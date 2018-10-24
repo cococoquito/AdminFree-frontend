@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'admin-root',
-  template: '<router-outlet></router-outlet>'
+  template: '<router-outlet></router-outlet> hol'
 })
-export class AppComponent {
+export class RootComponent {
   title = 'AdminFree';
 }
