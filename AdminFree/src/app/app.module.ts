@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RootRoutingModule } from './core/root/root-routing-module';
+import { CoreModule } from './core/core.module';
 
-import { RootComponent } from './core/root/root.component';
+import { AppComponent } from './app.component';
 
+/**
+ * Modulo principal de la aplicacion AdminFree, contiene
+ * todas las componentes y modulos de inicio
+ */
 @NgModule({
   declarations: [
-    RootComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    RootRoutingModule
+    CoreModule
   ],
   providers: [],
-  bootstrap: [RootComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
