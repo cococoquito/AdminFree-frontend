@@ -13,7 +13,7 @@ const routes: Routes = [
 ];
 
 /**
- * Modulo que contiene los compoenentes y servicios para la
+ * Modulo que contiene los componentes y servicios para la
  * administracion de clientes del sistema
  */
 @NgModule({
