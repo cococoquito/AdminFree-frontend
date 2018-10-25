@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
-import { ApiConfiguracionesEnum, AppEnum } from './../../enums/app-enums';
+import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
+import { ApiConfiguracionesEnum, ApiSeguridadEnum, AppEnum } from './../../enums/app-enums';
 
 /**
  * Clase que contiene todos los servicios para
@@ -13,6 +14,9 @@ import { ApiConfiguracionesEnum, AppEnum } from './../../enums/app-enums';
 @Injectable({ providedIn: 'root' })
 export class AdminClienteService {
 
+  /** Se necesita para las peticiones PUT y POST*/
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8' });
+
   /**
    * Creates an instance of AdminClienteService
    *
@@ -21,15 +25,25 @@ export class AdminClienteService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Servicio que permite obtener los CLIENTES del sistema
-   *
-   * @return lista de CLIENTES parametrizados en el sistema
+   * Servicio que permite soportar el proceso de iniciar sesion de Admin Clientes
    */
-  getClientes(): Observable<ClienteDTO[]> {
+  public iniciarSesion(credenciales: AutenticacionDTO): Observable<AutenticacionDTO> {
+    return this.http.post<AutenticacionDTO>(
+      AppEnum.DOMINIO_REST +
+      ApiSeguridadEnum.SEGURIDAD_API +
+      ApiSeguridadEnum.ADMIN_CLIENTES_ENTRAR,
+      credenciales, { headers: this.headers }
+    );
+  }
+
+  /**
+   * Servicio que permite obtener los CLIENTES del sistema
+   */
+  public getClientes(): Observable<ClienteDTO[]> {
     return this.http.get<ClienteDTO[]>(
-        AppEnum.DOMINIO_REST +
-        ApiConfiguracionesEnum.CONFIGURACIONES_API +
-        ApiConfiguracionesEnum.CLIENTES
+      AppEnum.DOMINIO_REST +
+      ApiConfiguracionesEnum.CONFIGURACIONES_API +
+      ApiConfiguracionesEnum.CLIENTES
     );
   }
 }

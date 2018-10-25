@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { AdminClientesComponent } from './admin-clientes/admin-clientes.component';
 import { Routes } from '@angular/router';
@@ -19,6 +20,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [AdminClientesComponent]

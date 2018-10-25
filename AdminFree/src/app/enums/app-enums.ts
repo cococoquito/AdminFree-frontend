@@ -12,6 +12,12 @@ export enum ApiConfiguracionesEnum {
   ELIMINAR_CLIENTE = 'eliminarcliente'
 }
 
+/** Enums para los nombre de los servicios REST del modulo de seguridad*/
+export enum ApiSeguridadEnum {
+  SEGURIDAD_API = 'authapi/',
+  ADMIN_CLIENTES_ENTRAR = 'adminclientesentrar'
+}
+
 /** Enums para la seguridad del sistema peticiones REST*/
 export enum SecurityEnum {
   auth_user = 'f0f38460e739a72f40a009c639767fb7',
