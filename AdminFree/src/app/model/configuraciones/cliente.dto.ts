@@ -31,6 +31,9 @@ export class ClienteDTO {
   /** Estado que se encuentra el cliente */
   public estado: number;
 
+  /** Es el nombre del Estado que se encuentra el cliente */
+  public estadoNombre: string;
+
   /** Identifica que tipo de accion se va ralizar sobre el cliente */
   public tipoEvento: string;
 }
