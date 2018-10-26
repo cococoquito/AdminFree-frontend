@@ -54,13 +54,9 @@ export enum AppSecurity {
   auth_user = 'f0f38460e739a72f40a009c639767fb7',
   auth_pass = '5262d63d2f90a94ac51521abc7c3539f',
   auth_token = 'dffa627a756bf5ce0dcbe9477eac1482',
+  content = 'application/json;charset=UTF-8',
   post_angular_auth = 'jtizq',
-  post_angular = 'apwni',
-  huser = 'huser',
-  hpass = 'hpass',
-  htoken = 'htoken',
-  content_type = 'Content-Type',
-  content = 'application/json;charset=UTF-8'
+  post_angular = 'apwni'
 }
 
 /** Enums que contiene los KEYs del localstore*/

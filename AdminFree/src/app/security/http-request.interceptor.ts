@@ -25,12 +25,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    // Son los keys a configurar en el header-request
-    const contentK: string = AppSecurity.content_type;
-    const userK: string = AppSecurity.huser;
-    const passK: string = AppSecurity.hpass;
-    const tokenK: string = AppSecurity.htoken;
-
     // Nombres de las URL
     const adminClienteURL: string = ModuloSeguridadURL.ADMIN_CLIENTES_AUTH.toString();
 
@@ -40,20 +34,20 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     // si la peticion es para la autenticacion de admin-clientes
     if (req.url === adminClienteURL) {
       security = {
-        contentK: AppSecurity.content,
-        userK: AppSecurity.auth_user,
-        passK: AppSecurity.auth_pass,
-        tokenK: AppSecurity.auth_token + AppSecurity.post_angular_auth
+        'Content-Type': AppSecurity.content,
+        'huser': AppSecurity.auth_user,
+        'hpass': AppSecurity.auth_pass,
+        'htoken': AppSecurity.auth_token + AppSecurity.post_angular_auth
       };
     } else {
       const credenciales: AutenticacionDTO = JSON.parse(
         localStorage.getItem(keyLocalStore.KEY_USER_SECURITY)
       );
       security = {
-        contentK: AppSecurity.content,
-        userK: credenciales.usuario,
-        passK: credenciales.clave,
-        tokenK: credenciales.token + AppSecurity.post_angular
+        'Content-Type': AppSecurity.content,
+        'huser': credenciales.usuario,
+        'hpass': credenciales.clave,
+        'htoken': credenciales.token + AppSecurity.post_angular
       };
     }
 
