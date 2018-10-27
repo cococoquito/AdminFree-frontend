@@ -66,8 +66,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
           localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
         },
         error => {
-          const errorResponse: ErrorResponse = this.getErrorResponse(error);
-          this.msjError = errorResponse.mensaje.mensaje;
+          this.msjError = this.getErrorResponse(error).mensaje.mensaje;
         }
       );
     }
@@ -81,10 +80,14 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     if (confirm('¿Está seguro de eliminar el siguiente cliente:? ' + cliente.nombre)) {
       this.service.eliminarCliente(cliente).subscribe(
         data => {
-          console.log(data);
+            // la funcion splice es para eliminar el item de la lista
+            const i = this.autenticacion.clientes.indexOf(cliente, 0);
+            if (i > -1) {
+              this.autenticacion.clientes.splice(i, 1);
+            }
         },
         error => {
-          console.log(error);
+          this.msjError = this.getErrorResponse(error).mensaje.mensaje;
         }
       );
     }
