@@ -1,8 +1,10 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonComponent } from './../../model/common/common.component';
 import { keyLocalStore } from './../../enums/app-enums';
 import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
-import { Component, OnInit } from '@angular/core';
+import { ErrorResponse } from './../../model/common/error-response';
 import { AdminClienteService } from './../../core/services/admin-cliente.service';
 
 /**
@@ -11,7 +13,7 @@ import { AdminClienteService } from './../../core/services/admin-cliente.service
 @Component({
   templateUrl: './admin-clientes.component.html'
 })
-export class AdminClientesComponent implements OnInit {
+export class AdminClientesComponent extends CommonComponent implements OnInit {
 
   /** Se utiliza para capturar las credenciales del usuario */
   public entrada: AutenticacionDTO;
@@ -27,7 +29,9 @@ export class AdminClientesComponent implements OnInit {
    *
    * @param contiene los servicios para administrar los clientes
    */
-  constructor(private service: AdminClienteService) {}
+  constructor(private service: AdminClienteService) {
+    super();
+  }
 
   ngOnInit() {
     const credenciales = localStorage.getItem(keyLocalStore.KEY_USER_SECURITY);
@@ -62,8 +66,8 @@ export class AdminClientesComponent implements OnInit {
           localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
         },
         error => {
-          this.msjError =
-            'El Usuario y la Contraseña que usted ingresó no ha sido reconocido. Por favor, inténtelo de nuevo.';
+          const errorResponse: ErrorResponse = this.getErrorResponse(error);
+          this.msjError = errorResponse.mensaje.mensaje;
         }
       );
     }
@@ -73,6 +77,7 @@ export class AdminClientesComponent implements OnInit {
    * Metodo que permite soportar el evento eliminar cliente
    */
   public eliminarCliente(cliente: ClienteDTO) {
+    this.msjError = null;
     if (confirm('¿Está seguro de eliminar el siguiente cliente:? ' + cliente.nombre)) {
       this.service.eliminarCliente(cliente).subscribe(
         data => {

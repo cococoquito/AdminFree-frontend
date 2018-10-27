@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
-import { CommonResponse } from './../../model/common/common-response.dto';
+import { MessageResponse } from './../../model/common/message-response';
 import { ModuloConfiguracionesURL, ModuloSeguridadURL } from './../../enums/app-enums';
 
 /**
@@ -43,8 +43,8 @@ export class AdminClienteService {
   /**
    * Servicio que permite eliminar un cliente del sistema
    */
-  public eliminarCliente(cliente: ClienteDTO): Observable<CommonResponse> {
-    return this.http.put<CommonResponse>(
+  public eliminarCliente(cliente: ClienteDTO): Observable<MessageResponse> {
+    return this.http.put<MessageResponse>(
       ModuloConfiguracionesURL.ELIMINAR_CLIENTE.toString(),
       cliente);
   }

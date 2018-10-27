@@ -64,3 +64,13 @@ export enum keyLocalStore {
   KEY_USER_SECURITY = 'USER_SECURITY',
   KEY_ADMIN_CLIENTES = 'ADMIN_CLIENTES'
 }
+
+export enum HttpStatus {
+  BAD_REQUEST = 400,
+  INTERNAL_SERVER_ERROR = 500
+}
+
+export enum CodigoBusinessMessage {
+  COD_AUTENTICACION_FALLIDA = '1',
+  COD_AUTORIZACION_FALLIDA = '2'
+}
