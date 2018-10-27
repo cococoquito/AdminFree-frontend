@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
+import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
 import { ModuloConfiguracionesURL, ModuloSeguridadURL } from './../../enums/app-enums';
 
 /**
@@ -24,8 +25,8 @@ export class AdminClienteService {
   /**
    * Servicio que permite soportar el proceso de iniciar sesion de Admin Clientes
    */
-  public iniciarSesion(credenciales: AutenticacionDTO): Observable<AutenticacionDTO> {
-    return this.http.post<AutenticacionDTO>(
+  public iniciarSesion(credenciales: AutenticacionDTO): Observable<AdminClientesDTO> {
+    return this.http.post<AdminClientesDTO>(
       ModuloSeguridadURL.ADMIN_CLIENTES_AUTH.toString(),
       credenciales
     );

@@ -61,5 +61,6 @@ export enum AppSecurity {
 
 /** Enums que contiene los KEYs del localstore*/
 export enum keyLocalStore {
-  KEY_USER_SECURITY = 'USER_SECURITY'
+  KEY_USER_SECURITY = 'USER_SECURITY',
+  KEY_ADMIN_CLIENTES = 'ADMIN_CLIENTES'
 }
