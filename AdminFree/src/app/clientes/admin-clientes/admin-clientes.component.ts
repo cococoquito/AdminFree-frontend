@@ -73,9 +73,16 @@ export class AdminClientesComponent implements OnInit {
    * Metodo que permite soportar el evento eliminar cliente
    */
   public eliminarCliente(cliente: ClienteDTO) {
-      if (confirm('¿Está seguro de eliminar el siguiente cliente:? ' + cliente.nombre)) {
-
-      }
+    if (confirm('¿Está seguro de eliminar el siguiente cliente:? ' + cliente.nombre)) {
+      this.service.eliminarCliente(cliente).subscribe(
+        data => {
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   /**
