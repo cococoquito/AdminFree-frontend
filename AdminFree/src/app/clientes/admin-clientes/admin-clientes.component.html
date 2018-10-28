@@ -21,52 +21,90 @@
 </div>
 
 <div *ngIf="autenticacion" class="container">
-  <button type="button" class="btn btn-success" style="margin-right: 2%;margin-left: 2% " (click)="cerrarSesion()">Cerrar Sesión</button>
-  <button type="button" class="btn btn-primary">Agregar Cliente</button>
-  <br/>
-  <br/>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Token</th>
-        <th>Telefonos</th>
-        <th>Emails</th>
-        <th>Activación</th>
-        <th>Inactivación</th>
-        <th>Estado</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cliente of autenticacion.clientes">
-        <td>
-          <p>{{cliente.nombre}}</p>
-        </td>
-        <td>
-            <button type="button" class="btn btn-warning">Ver</button>
-        </td>
-        <td>
-          <p>{{cliente.telefonos}}</p>
-        </td>
-        <td>
-          <p>{{cliente.emails}}</p>
-        </td>
-        <td>
-          <p>{{cliente.fechaActivacion}}</p>
-        </td>
-        <td>
-          <p>{{cliente.fechaInactivacion}}</p>
-        </td>
-        <td>
-          <p>{{cliente.estadoNombre}}</p>
-        </td>
 
-        <td>
+  <div *ngIf="!clienteCrear">
+
+    <div *ngIf="token">
+      <p style="text-align: center; color: blue; text-decoration: underline; cursor: pointer;" (click)="limpiarToken()">Nombre: {{token.nombre}}</p>
+      <p style="color: red; text-align: center">{{token.token}}</p>
+    </div>
+
+    <button type="button" class="btn btn-success" style="margin-right: 2%;margin-left: 2% " (click)="cerrarSesion()">Cerrar
+      Sesión</button>
+    <button type="button" class="btn btn-primary" (click)="btnAgregarCliente()">Agregar Cliente</button>
+    <br />
+    <br />
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Token</th>
+          <th>Telefonos</th>
+          <th>Emails</th>
+          <th>Activación</th>
+          <th>Inactivación</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of autenticacion.clientes">
+          <td>
+            <p>{{cliente.nombre}}</p>
+          </td>
+          <td>
+            <button type="button" class="btn btn-warning" (click)="verToken(cliente)">Ver</button>
+          </td>
+          <td>
+            <p>{{cliente.telefonos}}</p>
+          </td>
+          <td>
+            <p>{{cliente.emails}}</p>
+          </td>
+          <td>
+            <p>{{cliente.fechaActivacion}}</p>
+          </td>
+          <td>
+            <p>{{cliente.fechaInactivacion}}</p>
+          </td>
+          <td>
+            <button *ngIf="cliente.estado === 1" type="button" class="btn btn-success" (click)="inactivarCliente(cliente)">{{cliente.estadoNombre}}</button>
+            <button *ngIf="cliente.estado === 2" type="button" class="btn btn-danger" (click)="activarCliente(cliente)">{{cliente.estadoNombre}}</button>
+          </td>
+
+          <td>
             <button type="button" class="btn btn-success" style="margin-right: 3%">Editar</button>
             <button type="button" class="btn btn-secondary" (click)="eliminarCliente(cliente)">Eliminar</button>
           </td>
-      </tr>
-    </tbody>
-  </table>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+
+
+
+  <div class="container" *ngIf="clienteCrear">
+    <div class="form-group col-xs-12">
+      <label for="nombre">Nombre cliente:</label>
+      <input id="nombre" type="text" class='form-control' [(ngModel)]="clienteCrear.nombre"/>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <label for="tele">Telefonos:</label>
+      <input id="tele" type="text" class='form-control' [(ngModel)]="clienteCrear.telefonos"/>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <label for="ema">Emals:</label>
+      <input id="ema" type="text" class='form-control' [(ngModel)]="clienteCrear.emails"/>
+    </div>
+
+    <button type="button" class="btn btn-success" style="margin-right: 2%;margin-left: 2% " (click)="btnRegresar()">Regresar</button>
+    <button type="button" class="btn btn-primary" (click)="agregarCliente()">Agregar Cliente</button>
+  </div>
+
+
+
 </div>

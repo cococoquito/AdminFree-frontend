@@ -4,7 +4,6 @@ import { keyLocalStore } from './../../enums/app-enums';
 import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
-import { ErrorResponse } from './../../model/common/error-response';
 import { AdminClienteService } from './../../core/services/admin-cliente.service';
 
 /**
@@ -23,6 +22,11 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
   /** Contiene el mensaje de error para la autenticacion */
   public msjError: string;
+
+  /** Se utiliza para crear el cliente */
+  public clienteCrear: ClienteDTO;
+
+  public token: ClienteDTO;
 
   /**
    * Creates an instance of AdminClientesComponent.
@@ -72,12 +76,25 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     }
   }
 
+  public agregarCliente(){
+    this.msjError = null;
+    this.service.crearCliente(this.clienteCrear).subscribe(
+      data =>{
+        this.autenticacion.clientes.push(data);
+        this.clienteCrear = null;
+      },
+      error => {
+        this.msjError = this.getErrorResponse(error).mensaje.mensaje;
+      }
+    );
+  }
+
   /**
    * Metodo que permite soportar el evento eliminar cliente
    */
   public eliminarCliente(cliente: ClienteDTO) {
     this.msjError = null;
-    if (confirm('¿Está seguro de eliminar el siguiente cliente:? ' + cliente.nombre)) {
+    if (confirm('¿Está seguro de ELIMINAR el siguiente cliente? ' + cliente.nombre)) {
       this.service.eliminarCliente(cliente).subscribe(
         data => {
             // la funcion splice es para eliminar el item de la lista
@@ -85,11 +102,70 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
             if (i > -1) {
               this.autenticacion.clientes.splice(i, 1);
             }
+            alert('El cliente fue eliminado exitosamente.');
         },
         error => {
           this.msjError = this.getErrorResponse(error).mensaje.mensaje;
         }
       );
+    }
+  }
+
+  public verToken(cliente: ClienteDTO): void {
+    this.token = cliente;
+  }
+
+  public limpiarToken(): void {
+    this.token = null;
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton agregar cliente
+   */
+  public btnAgregarCliente(): void {
+    this.clienteCrear = new ClienteDTO();
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton regresar
+   */
+  public btnRegresar(): void {
+    this.clienteCrear = null;
+  }
+
+  public inactivarCliente(cliente: ClienteDTO): void {
+    if (confirm('¿Está seguro de INACTIVAR el siguiente cliente? ' + cliente.nombre)) {
+      cliente.tipoEvento = 'IN';
+      this.service.modificarCliente(cliente).subscribe(
+        data => {
+            cliente.fechaInactivacion = new Date();
+            cliente.estado = 2;
+            cliente.estadoNombre = 'Inactivo';
+            alert('El cliente fue INACTIVADO exitosamente.');
+        },
+        error => {
+          this.msjError = this.getErrorResponse(error).mensaje.mensaje;
+        }
+      );
+
+    }
+  }
+
+  public activarCliente(cliente: ClienteDTO): void {
+    if (confirm('¿Está seguro de ACTIVAR el siguiente cliente? ' + cliente.nombre)) {
+      cliente.tipoEvento = 'AC';
+      this.service.modificarCliente(cliente).subscribe(
+        data => {
+            cliente.fechaInactivacion = null;
+            cliente.estado = 1;
+            cliente.estadoNombre = 'Activo';
+            alert('El cliente fue ACTIVADO exitosamente.');
+        },
+        error => {
+          this.msjError = this.getErrorResponse(error).mensaje.mensaje;
+        }
+      );
+
     }
   }
 

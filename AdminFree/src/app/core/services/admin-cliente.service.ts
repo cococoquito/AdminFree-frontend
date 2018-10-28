@@ -41,11 +41,30 @@ export class AdminClienteService {
   }
 
   /**
+   * Servicio que permite crear un cliente en el sistema
+   */
+  public crearCliente(nuevoCliente: ClienteDTO): Observable<ClienteDTO> {
+    return this.http.post<ClienteDTO>(
+      ModuloConfiguracionesURL.CREAR_CLIENTES.toString(),
+      nuevoCliente
+    );
+  }
+
+  /**
    * Servicio que permite eliminar un cliente del sistema
    */
   public eliminarCliente(cliente: ClienteDTO): Observable<MessageResponse> {
     return this.http.put<MessageResponse>(
       ModuloConfiguracionesURL.ELIMINAR_CLIENTE.toString(),
+      cliente);
+  }
+
+  /**
+   * Servicio que permite modificar los datos de un cliente
+   */
+  public modificarCliente(cliente: ClienteDTO): Observable<MessageResponse> {
+    return this.http.put<MessageResponse>(
+      ModuloConfiguracionesURL.MODIFICAR_CLIENTE.toString(),
       cliente);
   }
 }
