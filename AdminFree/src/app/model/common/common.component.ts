@@ -18,29 +18,40 @@ export class CommonComponent {
     const status: number = error.status;
     let mensaje: string;
 
-    // se valida si hay mensaje en el body del error
+    // se valida si hay codigo del mensaje en el body del error
     if (error.error && error.error.mensaje) {
+
+      // del server siempre llega el codigo del mensaje
       const codigoMensaje: string = error.error.mensaje;
 
-      // BAD REQUEST son los errores de negocio
-      if (HttpStatus.BAD_REQUEST === status) {
+      // se valida el status-response
+      switch (status) {
 
-        switch (codigoMensaje) {
+        // status para los errores de negocio
+        case HttpStatus.BAD_REQUEST: {
 
-          // Business error autenticacion fallida
-          case CodigoBusinessMessage.COD_AUTENTICACION_FALLIDA: {
-            mensaje = BusinessMessage.AUTENTICACION_FALLIDA;
-            break;
+          switch (codigoMensaje) {
+
+            // Business error autenticacion fallida
+            case CodigoBusinessMessage.COD_AUTENTICACION_FALLIDA: {
+              mensaje = BusinessMessage.AUTENTICACION_FALLIDA;
+              break;
+            }
           }
-
-          // Business error autorizacion fallida
-          case CodigoBusinessMessage.COD_AUTORIZACION_FALLIDA: {
-            mensaje = BusinessMessage.AUTORIZACION_FALLIDA;
-            break;
-          }
+          break;
         }
-      } else {
-        mensaje = BusinessMessage.INTERNAL_SERVER_ERROR + error.error.mensaje;
+
+        // status cuando intentan ingresar un recurso sin el TOKEN
+        case HttpStatus.UNAUTHORIZED: {
+          mensaje = BusinessMessage.AUTORIZACION_FALLIDA;
+          break;
+        }
+
+        // si no son ningunas de las anteriores, se define como internal server error
+        default: {
+          mensaje = BusinessMessage.INTERNAL_SERVER_ERROR + error.error.mensaje;
+          break;
+        }
       }
     } else {
       mensaje = error.message;
