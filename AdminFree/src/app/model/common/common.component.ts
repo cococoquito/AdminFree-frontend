@@ -29,15 +29,7 @@ export class CommonComponent {
 
         // status para los errores de negocio
         case HttpStatus.BAD_REQUEST: {
-
-          switch (codigoMensaje) {
-
-            // Business error autenticacion fallida
-            case CodigoBusinessMessage.COD_AUTENTICACION_FALLIDA: {
-              mensaje = BusinessMessage.AUTENTICACION_FALLIDA;
-              break;
-            }
-          }
+          mensaje = this.getBusinessMessage(codigoMensaje);
           break;
         }
 
@@ -62,5 +54,22 @@ export class CommonComponent {
     errorResponse.mensaje.mensaje = mensaje;
     errorResponse.status = status;
     return errorResponse;
+  }
+
+  /**
+   * Metodo que permite obtener el business mensaje que corresponsa al codigo
+   */
+  private getBusinessMessage(codBusinessMsj: string): string {
+    let businessMsj = '';
+
+    // se verifica que tipo de business msj corresponde
+    switch (codBusinessMsj) {
+
+      // Business error autenticacion fallida
+      case CodigoBusinessMessage.COD_AUTENTICACION_FALLIDA: {
+        businessMsj = BusinessMessage.AUTENTICACION_FALLIDA;
+      }
+    }
+    return businessMsj;
   }
 }
