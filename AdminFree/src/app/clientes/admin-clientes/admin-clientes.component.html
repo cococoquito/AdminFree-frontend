@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<div *ngIf="autenticacion" class="container">
+<div *ngIf="autenticacion">
 
   <div *ngIf="!clienteCrear">
 
@@ -50,31 +50,35 @@
       <tbody>
         <tr *ngFor="let cliente of autenticacion.clientes">
           <td>
-            <p>{{cliente.nombre}}</p>
+            <input *ngIf="clienteModificar && clienteModificar.id === cliente.id" type="text" [(ngModel)]="cliente.nombre" />
+            <p *ngIf="!(clienteModificar && clienteModificar.id === cliente.id)">{{cliente.nombre}}</p>
           </td>
           <td>
-            <button type="button" class="btn btn-warning" (click)="verToken(cliente)">Ver</button>
+            <button type="button" class="btn btn-warning btn-sm" (click)="verToken(cliente)">Ver</button>
           </td>
           <td>
-            <p>{{cliente.telefonos}}</p>
+              <input *ngIf="clienteModificar && clienteModificar.id === cliente.id" type="text" [(ngModel)]="cliente.telefonos" />
+              <p *ngIf="!(clienteModificar && clienteModificar.id === cliente.id)">{{cliente.telefonos}}</p>
           </td>
           <td>
-            <p>{{cliente.emails}}</p>
+              <input *ngIf="clienteModificar && clienteModificar.id === cliente.id" type="text" [(ngModel)]="cliente.emails" />
+              <p *ngIf="!(clienteModificar && clienteModificar.id === cliente.id)">{{cliente.emails}}</p>
           </td>
           <td>
-            <p>{{cliente.fechaActivacion}}</p>
+            <p> {{cliente?.fechaActivacion | date: 'dd/MM/yyyy'}}</p>
           </td>
           <td>
-            <p>{{cliente.fechaInactivacion}}</p>
+            <p> {{cliente?.fechaInactivacion | date: 'dd/MM/yyyy'}}</p>
           </td>
           <td>
-            <button *ngIf="cliente.estado === 1" type="button" class="btn btn-success" (click)="inactivarCliente(cliente)">{{cliente.estadoNombre}}</button>
-            <button *ngIf="cliente.estado === 2" type="button" class="btn btn-danger" (click)="activarCliente(cliente)">{{cliente.estadoNombre}}</button>
+            <button *ngIf="cliente.estado === 1" type="button" class="btn btn-success btn-sm" (click)="inactivarCliente(cliente)">{{cliente.estadoNombre}}</button>
+            <button *ngIf="cliente.estado === 2" type="button" class="btn btn-danger btn-sm" (click)="activarCliente(cliente)">{{cliente.estadoNombre}}</button>
           </td>
 
           <td>
-            <button type="button" class="btn btn-success" style="margin-right: 3%">Editar</button>
-            <button type="button" class="btn btn-secondary" (click)="eliminarCliente(cliente)">Eliminar</button>
+            <button type="button" *ngIf="!(clienteModificar && clienteModificar.id === cliente.id)" class="btn btn-success btn-sm" style="margin-right: 3%" (click)="habilitarEdicionCliente(cliente)">E</button>
+            <button type="button" *ngIf="clienteModificar && clienteModificar.id === cliente.id" class="btn btn-danger btn-sm" style="margin-right: 3%" (click)="modificarCliente()">G</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="eliminarCliente(cliente)">X</button>
           </td>
         </tr>
       </tbody>

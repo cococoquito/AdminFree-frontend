@@ -28,6 +28,10 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
   public token: ClienteDTO;
 
+  public clienteModificar: ClienteDTO;
+
+  private clienteOrigen: ClienteDTO;
+
   /**
    * Creates an instance of AdminClientesComponent.
    *
@@ -76,11 +80,12 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     }
   }
 
-  public agregarCliente(){
+  public agregarCliente() {
     this.msjError = null;
     this.service.crearCliente(this.clienteCrear).subscribe(
-      data =>{
+      data => {
         this.autenticacion.clientes.push(data);
+        localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
         this.clienteCrear = null;
       },
       error => {
@@ -102,6 +107,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
             if (i > -1) {
               this.autenticacion.clientes.splice(i, 1);
             }
+            localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
             alert('El cliente fue eliminado exitosamente.');
         },
         error => {
@@ -136,11 +142,12 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   public inactivarCliente(cliente: ClienteDTO): void {
     if (confirm('¿Está seguro de INACTIVAR el siguiente cliente? ' + cliente.nombre)) {
       cliente.tipoEvento = 'IN';
-      this.service.modificarCliente(cliente).subscribe(
+      this.service.activarInactivarCliente(cliente).subscribe(
         data => {
-            cliente.fechaInactivacion = new Date();
-            cliente.estado = 2;
-            cliente.estadoNombre = 'Inactivo';
+            cliente.estado = data.estado;
+            cliente.estadoNombre = data.estadoNombre;
+            cliente.fechaInactivacion = data.fechaInactivacion;
+            localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
             alert('El cliente fue INACTIVADO exitosamente.');
         },
         error => {
@@ -154,11 +161,13 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   public activarCliente(cliente: ClienteDTO): void {
     if (confirm('¿Está seguro de ACTIVAR el siguiente cliente? ' + cliente.nombre)) {
       cliente.tipoEvento = 'AC';
-      this.service.modificarCliente(cliente).subscribe(
+      this.service.activarInactivarCliente(cliente).subscribe(
         data => {
-            cliente.fechaInactivacion = null;
-            cliente.estado = 1;
-            cliente.estadoNombre = 'Activo';
+          cliente.estado = data.estado;
+          cliente.estadoNombre = data.estadoNombre;
+          cliente.fechaInactivacion = data.fechaInactivacion;
+          cliente.fechaActivacion = data.fechaActivacion;
+          localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
             alert('El cliente fue ACTIVADO exitosamente.');
         },
         error => {
@@ -169,6 +178,43 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     }
   }
 
+  public habilitarEdicionCliente(cliente: ClienteDTO): void {
+    if(this.clienteModificar && this.clienteOrigen){
+      this.clienteModificar.nombre = this.clienteOrigen.nombre;
+      this.clienteModificar.emails = this.clienteOrigen.emails;
+      this.clienteModificar.telefonos = this.clienteOrigen.telefonos;
+    }
+
+    this.clienteModificar = cliente;
+    this.clienteOrigen = new ClienteDTO();
+    this.clienteOrigen.nombre = cliente.nombre;
+    this.clienteOrigen.emails = cliente.emails;
+    this.clienteOrigen.telefonos = cliente.telefonos;
+  }
+
+  public modificarCliente(): void {
+    if (this.clienteModificar.nombre !== this.clienteOrigen.nombre ||
+      this.clienteModificar.emails !== this.clienteOrigen.emails ||
+      this.clienteModificar.telefonos !== this.clienteOrigen.telefonos) {
+        this.clienteModificar.tipoEvento = 'A';
+        this.service.modificarCliente(this.clienteModificar).subscribe(
+          data => {
+            this.clienteModificar = null;
+            this.clienteOrigen = null;
+            localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
+            alert('El cliente fue MODIFICADO exitosamente.');
+          },
+          error => {
+            this.msjError = this.getErrorResponse(error).mensaje.mensaje;
+          }
+        );
+    } else{
+      this.clienteModificar = null;
+      this.clienteOrigen = null;
+    }
+
+  }
+
   /**
    * Metodo que soporta el evento click del boton cerrar sesion
    */
@@ -177,5 +223,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     localStorage.removeItem(keyLocalStore.KEY_ADMIN_CLIENTES);
     this.entrada = new AutenticacionDTO();
     this.autenticacion = null;
+    this.token = null;
+    this.clienteModificar = null;
   }
 }

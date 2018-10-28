@@ -60,7 +60,16 @@ export class AdminClienteService {
   }
 
   /**
-   * Servicio que permite modificar los datos de un cliente
+   * Servicio que permite inactivar o activar un cliente
+   */
+  public activarInactivarCliente(cliente: ClienteDTO): Observable<ClienteDTO> {
+    return this.http.put<ClienteDTO>(
+      ModuloConfiguracionesURL.MODIFICAR_CLIENTE.toString(),
+      cliente);
+  }
+
+  /**
+   * Servicio que permite modificar los dato de un cliente
    */
   public modificarCliente(cliente: ClienteDTO): Observable<MessageResponse> {
     return this.http.put<MessageResponse>(
