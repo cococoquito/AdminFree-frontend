@@ -6,7 +6,6 @@ import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
 import { AdminClienteService } from './../../core/services/admin-cliente.service';
 import { KeyLocalStoreConstant } from '../../constants/key-localstore.constant';
 import { TipoEventoConstant } from './../../constants/tipo-evento.constant';
-import { EstadoConstant } from './../../constants/estado.constant';
 
 /**
  * Componente para la administracion de los clientes del sistema
