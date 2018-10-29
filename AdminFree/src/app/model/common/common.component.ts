@@ -11,6 +11,19 @@ import { HttpStatusConstant } from './../../constants/http-status.constant';
 export class CommonComponent {
 
   /**
+   * Metodo que permite mostrar solo el mensaje de error
+   *
+   * @param error, Es el Http error retornado del servidor
+   */
+  protected showMensajeError(error: HttpErrorResponse): string {
+    const errorResponse: ErrorResponse = this.getErrorResponse(error);
+    if (errorResponse && errorResponse.mensaje) {
+      return errorResponse.mensaje.mensaje;
+    }
+    return MessagesConstant.INTERNAL_SERVER_ERROR;
+  }
+
+  /**
    * Metodo que permite construir el mensaje de error con el
    * codigo del status de un error-response del servidor
    *

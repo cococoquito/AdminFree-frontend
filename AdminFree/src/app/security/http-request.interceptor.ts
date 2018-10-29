@@ -21,7 +21,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    * Metodo que permite capturar cada request del sistema,
    * para asi agregar la seguridad correspondiente a cada peticion
    *
-   * @param req, es la solicitud que envia en cliente
+   * @param req, es la solicitud que envia el cliente
    * @param next, es el siguiente interceptor a ejecutar, si aplica
    * @returns Observador con el request modificado
    */
@@ -39,6 +39,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         'htoken': AppSecurityConstant.AUTH_TOKEN + AppSecurityConstant.POST_ANGULAR_AUTH
       };
     } else {
+      // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
       const credenciales: AutenticacionDTO = JSON.parse(
         localStorage.getItem(KeyLocalStoreConstant.KEY_USER_SECURITY)
       );
@@ -50,7 +51,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       };
     }
 
-    // se configura el header para el sieguiente filtro
+    // se configura el header para el siguiente filtro
     return next.handle(req.clone({ setHeaders: security }));
   }
 }
