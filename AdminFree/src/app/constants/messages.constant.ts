@@ -3,7 +3,7 @@
  *
  * @author Carlos Andres Diaz
  */
-class MessagesConstant {
+export class MessagesConstant {
 
   /** Codigo para el mensaje de autenticacion fallida*/
   static readonly COD_AUTENTICACION_FALLIDA: string = '1';

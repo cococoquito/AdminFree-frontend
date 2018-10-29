@@ -3,7 +3,7 @@
  *
  * @author Carlos Andres Diaz
  */
-class KeyLocalStoreConstant {
+export class KeyLocalStoreConstant {
 
   /** Key para almacenar la seguridad del usuario*/
   static readonly KEY_USER_SECURITY: string = 'USER_SECURITY';

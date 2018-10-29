@@ -3,7 +3,7 @@
  *
  * @author Carlos Andres Diaz
  */
-class AppSecurityConstant {
+export class AppSecurityConstant {
 
   static readonly AUTH_USER: string = 'f0f38460e739a72f40a009c639767fb7';
   static readonly AUTH_PASS: string = '5262d63d2f90a94ac51521abc7c3539f';

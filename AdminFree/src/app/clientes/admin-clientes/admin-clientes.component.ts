@@ -4,6 +4,7 @@ import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.d
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
 import { AdminClienteService } from './../../core/services/admin-cliente.service';
+import { KeyLocalStoreConstant } from '../../constants/key-localstore.constant';
 
 /**
  * Componente para la administracion de los clientes del sistema

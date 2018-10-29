@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from './error-response';
+import { MessagesConstant } from './../../constants/messages.constant';
+import { HttpStatusConstant } from './../../constants/http-status.constant';
 
 /**
  * Contiene los metodos comunes para todos los componentes

@@ -1,9 +1,11 @@
+import { AppDomainConstant } from './app-domain.constant';
+
 /**
  * Clase que contiene todas las constantes para el modulo de configuraciones
  *
  * @author Carlos Andres Diaz
  */
-class ConfiguracionesConstant {
+export class ConfiguracionesConstant {
 
   /** Nombre del REST para el modulo configuraciones*/
   static readonly CONFIGURACIONES_API: string = 'configuracionesapi/';

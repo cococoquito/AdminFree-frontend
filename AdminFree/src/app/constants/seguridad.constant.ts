@@ -1,9 +1,11 @@
+import { AppDomainConstant } from './app-domain.constant';
+
 /**
  * Clase que contiene todas las constantes para el modulo de seguridad
  *
  * @author Carlos Andres Diaz
  */
-class SeguridadConstant {
+export class SeguridadConstant {
 
   /** Nombre del REST para el modulo seguridad*/
   static readonly SEGURIDAD_API: string = 'authapi/';
