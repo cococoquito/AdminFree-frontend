@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../model/common/common.component';
-import { keyLocalStore } from './../../enums/app-enums';
 import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
@@ -42,12 +41,16 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   }
 
   ngOnInit() {
-    const credenciales = localStorage.getItem(keyLocalStore.KEY_USER_SECURITY);
+    const credenciales = localStorage.getItem(
+      KeyLocalStoreConstant.KEY_USER_SECURITY
+    );
     if (credenciales) {
       this.autenticacion = new AdminClientesDTO();
       this.autenticacion.credenciales = JSON.parse(credenciales);
 
-      const clientes = localStorage.getItem(keyLocalStore.KEY_ADMIN_CLIENTES);
+      const clientes = localStorage.getItem(
+        KeyLocalStoreConstant.KEY_ADMIN_CLIENTES
+      );
       if (clientes) {
         this.autenticacion.clientes = JSON.parse(clientes);
       } else {
@@ -70,8 +73,14 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
           this.autenticacion.credenciales.clave = this.entrada.clave;
           this.autenticacion.credenciales.usuario = this.entrada.usuario;
           this.msjError = null;
-          localStorage.setItem(keyLocalStore.KEY_USER_SECURITY, JSON.stringify(this.autenticacion.credenciales));
-          localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
+          localStorage.setItem(
+            KeyLocalStoreConstant.KEY_USER_SECURITY,
+            JSON.stringify(this.autenticacion.credenciales)
+          );
+          localStorage.setItem(
+            KeyLocalStoreConstant.KEY_ADMIN_CLIENTES,
+            JSON.stringify(this.autenticacion.clientes)
+          );
         },
         error => {
           this.msjError = this.getErrorResponse(error).mensaje.mensaje;
@@ -85,7 +94,10 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     this.service.crearCliente(this.clienteCrear).subscribe(
       data => {
         this.autenticacion.clientes.push(data);
-        localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
+        localStorage.setItem(
+          KeyLocalStoreConstant.KEY_ADMIN_CLIENTES,
+          JSON.stringify(this.autenticacion.clientes)
+        );
         this.clienteCrear = null;
       },
       error => {
@@ -99,16 +111,23 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
    */
   public eliminarCliente(cliente: ClienteDTO) {
     this.msjError = null;
-    if (confirm('¿Está seguro de ELIMINAR el siguiente cliente? ' + cliente.nombre)) {
+    if (
+      confirm(
+        '¿Está seguro de ELIMINAR el siguiente cliente? ' + cliente.nombre
+      )
+    ) {
       this.service.eliminarCliente(cliente).subscribe(
         data => {
-            // la funcion splice es para eliminar el item de la lista
-            const i = this.autenticacion.clientes.indexOf(cliente, 0);
-            if (i > -1) {
-              this.autenticacion.clientes.splice(i, 1);
-            }
-            localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
-            alert('El cliente fue eliminado exitosamente.');
+          // la funcion splice es para eliminar el item de la lista
+          const i = this.autenticacion.clientes.indexOf(cliente, 0);
+          if (i > -1) {
+            this.autenticacion.clientes.splice(i, 1);
+          }
+          localStorage.setItem(
+            KeyLocalStoreConstant.KEY_ADMIN_CLIENTES,
+            JSON.stringify(this.autenticacion.clientes)
+          );
+          alert('El cliente fue eliminado exitosamente.');
         },
         error => {
           this.msjError = this.getErrorResponse(error).mensaje.mensaje;
@@ -140,26 +159,34 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   }
 
   public inactivarCliente(cliente: ClienteDTO): void {
-    if (confirm('¿Está seguro de INACTIVAR el siguiente cliente? ' + cliente.nombre)) {
+    if (
+      confirm(
+        '¿Está seguro de INACTIVAR el siguiente cliente? ' + cliente.nombre
+      )
+    ) {
       cliente.tipoEvento = 'IN';
       this.service.activarInactivarCliente(cliente).subscribe(
         data => {
-            cliente.estado = data.estado;
-            cliente.estadoNombre = data.estadoNombre;
-            cliente.fechaInactivacion = data.fechaInactivacion;
-            localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
-            alert('El cliente fue INACTIVADO exitosamente.');
+          cliente.estado = data.estado;
+          cliente.estadoNombre = data.estadoNombre;
+          cliente.fechaInactivacion = data.fechaInactivacion;
+          localStorage.setItem(
+            KeyLocalStoreConstant.KEY_ADMIN_CLIENTES,
+            JSON.stringify(this.autenticacion.clientes)
+          );
+          alert('El cliente fue INACTIVADO exitosamente.');
         },
         error => {
           this.msjError = this.getErrorResponse(error).mensaje.mensaje;
         }
       );
-
     }
   }
 
   public activarCliente(cliente: ClienteDTO): void {
-    if (confirm('¿Está seguro de ACTIVAR el siguiente cliente? ' + cliente.nombre)) {
+    if (
+      confirm('¿Está seguro de ACTIVAR el siguiente cliente? ' + cliente.nombre)
+    ) {
       cliente.tipoEvento = 'AC';
       this.service.activarInactivarCliente(cliente).subscribe(
         data => {
@@ -167,19 +194,21 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
           cliente.estadoNombre = data.estadoNombre;
           cliente.fechaInactivacion = data.fechaInactivacion;
           cliente.fechaActivacion = data.fechaActivacion;
-          localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
-            alert('El cliente fue ACTIVADO exitosamente.');
+          localStorage.setItem(
+            KeyLocalStoreConstant.KEY_ADMIN_CLIENTES,
+            JSON.stringify(this.autenticacion.clientes)
+          );
+          alert('El cliente fue ACTIVADO exitosamente.');
         },
         error => {
           this.msjError = this.getErrorResponse(error).mensaje.mensaje;
         }
       );
-
     }
   }
 
   public habilitarEdicionCliente(cliente: ClienteDTO): void {
-    if(this.clienteModificar && this.clienteOrigen){
+    if (this.clienteModificar && this.clienteOrigen) {
       this.clienteModificar.nombre = this.clienteOrigen.nombre;
       this.clienteModificar.emails = this.clienteOrigen.emails;
       this.clienteModificar.telefonos = this.clienteOrigen.telefonos;
@@ -193,34 +222,38 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   }
 
   public modificarCliente(): void {
-    if (this.clienteModificar.nombre !== this.clienteOrigen.nombre ||
+    if (
+      this.clienteModificar.nombre !== this.clienteOrigen.nombre ||
       this.clienteModificar.emails !== this.clienteOrigen.emails ||
-      this.clienteModificar.telefonos !== this.clienteOrigen.telefonos) {
-        this.clienteModificar.tipoEvento = 'A';
-        this.service.modificarCliente(this.clienteModificar).subscribe(
-          data => {
-            this.clienteModificar = null;
-            this.clienteOrigen = null;
-            localStorage.setItem(keyLocalStore.KEY_ADMIN_CLIENTES, JSON.stringify(this.autenticacion.clientes));
-            alert('El cliente fue MODIFICADO exitosamente.');
-          },
-          error => {
-            this.msjError = this.getErrorResponse(error).mensaje.mensaje;
-          }
-        );
-    } else{
+      this.clienteModificar.telefonos !== this.clienteOrigen.telefonos
+    ) {
+      this.clienteModificar.tipoEvento = 'A';
+      this.service.modificarCliente(this.clienteModificar).subscribe(
+        data => {
+          this.clienteModificar = null;
+          this.clienteOrigen = null;
+          localStorage.setItem(
+            KeyLocalStoreConstant.KEY_ADMIN_CLIENTES,
+            JSON.stringify(this.autenticacion.clientes)
+          );
+          alert('El cliente fue MODIFICADO exitosamente.');
+        },
+        error => {
+          this.msjError = this.getErrorResponse(error).mensaje.mensaje;
+        }
+      );
+    } else {
       this.clienteModificar = null;
       this.clienteOrigen = null;
     }
-
   }
 
   /**
    * Metodo que soporta el evento click del boton cerrar sesion
    */
   public cerrarSesion(): void {
-    localStorage.removeItem(keyLocalStore.KEY_USER_SECURITY);
-    localStorage.removeItem(keyLocalStore.KEY_ADMIN_CLIENTES);
+    localStorage.removeItem(KeyLocalStoreConstant.KEY_USER_SECURITY);
+    localStorage.removeItem(KeyLocalStoreConstant.KEY_ADMIN_CLIENTES);
     this.entrada = new AutenticacionDTO();
     this.autenticacion = null;
     this.token = null;

@@ -1,11 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { AutenticacionDTO } from './../model/configuraciones/autenticacion.dto';
 import {
-  AppSecurity,
-  ModuloSeguridadURL,
-  keyLocalStore
-} from './../enums/app-enums';
-import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
@@ -22,32 +17,33 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   /**
    * Metodo que permite capturar cada request del sistema,
    * para asi agregar la seguridad correspondiente a cada peticion
+   *
+   * @param req, es la solicitud que envia en cliente
+   * @param next, es el siguiente interceptor a ejecutar, si aplica
+   * @returns Observador con el request modificado
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    // Nombres de las URL
-    const adminClienteURL: string = ModuloSeguridadURL.ADMIN_CLIENTES_AUTH.toString();
 
     // variable que contiene los valores del header dependiendo la URL
     let security;
 
     // si la peticion es para la autenticacion de admin-clientes
-    if (req.url === adminClienteURL) {
+    if (SeguridadConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
       security = {
-        'Content-Type': AppSecurity.content,
-        'huser': AppSecurity.auth_user,
-        'hpass': AppSecurity.auth_pass,
-        'htoken': AppSecurity.auth_token + AppSecurity.post_angular_auth
+        'Content-Type': AppSecurityConstant.CONTENT,
+        'huser': AppSecurityConstant.AUTH_USER,
+        'hpass': AppSecurityConstant.AUTH_PASS,
+        'htoken': AppSecurityConstant.AUTH_TOKEN + AppSecurityConstant.POST_ANGULAR_AUTH
       };
     } else {
       const credenciales: AutenticacionDTO = JSON.parse(
-        localStorage.getItem(keyLocalStore.KEY_USER_SECURITY)
+        localStorage.getItem(KeyLocalStoreConstant.KEY_USER_SECURITY)
       );
       security = {
-        'Content-Type': AppSecurity.content,
+        'Content-Type': AppSecurityConstant.CONTENT,
         'huser': credenciales.usuario,
         'hpass': credenciales.clave,
-        'htoken': credenciales.token + AppSecurity.post_angular
+        'htoken': credenciales.token + AppSecurityConstant.POST_ANGULAR
       };
     }
 

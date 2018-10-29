@@ -8,7 +8,9 @@ import { AppComponent } from './app.component';
 
 /**
  * Modulo principal de la aplicacion AdminFree, contiene
- * todas las componentes y modulos de inicio
+ * todas los componentes y modulos de inicio
+ *
+ * @author Carlos Andres Diaz
  */
 @NgModule({
   declarations: [

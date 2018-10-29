@@ -4,12 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
-import { MessageResponse } from './../../model/common/message-response';
-import { ModuloConfiguracionesURL, ModuloSeguridadURL } from './../../enums/app-enums';
+import { MessageResponseDTO } from './../../model/common/message-response.dto';
 
 /**
- * Servicio que contiene todos los metodos para
- * la administracion de los clientes
+ * Servicio que contiene todos los metodos para la administracion de los clientes
  *
  * @author Carlos Andres Diaz
  */
@@ -24,56 +22,63 @@ export class AdminClienteService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Servicio que permite soportar el proceso de iniciar sesion de Admin Clientes
+   * Metodo que permite soportar el proceso de iniciar sesion de Admin Clientes
+   *
+   * @param credenciales, contiene las credenciales del usuario
+   * @returns DTO con los datos de inicio para el modulo de admin clientes
    */
   public iniciarSesion(credenciales: AutenticacionDTO): Observable<AdminClientesDTO> {
     return this.http.post<AdminClientesDTO>(
-      ModuloSeguridadURL.ADMIN_CLIENTES_AUTH.toString(),
+      SeguridadConstant.URL_ADMIN_CLIENTES_AUTH,
       credenciales
     );
   }
 
   /**
-   * Servicio que permite obtener los CLIENTES del sistema
-   */
-  public getClientes(): Observable<ClienteDTO[]> {
-    return this.http.get<ClienteDTO[]>(ModuloConfiguracionesURL.CLIENTES.toString());
-  }
-
-  /**
-   * Servicio que permite crear un cliente en el sistema
+   * Metodo que permite crear un cliente en el sistema
+   *
+   * @param nuevoCliente, DTO con los datos del cliente a crear
+   * @returns DTO con los datos del cliente creado
    */
   public crearCliente(nuevoCliente: ClienteDTO): Observable<ClienteDTO> {
     return this.http.post<ClienteDTO>(
-      ModuloConfiguracionesURL.CREAR_CLIENTES.toString(),
+      ConfiguracionesConstant.URL_CREAR_CLIENTE,
       nuevoCliente
     );
   }
 
   /**
-   * Servicio que permite eliminar un cliente del sistema
+   * Metodo que permite eliminar un cliente del sistema
+   *
+   * @param cliente a eliminar
+   * @returns Estatus del response donde se identifica si el proceso
+   * se ejecuto con exito o se genero algun error
    */
-  public eliminarCliente(cliente: ClienteDTO): Observable<MessageResponse> {
-    return this.http.put<MessageResponse>(
-      ModuloConfiguracionesURL.ELIMINAR_CLIENTE.toString(),
+  public eliminarCliente(cliente: ClienteDTO): Observable<MessageResponseDTO> {
+    return this.http.put<MessageResponseDTO>(
+      ConfiguracionesConstant.URL_ELIMINAR_CLIENTE,
       cliente);
   }
 
   /**
-   * Servicio que permite inactivar o activar un cliente
+   * Metodo que permite modificar los dato de un cliente
+   *
+   * @param cliente a modificar en el sistema
+   */
+  public modificarCliente(cliente: ClienteDTO): Observable<MessageResponseDTO> {
+    return this.http.put<MessageResponseDTO>(
+      ConfiguracionesConstant.URL_MODIFICAR_CLIENTE,
+      cliente);
+  }
+
+  /**
+   * Metodo que permite activar/inactivar un cliente
+   *
+   * @param cliente a activar/inactivar
    */
   public activarInactivarCliente(cliente: ClienteDTO): Observable<ClienteDTO> {
     return this.http.put<ClienteDTO>(
-      ModuloConfiguracionesURL.MODIFICAR_CLIENTE.toString(),
-      cliente);
-  }
-
-  /**
-   * Servicio que permite modificar los dato de un cliente
-   */
-  public modificarCliente(cliente: ClienteDTO): Observable<MessageResponse> {
-    return this.http.put<MessageResponse>(
-      ModuloConfiguracionesURL.MODIFICAR_CLIENTE.toString(),
+      ConfiguracionesConstant.URL_MODIFICAR_CLIENTE,
       cliente);
   }
 }

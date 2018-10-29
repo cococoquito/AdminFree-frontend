@@ -5,10 +5,10 @@
  */
 export class AutenticacionDTO {
 
-  /** Es el usuario de la autenticacion para administrar clientes */
+  /** Es el usuario para la autenticacion del sistema */
   public usuario: string;
 
-  /** Es el clave de la autenticacion para administrar clientes */
+  /** Es la clave para la autenticacion del sistema */
   public clave: string;
 
   /** Es el token generado desde el servidor */

@@ -1,6 +1,4 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { BusinessMessage } from './../../enums/business-message.enum';
-import { HttpStatus, CodigoBusinessMessage } from './../../enums/app-enums';
 import { ErrorResponse } from './error-response';
 
 /**
@@ -13,6 +11,9 @@ export class CommonComponent {
   /**
    * Metodo que permite construir el mensaje de error con el
    * codigo del status de un error-response del servidor
+   *
+   * @param error, Es el Http error retornado del servidor
+   * @returns Objecto construido con el mensaje y codigo-status del error
    */
   protected getErrorResponse(error: HttpErrorResponse): ErrorResponse {
     const status: number = error.status;
@@ -28,20 +29,20 @@ export class CommonComponent {
       switch (status) {
 
         // status para los errores de negocio
-        case HttpStatus.BAD_REQUEST: {
+        case HttpStatusConstant.BAD_REQUEST: {
           mensaje = this.getBusinessMessage(codigoMensaje);
           break;
         }
 
         // status cuando intentan ingresar un recurso sin el TOKEN
-        case HttpStatus.UNAUTHORIZED: {
-          mensaje = BusinessMessage.AUTORIZACION_FALLIDA;
+        case HttpStatusConstant.UNAUTHORIZED: {
+          mensaje = MessagesConstant.AUTORIZACION_FALLIDA;
           break;
         }
 
-        // si no son ningunas de las anteriores, se define como internal server error
+        // si no es ninguna de las anteriores, se define como internal server error
         default: {
-          mensaje = BusinessMessage.INTERNAL_SERVER_ERROR + error.error.mensaje;
+          mensaje = MessagesConstant.INTERNAL_SERVER_ERROR + codigoMensaje;
           break;
         }
       }
@@ -66,8 +67,9 @@ export class CommonComponent {
     switch (codBusinessMsj) {
 
       // Business error autenticacion fallida
-      case CodigoBusinessMessage.COD_AUTENTICACION_FALLIDA: {
-        businessMsj = BusinessMessage.AUTENTICACION_FALLIDA;
+      case MessagesConstant.COD_AUTENTICACION_FALLIDA: {
+        businessMsj = MessagesConstant.AUTENTICACION_FALLIDA;
+        break;
       }
     }
     return businessMsj;
