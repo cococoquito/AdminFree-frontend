@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonComponent } from './../../model/common/common.component';
+import { SharedComponent } from './../../shared/shared.component';
 import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
@@ -15,7 +15,7 @@ import { TipoEventoConstant } from './../../constants/tipo-evento.constant';
 @Component({
   templateUrl: './admin-clientes.component.html'
 })
-export class AdminClientesComponent extends CommonComponent implements OnInit {
+export class AdminClientesComponent extends SharedComponent implements OnInit {
 
   /** Se utiliza para capturar las credenciales del usuario */
   public credenciales: AutenticacionDTO;
