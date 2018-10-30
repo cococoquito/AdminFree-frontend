@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+}
+
+.title-bar {
+  flex-grow: 1;
+  display: flex;
+  min-height: 64px;
+  background-color: #31404a;
+}
+
+.logo-container {
+  height: 64px;
+  color: #ffffff!important;
+  padding-left: 12px;
+  padding-top: 12px;
+  width: 224px;
+  float: left;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  vertical-align: middle;
+  border: 0 none;
+}
+
+.sub-title {
+  font-weight: bold;
+  font-size: 24px;
+  vertical-align: middle;
+  margin-left: 12px;
+}
+
+.menu-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-right: 20px;
+}
