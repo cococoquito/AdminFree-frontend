@@ -62,10 +62,9 @@ export class CommonComponent {
         }
       }
     } else {
+      mensaje = error.message;
       if (HttpStatusConstant.UNKNOWN === status) {
         mensaje = MessagesConstant.AUTORIZACION_FALLIDA;
-      } else {
-        mensaje = error.message;
       }
     }
 
