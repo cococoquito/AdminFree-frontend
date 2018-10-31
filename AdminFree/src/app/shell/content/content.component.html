@@ -1,1 +1,9 @@
+<admin-menu
+  *ngIf="menuService.isVertical"
+  class="vertical-menu">
+</admin-menu>
 
+
+<div class="body-style">
+  <router-outlet></router-outlet>
+</div>

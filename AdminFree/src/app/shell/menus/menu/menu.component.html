@@ -1,0 +1,11 @@
+<nav>
+  <ul>
+    <li *ngFor="let item of menuService.items">
+      <admin-menu-item [item]="item"
+        [ngClass]="{'vertical-menu': menuService.isVertical}"
+
+                    >
+      </admin-menu-item>
+    </li>
+  </ul>
+</nav>

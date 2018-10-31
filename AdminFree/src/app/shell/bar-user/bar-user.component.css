@@ -21,4 +21,9 @@
   text-align: center;
   line-height: 64px;
   font-size: 36px;
+  cursor: pointer;
+}
+
+.pnl:hover{
+  background-color: #48545c;
 }

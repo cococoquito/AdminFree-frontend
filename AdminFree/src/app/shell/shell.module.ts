@@ -5,12 +5,16 @@ import { ContentComponent } from './content/content.component';
 import { TitleBarComponent } from './title-bar/title-bar.component';
 import { BarUserComponent } from './bar-user/bar-user.component';
 import { FooterComponent } from './footer/footer.component';
+import { MenuComponent } from './menus/menu/menu.component';
+import { MenuItemComponent } from './menus/menu-item/menu-item.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
-  declarations: [BodyComponent, ContentComponent, TitleBarComponent, BarUserComponent, FooterComponent],
+  declarations: [BodyComponent, ContentComponent, TitleBarComponent, BarUserComponent, FooterComponent, MenuComponent, MenuItemComponent],
   exports: [BodyComponent]
 })
 export class ShellModule { }
