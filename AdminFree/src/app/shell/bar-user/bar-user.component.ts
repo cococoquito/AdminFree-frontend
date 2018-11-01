@@ -13,9 +13,9 @@ export class BarUserComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      {label: 'Página de Inicio', icon: 'pi pi-fw pi-plus'},
-      {label: 'Cambiar Contraseña', icon: 'pi pi-fw pi-download'},
-      {label: 'Cerrar Sesión', icon: 'pi pi-fw pi-refresh'}
+      {label: 'Página de Inicio', icon: 'fa fa-fw fa-home'},
+      {label: 'Cambiar Contraseña', icon: 'fa fa-fw fa-gear'},
+      {label: 'Cerrar Sesión', icon: 'fa fa-fw fa-power-off'}
   ];
   }
 
