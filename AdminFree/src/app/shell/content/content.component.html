@@ -1,6 +1,6 @@
-<admin-menu
-         *ngIf="(!screenService.isLarge() && (!menuService.isInicio && menuService.showingLeftSideMenu)) ||
-         (screenService.isLarge() && (menuService.isInicio || menuService.showingLeftSideMenu))"
+<admin-menu [@openClose]="((!screenService.isLarge() && (!menuService.isInicio && menuService.showingLeftSideMenu)) ||
+(screenService.isLarge() && (menuService.isInicio || menuService.showingLeftSideMenu)))  ? 'open' : 'closed'"
+
 
 
   class="vertical-menu">
