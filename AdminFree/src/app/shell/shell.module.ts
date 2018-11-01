@@ -9,12 +9,14 @@ import { MenuComponent } from './menus/menu/menu.component';
 import { MenuItemComponent } from './menus/menu-item/menu-item.component';
 import { RouterModule } from '@angular/router';
 import {MenuModule} from 'primeng/menu';
+import {SidebarModule} from 'primeng/sidebar';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    MenuModule
+    MenuModule,
+    SidebarModule
   ],
   declarations: [BodyComponent, ContentComponent, TitleBarComponent, BarUserComponent, FooterComponent, MenuComponent, MenuItemComponent],
   exports: [BodyComponent]
