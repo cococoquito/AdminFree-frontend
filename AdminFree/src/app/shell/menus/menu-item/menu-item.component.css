@@ -5,8 +5,6 @@
   margin-top: 0;
   margin-bottom: 0;
   padding: 0;
-  font-size: 15px;
-  line-height: 15px;
   color: #666;
   cursor: pointer;
   box-sizing: border-box;
@@ -21,8 +19,6 @@
 :host(.vertical-menu) {
   display: block;
   margin-left: 0;
-  margin-top: 6px;
-  margin-bottom: 6px;
   color: #2d3f47;
   font-weight: 600;
 }

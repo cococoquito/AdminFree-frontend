@@ -1,7 +1,11 @@
 <admin-menu
-  *ngIf="menuService.isVertical"
+         *ngIf="(!screenService.isLarge() && (!menuService.isInicio && menuService.showingLeftSideMenu)) ||
+         (screenService.isLarge() && (menuService.isInicio || menuService.showingLeftSideMenu))"
+
+
   class="vertical-menu">
 </admin-menu>
+
 
 
 <div class="body-style">

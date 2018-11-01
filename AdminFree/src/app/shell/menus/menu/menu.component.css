@@ -8,7 +8,6 @@
 :host(.vertical-menu) {
   display: inline-block;
   width: 224px;
-  padding-left: 4px;
   flex-grow: 0;
   background-color: #e9e9e9;
   overflow: auto;

@@ -1,10 +1,11 @@
+import { ScreenService } from './screen.service';
 import { Injectable } from '@angular/core';
 
 export let initialMenuItems: Array<MenuItem> = [
   {
       text: 'Dashboard',
       icon: 'glyphicon-dashboard',
-      route: '/authenticated/dashboard',
+      route: '/zaqwsx',
       submenu: null
   },
   {
@@ -90,14 +91,19 @@ export class MenuService {
   items: Array<MenuItem>;
   isVertical = true;
   showingLeftSideMenu = false;
+  isInicio = true;
 
-  constructor() {
+  constructor(private screenService: ScreenService) {
     this.items = initialMenuItems;
   }
 
   toggleLeftSideMenu(): void {
-    this.isVertical = true;
+    if (this.isInicio && this.screenService.isLarge()) {
+      this.showingLeftSideMenu = true;
+    }
+
     this.showingLeftSideMenu = !this.showingLeftSideMenu;
+    this.isInicio = false;
   }
 
   toggleMenuOrientation() {
