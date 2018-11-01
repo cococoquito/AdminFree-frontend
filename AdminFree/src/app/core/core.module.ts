@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpRequestInterceptor } from './../security/http-request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 /**
  * Modulo Core de la aplicacion, aca se debe agregar todos los modulos,
@@ -18,7 +19,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
         loadChildren: '../clientes/clientes.module#ClientesModule'
       }
     ]),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   exports: [RouterModule],
   providers: [

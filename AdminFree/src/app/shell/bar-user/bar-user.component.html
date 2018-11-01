@@ -4,5 +4,6 @@
 </a>
 
 <a>
-  <i class="fa fa-ellipsis-v pnl"></i>
+  <i class="fa fa-ellipsis-v pnl" (click)="menu.toggle($event)"></i>
+  <p-menu #menu [popup]="true" [model]="items" id="menuser"></p-menu>
 </a>

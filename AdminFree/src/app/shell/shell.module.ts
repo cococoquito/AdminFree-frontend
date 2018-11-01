@@ -8,11 +8,13 @@ import { FooterComponent } from './footer/footer.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { MenuItemComponent } from './menus/menu-item/menu-item.component';
 import { RouterModule } from '@angular/router';
+import {MenuModule} from 'primeng/menu';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MenuModule
   ],
   declarations: [BodyComponent, ContentComponent, TitleBarComponent, BarUserComponent, FooterComponent, MenuComponent, MenuItemComponent],
   exports: [BodyComponent]

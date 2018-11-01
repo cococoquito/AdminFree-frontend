@@ -1,3 +1,25 @@
 body {
   font-family: 'Open Sans', sans-serif !important;
 }
+
+#menuser .ui-menu {
+  background-color: #212121;
+  color: #eaeaea;
+  width: 15.5em;
+}
+
+#menuser .ui-menuitem-text{
+  color: #eaeaea;
+}
+
+#menuser .ui-menuitem-icon{
+  color: #eaeaea;
+}
+
+#menuser .ui-menuitem {
+text-align: left;
+}
+
+#menuser .ui-menu .ui-menuitem-link:hover {
+  background-color: #3a3939;
+}
