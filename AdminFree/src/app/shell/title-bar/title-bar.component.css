@@ -18,6 +18,12 @@
   float: left;
 }
 
+.logo-container-small {
+  height: 64px;
+  padding-top: 12px;
+  float: left;
+}
+
 .logo {
   height: 40px;
   width: auto;

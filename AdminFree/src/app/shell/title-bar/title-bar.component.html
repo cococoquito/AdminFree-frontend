@@ -12,6 +12,10 @@
 
 <div class="title-bar" *ngIf="!screenService.isLarge()">
   <a class="prueba"  (click)="menuService.toggleLeftSideMenu()"><i class="fa fa-bars"></i></a>
+  <a class="logo-container" class="logo-container-small">
+      <img src="assets/harmony-logo.png" class="logo" alt="hola esta es una prueba">
+    </a>
   <div class="menu-area">
+      <admin-bar-user></admin-bar-user>
   </div>
 </div>

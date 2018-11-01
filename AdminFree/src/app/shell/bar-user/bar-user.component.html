@@ -1,6 +1,10 @@
-<a class="logo-container" style="padding-right: 10px">
-  <img alt="harmony-layout" class="logo" src="assets/avatar.png">
-  <span>Kate Winston</span>
+<a class="logo-container" *ngIf="!screenService.isLarge()">
+    <img alt="harmony-layout" class="logo" src="assets/avatar.png">
+</a>
+
+<a class="logo-container" style="padding-right: 10px" *ngIf="screenService.isLarge()">
+    <img alt="harmony-layout" class="logo" src="assets/avatar.png">
+    <span>Kate Winston</span>
 </a>
 
 <a>

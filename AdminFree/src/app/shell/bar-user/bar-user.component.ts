@@ -1,3 +1,4 @@
+import { ScreenService } from './../services/screen.service';
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 
@@ -9,7 +10,7 @@ import {MenuItem} from 'primeng/api';
 export class BarUserComponent implements OnInit {
   items: MenuItem[];
   display = false;
-  constructor() { }
+  constructor(public screenService: ScreenService) { }
 
   ngOnInit() {
     this.items = [
