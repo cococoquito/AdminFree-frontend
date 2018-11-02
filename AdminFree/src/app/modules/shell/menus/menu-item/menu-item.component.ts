@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MenuItem } from './../../../model/common/menu-item';
+import { MenuItem } from './../../../../model/common/menu-item';
 
 /**
  * Es el Item del menu a visualizar en el Shell

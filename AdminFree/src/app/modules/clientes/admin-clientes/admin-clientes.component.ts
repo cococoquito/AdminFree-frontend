@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedComponent } from './../../shared/shared.component';
-import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
-import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
-import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
-import { AdminClienteService } from './../../services/admin-cliente.service';
-import { KeyLocalStoreConstant } from '../../constants/key-localstore.constant';
-import { TipoEventoConstant } from './../../constants/tipo-evento.constant';
+import { AdminClientesDTO } from './../../../model/configuraciones/admin-clientes.dto';
+import { AutenticacionDTO } from './../../../model/configuraciones/autenticacion.dto';
+import { ClienteDTO } from './../../../model/configuraciones/cliente.dto';
+import { AdminClienteService } from './../../../services/admin-cliente.service';
+import { KeyLocalStoreConstant } from '../../../constants/key-localstore.constant';
+import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
 /**
  * Componente para la administracion de los clientes del sistema

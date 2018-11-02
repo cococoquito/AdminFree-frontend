@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShellState } from '../../states/shell.state';
+import { ShellState } from '../../../states/shell.state';
 
 /**
  * Es el Header del shell de la aplicacion, contiene el menu de las

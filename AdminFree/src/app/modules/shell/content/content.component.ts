@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShellState } from './../../states/shell.state';
+import { ShellState } from './../../../states/shell.state';
 import {
   trigger,
   state,

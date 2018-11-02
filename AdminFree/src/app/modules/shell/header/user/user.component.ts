@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShellState } from '../../../states/shell.state';
+import { ShellState } from '../../../../states/shell.state';
 import { MenuItem } from 'primeng/api';
 
 /**
