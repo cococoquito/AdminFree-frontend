@@ -1,0 +1,24 @@
+<!-- header para resoluciones grandes -->
+<div class="header" *ngIf="screenService.isLarge()">
+  <a class="logo-container">
+    <img class="logo" src="assets/harmony-logo.png" alt="logo">
+    <span class="title">HARMONY</span>
+  </a>
+  <a class="hambu" (click)="menuService.toggleLeftSideMenu()">
+    <i class="fa fa-bars"></i>
+  </a>
+  <div class="menu-area">
+    <admin-bar-user></admin-bar-user>
+  </div>
+</div>
+
+<!-- header para resoluciones pequenia -->
+<div class="header" *ngIf="!screenService.isLarge()">
+  <a class="hambu" (click)="menuService.toggleLeftSideMenu()"><i class="fa fa-bars"></i></a>
+  <a class="logo-container-small">
+    <img class="logo" src="assets/harmony-logo.png" alt="logo">
+  </a>
+  <div class="menu-area">
+    <admin-bar-user></admin-bar-user>
+  </div>
+</div>

@@ -1,13 +1,14 @@
+import { Component, OnInit } from '@angular/core';
 import { MenuService } from './../services/menu.service';
 import { ScreenService } from './../services/screen.service';
-import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'admin-title-bar',
-  templateUrl: './title-bar.component.html',
-  styleUrls: ['./title-bar.component.css']
+  selector: 'admin-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
-export class TitleBarComponent implements OnInit {
+export class HeaderComponent implements OnInit {
+
 
   constructor(public screenService: ScreenService,
     public menuService: MenuService) { }
