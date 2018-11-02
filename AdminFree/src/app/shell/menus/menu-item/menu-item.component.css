@@ -11,11 +11,6 @@
   width: 100%;
 }
 
-:host:not(.parent-is-popup) {
-  margin-left: 16px;
-  width: auto;
-}
-
 :host(.vertical-menu) {
   display: block;
   margin-left: 0;
@@ -25,14 +20,19 @@
 
 span {
   pointer-events: none;
+  padding-left: 5px;
+  font-size: 14px;
 }
 
 .glyphicon {
   top: 1px;
-  font-size: 14px;
   margin-right: 4px;
   margin-left: 8px;
   float: right;
+}
+
+.size-icon {
+  font-size: 20px !important;
 }
 
 .menu-item {
@@ -41,22 +41,10 @@ span {
   padding-left: 10px;
 }
 
-.menu-item.vertical-menu {
-  padding: 6px 6px 6px 0;
-}
-
-.menu-item.vertical-menu:hover {
-  background-color: green;
-}
-
 .menu-item:hover {
   background-color: #dfd;
 }
 
 .router-link-active {
   background-color: #dfd;
-}
-
-.router-link-active.vertical-menu {
-    background-color: green;
 }
