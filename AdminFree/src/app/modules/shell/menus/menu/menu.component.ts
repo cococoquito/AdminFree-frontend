@@ -12,5 +12,5 @@ import { ShellState } from '../../../../states/shell.state';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  constructor(public shell: ShellState) {}
+  constructor(public estado: ShellState) {}
 }

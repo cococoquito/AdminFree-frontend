@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
   /** Son los items a mostrar en el menu de user-settings */
   public items: MenuItem[];
 
-  constructor(public shell: ShellState) {}
+  constructor(public estado: ShellState) {}
 
   ngOnInit() {
     // se construye los items del menu

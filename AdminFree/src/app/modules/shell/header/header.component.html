@@ -1,10 +1,10 @@
 <!-- header para resoluciones grandes -->
-<div class="header" *ngIf="shell.isGrande()">
+<div class="header" *ngIf="estado.isGrande()">
   <a class="logo-container">
     <img class="logo" src="assets/harmony-logo.png" alt="logo">
     <span class="title">HARMONY</span>
   </a>
-  <a class="hambu" (click)="shell.toggleMenu()">
+  <a class="hambu" (click)="estado.toggleMenu()">
     <i class="fa fa-bars"></i>
   </a>
   <div class="menu-area">
@@ -13,8 +13,8 @@
 </div>
 
 <!-- header para resoluciones pequenia -->
-<div class="header" *ngIf="!shell.isGrande()">
-  <a class="hambu" (click)="shell.toggleMenu()"><i class="fa fa-bars"></i></a>
+<div class="header" *ngIf="!estado.isGrande()">
+  <a class="hambu" (click)="estado.toggleMenu()"><i class="fa fa-bars"></i></a>
   <a class="logo-container-small">
     <img class="logo" src="assets/harmony-logo.png" alt="logo">
   </a>

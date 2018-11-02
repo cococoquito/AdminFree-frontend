@@ -13,5 +13,5 @@ import { ShellState } from '../../../states/shell.state';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(public shell: ShellState) {}
+  constructor(public estado: ShellState) {}
 }

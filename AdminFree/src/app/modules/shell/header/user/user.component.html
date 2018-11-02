@@ -1,11 +1,11 @@
 <!-- Logo del user para dispositivos resolucion grande -->
-<a class="logo-container" *ngIf="shell.isGrande()">
+<a class="logo-container" *ngIf="estado.isGrande()">
   <img class="logo" src="assets/avatar.png" alt="user">
   <span>Kate Winston</span>
 </a>
 
 <!-- Logo del user para dispositivos resolucion pequenio -->
-<a class="logo-container-small" *ngIf="!shell.isGrande()">
+<a class="logo-container-small" *ngIf="!estado.isGrande()">
   <img class="logo-small" src="assets/avatar.png" alt="user">
 </a>
 

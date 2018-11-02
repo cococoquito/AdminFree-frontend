@@ -28,5 +28,5 @@ import {
   ]
 })
 export class ContentComponent {
-  constructor(public shell: ShellState) {}
+  constructor(public estado: ShellState) {}
 }
