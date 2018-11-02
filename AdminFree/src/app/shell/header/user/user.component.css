@@ -7,10 +7,22 @@
   font-size: 14px;
   height: 64px;
   line-height: 61px;
+  padding-right: 10px;
+}
+
+.logo-container-small {
+  color: white !important;
+  font-size: 14px;
+  height: 64px;
+  line-height: 61px;
 }
 
 .logo {
   padding-right: 5px;
+}
+
+.logo-small {
+  padding-right: 3px;
 }
 
 .pnl-user {

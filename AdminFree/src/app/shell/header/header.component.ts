@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ShellService } from './../../core/services/shell.service';
 
+/**
+ * Es el Header del shell de la aplicacion, contiene el menu de las
+ * configuraciones del usuario, cierre de sesion
+ *
+ * @author Carlos Andres Diaz
+ */
 @Component({
   selector: 'admin-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-
-
-  constructor(public shell: ShellService) { }
-
-  ngOnInit() {
-  }
-
+export class HeaderComponent {
+  constructor(public shell: ShellService) {}
 }

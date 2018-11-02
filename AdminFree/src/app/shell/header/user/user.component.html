@@ -1,12 +1,15 @@
-<a class="logo-container" *ngIf="!shell.isGrande()">
-  <img class="logo" src="assets/avatar.png" alt="user">
-</a>
-
-<a class="logo-container" style="padding-right: 10px" *ngIf="shell.isGrande()">
+<!-- Logo del user para dispositivos resolucion grande -->
+<a class="logo-container" *ngIf="shell.isGrande()">
   <img class="logo" src="assets/avatar.png" alt="user">
   <span>Kate Winston</span>
 </a>
 
+<!-- Logo del user para dispositivos resolucion pequenio -->
+<a class="logo-container-small" *ngIf="!shell.isGrande()">
+  <img class="logo-small" src="assets/avatar.png" alt="user">
+</a>
+
+<!-- Icono para el menu de user-settings -->
 <a>
   <i class="fa fa-ellipsis-v pnl-user" (click)="menuUserSettings.toggle($event)"></i>
   <p-menu #menuUserSettings id="menuUserSettings" [popup]="true" [model]="items"></p-menu>
