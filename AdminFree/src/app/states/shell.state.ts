@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MenuItem } from './../model/common/menu-item';
+import { MenuItem } from './../util-class/menu-item';
 
 export let initialMenuItems: Array<MenuItem> = [
   {

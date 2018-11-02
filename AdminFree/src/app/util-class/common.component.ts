@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse } from './../../model/common/error-response';
-import { MessagesConstant } from './../../constants/messages.constant';
-import { HttpStatusConstant } from './../../constants/http-status.constant';
+import { ErrorResponse } from './error-response';
+import { MessagesConstant } from './../constants/messages.constant';
+import { HttpStatusConstant } from './../constants/http-status.constant';
 
 /**
  * Contiene los metodos comunes para los componentes de la aplicacion,
@@ -9,7 +9,7 @@ import { HttpStatusConstant } from './../../constants/http-status.constant';
  *
  * @author Carlos Andres Diaz
  */
-export class SharedComponent {
+export class CommonComponent {
 
   /**
    * Metodo que permite mostrar solo el mensaje de error

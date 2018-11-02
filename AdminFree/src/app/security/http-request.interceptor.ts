@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { AutenticacionDTO } from './../model/configuraciones/autenticacion.dto';
+import { AutenticacionDTO } from './../dtos/configuraciones/autenticacion.dto';
 import { KeyLocalStoreConstant } from './../constants/key-localstore.constant';
 import { SeguridadConstant } from '../constants/seguridad.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';

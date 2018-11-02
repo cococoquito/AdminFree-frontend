@@ -1,4 +1,4 @@
-import { MessageResponseDTO } from './message-response.dto';
+import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 
 /**
  * Se utiliza para construir el error retornado por el server
