@@ -2,8 +2,8 @@
   text-align: right;
 }
 
-.logo-container{
-  color: white!important;
+.logo-container {
+  color: white !important;
   font-size: 14px;
   height: 64px;
   line-height: 61px;
@@ -13,9 +13,9 @@
   padding-right: 5px;
 }
 
-.pnl {
+.pnl-user {
   float: right;
-  color: #f4f4f4!important;
+  color: #f4f4f4 !important;
   height: 64px;
   width: 64px;
   text-align: center;
@@ -24,6 +24,6 @@
   cursor: pointer;
 }
 
-.pnl:hover{
+.pnl-user:hover {
   background-color: #48545c;
 }

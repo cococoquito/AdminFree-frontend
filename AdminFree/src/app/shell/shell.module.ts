@@ -4,11 +4,11 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { BodyComponent } from './body/body.component';
 import { ContentComponent } from './content/content.component';
-import { BarUserComponent } from './bar-user/bar-user.component';
 import { FooterComponent } from './footer/footer.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { MenuItemComponent } from './menus/menu-item/menu-item.component';
 import { HeaderComponent } from './header/header.component';
+import { UserComponent } from './header/user/user.component';
 
 /**
  * Modulo que contiene todos los componentes y modulos que define
@@ -25,11 +25,11 @@ import { HeaderComponent } from './header/header.component';
   declarations: [
     BodyComponent,
     ContentComponent,
-    BarUserComponent,
     FooterComponent,
     MenuComponent,
     MenuItemComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserComponent
   ],
   exports: [BodyComponent]
 })

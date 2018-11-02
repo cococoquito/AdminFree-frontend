@@ -1,0 +1,13 @@
+<a class="logo-container" *ngIf="!screenService.isLarge()">
+  <img class="logo" src="assets/avatar.png" alt="user">
+</a>
+
+<a class="logo-container" style="padding-right: 10px" *ngIf="screenService.isLarge()">
+  <img class="logo" src="assets/avatar.png" alt="user">
+  <span>Kate Winston</span>
+</a>
+
+<a>
+  <i class="fa fa-ellipsis-v pnl-user" (click)="menuUserSettings.toggle($event)"></i>
+  <p-menu #menuUserSettings id="menuUserSettings" [popup]="true" [model]="items"></p-menu>
+</a>
