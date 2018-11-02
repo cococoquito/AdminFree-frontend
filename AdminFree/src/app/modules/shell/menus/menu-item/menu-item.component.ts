@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MenuItem } from './../../../../util-class/menu-item';
+import { MenuItem } from 'primeng/api';
 
 /**
  * Es el Item del menu a visualizar en el Shell
