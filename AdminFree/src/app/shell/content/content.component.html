@@ -1,17 +1,18 @@
-
-<admin-menu [@openClose]="(shell.isGrande() && (shell.isInicio || shell.isMenuOpen))  ? 'open' : 'closed'"
-  class="vertical-menu">
+<!-- para dispositivos con resolucion grande -->
+<admin-menu [@openClose]="(shell.isGrande() && (shell.isInicio || shell.isMenuOpen))  ? 'open' : 'closed'" class="vertical-menu">
 </admin-menu>
 
-
-<p-sidebar *ngIf="!shell.isGrande() && shell.isMenuOpen"
-  id="menu" [showCloseIcon]="false" [(visible)]="shell.isMenuOpen" [baseZIndex]="10000">
-  <admin-menu class="vertical-menu">
-  </admin-menu>
+<!-- para dispositivos con resolucion pequenia -->
+<p-sidebar id="smallMenu"
+  *ngIf="!shell.isGrande()"
+  [(visible)]="shell.isMenuOpen"
+  [showCloseIcon]="false"
+  [baseZIndex]="10000">
+    <admin-menu class="vertical-menu">
+    </admin-menu>
 </p-sidebar>
 
-
-
+<!-- aca es donde va el contenido del shell -->
 <div class="body-style">
   <router-outlet></router-outlet>
 </div>

@@ -25,12 +25,13 @@ body {
   background-color: #3a3939;
 }
 
-#menu .ui-sidebar-left {
+/* Estilos para el menu para dispositivos con pequenia resolucion */
+#smallMenu .ui-sidebar-left {
   top: 64px !important;
   width: 227px !important;
 }
 
-#menu .ui-sidebar {
+#smallMenu .ui-sidebar {
   padding: 0px !important;
   background-color: #e9e9e9;
 }
