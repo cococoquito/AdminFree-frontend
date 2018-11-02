@@ -17,6 +17,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       {
         path: 'zaqwsx',
         loadChildren: '../clientes/clientes.module#ClientesModule'
+      },
+      {
+        path: 'login',
+        loadChildren: '../login/login.module#LoginModule'
       }
     ]),
     HttpClientModule,

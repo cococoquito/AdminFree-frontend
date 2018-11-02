@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ShellModule } from './modules/shell/shell.module';
 import { CoreModule } from './modules/core/core.module';
 import { AppComponent } from './app.component';
 
@@ -16,8 +15,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    CoreModule,
-    ShellModule
+    CoreModule
   ],
   bootstrap: [AppComponent]
 })
