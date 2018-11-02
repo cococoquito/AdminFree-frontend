@@ -1,5 +1,5 @@
-import { ScreenService } from './screen.service';
 import { Injectable } from '@angular/core';
+import { MenuItem } from './../../model/common/menu-item';
 
 export let initialMenuItems: Array<MenuItem> = [
   {
@@ -79,34 +79,72 @@ export let initialMenuItems: Array<MenuItem> = [
   }
 ];
 
-export interface MenuItem {
-  text: string;
-  icon: string;
-  route: string;
-  submenu: Array<MenuItem>;
-}
 
+/**
+ * Servicio que contiene todos los metodos utilitarios para la
+ * construcion del Shell de la aplicacion
+ *
+ * @author Carlos Andres Diaz
+ */
 @Injectable({ providedIn: 'root' })
-export class MenuService {
-  items: Array<MenuItem>;
-  isVertical = true;
-  showingLeftSideMenu = false;
-  isInicio = true;
+export class ShellService {
 
-  constructor(private screenService: ScreenService) {
-    this.items = initialMenuItems;
+  /** Son los items del menu **/
+  public menuItems: Array<MenuItem>;
+
+  /** Indica si el menu se debe visualizar **/
+  public isMenuOpen = false;
+
+  /** Indica si el menu se visualiza por primera vez **/
+  public isInicio = true;
+
+  /** Variables para identificar que tamanio tiene el dispositivo **/
+  public largeBreakpoint = 1024;
+  public screenWidth = 1000;
+  public screenHeight = 800;
+
+  /**
+   * Constructor del servicio donde se identifica que
+   * tipo de resolucion tiene la pantalla
+   */
+  constructor() {
+    try {
+      this.menuItems = initialMenuItems;
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight;
+      window.addEventListener('resize', event => this.onResize(event));
+    } catch (e) {
+      // we're going with default screen dimensions
+    }
   }
 
-  toggleLeftSideMenu(): void {
-    if (this.isInicio && this.screenService.isLarge()) {
-      this.showingLeftSideMenu = true;
+  /**
+   * Metodo que permite ocultar o mostrar el Menu
+   */
+  public toggleMenu(): void {
+    if (this.isInicio && this.isGrande()) {
+      this.isMenuOpen = true;
     }
-
-    this.showingLeftSideMenu = !this.showingLeftSideMenu;
+    this.isMenuOpen = !this.isMenuOpen;
     this.isInicio = false;
   }
 
-  toggleMenuOrientation() {
-    this.isVertical = !this.isVertical;
+  /**
+   * Metodo que identifica si la resolucion de la pantalla es grande
+   */
+  public isGrande(): boolean {
+    return this.screenWidth >= this.largeBreakpoint;
+  }
+
+  /**
+   * Metodo que es invocado cuando el tamanio
+   * de la pantalla cambia
+   *
+   * @param $event, es la nueva resolucion donde
+   * se toma los nuevos valores
+   */
+  private onResize($event): void {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
   }
 }

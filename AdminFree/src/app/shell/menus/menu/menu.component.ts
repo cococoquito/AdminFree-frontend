@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuService } from '../../services/menu.service';
+import { ShellService } from '../../../core/services/shell.service';
 
 @Component({
   selector: 'admin-menu',
@@ -8,7 +8,7 @@ import { MenuService } from '../../services/menu.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(public menuService: MenuService) { }
+  constructor(public shell: ShellService) { }
 
   ngOnInit() {
   }

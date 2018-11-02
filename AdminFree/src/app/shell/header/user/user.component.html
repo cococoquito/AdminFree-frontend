@@ -1,8 +1,8 @@
-<a class="logo-container" *ngIf="!screenService.isLarge()">
+<a class="logo-container" *ngIf="!shell.isGrande()">
   <img class="logo" src="assets/avatar.png" alt="user">
 </a>
 
-<a class="logo-container" style="padding-right: 10px" *ngIf="screenService.isLarge()">
+<a class="logo-container" style="padding-right: 10px" *ngIf="shell.isGrande()">
   <img class="logo" src="assets/avatar.png" alt="user">
   <span>Kate Winston</span>
 </a>

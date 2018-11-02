@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ScreenService } from './../../services/screen.service';
+import { ShellService } from './../../../core/services/shell.service';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -10,7 +10,7 @@ import { MenuItem } from 'primeng/api';
 export class UserComponent implements OnInit {
   items: MenuItem[];
   display = false;
-  constructor(public screenService: ScreenService) {}
+  constructor(public shell: ShellService) {}
 
   ngOnInit() {
     this.items = [

@@ -1,11 +1,11 @@
 
-<admin-menu [@openClose]="(screenService.isLarge() && (menuService.isInicio || menuService.showingLeftSideMenu))  ? 'open' : 'closed'"
+<admin-menu [@openClose]="(shell.isGrande() && (shell.isInicio || shell.isMenuOpen))  ? 'open' : 'closed'"
   class="vertical-menu">
 </admin-menu>
 
 
-<p-sidebar *ngIf="!screenService.isLarge() && menuService.showingLeftSideMenu"
-  id="menu" [showCloseIcon]="false" [(visible)]="menuService.showingLeftSideMenu" [baseZIndex]="10000">
+<p-sidebar *ngIf="!shell.isGrande() && shell.isMenuOpen"
+  id="menu" [showCloseIcon]="false" [(visible)]="shell.isMenuOpen" [baseZIndex]="10000">
   <admin-menu class="vertical-menu">
   </admin-menu>
 </p-sidebar>

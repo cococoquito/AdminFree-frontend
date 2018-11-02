@@ -1,6 +1,5 @@
-import { ScreenService } from './../services/screen.service';
-import { MenuService } from './../services/menu.service';
 import { Component, OnInit } from '@angular/core';
+import { ShellService } from './../../core/services/shell.service';
 import {
   trigger,
   state,
@@ -24,7 +23,7 @@ import {
 })
 export class ContentComponent implements OnInit {
 
-  constructor(public menuService: MenuService, public screenService: ScreenService) { }
+  constructor(public shell: ShellService) { }
 
   ngOnInit() {
   }

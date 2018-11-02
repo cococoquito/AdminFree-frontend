@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MenuItem, MenuService } from '../../services/menu.service';
+import { MenuItem } from './../../../model/common/menu-item';
 
 @Component({
   selector: 'admin-menu-item',

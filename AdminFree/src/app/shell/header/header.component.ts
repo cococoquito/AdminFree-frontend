@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuService } from './../services/menu.service';
-import { ScreenService } from './../services/screen.service';
+import { ShellService } from './../../core/services/shell.service';
 
 @Component({
   selector: 'admin-header',
@@ -10,8 +9,7 @@ import { ScreenService } from './../services/screen.service';
 export class HeaderComponent implements OnInit {
 
 
-  constructor(public screenService: ScreenService,
-    public menuService: MenuService) { }
+  constructor(public shell: ShellService) { }
 
   ngOnInit() {
   }
