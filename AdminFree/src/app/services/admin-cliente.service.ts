@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
-import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
-import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
-import { MessageResponseDTO } from './../../model/common/message-response.dto';
-import { ConfiguracionesConstant } from './../../constants/configuraciones.constant';
-import { SeguridadConstant } from './../../constants/seguridad.constant';
+import { ClienteDTO } from './../model/configuraciones/cliente.dto';
+import { AutenticacionDTO } from './../model/configuraciones/autenticacion.dto';
+import { AdminClientesDTO } from './../model/configuraciones/admin-clientes.dto';
+import { MessageResponseDTO } from './../model/common/message-response.dto';
+import { ConfiguracionesConstant } from './../constants/configuraciones.constant';
+import { SeguridadConstant } from './../constants/seguridad.constant';
 
 /**
  * Servicio que contiene todos los metodos para la administracion de los clientes

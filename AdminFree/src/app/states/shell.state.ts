@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MenuItem } from './../../model/common/menu-item';
+import { MenuItem } from './../model/common/menu-item';
 
 export let initialMenuItems: Array<MenuItem> = [
   {
@@ -81,13 +81,12 @@ export let initialMenuItems: Array<MenuItem> = [
 
 
 /**
- * Servicio que contiene todos los metodos utilitarios para la
- * construcion del Shell de la aplicacion
+ * Es el estado en la que se encuentra el Shell de la app
  *
  * @author Carlos Andres Diaz
  */
 @Injectable({ providedIn: 'root' })
-export class ShellService {
+export class ShellState {
 
   /** Son los items del menu **/
   public menuItems: Array<MenuItem>;

@@ -3,7 +3,7 @@ import { SharedComponent } from './../../shared/shared.component';
 import { AdminClientesDTO } from './../../model/configuraciones/admin-clientes.dto';
 import { AutenticacionDTO } from './../../model/configuraciones/autenticacion.dto';
 import { ClienteDTO } from './../../model/configuraciones/cliente.dto';
-import { AdminClienteService } from './../../core/services/admin-cliente.service';
+import { AdminClienteService } from './../../services/admin-cliente.service';
 import { KeyLocalStoreConstant } from '../../constants/key-localstore.constant';
 import { TipoEventoConstant } from './../../constants/tipo-evento.constant';
 

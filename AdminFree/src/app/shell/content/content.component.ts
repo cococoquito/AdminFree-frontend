@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShellService } from './../../core/services/shell.service';
+import { ShellState } from './../../states/shell.state';
 import {
   trigger,
   state,
@@ -28,5 +28,5 @@ import {
   ]
 })
 export class ContentComponent {
-  constructor(public shell: ShellService) {}
+  constructor(public shell: ShellState) {}
 }

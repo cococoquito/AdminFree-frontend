@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShellService } from './../../core/services/shell.service';
+import { ShellState } from '../../states/shell.state';
 
 /**
  * Es el Header del shell de la aplicacion, contiene el menu de las
@@ -13,5 +13,5 @@ import { ShellService } from './../../core/services/shell.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(public shell: ShellService) {}
+  constructor(public shell: ShellState) {}
 }

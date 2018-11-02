@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuModule } from 'primeng/menu';
-import { SidebarModule } from 'primeng/sidebar';
 import { BodyComponent } from './body/body.component';
-import { ContentComponent } from './content/content.component';
-import { FooterComponent } from './footer/footer.component';
-import { MenuComponent } from './menus/menu/menu.component';
-import { MenuItemComponent } from './menus/menu-item/menu-item.component';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './header/user/user.component';
+import { MenuComponent } from './menus/menu/menu.component';
+import { MenuItemComponent } from './menus/menu-item/menu-item.component';
+import { ContentComponent } from './content/content.component';
+import { FooterComponent } from './footer/footer.component';
+import { MenuModule } from 'primeng/menu';
+import { SidebarModule } from 'primeng/sidebar';
 
 /**
  * Modulo que contiene todos los componentes y modulos que define
@@ -24,11 +24,11 @@ import { UserComponent } from './header/user/user.component';
   ],
   declarations: [
     BodyComponent,
+    HeaderComponent,
     ContentComponent,
     FooterComponent,
     MenuComponent,
     MenuItemComponent,
-    HeaderComponent,
     UserComponent
   ],
   exports: [BodyComponent]

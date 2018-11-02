@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShellService } from './../../../core/services/shell.service';
+import { ShellState } from '../../../states/shell.state';
 import { MenuItem } from 'primeng/api';
 
 /**
@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
   /** Son los items a mostrar en el menu de user-settings */
   public items: MenuItem[];
 
-  constructor(public shell: ShellService) {}
+  constructor(public shell: ShellState) {}
 
   ngOnInit() {
     // se construye los items del menu
