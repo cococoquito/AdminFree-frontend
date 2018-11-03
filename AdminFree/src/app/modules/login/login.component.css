@@ -1,0 +1,33 @@
+.pnl-main {
+  background-color: #6f8899;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.pnl-content {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.color-header {
+  background-color: #31404a;
+}
+
+.title {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sub-title {
+  color: white;
+  font-size: 13px;
+}
+
+.font {
+  font-size: 14px;
+}
+
+.btn-login-size {
+  font-size:16px;
+}

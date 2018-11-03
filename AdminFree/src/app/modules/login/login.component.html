@@ -1,3 +1,84 @@
-<p>
-  login works!
-</p>
+<div class="container-fluid ">
+
+  <!-- Logo admin-free -->
+  <img class="rounded mx-auto d-block" src="assets/harmony-logo.png" alt="logo">
+
+  <!-- panel principal -->
+  <div class="row pnl-main">
+
+    <!-- panel login center -->
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto pnl-content">
+
+      <!-- card del login -->
+      <div class="card">
+
+        <!-- header - card -->
+        <div class="card-header color-header">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <small class="title">Bienvenido</small>
+              <br>
+              <small class="sub-title">Por favor use el formulario para iniciar sesión</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- header - body -->
+        <div class="card-body">
+
+          <!-- form - login -->
+          <form class="font"
+            #f="ngForm"
+            (ngSubmit)="f.form.valid && iniciarSesion()" novalidate>
+
+            <!-- usuario y password o token-->
+            <div class="form-group row">
+              <input type="text" required
+                [(ngModel)]="credenciales.usuario"
+                name="username"
+                #username="ngModel"
+                class="form-control font"
+                placeholder="Usuario"
+                maxlength="100"
+                [ngClass]="(username.invalid) ? 'form-control input-invalido':'form-control input-valido'"/>
+            </div>
+            <div class="form-group row">
+              <input type="password"
+                [(ngModel)]="credenciales.clave"
+                name="clave"
+                #clave="ngModel"
+                class="form-control font"
+                placeholder="{{credenciales.administrador ? 'Token' : 'Password'}}"
+                [ngClass]="(!clave.valid) ? 'form-control input-invalido':'form-control input-valido'"
+                maxlength="100" />
+            </div>
+
+            <!-- ckeck ingresar como admin-->
+            <div class="form-group row">
+              <div class="custom-control custom-checkbox">
+                <input id="defaultUnchecked"
+                  (click)="toogleAdmin()"
+                  type="checkbox"
+                  class="custom-control-input">
+                <label class="custom-control-label" for="defaultUnchecked">Ingresar como administrador</label>
+              </div>
+            </div>
+
+            <!-- boton - ingreso-->
+            <br>
+            <div class="form-group row">
+              <button type="submit" class="btn btn-primary w-100">
+                  <i class="fa fa-sign-in"> Entrar</i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="text-center">
+    <small>AdminFree &copy; 2019</small>
+  </div>
+</div>

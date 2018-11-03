@@ -13,4 +13,7 @@ export class AutenticacionDTO {
 
   /** Es el token generado desde el servidor */
   public token: string;
+
+  /** Indica si el usuario es un administrador */
+  public administrador: boolean;
 }
