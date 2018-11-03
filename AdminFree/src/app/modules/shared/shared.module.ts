@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NoEspaciosBlancoDirective } from './../../directives/validators/espacios-blanco/no-espacios-blanco.directive';
 
 /**
  * Modulo que contiene los modulos, componentes comunes
@@ -10,7 +11,7 @@ import { FormsModule } from '@angular/forms';
  */
 @NgModule({
   imports: [CommonModule, FormsModule],
-  exports: [CommonModule, FormsModule],
-  declarations: []
+  exports: [CommonModule, FormsModule, NoEspaciosBlancoDirective],
+  declarations: [NoEspaciosBlancoDirective]
 })
 export class SharedModule {}

@@ -33,7 +33,7 @@
 
             <!-- usuario y password o token-->
             <div class="form-group row">
-              <input type="text" required
+              <input type="text" adminRequired
                 [(ngModel)]="credenciales.usuario"
                 name="username"
                 #username="ngModel"
@@ -43,7 +43,7 @@
                 [ngClass]="(username.invalid) ? 'form-control input-invalido':'form-control input-valido'"/>
             </div>
             <div class="form-group row">
-              <input type="password"
+              <input type="password" adminRequired
                 [(ngModel)]="credenciales.clave"
                 name="clave"
                 #clave="ngModel"
