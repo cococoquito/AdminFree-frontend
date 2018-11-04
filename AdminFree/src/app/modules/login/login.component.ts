@@ -24,6 +24,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
   }
 
   public iniciarSesion(): void {
+    alert(this.credenciales.usuario + '  ' + this.credenciales.clave);
     console.log(this.credenciales.usuario);
     console.log(this.credenciales.clave);
   }

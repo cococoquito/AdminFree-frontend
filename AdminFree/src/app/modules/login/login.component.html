@@ -27,7 +27,7 @@
         <div class="card-body">
 
           <!-- form - login -->
-          <form class="font" name="form" #f="ngForm" (ngSubmit)="onSubmit() && f.form.valid && iniciarSesion()" novalidate>
+          <form class="font" name="form" #f="ngForm" (ngSubmit)="onSubmit() && f.form.valid && iniciarSesion()" novalidate (keydown.enter)="$event.preventDefault()">
 
             <!-- usuario y password o token-->
             <div class="form-group row">
