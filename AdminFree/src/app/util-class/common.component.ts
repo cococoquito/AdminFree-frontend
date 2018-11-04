@@ -11,6 +11,24 @@ import { HttpStatusConstant } from './../constants/http-status.constant';
  */
 export class CommonComponent {
 
+  /** bandera que identifica si ya se hizo submit */
+  protected submitted: boolean;
+
+  /**
+   * Metodo que permite establecer que el user ya hizo submitted
+   */
+  protected onSubmit(): boolean {
+    this.submitted = true;
+    return this.submitted;
+  }
+
+  /**
+   * Metodo que permite limpiar el submit
+   */
+  protected cleanSubmit(): void {
+    this.submitted = false;
+  }
+
   /**
    * Metodo que permite mostrar solo el mensaje de error
    *
