@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
-import { AutenticacionDTO } from './../../../dtos/configuraciones/autenticacion.dto';
+import { AutenticacionDTO } from './../../../dtos/seguridad/autenticacion.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { AdminClienteService } from './../../../services/admin-cliente.service';
 import { KeyLocalStoreConstant } from '../../../constants/key-localstore.constant';

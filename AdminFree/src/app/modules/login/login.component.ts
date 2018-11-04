@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AutenticacionDTO } from './../../dtos/configuraciones/autenticacion.dto';
+import { AutenticacionDTO } from './../../dtos/seguridad/autenticacion.dto';
 import { CommonComponent } from './../../util-class/common.component';
 
 /**

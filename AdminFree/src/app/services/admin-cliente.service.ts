@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
-import { AutenticacionDTO } from './../dtos/configuraciones/autenticacion.dto';
+import { AutenticacionDTO } from './../dtos/seguridad/autenticacion.dto';
 import { AdminClientesDTO } from './../dtos/configuraciones/admin-clientes.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { ConfiguracionesConstant } from './../constants/configuraciones.constant';

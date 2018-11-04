@@ -1,4 +1,4 @@
-import { AutenticacionDTO } from './autenticacion.dto';
+import { AutenticacionDTO } from './../seguridad/autenticacion.dto';
 import { ClienteDTO } from './cliente.dto';
 
 /**
