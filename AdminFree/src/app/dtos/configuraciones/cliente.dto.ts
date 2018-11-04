@@ -34,4 +34,7 @@ export class ClienteDTO {
 
   /** Identifica que tipo de accion se va ralizar sobre el cliente */
   public tipoEvento: string;
+
+  /** Es el usuario para la autenticacion del cliente en el sistema como admin */
+  public usuario: string;
 }
