@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { AutenticacionDTO } from './../dtos/seguridad/autenticacion.dto';
+import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { KeyLocalStoreConstant } from './../constants/key-localstore.constant';
 import { SeguridadConstant } from '../constants/seguridad.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
@@ -40,7 +40,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       };
     } else {
       // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
-      const credenciales: AutenticacionDTO = JSON.parse(
+      const credenciales: CredencialesDTO = JSON.parse(
         localStorage.getItem(KeyLocalStoreConstant.KEY_USER_SECURITY)
       );
       security = {

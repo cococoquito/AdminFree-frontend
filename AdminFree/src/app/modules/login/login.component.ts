@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AutenticacionDTO } from './../../dtos/seguridad/autenticacion.dto';
 import { CommonComponent } from './../../util-class/common.component';
+import { CredencialesDTO } from './../../dtos/seguridad/credenciales.dto';
 
 /**
  * Componente para la autenticacion del sistema ADMINFREE
@@ -14,12 +14,12 @@ import { CommonComponent } from './../../util-class/common.component';
 export class LoginComponent extends CommonComponent implements OnInit {
 
   /** Se utiliza para capturar las credenciales del usuario o admin */
-  public credenciales: AutenticacionDTO;
+  public credenciales: CredencialesDTO;
 
   constructor() { super(); }
 
   ngOnInit() {
-    this.credenciales = new AutenticacionDTO();
+    this.credenciales = new CredencialesDTO();
     this.credenciales.administrador = false;
   }
 

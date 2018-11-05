@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
+import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
-import { AutenticacionDTO } from './../../../dtos/seguridad/autenticacion.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { AdminClienteService } from './../../../services/admin-cliente.service';
 import { KeyLocalStoreConstant } from '../../../constants/key-localstore.constant';
@@ -18,7 +18,7 @@ import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 export class AdminClientesComponent extends CommonComponent implements OnInit {
 
   /** Se utiliza para capturar las credenciales del usuario */
-  public credenciales: AutenticacionDTO;
+  public credenciales: CredencialesDTO;
 
   /** Contiene el resultado de la autenticacion */
   public autenticacion: AdminClientesDTO;
@@ -275,7 +275,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
    */
   public showPanelCrearCliente(): void {
     this.clienteCrear = new ClienteDTO();
-    this.clienteCrear.credenciales = new AutenticacionDTO();
+    this.clienteCrear.credenciales = new CredencialesDTO();
   }
 
   /**
@@ -323,7 +323,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     localStorage.removeItem(KeyLocalStoreConstant.KEY_ADMIN_CLIENTES);
 
     // se crea la instancia de las credenciales por si intentan ingresar de nuevo
-    this.credenciales = new AutenticacionDTO();
+    this.credenciales = new CredencialesDTO();
 
     // se limpia todos las variable globales
     this.autenticacion = null;
@@ -361,7 +361,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
       }
     } else {
       // cuando el administrador no se ha autenticado
-      this.credenciales = new AutenticacionDTO();
+      this.credenciales = new CredencialesDTO();
     }
   }
 

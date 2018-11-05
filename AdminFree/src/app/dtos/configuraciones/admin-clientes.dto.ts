@@ -1,4 +1,4 @@
-import { AutenticacionDTO } from './../seguridad/autenticacion.dto';
+import { CredencialesDTO } from './../seguridad/credenciales.dto';
 import { ClienteDTO } from './cliente.dto';
 
 /**
@@ -9,8 +9,8 @@ import { ClienteDTO } from './cliente.dto';
  */
 export class AdminClientesDTO {
 
-  /** DTO con los datos de la autenticacion */
-  public credenciales: AutenticacionDTO;
+  /** DTO con los datos de la autenticacion para administrar los clientes */
+  public credenciales: CredencialesDTO;
 
   /** Lista de clientes parametrizados en el sistema */
   public clientes: Array<ClienteDTO>;

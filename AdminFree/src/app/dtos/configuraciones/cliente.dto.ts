@@ -1,4 +1,4 @@
-import { AutenticacionDTO } from './../seguridad/autenticacion.dto';
+import { CredencialesDTO } from './../seguridad/credenciales.dto';
 
 /**
  * DTO que contiene los atributos de los clientes del sistema
@@ -34,6 +34,6 @@ export class ClienteDTO {
   /** Identifica que tipo de accion se va ralizar sobre el cliente */
   public tipoEvento: string;
 
-  /** Se utiliza para la autenticacion del ADMINISTRADOR */
-  public credenciales: AutenticacionDTO;
+  /** Son las credenciales del cliente que es un ADMIN */
+  public credenciales: CredencialesDTO;
 }

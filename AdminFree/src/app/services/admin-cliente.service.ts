@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
-import { AutenticacionDTO } from './../dtos/seguridad/autenticacion.dto';
+import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../dtos/configuraciones/admin-clientes.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { ConfiguracionesConstant } from './../constants/configuraciones.constant';
@@ -29,7 +29,7 @@ export class AdminClienteService {
    * @param credenciales, contiene las credenciales del usuario
    * @returns DTO con los datos de inicio para el modulo de admin clientes
    */
-  public iniciarSesion(credenciales: AutenticacionDTO): Observable<AdminClientesDTO> {
+  public iniciarSesion(credenciales: CredencialesDTO): Observable<AdminClientesDTO> {
     return this.http.post<AdminClientesDTO>(
       SeguridadConstant.URL_ADMIN_CLIENTES_AUTH,
       credenciales
