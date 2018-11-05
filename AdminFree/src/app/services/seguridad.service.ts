@@ -19,12 +19,12 @@ export class SeguridadService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Metodo que permite soportar el proceso de iniciar sesion de Admin Clientes
+   * Metodo que permite soportar el proceso de iniciar sesion para Admin Clientes
    *
    * @param credenciales, contiene las credenciales del usuario
    * @returns DTO con los datos de inicio para el modulo de admin clientes
    */
-  public iniciarSesion(credenciales: CredencialesDTO): Observable<AdminClientesDTO> {
+  public iniciarSesionAdminClientes(credenciales: CredencialesDTO): Observable<AdminClientesDTO> {
     return this.http.post<AdminClientesDTO>(
       SeguridadConstant.URL_ADMIN_CLIENTES_AUTH,
       credenciales

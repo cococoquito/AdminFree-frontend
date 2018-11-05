@@ -75,7 +75,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
         this.credenciales.usuario) {
 
       // se procede a iniciar sesion ante el sistema
-      this.segService.iniciarSesion(this.credenciales).subscribe(
+      this.segService.iniciarSesionAdminClientes(this.credenciales).subscribe(
         data => {
 
           // se configura el response
