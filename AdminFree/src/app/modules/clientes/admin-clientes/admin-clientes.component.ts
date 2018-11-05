@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
+import { SeguridadService } from '../../../services/seguridad.service';
+import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
-import { AdminClienteService } from './../../../services/admin-cliente.service';
 import { KeyLocalStoreConstant } from '../../../constants/key-localstore.constant';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
@@ -41,9 +42,12 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   /**
    * Creates an instance of AdminClientesComponent.
    *
-   * @param contiene los servicios para administrar los clientes
+   * @param segService, contiene los servicios para la seguridad sistema
+   * @param confService, contiene los servicios para la configuraciones sistema
    */
-  constructor(private service: AdminClienteService) {
+  constructor(
+    private segService: SeguridadService,
+    private confService: ConfiguracionesService) {
     super();
   }
 
@@ -71,7 +75,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
         this.credenciales.usuario) {
 
       // se procede a iniciar sesion ante el sistema
-      this.service.iniciarSesion(this.credenciales).subscribe(
+      this.segService.iniciarSesion(this.credenciales).subscribe(
         data => {
 
           // se configura el response
@@ -99,7 +103,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     this.msjError = null;
 
     // se procede a crear el cliente en el sistema
-    this.service.crearCliente(this.clienteCrear).subscribe(
+    this.confService.crearCliente(this.clienteCrear).subscribe(
       data => {
 
         // se procede agregar el cliente en la lista visualizada en la pagina
@@ -127,7 +131,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     if (confirm('¿Está seguro de ELIMINAR el siguiente cliente? ' + cliente.nombre)) {
 
       // se procede a eliminar el cliente del sistema
-      this.service.eliminarCliente(cliente).subscribe(
+      this.confService.eliminarCliente(cliente).subscribe(
         data => {
 
           // se elimina el cliente de la lista visualizada en la pagina
@@ -162,7 +166,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a inactivar el cliente en el sistema
       cliente.tipoEvento = TipoEventoConstant.INACTIVAR;
-      this.service.activarInactivarCliente(cliente).subscribe(
+      this.confService.activarInactivarCliente(cliente).subscribe(
         data => {
 
           // se configura los datos retornado del servidor
@@ -197,7 +201,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a ACTIVAR el cliente en el sistema
       cliente.tipoEvento = TipoEventoConstant.ACTIVAR;
-      this.service.activarInactivarCliente(cliente).subscribe(
+      this.confService.activarInactivarCliente(cliente).subscribe(
         data => {
 
           // se configura los datos retornado del servidor
@@ -232,7 +236,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a MODIFICAR el cliente en el sistema
       this.clienteModificar.tipoEvento = TipoEventoConstant.ACTUALIZAR;
-      this.service.modificarCliente(this.clienteModificar).subscribe(
+      this.confService.modificarCliente(this.clienteModificar).subscribe(
         data => {
 
           // se cierra el modo de edicion
