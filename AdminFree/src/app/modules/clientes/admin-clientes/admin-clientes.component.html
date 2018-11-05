@@ -31,8 +31,8 @@
 
     <div *ngIf="clienteToken">
       <p style="text-align: center; color: blue; text-decoration: underline; cursor: pointer;" (click)="limpiarToken()">Nombre: {{clienteToken.nombre}}</p>
-      <p style="color: red; text-align: center">Usuario: {{clienteToken.usuario}}</p>
-      <p style="color: red; text-align: center">{{clienteToken.token}}</p>
+      <p style="color: red; text-align: center">Usuario:{{clienteToken.credenciales.usuario}}</p>
+      <p style="color: red; text-align: center">{{clienteToken.credenciales.token}}</p>
     </div>
 
     <button type="button" class="btn btn-success" style="margin-right: 2%;margin-left: 2% " (click)="cerrarSesion()">Cerrar Sesión</button>
@@ -100,7 +100,7 @@
 
     <div class="form-group col-xs-12">
       <label for="user">Usuario:</label>
-      <input id="user" type="text" class='form-control' [(ngModel)]="clienteCrear.usuario" />
+      <input id="user" type="text" class='form-control' [(ngModel)]="clienteCrear.credenciales.usuario" />
     </div>
 
     <div class="form-group col-xs-12">

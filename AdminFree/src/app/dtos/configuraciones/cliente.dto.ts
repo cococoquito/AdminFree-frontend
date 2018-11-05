@@ -1,3 +1,5 @@
+import { AutenticacionDTO } from './../seguridad/autenticacion.dto';
+
 /**
  * DTO que contiene los atributos de los clientes del sistema
  *
@@ -7,9 +9,6 @@ export class ClienteDTO {
 
   /** Es el identificador del cliente */
   public id: number;
-
-  /** TOKEN que se utiliza para que el cliente se autentique en el sistema */
-  public token: string;
 
   /** Nombre del cliente */
   public nombre: string;
@@ -35,6 +34,6 @@ export class ClienteDTO {
   /** Identifica que tipo de accion se va ralizar sobre el cliente */
   public tipoEvento: string;
 
-  /** Es el usuario para la autenticacion del cliente en el sistema como admin */
-  public usuario: string;
+  /** Se utiliza para la autenticacion del ADMINISTRADOR */
+  public credenciales: AutenticacionDTO;
 }

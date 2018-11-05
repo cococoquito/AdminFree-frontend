@@ -275,6 +275,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
    */
   public showPanelCrearCliente(): void {
     this.clienteCrear = new ClienteDTO();
+    this.clienteCrear.credenciales = new AutenticacionDTO();
   }
 
   /**
