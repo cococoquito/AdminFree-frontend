@@ -25,7 +25,7 @@ export class LocalStoreState {
   }
 
   /**
-   * Metodo que permite administrar los clientes del LOCAL-STORE
+   * Metodo que permite administrar los clientes en el LOCAL-STORE
    */
   public clientes(evento: TipoEventoConstant, clientes?: Array<ClienteDTO>): Array<ClienteDTO> {
     return this.implementarEvento(evento, this.KEY_CLIENTES, clientes);
