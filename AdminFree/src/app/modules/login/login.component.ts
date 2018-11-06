@@ -1,11 +1,11 @@
-import { TipoEventoConstant } from './../../constants/tipo-evento.constant';
-import { LocalStoreState } from './../../states/local-store.state';
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../util-class/common.component';
 import { SeguridadService } from './../../services/seguridad.service';
+import { LocalStoreState } from './../../states/local-store.state';
 import { CredencialesDTO } from './../../dtos/seguridad/credenciales.dto';
 import { UsuarioDTO } from './../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../dtos/configuraciones/cliente.dto';
+import { TipoEventoConstant } from './../../constants/tipo-evento.constant';
 
 /**
  * Componente para la autenticacion del sistema ADMINFREE
