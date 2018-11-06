@@ -29,5 +29,10 @@
 }
 
 .btn-login-size {
-  font-size:16px;
+  font-size: 16px;
+}
+
+.msj-error {
+  font-size: 13px;
+  margin-bottom: 0px;
 }

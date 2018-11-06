@@ -37,23 +37,16 @@ export class LoginComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que soporta el evento click del check
-   * ingresar como administrador
-   */
-  public toogleAdmin(): void {
-    this.credenciales.administrador = !this.credenciales.administrador;
-  }
-
-  /**
    * Metodo que soporta el evento click del boton iniciar sesion
    */
   public iniciarSesion(): void {
-    this.msjError = null;
-    if (
-      this.credenciales &&
-      this.credenciales.clave &&
-      this.credenciales.usuario
-    ) {
+
+    // se valida la nulalidad de las credenciales
+    if (this.credenciales &&
+        this.credenciales.clave &&
+        this.credenciales.usuario) {
+
+      // se procede a iniciar sesion en el sistema
       this.segService.iniciarSesion(this.credenciales).subscribe(
         data => {},
         error => {
@@ -63,6 +56,23 @@ export class LoginComponent extends CommonComponent implements OnInit {
         }
       );
     }
+  }
+
+  /**
+   * Metodo que es ejecutado antes de invocar el metodo iniciar sesion
+   */
+  public beforeIniciarSesion(): boolean {
+    this.onSubmit();
+    this.msjError = null;
+    return true;
+  }
+
+  /**
+   * Metodo que soporta el evento click del check
+   * ingresar como administrador
+   */
+  public toogleAdmin(): void {
+    this.credenciales.administrador = !this.credenciales.administrador;
   }
 
   /**

@@ -27,7 +27,7 @@
         <div class="card-body">
 
           <!-- form - login -->
-          <form class="font" name="form" #f="ngForm" (ngSubmit)="onSubmit() && f.form.valid && iniciarSesion()" novalidate (keydown.enter)="$event.preventDefault()">
+          <form class="font" name="form" #f="ngForm" (ngSubmit)="beforeIniciarSesion() && f.form.valid && iniciarSesion()" novalidate (keydown.enter)="$event.preventDefault()">
 
             <!-- usuario y password o token-->
             <div class="form-group row">
@@ -66,14 +66,13 @@
             </div>
 
             <!-- boton - ingreso-->
+            <br>
             <div class="form-group row">
               <button type="submit" class="btn btn-primary w-100">
                   <i class="fa fa-sign-in"> Entrar</i>
               </button>
             </div>
-            <p class="text-danger text-center" style="font-size: 13px">{{msjError}}</p>
-
-
+            <p class="text-danger text-center msj-error">{{msjError}}</p>
           </form>
         </div>
       </div>
