@@ -1,3 +1,4 @@
+import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { Injectable } from '@angular/core';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
@@ -16,6 +17,26 @@ export class LocalStoreState {
 
   /** Key que representa las credenciales en el local-store*/
   private readonly KEY_CREDENCIALES: string = 'CREDENCIALES';
+
+  /** Key que representa las datos del user autenticado en el local-store*/
+  private readonly KEY_USER_AUTH: string = 'USER_AUTH';
+
+  /** Key que representa las datos del ADMIN autenticado en el local-store*/
+  private readonly KEY_ADMIN_AUTH: string = 'ADMIN_AUTH';
+
+  /**
+   * Metodo que permite administrar los datos del ADMIN autenticado en el LOCAL-STORE
+   */
+  public adminAuth(evento: TipoEventoConstant, admin?: ClienteDTO): ClienteDTO {
+    return this.implementarEvento(evento, this.KEY_ADMIN_AUTH, admin);
+  }
+
+  /**
+   * Metodo que permite administrar los datos del USER autenticado en el LOCAL-STORE
+   */
+  public userAuth(evento: TipoEventoConstant, user?: UsuarioDTO): UsuarioDTO {
+    return this.implementarEvento(evento, this.KEY_USER_AUTH, user);
+  }
 
   /**
    * Metodo que permite administrar las credenciales de seguridad en el LOCAL-STORE
