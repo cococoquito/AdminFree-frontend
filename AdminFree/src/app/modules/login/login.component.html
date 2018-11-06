@@ -36,7 +36,7 @@
                 #username="ngModel"
                 [(ngModel)]="credenciales.usuario"
                 placeholder="Usuario"
-                maxlength="100"
+                maxlength="50"
                 adminRequired
                 adminAutofocus
                 class="form-control font"
@@ -47,8 +47,8 @@
                 name="clave"
                 #clave="ngModel"
                 [(ngModel)]="credenciales.clave"
-                placeholder="{{credenciales.administrador ? 'Token' : 'Password'}}"
-                maxlength="100"
+                placeholder="{{credenciales.administrador ? 'Token' : 'Contraseña'}}"
+                maxlength="50"
                 adminRequired
                 class="form-control font"
                 [ngClass]="(submitted && !clave.valid) ? 'input-invalido' : 'input-valido'"/>
@@ -66,12 +66,14 @@
             </div>
 
             <!-- boton - ingreso-->
-            <br>
             <div class="form-group row">
               <button type="submit" class="btn btn-primary w-100">
                   <i class="fa fa-sign-in"> Entrar</i>
               </button>
             </div>
+            <p class="text-danger text-center" style="font-size: 13px">{{msjError}}</p>
+
+
           </form>
         </div>
       </div>

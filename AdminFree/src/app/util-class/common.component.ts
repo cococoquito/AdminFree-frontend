@@ -103,9 +103,13 @@ export class CommonComponent {
     // se verifica que tipo de business msj corresponde
     switch (codBusinessMsj) {
 
-      // Business error autenticacion fallida
-      case MessagesConstant.COD_AUTENTICACION_FALLIDA: {
-        businessMsj = MessagesConstant.AUTENTICACION_FALLIDA;
+      case MessagesConstant.COD_AUTENTICACION_FALLIDA_USER: {
+        businessMsj = MessagesConstant.AUTENTICACION_FALLIDA_USER;
+        break;
+      }
+
+      case MessagesConstant.COD_AUTENTICACION_FALLIDA_ADMIN: {
+        businessMsj = MessagesConstant.AUTENTICACION_FALLIDA_ADMIN;
         break;
       }
     }

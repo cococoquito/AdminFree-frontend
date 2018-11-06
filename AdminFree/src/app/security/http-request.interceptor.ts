@@ -30,8 +30,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     // variable que contiene los valores del header dependiendo la URL
     let security;
 
-    // si la peticion es para la autenticacion de admin-clientes
-    if (SeguridadConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
+    // si la peticion es para la autenticacion en el sistema
+    if (SeguridadConstant.URL_AUTH === req.url ||
+        SeguridadConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
       security = {
         'Content-Type': AppSecurityConstant.CONTENT,
         'huser': AppSecurityConstant.AUTH_USER,

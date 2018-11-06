@@ -5,12 +5,19 @@
  */
 export class MessagesConstant {
 
-  /** Codigo para el mensaje de autenticacion fallida*/
-  static readonly COD_AUTENTICACION_FALLIDA: string = '1';
+  /** Codigo cuando el USER intenta ingresar con una credenciales incorrecta */
+  static readonly COD_AUTENTICACION_FALLIDA_USER: string = '1';
 
-  /** Mensaje cuando el usuario intenta ingresar con una credenciales incorrecta */
-  static readonly AUTENTICACION_FALLIDA: string =
-    'El Usuario y la Contraseña que usted ingresó no ha sido reconocido. Por favor, inténtelo de nuevo.';
+  /** Codigo cuando el ADMIN intenta ingresar con una credenciales incorrecta */
+  static readonly COD_AUTENTICACION_FALLIDA_ADMIN: string = '2';
+
+  /** Mensaje cuando el USER intenta ingresar con una credenciales incorrecta */
+  static readonly AUTENTICACION_FALLIDA_USER: string =
+    'El Usuario y la Contraseña que ingresó no ha sido reconocido.';
+
+  /** Mensaje cuando el ADMIN intenta ingresar con una credenciales incorrecta */
+  static readonly AUTENTICACION_FALLIDA_ADMIN: string =
+    'El Usuario y el Token que ingresó no ha sido reconocido.';
 
   /** Mensaje cuando el usuario intenta ingresar al recurso de ADMINFREE sin el TOKEN */
   static readonly AUTORIZACION_FALLIDA: string =

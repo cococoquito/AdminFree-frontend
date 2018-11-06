@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../util-class/common.component';
+import { SeguridadService } from './../../services/seguridad.service';
 import { CredencialesDTO } from './../../dtos/seguridad/credenciales.dto';
 
 /**
@@ -16,17 +17,23 @@ export class LoginComponent extends CommonComponent implements OnInit {
   /** Se utiliza para capturar las credenciales del usuario o admin */
   public credenciales: CredencialesDTO;
 
-  constructor() { super(); }
+  /** Contiene el mensaje de error presentada en la autenticacion */
+  public msjError: string;
 
-  ngOnInit() {
-    this.credenciales = new CredencialesDTO();
-    this.credenciales.administrador = false;
+  /**
+   * Constructor del login de la aplicacion
+   *
+   * @param segService, contiene los servicios de seguridad
+   */
+  constructor(private segService: SeguridadService) {
+    super();
   }
 
-  public iniciarSesion(): void {
-    alert(this.credenciales.usuario + '  ' + this.credenciales.clave);
-    console.log(this.credenciales.usuario);
-    console.log(this.credenciales.clave);
+  /**
+   * Aca se debe inicializar las variables globales del LOGIN
+   */
+  ngOnInit() {
+    this.init();
   }
 
   /**
@@ -35,5 +42,34 @@ export class LoginComponent extends CommonComponent implements OnInit {
    */
   public toogleAdmin(): void {
     this.credenciales.administrador = !this.credenciales.administrador;
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton iniciar sesion
+   */
+  public iniciarSesion(): void {
+    this.msjError = null;
+    if (
+      this.credenciales &&
+      this.credenciales.clave &&
+      this.credenciales.usuario
+    ) {
+      this.segService.iniciarSesion(this.credenciales).subscribe(
+        data => {},
+        error => {
+          this.msjError = this.showMensajeError(error);
+          this.credenciales.clave = null;
+          this.cleanSubmit();
+        }
+      );
+    }
+  }
+
+  /**
+   * Metodo que permite inicializar las variables globales
+   */
+  private init(): void {
+    this.credenciales = new CredencialesDTO();
+    this.credenciales.administrador = false;
   }
 }
