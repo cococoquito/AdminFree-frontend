@@ -1,9 +1,12 @@
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
+import { SpinnerState } from './../states/spinner.state';
+import { LocalStoreState } from './../states/local-store.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
-import { KeyLocalStoreConstant } from './../constants/key-localstore.constant';
 import { SeguridadConstant } from '../constants/seguridad.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
+import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -18,7 +21,18 @@ import {
  *
  * @author Carlos Andres Diaz
  */
+@Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
+
+  /**
+   * Constructor del HttpInterceptor
+   *
+   * @param spinnerState, se utiliza para visualizar, ocultar el spinner
+   * @param localStoreState, se utiliza para obtener las credenciales del usuario, admin
+   */
+  constructor(
+    private spinnerState: SpinnerState,
+    private localStoreState: LocalStoreState) {}
 
   /**
    * Metodo que permite capturar cada request del sistema,
@@ -31,40 +45,40 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    // variable que contiene los valores del header dependiendo la URL
-    let security;
+    // variable que contiene el header con seguridad
+    let securityHeader;
 
     // si la peticion es para autenticacion se agrega la seguridad correspondiente
     if (SeguridadConstant.URL_AUTH === req.url ||
         SeguridadConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
-          security = this.getHeaderSecurity(
+          securityHeader = this.getSecurityHeader(
             AppSecurityConstant.AUTH_USER,
             AppSecurityConstant.AUTH_PASS,
             AppSecurityConstant.AUTH_TOKEN + AppSecurityConstant.POST_ANGULAR_AUTH
           );
     } else {
       // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
-      const credenciales: CredencialesDTO = JSON.parse(
-        localStorage.getItem(KeyLocalStoreConstant.KEY_USER_SECURITY)
-      );
-      security = this.getHeaderSecurity(
-        credenciales.usuario,
-        credenciales.clave,
-        credenciales.token + AppSecurityConstant.POST_ANGULAR
-      );
+      const credenciales: CredencialesDTO = this.localStoreState.credenciales(TipoEventoConstant.GET);
+      if (credenciales) {
+        securityHeader = this.getSecurityHeader(
+          credenciales.usuario,
+          credenciales.clave,
+          credenciales.token + AppSecurityConstant.POST_ANGULAR
+        );
+      }
     }
 
     // se configura el spinner para esta peticion
-    console.log('inicio request...');
-    return next.handle(req.clone({ setHeaders: security })).pipe(
+    this.spinnerState.displaySpinner();
+    return next.handle(req.clone({ setHeaders: securityHeader })).pipe(
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            console.log('finalizo request...');
+            this.spinnerState.hideSpinner();
           }
         },
         (err: any) => {
-          console.log('finalizo request...');
+          this.spinnerState.hideSpinner();
         }
       )
     );
@@ -76,7 +90,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    * @param pass , clave a configurar en el header
    * @param token , token a configurar en el header
    */
-  private getHeaderSecurity(user: string, pass: string, token: string): any {
+  private getSecurityHeader(user: string, pass: string, token: string): any {
     return {
       'Content-Type': AppSecurityConstant.CONTENT,
       'huser': user,

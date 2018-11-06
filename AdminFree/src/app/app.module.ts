@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CoreModule } from './modules/core/core.module';
 import { AppComponent } from './app.component';
+import { SpinnerComponent } from './directives/spinner/spinner.component';
 
 /**
  * Modulo principal de la aplicacion AdminFree, contiene
@@ -11,7 +12,8 @@ import { AppComponent } from './app.component';
  */
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'admin-root',
-  template: '<router-outlet></router-outlet>'
+  template: '<admin-spinner></admin-spinner> <router-outlet></router-outlet>'
 })
 export class AppComponent {}

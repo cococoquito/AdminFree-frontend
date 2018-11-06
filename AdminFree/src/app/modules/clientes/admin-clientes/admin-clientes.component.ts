@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
 import { SeguridadService } from '../../../services/seguridad.service';
 import { ConfiguracionesService } from './../../../services/configuraciones.service';
+import { LocalStoreState } from './../../../states/local-store.state';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
-import { KeyLocalStoreConstant } from '../../../constants/key-localstore.constant';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
 /**
@@ -44,10 +44,12 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
    *
    * @param segService, contiene los servicios para la seguridad sistema
    * @param confService, contiene los servicios para la configuraciones sistema
+   * @param localStoreState, se utiliza para obtener las credenciales del usuario, admin
    */
   constructor(
     private segService: SeguridadService,
-    private confService: ConfiguracionesService) {
+    private confService: ConfiguracionesService,
+    private localStoreState: LocalStoreState) {
     super();
   }
 
@@ -323,8 +325,8 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   public cerrarSesion(): void {
 
     // se limpia los keystore almacenados
-    localStorage.removeItem(KeyLocalStoreConstant.KEY_USER_SECURITY);
-    localStorage.removeItem(KeyLocalStoreConstant.KEY_ADMIN_CLIENTES);
+    this.localStoreState.clientes(TipoEventoConstant.REMOVE);
+    this.localStoreState.credenciales(TipoEventoConstant.REMOVE);
 
     // se crea la instancia de las credenciales por si intentan ingresar de nuevo
     this.credenciales = new CredencialesDTO();
@@ -344,25 +346,17 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   private init(): void {
 
     // se obtiene las credenciales del localstore
-    const userCredenciales = localStorage.getItem(
-      KeyLocalStoreConstant.KEY_USER_SECURITY
-    );
+    const credenciales: CredencialesDTO = this.localStoreState.credenciales(TipoEventoConstant.GET);
 
     // se verifica si el administrador ya se autentico con anterioridad
-    if (userCredenciales) {
+    if (credenciales) {
 
-      // se configura la autenticacion
+      // se configura la autenticacion con sus credenciales
       this.autenticacion = new AdminClientesDTO();
-      this.autenticacion.credenciales = JSON.parse(userCredenciales);
+      this.autenticacion.credenciales = credenciales;
 
       // se configura los clientes consultados con anterioridad
-      this.autenticacion.clientes = [];
-      const clientes = localStorage.getItem(
-        KeyLocalStoreConstant.KEY_ADMIN_CLIENTES
-      );
-      if (clientes) {
-        this.autenticacion.clientes = JSON.parse(clientes);
-      }
+      this.autenticacion.clientes = this.localStoreState.clientes(TipoEventoConstant.GET);
     } else {
       // cuando el administrador no se ha autenticado
       this.credenciales = new CredencialesDTO();
@@ -374,27 +368,21 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
    */
   private setStateLocalStore(): void {
 
-    // se limpia los datos anteriores
-    localStorage.removeItem(KeyLocalStoreConstant.KEY_USER_SECURITY);
-    localStorage.removeItem(KeyLocalStoreConstant.KEY_ADMIN_CLIENTES);
+    // se limpia los keystore almacenados
+    this.localStoreState.clientes(TipoEventoConstant.REMOVE);
+    this.localStoreState.credenciales(TipoEventoConstant.REMOVE);
 
     // se verifica si el cliente esta autenticado
     if (this.autenticacion) {
 
       // se configura las credenciales en el localstore
       if (this.autenticacion.credenciales) {
-        localStorage.setItem(
-          KeyLocalStoreConstant.KEY_USER_SECURITY,
-          JSON.stringify(this.autenticacion.credenciales)
-        );
+        this.localStoreState.credenciales(TipoEventoConstant.SET, this.autenticacion.credenciales);
       }
 
       // se configura los clientes en el localstore
       if (this.autenticacion.clientes) {
-        localStorage.setItem(
-          KeyLocalStoreConstant.KEY_ADMIN_CLIENTES,
-          JSON.stringify(this.autenticacion.clientes)
-        );
+        this.localStoreState.clientes(TipoEventoConstant.SET, this.autenticacion.clientes);
       }
     }
   }
