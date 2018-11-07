@@ -15,6 +15,9 @@ export class LocalStoreState {
   /** Key que representa los clientes en el local-store*/
   private readonly KEY_CLIENTES: string = 'CLIENTES';
 
+  /** Key que representa las credenciales para admin-clientes en el local-store*/
+  private readonly KEY_CREDENCIALES_ADMIN: string = 'CREDENCIALES_ADMIN';
+
   /** Key que representa las credenciales en el local-store*/
   private readonly KEY_CREDENCIALES: string = 'CREDENCIALES';
 
@@ -32,6 +35,14 @@ export class LocalStoreState {
     localStorage.removeItem(this.KEY_CREDENCIALES);
     localStorage.removeItem(this.KEY_USER_AUTH);
     localStorage.removeItem(this.KEY_ADMIN_AUTH);
+  }
+
+  /**
+   * Metodo que permite administrar los datos de las credenciales del usuario
+   * quien administra los clientes en el sistema
+   */
+  public credencialesAdminClientes(evento: TipoEventoConstant, adminClientes?: CredencialesDTO): CredencialesDTO {
+    return this.implementarEvento(evento, this.KEY_CREDENCIALES_ADMIN, adminClientes);
   }
 
   /**
