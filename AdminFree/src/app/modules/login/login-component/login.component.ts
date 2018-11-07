@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonComponent } from './../../util-class/common.component';
-import { SeguridadService } from './../../services/seguridad.service';
-import { LocalStoreState } from './../../states/local-store.state';
-import { CredencialesDTO } from './../../dtos/seguridad/credenciales.dto';
-import { TipoEventoConstant } from './../../constants/tipo-evento.constant';
+import { CommonComponent } from './../../../util-class/common.component';
+import { SeguridadService } from './../../../services/seguridad.service';
+import { LocalStoreState } from './../../../states/local-store.state';
+import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
+import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
 /**
  * Componente para la autenticacion del sistema ADMINFREE
