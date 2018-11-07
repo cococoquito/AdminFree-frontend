@@ -18,7 +18,7 @@ export class LocalStoreState {
   /** Key que representa las credenciales para admin-clientes en el local-store*/
   private readonly KEY_CREDENCIALES_ADMIN: string = 'CREDENCIALES_ADMIN';
 
-  /** Key que representa las credenciales en el local-store*/
+  /** Key que representa las credenciales de user o admin en el local-store*/
   private readonly KEY_CREDENCIALES: string = 'CREDENCIALES';
 
   /** Key que representa las datos del user autenticado en el local-store*/
@@ -26,17 +26,6 @@ export class LocalStoreState {
 
   /** Key que representa las datos del ADMIN autenticado en el local-store*/
   private readonly KEY_ADMIN_AUTH: string = 'ADMIN_AUTH';
-
-  /**
-   * Metodo que permite limpiar todo el local-store para ADMIN-FREE
-   */
-  public cleanAll(): void {
-    localStorage.removeItem(this.KEY_CLIENTES);
-    localStorage.removeItem(this.KEY_CREDENCIALES);
-    localStorage.removeItem(this.KEY_USER_AUTH);
-    localStorage.removeItem(this.KEY_ADMIN_AUTH);
-    localStorage.removeItem(this.KEY_CREDENCIALES_ADMIN);
-  }
 
   /**
    * Metodo que permite administrar los datos de las credenciales del usuario
@@ -72,6 +61,17 @@ export class LocalStoreState {
    */
   public clientes(evento: TipoEventoConstant, clientes?: Array<ClienteDTO>): Array<ClienteDTO> {
     return this.implementarEvento(evento, this.KEY_CLIENTES, clientes);
+  }
+
+  /**
+   * Metodo que permite limpiar todo el local-store para ADMIN-FREE
+   */
+  public cleanAll(): void {
+    localStorage.removeItem(this.KEY_CLIENTES);
+    localStorage.removeItem(this.KEY_CREDENCIALES);
+    localStorage.removeItem(this.KEY_USER_AUTH);
+    localStorage.removeItem(this.KEY_ADMIN_AUTH);
+    localStorage.removeItem(this.KEY_CREDENCIALES_ADMIN);
   }
 
   /**

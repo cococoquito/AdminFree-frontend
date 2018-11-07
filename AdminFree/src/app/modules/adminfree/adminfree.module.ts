@@ -6,6 +6,12 @@ import { AutenticadoComponent } from './autenticado/autenticado.component';
 import { BienvenidaComponent } from './bienvenida/bienvenida.component';
 import { RouterConstant } from './../../constants/router.constant';
 
+/**
+ * Modulo donde contiene solamente los componente del negocio tales como,
+ * correspondencia, archivo gestion, configuraciones, reportes etc
+ *
+ * @author Carlos Andres Diaz
+ */
 @NgModule({
   imports: [
     RouterModule.forChild([

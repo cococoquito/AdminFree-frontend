@@ -5,6 +5,7 @@ import { SeguridadService } from './../../../services/seguridad.service';
 import { LocalStoreState } from './../../../states/local-store.state';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
+import { RouterConstant } from './../../../constants/router.constant';
 
 /**
  * Componente para la autenticacion del sistema ADMINFREE
@@ -63,13 +64,13 @@ export class LoginComponent extends CommonComponent implements OnInit {
 
           // se configura los datos del USER o ADMIN
           if (this.credenciales.administrador) {
-            this.localStoreState.adminAuth(TipoEventoConstant.SET, data.administrador);
+              this.localStoreState.adminAuth(TipoEventoConstant.SET, data.administrador);
           } else {
             this.localStoreState.userAuth(TipoEventoConstant.SET, data.usuario);
           }
 
-          // se redirecciona a la pantalla de bienvenida
-          this.router.navigate(['/autenticado']);
+          // se redirecciona a la pagina de bienvenida
+          this.router.navigate(['/' + RouterConstant.AUTENTICADO]);
         },
         error => {
           this.msjError = this.showMensajeError(error);
