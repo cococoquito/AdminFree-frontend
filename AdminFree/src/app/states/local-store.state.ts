@@ -25,6 +25,16 @@ export class LocalStoreState {
   private readonly KEY_ADMIN_AUTH: string = 'ADMIN_AUTH';
 
   /**
+   * Metodo que permite limpiar todo el local-store para ADMIN-FREE
+   */
+  public cleanAll(): void {
+    localStorage.removeItem(this.KEY_CLIENTES);
+    localStorage.removeItem(this.KEY_CREDENCIALES);
+    localStorage.removeItem(this.KEY_USER_AUTH);
+    localStorage.removeItem(this.KEY_ADMIN_AUTH);
+  }
+
+  /**
    * Metodo que permite administrar los datos del ADMIN autenticado en el LOCAL-STORE
    */
   public adminAuth(evento: TipoEventoConstant, admin?: ClienteDTO): ClienteDTO {
