@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpRequestInterceptor } from './../../interceptors/http-request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouterConstant } from './../../constants/router.constant';
 
 /**
  * Modulo Core de la aplicacion, aca se debe agregar todos los modulos,
@@ -15,25 +16,25 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   imports: [
     RouterModule.forRoot([
       {
-        path: 'zaqwsx',
+        path: RouterConstant.CLIENTES,
         loadChildren: '../clientes/clientes.module#ClientesModule'
       },
       {
-        path: 'login',
+        path: RouterConstant.LOGIN,
         loadChildren: '../login/login.module#LoginModule'
       },
       {
-        path: 'autenticado',
+        path: RouterConstant.AUTENTICADO,
         loadChildren: '../adminfree/adminfree.module#AdminfreeModule'
       },
       {
         path: '',
-        redirectTo: 'login',
+        redirectTo: RouterConstant.LOGIN,
         pathMatch: 'full'
       },
       {
         path: '**',
-        redirectTo: 'login',
+        redirectTo: RouterConstant.LOGIN,
         pathMatch: 'full'
       }
     ]),

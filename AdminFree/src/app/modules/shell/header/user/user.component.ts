@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ShellState } from '../../../../states/shell.state';
 import { LocalStoreState } from './../../../../states/local-store.state';
 import { MenuItem } from 'primeng/api';
+import { RouterConstant } from './../../../../constants/router.constant';
 
 /**
  * Es el menu de configuraciones del usuario donde se
@@ -57,6 +58,6 @@ export class UserComponent implements OnInit {
     this.localStoreState.cleanAll();
 
     // se redirecciona al LOGIN
-    this.router.navigate(['/login']);
+    this.router.navigate(['/' + RouterConstant.LOGIN]);
   }
 }
