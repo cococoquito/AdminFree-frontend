@@ -35,6 +35,7 @@ export class LocalStoreState {
     localStorage.removeItem(this.KEY_CREDENCIALES);
     localStorage.removeItem(this.KEY_USER_AUTH);
     localStorage.removeItem(this.KEY_ADMIN_AUTH);
+    localStorage.removeItem(this.KEY_CREDENCIALES_ADMIN);
   }
 
   /**

@@ -58,7 +58,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           );
     } else {
       // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
-      const credenciales: CredencialesDTO = this.localStoreState.credenciales(TipoEventoConstant.GET);
+      const credenciales: CredencialesDTO = this.getCredenciales();
       if (credenciales) {
         securityHeader = this.getSecurityHeader(
           credenciales.usuario,
@@ -97,5 +97,18 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       'hpass': pass,
       'htoken': token
     };
+  }
+
+  /**
+   * Metodo que permite obtener las credenciales del usuario o admin o
+   * el administrador de clientes del local-store
+   */
+  private getCredenciales(): CredencialesDTO {
+    let user: CredencialesDTO = this.localStoreState.credenciales(TipoEventoConstant.GET);
+    if (user) {
+      return user;
+    }
+    user = this.localStoreState.credencialesAdminClientes(TipoEventoConstant.GET);
+    return user;
   }
 }
