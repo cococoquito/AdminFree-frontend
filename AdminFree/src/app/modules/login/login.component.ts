@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonComponent } from './../../util-class/common.component';
 import { SeguridadService } from './../../services/seguridad.service';
 import { LocalStoreState } from './../../states/local-store.state';
@@ -30,10 +31,12 @@ export class LoginComponent extends CommonComponent implements OnInit {
    * @param segService, contiene los servicios de seguridad
    * @param localStoreState, se utiliza para almacenar los datos
    * del user o admin autenticado en el sistema
+   * @param router, Router para la navegacion a la pagina bienvenida
    */
   constructor(
     private segService: SeguridadService,
-    private localStoreState: LocalStoreState) {
+    private localStoreState: LocalStoreState,
+    private router: Router) {
     super();
   }
 
@@ -57,16 +60,18 @@ export class LoginComponent extends CommonComponent implements OnInit {
       // se procede a iniciar sesion en el sistema
       this.segService.iniciarSesion(this.credenciales).subscribe(
         data => {
-          // se configura el usuario o el admin dependiendo del tipo autenticacion
-          if (data instanceof UsuarioDTO) {
-              this.localStoreState.credenciales(TipoEventoConstant.SET, data.credenciales);
-              data.credenciales = null;
-              this.localStoreState.userAuth(TipoEventoConstant.SET, data);
-          } else if (data instanceof ClienteDTO) {
-            this.localStoreState.credenciales(TipoEventoConstant.SET, data.credenciales);
-            data.credenciales = null;
-            this.localStoreState.adminAuth(TipoEventoConstant.SET, data);
+          // se configura las credenciales del USER o ADMIN
+          this.localStoreState.credenciales(TipoEventoConstant.SET, data.credenciales);
+
+          // se configura los datos del USER o ADMIN
+          if (this.credenciales.administrador) {
+            this.localStoreState.adminAuth(TipoEventoConstant.SET, data.administrador);
+          } else {
+            this.localStoreState.userAuth(TipoEventoConstant.SET, data.usuario);
           }
+
+          // se redirecciona a la pantalla de bienvenida
+          this.router.navigate(['/autenticado']);
         },
         error => {
           this.msjError = this.showMensajeError(error);

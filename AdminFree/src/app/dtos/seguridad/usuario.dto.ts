@@ -1,4 +1,3 @@
-import { CredencialesDTO } from './credenciales.dto';
 import { RolDTO } from './rol.dto';
 import { ClienteDTO } from '../configuraciones/cliente.dto';
 
@@ -21,7 +20,4 @@ export class UsuarioDTO {
 
   /** Lista de ROLES que tiene el usuario */
   public roles: Array<RolDTO>;
-
-  /** Son las credenciales del USUARIO */
-  public credenciales: CredencialesDTO;
 }

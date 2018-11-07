@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AdminClientesDTO } from './../dtos/configuraciones/admin-clientes.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
-import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
-import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
+import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { SeguridadConstant } from './../constants/seguridad.constant';
 
 /**
@@ -37,9 +36,10 @@ export class SeguridadService {
    * Servicio que permite soportar el proceso de iniciar sesion
    *
    * @param credenciales, contiene las credenciales del USER o ADMIN
+   * @return datos de inicio de la aplicacion
    */
-  public iniciarSesion(credenciales: CredencialesDTO): Observable<ClienteDTO | UsuarioDTO> {
-    return this.http.post<ClienteDTO | UsuarioDTO>(
+  public iniciarSesion(credenciales: CredencialesDTO): Observable<WelcomeDTO> {
+    return this.http.post<WelcomeDTO>(
       SeguridadConstant.URL_AUTH,
       credenciales
     );

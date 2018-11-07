@@ -21,6 +21,20 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       {
         path: 'login',
         loadChildren: '../login/login.module#LoginModule'
+      },
+      {
+        path: 'autenticado',
+        loadChildren: '../adminfree/adminfree.module#AdminfreeModule'
+      },
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+      },
+      {
+        path: '**',
+        redirectTo: 'login',
+        pathMatch: 'full'
       }
     ]),
     HttpClientModule,
