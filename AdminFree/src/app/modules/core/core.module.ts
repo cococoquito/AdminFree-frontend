@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpRequestInterceptor } from './../../interceptors/http-request.interceptor';
+import { AuthGuard } from './../../auth-guard/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterConstant } from './../../constants/router.constant';
 
@@ -25,6 +26,7 @@ import { RouterConstant } from './../../constants/router.constant';
       },
       {
         path: RouterConstant.AUTENTICADO,
+        canActivate: [AuthGuard],
         loadChildren: '../adminfree/adminfree.module#AdminfreeModule'
       },
       {
@@ -47,7 +49,8 @@ import { RouterConstant } from './../../constants/router.constant';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestInterceptor,
       multi: true
-    }
+    },
+    AuthGuard
   ]
 })
 export class CoreModule {}
