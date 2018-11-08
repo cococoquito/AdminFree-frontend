@@ -18,6 +18,6 @@ export class RouterConstant {
   public static readonly BIENVENIDA: string = 'bienvenida';
 
   /** Router para las paginas de errores*/
-  public static readonly RECHAZADO: string = 'rechazado';
+  public static readonly DENEGADO: string = 'denegado';
   public static readonly ERROR: string = 'error';
 }
