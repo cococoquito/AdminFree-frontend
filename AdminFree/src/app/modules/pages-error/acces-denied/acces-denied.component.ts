@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { RouterConstant } from '../../../constants/router.constant';
 
+/**
+ * Pagina de error cuando el usuario intenta ingresar
+ * a una pagina que no tiene privilegios
+ *
+ * @author Carlos Andres Diaz
+ */
 @Component({
-  selector: 'admin-acces-denied',
-  templateUrl: './acces-denied.component.html',
-  styleUrls: ['./acces-denied.component.css']
+  templateUrl: './acces-denied.component.html'
 })
-export class AccesDeniedComponent implements OnInit {
+export class AccesDeniedComponent {
+  constructor(private router: Router) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  /**
+   * Metodo que soporta el evento de ir a la pagina de bienvenida
+   */
+  public goHome(): void {
+    this.router.navigate(['/' + RouterConstant.AUTENTICADO]);
   }
-
 }

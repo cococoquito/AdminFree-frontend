@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { RouterConstant } from '../../../constants/router.constant';
 
+/**
+ * Pagina de error cuando el usuario ingresa a una
+ * ruta que no esta configurada en el sistema
+ * page not found
+ *
+ * @author Carlos Andres Diaz
+ */
 @Component({
-  selector: 'admin-not-found',
-  templateUrl: './not-found.component.html',
-  styleUrls: ['./not-found.component.css']
+  templateUrl: './not-found.component.html'
 })
-export class NotFoundComponent implements OnInit {
+export class NotFoundComponent {
+  constructor(private router: Router) {}
 
-  constructor() { }
-
-  ngOnInit() {
+  /**
+   * Metodo que soporta el evento de ir a la pagina de bienvenida
+   */
+  public goHome(): void {
+    this.router.navigate(['/' + RouterConstant.AUTENTICADO]);
   }
-
 }
