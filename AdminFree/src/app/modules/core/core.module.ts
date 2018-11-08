@@ -22,6 +22,7 @@ import { RouterConstant } from './../../constants/router.constant';
       },
       {
         path: RouterConstant.LOGIN,
+        canActivate: [AuthGuard],
         loadChildren: '../login/login.module#LoginModule'
       },
       {
@@ -30,13 +31,17 @@ import { RouterConstant } from './../../constants/router.constant';
         loadChildren: '../adminfree/adminfree.module#AdminfreeModule'
       },
       {
+        path: RouterConstant.ERROR,
+        loadChildren: '../pages-error/pages-error.module#PagesErrorModule'
+      },
+      {
         path: '',
         redirectTo: RouterConstant.LOGIN,
         pathMatch: 'full'
       },
       {
         path: '**',
-        redirectTo: RouterConstant.LOGIN,
+        redirectTo: RouterConstant.ERROR,
         pathMatch: 'full'
       }
     ]),

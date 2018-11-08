@@ -16,4 +16,8 @@ export class RouterConstant {
 
   /** Router para navegar a la pagina BIENVENIDA*/
   public static readonly BIENVENIDA: string = 'bienvenida';
+
+  /** Router para las paginas de errores*/
+  public static readonly RECHAZADO: string = 'rechazado';
+  public static readonly ERROR: string = 'error';
 }
