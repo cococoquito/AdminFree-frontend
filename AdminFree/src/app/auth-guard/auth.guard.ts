@@ -6,8 +6,8 @@ import {
 } from '@angular/router';
 
 /**
- * Guardia de router que permite validar si el usuario
- * tiene privilegios para un determinado router
+ * Guardia del router que permite validar si el usuario
+ * tiene privilegios para un determinada pagina
  *
  * @author Carlos Andres Diaz
  */
@@ -15,7 +15,7 @@ import {
 export class AuthGuard implements CanActivate {
 
   /**
-   * Metodo que permite validar si el router es valido a navegar
+   * Metodo que permite validar si el router es valido para el user
    * @param route , es el router actualmente activo
    * @param state , estado en la que se encuentra el router activo
    */

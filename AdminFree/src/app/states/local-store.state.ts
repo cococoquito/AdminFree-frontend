@@ -1,5 +1,5 @@
-import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { Injectable } from '@angular/core';
+import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
