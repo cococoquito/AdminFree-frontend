@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
  * @author Carlos Andres Diaz
  */
 @Component({
-  selector: 'admin-body',
-  templateUrl: './body.component.html',
-  styleUrls: ['./body.component.css']
+  selector: 'admin-shell',
+  templateUrl: './shell.component.html',
+  styleUrls: ['./shell.component.css']
 })
-export class BodyComponent {}
+export class ShellComponent {}

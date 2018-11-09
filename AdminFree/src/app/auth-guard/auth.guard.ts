@@ -20,7 +20,8 @@ export class AuthGuard implements CanActivate {
    * @param state , estado en la que se encuentra el router activo
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    console.log('AuthGuard entro...');
+    console.log('AuthGuard ActivatedRouteSnapshot...' + route.url);
+    console.log('AuthGuard RouterStateSnapshot...' + state.url);
     return true;
   }
 }

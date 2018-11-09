@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BodyComponent } from './body/body.component';
+import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './header/user/user.component';
 import { MenuComponent } from './menus/menu/menu.component';
@@ -23,7 +23,7 @@ import { SidebarModule } from 'primeng/sidebar';
     SidebarModule
   ],
   declarations: [
-    BodyComponent,
+    ShellComponent,
     HeaderComponent,
     ContentComponent,
     FooterComponent,
@@ -31,6 +31,6 @@ import { SidebarModule } from 'primeng/sidebar';
     MenuItemComponent,
     UserComponent
   ],
-  exports: [BodyComponent]
+  exports: [ ShellComponent ]
 })
 export class ShellModule {}

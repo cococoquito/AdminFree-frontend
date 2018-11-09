@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpRequestInterceptor } from './../../interceptors/http-request.interceptor';
 import { AuthGuard } from './../../auth-guard/auth.guard';
+import { SelectivePreload } from './../../services/selective-preload.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterConstant } from './../../constants/router.constant';
 
@@ -26,11 +27,6 @@ import { RouterConstant } from './../../constants/router.constant';
         loadChildren: '../login/login.module#LoginModule'
       },
       {
-        path: RouterConstant.AUTENTICADO,
-        canActivate: [AuthGuard],
-        loadChildren: '../adminfree/adminfree.module#AdminfreeModule'
-      },
-      {
         path: RouterConstant.ERROR,
         loadChildren: '../pages-error/pages-error.module#PagesErrorModule'
       },
@@ -44,7 +40,7 @@ import { RouterConstant } from './../../constants/router.constant';
         redirectTo: RouterConstant.ERROR,
         pathMatch: 'full'
       }
-    ]),
+    ], { preloadingStrategy: SelectivePreload }),
     HttpClientModule,
     BrowserAnimationsModule
   ],
@@ -55,7 +51,8 @@ import { RouterConstant } from './../../constants/router.constant';
       useClass: HttpRequestInterceptor,
       multi: true
     },
-    AuthGuard
+    AuthGuard,
+    SelectivePreload
   ]
 })
 export class CoreModule {}
