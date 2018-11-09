@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MenuModule } from 'primeng/menu';
+import { SidebarModule } from 'primeng/sidebar';
 import { NoEspaciosBlancoDirective } from './../../directives/validators/espacios-blanco/no-espacios-blanco.directive';
 import { AutofocusDirective } from './../../directives/focus/autofocus.directive';
 
@@ -11,13 +13,23 @@ import { AutofocusDirective } from './../../directives/focus/autofocus.directive
  * @author Carlos Andres Diaz
  */
 @NgModule({
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MenuModule,
+    SidebarModule
+  ],
   exports: [
     CommonModule,
     FormsModule,
+    MenuModule,
+    SidebarModule,
     NoEspaciosBlancoDirective,
     AutofocusDirective
   ],
-  declarations: [NoEspaciosBlancoDirective, AutofocusDirective]
+  declarations: [
+    NoEspaciosBlancoDirective,
+    AutofocusDirective
+  ]
 })
 export class SharedModule {}

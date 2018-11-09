@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from './../shared/shared.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NoEspaciosBlancoDirective } from './../../directives/validators/espacios-blanco/no-espacios-blanco.directive';
+import { AutofocusDirective } from './../../directives/focus/autofocus.directive';
 import { LoginComponent } from './login-component/login.component';
 
 /**
@@ -16,8 +19,13 @@ import { LoginComponent } from './login-component/login.component';
         component: LoginComponent
       }
     ]),
-    SharedModule
+    CommonModule,
+    FormsModule
   ],
-  declarations: [LoginComponent]
+  declarations: [
+    LoginComponent,
+    NoEspaciosBlancoDirective,
+    AutofocusDirective
+  ]
 })
 export class LoginModule {}

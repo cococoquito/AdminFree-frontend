@@ -24,6 +24,6 @@ import { RouterConstant } from '../../constants/router.constant';
       }
     ]),
   ],
-  declarations: [AccesDeniedComponent, NotFoundComponent]
+  declarations: [ AccesDeniedComponent, NotFoundComponent ]
 })
 export class PagesErrorModule {}
