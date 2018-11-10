@@ -1,35 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MenuModule } from 'primeng/menu';
-import { SidebarModule } from 'primeng/sidebar';
-import { NoEspaciosBlancoDirective } from './../../directives/validators/espacios-blanco/no-espacios-blanco.directive';
-import { AutofocusDirective } from './../../directives/focus/autofocus.directive';
+import { ShellModule } from '../shell/shell.module';
 
 /**
- * Modulo que contiene los modulos, componentes comunes
- * para ser compartidos a los demas modulos
+ * Modulo que contiene los artefacto para ser compartidos
+ * para los modulos que se visualizan despues de la autenticacion
  *
  * @author Carlos Andres Diaz
  */
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    MenuModule,
-    SidebarModule
+    ShellModule
   ],
   exports: [
-    CommonModule,
-    FormsModule,
-    MenuModule,
-    SidebarModule,
-    NoEspaciosBlancoDirective,
-    AutofocusDirective
+    ShellModule
   ],
   declarations: [
-    NoEspaciosBlancoDirective,
-    AutofocusDirective
   ]
 })
 export class SharedModule {}

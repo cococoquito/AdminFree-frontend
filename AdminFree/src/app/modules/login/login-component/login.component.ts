@@ -70,7 +70,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
           }
 
           // se redirecciona a la pagina de bienvenida
-          this.router.navigate(['/' + RouterConstant.AUTENTICADO]);
+          this.router.navigate(['/' + RouterConstant.BIENVENIDA]);
         },
         error => {
           this.msjError = this.showMensajeError(error);

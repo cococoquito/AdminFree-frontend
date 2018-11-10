@@ -20,6 +20,11 @@ export const ROUTES: Routes = [
     loadChildren: './modules/login/login.module#LoginModule'
   },
   {
+    path: RouterConstant.BIENVENIDA,
+    canActivate: [AuthGuard],
+    loadChildren: './modules/bienvenida/bienvenida.module#BienvenidaModule'
+  },
+  {
     path: RouterConstant.ERROR,
     loadChildren: './modules/pages-error/pages-error.module#PagesErrorModule'
   },
