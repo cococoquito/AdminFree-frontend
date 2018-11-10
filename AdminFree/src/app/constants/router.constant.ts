@@ -20,6 +20,9 @@ export class RouterConstant {
   /** Router principal del modulo de correpondencia*/
   public static readonly CORRESPONDENCIA: string = 'correspondencia';
 
+  /** Router principal del modulo de reportes*/
+  public static readonly REPORTES: string = 'reportes';
+
   /** Router para la pagina de error cuando el usuario no tiene permisos*/
   public static readonly DENEGADO: string = 'denegado';
 

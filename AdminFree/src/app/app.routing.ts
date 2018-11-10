@@ -35,6 +35,11 @@ export const ROUTES: Routes = [
     loadChildren: './modules/correspondencia/correspondencia.module#CorrespondenciaModule'
   },
   {
+    path: RouterConstant.REPORTES,
+    canActivate: [AuthGuard],
+    loadChildren: './modules/reportes/reportes.module#ReportesModule'
+  },
+  {
     path: RouterConstant.ERROR,
     loadChildren: './modules/pages-error/pages-error.module#PagesErrorModule'
   },
