@@ -1,10 +1,35 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from './../shared/shared.module';
+import { ShellComponent } from './../shell/shell/shell.component';
+import { ConfiguracionesAppComponent } from './configuraciones-app/configuraciones-app.component';
+import { ConfiguracionesUserComponent } from './configuraciones-user/configuraciones-user.component';
 
+/**
+ * Modulo que contiene todas las configuraciones
+ * iniciales de la aplicacion
+ *
+ * @author Carlos Andres Diaz
+ */
 @NgModule({
   imports: [
-    CommonModule
+    RouterModule.forChild([
+      {
+        path: '',
+        component: ShellComponent,
+        children: [
+          {
+            path: '',
+            component: ConfiguracionesAppComponent
+          }
+        ]
+      }
+    ]),
+    SharedModule
   ],
-  declarations: []
+  declarations: [
+    ConfiguracionesAppComponent,
+    ConfiguracionesUserComponent
+  ]
 })
 export class ConfiguracionesModule { }

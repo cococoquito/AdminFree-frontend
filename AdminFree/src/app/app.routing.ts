@@ -40,6 +40,11 @@ export const ROUTES: Routes = [
     loadChildren: './modules/reportes/reportes.module#ReportesModule'
   },
   {
+    path: RouterConstant.CONFIGURACIONES,
+    canActivate: [AuthGuard],
+    loadChildren: './modules/configuraciones/configuraciones.module#ConfiguracionesModule'
+  },
+  {
     path: RouterConstant.ERROR,
     loadChildren: './modules/pages-error/pages-error.module#PagesErrorModule'
   },
