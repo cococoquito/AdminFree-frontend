@@ -1,10 +1,31 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from './../shared/shared.module';
+import { ShellComponent } from './../shell/shell/shell.component';
+import { SolicitarConsecutivoComponent } from './solicitar-consecutivo/solicitar-consecutivo.component';
 
+/**
+ * Modulo que contiene todos los procesos de negocio
+ * para la administracion de los consecutivo de correspondencia
+ *
+ * @author Carlos Andres Diaz
+ */
 @NgModule({
   imports: [
-    CommonModule
+    RouterModule.forChild([
+      {
+        path: '',
+        component: ShellComponent,
+        children: [
+          {
+            path: '',
+            component: SolicitarConsecutivoComponent
+          }
+        ]
+      }
+    ]),
+    SharedModule
   ],
-  declarations: []
+  declarations: [SolicitarConsecutivoComponent]
 })
-export class CorrespondenciaModule { }
+export class CorrespondenciaModule {}

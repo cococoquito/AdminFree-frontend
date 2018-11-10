@@ -14,8 +14,11 @@ export class RouterConstant {
   /** Router para navegar a la pagina BIENVENIDA*/
   public static readonly BIENVENIDA: string = 'bienvenida';
 
-  /** Router principal del modulo archivo-gestion*/
+  /** Router principal del modulo de archivo-gestion*/
   public static readonly ARCHIVO_GESTION: string = 'archivogestion';
+
+  /** Router principal del modulo de correpondencia*/
+  public static readonly CORRESPONDENCIA: string = 'correspondencia';
 
   /** Router para la pagina de error cuando el usuario no tiene permisos*/
   public static readonly DENEGADO: string = 'denegado';
