@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { BienvenidaComponent } from './bienvenida-component/bienvenida.component';
 import { ShellComponent } from './../shell/shell/shell.component';
-import { RouterConstant } from './../../constants/router.constant';
 
 /**
  * Modulo de bienvenida de la aplicacion, se muestra
@@ -18,7 +17,10 @@ import { RouterConstant } from './../../constants/router.constant';
         path: '',
         component: ShellComponent,
         children: [
-          { path: RouterConstant.BIENVENIDA, component: BienvenidaComponent }
+          {
+            path: '',
+            component: BienvenidaComponent
+          }
         ]
       }
     ]),

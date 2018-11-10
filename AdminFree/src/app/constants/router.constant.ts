@@ -14,7 +14,9 @@ export class RouterConstant {
   /** Router para navegar a la pagina BIENVENIDA*/
   public static readonly BIENVENIDA: string = 'bienvenida';
 
-  /** Router para las paginas de errores*/
+  /** Router para la pagina de error cuando el usuario no tiene permisos*/
   public static readonly DENEGADO: string = 'denegado';
+
+  /** Router para la pagina de error cuando la pagina no existe*/
   public static readonly ERROR: string = 'error';
 }
