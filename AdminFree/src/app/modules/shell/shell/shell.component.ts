@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
  * @author Carlos Andres Diaz
  */
 @Component({
-  selector: 'admin-shell',
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.css']
 })
