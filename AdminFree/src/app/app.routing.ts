@@ -25,6 +25,11 @@ export const ROUTES: Routes = [
     loadChildren: './modules/bienvenida/bienvenida.module#BienvenidaModule'
   },
   {
+    path: RouterConstant.ARCHIVO_GESTION,
+    canActivate: [AuthGuard],
+    loadChildren: './modules/archivo-gestion/archivo-gestion.module#ArchivoGestionModule'
+  },
+  {
     path: RouterConstant.ERROR,
     loadChildren: './modules/pages-error/pages-error.module#PagesErrorModule'
   },
