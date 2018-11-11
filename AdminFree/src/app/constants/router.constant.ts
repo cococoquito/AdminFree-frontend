@@ -8,6 +8,9 @@ export class RouterConstant {
   /** Router para navegar al modulo del CLIENTES*/
   public static readonly CLIENTES: string = 'zaqwsx';
 
+  /** Es el router completo del clientes*/
+  public static readonly CLIENTES_ROUTER: string = '/' + RouterConstant.CLIENTES;
+
   /** Router para navegar al modulo del LOGIN*/
   public static readonly LOGIN: string = 'login';
 

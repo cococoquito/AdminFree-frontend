@@ -17,31 +17,37 @@ export const ROUTES: Routes = [
   {
     path: RouterConstant.LOGIN,
     canActivate: [AuthGuard],
+    data: { preload: true },
     loadChildren: './modules/login/login.module#LoginModule'
   },
   {
     path: RouterConstant.BIENVENIDA,
     canActivate: [AuthGuard],
+    data: { preload: true },
     loadChildren: './modules/bienvenida/bienvenida.module#BienvenidaModule'
   },
   {
     path: RouterConstant.ARCHIVO_GESTION,
     canActivate: [AuthGuard],
+    data: { preload: true },
     loadChildren: './modules/archivo-gestion/archivo-gestion.module#ArchivoGestionModule'
   },
   {
     path: RouterConstant.CORRESPONDENCIA,
     canActivate: [AuthGuard],
+    data: { preload: true },
     loadChildren: './modules/correspondencia/correspondencia.module#CorrespondenciaModule'
   },
   {
     path: RouterConstant.REPORTES,
     canActivate: [AuthGuard],
+    data: { preload: true },
     loadChildren: './modules/reportes/reportes.module#ReportesModule'
   },
   {
     path: RouterConstant.CONFIGURACIONES,
     canActivate: [AuthGuard],
+    data: { preload: true },
     loadChildren: './modules/configuraciones/configuraciones.module#ConfiguracionesModule'
   },
   {
