@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './auth-guard/auth.guard';
 import { RouterConstant } from './constants/router.constant';
+import { ModulosConstant } from './constants/modulos.constant';
 
 /**
  * Constante que contiene todos los router de cada modulo del
@@ -29,25 +30,25 @@ export const ROUTES: Routes = [
   {
     path: RouterConstant.ARCHIVO_GESTION,
     canActivate: [AuthGuard],
-    data: { preload: true },
+    data: { preload: true, id: ModulosConstant.ID_ARCHIVO_GESTION },
     loadChildren: './modules/archivo-gestion/archivo-gestion.module#ArchivoGestionModule'
   },
   {
     path: RouterConstant.CORRESPONDENCIA,
     canActivate: [AuthGuard],
-    data: { preload: true },
+    data: { preload: true, id: ModulosConstant.ID_CORRESPONDENCIA },
     loadChildren: './modules/correspondencia/correspondencia.module#CorrespondenciaModule'
   },
   {
     path: RouterConstant.REPORTES,
     canActivate: [AuthGuard],
-    data: { preload: true },
+    data: { preload: true, id: ModulosConstant.ID_REPORTES },
     loadChildren: './modules/reportes/reportes.module#ReportesModule'
   },
   {
     path: RouterConstant.CONFIGURACIONES,
     canActivate: [AuthGuard],
-    data: { preload: true },
+    data: { preload: true, id: ModulosConstant.ID_CONFIGURACIONES },
     loadChildren: './modules/configuraciones/configuraciones.module#ConfiguracionesModule'
   },
   {
