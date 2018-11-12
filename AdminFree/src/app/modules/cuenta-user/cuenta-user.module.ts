@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { ShellComponent } from './../shell/shell/shell.component';
-import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
+import { AdminCuentaUserComponent } from './admin-cuenta-user/admin-cuenta-user.component';
 
 /**
- * Modulo que contiene todas las configuraciones iniciales de la aplicacion
+ * Modulo para la administracion de la cuenta del usuario
  *
  * @author Carlos Andres Diaz
  */
@@ -18,15 +18,13 @@ import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.componen
         children: [
           {
             path: '',
-            component: AdminUsuariosComponent
+            component: AdminCuentaUserComponent
           }
         ]
       }
     ]),
     SharedModule
   ],
-  declarations: [
-    AdminUsuariosComponent
-  ]
+  declarations: [AdminCuentaUserComponent]
 })
-export class ConfiguracionesModule { }
+export class CuentaUserModule {}

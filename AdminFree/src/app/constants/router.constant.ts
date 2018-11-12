@@ -29,6 +29,9 @@ export class RouterConstant {
   /** Router principal del modulo de configuraciones*/
   public static readonly CONFIGURACIONES: string = 'configuraciones';
 
+  /** Router principal del modulo de cuenta-user*/
+  public static readonly ADMIN_CUENTA_USER: string = 'admincuentauser';
+
   /** Router para la pagina de error cuando el usuario no tiene permisos*/
   public static readonly DENEGADO: string = 'denegado';
 

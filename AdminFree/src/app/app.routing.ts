@@ -28,6 +28,12 @@ export const ROUTES: Routes = [
     loadChildren: './modules/bienvenida/bienvenida.module#BienvenidaModule'
   },
   {
+    path: RouterConstant.ADMIN_CUENTA_USER,
+    canActivate: [AuthGuard],
+    data: { preload: true },
+    loadChildren: './modules/cuenta-user/cuenta-user.module#CuentaUserModule'
+  },
+  {
     path: RouterConstant.ARCHIVO_GESTION,
     canActivate: [AuthGuard],
     data: { preload: true, id: ModulosConstant.ID_ARCHIVO_GESTION },
