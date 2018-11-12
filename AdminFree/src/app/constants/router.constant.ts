@@ -37,4 +37,7 @@ export class RouterConstant {
 
   /** Router para la pagina de error cuando la pagina no existe*/
   public static readonly ERROR: string = 'error';
+
+  /** Router para la pagina de error cuando el usuario no tiene permisos*/
+  public static readonly ERROR_DENEGADO: string = RouterConstant.ERROR + '/' + RouterConstant.DENEGADO;
 }
