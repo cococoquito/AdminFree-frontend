@@ -3,6 +3,7 @@
   align-items: flex-end;
   justify-content: flex-end;
   flex-grow: 1;
+  position: relative;
 }
 
 :host(.vertical-menu) {
