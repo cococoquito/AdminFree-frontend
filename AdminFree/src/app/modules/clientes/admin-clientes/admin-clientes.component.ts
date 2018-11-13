@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
 import { LocalStoreService } from './../../../services/local-store.service';
+import { AdminClienteService } from './../../../services/admin-cliente.service';
 import { SeguridadService } from '../../../services/seguridad.service';
-import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
@@ -43,12 +43,12 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
    * Creates an instance of AdminClientesComponent.
    *
    * @param segService, contiene los servicios para la seguridad sistema
-   * @param confService, contiene los servicios para la configuraciones sistema
+   * @param adminService, contiene los servicios para la administracion de clientes
    * @param localStoreState, se utiliza para obtener las credenciales del usuario, admin
    */
   constructor(
     private segService: SeguridadService,
-    private confService: ConfiguracionesService,
+    private adminService: AdminClienteService,
     private localStoreService: LocalStoreService) {
     super();
   }
@@ -105,7 +105,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     this.msjError = null;
 
     // se procede a crear el cliente en el sistema
-    this.confService.crearCliente(this.clienteCrear).subscribe(
+    this.adminService.crearCliente(this.clienteCrear).subscribe(
       data => {
 
         // se procede agregar el cliente en la lista visualizada en la pagina
@@ -133,7 +133,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     if (confirm('¿Está seguro de ELIMINAR el siguiente cliente? ' + cliente.nombre)) {
 
       // se procede a eliminar el cliente del sistema
-      this.confService.eliminarCliente(cliente).subscribe(
+      this.adminService.eliminarCliente(cliente).subscribe(
         data => {
 
           // se elimina el cliente de la lista visualizada en la pagina
@@ -168,7 +168,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a inactivar el cliente en el sistema
       cliente.tipoEvento = TipoEventoConstant.INACTIVAR;
-      this.confService.activarInactivarCliente(cliente).subscribe(
+      this.adminService.activarInactivarCliente(cliente).subscribe(
         data => {
 
           // se configura los datos retornado del servidor
@@ -203,7 +203,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a ACTIVAR el cliente en el sistema
       cliente.tipoEvento = TipoEventoConstant.ACTIVAR;
-      this.confService.activarInactivarCliente(cliente).subscribe(
+      this.adminService.activarInactivarCliente(cliente).subscribe(
         data => {
 
           // se configura los datos retornado del servidor
@@ -238,7 +238,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a MODIFICAR el cliente en el sistema
       this.clienteModificar.tipoEvento = TipoEventoConstant.ACTUALIZAR;
-      this.confService.modificarCliente(this.clienteModificar).subscribe(
+      this.adminService.modificarCliente(this.clienteModificar).subscribe(
         data => {
 
           // se cierra el modo de edicion

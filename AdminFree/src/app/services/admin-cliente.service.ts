@@ -6,13 +6,13 @@ import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { ConfiguracionesConstant } from './../constants/configuraciones.constant';
 
 /**
- * Clase que contiene todos los servicios para las CONFIGURACIONES
- * del sistema
+ * Clase que contiene todos los servicios para la administracion
+ * de clientes en el sistema
  *
  * @author Carlos Andres Diaz
  */
 @Injectable({ providedIn: 'root' })
-export class ConfiguracionesService {
+export class AdminClienteService {
 
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
