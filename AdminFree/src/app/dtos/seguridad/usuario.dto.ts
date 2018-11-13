@@ -1,4 +1,4 @@
-import { RolDTO } from './rol.dto';
+import { ModuloDTO } from './modulo.dto';
 import { ClienteDTO } from '../configuraciones/cliente.dto';
 
 /**
@@ -18,6 +18,6 @@ export class UsuarioDTO {
   /** Cliente donde pertenece el usuario */
   public cliente: ClienteDTO;
 
-  /** Lista de ROLES que tiene el usuario */
-  public roles: Array<RolDTO>;
+  /** Lista de Modulos asignados al usuario */
+  public modulos: Array<ModuloDTO>;
 }

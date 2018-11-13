@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStoreState } from './../states/local-store.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
-import { RolDTO } from './../dtos/seguridad/rol.dto';
+import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 import { RouterConstant } from './../constants/router.constant';
 import {
@@ -54,7 +54,7 @@ export class AuthGuard implements CanActivate {
 
   /**
    * Metodo que permite validar si el current router es valido cuando
-   * el usuario se encuentra autenticado en el sistema, tomando sus roles
+   * el usuario se encuentra autenticado en el sistema, tomando sus modulos
    * y verificando si tiene privilegios para esa URL especifica
    *
    * @param route, es el router actualmente activo
@@ -70,7 +70,7 @@ export class AuthGuard implements CanActivate {
     if (url.includes(RouterConstant.LOGIN)) {
         valido = this.goTo(RouterConstant.BIENVENIDA);
     } else {
-      // no aplica para administador (tiene todo privilegios),
+      // no aplica para administrador (tiene todo privilegios),
       // tampoco para las paginas de bienvenida y administracion
       // de cuenta user, son visibles para todos los usuarios o admin
       if (!credenciales.administrador &&
@@ -81,8 +81,8 @@ export class AuthGuard implements CanActivate {
           const user: UsuarioDTO = this.localStoreState.userAuth(TipoEventoConstant.GET);
 
           // si el usuario tiene modulos asignados
-          if (user.roles) {
-              valido = this.tieneUserPrivilegio(user.roles, route);
+          if (user.modulos) {
+              valido = this.tieneUserPrivilegio(user.modulos, route);
           } else {
               valido = this.goTo(RouterConstant.ERROR_DENEGADO);
           }
@@ -113,7 +113,7 @@ export class AuthGuard implements CanActivate {
    * @param route se utiliza para obtener el id del modulo current
    * @returns true si tiene privilegios de lo contrario false
    */
-  private tieneUserPrivilegio(modulos: Array<RolDTO>, route: ActivatedRouteSnapshot): boolean {
+  private tieneUserPrivilegio(modulos: Array<ModuloDTO>, route: ActivatedRouteSnapshot): boolean {
     // se recorre todos los modulos asignados al usuario verificando
     // si tiene algun modulo con el mismo id del modulo current
     const idModulo: number = route.data.id;
