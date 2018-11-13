@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
+import { LocalStoreService } from './../services/local-store.service';
 import { SpinnerState } from './../states/spinner.state';
-import { LocalStoreState } from './../states/local-store.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { SeguridadConstant } from '../constants/seguridad.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
@@ -26,11 +26,11 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
   /**
    * @param spinnerState, se utiliza para visualizar, ocultar el spinner
-   * @param localStoreState, se utiliza para obtener las credenciales del usuario, admin
+   * @param localStoreService, se utiliza para obtener las credenciales del usuario, admin
    */
   constructor(
     private spinnerState: SpinnerState,
-    private localStoreState: LocalStoreState) {}
+    private localStoreService: LocalStoreService) {}
 
   /**
    * Metodo que permite capturar cada request del sistema,
@@ -102,9 +102,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    * el administrador de clientes del local-store
    */
   private getCredenciales(): CredencialesDTO {
-    let user: CredencialesDTO = this.localStoreState.credenciales(TipoEventoConstant.GET);
+    let user: CredencialesDTO = this.localStoreService.credenciales(TipoEventoConstant.GET);
     if (!user) {
-        user = this.localStoreState.credencialesAdminClientes(TipoEventoConstant.GET);
+        user = this.localStoreService.credencialesAdminClientes(TipoEventoConstant.GET);
     }
     return user;
   }

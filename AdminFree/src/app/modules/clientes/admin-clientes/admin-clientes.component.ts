@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
+import { LocalStoreService } from './../../../services/local-store.service';
 import { SeguridadService } from '../../../services/seguridad.service';
 import { ConfiguracionesService } from './../../../services/configuraciones.service';
-import { LocalStoreState } from './../../../states/local-store.state';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
@@ -49,7 +49,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   constructor(
     private segService: SeguridadService,
     private confService: ConfiguracionesService,
-    private localStoreState: LocalStoreState) {
+    private localStoreService: LocalStoreService) {
     super();
   }
 
@@ -325,8 +325,8 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   public cerrarSesion(): void {
 
     // se limpia los keystore almacenados
-    this.localStoreState.clientes(TipoEventoConstant.REMOVE);
-    this.localStoreState.credencialesAdminClientes(TipoEventoConstant.REMOVE);
+    this.localStoreService.clientes(TipoEventoConstant.REMOVE);
+    this.localStoreService.credencialesAdminClientes(TipoEventoConstant.REMOVE);
 
     // se crea la instancia de las credenciales por si intentan ingresar de nuevo
     this.credenciales = new CredencialesDTO();
@@ -346,7 +346,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   private init(): void {
 
     // se obtiene las credenciales del localstore
-    const credenciales: CredencialesDTO = this.localStoreState.credencialesAdminClientes(TipoEventoConstant.GET);
+    const credenciales: CredencialesDTO = this.localStoreService.credencialesAdminClientes(TipoEventoConstant.GET);
 
     // se verifica si el administrador ya se autentico con anterioridad
     if (credenciales) {
@@ -356,7 +356,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
       this.autenticacion.credenciales = credenciales;
 
       // se configura los clientes consultados con anterioridad
-      this.autenticacion.clientes = this.localStoreState.clientes(TipoEventoConstant.GET);
+      this.autenticacion.clientes = this.localStoreService.clientes(TipoEventoConstant.GET);
     } else {
       // cuando el administrador no se ha autenticado
       this.credenciales = new CredencialesDTO();
@@ -369,20 +369,20 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   private setStateLocalStore(): void {
 
     // se limpia los keystore almacenados
-    this.localStoreState.clientes(TipoEventoConstant.REMOVE);
-    this.localStoreState.credencialesAdminClientes(TipoEventoConstant.REMOVE);
+    this.localStoreService.clientes(TipoEventoConstant.REMOVE);
+    this.localStoreService.credencialesAdminClientes(TipoEventoConstant.REMOVE);
 
     // se verifica si el cliente esta autenticado
     if (this.autenticacion) {
 
       // se configura las credenciales en el localstore
       if (this.autenticacion.credenciales) {
-        this.localStoreState.credencialesAdminClientes(TipoEventoConstant.SET, this.autenticacion.credenciales);
+        this.localStoreService.credencialesAdminClientes(TipoEventoConstant.SET, this.autenticacion.credenciales);
       }
 
       // se configura los clientes en el localstore
       if (this.autenticacion.clientes) {
-        this.localStoreState.clientes(TipoEventoConstant.SET, this.autenticacion.clientes);
+        this.localStoreService.clientes(TipoEventoConstant.SET, this.autenticacion.clientes);
       }
     }
   }

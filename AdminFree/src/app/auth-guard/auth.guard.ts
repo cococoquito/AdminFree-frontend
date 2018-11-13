@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStoreState } from './../states/local-store.state';
+import { LocalStoreService } from './../services/local-store.service';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
@@ -22,11 +22,11 @@ export class AuthGuard implements CanActivate {
 
   /**
    * @param router, es el router de la app para el redireccionamiento
-   * @param localStoreState, se utiliza para obtener las credenciales del usuario o admin
+   * @param localStoreService, se utiliza para obtener las credenciales del usuario o admin
    */
   constructor(
     private router: Router,
-    private localStoreState: LocalStoreState) {}
+    private localStoreService: LocalStoreService) {}
 
   /**
    * Metodo que permite validar si el router es valido para el user
@@ -41,7 +41,7 @@ export class AuthGuard implements CanActivate {
     const url = state.url;
 
     // se obtiene las credenciales del ADMIN o USER
-    const credenciales: CredencialesDTO = this.localStoreState.credenciales(TipoEventoConstant.GET);
+    const credenciales: CredencialesDTO = this.localStoreService.credenciales(TipoEventoConstant.GET);
 
     // dependiendo del estado de la autenticacion se hace el llamado a los metodos
     if (credenciales) {
@@ -78,7 +78,7 @@ export class AuthGuard implements CanActivate {
           !url.includes(RouterConstant.ADMIN_CUENTA_USER)) {
 
           // se obtiene los datos del usuario autenticado
-          const user: UsuarioDTO = this.localStoreState.userAuth(TipoEventoConstant.GET);
+          const user: UsuarioDTO = this.localStoreService.userAuth(TipoEventoConstant.GET);
 
           // si el usuario tiene modulos asignados
           if (user && user.modulos) {

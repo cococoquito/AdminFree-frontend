@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStoreService } from './../../../../services/local-store.service';
 import { ShellState } from '../../../../states/shell.state';
-import { LocalStoreState } from './../../../../states/local-store.state';
 import { MenuItem } from 'primeng/api';
 import { RouterConstant } from './../../../../constants/router.constant';
 
@@ -25,12 +25,12 @@ export class UserComponent implements OnInit {
    * Constructor del componente
    *
    * @param estado , estado del shell de la app
-   * @param localStoreState , estado del local-store
+   * @param localStoreService , se utiliza para limpiar el localstore cuando cierra sesion
    * @param router , router para la navegacion
    */
   constructor(
     public estado: ShellState,
-    private localStoreState: LocalStoreState,
+    private localStoreService: LocalStoreService,
     private router: Router) {}
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class UserComponent implements OnInit {
    */
   public cerrarSesion(): void {
     // se limpia todo los datos almacenados del localstore
-    this.localStoreState.cleanAll();
+    this.localStoreService.cleanAll();
 
     // se redirecciona al LOGIN
     this.router.navigate(['/' + RouterConstant.LOGIN]);

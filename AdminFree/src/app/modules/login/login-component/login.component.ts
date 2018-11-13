@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonComponent } from './../../../util-class/common.component';
+import { LocalStoreService } from './../../../services/local-store.service';
 import { SeguridadService } from './../../../services/seguridad.service';
-import { LocalStoreState } from './../../../states/local-store.state';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 import { RouterConstant } from './../../../constants/router.constant';
@@ -26,13 +26,13 @@ export class LoginComponent extends CommonComponent implements OnInit {
 
   /**
    * @param segService, contiene los servicios de seguridad
-   * @param localStoreState, se utiliza para almacenar los datos
+   * @param localStoreService, se utiliza para almacenar los datos
    * del user o admin autenticado en el sistema
    * @param router, Router para la navegacion a la pagina bienvenida
    */
   constructor(
     private segService: SeguridadService,
-    private localStoreState: LocalStoreState,
+    private localStoreService: LocalStoreService,
     private router: Router) {
     super();
   }
@@ -58,13 +58,13 @@ export class LoginComponent extends CommonComponent implements OnInit {
       this.segService.iniciarSesion(this.credenciales).subscribe(
         data => {
           // se configura las credenciales del USER o ADMIN
-          this.localStoreState.credenciales(TipoEventoConstant.SET, data.credenciales);
+          this.localStoreService.credenciales(TipoEventoConstant.SET, data.credenciales);
 
           // se configura los datos del USER o ADMIN
           if (this.credenciales.administrador) {
-              this.localStoreState.adminAuth(TipoEventoConstant.SET, data.administrador);
+              this.localStoreService.adminAuth(TipoEventoConstant.SET, data.administrador);
           } else {
-            this.localStoreState.userAuth(TipoEventoConstant.SET, data.usuario);
+            this.localStoreService.userAuth(TipoEventoConstant.SET, data.usuario);
           }
 
           // se redirecciona a la pagina de bienvenida

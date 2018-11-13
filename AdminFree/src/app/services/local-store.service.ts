@@ -5,12 +5,12 @@ import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
- * Es el estado del local store de la aplicacion
+ * Sevicio que permite administrar los datos almacenados en el local-store
  *
  * @author Carlos Andres Diaz
  */
 @Injectable({ providedIn: 'root' })
-export class LocalStoreState {
+export class LocalStoreService {
 
   /** Key que representa los clientes en el local-store*/
   private readonly KEY_CLIENTES: string = 'CLIENTES';
