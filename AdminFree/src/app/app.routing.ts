@@ -36,25 +36,25 @@ export const ROUTES: Routes = [
   {
     path: RouterConstant.ARCHIVO_GESTION,
     canActivate: [AuthGuard],
-    data: { preload: true, id: ModulosConstant.ID_ARCHIVO_GESTION },
+    data: { preload: true, token: ModulosConstant.TK_ARCHIVO_GESTION },
     loadChildren: './modules/archivo-gestion/archivo-gestion.module#ArchivoGestionModule'
   },
   {
     path: RouterConstant.CORRESPONDENCIA,
     canActivate: [AuthGuard],
-    data: { preload: true, id: ModulosConstant.ID_CORRESPONDENCIA },
+    data: { preload: true, token: ModulosConstant.TK_CORRESPONDENCIA },
     loadChildren: './modules/correspondencia/correspondencia.module#CorrespondenciaModule'
   },
   {
     path: RouterConstant.REPORTES,
     canActivate: [AuthGuard],
-    data: { preload: true, id: ModulosConstant.ID_REPORTES },
+    data: { preload: true, token: ModulosConstant.TK_REPORTES },
     loadChildren: './modules/reportes/reportes.module#ReportesModule'
   },
   {
     path: RouterConstant.CONFIGURACIONES,
     canActivate: [AuthGuard],
-    data: { preload: true, id: ModulosConstant.ID_CONFIGURACIONES },
+    data: { preload: true, token: ModulosConstant.TK_CONFIGURACIONES },
     loadChildren: './modules/configuraciones/configuraciones.module#ConfiguracionesModule'
   },
   {

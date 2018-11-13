@@ -6,8 +6,8 @@
  */
 export class ModuloDTO {
 
-  /** Identificador del MODULO */
-  public id: number;
+  /** token del MODULO */
+  public tokenModulo: string;
 
   /** Nombre del MODULO */
   public nombre: string;

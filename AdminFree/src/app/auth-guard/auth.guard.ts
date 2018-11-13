@@ -115,10 +115,10 @@ export class AuthGuard implements CanActivate {
    */
   private tieneUserPrivilegio(modulos: Array<ModuloDTO>, route: ActivatedRouteSnapshot): boolean {
     // se recorre todos los modulos asignados al usuario verificando
-    // si tiene algun modulo con el mismo id del modulo current
-    const idModulo: number = route.data.id;
+    // si tiene algun modulo con el mismo token del modulo current
+    const tokenModulo: string = route.data.token;
     for (const modulo of modulos) {
-      if (modulo.id === idModulo) {
+      if (modulo.tokenModulo === tokenModulo) {
           return true;
       }
     }

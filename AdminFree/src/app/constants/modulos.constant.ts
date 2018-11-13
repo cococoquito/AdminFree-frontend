@@ -6,15 +6,15 @@
  */
 export class ModulosConstant {
 
-  /** identificador del modulo correspondencia */
-  static readonly ID_CORRESPONDENCIA: number = 1;
+  /** Token del modulo correspondencia */
+  static readonly TK_CORRESPONDENCIA: string = '9f1124f946de506332f221a01d39c411';
 
-  /** identificador del modulo archivo gestion */
-  static readonly ID_ARCHIVO_GESTION: number = 2;
+  /** Token del modulo archivo gestion */
+  static readonly TK_ARCHIVO_GESTION: string = 'a9ee4d222a05960a00ea9b5eb6fb0a81';
 
-  /** identificador del modulo de reportes */
-  static readonly ID_REPORTES: number = 3;
+  /** Token del modulo de reportes */
+  static readonly TK_REPORTES: string = 'b6177afc6e3818cb7cb663cf71ef1ce4';
 
-  /** identificador del modulo configuraciones de la app */
-  static readonly ID_CONFIGURACIONES: number = 4;
+  /** Token del modulo configuraciones de la app */
+  static readonly TK_CONFIGURACIONES: string = '4813e117da87e1ae5bdfb0d4967f4387';
 }
