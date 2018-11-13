@@ -11,7 +11,7 @@ import { ConfiguracionesConstant } from './../constants/configuraciones.constant
  *
  * @author Carlos Andres Diaz
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AdminClienteService {
 
   /**
