@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStoreService } from './../../../../services/local-store.service';
 import { ShellState } from '../../../../states/shell.state';
+import { CuentaUserState } from './../../../../states/cuenta-user.state';
 import { MenuItem } from 'primeng/api';
 import { RouterConstant } from './../../../../constants/router.constant';
 
@@ -22,14 +23,14 @@ export class UserComponent implements OnInit {
   public items: MenuItem[];
 
   /**
-   * Constructor del componente
-   *
    * @param estado , estado del shell de la app
+   * @param estadoCuenta , se utiliza para mostrar el nombre del user autenticado
    * @param localStoreService , se utiliza para limpiar el localstore cuando cierra sesion
    * @param router , router para la navegacion
    */
   constructor(
     public estado: ShellState,
+    public estadoCuenta: CuentaUserState,
     private localStoreService: LocalStoreService,
     private router: Router) {}
 
