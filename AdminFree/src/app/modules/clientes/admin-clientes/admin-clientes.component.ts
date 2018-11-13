@@ -15,7 +15,7 @@ import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
  */
 @Component({
   templateUrl: './admin-clientes.component.html',
-  providers: [AdminClienteService]
+  providers: [AdminClienteService, SeguridadService]
 })
 export class AdminClientesComponent extends CommonComponent implements OnInit {
 

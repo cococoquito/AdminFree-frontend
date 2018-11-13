@@ -14,7 +14,8 @@ import { RouterConstant } from './../../../constants/router.constant';
  */
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [SeguridadService]
 })
 export class LoginComponent extends CommonComponent implements OnInit {
 

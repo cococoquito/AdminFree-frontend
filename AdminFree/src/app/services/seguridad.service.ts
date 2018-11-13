@@ -11,7 +11,7 @@ import { SeguridadConstant } from './../constants/seguridad.constant';
  *
  * @author Carlos Andres Diaz
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SeguridadService {
 
   /**
