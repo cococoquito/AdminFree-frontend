@@ -1,6 +1,5 @@
 /**
- * Clase constante que contiene los atributos
- * de cada modulo del sistema
+ * Clase constante que contiene los tokens de los modulos
  *
  * @author Carlos Andres Diaz
  */

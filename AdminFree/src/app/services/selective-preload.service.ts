@@ -14,7 +14,6 @@ import { RouterConstant } from '../constants/router.constant';
 export class SelectivePreload implements PreloadingStrategy {
 
   /**
-   * Constructor del preolading
    * @param router, se utiliza para validar a que URL
    * especifico no se debe cargar los demas modulos
    */

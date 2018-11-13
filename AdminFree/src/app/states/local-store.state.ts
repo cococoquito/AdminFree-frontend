@@ -36,6 +36,14 @@ export class LocalStoreState {
   }
 
   /**
+   * Metodo que permite administrar las credenciales de seguridad en el LOCAL-STORE
+   * para los usuarios o administrador del sistema
+   */
+  public credenciales(evento: TipoEventoConstant, credenciales?: CredencialesDTO): CredencialesDTO {
+    return this.implementarEvento(evento, this.KEY_CREDENCIALES, credenciales);
+  }
+
+  /**
    * Metodo que permite administrar los datos del ADMIN autenticado en el LOCAL-STORE
    */
   public adminAuth(evento: TipoEventoConstant, admin?: ClienteDTO): ClienteDTO {
@@ -47,13 +55,6 @@ export class LocalStoreState {
    */
   public userAuth(evento: TipoEventoConstant, user?: UsuarioDTO): UsuarioDTO {
     return this.implementarEvento(evento, this.KEY_USER_AUTH, user);
-  }
-
-  /**
-   * Metodo que permite administrar las credenciales de seguridad en el LOCAL-STORE
-   */
-  public credenciales(evento: TipoEventoConstant, credenciales?: CredencialesDTO): CredencialesDTO {
-    return this.implementarEvento(evento, this.KEY_CREDENCIALES, credenciales);
   }
 
   /**
@@ -69,9 +70,9 @@ export class LocalStoreState {
   public cleanAll(): void {
     localStorage.removeItem(this.KEY_CLIENTES);
     localStorage.removeItem(this.KEY_CREDENCIALES);
+    localStorage.removeItem(this.KEY_CREDENCIALES_ADMIN);
     localStorage.removeItem(this.KEY_USER_AUTH);
     localStorage.removeItem(this.KEY_ADMIN_AUTH);
-    localStorage.removeItem(this.KEY_CREDENCIALES_ADMIN);
   }
 
   /**

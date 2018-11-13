@@ -81,7 +81,7 @@ export class AuthGuard implements CanActivate {
           const user: UsuarioDTO = this.localStoreState.userAuth(TipoEventoConstant.GET);
 
           // si el usuario tiene modulos asignados
-          if (user.modulos) {
+          if (user && user.modulos) {
               valido = this.tieneUserPrivilegio(user.modulos, route);
           } else {
               valido = this.goTo(RouterConstant.ERROR_DENEGADO);
@@ -110,7 +110,7 @@ export class AuthGuard implements CanActivate {
    * tiene visibilidad al current router navegacion
    *
    * @param modulos asignados al user
-   * @param route se utiliza para obtener el id del modulo current
+   * @param route se utiliza para obtener el token del modulo current
    * @returns true si tiene privilegios de lo contrario false
    */
   private tieneUserPrivilegio(modulos: Array<ModuloDTO>, route: ActivatedRouteSnapshot): boolean {

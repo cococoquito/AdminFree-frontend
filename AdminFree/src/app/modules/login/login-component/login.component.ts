@@ -25,8 +25,6 @@ export class LoginComponent extends CommonComponent implements OnInit {
   public msjError: string;
 
   /**
-   * Constructor del login de la aplicacion
-   *
    * @param segService, contiene los servicios de seguridad
    * @param localStoreState, se utiliza para almacenar los datos
    * del user o admin autenticado en el sistema

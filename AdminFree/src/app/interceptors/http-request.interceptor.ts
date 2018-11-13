@@ -25,8 +25,6 @@ import {
 export class HttpRequestInterceptor implements HttpInterceptor {
 
   /**
-   * Constructor del HttpInterceptor
-   *
    * @param spinnerState, se utiliza para visualizar, ocultar el spinner
    * @param localStoreState, se utiliza para obtener las credenciales del usuario, admin
    */
@@ -105,10 +103,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    */
   private getCredenciales(): CredencialesDTO {
     let user: CredencialesDTO = this.localStoreState.credenciales(TipoEventoConstant.GET);
-    if (user) {
-      return user;
+    if (!user) {
+        user = this.localStoreState.credencialesAdminClientes(TipoEventoConstant.GET);
     }
-    user = this.localStoreState.credencialesAdminClientes(TipoEventoConstant.GET);
     return user;
   }
 }
