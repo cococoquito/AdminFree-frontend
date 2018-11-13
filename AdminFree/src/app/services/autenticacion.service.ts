@@ -7,12 +7,13 @@ import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { SeguridadConstant } from './../constants/seguridad.constant';
 
 /**
- * Clase que contiene todos los servicios para el modulo de SEGURIDAD
+ * Clase que contiene los servicios para la autenticacion
+ * en el sistema para todo tipo de usuarios
  *
  * @author Carlos Andres Diaz
  */
 @Injectable()
-export class SeguridadService {
+export class AutenticacionService {
 
   /**
    * @param HTTP para hacer las peticiones a los servicios REST

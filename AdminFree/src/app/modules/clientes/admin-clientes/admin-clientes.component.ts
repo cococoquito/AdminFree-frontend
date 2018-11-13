@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
 import { LocalStoreService } from './../../../services/local-store.service';
 import { AdminClienteService } from './../../../services/admin-cliente.service';
-import { SeguridadService } from '../../../services/seguridad.service';
+import { AutenticacionService } from './../../../services/autenticacion.service';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
@@ -15,7 +15,7 @@ import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
  */
 @Component({
   templateUrl: './admin-clientes.component.html',
-  providers: [AdminClienteService, SeguridadService]
+  providers: [AdminClienteService, AutenticacionService]
 })
 export class AdminClientesComponent extends CommonComponent implements OnInit {
 
@@ -43,12 +43,12 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   /**
    * Creates an instance of AdminClientesComponent.
    *
-   * @param segService, contiene los servicios para la seguridad sistema
+   * @param autenticacionService, contiene los servicios para la autenticacion
    * @param adminService, contiene los servicios para la administracion de clientes
    * @param localStoreState, se utiliza para obtener las credenciales del usuario, admin
    */
   constructor(
-    private segService: SeguridadService,
+    private autenticacionService: AutenticacionService,
     private adminService: AdminClienteService,
     private localStoreService: LocalStoreService) {
     super();
@@ -78,7 +78,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
         this.credenciales.usuario) {
 
       // se procede a iniciar sesion ante el sistema
-      this.segService.iniciarSesionAdminClientes(this.credenciales).subscribe(
+      this.autenticacionService.iniciarSesionAdminClientes(this.credenciales).subscribe(
         data => {
 
           // se configura el response

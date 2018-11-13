@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonComponent } from './../../../util-class/common.component';
 import { LocalStoreService } from './../../../services/local-store.service';
-import { SeguridadService } from './../../../services/seguridad.service';
+import { AutenticacionService } from './../../../services/autenticacion.service';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 import { RouterConstant } from './../../../constants/router.constant';
@@ -15,7 +15,7 @@ import { RouterConstant } from './../../../constants/router.constant';
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [SeguridadService]
+  providers: [AutenticacionService]
 })
 export class LoginComponent extends CommonComponent implements OnInit {
 
@@ -26,13 +26,13 @@ export class LoginComponent extends CommonComponent implements OnInit {
   public msjError: string;
 
   /**
-   * @param segService, contiene los servicios de seguridad
+   * @param autenticacionService, contiene los servicios para la autenticacion
    * @param localStoreService, se utiliza para almacenar los datos
    * del user o admin autenticado en el sistema
    * @param router, Router para la navegacion a la pagina bienvenida
    */
   constructor(
-    private segService: SeguridadService,
+    private autenticacionService: AutenticacionService,
     private localStoreService: LocalStoreService,
     private router: Router) {
     super();
@@ -56,7 +56,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
         this.credenciales.usuario) {
 
       // se procede a iniciar sesion en el sistema
-      this.segService.iniciarSesion(this.credenciales).subscribe(
+      this.autenticacionService.iniciarSesion(this.credenciales).subscribe(
         data => {
           // se configura las credenciales del USER o ADMIN
           this.localStoreService.credenciales(TipoEventoConstant.SET, data.credenciales);
