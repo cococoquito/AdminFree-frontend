@@ -6,12 +6,12 @@ import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
- * Es el estado en la que se encuentra los datos de la cuenta del usuario
- * autenticado en el sistema
+ * Es el estado en la que se encuentra los datos de la cuenta
+ * del usuario autenticado en el sistema
  *
  * @author Carlos Andres Diaz
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class CuentaUserState {
 
   /**
@@ -25,7 +25,6 @@ export class CuentaUserState {
    * de la cuenta del usuario autenticado en el sistema
    */
   constructor(private localStoreService: LocalStoreService) {
-    // se obtiene los datos del usuario autenticado
     this.getUsuarioAutenticado();
   }
 

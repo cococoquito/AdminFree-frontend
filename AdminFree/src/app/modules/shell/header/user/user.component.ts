@@ -15,7 +15,8 @@ import { RouterConstant } from './../../../../constants/router.constant';
 @Component({
   selector: 'admin-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
+  providers: [CuentaUserState]
 })
 export class UserComponent implements OnInit {
 
@@ -24,13 +25,13 @@ export class UserComponent implements OnInit {
 
   /**
    * @param estado , estado del shell de la app
-   * @param estadoCuenta , se utiliza para mostrar el nombre del user autenticado
+   * @param cuentaUserState , se utiliza para mostrar el nombre del user autenticado
    * @param localStoreService , se utiliza para limpiar el localstore cuando cierra sesion
    * @param router , router para la navegacion
    */
   constructor(
     public estado: ShellState,
-    public estadoCuenta: CuentaUserState,
+    public cuentaUserState: CuentaUserState,
     private localStoreService: LocalStoreService,
     private router: Router) {}
 
