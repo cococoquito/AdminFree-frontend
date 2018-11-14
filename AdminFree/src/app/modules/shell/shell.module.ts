@@ -4,7 +4,7 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './header/header.component';
-import { UserComponent } from './header/user/user.component';
+import { UserAccountComponent } from './header/user-account/user-account.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { MenuItemComponent } from './menus/menu-item/menu-item.component';
 import { ContentComponent } from './content/content.component';
@@ -29,7 +29,7 @@ import { FooterComponent } from './footer/footer.component';
     FooterComponent,
     MenuComponent,
     MenuItemComponent,
-    UserComponent
+    UserAccountComponent
   ],
   exports: [
     ShellComponent,

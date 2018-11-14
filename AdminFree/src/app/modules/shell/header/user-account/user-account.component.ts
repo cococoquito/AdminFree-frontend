@@ -13,24 +13,24 @@ import { RouterConstant } from './../../../../constants/router.constant';
  * @author Carlos Andres Diaz
  */
 @Component({
-  selector: 'admin-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  selector: 'admin-user-account',
+  templateUrl: './user-account.component.html',
+  styleUrls: ['./user-account.component.css'],
   providers: [CuentaUserState]
 })
-export class UserComponent implements OnInit {
+export class UserAccountComponent implements OnInit {
 
   /** Son los items a mostrar en el menu de user-settings */
   public items: MenuItem[];
 
   /**
-   * @param estado , estado del shell de la app
+   * @param shellState , estado del shell de la app
    * @param cuentaUserState , se utiliza para mostrar el nombre del user autenticado
    * @param localStoreService , se utiliza para limpiar el localstore cuando cierra sesion
    * @param router , router para la navegacion
    */
   constructor(
-    public estado: ShellState,
+    public shellState: ShellState,
     public cuentaUserState: CuentaUserState,
     private localStoreService: LocalStoreService,
     private router: Router) {}
