@@ -89,17 +89,6 @@ export class LocalStoreService {
   }
 
   /**
-   * Metodo que permite obtener los modulos del funcionario autenticado
-   */
-  public getModulosUsuario(): Array<ModuloDTO> {
-    const usuario: any = this.getDatosUsuarioAutenticado();
-    if (usuario && usuario.modulos) {
-      return usuario.modulos;
-    }
-    return null;
-  }
-
-  /**
    * Metodo que permite limpiar todo el local-store para ADMIN-FREE
    */
   public cleanAll(): void {

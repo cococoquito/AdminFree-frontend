@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { LocalStoreService } from './../services/local-store.service';
-import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
+import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { RouterConstant } from './../constants/router.constant';
+import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
@@ -38,12 +39,12 @@ export class AuthGuard implements CanActivate {
     // se obtiene la URL de la pagina destino
     const url = state.url;
 
-    // se obtiene las credenciales del ADMIN o USER
-    const credenciales: CredencialesDTO = this.localStoreService.getCredenciales();
+    // DTO que contiene los datos de inicio sesion
+    const welcome: WelcomeDTO = this.localStoreService.welcome(TipoEventoConstant.GET);
 
     // dependiendo del estado de la autenticacion se hace el llamado a los metodos
-    if (credenciales) {
-        valido = this.canActivateUserLogin(route, credenciales, url);
+    if (welcome && welcome.credenciales) {
+        valido = this.canActivateUserLogin(route, welcome, url);
     } else {
         valido = this.canActivateUserNoLogin(url);
     }
@@ -56,11 +57,11 @@ export class AuthGuard implements CanActivate {
    * y verificando si tiene privilegios para esa URL especifica
    *
    * @param route, es el router actualmente activo
-   * @param credenciales, son las credenciales del usuario autenticado
+   * @param welcome, DTO que contiene los datos de inicio sesion
    * @param url, es la URL destino que el usuario prentende navegar
    * @returns, true si el usuario tiene privilegios de lo contrario false
    */
-  private canActivateUserLogin(route: ActivatedRouteSnapshot, credenciales: CredencialesDTO, url: string): boolean {
+  private canActivateUserLogin(route: ActivatedRouteSnapshot, welcome: WelcomeDTO, url: string): boolean {
     // por default el router es valido
     let valido = true;
 
@@ -71,12 +72,12 @@ export class AuthGuard implements CanActivate {
       // no aplica para administrador (tiene todo privilegios),
       // tampoco para las paginas de bienvenida y administracion
       // de cuenta user, son visibles para todos los usuarios o admin
-      if (!credenciales.administrador &&
+      if (!welcome.credenciales.administrador &&
           !url.includes(RouterConstant.BIENVENIDA) &&
           !url.includes(RouterConstant.ADMIN_CUENTA_USER)) {
 
           // se obtiene los datos del usuario autenticado
-          const modulos: Array<ModuloDTO> = this.localStoreService.getModulosUsuario();
+          const modulos: Array<ModuloDTO> = welcome.usuario.modulos;
 
           // si el usuario tiene modulos asignados
           if (modulos) {
