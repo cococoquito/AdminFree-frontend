@@ -92,8 +92,8 @@ export class LocalStoreService {
    * Metodo que permite obtener los modulos del funcionario autenticado
    */
   public getModulosUsuario(): Array<ModuloDTO> {
-    const usuario: ClienteDTO | UsuarioDTO = this.getDatosUsuarioAutenticado();
-    if (usuario && usuario instanceof UsuarioDTO) {
+    const usuario: any = this.getDatosUsuarioAutenticado();
+    if (usuario && usuario.modulos) {
       return usuario.modulos;
     }
     return null;
