@@ -46,8 +46,8 @@ export class UserAccountComponent implements OnInit {
    */
   private construirItems(): void {
     this.items = [
-      { label: 'Página de Inicio', icon: 'fa fa-fw fa-home' },
-      { label: 'Cambiar Contraseña', icon: 'fa fa-fw fa-gear'},
+      { label: 'Página de Inicio', icon: 'fa fa-fw fa-home', command: (click) => this.goToBienvenida() },
+      { label: 'Configuración de Cuenta', icon: 'fa fa-fw fa-gear', command: (click) => this.goToConfiguracionCuenta() },
       { label: 'Cerrar Sesión', icon: 'fa fa-fw fa-power-off', command: (click) => this.cerrarSesion() }
     ];
   }
@@ -61,5 +61,19 @@ export class UserAccountComponent implements OnInit {
 
     // se redirecciona al LOGIN
     this.router.navigate(['/' + RouterConstant.LOGIN]);
+  }
+
+  /**
+   * Metodo que soporta el evento click del menu Pagina de inicio
+   */
+  public goToBienvenida(): void {
+    this.router.navigate(['/' + RouterConstant.BIENVENIDA]);
+  }
+
+  /**
+   * Metodo que soporta el evento click del menu Configuración de Cuenta
+   */
+  public goToConfiguracionCuenta(): void {
+    this.router.navigate(['/' + RouterConstant.ADMIN_CUENTA_USER]);
   }
 }
