@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShellState } from '../../../../states/shell.state';
-import { CuentaUserState } from './../../../../states/cuenta-user.state';
+import { UserAccountState } from './../../../../states/user-account.state';
 import { MenuItem } from 'primeng/api';
 import { RouterConstant } from './../../../../constants/router.constant';
-import { LocalStoreUtil } from '../../../../util-class/local-store.util';
 
 /**
  * Es el menu de configuraciones del usuario donde se
@@ -15,8 +14,7 @@ import { LocalStoreUtil } from '../../../../util-class/local-store.util';
 @Component({
   selector: 'admin-user-account',
   templateUrl: './user-account.component.html',
-  styleUrls: ['./user-account.component.css'],
-  providers: [CuentaUserState]
+  styleUrls: ['./user-account.component.css']
 })
 export class UserAccountComponent implements OnInit {
 
@@ -25,12 +23,12 @@ export class UserAccountComponent implements OnInit {
 
   /**
    * @param shellState , estado del shell de la app
-   * @param cuentaUserState , se utiliza para mostrar el nombre del user autenticado
+   * @param userAccountState , se utiliza para mostrar el nombre del user autenticado
    * @param router , router para la navegacion
    */
   constructor(
     public shellState: ShellState,
-    public cuentaUserState: CuentaUserState,
+    public userAccountState: UserAccountState,
     private router: Router) {}
 
   ngOnInit() {
@@ -54,8 +52,8 @@ export class UserAccountComponent implements OnInit {
    * Metodo que soporta el evento cerrar sesion del menu
    */
   public cerrarSesion(): void {
-    // se limpia todo los datos almacenados del localstore
-    LocalStoreUtil.cleanAll();
+    // se cambia el estado de la cuenta a sesion cerrada
+    this.userAccountState.changeStateSesionCerrada();
 
     // se redirecciona al LOGIN
     this.router.navigate(['/' + RouterConstant.LOGIN]);
