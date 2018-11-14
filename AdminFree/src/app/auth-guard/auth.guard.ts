@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStoreService } from './../services/local-store.service';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
-import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
-import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 import { RouterConstant } from './../constants/router.constant';
 import {
   CanActivate,
@@ -41,7 +39,7 @@ export class AuthGuard implements CanActivate {
     const url = state.url;
 
     // se obtiene las credenciales del ADMIN o USER
-    const credenciales: CredencialesDTO = this.localStoreService.credenciales(TipoEventoConstant.GET);
+    const credenciales: CredencialesDTO = this.localStoreService.getCredenciales();
 
     // dependiendo del estado de la autenticacion se hace el llamado a los metodos
     if (credenciales) {
@@ -78,11 +76,11 @@ export class AuthGuard implements CanActivate {
           !url.includes(RouterConstant.ADMIN_CUENTA_USER)) {
 
           // se obtiene los datos del usuario autenticado
-          const user: UsuarioDTO = this.localStoreService.userAuth(TipoEventoConstant.GET);
+          const modulos: Array<ModuloDTO> = this.localStoreService.getModulosUsuario();
 
           // si el usuario tiene modulos asignados
-          if (user && user.modulos) {
-              valido = this.tieneUserPrivilegio(user.modulos, route);
+          if (modulos) {
+              valido = this.tieneUserPrivilegio(modulos, route);
           } else {
               valido = this.goTo(RouterConstant.ERROR_DENEGADO);
           }

@@ -58,15 +58,8 @@ export class LoginComponent extends CommonComponent implements OnInit {
       // se procede a iniciar sesion en el sistema
       this.autenticacionService.iniciarSesion(this.credenciales).subscribe(
         data => {
-          // se configura las credenciales del USER o ADMIN
-          this.localStoreService.credenciales(TipoEventoConstant.SET, data.credenciales);
-
-          // se configura los datos del USER o ADMIN
-          if (this.credenciales.administrador) {
-              this.localStoreService.adminAuth(TipoEventoConstant.SET, data.administrador);
-          } else {
-            this.localStoreService.userAuth(TipoEventoConstant.SET, data.usuario);
-          }
+          // se configura los datos iniciales de la autenticacion
+          this.localStoreService.welcome(TipoEventoConstant.SET, data);
 
           // se redirecciona a la pagina de bienvenida
           this.router.navigate(['/' + RouterConstant.BIENVENIDA]);

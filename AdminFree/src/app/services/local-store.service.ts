@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
+import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
+import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
@@ -16,46 +18,10 @@ export class LocalStoreService {
   private readonly KEY_CLIENTES: string = 'CLIENTES';
 
   /** Key que representa las credenciales para admin-clientes en el local-store*/
-  private readonly KEY_CREDENCIALES_ADMIN: string = 'CREDENCIALES_ADMIN';
+  private readonly KEY_ADMIN_CLIENTES: string = 'ADMIN_CLIENTES';
 
-  /** Key que representa las credenciales de user o admin en el local-store*/
-  private readonly KEY_CREDENCIALES: string = 'CREDENCIALES';
-
-  /** Key que representa las datos del user autenticado en el local-store*/
-  private readonly KEY_USER_AUTH: string = 'USER_AUTH';
-
-  /** Key que representa las datos del ADMIN autenticado en el local-store*/
-  private readonly KEY_ADMIN_AUTH: string = 'ADMIN_AUTH';
-
-  /**
-   * Metodo que permite administrar los datos de las credenciales del usuario
-   * quien administra los clientes en el sistema
-   */
-  public credencialesAdminClientes(evento: TipoEventoConstant, adminClientes?: CredencialesDTO): CredencialesDTO {
-    return this.implementarEvento(evento, this.KEY_CREDENCIALES_ADMIN, adminClientes);
-  }
-
-  /**
-   * Metodo que permite administrar las credenciales de seguridad en el LOCAL-STORE
-   * para los usuarios o administrador del sistema
-   */
-  public credenciales(evento: TipoEventoConstant, credenciales?: CredencialesDTO): CredencialesDTO {
-    return this.implementarEvento(evento, this.KEY_CREDENCIALES, credenciales);
-  }
-
-  /**
-   * Metodo que permite administrar los datos del ADMIN autenticado en el LOCAL-STORE
-   */
-  public adminAuth(evento: TipoEventoConstant, admin?: ClienteDTO): ClienteDTO {
-    return this.implementarEvento(evento, this.KEY_ADMIN_AUTH, admin);
-  }
-
-  /**
-   * Metodo que permite administrar los datos del USER autenticado en el LOCAL-STORE
-   */
-  public userAuth(evento: TipoEventoConstant, user?: UsuarioDTO): UsuarioDTO {
-    return this.implementarEvento(evento, this.KEY_USER_AUTH, user);
-  }
+  /** Key que representa los datos de entrada al sistema*/
+  private readonly KEY_WELCOME: string = 'WELCOME';
 
   /**
    * Metodo que permite administrar los clientes en el LOCAL-STORE
@@ -65,14 +31,81 @@ export class LocalStoreService {
   }
 
   /**
+   * Metodo que permite administrar los datos de las credenciales
+   * del usuario quien administra los clientes en el sistema
+   */
+  public credencialesAdminClientes(evento: TipoEventoConstant, adminClientes?: CredencialesDTO): CredencialesDTO {
+    return this.implementarEvento(evento, this.KEY_ADMIN_CLIENTES, adminClientes);
+  }
+
+  /**
+   * Metodo que permite administrar el DTO que contiene
+   * los datos de inicio de sesion en el sistema
+   */
+  public welcome(evento: TipoEventoConstant, welcomeDTO?: WelcomeDTO): WelcomeDTO {
+    return this.implementarEvento(evento, this.KEY_WELCOME, welcomeDTO);
+  }
+
+  /**
+   * Metodo que permite obtener las credenciales del funcionario o admin
+   */
+  public getCredenciales(): CredencialesDTO {
+    const welcome: WelcomeDTO = this.welcome(TipoEventoConstant.GET);
+    if (welcome) {
+      return welcome.credenciales;
+    }
+    return null;
+  }
+
+  /**
+   * Metodo que permite obtener las credenciales del admin-clientes o
+   * del funcionario o del administrador del sistema
+   */
+  public getCurrentCredenciales(): CredencialesDTO {
+    let credenciales: CredencialesDTO = this.getCredenciales();
+    if (!credenciales) {
+        credenciales = this.credencialesAdminClientes(TipoEventoConstant.GET);
+    }
+    return credenciales;
+  }
+
+  /**
+   * Metodo que permite obtener los datos del usuario autenticado
+   * ClienteDTO = administrador, UsuarioDTO = funcionario
+   *
+   * @returns ClienteDTO = administrador, UsuarioDTO = funcionario
+   */
+  public getDatosUsuarioAutenticado(): ClienteDTO | UsuarioDTO {
+    let datosUsuario: ClienteDTO | UsuarioDTO;
+
+    // se obtiene el DTO que contiene los datos del funcionario o admin
+    const welcome: WelcomeDTO = this.welcome(TipoEventoConstant.GET);
+
+    // dependiendo del quien se ha autenticado se procede a obtener el dato
+    if (welcome) {
+      datosUsuario = (welcome.administrador) ? welcome.administrador : welcome.usuario;
+    }
+    return datosUsuario;
+  }
+
+  /**
+   * Metodo que permite obtener los modulos del funcionario autenticado
+   */
+  public getModulosUsuario(): Array<ModuloDTO> {
+    const usuario: ClienteDTO | UsuarioDTO = this.getDatosUsuarioAutenticado();
+    if (usuario && usuario instanceof UsuarioDTO) {
+      return usuario.modulos;
+    }
+    return null;
+  }
+
+  /**
    * Metodo que permite limpiar todo el local-store para ADMIN-FREE
    */
   public cleanAll(): void {
     localStorage.removeItem(this.KEY_CLIENTES);
-    localStorage.removeItem(this.KEY_CREDENCIALES);
-    localStorage.removeItem(this.KEY_CREDENCIALES_ADMIN);
-    localStorage.removeItem(this.KEY_USER_AUTH);
-    localStorage.removeItem(this.KEY_ADMIN_AUTH);
+    localStorage.removeItem(this.KEY_ADMIN_CLIENTES);
+    localStorage.removeItem(this.KEY_WELCOME);
   }
 
   /**

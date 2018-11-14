@@ -3,7 +3,6 @@ import { LocalStoreService } from './../services/local-store.service';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
-import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
  * Es el estado en la que se encuentra los datos de la cuenta
@@ -13,7 +12,6 @@ import { TipoEventoConstant } from './../constants/tipo-evento.constant';
  */
 @Injectable()
 export class CuentaUserState implements OnDestroy {
-
 
   /**
    * Es el usuario autenticado en el sistema,
@@ -48,16 +46,13 @@ export class CuentaUserState implements OnDestroy {
    * del local-store, cliente = cuando es administrador, usuario = funcionario
    */
   public getUsuarioAutenticado(): void {
-    this.usuario = this.localStoreService.userAuth(TipoEventoConstant.GET);
-    if (!this.usuario) {
-      this.usuario = this.localStoreService.adminAuth(TipoEventoConstant.GET);
-    }
+    this.usuario = this.localStoreService.getDatosUsuarioAutenticado();
   }
 
   /**
    * Metodo que permite obtener las credenciales del usuario autenticado del local-store
    */
   public getCredenciales() {
-    this.credenciales = this.localStoreService.credenciales(TipoEventoConstant.GET);
+    this.credenciales = this.localStoreService.getCredenciales();
   }
 }

@@ -6,7 +6,6 @@ import { SpinnerState } from './../states/spinner.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { SeguridadConstant } from '../constants/seguridad.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
-import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -56,7 +55,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           );
     } else {
       // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
-      const credenciales: CredencialesDTO = this.getCredenciales();
+      const credenciales: CredencialesDTO = this.localStoreService.getCurrentCredenciales();
       if (credenciales) {
         securityHeader = this.getSecurityHeader(
           credenciales.usuario,
@@ -95,17 +94,5 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       'hpass': pass,
       'htoken': token
     };
-  }
-
-  /**
-   * Metodo que permite obtener las credenciales del usuario o admin o
-   * el administrador de clientes del local-store
-   */
-  private getCredenciales(): CredencialesDTO {
-    let user: CredencialesDTO = this.localStoreService.credenciales(TipoEventoConstant.GET);
-    if (!user) {
-        user = this.localStoreService.credencialesAdminClientes(TipoEventoConstant.GET);
-    }
-    return user;
   }
 }
