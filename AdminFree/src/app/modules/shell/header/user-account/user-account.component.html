@@ -1,7 +1,8 @@
 <!-- Logo del user para dispositivos resolucion grande -->
 <a class="logo-container" *ngIf="shellState.isGrande()">
   <img class="logo" src="assets/avatar.png" alt="user">
-  <span>{{cuentaUserState.usuario?.nombre}}</span>
+  <span *ngIf="!cuentaUserState.credenciales?.administrador">{{cuentaUserState.usuario?.nombre}}</span>
+  <span *ngIf="cuentaUserState.credenciales?.administrador">Administrador</span>
 </a>
 
 <!-- Logo del user para dispositivos resolucion pequenio -->
