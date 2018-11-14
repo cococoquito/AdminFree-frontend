@@ -1,4 +1,3 @@
-import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
@@ -44,45 +43,15 @@ export class LocalStoreUtil {
   }
 
   /**
-   * Metodo que permite obtener las credenciales del funcionario o admin
-   */
-  public static getCredenciales(): CredencialesDTO {
-    const welcome: WelcomeDTO = this.welcome(TipoEventoConstant.GET);
-    if (welcome) {
-      return welcome.credenciales;
-    }
-    return null;
-  }
-
-  /**
    * Metodo que permite obtener las credenciales del admin-clientes o
    * del funcionario o del administrador del sistema
    */
   public static getCurrentCredenciales(): CredencialesDTO {
-    let credenciales: CredencialesDTO = this.getCredenciales();
-    if (!credenciales) {
-        credenciales = this.credencialesAdminClientes(TipoEventoConstant.GET);
-    }
-    return credenciales;
-  }
-
-  /**
-   * Metodo que permite obtener los datos del usuario autenticado
-   * ClienteDTO = administrador, UsuarioDTO = funcionario
-   *
-   * @returns ClienteDTO = administrador, UsuarioDTO = funcionario
-   */
-  public static getDatosUsuarioAutenticado(): ClienteDTO | UsuarioDTO {
-    let datosUsuario: ClienteDTO | UsuarioDTO;
-
-    // se obtiene el DTO que contiene los datos del funcionario o admin
     const welcome: WelcomeDTO = this.welcome(TipoEventoConstant.GET);
-
-    // dependiendo del quien se ha autenticado se procede a obtener el dato
-    if (welcome) {
-      datosUsuario = (welcome.administrador) ? welcome.administrador : welcome.usuario;
+    if (welcome && welcome.credenciales) {
+      return welcome.credenciales;
     }
-    return datosUsuario;
+    return this.credencialesAdminClientes(TipoEventoConstant.GET);
   }
 
   /**
