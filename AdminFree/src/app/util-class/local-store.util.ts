@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
@@ -6,26 +5,25 @@ import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
- * Sevicio que permite administrar los datos almacenados en el local-store
+ * Clase utilitaria para la administracion del localstore
  *
  * @author Carlos Andres Diaz
  */
-@Injectable({ providedIn: 'root' })
-export class LocalStoreService {
+export class LocalStoreUtil {
 
   /** Key que representa los clientes en el local-store*/
-  private readonly KEY_CLIENTES: string = 'CLIENTES';
+  private static readonly KEY_CLIENTES: string = 'CLIENTES';
 
   /** Key que representa las credenciales para admin-clientes en el local-store*/
-  private readonly KEY_ADMIN_CLIENTES: string = 'ADMIN_CLIENTES';
+  private static readonly KEY_ADMIN_CLIENTES: string = 'ADMIN_CLIENTES';
 
   /** Key que representa los datos de entrada al sistema*/
-  private readonly KEY_WELCOME: string = 'WELCOME';
+  private static readonly KEY_WELCOME: string = 'WELCOME';
 
   /**
    * Metodo que permite administrar los clientes en el LOCAL-STORE
    */
-  public clientes(evento: TipoEventoConstant, clientes?: Array<ClienteDTO>): Array<ClienteDTO> {
+  public static clientes(evento: TipoEventoConstant, clientes?: Array<ClienteDTO>): Array<ClienteDTO> {
     return this.implementarEvento(evento, this.KEY_CLIENTES, clientes);
   }
 
@@ -33,7 +31,7 @@ export class LocalStoreService {
    * Metodo que permite administrar los datos de las credenciales
    * del usuario quien administra los clientes en el sistema
    */
-  public credencialesAdminClientes(evento: TipoEventoConstant, adminClientes?: CredencialesDTO): CredencialesDTO {
+  public static credencialesAdminClientes(evento: TipoEventoConstant, adminClientes?: CredencialesDTO): CredencialesDTO {
     return this.implementarEvento(evento, this.KEY_ADMIN_CLIENTES, adminClientes);
   }
 
@@ -41,14 +39,14 @@ export class LocalStoreService {
    * Metodo que permite administrar el DTO que contiene
    * los datos de inicio de sesion en el sistema
    */
-  public welcome(evento: TipoEventoConstant, welcomeDTO?: WelcomeDTO): WelcomeDTO {
+  public static welcome(evento: TipoEventoConstant, welcomeDTO?: WelcomeDTO): WelcomeDTO {
     return this.implementarEvento(evento, this.KEY_WELCOME, welcomeDTO);
   }
 
   /**
    * Metodo que permite obtener las credenciales del funcionario o admin
    */
-  public getCredenciales(): CredencialesDTO {
+  public static getCredenciales(): CredencialesDTO {
     const welcome: WelcomeDTO = this.welcome(TipoEventoConstant.GET);
     if (welcome) {
       return welcome.credenciales;
@@ -60,7 +58,7 @@ export class LocalStoreService {
    * Metodo que permite obtener las credenciales del admin-clientes o
    * del funcionario o del administrador del sistema
    */
-  public getCurrentCredenciales(): CredencialesDTO {
+  public static getCurrentCredenciales(): CredencialesDTO {
     let credenciales: CredencialesDTO = this.getCredenciales();
     if (!credenciales) {
         credenciales = this.credencialesAdminClientes(TipoEventoConstant.GET);
@@ -74,7 +72,7 @@ export class LocalStoreService {
    *
    * @returns ClienteDTO = administrador, UsuarioDTO = funcionario
    */
-  public getDatosUsuarioAutenticado(): ClienteDTO | UsuarioDTO {
+  public static getDatosUsuarioAutenticado(): ClienteDTO | UsuarioDTO {
     let datosUsuario: ClienteDTO | UsuarioDTO;
 
     // se obtiene el DTO que contiene los datos del funcionario o admin
@@ -90,7 +88,7 @@ export class LocalStoreService {
   /**
    * Metodo que permite limpiar todo el local-store para ADMIN-FREE
    */
-  public cleanAll(): void {
+  public static cleanAll(): void {
     localStorage.removeItem(this.KEY_CLIENTES);
     localStorage.removeItem(this.KEY_ADMIN_CLIENTES);
     localStorage.removeItem(this.KEY_WELCOME);
@@ -103,7 +101,7 @@ export class LocalStoreService {
    * @param key , identifica el key del local-store
    * @param dataUpdate , valor actualizar en el local, es opcional
    */
-  private implementarEvento(evento: TipoEventoConstant, key: string, dataUpdate?: any): any {
+  private static implementarEvento(evento: TipoEventoConstant, key: string, dataUpdate?: any): any {
     // contiene el resultado a retornar, opcional
     let resultado = null;
 

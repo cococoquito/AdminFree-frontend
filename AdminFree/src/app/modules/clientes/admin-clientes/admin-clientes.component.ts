@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util-class/common.component';
-import { LocalStoreService } from './../../../services/local-store.service';
 import { AdminClienteService } from './../../../services/admin-cliente.service';
 import { AutenticacionService } from './../../../services/autenticacion.service';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
+import { LocalStoreUtil } from '../../../util-class/local-store.util';
 
 /**
  * Componente para la administracion de los clientes del sistema
@@ -45,12 +45,10 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
    *
    * @param autenticacionService, contiene los servicios para la autenticacion
    * @param adminService, contiene los servicios para la administracion de clientes
-   * @param localStoreState, se utiliza para obtener las credenciales del usuario, admin
    */
   constructor(
     private autenticacionService: AutenticacionService,
-    private adminService: AdminClienteService,
-    private localStoreService: LocalStoreService) {
+    private adminService: AdminClienteService) {
     super();
   }
 
@@ -326,8 +324,8 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   public cerrarSesion(): void {
 
     // se limpia los keystore almacenados
-    this.localStoreService.clientes(TipoEventoConstant.REMOVE);
-    this.localStoreService.credencialesAdminClientes(TipoEventoConstant.REMOVE);
+    LocalStoreUtil.clientes(TipoEventoConstant.REMOVE);
+    LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.REMOVE);
 
     // se crea la instancia de las credenciales por si intentan ingresar de nuevo
     this.credenciales = new CredencialesDTO();
@@ -347,7 +345,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   private init(): void {
 
     // se obtiene las credenciales del localstore
-    const credenciales: CredencialesDTO = this.localStoreService.credencialesAdminClientes(TipoEventoConstant.GET);
+    const credenciales: CredencialesDTO = LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.GET);
 
     // se verifica si el administrador ya se autentico con anterioridad
     if (credenciales) {
@@ -357,7 +355,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
       this.autenticacion.credenciales = credenciales;
 
       // se configura los clientes consultados con anterioridad
-      this.autenticacion.clientes = this.localStoreService.clientes(TipoEventoConstant.GET);
+      this.autenticacion.clientes = LocalStoreUtil.clientes(TipoEventoConstant.GET);
     } else {
       // cuando el administrador no se ha autenticado
       this.credenciales = new CredencialesDTO();
@@ -370,20 +368,20 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   private setStateLocalStore(): void {
 
     // se limpia los keystore almacenados
-    this.localStoreService.clientes(TipoEventoConstant.REMOVE);
-    this.localStoreService.credencialesAdminClientes(TipoEventoConstant.REMOVE);
+    LocalStoreUtil.clientes(TipoEventoConstant.REMOVE);
+    LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.REMOVE);
 
     // se verifica si el cliente esta autenticado
     if (this.autenticacion) {
 
       // se configura las credenciales en el localstore
       if (this.autenticacion.credenciales) {
-        this.localStoreService.credencialesAdminClientes(TipoEventoConstant.SET, this.autenticacion.credenciales);
+          LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.SET, this.autenticacion.credenciales);
       }
 
       // se configura los clientes en el localstore
       if (this.autenticacion.clientes) {
-        this.localStoreService.clientes(TipoEventoConstant.SET, this.autenticacion.clientes);
+          LocalStoreUtil.clientes(TipoEventoConstant.SET, this.autenticacion.clientes);
       }
     }
   }

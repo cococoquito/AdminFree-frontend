@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { LocalStoreService } from './../services/local-store.service';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
+import { LocalStoreUtil } from './../util-class/local-store.util';
 
 /**
  * Es el estado en la que se encuentra los datos de la cuenta
@@ -28,11 +28,7 @@ export class CuentaUserState implements OnDestroy {
     console.log('DESTRUIDO');
   }
 
-  /**
-   * @param localStoreService, se utiliza para obtener los datos
-   * de la cuenta del usuario autenticado en el sistema
-   */
-  constructor(private localStoreService: LocalStoreService) {
+  constructor() {
     console.log('CREADO');
     // se obtiene los datos del usuario autenticado
     this.getUsuarioAutenticado();
@@ -46,13 +42,13 @@ export class CuentaUserState implements OnDestroy {
    * del local-store, cliente = cuando es administrador, usuario = funcionario
    */
   public getUsuarioAutenticado(): void {
-    this.usuario = this.localStoreService.getDatosUsuarioAutenticado();
+    this.usuario = LocalStoreUtil.getDatosUsuarioAutenticado();
   }
 
   /**
    * Metodo que permite obtener las credenciales del usuario autenticado del local-store
    */
   public getCredenciales() {
-    this.credenciales = this.localStoreService.getCredenciales();
+    this.credenciales = LocalStoreUtil.getCredenciales();
   }
 }

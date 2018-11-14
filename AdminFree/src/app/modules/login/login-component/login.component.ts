@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonComponent } from './../../../util-class/common.component';
-import { LocalStoreService } from './../../../services/local-store.service';
 import { AutenticacionService } from './../../../services/autenticacion.service';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 import { RouterConstant } from './../../../constants/router.constant';
+import { LocalStoreUtil } from '../../../util-class/local-store.util';
 
 /**
  * Componente para la autenticacion del sistema ADMINFREE
@@ -27,13 +27,10 @@ export class LoginComponent extends CommonComponent implements OnInit {
 
   /**
    * @param autenticacionService, contiene los servicios para la autenticacion
-   * @param localStoreService, se utiliza para almacenar los datos
-   * del user o admin autenticado en el sistema
    * @param router, Router para la navegacion a la pagina bienvenida
    */
   constructor(
     private autenticacionService: AutenticacionService,
-    private localStoreService: LocalStoreService,
     private router: Router) {
     super();
   }
@@ -59,7 +56,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
       this.autenticacionService.iniciarSesion(this.credenciales).subscribe(
         data => {
           // se configura los datos iniciales de la autenticacion
-          this.localStoreService.welcome(TipoEventoConstant.SET, data);
+          LocalStoreUtil.welcome(TipoEventoConstant.SET, data);
 
           // se redirecciona a la pagina de bienvenida
           this.router.navigate(['/' + RouterConstant.BIENVENIDA]);

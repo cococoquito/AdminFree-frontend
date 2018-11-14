@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
-import { LocalStoreService } from './../services/local-store.service';
 import { SpinnerState } from './../states/spinner.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { SeguridadConstant } from '../constants/seguridad.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
+import { LocalStoreUtil } from '../util-class/local-store.util';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -25,11 +25,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
   /**
    * @param spinnerState, se utiliza para visualizar, ocultar el spinner
-   * @param localStoreService, se utiliza para obtener las credenciales del usuario, admin
    */
-  constructor(
-    private spinnerState: SpinnerState,
-    private localStoreService: LocalStoreService) {}
+  constructor(private spinnerState: SpinnerState) {}
 
   /**
    * Metodo que permite capturar cada request del sistema,
@@ -55,7 +52,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           );
     } else {
       // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
-      const credenciales: CredencialesDTO = this.localStoreService.getCurrentCredenciales();
+      const credenciales: CredencialesDTO = LocalStoreUtil.getCurrentCredenciales();
       if (credenciales) {
         securityHeader = this.getSecurityHeader(
           credenciales.usuario,

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { LocalStoreService } from './../services/local-store.service';
 import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { RouterConstant } from './../constants/router.constant';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
+import { LocalStoreUtil } from './../util-class/local-store.util';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
@@ -21,11 +21,8 @@ export class AuthGuard implements CanActivate {
 
   /**
    * @param router, es el router de la app para el redireccionamiento
-   * @param localStoreService, se utiliza para obtener las credenciales del usuario o admin
    */
-  constructor(
-    private router: Router,
-    private localStoreService: LocalStoreService) {}
+  constructor(private router: Router) {}
 
   /**
    * Metodo que permite validar si el router es valido para el user
@@ -40,7 +37,7 @@ export class AuthGuard implements CanActivate {
     const url = state.url;
 
     // DTO que contiene los datos de inicio sesion
-    const welcome: WelcomeDTO = this.localStoreService.welcome(TipoEventoConstant.GET);
+    const welcome: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
 
     // dependiendo del estado de la autenticacion se hace el llamado a los metodos
     if (welcome && welcome.credenciales) {
