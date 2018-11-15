@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuModule } from 'primeng/menu';
+import { MenuModulo } from './../../model/menu-modulo';
 
 /**
  * Es el Menu del shell a visualizar en la aplicacion
@@ -12,6 +12,6 @@ import { MenuModule } from 'primeng/menu';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  public modulos: Array<MenuModule>;
+  public modulos: Array<MenuModulo>;
   constructor() {}
 }
