@@ -1,8 +1,8 @@
 <nav>
   <ul>
-    <li *ngFor="let item of estado.menuItems">
-      <admin-menu-item [item]="item" class="vertical-menu">
-      </admin-menu-item>
+    <li *ngFor="let modulo of modulos">
+      <admin-menu-modulo [modulo]="modulo" class="vertical-menu">
+      </admin-menu-modulo>
     </li>
   </ul>
 </nav>

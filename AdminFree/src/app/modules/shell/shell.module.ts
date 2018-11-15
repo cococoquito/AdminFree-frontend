@@ -6,7 +6,7 @@ import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './header/header.component';
 import { UserAccountComponent } from './header/user-account/user-account.component';
 import { MenuComponent } from './menus/menu/menu.component';
-import { MenuItemComponent } from './menus/menu-item/menu-item.component';
+import { MenuModuloComponent } from './menus/menu-modulo/menu-modulo.component';
 import { ContentComponent } from './content/content.component';
 import { FooterComponent } from './footer/footer.component';
 
@@ -28,7 +28,7 @@ import { FooterComponent } from './footer/footer.component';
     ContentComponent,
     FooterComponent,
     MenuComponent,
-    MenuItemComponent,
+    MenuModuloComponent,
     UserAccountComponent
   ],
   exports: [
