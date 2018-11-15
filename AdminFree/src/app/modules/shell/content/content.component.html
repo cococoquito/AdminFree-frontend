@@ -1,5 +1,5 @@
 <!-- para dispositivos con resolucion grande -->
-<admin-menu [@openClose]="(estado.isGrande() && (estado.isInicio || estado.isMenuOpen))  ? 'open' : 'closed'" class="vertical-menu">
+<admin-menu [@openClose]="(estado.isGrande() && (estado.isInicio || estado.isMenuOpen))  ? 'open' : 'closed'" class="content-menu">
 </admin-menu>
 
 <!-- para dispositivos con resolucion pequenia -->
@@ -8,7 +8,7 @@
   [(visible)]="estado.isMenuOpen"
   [showCloseIcon]="false"
   [baseZIndex]="10000">
-    <admin-menu class="vertical-menu">
+    <admin-menu class="content-menu">
     </admin-menu>
 </p-sidebar>
 

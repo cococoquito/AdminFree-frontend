@@ -6,7 +6,7 @@
   position: relative;
 }
 
-:host(.vertical-menu) {
+:host(.content-menu) {
   display: inline-block;
   width: 225px;
   flex-grow: 0;
