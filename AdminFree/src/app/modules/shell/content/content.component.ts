@@ -21,8 +21,8 @@ import {
   styleUrls: ['./content.component.css'],
   animations: [
     trigger('openClose', [
-      state('open', style({ left: '0px', width: '225px' })),
-      state('closed', style({ left: '-225px', width: '0px' })),
+      state('open', style({ left: '0px', width: '240px' })),
+      state('closed', style({ left: '-240px', width: '0px' })),
       transition('* => *', animate(300))
     ])
   ]

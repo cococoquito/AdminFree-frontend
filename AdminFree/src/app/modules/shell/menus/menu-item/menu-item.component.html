@@ -1,11 +1,12 @@
-<div class="menu-item">
+<div *ngIf="item.items" class="menu-modulo">
   <i class="fa fa-fw fa-cog size-icon"></i>
   <span>{{item.nombre}}</span>
   <i class="fa fa-fw fa-angle-down glyphicon size-icon"></i>
 </div>
 
-<admin-menu-item-detail [items]="item.items"
+<div *ngIf="!item.items" class="menu-item">
+  <i class="fa fa-fw fa-cog size-icon"></i>
+  <span>{{item.nombre}}</span>
+</div>
 
->
-
-</admin-menu-item-detail>
+<admin-menu-item-detail [items]="item.items"></admin-menu-item-detail>

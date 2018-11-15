@@ -3,10 +3,17 @@
   cursor: pointer;
 }
 
-.menu-item {
+.menu-modulo {
   padding: 10px 10px 10px 0;
   border-bottom: 1px solid #d0d0d0;
   padding-left: 10px;
+}
+
+.menu-item {
+  padding: 10px 10px 10px 0;
+  background-color: #f4f4f4;
+  border-bottom: 0px;
+  padding-left: 16px;
 }
 
 span {
@@ -24,6 +31,7 @@ span {
 
 .size-icon {
   font-size: 20px !important;
+  margin: 0px!important;
 }
 
 .menu-item:hover {
