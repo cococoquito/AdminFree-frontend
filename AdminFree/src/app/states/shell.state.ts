@@ -1,23 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-
-export let initialMenuItems: Array<MenuItem> = [
-  {
-      label: 'Dashboard',
-      icon: 'glyphicon-dashboard',
-      url: '/zaqwsx'
-  },
-  {
-      label: 'Countries',
-      icon: 'glyphicon-flag',
-      url: null
-  },
-  {
-      label: 'Maintenance',
-      icon: 'glyphicon-wrench',
-      url: null
-  }
-];
 
 /**
  * Es el estado en la que se encuentra el Shell de la app
@@ -26,9 +7,6 @@ export let initialMenuItems: Array<MenuItem> = [
  */
 @Injectable({ providedIn: 'root' })
 export class ShellState {
-
-  /** Son los items del menu **/
-  public menuItems: Array<MenuItem>;
 
   /** Indica si el menu se debe visualizar **/
   public isMenuOpen = false;
@@ -47,7 +25,6 @@ export class ShellState {
    */
   constructor() {
     try {
-      this.menuItems = initialMenuItems;
       this.screenWidth = window.innerWidth;
       this.screenHeight = window.innerHeight;
       window.addEventListener('resize', event => this.onResize(event));

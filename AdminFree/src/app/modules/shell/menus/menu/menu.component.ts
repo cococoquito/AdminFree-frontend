@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuModulo } from './../../model/menu-modulo';
+import { MenuState } from './../../../../states/menu.state';
 
 /**
  * Es el Menu del shell a visualizar en la aplicacion
@@ -12,6 +12,7 @@ import { MenuModulo } from './../../model/menu-modulo';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  public modulos: Array<MenuModulo>;
-  constructor() {}
+  constructor(public menuState: MenuState) {
+    console.log('MenuComponent CREADO');
+  }
 }
