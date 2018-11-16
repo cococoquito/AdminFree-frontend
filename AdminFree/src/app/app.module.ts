@@ -9,7 +9,7 @@ import { SelectivePreload } from './services/selective-preload.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './directives/spinner/spinner.component';
-import { ROUTES } from './app.routing';
+import { ROUTES } from './app-routing';
 
 /**
  * Modulo principal de la aplicacion AdminFree, contiene
