@@ -22,18 +22,6 @@ export const ROUTES: Routes = [
     loadChildren: './modules/login/login.module#LoginModule'
   },
   {
-    path: RouterConstant.BIENVENIDA,
-    canActivate: [AuthGuard],
-    data: { preload: true },
-    loadChildren: './modules/bienvenida/bienvenida.module#BienvenidaModule'
-  },
-  {
-    path: RouterConstant.ADMIN_CUENTA_USER,
-    canActivate: [AuthGuard],
-    data: { preload: true },
-    loadChildren: './modules/cuenta-user/cuenta-user.module#CuentaUserModule'
-  },
-  {
     path: RouterConstant.ARCHIVO_GESTION,
     canActivate: [AuthGuard],
     data: { preload: true, token: ModulosConstant.TK_ARCHIVO_GESTION },
