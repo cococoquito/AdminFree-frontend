@@ -23,6 +23,9 @@ export class MenuItem {
   /** Son los items de este modulo o submodulo */
   public items?: Array<MenuItem>;
 
+  /** Indica si es el ultimo Item */
+  public isUltimoItem: boolean;
+
   /**
    * Metodo que permite agregar un item para este modulo o submodulo
    *

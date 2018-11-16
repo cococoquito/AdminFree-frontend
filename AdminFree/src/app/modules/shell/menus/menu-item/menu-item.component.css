@@ -7,13 +7,19 @@
   padding: 10px 10px 10px 0;
   border-bottom: 1px solid #d0d0d0;
   padding-left: 10px;
+  color: #2e3c45;
 }
 
 .menu-item {
-  padding: 10px 10px 10px 0;
+  padding: 6px 6px 6px 0;
   background-color: #f4f4f4;
   border-bottom: 0px;
   padding-left: 16px;
+  color: #2e3c45;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #d0d0d0 !important;
 }
 
 span {

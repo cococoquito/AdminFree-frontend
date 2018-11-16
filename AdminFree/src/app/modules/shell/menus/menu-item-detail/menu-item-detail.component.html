@@ -1,4 +1,4 @@
-<li *ngFor="let item of items">
+<li *ngFor="let item of items" [@openCloseMenu]="item.isSeleccionado ? 'open' : 'closed'">
     <admin-menu-item [item]="item">
     </admin-menu-item>
 </li>

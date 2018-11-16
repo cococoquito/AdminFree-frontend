@@ -1,12 +1,14 @@
-<div *ngIf="item.items" class="menu-modulo">
-  <i class="fa fa-fw fa-cog size-icon"></i>
-  <span>{{item.nombre}}</span>
-  <i class="fa fa-fw fa-angle-down glyphicon size-icon"></i>
+<div *ngIf="item.items" class="menu-modulo" (click)="openItems()">
+  <i class="{{item.icono}} size-icon" style="color: #a6a6a6"></i>
+  <span class="font-weight-bold">{{item.nombre}}</span>
+  <i *ngIf="!item.isSeleccionado" class="fa fa-fw fa-angle-down glyphicon size-icon"></i>
+  <i *ngIf="item.isSeleccionado" class="fa fa-fw fa-angle-up glyphicon size-icon"></i>
 </div>
 
-<div *ngIf="!item.items" class="menu-item">
-  <i class="fa fa-fw fa-cog size-icon"></i>
-  <span>{{item.nombre}}</span>
+<div *ngIf="!item.items"
+  [ngClass]="(item.isUltimoItem) ? 'menu-item border-bottom' : 'menu-item'">
+  <i class="fa fa-fw fa-cog size-icon" style="color: #a6a6a6"></i>
+  <span style="color: #333333; font-size: 13px!important;" class="font-weight-bold">{{item.nombre}}</span>
 </div>
 
 <admin-menu-item-detail [items]="item.items"></admin-menu-item-detail>
