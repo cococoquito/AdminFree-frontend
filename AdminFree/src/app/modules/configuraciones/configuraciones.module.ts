@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { ShellComponent } from './../shell/shell/shell.component';
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
 
 /**
@@ -14,13 +13,7 @@ import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.componen
     RouterModule.forChild([
       {
         path: '',
-        component: ShellComponent,
-        children: [
-          {
-            path: '',
-            component: AdminUsuariosComponent
-          }
-        ]
+        component: AdminUsuariosComponent
       }
     ]),
     SharedModule

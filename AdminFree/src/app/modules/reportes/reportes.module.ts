@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { ShellComponent } from './../shell/shell/shell.component';
 import { GenerarReporteComponent } from './generar-reporte/generar-reporte.component';
 
 /**
@@ -15,13 +14,7 @@ import { GenerarReporteComponent } from './generar-reporte/generar-reporte.compo
     RouterModule.forChild([
       {
         path: '',
-        component: ShellComponent,
-        children: [
-          {
-            path: '',
-            component: GenerarReporteComponent
-          }
-        ]
+        component: GenerarReporteComponent
       }
     ]),
     SharedModule

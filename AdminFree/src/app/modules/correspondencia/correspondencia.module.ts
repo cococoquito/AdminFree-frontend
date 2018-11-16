@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { ShellComponent } from './../shell/shell/shell.component';
 import { SolicitarConsecutivoComponent } from './solicitar-consecutivo/solicitar-consecutivo.component';
 
 /**
@@ -15,13 +14,7 @@ import { SolicitarConsecutivoComponent } from './solicitar-consecutivo/solicitar
     RouterModule.forChild([
       {
         path: '',
-        component: ShellComponent,
-        children: [
-          {
-            path: '',
-            component: SolicitarConsecutivoComponent
-          }
-        ]
+        component: SolicitarConsecutivoComponent
       }
     ]),
     SharedModule

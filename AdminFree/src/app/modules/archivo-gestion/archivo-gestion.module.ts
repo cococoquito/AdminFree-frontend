@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { ShellComponent } from './../shell/shell/shell.component';
 import { SeriesDocumentalesComponent } from './series-documentales/series-documentales.component';
 
 /**
@@ -15,13 +14,7 @@ import { SeriesDocumentalesComponent } from './series-documentales/series-docume
     RouterModule.forChild([
       {
         path: '',
-        component: ShellComponent,
-        children: [
-          {
-            path: '',
-            component: SeriesDocumentalesComponent
-          }
-        ]
+        component: SeriesDocumentalesComponent
       }
     ]),
     SharedModule
