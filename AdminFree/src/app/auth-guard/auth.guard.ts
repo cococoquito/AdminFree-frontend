@@ -63,15 +63,15 @@ export class AuthGuard implements CanActivate {
     let valido = true;
 
     // como el user esta autenticado y la invocacion es pagina LOGIN se redirecciona a HOME
-    if (url.includes(RouterConstant.LOGIN)) {
-        valido = this.goTo(RouterConstant.BIENVENIDA);
+    if (url.includes(RouterConstant.ROUTER_LOGIN)) {
+        valido = this.goTo(RouterConstant.NAVIGATE_BIENVENIDA);
     } else {
       // no aplica para administrador (tiene todo privilegios),
       // tampoco para las paginas de bienvenida y administracion
       // de cuenta user, son visibles para todos los usuarios o admin
       if (!welcome.credenciales.administrador &&
-          !url.includes(RouterConstant.BIENVENIDA) &&
-          !url.includes(RouterConstant.ADMIN_CUENTA_USER)) {
+          !url.includes(RouterConstant.ROUTER_BIENVENIDA) &&
+          !url.includes(RouterConstant.ROUTER_CUENTA_USER)) {
 
           // se obtiene los datos del usuario autenticado
           const modulos: Array<ModuloDTO> = welcome.usuario.modulos;
@@ -80,7 +80,7 @@ export class AuthGuard implements CanActivate {
           if (modulos) {
               valido = this.tieneUserPrivilegio(modulos, route);
           } else {
-              valido = this.goTo(RouterConstant.ERROR_DENEGADO);
+              valido = this.goTo(RouterConstant.NAVIGATE_DENEGADO);
           }
       }
     }
@@ -95,8 +95,8 @@ export class AuthGuard implements CanActivate {
    * @returns, true si la URL es login de lo contrario false
    */
   private canActivateUserNoLogin(url: string): boolean {
-    if (!url.includes(RouterConstant.LOGIN)) {
-        return this.goTo(RouterConstant.LOGIN);
+    if (!url.includes(RouterConstant.ROUTER_LOGIN)) {
+        return this.goTo(RouterConstant.NAVIGATE_LOGIN);
     }
     return true;
   }
@@ -118,7 +118,7 @@ export class AuthGuard implements CanActivate {
           return true;
       }
     }
-    return this.goTo(RouterConstant.ERROR_DENEGADO);
+    return this.goTo(RouterConstant.NAVIGATE_DENEGADO);
   }
 
   /**
@@ -128,7 +128,7 @@ export class AuthGuard implements CanActivate {
    * @param url , es la URL a navegar
    */
   private goTo(url: string): boolean {
-    this.router.navigate(['/' + url]);
+    this.router.navigate([url]);
     return false;
   }
 }

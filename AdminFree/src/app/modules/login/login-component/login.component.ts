@@ -60,7 +60,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
           this.userAccountState.changeStateAutenticado(data);
 
           // se redirecciona a la pagina de bienvenida
-          this.router.navigate(['/' + RouterConstant.BIENVENIDA]);
+          this.router.navigate([RouterConstant.NAVIGATE_BIENVENIDA]);
         },
         error => {
           this.msjError = this.showMensajeError(error);

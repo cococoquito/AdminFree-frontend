@@ -18,35 +18,35 @@ export const ROUTES: Routes = [
     component: ShellComponent,
     children: [
       {
-        path: RouterConstant.BIENVENIDA,
+        path: RouterConstant.ROUTER_BIENVENIDA,
         canActivate: [AuthGuard],
         component: BienvenidaComponent
       },
       {
-        path: RouterConstant.ADMIN_CUENTA_USER,
+        path: RouterConstant.ROUTER_CUENTA_USER,
         canActivate: [AuthGuard],
         component: CuentaUserComponent
       },
       {
-        path: RouterConstant.CORRESPONDENCIA,
+        path: RouterConstant.ROUTER_CORRESPONDENCIA,
         canActivate: [AuthGuard],
         data: { preload: true, token: ModulosConstant.TK_CORRESPONDENCIA },
         loadChildren: '../correspondencia/correspondencia.module#CorrespondenciaModule'
       },
       {
-        path: RouterConstant.ARCHIVO_GESTION,
+        path: RouterConstant.ROUTER_ARCHIVO_GESTION,
         canActivate: [AuthGuard],
         data: { preload: true, token: ModulosConstant.TK_ARCHIVO_GESTION },
         loadChildren: '../archivo-gestion/archivo-gestion.module#ArchivoGestionModule'
       },
       {
-        path: RouterConstant.REPORTES,
+        path: RouterConstant.ROUTER_REPORTES,
         canActivate: [AuthGuard],
         data: { preload: true, token: ModulosConstant.TK_REPORTES },
         loadChildren: '../reportes/reportes.module#ReportesModule'
       },
       {
-        path: RouterConstant.CONFIGURACIONES,
+        path: RouterConstant.ROUTER_CONFIGURACIONES,
         canActivate: [AuthGuard],
         data: { preload: true, token: ModulosConstant.TK_CONFIGURACIONES },
         loadChildren: '../configuraciones/configuraciones.module#ConfiguracionesModule'

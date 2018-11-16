@@ -11,27 +11,33 @@ import { RouterConstant } from './constants/router.constant';
  */
 export const ROUTES: Routes = [
   {
-    path: RouterConstant.CLIENTES,
+    path: RouterConstant.ROUTER_CLIENTES,
     loadChildren: './modules/clientes/clientes.module#ClientesModule'
   },
   {
-    path: RouterConstant.LOGIN,
+    path: RouterConstant.ROUTER_LOGIN,
     canActivate: [AuthGuard],
     data: { preload: true },
     loadChildren: './modules/login/login.module#LoginModule'
   },
   {
-    path: RouterConstant.ERROR,
+    path: RouterConstant.ROUTER_AUTENTICADO,
+    canActivate: [AuthGuard],
+    data: { preload: true },
+    loadChildren: './modules/autenticado/autenticado.module#AutenticadoModule'
+  },
+  {
+    path: RouterConstant.ROUTER_ERROR,
     loadChildren: './modules/pages-error/pages-error.module#PagesErrorModule'
   },
   {
     path: '',
-    redirectTo: RouterConstant.LOGIN,
+    redirectTo: RouterConstant.ROUTER_LOGIN,
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: RouterConstant.ERROR,
+    redirectTo: RouterConstant.ROUTER_ERROR,
     pathMatch: 'full'
   }
 ];

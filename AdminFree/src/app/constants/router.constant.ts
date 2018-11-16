@@ -5,39 +5,51 @@
  */
 export class RouterConstant {
 
-  /** Router para navegar al modulo del CLIENTES*/
-  public static readonly CLIENTES: string = 'zaqwsx';
+  /** Nombre del Router para el modulo del CLIENTES */
+  public static readonly ROUTER_CLIENTES: string = 'zaqwsx';
 
-  /** Es el router completo de clientes*/
-  public static readonly CLIENTES_ROUTER: string = '/' + RouterConstant.CLIENTES;
+  /** Nombre del Router para el modulo del LOGIN */
+  public static readonly ROUTER_LOGIN: string = 'login';
 
-  /** Router para navegar al modulo del LOGIN*/
-  public static readonly LOGIN: string = 'login';
+  /** Nombre del Router para el modulo del PAGINAS DE ERRORES */
+  public static readonly ROUTER_ERROR: string = 'error';
 
-  /** Router para navegar a la pagina BIENVENIDA*/
-  public static readonly BIENVENIDA: string = 'bienvenida';
+  /** Nombre del Router para la pagina de error cuando el usuario no tiene permisos*/
+  public static readonly ROUTER_DENEGADO: string = 'denegado';
 
-  /** Router principal del modulo de archivo-gestion*/
-  public static readonly ARCHIVO_GESTION: string = 'archivogestion';
+  /** Nombre del Router que se utiliza cuando el user esta autenticado*/
+  public static readonly ROUTER_AUTENTICADO: string = 'autenticado';
 
-  /** Router principal del modulo de correpondencia*/
-  public static readonly CORRESPONDENCIA: string = 'correspondencia';
+  /** Nombre del Router para la pagina BIENVENIDA*/
+  public static readonly ROUTER_BIENVENIDA: string = 'bienvenida';
 
-  /** Router principal del modulo de reportes*/
-  public static readonly REPORTES: string = 'reportes';
+  /** Nombre del Router para la pagina de admin cuenta del user*/
+  public static readonly ROUTER_CUENTA_USER: string = 'cuentauser';
 
-  /** Router principal del modulo de configuraciones*/
-  public static readonly CONFIGURACIONES: string = 'configuraciones';
+  /** Nombre del Router del modulo de ARCHIVO_GESTION*/
+  public static readonly ROUTER_ARCHIVO_GESTION: string = 'archivogestion';
 
-  /** Router principal del modulo de cuenta-user*/
-  public static readonly ADMIN_CUENTA_USER: string = 'admincuentauser';
+  /** Nombre del Router del modulo de CORRESPONDENCIA*/
+  public static readonly ROUTER_CORRESPONDENCIA: string = 'correspondencia';
 
-  /** Router para la pagina de error cuando el usuario no tiene permisos*/
-  public static readonly DENEGADO: string = 'denegado';
+  /** Nombre del Router del modulo de REPORTES*/
+  public static readonly ROUTER_REPORTES: string = 'reportes';
 
-  /** Router para la pagina de error cuando la pagina no existe*/
-  public static readonly ERROR: string = 'error';
+  /** Nombre del Router del modulo de CONFIGURACIONES*/
+  public static readonly ROUTER_CONFIGURACIONES: string = 'configuraciones';
 
-  /** Router para la pagina de error cuando el usuario no tiene permisos*/
-  public static readonly ERROR_DENEGADO: string = RouterConstant.ERROR + '/' + RouterConstant.DENEGADO;
+  /** Constante para navegar al modulo de CLIENTES */
+  public static readonly NAVIGATE_CLIENTES: string = `/${RouterConstant.ROUTER_CLIENTES}`;
+
+  /** Constante para navegar al modulo de LOGIN */
+  public static readonly NAVIGATE_LOGIN: string = `/${RouterConstant.ROUTER_LOGIN}`;
+
+  /** Constante para navegar a la pagina de PERMISOS DENEGADO */
+  public static readonly NAVIGATE_DENEGADO: string = `/${RouterConstant.ROUTER_ERROR}/${RouterConstant.ROUTER_DENEGADO}`;
+
+  /** Constante para navegar a la pagina de BIENVENIDA */
+  public static readonly NAVIGATE_BIENVENIDA: string = `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_BIENVENIDA}`;
+
+  /** Constante para navegar a la pagina de ADMIN CUENTA USER */
+  public static readonly NAVIGATE_CUENTA_USER: string = `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CUENTA_USER}`;
 }

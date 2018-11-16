@@ -56,20 +56,20 @@ export class UserAccountComponent implements OnInit {
     this.userAccountState.changeStateSesionCerrada();
 
     // se redirecciona al LOGIN
-    this.router.navigate(['/' + RouterConstant.LOGIN]);
+    this.router.navigate([RouterConstant.NAVIGATE_LOGIN]);
   }
 
   /**
    * Metodo que soporta el evento click del menu Pagina de inicio
    */
   public goToBienvenida(): void {
-    this.router.navigate(['/' + RouterConstant.BIENVENIDA]);
+    this.router.navigate([RouterConstant.NAVIGATE_BIENVENIDA]);
   }
 
   /**
    * Metodo que soporta el evento click del menu Configuración de Cuenta
    */
   public goToConfiguracionCuenta(): void {
-    this.router.navigate(['/' + RouterConstant.ADMIN_CUENTA_USER]);
+    this.router.navigate([RouterConstant.NAVIGATE_CUENTA_USER]);
   }
 }
