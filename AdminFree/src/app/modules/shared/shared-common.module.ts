@@ -5,8 +5,10 @@ import { NoEspaciosBlancoDirective } from './../../directives/validators/espacio
 import { AutofocusDirective } from './../../directives/focus/autofocus.directive';
 
 /**
- * Modulo que contiene los artefactos que utiliza el login
- * para ser compartidos para otros modulos que los requiera
+ * Modulo que contiene los artefactos comunues,
+ * CommonModule, FormsModule y directivas, este modulo
+ * no puede contener mas artefactos, dado que es utilizado
+ * en el login y esta debe ser liviano en descargar en el browser
  *
  * @author Carlos Andres Diaz
  */
@@ -26,4 +28,4 @@ import { AutofocusDirective } from './../../directives/focus/autofocus.directive
     AutofocusDirective
   ]
 })
-export class SharedLoginModule {}
+export class SharedCommonModule {}

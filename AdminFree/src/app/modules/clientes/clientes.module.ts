@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SharedLoginModule } from './../shared/shared-login.module';
+import { SharedCommonModule } from './../shared/shared-common.module';
 import { AdminClientesComponent } from './admin-clientes/admin-clientes.component';
 
 /**
@@ -17,7 +17,7 @@ import { AdminClientesComponent } from './admin-clientes/admin-clientes.componen
         component: AdminClientesComponent
       }
     ]),
-    SharedLoginModule
+    SharedCommonModule
   ],
   declarations: [AdminClientesComponent]
 })

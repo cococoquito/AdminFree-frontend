@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ShellModule } from '../shell/shell.module';
+import { SharedCommonModule } from './shared-common.module';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -9,10 +9,10 @@ import { ShellModule } from '../shell/shell.module';
  */
 @NgModule({
   imports: [
-    ShellModule
+    SharedCommonModule
   ],
   exports: [
-    ShellModule
+    SharedCommonModule
   ],
   declarations: [
   ]

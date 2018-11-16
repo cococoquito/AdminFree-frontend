@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedLoginModule } from '../shared/shared-login.module';
+import { SharedCommonModule } from './../shared/shared-common.module';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { ShellComponent } from './shell/shell.component';
@@ -19,7 +19,7 @@ import { FooterComponent } from './footer/footer.component';
  */
 @NgModule({
   imports: [
-    SharedLoginModule,
+    SharedCommonModule,
     MenuModule,
     SidebarModule
   ],
@@ -35,7 +35,7 @@ import { FooterComponent } from './footer/footer.component';
   ],
   exports: [
     ShellComponent,
-    SharedLoginModule
+    SharedCommonModule
   ]
 })
 export class ShellModule {}
