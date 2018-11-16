@@ -19,7 +19,7 @@ import { RouterConstant } from '../../constants/router.constant';
         component: NotFoundComponent
       },
       {
-        path: RouterConstant.DENEGADO,
+        path: RouterConstant.ROUTER_DENEGADO,
         component: AccesDeniedComponent
       }
     ]),

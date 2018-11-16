@@ -19,6 +19,6 @@ export class NotFoundComponent {
    * Metodo que soporta el evento de ir a la pagina de bienvenida
    */
   public goHome(): void {
-    this.router.navigate(['/' + RouterConstant.BIENVENIDA]);
+    this.router.navigate([RouterConstant.NAVIGATE_BIENVENIDA]);
   }
 }

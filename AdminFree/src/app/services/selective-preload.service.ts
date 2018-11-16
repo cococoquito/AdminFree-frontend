@@ -25,7 +25,7 @@ export class SelectivePreload implements PreloadingStrategy {
    * modulos que son de uso frecuente
    */
   preload(route: Route, load: Function): Observable<any> {
-    return this.router.url !== RouterConstant.CLIENTES_ROUTER &&
+    return this.router.url !== RouterConstant.NAVIGATE_CLIENTES &&
       route.data &&
       route.data.preload
       ? load()
