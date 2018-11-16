@@ -1,12 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { MenuItem } from './../model/menu-item';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
 @Component({
   selector: 'admin-menu-item',
   templateUrl: './menu-item.component.html',

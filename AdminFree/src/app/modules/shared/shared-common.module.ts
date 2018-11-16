@@ -5,7 +5,7 @@ import { NoEspaciosBlancoDirective } from './../../directives/validators/espacio
 import { AutofocusDirective } from './../../directives/focus/autofocus.directive';
 
 /**
- * Modulo que contiene los artefactos comunues,
+ * Modulo que contiene los artefactos comunes,
  * CommonModule, FormsModule y directivas, este modulo
  * no puede contener mas artefactos, dado que es utilizado
  * en el login y esta debe ser liviano en descargar en el browser

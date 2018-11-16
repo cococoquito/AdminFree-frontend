@@ -21,7 +21,6 @@ import {
 })
 export class MenuItemDetailComponent implements OnInit {
   @Input() items: Array<MenuItem>;
-  constructor() {console.log('CREADO'); }
 
   ngOnInit() {
   }
