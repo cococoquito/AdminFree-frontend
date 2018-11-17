@@ -68,10 +68,16 @@ export class MenuState {
     const solicitarConsecutivo = new MenuItem();
     solicitarConsecutivo.nombre = 'Solicitar Consecutivo';
     solicitarConsecutivo.router = '/autenticado/correspondencia/solicitar';
-    solicitarConsecutivo.isUltimoItem = true;
+
+    // ITEM2, prueba
+    const prueba  = new MenuItem();
+    prueba.nombre = 'Prueba';
+    prueba.router = '/autenticado/correspondencia/solicitar';
+    prueba.isUltimoItem = true;
 
     // se agrega los items para este modulo
     correspondencia.agregarItem(solicitarConsecutivo);
+    correspondencia.agregarItem(prueba);
     return correspondencia;
   }
 
