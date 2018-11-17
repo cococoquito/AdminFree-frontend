@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './../../auth-guard/auth.guard';
+import { PrivilegiosGuard } from './../../auth-guard/privilegios.guard';
 import { ShellComponent } from './../shell/shell/shell.component';
 import { BienvenidaComponent } from './bienvenida/bienvenida.component';
 import { CuentaUserComponent } from './cuenta-user/cuenta-user.component';
@@ -19,35 +19,33 @@ export const ROUTES: Routes = [
     children: [
       {
         path: RouterConstant.ROUTER_BIENVENIDA,
-        canActivate: [AuthGuard],
         component: BienvenidaComponent
       },
       {
         path: RouterConstant.ROUTER_CUENTA_USER,
-        canActivate: [AuthGuard],
         component: CuentaUserComponent
       },
       {
         path: RouterConstant.ROUTER_CORRESPONDENCIA,
-        canActivate: [AuthGuard],
+        canActivate: [PrivilegiosGuard],
         data: { preload: true, token: ModulosConstant.TK_CORRESPONDENCIA },
         loadChildren: '../correspondencia/correspondencia.module#CorrespondenciaModule'
       },
       {
         path: RouterConstant.ROUTER_ARCHIVO_GESTION,
-        canActivate: [AuthGuard],
+        canActivate: [PrivilegiosGuard],
         data: { preload: true, token: ModulosConstant.TK_ARCHIVO_GESTION },
         loadChildren: '../archivo-gestion/archivo-gestion.module#ArchivoGestionModule'
       },
       {
         path: RouterConstant.ROUTER_REPORTES,
-        canActivate: [AuthGuard],
+        canActivate: [PrivilegiosGuard],
         data: { preload: true, token: ModulosConstant.TK_REPORTES },
         loadChildren: '../reportes/reportes.module#ReportesModule'
       },
       {
         path: RouterConstant.ROUTER_CONFIGURACIONES,
-        canActivate: [AuthGuard],
+        canActivate: [PrivilegiosGuard],
         data: { preload: true, token: ModulosConstant.TK_CONFIGURACIONES },
         loadChildren: '../configuraciones/configuraciones.module#ConfiguracionesModule'
       }

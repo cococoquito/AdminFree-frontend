@@ -4,8 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpRequestInterceptor } from './interceptors/http-request.interceptor';
-import { AuthGuard } from './auth-guard/auth.guard';
 import { SelectivePreload } from './services/selective-preload.service';
+import { PrivilegiosGuard } from './auth-guard/privilegios.guard';
+import { AutenticacionGuard } from './auth-guard/autenticacion.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './directives/spinner/spinner.component';
@@ -34,8 +35,9 @@ import { ROUTES } from './app-routing';
       useClass: HttpRequestInterceptor,
       multi: true
     },
-    AuthGuard,
-    SelectivePreload
+    SelectivePreload,
+    AutenticacionGuard,
+    PrivilegiosGuard
   ],
   bootstrap: [ AppComponent ]
 })

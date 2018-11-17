@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './auth-guard/auth.guard';
+import { AutenticacionGuard } from './auth-guard/autenticacion.guard';
 import { RouterConstant } from './constants/router.constant';
 
 /**
@@ -16,13 +16,13 @@ export const ROUTES: Routes = [
   },
   {
     path: RouterConstant.ROUTER_LOGIN,
-    canActivate: [AuthGuard],
+    canActivate: [AutenticacionGuard],
     data: { preload: true },
     loadChildren: './modules/login/login.module#LoginModule'
   },
   {
     path: RouterConstant.ROUTER_AUTENTICADO,
-    canActivate: [AuthGuard],
+    canActivate: [AutenticacionGuard],
     data: { preload: true },
     loadChildren: './modules/autenticado/autenticado.module#AutenticadoModule'
   },
