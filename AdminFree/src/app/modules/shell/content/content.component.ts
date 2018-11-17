@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShellState } from './../../../states/shell.state';
+import { MenuState } from './../../../states/menu.state';
 import {
   trigger,
   state,
@@ -28,5 +28,10 @@ import {
   ]
 })
 export class ContentComponent {
-  constructor(public estado: ShellState) {}
+
+  /**
+   * @param menuState, se utiliza para mostrar/ocultar el menu
+   * y validar el tamanio de la pantalla
+   */
+  constructor(public menuState: MenuState) {}
 }

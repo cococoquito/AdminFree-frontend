@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShellState } from '../../../states/shell.state';
+import { MenuState } from '../../../states/menu.state';
 
 /**
  * Es el Header del shell de la aplicacion, contiene el menu de las
@@ -13,5 +13,10 @@ import { ShellState } from '../../../states/shell.state';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(public estado: ShellState) {}
+
+  /**
+   * @param menuState, se utiliza para mostrar/ocultar el menu
+   * y validar el tamanio de la pantalla
+   */
+  constructor(public menuState: MenuState) {}
 }

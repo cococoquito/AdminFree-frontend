@@ -7,7 +7,7 @@ import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
- * Es el estado en la que se encuentra la cuenta del usuario
+ * Estado para administrar la cuenta del usuario
  *
  * @author Carlos Andres Diaz
  */

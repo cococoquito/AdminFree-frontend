@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 /**
- * Es el estado en la que se encuentra el Spinner
+ * Estado para administrar el Spinner de carga
  *
  * @author Carlos Andres Diaz
  */

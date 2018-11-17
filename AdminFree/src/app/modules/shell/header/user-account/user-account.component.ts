@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ShellState } from '../../../../states/shell.state';
+import { ScreenState } from './../../../../states/screen.state';
 import { UserAccountState } from './../../../../states/user-account.state';
 import { MenuItem } from 'primeng/api';
 import { RouterConstant } from './../../../../constants/router.constant';
@@ -22,12 +22,12 @@ export class UserAccountComponent implements OnInit {
   public items: MenuItem[];
 
   /**
-   * @param shellState , estado del shell de la app
+   * @param screenState , se utiliza para validar el tamanio de la pantalla
    * @param userAccountState , se utiliza para mostrar el nombre del user autenticado
    * @param router , router para la navegacion
    */
   constructor(
-    public shellState: ShellState,
+    public screenState: ScreenState,
     public userAccountState: UserAccountState,
     private router: Router) {}
 

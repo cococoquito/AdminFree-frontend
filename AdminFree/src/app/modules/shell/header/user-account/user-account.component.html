@@ -1,12 +1,12 @@
 <!-- Logo del user para dispositivos resolucion grande -->
-<a class="logo-container" *ngIf="shellState.isGrande()">
+<a class="logo-container" *ngIf="screenState.isBigScreen()">
   <img class="logo" src="assets/avatar.png" alt="user">
   <span *ngIf="!userAccountState.credenciales?.administrador">{{userAccountState.usuario?.nombre}}</span>
   <span *ngIf="userAccountState.credenciales?.administrador">Administrador</span>
 </a>
 
 <!-- Logo del user para dispositivos resolucion pequenio -->
-<a class="logo-container-small" *ngIf="!shellState.isGrande()">
+<a class="logo-container-small" *ngIf="!screenState.isBigScreen()">
   <img class="logo-small" src="assets/avatar.png" alt="user">
 </a>
 
