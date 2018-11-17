@@ -20,7 +20,7 @@ import {
   ]
 })
 export class MenuItemDetailComponent implements OnInit {
-  @Input() items: Array<MenuItem>;
+  @Input() modulo: MenuItem;
 
   ngOnInit() {
   }

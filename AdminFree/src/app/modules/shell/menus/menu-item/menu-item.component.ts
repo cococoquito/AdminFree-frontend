@@ -16,11 +16,8 @@ export class MenuItemComponent {
    */
   public openItems() {
     if (this.item && this.item.items) {
-      for (const i of this.item.items) {
-        i.isSeleccionado = !i.isSeleccionado;
-      }
+      this.item.isOpen = !this.item.isOpen;
     }
-    this.item.isSeleccionado = !this.item.isSeleccionado;
   }
 
   public goRouter(url: string) {
