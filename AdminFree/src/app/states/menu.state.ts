@@ -80,8 +80,9 @@ export class MenuState {
     configuraciones.nombre = 'Configuraciones';
     configuraciones.isSeleccionado = true;
     const h = new MenuItem();
-    h.nombre = 'Series';
+    h.nombre = 'Usuarios';
     h.isSeleccionado = true;
+    h.router = '/autenticado/configuraciones/users';
     const a = new MenuItem();
     a.nombre = 'Archivar';
     a.isUltimoItem = true;
