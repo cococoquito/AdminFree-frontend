@@ -12,7 +12,7 @@ import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.componen
   imports: [
     RouterModule.forChild([
       {
-        path: '',
+        path: 'users',
         component: AdminUsuariosComponent
       }
     ]),

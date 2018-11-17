@@ -13,7 +13,7 @@ import { SeriesDocumentalesComponent } from './series-documentales/series-docume
   imports: [
     RouterModule.forChild([
       {
-        path: '',
+        path: 'series',
         component: SeriesDocumentalesComponent
       }
     ]),

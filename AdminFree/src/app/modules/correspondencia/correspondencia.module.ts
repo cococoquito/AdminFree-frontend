@@ -13,7 +13,7 @@ import { SolicitarConsecutivoComponent } from './solicitar-consecutivo/solicitar
   imports: [
     RouterModule.forChild([
       {
-        path: '',
+        path: 'solicitar',
         component: SolicitarConsecutivoComponent
       }
     ]),

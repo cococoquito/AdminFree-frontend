@@ -27,6 +27,7 @@ export class MenuState {
     const solicitarConsecutivo = new MenuItem();
     solicitarConsecutivo.nombre = 'Solicitar';
     solicitarConsecutivo.isSeleccionado = true;
+    solicitarConsecutivo.router = '/autenticado/correspondencia/solicitar';
 
     const consecutivosSolicitados = new MenuItem();
     consecutivosSolicitados.nombre = 'Consecutivos';
@@ -46,6 +47,7 @@ export class MenuState {
     const series = new MenuItem();
     series.nombre = 'Series';
     series.isSeleccionado = true;
+    series.router = '/autenticado/archivogestion/series';
 
     const archivar = new MenuItem();
     archivar.nombre = 'Archivar';

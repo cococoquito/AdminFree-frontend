@@ -13,7 +13,7 @@ import { GenerarReporteComponent } from './generar-reporte/generar-reporte.compo
   imports: [
     RouterModule.forChild([
       {
-        path: '',
+        path: 'generar',
         component: GenerarReporteComponent
       }
     ]),
