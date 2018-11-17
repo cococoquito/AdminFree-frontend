@@ -3,12 +3,10 @@
 
 (click)="openItems()">
   <i class="{{item.icono}} size-icon icon_modulo"
-  [ngClass]="(!item.isSeleccionado) ? 'icon_modulo-sele' : 'icon_modulo'"
-
-  ></i>
+  [ngClass]="(!item.isSeleccionado) ? 'icon_modulo-sele' : 'icon_modulo'"></i>
   <span class="font-weight-bold">{{item.nombre}}</span>
-  <i *ngIf="!item.isSeleccionado" class="fa fa-fw fa-angle-right glyphicon size-icon"></i>
-  <i *ngIf="item.isSeleccionado" class="fa fa-fw fa-angle-down glyphicon size-icon"></i>
+  <i [ngClass]="(item.isOpen) ? 'fa fa-fw fa-angle-down' : 'fa fa-fw fa-angle-right'"
+  class="glyphicon size-icon"></i>
 </div>
 
 <div *ngIf="!item.items" (click)="goRouter(item.router)"
