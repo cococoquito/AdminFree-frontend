@@ -1,18 +1,38 @@
-<div *ngIf="item.isPaginaInicio" (click)="navigate(item.router)" [ngClass]="(item.isSeleccionado) ? 'menu-modulo-sele' : 'menu-modulo'">
-  <i class="{{item.icono}} size-icon icon_modulo" [ngClass]="item.isSeleccionado ? 'icon_modulo_sel' : ''"></i>
-  <span class="font-weight-bold">{{item.nombre}}</span>
-</div>
-<div *ngIf="!item.isPaginaInicio">
-  <div *ngIf="item.items" [ngClass]="(item.isSeleccionado) ? 'menu-modulo-sele' : 'menu-modulo'" (click)="menuState.toggleMenuModulo(item)">
-    <i class="{{item.icono}} size-icon icon_modulo" [ngClass]="item.isSeleccionado ? 'icon_modulo_sel' : ''"></i>
+<!-- item para la pagina de inicio -->
+<div
+  *ngIf="item.isPaginaInicio"
+  (click)="navigate(item.router)"
+  [ngClass]="(item.isSeleccionado) ? 'menu-modulo-selected' : 'menu-modulo'">
+    <i class="{{item.icono}} size-icon" [ngClass]="item.isSeleccionado ? 'icon_modulo_selected' : 'icon_modulo'"></i>
     <span class="font-weight-bold">{{item.nombre}}</span>
-    <i [ngClass]="(item.isOpen) ? 'fa fa-fw fa-angle-down' : 'fa fa-fw fa-angle-right'" class="glyphicon size-icon"></i>
+</div>
+
+<!-- items diferentes a la pagina de inicio -->
+<div *ngIf="!item.isPaginaInicio">
+
+  <!-- div para los items tipo modulo o sub-modulo -->
+  <div
+    *ngIf="item.items"
+    [ngClass]="(item.isSeleccionado) ? 'menu-modulo-selected' : 'menu-modulo'"
+    (click)="menuState.toggleMenuModulo(item)">
+      <i class="{{item.icono}} size-icon" [ngClass]="item.isSeleccionado ? 'icon_modulo_selected' : 'icon_modulo'"></i>
+      <span class="font-weight-bold">{{item.nombre}}</span>
+      <i [ngClass]="(item.isOpen) ? 'fa fa-fw fa-angle-down' : 'fa fa-fw fa-angle-right'" class="float-right size-icon"></i>
   </div>
+
+
+  <!-- div para los items -->
   <div [ngClass]="menuState.isMenuShowFirstTime ? 'd-none' : ''">
-    <div *ngIf="!item.items" (click)="navigate(item.router)" [ngClass]="item.isUltimoItem ? item.isSeleccionado ? 'border-bottom menu-item-sele' : 'border-bottom menu-item'  : item.isSeleccionado ? 'menu-item-sele' : 'menu-item'">
-      <span class="font-weight-bold text">
-        <i class="fa fa-fw fa-angle-double-right size-icon-item icon_modulo" [ngClass]="item.isSeleccionado ? 'icon_modulo_sel' : ''"></i>
-        {{item.nombre}}</span>
+    <div
+      *ngIf="!item.items"
+      (click)="navigate(item.router)"
+      [ngClass]="item.isUltimoItem ? item.isSeleccionado ? 'border-bottom menu-item-selected' : 'border-bottom menu-item'  : item.isSeleccionado ? 'menu-item-selected' : 'menu-item'">
+        <span class="font-weight-bold text-item">
+          <i class="fa fa-fw fa-angle-double-right size-icon-item icon_modulo"
+            [ngClass]="item.isSeleccionado ? 'icon_modulo_selected' : ''">
+          </i>
+          {{item.nombre}}
+        </span>
     </div>
     <admin-menu-item-detail [modulo]="item"></admin-menu-item-detail>
   </div>
