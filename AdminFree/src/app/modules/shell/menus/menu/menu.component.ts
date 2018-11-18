@@ -15,7 +15,7 @@ export class MenuComponent {
 
   /**
    * @param menuState, se utiliza para obtener los Modulos
-   * con sus items para se visualizados en el menu
+   * con sus items para ser visualizados en el menu
    */
   constructor(public menuState: MenuState) {}
 }

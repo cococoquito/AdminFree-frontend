@@ -61,7 +61,7 @@ export class MenuState {
    * @param modulo, es el modulo seleccionado para
    * abrir/ocultar sus items
    */
-  public toggleMenuModulo(modulo: MenuItem) {
+  public toggleMenuModulo(modulo: MenuItem): void {
     // Se cambia la bandera a Menu visualizado y cargado
     this.isMenuShowFirstTime = false;
 
@@ -117,7 +117,7 @@ export class MenuState {
    * Metodo que permite construir los modulos con sus items
    * para ser visualizados en el menu de la aplicacion
    */
-  private construirMenu() {
+  private construirMenu(): void {
     this.modulos = new Array<MenuItem>();
 
     // se agrega la pagina de inicio
