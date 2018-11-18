@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { GenerarReporteComponent } from './generar-reporte/generar-reporte.component';
+import { PruebaComponent } from './prueba/prueba.component';
 
 /**
  * Modulo que contiene todos los procesos de negocio
@@ -15,10 +16,14 @@ import { GenerarReporteComponent } from './generar-reporte/generar-reporte.compo
       {
         path: 'generar',
         component: GenerarReporteComponent
+      },
+      {
+        path: 'prueba',
+        component: PruebaComponent
       }
     ]),
     SharedModule
   ],
-  declarations: [GenerarReporteComponent]
+  declarations: [GenerarReporteComponent, PruebaComponent]
 })
 export class ReportesModule { }

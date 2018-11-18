@@ -124,10 +124,16 @@ export class MenuState {
     const series = new MenuItem();
     series.nombre = 'Series Documentales';
     series.router = '/autenticado/archivogestion/series';
-    series.isUltimoItem = true;
+
+    // ITEM2, prueba
+    const prueba  = new MenuItem();
+    prueba.nombre = 'Prueba Archivo';
+    prueba.router = '/autenticado/archivogestion/prueba';
+    prueba.isUltimoItem = true;
 
     // se agrega los items para este modulo
     archivoGestion.agregarItem(series);
+    archivoGestion.agregarItem(prueba);
     return archivoGestion;
   }
 
@@ -146,10 +152,16 @@ export class MenuState {
     const generar = new MenuItem();
     generar.nombre = 'Generar Reportes';
     generar.router = '/autenticado/reportes/generar';
-    generar.isUltimoItem = true;
+
+    // ITEM2, prueba
+    const prueba  = new MenuItem();
+    prueba.nombre = 'Prueba Reportes';
+    prueba.router = '/autenticado/reportes/prueba';
+    prueba.isUltimoItem = true;
 
     // se agrega los items para este modulo
     reportes.agregarItem(generar);
+    reportes.agregarItem(prueba);
     return reportes;
   }
 
@@ -168,10 +180,16 @@ export class MenuState {
     const adminUsers = new MenuItem();
     adminUsers.nombre = 'Administrar Usuarios';
     adminUsers.router = '/autenticado/configuraciones/users';
-    adminUsers.isUltimoItem = true;
+
+    // ITEM2, prueba
+    const prueba  = new MenuItem();
+    prueba.nombre = 'Prueba Conf';
+    prueba.router = '/autenticado/configuraciones/prueba';
+    prueba.isUltimoItem = true;
 
     // se agrega los items para este modulo
     configuraciones.agregarItem(adminUsers);
+    configuraciones.agregarItem(prueba);
     return configuraciones;
   }
 }
