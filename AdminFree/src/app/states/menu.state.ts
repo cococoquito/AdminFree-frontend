@@ -69,11 +69,11 @@ export class MenuState {
     modulo.isOpen = !modulo.isOpen;
 
     // se recorre los demas modulos para cerrar sus items
-    for (const otherMenu  of this.modulos) {
+    for (const otherModulo  of this.modulos) {
 
       // no aplica para el modulo que llega por parametro ni para p-inicio
-      if (otherMenu !== modulo && !otherMenu.isPaginaInicio) {
-          otherMenu.isOpen = false;
+      if (otherModulo !== modulo && !otherModulo.isPaginaInicio) {
+          otherModulo.isOpen = false;
       }
     }
   }
