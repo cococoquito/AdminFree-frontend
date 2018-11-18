@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { SolicitarConsecutivoComponent } from './solicitar-consecutivo/solicitar-consecutivo.component';
+import { PruebaComponent } from './prueba/prueba.component';
 
 /**
  * Modulo que contiene todos los procesos de negocio
@@ -15,10 +16,14 @@ import { SolicitarConsecutivoComponent } from './solicitar-consecutivo/solicitar
       {
         path: 'solicitar',
         component: SolicitarConsecutivoComponent
+      },
+      {
+        path: 'prueba',
+        component: PruebaComponent
       }
     ]),
     SharedModule
   ],
-  declarations: [SolicitarConsecutivoComponent]
+  declarations: [SolicitarConsecutivoComponent, PruebaComponent]
 })
 export class CorrespondenciaModule {}

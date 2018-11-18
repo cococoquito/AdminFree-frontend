@@ -46,21 +46,26 @@
 
 .menu-item-sele {
   padding: 6px 6px 6px 0;
-  background-color: #dfd;
+  background-color: #e0ebf1;
   border-bottom: 0px;
   padding-left: 16px;
   color: #333333;
   cursor: auto;
 }
 
-.menu-item:hover * {
-  background-color: #d0d0d0;
+.text {
   color: #333333;
+  font-size: 13px;
 }
 
-.menu-item:hover{
-  background-color: #d0d0d0;
+.menu-item:hover {
   color: #333333;
+  background-color: #d0d0d0;
+}
+
+.menu-item:hover * {
+  color: #333333;
+  background-color: #d0d0d0;
 }
 
 .border-bottom {

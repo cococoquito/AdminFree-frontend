@@ -100,7 +100,7 @@ export class MenuState {
     // ITEM2, prueba
     const prueba  = new MenuItem();
     prueba.nombre = 'Prueba';
-    prueba.router = '/autenticado/correspondencia/solicitar12312';
+    prueba.router = '/autenticado/correspondencia/prueba';
     prueba.isUltimoItem = true;
 
     // se agrega los items para este modulo
