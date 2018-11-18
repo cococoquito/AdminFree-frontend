@@ -12,8 +12,9 @@
 
 .menu-modulo-sele {
   padding: 10px 10px 10px 0;
-  background-color: #aabac3;
+  border-bottom: 1px solid #d0d0d0;
   padding-left: 10px;
+  background-color: #aabac3;
   color: #333333;
 }
 
@@ -31,7 +32,7 @@
   color: #a6a6a6;
 }
 
-.icon_modulo-sele {
+.icon_modulo_sel {
   color: #333333;
 }
 
@@ -41,6 +42,15 @@
   border-bottom: 0px;
   padding-left: 16px;
   color: #2e3c45;
+}
+
+.menu-item-sele {
+  padding: 6px 6px 6px 0;
+  background-color: #dfd;
+  border-bottom: 0px;
+  padding-left: 16px;
+  color: #333333;
+  cursor: auto;
 }
 
 .menu-item:hover * {

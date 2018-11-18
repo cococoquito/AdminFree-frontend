@@ -1,3 +1,4 @@
+import { Router, NavigationEnd } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { ScreenState } from './screen.state';
 import { MenuItem } from './../modules/shell/menus/model/menu-item';
@@ -23,8 +24,35 @@ export class MenuState {
   /**
    * @param screenState, se utiliza para la visualizacion del menu
    */
-  constructor(public screenState: ScreenState) {
+  constructor(public screenState: ScreenState,
+    private router: Router
+    ) {
+      router.events.subscribe((val) => {
+        if (val instanceof NavigationEnd) {
+        this.moduloSeleccionado(val.url);
+        }
+    });
     this.construirMenu();
+  }
+
+  private moduloSeleccionado(url: string): void {
+    console.log(url);
+    let moduloSle: MenuItem;
+    for (const modulo  of this.modulos) {
+      for (const item of modulo.items) {
+        if (item.router === url) {
+          item.isSeleccionado = true;
+          modulo.isSeleccionado = true;
+          moduloSle = modulo;
+        } else {
+          item.isSeleccionado = false;
+          if (moduloSle !== modulo) {
+            modulo.isSeleccionado = false;
+          }
+        }
+      }
+
+    }
   }
 
   /**
@@ -72,7 +100,7 @@ export class MenuState {
     // ITEM2, prueba
     const prueba  = new MenuItem();
     prueba.nombre = 'Prueba';
-    prueba.router = '/autenticado/correspondencia/solicitar';
+    prueba.router = '/autenticado/correspondencia/solicitar12312';
     prueba.isUltimoItem = true;
 
     // se agrega los items para este modulo
