@@ -39,19 +39,27 @@ export class MenuState {
     console.log(url);
     let moduloSle: MenuItem;
     for (const modulo  of this.modulos) {
-      for (const item of modulo.items) {
-        if (item.router === url) {
-          item.isSeleccionado = true;
+
+      if (modulo.isPaginaInicio) {
+        if (modulo.router === url) {
           modulo.isSeleccionado = true;
-          moduloSle = modulo;
         } else {
-          item.isSeleccionado = false;
-          if (moduloSle !== modulo) {
-            modulo.isSeleccionado = false;
+          modulo.isSeleccionado = false;
+        }
+      } else {
+        for (const item of modulo.items) {
+          if (item.router === url) {
+            item.isSeleccionado = true;
+            modulo.isSeleccionado = true;
+            moduloSle = modulo;
+          } else {
+            item.isSeleccionado = false;
+            if (moduloSle !== modulo) {
+              modulo.isSeleccionado = false;
+            }
           }
         }
       }
-
     }
   }
 
@@ -74,11 +82,23 @@ export class MenuState {
   private construirMenu() {
     this.modulos = new Array<MenuItem>();
 
+    // se agrega la pagina de inicio
+    this.modulos.push(this.getItemPaginaInicio());
+
     // se agregan los modulos en la lista a visualizar
     this.modulos.push(this.getModuloCorrespondencia());
     this.modulos.push(this.getModuloArchivoGestion());
     this.modulos.push(this.getModuloReportes());
     this.modulos.push(this.getModuloConfiguraciones());
+  }
+
+  private getItemPaginaInicio(): MenuItem {
+    const inicio = new MenuItem();
+    inicio.nombre = 'Página de Inicio';
+    inicio.icono = 'fa fa-fw fa-dashboard';
+    inicio.router = '/autenticado/bienvenida';
+    inicio.isPaginaInicio = true;
+    return inicio;
   }
 
   /**

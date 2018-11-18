@@ -14,6 +14,9 @@ export class MenuItem {
   /** Indica si este item fue seleccionado por el user */
   public isSeleccionado: boolean;
 
+  /** Indica si este item es de la pagina de inicio */
+  public isPaginaInicio: boolean;
+
   /** Indica si los items se debe visualizar en el menu */
   public isOpen: boolean;
 
