@@ -1,8 +1,9 @@
-import { Router, NavigationEnd } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { ScreenState } from './screen.state';
 import { MenuItem } from './../modules/shell/menus/model/menu-item';
 import { ModulosConstant } from './../constants/modulos.constant';
+import { RouterConstant } from './../constants/router.constant';
 
 /**
  * Se utiliza para administrar el estado del Menu
@@ -25,45 +26,20 @@ export class MenuState {
   public modulos: Array<MenuItem>;
 
   /**
-   * @param screenState, se utiliza para la visualizacion del menu
+   * @param screenState, se utiliza para validar el tamanio de la pantalla
+   * @param router, se utiliza para ser notificado cuando el router cambia
    */
-  constructor(public screenState: ScreenState,
-    private router: Router
-    ) {
-      router.events.subscribe((val) => {
-        if (val instanceof NavigationEnd) {
-        this.moduloSeleccionado(val.url);
-        }
-    });
-    this.construirMenu();
-  }
-
-  private moduloSeleccionado(url: string): void {
-    console.log(url);
-    let moduloSle: MenuItem;
-    for (const modulo  of this.modulos) {
-
-      if (modulo.isPaginaInicio) {
-        if (modulo.router === url) {
-          modulo.isSeleccionado = true;
-        } else {
-          modulo.isSeleccionado = false;
-        }
-      } else {
-        for (const item of modulo.items) {
-          if (item.router === url) {
-            item.isSeleccionado = true;
-            modulo.isSeleccionado = true;
-            moduloSle = modulo;
-          } else {
-            item.isSeleccionado = false;
-            if (moduloSle !== modulo) {
-              modulo.isSeleccionado = false;
-            }
-          }
-        }
+  constructor(public screenState: ScreenState, private router: Router) {
+    // se hace la suscripcion con el router para ser notificado
+    // cada vez que el router cambie su navegacion
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.notificarItemSeleccionado(val.url);
       }
-    }
+    });
+
+    // se construye el menu a visualizar en la app
+    this.construirMenu();
   }
 
   /**
@@ -78,12 +54,61 @@ export class MenuState {
     this.isToogleMenuFirstTime = false;
   }
 
-  public toogleMenuItem(modulo: MenuItem) {
+  /**
+   * Metodo que soporta el evento click del Modulo
+   * en el menu, donde se visualiza o esconde sus items
+   *
+   * @param modulo, es el modulo seleccionado para
+   * abrir/ocultar sus items
+   */
+  public toggleMenuModulo(modulo: MenuItem) {
+    // Se cambia la bandera a Menu visualizado y cargado
     this.isMenuShowFirstTime = false;
+
+    // se cambie el estado de la variable 'isOPen' de este modulo
     modulo.isOpen = !modulo.isOpen;
-    for (const modulo2  of this.modulos) {
-      if (modulo2 !== modulo) {
-        modulo2.isOpen = false;
+
+    // se recorre los demas modulos para cerrar sus items
+    for (const otherMenu  of this.modulos) {
+
+      // no aplica para el modulo que llega por parametro ni para p-inicio
+      if (otherMenu !== modulo && !otherMenu.isPaginaInicio) {
+          otherMenu.isOpen = false;
+      }
+    }
+  }
+
+  /**
+   * Metodo que permite configurar el modulo/item seleccionado
+   * por el usuario a navegar, esto aplica en el menu o cualquier
+   * cambio que se realice en el router
+   *
+   * @param url, es la nueva url donde el usuario va navegar
+   */
+  private notificarItemSeleccionado(url: string): void {
+    let moduloFueSeleccionado: MenuItem;
+
+    // se recorre todos los modulos para validar el router de sus items
+    for (const modulo  of this.modulos) {
+
+      // el modulo de la pagina inicio no tiene items pero si router
+      if (modulo.isPaginaInicio) {
+          modulo.isSeleccionado = modulo.router === url;
+      } else {
+
+        // se recorre los items de este modulo validando su router
+        for (const item of modulo.items) {
+          if (item.router === url) {
+              item.isSeleccionado = true;
+              modulo.isSeleccionado = true;
+              moduloFueSeleccionado = modulo;
+          } else {
+            item.isSeleccionado = false;
+            if (modulo !== moduloFueSeleccionado) {
+                modulo.isSeleccionado = false;
+            }
+          }
+        }
       }
     }
   }
@@ -105,11 +130,14 @@ export class MenuState {
     this.modulos.push(this.getModuloConfiguraciones());
   }
 
+  /**
+   * Metodo que permite construir el Item-Menu de la pagina de inicio
+   */
   private getItemPaginaInicio(): MenuItem {
     const inicio = new MenuItem();
     inicio.nombre = 'Página de Inicio';
     inicio.icono = 'fa fa-fw fa-dashboard';
-    inicio.router = '/autenticado/bienvenida';
+    inicio.router = RouterConstant.NAVIGATE_BIENVENIDA;
     inicio.isPaginaInicio = true;
     return inicio;
   }

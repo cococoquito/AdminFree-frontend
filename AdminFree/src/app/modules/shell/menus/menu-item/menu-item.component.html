@@ -11,7 +11,7 @@
   <div *ngIf="item.items"
   [ngClass]="(item.isSeleccionado) ? 'menu-modulo-sele' : 'menu-modulo'"
 
-  (click)="menuState.toogleMenuItem(item)">
+  (click)="menuState.toggleMenuModulo(item)">
     <i class="{{item.icono}} size-icon icon_modulo"
     [ngClass]="item.isSeleccionado ? 'icon_modulo_sel' : ''"
     ></i>
