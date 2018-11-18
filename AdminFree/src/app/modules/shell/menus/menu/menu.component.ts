@@ -12,7 +12,10 @@ import { MenuState } from './../../../../states/menu.state';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  constructor(public menuState: MenuState) {
-    console.log('MenuComponent CREADO');
-  }
+
+  /**
+   * @param menuState, se utiliza para obtener los Modulos
+   * con sus items para se visualizados en el menu
+   */
+  constructor(public menuState: MenuState) {}
 }
