@@ -21,6 +21,8 @@ export class MenuState {
   /** Son los modulos a visualizar en el menu **/
   public modulos: Array<MenuItem>;
 
+  public isMenuInicio = true;
+
   /**
    * @param screenState, se utiliza para la visualizacion del menu
    */
@@ -75,6 +77,16 @@ export class MenuState {
     this.isInicio = false;
   }
 
+  public toogleMenuItem(modulo: MenuItem) {
+    this.isMenuInicio = false;
+    modulo.isOpen = !modulo.isOpen;
+    for (const modulo2  of this.modulos) {
+      if (modulo2 !== modulo) {
+        modulo2.isOpen = false;
+      }
+    }
+  }
+
   /**
    * Metodo que permite construir los modulos con sus items
    * para ser visualizados en el menu de la aplicacion
@@ -110,7 +122,6 @@ export class MenuState {
     correspondencia.nombre = 'Correspondencia';
     correspondencia.icono = 'fa fa-fw fa-envelope';
     correspondencia.moduloToken = ModulosConstant.TK_CORRESPONDENCIA;
-    correspondencia.isOpen = true;
 
     // ITEM1, Solicitar consecutivo de correspondencia
     const solicitarConsecutivo = new MenuItem();
@@ -138,7 +149,6 @@ export class MenuState {
     archivoGestion.nombre = 'Archivo de Gestión';
     archivoGestion.icono = 'fa fa-fw fa-folder-open';
     archivoGestion.moduloToken = ModulosConstant.TK_ARCHIVO_GESTION;
-    archivoGestion.isOpen = true;
 
     // ITEM1, Admin Series documentales
     const series = new MenuItem();
@@ -166,7 +176,6 @@ export class MenuState {
     reportes.nombre = 'Reportes';
     reportes.icono = 'fa fa-fw fa-bar-chart';
     reportes.moduloToken = ModulosConstant.TK_REPORTES;
-    reportes.isOpen = true;
 
     // ITEM1, Generar reportes
     const generar = new MenuItem();
@@ -194,7 +203,6 @@ export class MenuState {
     configuraciones.nombre = 'Configuraciones';
     configuraciones.icono = 'fa fa-fw fa-wrench';
     configuraciones.moduloToken = ModulosConstant.TK_CONFIGURACIONES;
-    configuraciones.isOpen = true;
 
     // ITEM1, Administrar Usuarios
     const adminUsers = new MenuItem();

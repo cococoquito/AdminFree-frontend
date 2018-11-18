@@ -14,7 +14,7 @@ import {
   animations: [
     trigger('openCloseMenu', [
       state('open', style({ transform: 'translate3d(0, 0, 0)' })),
-      state('closed', style({ transform: 'translate3d(100%, 0, 0)', display: 'none'})),
+      state('closed', style({ transform: 'translate3d(100%, 0, 0)', height: '0px', display: 'none'})),
       transition('* => *', animate(300))
     ])
   ]

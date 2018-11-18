@@ -1,3 +1,4 @@
+import { MenuState } from './../../../../states/menu.state';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from './../model/menu-item';
@@ -9,7 +10,7 @@ import { MenuItem } from './../model/menu-item';
 export class MenuItemComponent {
   @Input()
   public item: MenuItem;
-  constructor(private router: Router) {}
+  constructor(private router: Router, public menuState: MenuState) {}
 
   /**
    * openItem
