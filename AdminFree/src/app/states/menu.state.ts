@@ -15,13 +15,14 @@ export class MenuState {
   /** Se utiliza para mostrar/ocultar el menu **/
   public isMenuOpen = false;
 
+  /** Indica si el toogle del menu se visualiza por primera vez **/
+  public isToogleMenuFirstTime = true;
+
   /** Indica si el menu se visualiza por primera vez **/
-  public isInicio = true;
+  public isMenuShowFirstTime = true;
 
   /** Son los modulos a visualizar en el menu **/
   public modulos: Array<MenuItem>;
-
-  public isMenuInicio = true;
 
   /**
    * @param screenState, se utiliza para la visualizacion del menu
@@ -70,15 +71,15 @@ export class MenuState {
    * toogle del menu que se visualiza en el header
    */
   public toggleMenu(): void {
-    if (this.isInicio && this.screenState.isBigScreen()) {
+    if (this.isToogleMenuFirstTime && this.screenState.isBigScreen()) {
       this.isMenuOpen = true;
     }
     this.isMenuOpen = !this.isMenuOpen;
-    this.isInicio = false;
+    this.isToogleMenuFirstTime = false;
   }
 
   public toogleMenuItem(modulo: MenuItem) {
-    this.isMenuInicio = false;
+    this.isMenuShowFirstTime = false;
     modulo.isOpen = !modulo.isOpen;
     for (const modulo2  of this.modulos) {
       if (modulo2 !== modulo) {

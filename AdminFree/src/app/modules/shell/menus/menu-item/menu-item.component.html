@@ -20,7 +20,7 @@
     class="glyphicon size-icon"></i>
   </div>
 
-<div [ngClass]="menuState.isMenuInicio ? 'd-none' : ''">
+<div [ngClass]="menuState.isMenuShowFirstTime ? 'd-none' : ''">
 
   <div *ngIf="!item.items" (click)="goRouter(item.router)"
   [ngClass]="item.isUltimoItem ? item.isSeleccionado ? 'border-bottom menu-item-sele' : 'border-bottom menu-item'  : item.isSeleccionado ? 'menu-item-sele' : 'menu-item'"
