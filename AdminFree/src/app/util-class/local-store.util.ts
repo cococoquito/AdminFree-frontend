@@ -1,6 +1,7 @@
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
+import { Menu } from './../states/shell/micro-state/menu';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
@@ -18,6 +19,9 @@ export class LocalStoreUtil {
 
   /** Key que representa los datos de entrada al sistema*/
   private static readonly KEY_WELCOME: string = 'WELCOME';
+
+  /** Key que representa los datos de del Menu*/
+  private static readonly KEY_MENU: string = 'MENU';
 
   /**
    * Metodo que permite administrar los clientes en el LOCAL-STORE
@@ -43,6 +47,13 @@ export class LocalStoreUtil {
   }
 
   /**
+   * Metodo que permite administrar los datos de los modulos del Menu
+   */
+  public static menu(evento: TipoEventoConstant, menu?: Menu): Menu {
+    return this.implementarEvento(evento, this.KEY_MENU, menu);
+  }
+
+  /**
    * Metodo que permite obtener las credenciales del admin-clientes o
    * del funcionario o del administrador del sistema
    */
@@ -61,6 +72,7 @@ export class LocalStoreUtil {
     localStorage.removeItem(this.KEY_CLIENTES);
     localStorage.removeItem(this.KEY_ADMIN_CLIENTES);
     localStorage.removeItem(this.KEY_WELCOME);
+    localStorage.removeItem(this.KEY_MENU);
   }
 
   /**

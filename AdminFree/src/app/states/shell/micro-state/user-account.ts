@@ -1,4 +1,3 @@
-import { Menu } from './menu';
 import { LocalStoreUtil } from './../../../util-class/local-store.util';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
@@ -27,8 +26,18 @@ export class UserAccount {
    * estado de la cuenta del user, se debe tomar los datos
    * del local-store, dado que en este punto son nulos
    */
-  constructor(private menu: Menu) {
+  constructor() {
     this.init();
+  }
+
+  /**
+   * Metodo que es invocado del constructor de este State
+   */
+  private init(): void {
+    const welcomeDTO: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
+    if (welcomeDTO) {
+      this.configurarCuentaUser(welcomeDTO);
+    }
   }
 
   /**
@@ -42,9 +51,6 @@ export class UserAccount {
 
     // se configura los datos del usuario
     this.configurarCuentaUser(welcomeDTO);
-
-    // se construye el Menu de acuerdo a los privilegios del usuario
-    this.menu.initMenu(welcomeDTO);
   }
 
   /**
@@ -56,19 +62,6 @@ export class UserAccount {
 
     // Se limpia las variables globales para notificar los demas componentes
     this.configurarCuentaUser(null);
-
-    // Se destruye el menu liberando memoria
-    this.menu.destroyMenu();
-  }
-
-  /**
-   * Metodo que es invocado del constructor de este state
-   */
-  private init(): void {
-    const welcomeDTO: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
-    if (welcomeDTO) {
-      this.configurarCuentaUser(welcomeDTO);
-    }
   }
 
   /**

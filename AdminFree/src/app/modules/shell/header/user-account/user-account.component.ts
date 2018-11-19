@@ -53,6 +53,9 @@ export class UserAccountComponent implements OnInit {
     // se cambia el estado de la cuenta a sesion cerrada
     this.shellState.userAccount.changeStateSesionCerrada();
 
+    // se destruye el menu para limpiar memoria
+    this.shellState.menu.destroyMenu();
+
     // se redirecciona al LOGIN
     this.router.navigate([RouterConstant.NAVIGATE_LOGIN]);
   }

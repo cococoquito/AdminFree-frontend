@@ -59,6 +59,9 @@ export class LoginComponent extends CommonComponent implements OnInit {
           // se cambia el estado de la cuenta a sesion iniciada
           this.shellState.userAccount.changeStateAutenticado(data);
 
+          // se construye el menu de la aplicacion
+          this.shellState.menu.initMenu(data);
+
           // se redirecciona a la pagina de bienvenida
           this.router.navigate([RouterConstant.NAVIGATE_BIENVENIDA]);
         },

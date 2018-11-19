@@ -1,11 +1,13 @@
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Screen } from './screen';
+import { LocalStoreUtil } from './../../../util-class/local-store.util';
 import { MenuItem } from '../../../modules/shell/menus/model/menu-item';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
 import { ModuloDTO } from './../../../dtos/seguridad/modulo.dto';
 import { ModulosConstant } from '../../../constants/modulos.constant';
 import { RouterConstant } from '../../../constants/router.constant';
+import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
 /**
  * Se utiliza para administrar el estado del Menu
@@ -33,7 +35,40 @@ export class Menu {
    * @param screen, se utiliza para validar el tamanio de la pantalla
    * @param router, se utiliza para ser notificado cuando el router cambia
    */
-  constructor(public screen: Screen, private router: Router) {}
+  constructor(
+    public screen: Screen,
+    private router: Router) {
+    this.init();
+  }
+
+  /**
+   * Metodo que es invocado del constructor de este State
+   */
+  private init(): void {
+    // se obtiene los datos de la autenticacion del local-store
+    const welcomeDTO: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
+
+    // se valida que el user si este autenticado
+    if (welcomeDTO && welcomeDTO.credenciales) {
+
+      // se obtiene el menu del localstore
+      const menu: Menu = LocalStoreUtil.menu(TipoEventoConstant.GET);
+      if (menu) {
+
+        // se configurar los atributos del localstore
+        this.isMenuOpen = menu.isMenuOpen;
+        this.isToogleMenuFirstTime = menu.isToogleMenuFirstTime;
+        this.isMenuShowFirstTime = menu.isMenuShowFirstTime;
+        this.modulos = menu.modulos;
+        this.subscriptionRouter = menu.subscriptionRouter;
+      } else {
+
+        // si no hay menu en el local se procede a crearlo de
+        // acuerdo a los privilegios del usuario autenticado
+        this.initMenu(welcomeDTO);
+      }
+    }
+  }
 
   /**
    * Metodo que permite inicializar el Menu, construyendo
@@ -47,6 +82,9 @@ export class Menu {
 
     // se obtiene la suscripcion del router para ser notificado
     this.getSuscribeRouter();
+
+    // se configura los datos del menu en el localstore
+    this.setMenuOnLocalStore();
   }
 
   /**
@@ -72,6 +110,9 @@ export class Menu {
     }
     this.isMenuOpen = !this.isMenuOpen;
     this.isToogleMenuFirstTime = false;
+
+    // se actualiza los datos del menu en el localstore
+    this.setMenuOnLocalStore();
   }
 
   /**
@@ -95,6 +136,16 @@ export class Menu {
         otherModulo.isOpen = false;
       }
     }
+
+    // se actualiza los datos del menu en el localstore
+    this.setMenuOnLocalStore();
+  }
+
+  /**
+   * Metodo que permite configurar el Menu en el localstore
+   */
+  private setMenuOnLocalStore() {
+    LocalStoreUtil.menu(TipoEventoConstant.SET, this);
   }
 
   /**
@@ -144,6 +195,8 @@ export class Menu {
           }
         }
       }
+      // se actualiza los datos del menu en el localstore
+      this.setMenuOnLocalStore();
     }
   }
 
