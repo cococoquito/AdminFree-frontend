@@ -6,7 +6,7 @@ import { MenuItem } from './../../../model/menu-item';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
 import { ModuloDTO } from './../../../dtos/seguridad/modulo.dto';
 import { MenuBackup } from './../../../model/menu-backup';
-import { ModulosConstant } from '../../../constants/modulos.constant';
+import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 import { RouterConstant } from '../../../constants/router.constant';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
@@ -33,6 +33,9 @@ export class Menu {
   private subscriptionRouter: Subscription;
 
   /**
+   * Cuando se carga la pagina se crea la instancia del estado del menu,
+   * se debe tomar los datos del local-store, ya que en este punto son nulos
+   *
    * @param screen, se utiliza para validar el tamanio de la pantalla
    * @param router, se utiliza para ser notificado cuando el router cambia
    */
@@ -52,7 +55,7 @@ export class Menu {
     // se valida que el user si este autenticado
     if (welcomeDTO && welcomeDTO.credenciales) {
 
-      // se obtiene el menu del localstore
+      // se obtiene el backup del menu del localstore
       const menuBackup: MenuBackup = LocalStoreUtil.menu(TipoEventoConstant.GET);
       if (menuBackup) {
 
@@ -91,7 +94,7 @@ export class Menu {
   }
 
   /**
-   * Metodo que permite destruir el menu liberando memoria
+   * Metodo que permite destruir el Menu liberando memoria
    */
   public destroyMenu(): void {
     this.isMenuOpen = false;
@@ -136,7 +139,7 @@ export class Menu {
     for (const otherModulo of this.modulos) {
       // no aplica para el modulo que llega por parametro ni para p-inicio
       if (otherModulo !== modulo && !otherModulo.isPaginaInicio) {
-        otherModulo.isOpen = false;
+          otherModulo.isOpen = false;
       }
     }
 
@@ -241,19 +244,19 @@ export class Menu {
             // se configura los modulos del negocio dependiendo de los privilegios
             switch (privilegio.tokenModulo) {
 
-              case ModulosConstant.TK_CORRESPONDENCIA: {
+              case ModulesTokenConstant.TK_CORRESPONDENCIA: {
                 this.modulos.push(this.getModuloCorrespondencia());
                 break;
               }
-              case ModulosConstant.TK_ARCHIVO_GESTION: {
+              case ModulesTokenConstant.TK_ARCHIVO_GESTION: {
                 this.modulos.push(this.getModuloArchivoGestion());
                 break;
               }
-              case ModulosConstant.TK_REPORTES: {
+              case ModulesTokenConstant.TK_REPORTES: {
                 this.modulos.push(this.getModuloReportes());
                 break;
               }
-              case ModulosConstant.TK_CONFIGURACIONES: {
+              case ModulesTokenConstant.TK_CONFIGURACIONES: {
                 this.modulos.push(this.getModuloConfiguraciones());
                 break;
               }

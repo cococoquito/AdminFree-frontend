@@ -3,7 +3,7 @@
  *
  * @author Carlos Andres Diaz
  */
-export class ModulosConstant {
+export class ModulesTokenConstant {
 
   /** Token del modulo correspondencia */
   static readonly TK_CORRESPONDENCIA: string = '9f1124f946de506332f221a01d39c411';

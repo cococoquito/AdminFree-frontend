@@ -3,7 +3,7 @@ import { PrivilegiosGuard } from './../../auth-guard/privilegios.guard';
 import { ShellComponent } from './../shell/shell/shell.component';
 import { BienvenidaComponent } from './bienvenida/bienvenida.component';
 import { CuentaUserComponent } from './cuenta-user/cuenta-user.component';
-import { ModulosConstant } from './../../constants/modulos.constant';
+import { ModulesTokenConstant } from './../../constants/modules-token.constant';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -28,25 +28,25 @@ export const ROUTES: Routes = [
       {
         path: RouterConstant.ROUTER_CORRESPONDENCIA,
         canActivate: [PrivilegiosGuard],
-        data: { preload: true, token: ModulosConstant.TK_CORRESPONDENCIA },
+        data: { preload: true, token: ModulesTokenConstant.TK_CORRESPONDENCIA },
         loadChildren: '../correspondencia/correspondencia.module#CorrespondenciaModule'
       },
       {
         path: RouterConstant.ROUTER_ARCHIVO_GESTION,
         canActivate: [PrivilegiosGuard],
-        data: { preload: true, token: ModulosConstant.TK_ARCHIVO_GESTION },
+        data: { preload: true, token: ModulesTokenConstant.TK_ARCHIVO_GESTION },
         loadChildren: '../archivo-gestion/archivo-gestion.module#ArchivoGestionModule'
       },
       {
         path: RouterConstant.ROUTER_REPORTES,
         canActivate: [PrivilegiosGuard],
-        data: { preload: true, token: ModulosConstant.TK_REPORTES },
+        data: { preload: true, token: ModulesTokenConstant.TK_REPORTES },
         loadChildren: '../reportes/reportes.module#ReportesModule'
       },
       {
         path: RouterConstant.ROUTER_CONFIGURACIONES,
         canActivate: [PrivilegiosGuard],
-        data: { preload: true, token: ModulosConstant.TK_CONFIGURACIONES },
+        data: { preload: true, token: ModulesTokenConstant.TK_CONFIGURACIONES },
         loadChildren: '../configuraciones/configuraciones.module#ConfiguracionesModule'
       }
     ]
