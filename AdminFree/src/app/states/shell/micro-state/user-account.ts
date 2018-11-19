@@ -1,4 +1,4 @@
-import { LocalStoreUtil } from './../../../util-class/local-store.util';
+import { LocalStoreUtil } from './../../../util/local-store.util';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';

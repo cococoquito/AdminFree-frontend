@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonComponent } from './../../../util-class/common.component';
+import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from './../../../states/shell/shell.state';
 import { AutenticacionService } from './../../../services/autenticacion.service';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';

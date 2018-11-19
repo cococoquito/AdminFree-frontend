@@ -1,7 +1,7 @@
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Screen } from './screen';
-import { LocalStoreUtil } from './../../../util-class/local-store.util';
+import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MenuItem } from './../../../model/menu-item';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
 import { ModuloDTO } from './../../../dtos/seguridad/modulo.dto';

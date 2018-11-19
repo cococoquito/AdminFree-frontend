@@ -5,7 +5,7 @@ import { SpinnerState } from './../states/spinner.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { SeguridadConstant } from '../constants/seguridad.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
-import { LocalStoreUtil } from '../util-class/local-store.util';
+import { LocalStoreUtil } from '../util/local-store.util';
 import {
   HttpInterceptor,
   HttpRequest,

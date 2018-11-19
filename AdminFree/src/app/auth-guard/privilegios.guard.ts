@@ -3,7 +3,7 @@ import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
 import { RouterConstant } from './../constants/router.constant';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
-import { LocalStoreUtil } from './../util-class/local-store.util';
+import { LocalStoreUtil } from './../util/local-store.util';
 import {
   CanActivate,
   ActivatedRouteSnapshot,

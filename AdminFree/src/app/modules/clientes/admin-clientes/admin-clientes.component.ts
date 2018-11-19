@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonComponent } from './../../../util-class/common.component';
+import { CommonComponent } from './../../../util/common.component';
 import { AdminClienteService } from './../../../services/admin-cliente.service';
 import { AutenticacionService } from './../../../services/autenticacion.service';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
-import { LocalStoreUtil } from '../../../util-class/local-store.util';
+import { LocalStoreUtil } from '../../../util/local-store.util';
 
 /**
  * Componente para la administracion de los clientes del sistema

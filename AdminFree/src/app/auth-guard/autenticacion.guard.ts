@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { RouterConstant } from './../constants/router.constant';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
-import { LocalStoreUtil } from './../util-class/local-store.util';
+import { LocalStoreUtil } from './../util/local-store.util';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
