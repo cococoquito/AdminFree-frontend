@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse } from './error-response';
+import { ErrorResponse } from './../model/error-response';
 import { MessagesConstant } from './../constants/messages.constant';
 import { HttpStatusConstant } from './../constants/http-status.constant';
 
