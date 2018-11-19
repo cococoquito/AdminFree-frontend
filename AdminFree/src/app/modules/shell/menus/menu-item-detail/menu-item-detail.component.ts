@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MenuItem } from './../model/menu-item';
+import { MenuItem } from './../../../../model/menu-item';
 import {
   trigger,
   state,

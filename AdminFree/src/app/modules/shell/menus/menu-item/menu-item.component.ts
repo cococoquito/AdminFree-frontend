@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShellState } from './../../../../states/shell/shell.state';
-import { MenuItem } from './../model/menu-item';
+import { MenuItem } from './../../../../model/menu-item';
 
 /**
  * Componente que representa un Item en el Menu de la app
