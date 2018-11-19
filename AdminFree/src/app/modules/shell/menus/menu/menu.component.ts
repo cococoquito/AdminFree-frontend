@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuState } from './../../../../states/menu.state';
+import { ShellState } from './../../../../states/shell/shell.state';
 
 /**
  * Es el Menu del shell a visualizar en la aplicacion
@@ -14,8 +14,8 @@ import { MenuState } from './../../../../states/menu.state';
 export class MenuComponent {
 
   /**
-   * @param menuState, se utiliza para obtener los Modulos
+   * @param shellState, se utiliza para obtener los Modulos
    * con sus items para ser visualizados en el menu
    */
-  constructor(public menuState: MenuState) {}
+  constructor(public shellState: ShellState) {}
 }

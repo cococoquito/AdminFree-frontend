@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ScreenState } from './../../../../states/screen.state';
-import { UserAccountState } from './../../../../states/user-account.state';
+import { ShellState } from './../../../../states/shell/shell.state';
 import { MenuItem } from 'primeng/api';
 import { RouterConstant } from './../../../../constants/router.constant';
 
@@ -22,13 +21,12 @@ export class UserAccountComponent implements OnInit {
   public items: MenuItem[];
 
   /**
-   * @param screenState , se utiliza para validar el tamanio de la pantalla
-   * @param userAccountState , se utiliza para mostrar el nombre del user autenticado
+   * @param shellState , se utiliza para validar el tamanio de la pantalla y
+   * para mostrar el nombre del user autenticado
    * @param router , router para la navegacion
    */
   constructor(
-    public screenState: ScreenState,
-    public userAccountState: UserAccountState,
+    public shellState: ShellState,
     private router: Router) {}
 
   ngOnInit() {
@@ -53,7 +51,7 @@ export class UserAccountComponent implements OnInit {
    */
   public cerrarSesion(): void {
     // se cambia el estado de la cuenta a sesion cerrada
-    this.userAccountState.changeStateSesionCerrada();
+    this.shellState.userAccount.changeStateSesionCerrada();
 
     // se redirecciona al LOGIN
     this.router.navigate([RouterConstant.NAVIGATE_LOGIN]);

@@ -1,20 +1,18 @@
-import { Injectable, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { ScreenState } from './screen.state';
-import { MenuItem } from './../modules/shell/menus/model/menu-item';
-import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
-import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
-import { ModulosConstant } from './../constants/modulos.constant';
-import { RouterConstant } from './../constants/router.constant';
+import { Screen } from './screen';
+import { MenuItem } from '../../../modules/shell/menus/model/menu-item';
+import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
+import { ModuloDTO } from './../../../dtos/seguridad/modulo.dto';
+import { ModulosConstant } from '../../../constants/modulos.constant';
+import { RouterConstant } from '../../../constants/router.constant';
 
 /**
  * Se utiliza para administrar el estado del Menu
  *
  * @author Carlos Andres Diaz
  */
-@Injectable({ providedIn: 'root' })
-export class MenuState implements OnDestroy {
+export class Menu {
 
   /** Se utiliza para mostrar/ocultar el menu **/
   public isMenuOpen = false;
@@ -32,17 +30,10 @@ export class MenuState implements OnDestroy {
   private subscriptionRouter: Subscription;
 
   /**
-   * @param screenState, se utiliza para validar el tamanio de la pantalla
+   * @param screen, se utiliza para validar el tamanio de la pantalla
    * @param router, se utiliza para ser notificado cuando el router cambia
    */
-  constructor(public screenState: ScreenState, private router: Router) {}
-
-  /**
-   * Se utiliza para eliminar el Menu, liberando memoria
-   */
-  ngOnDestroy(): void {
-    this.destroyMenu();
-  }
+  constructor(public screen: Screen, private router: Router) {}
 
   /**
    * Metodo que permite inicializar el Menu, construyendo
@@ -76,7 +67,7 @@ export class MenuState implements OnDestroy {
    * toogle del menu que se visualiza en el header
    */
   public toggleMenu(): void {
-    if (this.isToogleMenuFirstTime && this.screenState.isBigScreen()) {
+    if (this.isToogleMenuFirstTime && this.screen.isBigScreen()) {
       this.isMenuOpen = true;
     }
     this.isMenuOpen = !this.isMenuOpen;

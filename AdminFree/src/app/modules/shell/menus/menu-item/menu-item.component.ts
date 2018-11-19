@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuState } from './../../../../states/menu.state';
+import { ShellState } from './../../../../states/shell/shell.state';
 import { MenuItem } from './../model/menu-item';
 
 /**
@@ -19,12 +19,12 @@ export class MenuItemComponent {
   @Input() public item: MenuItem;
 
   /**
-   * @param menuState, Se utiliza para los diferentes eventos de cada item
+   * @param shellState, Se utiliza para los diferentes eventos de cada item
    * @param router, Se utiliza para hacer la navegacion al momento de dar
    * click en un item que contenga un router especifico
    */
   constructor(
-    public menuState: MenuState,
+    public shellState: ShellState,
     private router: Router) {}
 
   /**

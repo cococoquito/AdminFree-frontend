@@ -1,11 +1,11 @@
 <!-- para dispositivos con resolucion grande -->
-<admin-menu [@openClose]="(menuState.screenState.isBigScreen() && (menuState.isToogleMenuFirstTime || menuState.isMenuOpen))  ? 'open' : 'closed'" class="content-menu">
+<admin-menu [@openClose]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? 'open' : 'closed'" class="content-menu">
 </admin-menu>
 
 <!-- para dispositivos con resolucion pequenia -->
 <p-sidebar id="smallMenu"
-  *ngIf="!menuState.screenState.isBigScreen()"
-  [(visible)]="menuState.isMenuOpen"
+  *ngIf="!shellState.screen.isBigScreen()"
+  [(visible)]="shellState.menu.isMenuOpen"
   [showCloseIcon]="false"
   [baseZIndex]="10000">
     <admin-menu class="content-menu">

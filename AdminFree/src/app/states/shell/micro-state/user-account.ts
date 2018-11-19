@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
-import { MenuState } from './menu.state';
-import { LocalStoreUtil } from './../util-class/local-store.util';
-import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
-import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
-import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
-import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
-import { TipoEventoConstant } from './../constants/tipo-evento.constant';
+import { Menu } from './menu';
+import { LocalStoreUtil } from './../../../util-class/local-store.util';
+import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
+import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
+import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
+import { WelcomeDTO } from './../../../dtos/seguridad/welcome.dto';
+import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
 /**
  * Estado para administrar la cuenta del usuario
  *
  * @author Carlos Andres Diaz
  */
-@Injectable({ providedIn: 'root' })
-export class UserAccountState {
+export class UserAccount {
 
   /** Es el USUARIO autenticado en el sistema cuando aplica */
   public usuario: UsuarioDTO;
@@ -29,7 +27,7 @@ export class UserAccountState {
    * estado de la cuenta del user, se debe tomar los datos
    * del local-store, dado que en este punto son nulos
    */
-  constructor(private menuState: MenuState) {
+  constructor(private menu: Menu) {
     this.init();
   }
 
@@ -46,7 +44,7 @@ export class UserAccountState {
     this.configurarCuentaUser(welcomeDTO);
 
     // se construye el Menu de acuerdo a los privilegios del usuario
-    this.menuState.initMenu(welcomeDTO);
+    this.menu.initMenu(welcomeDTO);
   }
 
   /**
@@ -60,7 +58,7 @@ export class UserAccountState {
     this.configurarCuentaUser(null);
 
     // Se destruye el menu liberando memoria
-    this.menuState.destroyMenu();
+    this.menu.destroyMenu();
   }
 
   /**

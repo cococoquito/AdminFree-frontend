@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonComponent } from './../../../util-class/common.component';
+import { ShellState } from './../../../states/shell/shell.state';
 import { AutenticacionService } from './../../../services/autenticacion.service';
-import { UserAccountState } from './../../../states/user-account.state';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { RouterConstant } from './../../../constants/router.constant';
 
@@ -25,12 +25,12 @@ export class LoginComponent extends CommonComponent implements OnInit {
   public msjError: string;
 
   /**
-   * @param userAccountState, se utiliza para notificar el inicio de sesion
+   * @param shellState, se utiliza para notificar el inicio de sesion
    * @param autenticacionService, contiene los servicios para la autenticacion
    * @param router, Router para la navegacion a la pagina bienvenida
    */
   constructor(
-    private userAccountState: UserAccountState,
+    private shellState: ShellState,
     private autenticacionService: AutenticacionService,
     private router: Router) {
     super();
@@ -57,7 +57,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
       this.autenticacionService.iniciarSesion(this.credenciales).subscribe(
         data => {
           // se cambia el estado de la cuenta a sesion iniciada
-          this.userAccountState.changeStateAutenticado(data);
+          this.shellState.userAccount.changeStateAutenticado(data);
 
           // se redirecciona a la pagina de bienvenida
           this.router.navigate([RouterConstant.NAVIGATE_BIENVENIDA]);

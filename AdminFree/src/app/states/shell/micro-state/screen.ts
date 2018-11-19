@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 /**
  * Estado para notificar el tamanio de la pantalla
  * del monitor o celular, se utiliza para el
@@ -7,8 +5,7 @@ import { Injectable } from '@angular/core';
  *
  * @author Carlos Andres Diaz
  */
-@Injectable({ providedIn: 'root' })
-export class ScreenState {
+export class Screen {
 
   /** Es el largo minimo que identifica una resolucion grande **/
   public largeBreakpoint = 1024;

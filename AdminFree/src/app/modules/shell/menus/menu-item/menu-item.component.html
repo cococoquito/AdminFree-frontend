@@ -14,7 +14,7 @@
   <div
     *ngIf="item.items"
     [ngClass]="(item.isSeleccionado) ? 'menu-modulo-selected' : 'menu-modulo'"
-    (click)="menuState.toggleMenuModulo(item)">
+    (click)="shellState.menu.toggleMenuModulo(item)">
       <i class="{{item.icono}} size-icon" [ngClass]="item.isSeleccionado ? 'icon_modulo_selected' : 'icon_modulo'"></i>
       <span class="font-weight-bold">{{item.nombre}}</span>
       <i [ngClass]="(item.isOpen) ? 'fa fa-fw fa-angle-down' : 'fa fa-fw fa-angle-right'" class="float-right size-icon"></i>
@@ -22,7 +22,7 @@
 
 
   <!-- div para los items -->
-  <div [ngClass]="menuState.isMenuShowFirstTime ? 'd-none' : ''">
+  <div [ngClass]="shellState.menu.isMenuShowFirstTime ? 'd-none' : ''">
     <div
       *ngIf="!item.items"
       (click)="navigate(item.router)"
