@@ -1,7 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 import { ScreenState } from './screen.state';
 import { MenuItem } from './../modules/shell/menus/model/menu-item';
+import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
+import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
 import { ModulosConstant } from './../constants/modulos.constant';
 import { RouterConstant } from './../constants/router.constant';
 
@@ -11,7 +14,7 @@ import { RouterConstant } from './../constants/router.constant';
  * @author Carlos Andres Diaz
  */
 @Injectable({ providedIn: 'root' })
-export class MenuState {
+export class MenuState implements OnDestroy {
 
   /** Se utiliza para mostrar/ocultar el menu **/
   public isMenuOpen = false;
@@ -25,21 +28,47 @@ export class MenuState {
   /** Son los modulos a visualizar en el menu **/
   public modulos: Array<MenuItem>;
 
+  /** Contiene la subscripcion del router **/
+  private subscriptionRouter: Subscription;
+
   /**
    * @param screenState, se utiliza para validar el tamanio de la pantalla
    * @param router, se utiliza para ser notificado cuando el router cambia
    */
-  constructor(public screenState: ScreenState, private router: Router) {
-    // se hace la suscripcion con el router para ser notificado
-    // cada vez que el router cambie su navegacion
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.notificarItemSeleccionado(val.url);
-      }
-    });
+  constructor(public screenState: ScreenState, private router: Router) {}
 
-    // se construye el menu a visualizar en la app
-    this.construirMenu();
+  /**
+   * Se utiliza para eliminar el Menu, liberando memoria
+   */
+  ngOnDestroy(): void {
+    this.destroyMenu();
+  }
+
+  /**
+   * Metodo que permite inicializar el Menu, construyendo
+   * sus items dependiendo de los privilegios del usuario
+   *
+   * @param welcomeDTO, datos de la autenticacion
+   */
+  public initMenu(welcomeDTO: WelcomeDTO): void {
+    // se construye los modulos con sus items dependiendo de los privilegios del usuario
+    this.construirMenu(welcomeDTO);
+
+    // se obtiene la suscripcion del router para ser notificado
+    this.getSuscribeRouter();
+  }
+
+  /**
+   * Metodo que permite destruir el menu liberando memoria
+   */
+  public destroyMenu(): void {
+    this.isMenuOpen = false;
+    this.isToogleMenuFirstTime = true;
+    this.isMenuShowFirstTime = true;
+    this.modulos = null;
+    if (this.subscriptionRouter) {
+      this.subscriptionRouter.unsubscribe();
+    }
   }
 
   /**
@@ -69,13 +98,24 @@ export class MenuState {
     modulo.isOpen = !modulo.isOpen;
 
     // se recorre los demas modulos para cerrar sus items
-    for (const otherModulo  of this.modulos) {
-
+    for (const otherModulo of this.modulos) {
       // no aplica para el modulo que llega por parametro ni para p-inicio
       if (otherModulo !== modulo && !otherModulo.isPaginaInicio) {
-          otherModulo.isOpen = false;
+        otherModulo.isOpen = false;
       }
     }
+  }
+
+  /**
+   * Se hace la suscripcion con el router para ser notificado
+   * cada vez que el router cambie su navegacion
+   */
+  private getSuscribeRouter(): void {
+    this.subscriptionRouter = this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        this.notificarItemSeleccionado(val.url);
+      }
+    });
   }
 
   /**
@@ -86,26 +126,29 @@ export class MenuState {
    * @param url, es la nueva url donde el usuario va navegar
    */
   private notificarItemSeleccionado(url: string): void {
-    let moduloFueSeleccionado: MenuItem;
+    // programacion defensiva para los modulos
+    if (this.modulos) {
+      let moduloFueSeleccionado: MenuItem;
 
-    // se recorre todos los modulos para validar el router de sus items
-    for (const modulo  of this.modulos) {
+      // se recorre todos los modulos para validar el router de sus items
+      for (const modulo of this.modulos) {
 
-      // el modulo de la pagina inicio no tiene items pero si router
-      if (modulo.isPaginaInicio) {
-          modulo.isSeleccionado = modulo.router === url;
-      } else {
+        // el modulo de la pagina inicio no tiene items pero si router
+        if (modulo.isPaginaInicio) {
+            modulo.isSeleccionado = modulo.router === url;
+        } else {
 
-        // se recorre los items de este modulo validando su router
-        for (const item of modulo.items) {
-          if (item.router === url) {
-              item.isSeleccionado = true;
-              modulo.isSeleccionado = true;
-              moduloFueSeleccionado = modulo;
-          } else {
-            item.isSeleccionado = false;
-            if (modulo !== moduloFueSeleccionado) {
-                modulo.isSeleccionado = false;
+          // se recorre los items de este modulo validando su router
+          for (const item of modulo.items) {
+            if (item.router === url) {
+                item.isSeleccionado = true;
+                modulo.isSeleccionado = true;
+                moduloFueSeleccionado = modulo;
+            } else {
+              item.isSeleccionado = false;
+              if (modulo !== moduloFueSeleccionado) {
+                  modulo.isSeleccionado = false;
+              }
             }
           }
         }
@@ -116,18 +159,57 @@ export class MenuState {
   /**
    * Metodo que permite construir los modulos con sus items
    * para ser visualizados en el menu de la aplicacion
+   *
+   * @param welcomeDTO, datos de la autenticacion
    */
-  private construirMenu(): void {
+  private construirMenu(welcomeDTO: WelcomeDTO): void {
     this.modulos = new Array<MenuItem>();
 
     // se agrega la pagina de inicio
     this.modulos.push(this.getItemPaginaInicio());
 
-    // se agregan los modulos en la lista a visualizar
-    this.modulos.push(this.getModuloCorrespondencia());
-    this.modulos.push(this.getModuloArchivoGestion());
-    this.modulos.push(this.getModuloReportes());
-    this.modulos.push(this.getModuloConfiguraciones());
+    // se verifica si el usuario esta autenticado
+    if (welcomeDTO && welcomeDTO.credenciales) {
+
+      // el administrador tiene todo los privilegios
+      if (welcomeDTO.credenciales.administrador) {
+          this.modulos.push(this.getModuloCorrespondencia());
+          this.modulos.push(this.getModuloArchivoGestion());
+          this.modulos.push(this.getModuloReportes());
+          this.modulos.push(this.getModuloConfiguraciones());
+      } else {
+
+        // se verifica si el funcionario tiene privilegios asignados
+        const privilegios: Array<ModuloDTO> = welcomeDTO.usuario.modulos;
+        if (privilegios) {
+
+          // se recorre todos los privilegios asignados al usuario
+          for (const privilegio of privilegios) {
+
+            // se configura los modulos del negocio dependiendo de los privilegios
+            switch (privilegio.tokenModulo) {
+
+              case ModulosConstant.TK_CORRESPONDENCIA: {
+                this.modulos.push(this.getModuloCorrespondencia());
+                break;
+              }
+              case ModulosConstant.TK_ARCHIVO_GESTION: {
+                this.modulos.push(this.getModuloArchivoGestion());
+                break;
+              }
+              case ModulosConstant.TK_REPORTES: {
+                this.modulos.push(this.getModuloReportes());
+                break;
+              }
+              case ModulosConstant.TK_CONFIGURACIONES: {
+                this.modulos.push(this.getModuloConfiguraciones());
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -150,7 +232,6 @@ export class MenuState {
     const correspondencia = new MenuItem();
     correspondencia.nombre = 'Correspondencia';
     correspondencia.icono = 'fa fa-fw fa-envelope';
-    correspondencia.moduloToken = ModulosConstant.TK_CORRESPONDENCIA;
 
     // ITEM1, Solicitar consecutivo de correspondencia
     const solicitarConsecutivo = new MenuItem();
@@ -158,7 +239,7 @@ export class MenuState {
     solicitarConsecutivo.router = '/autenticado/correspondencia/solicitar';
 
     // ITEM2, prueba
-    const prueba  = new MenuItem();
+    const prueba = new MenuItem();
     prueba.nombre = 'Prueba';
     prueba.router = '/autenticado/correspondencia/prueba';
     prueba.isUltimoItem = true;
@@ -177,7 +258,6 @@ export class MenuState {
     const archivoGestion = new MenuItem();
     archivoGestion.nombre = 'Archivo de Gestión';
     archivoGestion.icono = 'fa fa-fw fa-folder-open';
-    archivoGestion.moduloToken = ModulosConstant.TK_ARCHIVO_GESTION;
 
     // ITEM1, Admin Series documentales
     const series = new MenuItem();
@@ -185,7 +265,7 @@ export class MenuState {
     series.router = '/autenticado/archivogestion/series';
 
     // ITEM2, prueba
-    const prueba  = new MenuItem();
+    const prueba = new MenuItem();
     prueba.nombre = 'Prueba Archivo';
     prueba.router = '/autenticado/archivogestion/prueba';
     prueba.isUltimoItem = true;
@@ -204,7 +284,6 @@ export class MenuState {
     const reportes = new MenuItem();
     reportes.nombre = 'Reportes';
     reportes.icono = 'fa fa-fw fa-bar-chart';
-    reportes.moduloToken = ModulosConstant.TK_REPORTES;
 
     // ITEM1, Generar reportes
     const generar = new MenuItem();
@@ -212,7 +291,7 @@ export class MenuState {
     generar.router = '/autenticado/reportes/generar';
 
     // ITEM2, prueba
-    const prueba  = new MenuItem();
+    const prueba = new MenuItem();
     prueba.nombre = 'Prueba Reportes';
     prueba.router = '/autenticado/reportes/prueba';
     prueba.isUltimoItem = true;
@@ -231,7 +310,6 @@ export class MenuState {
     const configuraciones = new MenuItem();
     configuraciones.nombre = 'Configuraciones';
     configuraciones.icono = 'fa fa-fw fa-wrench';
-    configuraciones.moduloToken = ModulosConstant.TK_CONFIGURACIONES;
 
     // ITEM1, Administrar Usuarios
     const adminUsers = new MenuItem();
@@ -239,7 +317,7 @@ export class MenuState {
     adminUsers.router = '/autenticado/configuraciones/users';
 
     // ITEM2, prueba
-    const prueba  = new MenuItem();
+    const prueba = new MenuItem();
     prueba.nombre = 'Prueba Conf';
     prueba.router = '/autenticado/configuraciones/prueba';
     prueba.isUltimoItem = true;

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MenuState } from './menu.state';
 import { LocalStoreUtil } from './../util-class/local-store.util';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
@@ -28,7 +29,7 @@ export class UserAccountState {
    * estado de la cuenta del user, se debe tomar los datos
    * del local-store, dado que en este punto son nulos
    */
-  constructor() {
+  constructor(private menuState: MenuState) {
     this.init();
   }
 
@@ -38,16 +39,28 @@ export class UserAccountState {
    * @param welcomeDTO, contiene los datos de la autenticacion
    */
   public changeStateAutenticado(welcomeDTO: WelcomeDTO): void {
+    // Se configura los datos de la autenticacion en el local-store
     LocalStoreUtil.welcome(TipoEventoConstant.SET, welcomeDTO);
+
+    // se configura los datos del usuario
     this.configurarCuentaUser(welcomeDTO);
+
+    // se construye el Menu de acuerdo a los privilegios del usuario
+    this.menuState.initMenu(welcomeDTO);
   }
 
   /**
    * Metodo que permite cambiar el estado a sesion cerrada
    */
   public changeStateSesionCerrada(): void {
+    // Se limpia todo los registros del local-store
     LocalStoreUtil.cleanAll();
+
+    // Se limpia las variables globales para notificar los demas componentes
     this.configurarCuentaUser(null);
+
+    // Se destruye el menu liberando memoria
+    this.menuState.destroyMenu();
   }
 
   /**

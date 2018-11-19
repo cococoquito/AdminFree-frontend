@@ -23,9 +23,6 @@ export class MenuItem {
   /** Es el router a navegar, solo aplica para items que no son modulo ni submodulo */
   public router?: string;
 
-  /** Es el identificador del MODULO, solo aplica para items tipo modulos */
-  public moduloToken?: string;
-
   /** Se utiliza para el estilo del menu */
   public isUltimoItem: boolean;
 
