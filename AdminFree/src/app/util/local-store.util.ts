@@ -1,7 +1,7 @@
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
-import { Menu } from './../states/shell/micro-state/menu';
+import { MenuBackup } from './../model/menu-backup';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
@@ -20,7 +20,7 @@ export class LocalStoreUtil {
   /** Key que representa los datos de entrada al sistema*/
   private static readonly KEY_WELCOME: string = 'WELCOME';
 
-  /** Key que representa los datos de del Menu*/
+  /** Key que representa los datos del Menu*/
   private static readonly KEY_MENU: string = 'MENU';
 
   /**
@@ -47,10 +47,10 @@ export class LocalStoreUtil {
   }
 
   /**
-   * Metodo que permite administrar los datos de los modulos del Menu
+   * Metodo que permite administrar los datos del backup del Menu
    */
-  public static menu(evento: TipoEventoConstant, menu?: Menu): Menu {
-    return this.implementarEvento(evento, this.KEY_MENU, menu);
+  public static menu(evento: TipoEventoConstant, menuBackup?: MenuBackup): MenuBackup {
+    return this.implementarEvento(evento, this.KEY_MENU, menuBackup);
   }
 
   /**

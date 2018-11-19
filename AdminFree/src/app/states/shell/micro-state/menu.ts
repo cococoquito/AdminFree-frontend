@@ -5,6 +5,7 @@ import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MenuItem } from './../../../model/menu-item';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
 import { ModuloDTO } from './../../../dtos/seguridad/modulo.dto';
+import { MenuBackup } from './../../../model/menu-backup';
 import { ModulosConstant } from '../../../constants/modulos.constant';
 import { RouterConstant } from '../../../constants/router.constant';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
@@ -52,15 +53,17 @@ export class Menu {
     if (welcomeDTO && welcomeDTO.credenciales) {
 
       // se obtiene el menu del localstore
-      const menu: Menu = LocalStoreUtil.menu(TipoEventoConstant.GET);
-      if (menu) {
+      const menuBackup: MenuBackup = LocalStoreUtil.menu(TipoEventoConstant.GET);
+      if (menuBackup) {
 
         // se configurar los atributos del localstore
-        this.isMenuOpen = menu.isMenuOpen;
-        this.isToogleMenuFirstTime = menu.isToogleMenuFirstTime;
-        this.isMenuShowFirstTime = menu.isMenuShowFirstTime;
-        this.modulos = menu.modulos;
-        this.subscriptionRouter = menu.subscriptionRouter;
+        this.isMenuOpen = menuBackup.isMenuOpen;
+        this.isToogleMenuFirstTime = menuBackup.isToogleMenuFirstTime;
+        this.isMenuShowFirstTime = menuBackup.isMenuShowFirstTime;
+        this.modulos = menuBackup.modulos;
+
+        // se obtiene la suscripcion del router para ser notificado
+        this.getSuscribeRouter();
       } else {
 
         // si no hay menu en el local se procede a crearlo de
@@ -145,7 +148,12 @@ export class Menu {
    * Metodo que permite configurar el Menu en el localstore
    */
   private setMenuOnLocalStore() {
-    LocalStoreUtil.menu(TipoEventoConstant.SET, this);
+    const menuBackup: MenuBackup = new MenuBackup();
+    menuBackup.isMenuOpen = this.isMenuOpen;
+    menuBackup.isToogleMenuFirstTime = this.isToogleMenuFirstTime;
+    menuBackup.isMenuShowFirstTime = this.isMenuShowFirstTime;
+    menuBackup.modulos = this.modulos;
+    LocalStoreUtil.menu(TipoEventoConstant.SET, menuBackup);
   }
 
   /**
