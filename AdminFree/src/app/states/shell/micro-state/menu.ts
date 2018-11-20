@@ -29,6 +29,9 @@ export class Menu {
   /** Son los modulos a visualizar en el menu **/
   public modulos: Array<MenuItem>;
 
+  /** Es la URL a visualizar en la miga de pan **/
+  public urlBreadcrumb: string;
+
   /** Contiene la subscripcion del router **/
   private subscriptionRouter: Subscription;
 
@@ -166,9 +169,22 @@ export class Menu {
   private getSuscribeRouter(): void {
     this.subscriptionRouter = this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
+        // se configura la URL para la miga de pan
+        this.configurarBreadcrumbURL(val.url);
+
+        // se cambia el estado seleccionado de los modulos del Menu
         this.notificarItemSeleccionado(val.url);
       }
     });
+  }
+
+  /**
+   * Metodo que permite configurar la URL de la miga de pan
+   *
+   * @param url, es la nueva url donde el usuario va navegar
+   */
+  private configurarBreadcrumbURL(url: string) {
+    this.urlBreadcrumb = url.replace(`/${RouterConstant.ROUTER_AUTENTICADO}`, '');
   }
 
   /**

@@ -14,5 +14,18 @@
 
 <!-- aca es donde va el contenido del shell -->
 <div class="body-style">
-  <router-outlet></router-outlet>
+
+  <!-- Miga de pan de la aplicacion -->
+  <nav aria-label="breadcrumb">
+    <div class="breadcrumb miga-pan">
+      <span class="small">
+        <i class="fa fa-home"></i> {{shellState.menu.urlBreadcrumb}}
+      </span>
+    </div>
+  </nav>
+
+  <!-- Aca es donde va las paginas seleccionadas por el user -->
+  <div class="contenido">
+    <router-outlet></router-outlet>
+  </div>
 </div>
