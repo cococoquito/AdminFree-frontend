@@ -4,11 +4,6 @@
   padding-bottom: 20px;
 }
 
-.pnl-content {
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
 .color-header {
   background-color: #31404a;
 }
@@ -35,4 +30,8 @@
 .msj-error {
   font-size: 13px;
   margin-bottom: 0px;
+}
+
+.width_card {
+  width: 23rem;
 }
