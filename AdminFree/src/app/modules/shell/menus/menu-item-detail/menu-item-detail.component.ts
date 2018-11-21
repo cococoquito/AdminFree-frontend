@@ -29,4 +29,17 @@ export class MenuItemDetailComponent {
 
   /** Modulo que contiene sus items para ser visualizado en el Menu */
   @Input() modulo: MenuItem;
+
+  /** Se utiliza para un optimo visualizacion del Menu */
+  public hiddenMenu: boolean;
+
+  /**
+   * Al cargar el item se muestra o se oculta los items con
+   * la Animations, se necesita ocultarlo para una optima
+   * visualizacion del Menu en el navegador
+   */
+  constructor() {
+    this.hiddenMenu = true;
+    setTimeout(() => { this.hiddenMenu = false; }, 400);
+  }
 }

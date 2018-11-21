@@ -23,9 +23,6 @@ export class Menu {
   /** Indica si el toogle del menu se visualiza por primera vez **/
   public isToogleMenuFirstTime = true;
 
-  /** Indica si el menu se visualiza por primera vez **/
-  public isMenuShowFirstTime = true;
-
   /** Son los modulos a visualizar en el menu **/
   public modulos: Array<MenuItem>;
 
@@ -65,7 +62,6 @@ export class Menu {
         // se configurar los atributos del localstore
         this.isMenuOpen = menuBackup.isMenuOpen;
         this.isToogleMenuFirstTime = menuBackup.isToogleMenuFirstTime;
-        this.isMenuShowFirstTime = menuBackup.isMenuShowFirstTime;
         this.modulos = menuBackup.modulos;
 
         // se obtiene la suscripcion del router para ser notificado
@@ -102,7 +98,6 @@ export class Menu {
   public destroyMenu(): void {
     this.isMenuOpen = false;
     this.isToogleMenuFirstTime = true;
-    this.isMenuShowFirstTime = true;
     this.modulos = null;
     if (this.subscriptionRouter) {
       this.subscriptionRouter.unsubscribe();
@@ -132,9 +127,6 @@ export class Menu {
    * abrir/ocultar sus items
    */
   public toggleMenuModulo(modulo: MenuItem): void {
-    // Se cambia la bandera a Menu visualizado y cargado
-    this.isMenuShowFirstTime = false;
-
     // se cambie el estado de la variable 'isOPen' de este modulo
     modulo.isOpen = !modulo.isOpen;
 
@@ -157,7 +149,6 @@ export class Menu {
     const menuBackup: MenuBackup = new MenuBackup();
     menuBackup.isMenuOpen = this.isMenuOpen;
     menuBackup.isToogleMenuFirstTime = this.isToogleMenuFirstTime;
-    menuBackup.isMenuShowFirstTime = this.isMenuShowFirstTime;
     menuBackup.modulos = this.modulos;
     LocalStoreUtil.menu(TipoEventoConstant.SET, menuBackup);
   }

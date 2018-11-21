@@ -55,12 +55,18 @@
   cursor: auto;
 }
 
-.icon_modulo {
+.icon-modulo {
   color: #a6a6a6;
 }
 
-.icon_modulo_selected {
+.icon-modulo-selected {
   color: #333333;
+}
+
+.icon-item {
+  color: #a6a6a6;
+  font-size: 16px !important;
+  margin: 0px !important;
 }
 
 .text-item {
@@ -74,11 +80,6 @@
 
 .size-icon {
   font-size: 20px !important;
-  margin: 0px !important;
-}
-
-.size-icon-item {
-  font-size: 16px !important;
   margin: 0px !important;
 }
 

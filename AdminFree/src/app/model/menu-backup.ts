@@ -14,9 +14,6 @@ export class MenuBackup {
   /** Indica si el toogle del menu se visualiza por primera vez **/
   public isToogleMenuFirstTime = true;
 
-  /** Indica si el menu se visualiza por primera vez **/
-  public isMenuShowFirstTime = true;
-
   /** Son los modulos a visualizar en el menu **/
   public modulos: Array<MenuItem>;
 }
