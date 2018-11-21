@@ -60,7 +60,7 @@
 }
 
 .icon-modulo-selected {
-  color: #333333;
+  color: #333333 !important;
 }
 
 .icon-item {
