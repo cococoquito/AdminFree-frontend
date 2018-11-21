@@ -169,22 +169,9 @@ export class Menu {
   private getSuscribeRouter(): void {
     this.subscriptionRouter = this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
-        // se configura la URL para la miga de pan
-        this.configurarBreadcrumbURL(val.url);
-
-        // se cambia el estado seleccionado de los modulos del Menu
         this.notificarItemSeleccionado(val.url);
       }
     });
-  }
-
-  /**
-   * Metodo que permite configurar la URL de la miga de pan
-   *
-   * @param url, es la nueva url donde el usuario va navegar
-   */
-  private configurarBreadcrumbURL(url: string) {
-    this.urlBreadcrumb = url.replace(`/${RouterConstant.ROUTER_AUTENTICADO}`, '');
   }
 
   /**
@@ -195,6 +182,12 @@ export class Menu {
    * @param url, es la nueva url donde el usuario va navegar
    */
   private notificarItemSeleccionado(url: string): void {
+    this.urlBreadcrumb = null;
+
+    if (url.includes(RouterConstant.ROUTER_CUENTA_USER)) {
+      this.urlBreadcrumb = '/Configuración de Cuenta';
+    }
+
     // programacion defensiva para los modulos
     if (this.modulos) {
       let moduloFueSeleccionado: MenuItem;
@@ -205,6 +198,9 @@ export class Menu {
         // el modulo de la pagina inicio no tiene items pero si router
         if (modulo.isPaginaInicio) {
             modulo.isSeleccionado = modulo.router === url;
+            if (modulo.isSeleccionado) {
+              this.urlBreadcrumb = '/' + modulo.nombre;
+            }
         } else {
 
           // se recorre los items de este modulo validando su router
@@ -213,6 +209,7 @@ export class Menu {
                 item.isSeleccionado = true;
                 modulo.isSeleccionado = true;
                 moduloFueSeleccionado = modulo;
+                this.urlBreadcrumb = '/' + modulo.nombre + '/' + item.nombre;
             } else {
               item.isSeleccionado = false;
               if (modulo !== moduloFueSeleccionado) {
