@@ -52,4 +52,7 @@ export class RouterConstant {
 
   /** Constante para navegar a la pagina de ADMIN CUENTA USER */
   public static readonly NAVIGATE_CUENTA_USER: string = `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CUENTA_USER}`;
+
+  /** Titulo del item configuracion de cuenta de usuario*/
+  public static readonly TITLE_CUENTA_USER: string = 'Configuración de Cuenta';
 }

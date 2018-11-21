@@ -184,8 +184,9 @@ export class Menu {
   private notificarItemSeleccionado(url: string): void {
     this.urlBreadcrumb = null;
 
+    // miga de pan para administracion de cuenta de usuario
     if (url.includes(RouterConstant.ROUTER_CUENTA_USER)) {
-      this.urlBreadcrumb = '/Configuración de Cuenta';
+      this.urlBreadcrumb = '/' + RouterConstant.TITLE_CUENTA_USER;
     }
 
     // programacion defensiva para los modulos
@@ -197,23 +198,23 @@ export class Menu {
 
         // el modulo de la pagina inicio no tiene items pero si router
         if (modulo.isPaginaInicio) {
-            modulo.isSeleccionado = modulo.router === url;
-            if (modulo.isSeleccionado) {
-              this.urlBreadcrumb = '/' + modulo.nombre;
-            }
+          modulo.isSeleccionado = modulo.router === url;
+          if (modulo.isSeleccionado) {
+            this.urlBreadcrumb = '/' + modulo.nombre;
+          }
         } else {
 
           // se recorre los items de este modulo validando su router
           for (const item of modulo.items) {
             if (item.router === url) {
-                item.isSeleccionado = true;
-                modulo.isSeleccionado = true;
-                moduloFueSeleccionado = modulo;
-                this.urlBreadcrumb = '/' + modulo.nombre + '/' + item.nombre;
+              item.isSeleccionado = true;
+              modulo.isSeleccionado = true;
+              moduloFueSeleccionado = modulo;
+              this.urlBreadcrumb = '/' + modulo.nombre + '/' + item.nombre;
             } else {
               item.isSeleccionado = false;
               if (modulo !== moduloFueSeleccionado) {
-                  modulo.isSeleccionado = false;
+                modulo.isSeleccionado = false;
               }
             }
           }

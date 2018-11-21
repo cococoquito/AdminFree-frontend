@@ -41,7 +41,7 @@ export class UserAccountComponent implements OnInit {
   private construirItems(): void {
     this.items = [
       { label: 'Página de Inicio', icon: 'fa fa-fw fa-dashboard', command: (click) => this.goToBienvenida() },
-      { label: 'Configuración de Cuenta', icon: 'fa fa-fw fa-gear', command: (click) => this.goToConfiguracionCuenta() },
+      { label: RouterConstant.TITLE_CUENTA_USER, icon: 'fa fa-fw fa-gear', command: (click) => this.goToConfiguracionCuenta() },
       { label: 'Cerrar Sesión', icon: 'fa fa-fw fa-power-off', command: (click) => this.cerrarSesion() }
     ];
   }
