@@ -9,6 +9,7 @@ import { MenuBackup } from './../../../model/menu-backup';
 import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 import { RouterConstant } from '../../../constants/router.constant';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
+import { LabelsConstant } from './../../../constants/labels.constant';
 
 /**
  * Se utiliza para administrar el estado del Menu
@@ -177,7 +178,7 @@ export class Menu {
 
     // miga de pan para administracion de cuenta de usuario
     if (url.includes(RouterConstant.ROUTER_CUENTA_USER)) {
-      this.urlBreadcrumb = '/' + RouterConstant.TITLE_CUENTA_USER;
+      this.urlBreadcrumb = '/' + LabelsConstant.MENU_CUENTA_USER;
     }
 
     // programacion defensiva para los modulos
@@ -373,7 +374,7 @@ export class Menu {
 
     // ITEM1, Administrar Usuarios
     const adminUsers = new MenuItem();
-    adminUsers.nombre = 'Administrar Usuarios';
+    adminUsers.nombre = LabelsConstant.MENU_ADMIN_USERS;
     adminUsers.router = '/autenticado/configuraciones/users';
 
     // ITEM2, prueba

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ShellState } from './../../../../states/shell/shell.state';
 import { MenuItem } from 'primeng/api';
 import { RouterConstant } from './../../../../constants/router.constant';
+import { LabelsConstant } from './../../../../constants/labels.constant';
 
 /**
  * Es el menu de configuraciones del usuario donde se
@@ -40,9 +41,9 @@ export class UserAccountComponent implements OnInit {
    */
   private construirItems(): void {
     this.items = [
-      { label: 'Página de Inicio', icon: 'fa fa-fw fa-dashboard', command: (click) => this.goToBienvenida() },
-      { label: RouterConstant.TITLE_CUENTA_USER, icon: 'fa fa-fw fa-gear', command: (click) => this.goToConfiguracionCuenta() },
-      { label: 'Cerrar Sesión', icon: 'fa fa-fw fa-power-off', command: (click) => this.cerrarSesion() }
+      { label: LabelsConstant.MENU_PAGINA_INICIO, icon: 'fa fa-fw fa-dashboard', command: (click) => this.goToBienvenida() },
+      { label: LabelsConstant.MENU_CUENTA_USER, icon: 'fa fa-fw fa-gear', command: (click) => this.goToConfiguracionCuenta() },
+      { label: LabelsConstant.CERRAR_SESION, icon: 'fa fa-fw fa-power-off', command: (click) => this.cerrarSesion() }
     ];
   }
 
