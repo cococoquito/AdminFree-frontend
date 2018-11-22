@@ -81,10 +81,7 @@ export class CommonComponent {
         }
       }
     } else {
-      mensaje = error.message;
-      if (HttpStatusConstant.UNKNOWN === status) {
-        mensaje = MessagesConstant.AUTORIZACION_FALLIDA;
-      }
+      mensaje = MessagesConstant.INTERNAL_SERVER_ERROR;
     }
 
     // se construye el errorResponse a retornar
