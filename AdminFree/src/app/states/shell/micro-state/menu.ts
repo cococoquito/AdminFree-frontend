@@ -278,7 +278,7 @@ export class Menu {
    */
   private getItemPaginaInicio(): MenuItem {
     const inicio = new MenuItem();
-    inicio.nombre = 'Página de Inicio';
+    inicio.nombre = LabelsConstant.MENU_PAGINA_INICIO;
     inicio.icono = 'fa fa-fw fa-dashboard';
     inicio.router = RouterConstant.NAVIGATE_BIENVENIDA;
     inicio.isPaginaInicio = true;
@@ -291,7 +291,7 @@ export class Menu {
   private getModuloCorrespondencia(): MenuItem {
     // se crea el Modulo de correspondencia
     const correspondencia = new MenuItem();
-    correspondencia.nombre = 'Correspondencia';
+    correspondencia.nombre = LabelsConstant.MODULO_CORRESPONDENCIA;
     correspondencia.icono = 'fa fa-fw fa-envelope';
 
     // ITEM1, Solicitar consecutivo de correspondencia
@@ -317,7 +317,7 @@ export class Menu {
   private getModuloArchivoGestion(): MenuItem {
     // se crea el Modulo de Archivo de Gestion
     const archivoGestion = new MenuItem();
-    archivoGestion.nombre = 'Archivo de Gestión';
+    archivoGestion.nombre = LabelsConstant.MODULO_ARCHIVO_GESTION;
     archivoGestion.icono = 'fa fa-fw fa-folder-open';
 
     // ITEM1, Admin Series documentales
@@ -343,7 +343,7 @@ export class Menu {
   private getModuloReportes(): MenuItem {
     // se crea el Modulo de REPORTES
     const reportes = new MenuItem();
-    reportes.nombre = 'Reportes';
+    reportes.nombre = LabelsConstant.MODULO_REPORTES;
     reportes.icono = 'fa fa-fw fa-bar-chart';
 
     // ITEM1, Generar reportes
@@ -369,13 +369,13 @@ export class Menu {
   private getModuloConfiguraciones(): MenuItem {
     // se crea el Modulo de CONFIGURACIONES
     const configuraciones = new MenuItem();
-    configuraciones.nombre = 'Configuraciones';
+    configuraciones.nombre = LabelsConstant.MODULO_CONFIGURACIONES;
     configuraciones.icono = 'fa fa-fw fa-wrench';
 
-    // ITEM1, Administrar Usuarios
+    // ITEM1, Administracion de Usuarios
     const adminUsers = new MenuItem();
     adminUsers.nombre = LabelsConstant.MENU_ADMIN_USERS;
-    adminUsers.router = '/autenticado/configuraciones/users';
+    adminUsers.router = RouterConstant.NAVIGATE_ADMIN_USERS;
 
     // ITEM2, prueba
     const prueba = new MenuItem();

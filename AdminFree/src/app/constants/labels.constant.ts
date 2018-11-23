@@ -6,6 +6,18 @@
  */
 export class LabelsConstant {
 
+  /** Titulo para el modulo de correspondencia*/
+  public static readonly MODULO_CORRESPONDENCIA: string = 'Correspondencia';
+
+  /** Titulo para el modulo de archivo de gestion*/
+  public static readonly MODULO_ARCHIVO_GESTION: string = 'Archivo de Gestión';
+
+  /** Titulo para el modulo de reportes*/
+  public static readonly MODULO_REPORTES: string = 'Reportes';
+
+  /** Titulo para el modulo de configuraciones*/
+  public static readonly MODULO_CONFIGURACIONES: string = 'Configuraciones';
+
   /** Titulo pagina de inicio para el menu*/
   public static readonly MENU_PAGINA_INICIO: string = 'Página de Inicio';
 

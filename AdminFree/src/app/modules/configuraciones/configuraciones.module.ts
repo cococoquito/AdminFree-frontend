@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
 import { PruebaComponent } from './prueba/prueba.component';
+import { RouterConstant } from './../../constants/router.constant';
 
 /**
  * Modulo que contiene todas las configuraciones iniciales de la aplicacion
@@ -13,7 +14,7 @@ import { PruebaComponent } from './prueba/prueba.component';
   imports: [
     RouterModule.forChild([
       {
-        path: 'users',
+        path: RouterConstant.ROUTER_ADMIN_USERS,
         component: AdminUsuariosComponent
       },
       {
