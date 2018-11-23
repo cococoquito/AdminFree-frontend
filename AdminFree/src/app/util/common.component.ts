@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from './../model/error-response';
-import { MessagesConstant } from './../constants/messages.constant';
 import { HttpStatusConstant } from './../constants/http-status.constant';
+import { MessagesBackendConstant } from './../constants/messages-backend.constant';
 
 /**
  * Contiene los metodos comunes para los componentes de la aplicacion,
@@ -39,7 +39,7 @@ export class CommonComponent {
     if (errorResponse && errorResponse.mensaje) {
       return errorResponse.mensaje.mensaje;
     }
-    return MessagesConstant.INTERNAL_SERVER_ERROR;
+    return MessagesBackendConstant.INTERNAL_SERVER_ERROR;
   }
 
   /**
@@ -70,18 +70,18 @@ export class CommonComponent {
 
         // status cuando intentan ingresar un recurso sin el TOKEN
         case HttpStatusConstant.UNAUTHORIZED: {
-          mensaje = MessagesConstant.AUTORIZACION_FALLIDA;
+          mensaje = MessagesBackendConstant.AUTORIZACION_FALLIDA;
           break;
         }
 
         // si no es ninguna de las anteriores, se define como internal server error
         default: {
-          mensaje = MessagesConstant.INTERNAL_SERVER_ERROR + codigoMensaje;
+          mensaje = MessagesBackendConstant.INTERNAL_SERVER_ERROR + codigoMensaje;
           break;
         }
       }
     } else {
-      mensaje = MessagesConstant.INTERNAL_SERVER_ERROR;
+      mensaje = MessagesBackendConstant.INTERNAL_SERVER_ERROR;
     }
 
     // se construye el errorResponse a retornar
@@ -100,13 +100,13 @@ export class CommonComponent {
     // se verifica que tipo de business msj corresponde
     switch (codBusinessMsj) {
 
-      case MessagesConstant.COD_AUTENTICACION_FALLIDA_USER: {
-        businessMsj = MessagesConstant.AUTENTICACION_FALLIDA_USER;
+      case MessagesBackendConstant.COD_AUTENTICACION_FALLIDA_USER: {
+        businessMsj = MessagesBackendConstant.AUTENTICACION_FALLIDA_USER;
         break;
       }
 
-      case MessagesConstant.COD_AUTENTICACION_FALLIDA_ADMIN: {
-        businessMsj = MessagesConstant.AUTENTICACION_FALLIDA_ADMIN;
+      case MessagesBackendConstant.COD_AUTENTICACION_FALLIDA_ADMIN: {
+        businessMsj = MessagesBackendConstant.AUTENTICACION_FALLIDA_ADMIN;
         break;
       }
     }

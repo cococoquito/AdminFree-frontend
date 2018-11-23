@@ -1,9 +1,10 @@
 /**
- * Clase constante que contiene todos los mensajes y codigo de la aplicacion web
+ * Clase constante que contiene los mensajes y codigo retornados
+ * por el backend al ejecutar algun proceso de negocio
  *
  * @author Carlos Andres Diaz
  */
-export class MessagesConstant {
+export class MessagesBackendConstant {
 
   /** Codigo cuando el USER intenta ingresar con una credenciales incorrecta */
   static readonly COD_AUTENTICACION_FALLIDA_USER: string = '1';
