@@ -14,6 +14,12 @@ export class UsuarioDTO {
   /** Nombre del usuario */
   public nombre: string;
 
+  /** Es el usuario de ingreso al sistema */
+  public usuarioIngreso: string;
+
+  /** Estado que se encuentra el USUARIO */
+  public estado: number;
+
   /** Cliente donde pertenece el usuario */
   public cliente: ClienteDTO;
 
