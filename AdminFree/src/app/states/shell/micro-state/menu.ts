@@ -4,7 +4,6 @@ import { Screen } from './screen';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MenuItem } from './../../../model/menu-item';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
-import { ModuloDTO } from './../../../dtos/seguridad/modulo.dto';
 import { MenuBackup } from './../../../model/menu-backup';
 import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 import { RouterConstant } from '../../../constants/router.constant';
@@ -241,14 +240,14 @@ export class Menu {
       } else {
 
         // se verifica si el funcionario tiene privilegios asignados
-        const privilegios: Array<ModuloDTO> = welcomeDTO.usuario.modulos;
+        const privilegios: Array<string> = welcomeDTO.usuario.modulosTokens;
         if (privilegios) {
 
           // se recorre todos los privilegios asignados al usuario
           for (const privilegio of privilegios) {
 
             // se configura los modulos del negocio dependiendo de los privilegios
-            switch (privilegio.tokenModulo) {
+            switch (privilegio) {
 
               case ModulesTokenConstant.TK_CORRESPONDENCIA: {
                 this.modulos.push(this.getModuloCorrespondencia());

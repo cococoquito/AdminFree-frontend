@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
-import { ModuloDTO } from './../dtos/seguridad/modulo.dto';
 import { RouterConstant } from './../constants/router.constant';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 import { LocalStoreUtil } from './../util/local-store.util';
@@ -42,12 +41,12 @@ export class PrivilegiosGuard implements CanActivate {
       // no aplica para administrador (tiene todo privilegios)
       if (!welcome.credenciales.administrador) {
 
-        // se obtiene los modulos del usuario autenticado
-        const modulos: Array<ModuloDTO> = welcome.usuario.modulos;
+        // se obtiene los privilegios del usuario autenticado
+        const privilegios: Array<string> = welcome.usuario.modulosTokens;
 
-        // si el usuario tiene modulos asignados
-        if (modulos) {
-            valido = this.tieneUserPrivilegio(modulos, route);
+        // si el usuario tiene privilegios asignados
+        if (privilegios) {
+            valido = this.tieneUserPrivilegio(privilegios, route);
         } else {
             valido = this.goTo(RouterConstant.NAVIGATE_DENEGADO);
         }
@@ -62,14 +61,14 @@ export class PrivilegiosGuard implements CanActivate {
    * Metodo que permite validar si los modulos asignados al usuario
    * tiene visibilidad al current router navegacion
    *
-   * @param modulos asignados al user
+   * @param privilegios asignados al user
    * @param route se utiliza para obtener el token del modulo current
    * @returns true si tiene privilegios de lo contrario false
    */
-  private tieneUserPrivilegio(modulos: Array<ModuloDTO>, route: ActivatedRouteSnapshot): boolean {
+  private tieneUserPrivilegio(privilegios: Array<string>, route: ActivatedRouteSnapshot): boolean {
     const tokenModulo: string = route.data.token;
-    for (const modulo of modulos) {
-      if (modulo.tokenModulo === tokenModulo) {
+    for (const privilegio of privilegios) {
+      if (privilegio === tokenModulo) {
         return true;
       }
     }

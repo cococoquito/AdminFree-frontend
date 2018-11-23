@@ -1,4 +1,3 @@
-import { ModuloDTO } from './modulo.dto';
 import { ClienteDTO } from '../configuraciones/cliente.dto';
 
 /**
@@ -18,6 +17,6 @@ export class UsuarioDTO {
   /** Cliente donde pertenece el usuario */
   public cliente: ClienteDTO;
 
-  /** Lista de Modulos asignados al usuario */
-  public modulos: Array<ModuloDTO>;
+  /** Lista de Tokens de modulos asignados al usuario */
+  public modulosTokens: Array<string>;
 }
