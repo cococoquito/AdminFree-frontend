@@ -25,7 +25,7 @@ export class LabelsConstant {
   public static readonly MENU_CUENTA_USER: string = 'Configuración de Cuenta';
 
   /** Titulo Administracion de usuarios para el menu*/
-  public static readonly MENU_ADMIN_USERS: string = 'Administración Usuarios';
+  public static readonly MENU_ADMIN_USERS: string = 'Administración de Usuarios';
 
   /** Label cerrar sesion*/
   public static readonly CERRAR_SESION: string = 'Cerrar Sesión';

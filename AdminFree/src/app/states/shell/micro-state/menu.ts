@@ -279,7 +279,6 @@ export class Menu {
   private getItemPaginaInicio(): MenuItem {
     const inicio = new MenuItem();
     inicio.nombre = LabelsConstant.MENU_PAGINA_INICIO;
-    inicio.icono = 'fa fa-fw fa-dashboard';
     inicio.router = RouterConstant.NAVIGATE_BIENVENIDA;
     inicio.isPaginaInicio = true;
     return inicio;
@@ -292,7 +291,7 @@ export class Menu {
     // se crea el Modulo de correspondencia
     const correspondencia = new MenuItem();
     correspondencia.nombre = LabelsConstant.MODULO_CORRESPONDENCIA;
-    correspondencia.icono = 'fa fa-fw fa-envelope';
+    correspondencia.icono = 'fa-envelope';
 
     // ITEM1, Solicitar consecutivo de correspondencia
     const solicitarConsecutivo = new MenuItem();
@@ -318,7 +317,7 @@ export class Menu {
     // se crea el Modulo de Archivo de Gestion
     const archivoGestion = new MenuItem();
     archivoGestion.nombre = LabelsConstant.MODULO_ARCHIVO_GESTION;
-    archivoGestion.icono = 'fa fa-fw fa-folder-open';
+    archivoGestion.icono = 'fa-folder-open';
 
     // ITEM1, Admin Series documentales
     const series = new MenuItem();
@@ -344,7 +343,7 @@ export class Menu {
     // se crea el Modulo de REPORTES
     const reportes = new MenuItem();
     reportes.nombre = LabelsConstant.MODULO_REPORTES;
-    reportes.icono = 'fa fa-fw fa-bar-chart';
+    reportes.icono = 'fa-bar-chart';
 
     // ITEM1, Generar reportes
     const generar = new MenuItem();
@@ -370,12 +369,13 @@ export class Menu {
     // se crea el Modulo de CONFIGURACIONES
     const configuraciones = new MenuItem();
     configuraciones.nombre = LabelsConstant.MODULO_CONFIGURACIONES;
-    configuraciones.icono = 'fa fa-fw fa-wrench';
+    configuraciones.icono = 'fa-wrench';
 
     // ITEM1, Administracion de Usuarios
     const adminUsers = new MenuItem();
     adminUsers.nombre = LabelsConstant.MENU_ADMIN_USERS;
     adminUsers.router = RouterConstant.NAVIGATE_ADMIN_USERS;
+    adminUsers.icono = 'fa-user';
 
     // ITEM2, prueba
     const prueba = new MenuItem();
