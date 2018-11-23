@@ -7,5 +7,4 @@ export class HttpStatusConstant {
 
   static readonly BAD_REQUEST: number = 400;
   static readonly UNAUTHORIZED: number = 401;
-  static readonly UNKNOWN: number = 0;
 }
