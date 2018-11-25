@@ -1,3 +1,18 @@
-<p>
-  admin-usuarios works!
-</p>
+<div>
+
+<p-table [value]="usuarios">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Nombre Completo</th>
+            <th>Usuario de Ingreso</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td>{{user.nombre}}</td>
+            <td>{{user.usuarioIngreso}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>

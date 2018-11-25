@@ -66,6 +66,29 @@ export class LocalStoreUtil {
   }
 
   /**
+   * Metodo que permite obtener el cliente del usuario autenticado
+   */
+  public static getCurrentCliente(): ClienteDTO {
+    let clienteAutenticado: ClienteDTO;
+
+    // se obtiene los datos de la autenticacion del localstore
+    const welcome: WelcomeDTO = this.welcome(TipoEventoConstant.GET);
+
+    // se valida que si exista alguna autenticacion
+    if (welcome && welcome.credenciales) {
+
+      // el administrador es el Cliente
+      if (welcome.credenciales.administrador) {
+          clienteAutenticado = welcome.administrador;
+      } else {
+          // el usuario contiene el cliente asociado
+          clienteAutenticado = welcome.usuario.cliente;
+      }
+    }
+    return clienteAutenticado;
+  }
+
+  /**
    * Metodo que permite limpiar todo el local-store para ADMIN-FREE
    */
   public static cleanAll(): void {

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {TableModule} from 'primeng/table';
 import { SharedCommonModule } from './shared-common.module';
 
 /**
@@ -9,10 +10,12 @@ import { SharedCommonModule } from './shared-common.module';
  */
 @NgModule({
   imports: [
-    SharedCommonModule
+    SharedCommonModule,
+    TableModule
   ],
   exports: [
-    SharedCommonModule
+    SharedCommonModule,
+    TableModule
   ],
   declarations: [
   ]
