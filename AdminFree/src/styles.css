@@ -46,3 +46,8 @@ body {
 .input-valido {
   border-left: 5px solid #92b8ff !important;
 }
+
+/* Para una visualizacion correcta en el Shell */
+.ui-table table {
+  table-layout: auto !important;
+}
