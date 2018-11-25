@@ -27,4 +27,34 @@ export class ConfiguracionesConstant {
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'eliminarcliente';
+
+  /** URL del recurso para obtener los clientes activo/inactivo*/
+  static readonly URL_GET_CLIENTES_USUARIO: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'clientesusuario';
+
+  /** URL del recurso para la creacion de los usuarios*/
+  static readonly URL_CREAR_USUARIO: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'crearuser';
+
+  /** URL del recurso para la modificacion del estado del usuario*/
+  static readonly URL_MODIFICAR_ESTADO_USUARIO: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'updatestateuser';
+
+  /** URL del recurso para la modificacion de los privilegios del usuario*/
+  static readonly URL_MODIFICAR_PRIVILEGIOS_USUARIO: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'updateprivilegiosuser';
+
+  /** URL del recurso para la generacion de la clave de ingreso del usuario*/
+  static readonly URL_GENERAR_CLAVE_USUARIO: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'generarclaveuser';
 }

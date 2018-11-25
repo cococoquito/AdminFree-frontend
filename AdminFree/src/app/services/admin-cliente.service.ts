@@ -7,7 +7,7 @@ import { ConfiguracionesConstant } from './../constants/configuraciones.constant
 
 /**
  * Clase que contiene todos los servicios para la administracion
- * de clientes en el sistema
+ * de los clientes en el sistema
  *
  * @author Carlos Andres Diaz
  */
