@@ -1,3 +1,4 @@
+import { CommonComponent } from './../../../util/common.component';
 import { Component, OnInit } from '@angular/core';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
@@ -15,17 +16,25 @@ import { OverlayPanel } from 'primeng/overlaypanel';
   styleUrls: ['./admin-usuarios.component.css'],
   providers: [AdminUsuarioService]
 })
-export class AdminUsuariosComponent implements OnInit {
+export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   public usuarios: Array<UsuarioDTO>;
   public selectedCar1;
   public usuarioCrear: UsuarioDTO;
 
   private cliente: ClienteDTO;
 
-  constructor(private adminUsuarioService: AdminUsuarioService) {}
+  constructor(private adminUsuarioService: AdminUsuarioService) {
+    super();
+  }
 
   ngOnInit() {
     this.init();
+  }
+
+  public crearUsuario(): void {
+    if (this.usuarioCrear.nombre && this.usuarioCrear.usuarioIngreso) {
+      alert('exitoso');
+    }
   }
 
   private init(): void {
@@ -40,6 +49,7 @@ export class AdminUsuariosComponent implements OnInit {
 
   public showPanelCrearUsuario(): void {
     this.usuarioCrear = new UsuarioDTO();
+    this.cleanSubmit();
   }
 
   public closePanelCrearUsuario(): void {

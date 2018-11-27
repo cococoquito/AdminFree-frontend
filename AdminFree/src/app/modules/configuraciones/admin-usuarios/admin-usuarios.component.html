@@ -76,16 +76,31 @@
       <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña.</strong>
     </p>
 
-    <form name="form" #f="ngForm" novalidate (keydown.enter)="$event.preventDefault()">
+    <form name="form" #f="ngForm" (ngSubmit)="onSubmit() && f.form.valid && crearUsuario()" novalidate (keydown.enter)="$event.preventDefault()">
 
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="col-form-label font-weight-bold" for="username">Nombre Completo: *</label>
-          <input id="username" type="text" class="form-control input-valido" adminAutofocus>
+          <input type="text"
+            name="username"
+            #username="ngModel"
+            [(ngModel)]="usuarioCrear.nombre"
+            maxlength="100"
+            adminRequired
+            adminAutofocus
+            class="form-control font-size-14"
+            [ngClass]="(submitted && !username.valid) ? 'input-invalido' : 'input-valido'"/>
         </div>
         <div class="form-group col-md-6">
           <label class="col-form-label font-weight-bold" for="useringreso">Usuario de Ingreso: *</label>
-          <input id="useringreso" type="text" class="form-control input-valido">
+          <input type="text"
+            name="useringreso"
+            #useringreso="ngModel"
+            [(ngModel)]="usuarioCrear.usuarioIngreso"
+            maxlength="50"
+            adminRequired
+            class="form-control font-size-14"
+            [ngClass]="(submitted && !useringreso.valid) ? 'input-invalido' : 'input-valido'"/>
         </div>
       </div>
 
@@ -95,7 +110,7 @@
           <tbody>
             <tr>
               <td>
-                <p-checkbox name="groupname" label="Correspondencia"></p-checkbox>
+                <p-checkbox name="group" label="Correspondencia"></p-checkbox>
               </td>
               <td>
                 <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular.</p>
@@ -103,7 +118,7 @@
             </tr>
             <tr>
               <td>
-                <p-checkbox name="groupname" label="Archivo de Gestión"></p-checkbox>
+                <p-checkbox name="group" label="Archivo de Gestión"></p-checkbox>
               </td>
               <td>
                 <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales.</p>
@@ -111,7 +126,7 @@
             </tr>
             <tr>
               <td>
-                <p-checkbox name="groupname" label="Reportes"></p-checkbox>
+                <p-checkbox name="group" label="Reportes"></p-checkbox>
               </td>
               <td>
                 <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos.</p>
@@ -119,7 +134,7 @@
             </tr>
             <tr>
               <td>
-                <p-checkbox name="groupname" label="Configuraciones"></p-checkbox>
+                <p-checkbox name="group" label="Configuraciones"></p-checkbox>
               </td>
               <td>
                 <p>Módulo administrativo del sistema solo para usuarios con ROL de administrador</p>
