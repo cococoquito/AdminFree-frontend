@@ -1,23 +1,28 @@
+<!-- titulo de la pagina -->
 <div class="text-center title-padding-bottom" >
   <p class="title-page">Administración de Usuarios</p>
-  <p class="sub-title-page" style="margin: 0px">Submódulo administrativo para las configuraciones de los <strong>usuarios del sistema</strong></p>
+  <p class="sub-title-page">Submódulo administrativo para las configuraciones de los <strong>usuarios del sistema</strong></p>
 </div>
 
+<!-- panel lista de usuarios -->
+<div *ngIf="!usuarioCrear">
 
-
-<div *ngIf="!nuevoUsuario">
-
-  <div class="text-right" style="margin-bottom: 3px">
-
+  <!-- boton crear usuario -->
+  <div class="text-right btn-registrar-user">
     <button type="button" class="btn btn-success btn-sm" (click)="showPanelCrearUsuario()">
       <i class="fa fa-user-plus"> Registrar Usuario</i>
     </button>
   </div>
 
-  <p-table id="tbl-users" [value]="usuarios" [responsive]="true" [paginator]="true" [rows]="5"
+  <!-- tabla - usuarios -->
+  <p-table id="tbl-users"
+    [value]="usuarios"
+    [responsive]="true"
+    [paginator]="true"
+    [rows]="5"
     selectionMode="single">
     <ng-template pTemplate="caption">
-      <i class="fa fa-users" style="font-size: 14px;"> <span class="font-admin"> Usuarios Registrados</span></i>
+      <i class="fa fa-users"> <span class="font-admin"> Usuarios Registrados</span></i>
     </ng-template>
     <ng-template pTemplate="header">
       <tr class="text-center">
@@ -34,96 +39,101 @@
         <td>{{user.nombre}}</td>
         <td>{{user.usuarioIngreso}}</td>
         <td>
-          <button *ngIf="user.estado === 1" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
-          <button *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
-        </td>
-
-        <td class="text-center">
-            <button type="button" class="btn btn-secondary btn-sm"
-            style="border-radius: 50%; webkit-border-radius: 50%;width: 2.2em;height: 2.2em;"
-            ><i class="pi pi-external-link" style="margin-left: -.1em;line-height: 1.2"></i></button>
-        </td>
-        <td class="text-center">
-            <button type="button" class="btn btn-secondary btn-sm"
-            style="border-radius: 50%; webkit-border-radius: 50%;width: 2.2em;height: 2.2em;">
-            <i class="pi pi-unlock " style="margin-left: -.1em"></i>
-
-
+          <button *ngIf="user.estado === 1"
+            type="button"
+            class="btn btn-outline-success btn-sm btn-block">Activo
           </button>
+          <button *ngIf="user.estado === 2"
+            type="button"
+            class="btn btn-outline-danger btn-sm btn-block">Inactivo
+          </button>
+        </td>
+        <td class="text-center">
+            <button type="button" class="btn btn-secondary btn-sm btn-round-table">
+              <i class="pi pi-external-link icon-round-table"></i>
+            </button>
+        </td>
+        <td class="text-center">
+            <button type="button" class="btn btn-secondary btn-sm btn-round-table">
+              <i class="pi pi-unlock icon-round-table-2"></i>
+            </button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
 
-
-<div *ngIf="nuevoUsuario">
-
+<!-- panel creacion de usuarios -->
+<div *ngIf="usuarioCrear">
   <p-panel>
-      <p-header>
-          <i class="fa fa-user-plus" style="font-size: 14px;"> <span class="font-admin"> Creación de Usuario</span></i>
-      </p-header>
-      <p class="text-center no_se" style="color: grey; font-size: 14px; margin-bottom: 5px;"><i class="fa fa-info-circle" style="font-size: 16px;"></i> <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña.</strong></p>
-      <div class="form-row">
-          <div class="form-group col-md-6">
-            <label class="col-form-label font-weight-bold" for="inputEmail4">Nombre Completo: *</label>
-            <input type="email" class="form-control input-valido" id="inputEmail4" adminAutofocus>
-          </div>
-          <div class="form-group col-md-6">
-            <label class="col-form-label font-weight-bold" for="inputPassword4">Usuario de Ingreso: *</label>
-            <input type="password" class="form-control input-valido" id="inputPassword4">
-          </div>
-        </div>
 
-        <div>
-          <p class="text-center" style="font-size: 14px; line-height: 1.8; background-color: #f4f4f4; color: #212121; font-weight: bold"><i class="fa fa-cog"></i> Asigne los módulos para el nuevo usuario</p>
-          <table class="table table-hover" style="margin-bottom: 0px;">
-              <tbody>
-                  <tr>
-                      <td>
-                          <p-checkbox name="groupname" label="Correspondencia"></p-checkbox>
-                      </td>
-                      <td><p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular.</p></td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <p-checkbox name="groupname" label="Archivo de Gestión"></p-checkbox>
-                        </td>
-                      <td><p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales.</p></td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <p-checkbox name="groupname" label="Reportes"></p-checkbox>
+    <p-header>
+      <i class="fa fa-user-plus font-size-14"> <span class="font-admin"> Creación de Usuario</span></i>
+    </p-header>
 
-                        </td>
-                      <td><p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos.</p></td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <p-checkbox name="groupname" label="Configuraciones"></p-checkbox>
-                        </td>
-                      <td><p>Módulo administrativo del sistema solo para usuarios con ROL de administrador</p></td>
-                  </tr>
-              </tbody>
-          </table>
+    <p class="info-text">
+      <i class="fa fa-info-circle font-size-16"></i>
+      <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña.</strong>
+    </p>
 
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label class="col-form-label font-weight-bold" for="username">Nombre Completo: *</label>
+        <input id="username" type="text" class="form-control input-valido" adminAutofocus>
+      </div>
+      <div class="form-group col-md-6">
+        <label class="col-form-label font-weight-bold" for="useringreso">Usuario de Ingreso: *</label>
+        <input id="useringreso" type="text" class="form-control input-valido">
+      </div>
+    </div>
 
-        </div>
+    <div>
+      <p class="text-assign-modulos"><i class="fa fa-cog"></i> Asigne los módulos para el nuevo usuario</p>
+      <table class="table table-hover tbl-modulos">
+        <tbody>
+          <tr>
+            <td>
+              <p-checkbox name="groupname" label="Correspondencia"></p-checkbox>
+            </td>
+            <td>
+              <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p-checkbox name="groupname" label="Archivo de Gestión"></p-checkbox>
+            </td>
+            <td>
+              <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p-checkbox name="groupname" label="Reportes"></p-checkbox>
+            </td>
+            <td>
+              <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p-checkbox name="groupname" label="Configuraciones"></p-checkbox>
+            </td>
+            <td>
+              <p>Módulo administrativo del sistema solo para usuarios con ROL de administrador</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-
-      <div class="text-center">
-      <button type="button" class="btn btn-info btn-sm" style="margin-right: 10px; min-width: 8em;" (click)="closePanelCrearUsuario()">
+    <div class="text-center">
+      <button type="button" class="btn btn-info btn-sm btn-regresar" (click)="closePanelCrearUsuario()">
           <i class="fa fa-backward"> Regresar</i>
       </button>
-      <button type="button" class="btn btn-success btn-sm" style="min-width: 8em;" (click)="closePanelCrearUsuario()">
+      <button type="submit" class="btn btn-success btn-sm btn-crear-user">
           <i class="fa fa-user-plus"> Crear Usuario</i>
       </button>
     </div>
-
-
-
-</p-panel>
-
-
-
+  </p-panel>
 </div>

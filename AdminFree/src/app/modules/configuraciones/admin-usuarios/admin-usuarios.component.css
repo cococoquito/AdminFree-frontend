@@ -1,0 +1,25 @@
+.btn-registrar-user {
+  margin-bottom: 3px;
+}
+
+.text-assign-modulos {
+  font-size: 14px;
+  line-height: 1.8;
+  background-color: #f4f4f4;
+  color: #212121;
+  font-weight: bold;
+  text-align: center;
+}
+
+.tbl-modulos {
+  margin-bottom: 0px !important;
+}
+
+.btn-regresar {
+  margin-right: 10px;
+  min-width: 8em;
+}
+
+.btn-crear-user {
+  min-width: 8em;
+}

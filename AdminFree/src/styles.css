@@ -56,11 +56,11 @@ body {
 .title-page {
   font-family: Times, Times New Roman, serif !important;
   color: #00AECF;
-  font-weight: 700!important;
+  font-weight: 700 !important;
   font-size: 20px;
   letter-spacing: 0.4pt;
   word-spacing: 0.8pt;
-  margin: 0px;
+  margin: 0px !important;
 }
 
 .title-padding-bottom {
@@ -70,56 +70,94 @@ body {
 .sub-title-page {
   font-family: Times, Times New Roman, serif !important;
   font-size: 1rem;
+  margin: 0px !important;
 }
 
+/* header de los p-table */
 .ui-table-caption {
   background-color: #607a8c !important;
   color: white !important;
-  font-size: 14px
 }
 
+/* para la fila seleccionada del componente p-table */
 .ui-state-highlight {
-  background-color: #f5a96d !important;
-  color: #212121 !important;
-}
-
-.ui-paginator-page.ui-state-active {
   background-color: #f5a96d !important;
   color: #212121 !important;
 }
 
 #tbl-users .ui-state-highlight {
   background-color: white !important;
-  webkit-border-radius: 50%;
-  border-radius: 50%!important;
 }
 
-.ui-table .ui-table-tbody > tr {
-  font-family: "Roboto", "Helvetica Neue", sans-serif!important;
-  color: #212121!important;
-  font-size: 14px!important;
+/* font-size */
+.font-size-14 {
+  font-size: 14px !important;
 }
 
+.font-size-16 {
+  font-size: 16px !important;
+}
+
+/* font family para admin free */
 .font-admin {
-  font-family: "Roboto", "Helvetica Neue", sans-serif!important
+  font-family: "Roboto", "Helvetica Neue", sans-serif !important
 }
 
-.ui-paginator .ui-paginator-pages .ui-paginator-page {
-  border-radius: 50%!important;
-  webkit-border-radius: 50%;
-}
-
-.ui-panel-titlebar {
-  background-color: #607a8c !important;
-  color: white !important;
-  font-size: 14px;
-  text-align: center;
-}
-
-.no_se {
+.font-new-roman {
   font-family: Times, Times New Roman, serif !important;
 }
 
+/* circulo redondo paginador */
+.ui-paginator-page.ui-state-active {
+  background-color: #f5a96d !important;
+  color: #212121 !important;
+}
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page {
+  border-radius: 50% !important;
+}
+
+/* circulo redondo btns table */
+.btn-round-table {
+  border-radius: 50% !important;
+  width: 2.2em !important;
+  height: 2.2em !important;
+}
+
+.icon-round-table {
+  margin-left: -.1em !important;
+  line-height: 1.2 !important;
+}
+
+.icon-round-table-2 {
+  margin-left: -.1em !important;
+}
+
+/* font para los valores de los tr de las tablas */
+.ui-table .ui-table-tbody>tr {
+  font-family: "Roboto", "Helvetica Neue", sans-serif !important;
+  color: #212121 !important;
+  font-size: 14px !important;
+}
+
+/* encabezados de panel */
+.ui-panel-titlebar {
+  background-color: #607a8c !important;
+  color: white !important;
+  font-size: 14px !important;
+  text-align: center !important;
+}
+
+/* textos para check-box */
 .ui-chkbox-label {
-  font-weight:700!important;
+  font-weight: 700 !important;
+}
+
+/* texto informacion */
+.info-text {
+  color: grey;
+  font-size: 14px;
+  margin-bottom: 5px !important;
+  text-align: center;
+  font-family: Times, Times New Roman, serif !important;
 }

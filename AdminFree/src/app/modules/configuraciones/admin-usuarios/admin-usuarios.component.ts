@@ -18,7 +18,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 export class AdminUsuariosComponent implements OnInit {
   public usuarios: Array<UsuarioDTO>;
   public selectedCar1;
-  public nuevoUsuario: UsuarioDTO;
+  public usuarioCrear: UsuarioDTO;
 
   private cliente: ClienteDTO;
 
@@ -39,10 +39,10 @@ export class AdminUsuariosComponent implements OnInit {
   }
 
   public showPanelCrearUsuario(): void {
-    this.nuevoUsuario = new UsuarioDTO();
+    this.usuarioCrear = new UsuarioDTO();
   }
 
   public closePanelCrearUsuario(): void {
-    this.nuevoUsuario = null;
+    this.usuarioCrear = null;
   }
 }
