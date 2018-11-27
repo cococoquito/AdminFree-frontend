@@ -29,7 +29,7 @@
         <th>Nombre Completo</th>
         <th>Usuario de Ingreso</th>
         <th style="width: 4%">Estado</th>
-        <th style="width: 4%">Modulos Asignados</th>
+        <th style="width: 4%">Módulos Asignados</th>
         <th style="width: 4%">Generar Clave</th>
       </tr>
     </ng-template>
@@ -67,7 +67,7 @@
 
     <p class="info-text">
       <i class="fa fa-info-circle font-size-16"></i>
-      <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña.</strong>
+      <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña</strong>
     </p>
 
     <form name="form" #f="ngForm" (ngSubmit)="onSubmit() && f.form.valid && crearUsuario()" novalidate (keydown.enter)="$event.preventDefault()">
@@ -111,7 +111,7 @@
                 </p-checkbox>
               </td>
               <td>
-                <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular.</p>
+                <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular</p>
               </td>
             </tr>
             <tr>
@@ -123,7 +123,7 @@
                 </p-checkbox>
               </td>
               <td>
-                <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales.</p>
+                <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales</p>
               </td>
             </tr>
             <tr>
@@ -135,7 +135,7 @@
                 </p-checkbox>
               </td>
               <td>
-                <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos.</p>
+                <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos</p>
               </td>
             </tr>
             <tr>
@@ -147,7 +147,7 @@
                 </p-checkbox>
               </td>
               <td>
-                <p>Módulo administrativo del sistema solo para usuarios con ROL de administrador</p>
+                <p>Módulo administrativo del sistema, solo para usuarios con ROL de administrador</p>
               </td>
             </tr>
           </tbody>
