@@ -49,12 +49,12 @@
           </button>
         </td>
         <td class="text-center">
-            <button type="button" class="btn btn-secondary btn-sm btn-round-table">
+            <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
               <i class="pi pi-external-link icon-round-table"></i>
             </button>
         </td>
         <td class="text-center">
-            <button type="button" class="btn btn-secondary btn-sm btn-round-table">
+            <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
               <i class="pi pi-unlock icon-round-table-2"></i>
             </button>
         </td>
@@ -76,64 +76,67 @@
       <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña.</strong>
     </p>
 
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label class="col-form-label font-weight-bold" for="username">Nombre Completo: *</label>
-        <input id="username" type="text" class="form-control input-valido" adminAutofocus>
-      </div>
-      <div class="form-group col-md-6">
-        <label class="col-form-label font-weight-bold" for="useringreso">Usuario de Ingreso: *</label>
-        <input id="useringreso" type="text" class="form-control input-valido">
-      </div>
-    </div>
+    <form name="form" #f="ngForm" novalidate (keydown.enter)="$event.preventDefault()">
 
-    <div>
-      <p class="text-assign-modulos"><i class="fa fa-cog"></i> Asigne los módulos para el nuevo usuario</p>
-      <table class="table table-hover tbl-modulos">
-        <tbody>
-          <tr>
-            <td>
-              <p-checkbox name="groupname" label="Correspondencia"></p-checkbox>
-            </td>
-            <td>
-              <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular.</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p-checkbox name="groupname" label="Archivo de Gestión"></p-checkbox>
-            </td>
-            <td>
-              <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales.</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p-checkbox name="groupname" label="Reportes"></p-checkbox>
-            </td>
-            <td>
-              <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos.</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p-checkbox name="groupname" label="Configuraciones"></p-checkbox>
-            </td>
-            <td>
-              <p>Módulo administrativo del sistema solo para usuarios con ROL de administrador</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="col-form-label font-weight-bold" for="username">Nombre Completo: *</label>
+          <input id="username" type="text" class="form-control input-valido" adminAutofocus>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="col-form-label font-weight-bold" for="useringreso">Usuario de Ingreso: *</label>
+          <input id="useringreso" type="text" class="form-control input-valido">
+        </div>
+      </div>
 
-    <div class="text-center">
-      <button type="button" class="btn btn-info btn-sm btn-regresar" (click)="closePanelCrearUsuario()">
-          <i class="fa fa-backward"> Regresar</i>
-      </button>
-      <button type="submit" class="btn btn-success btn-sm btn-crear-user">
-          <i class="fa fa-user-plus"> Crear Usuario</i>
-      </button>
-    </div>
+      <div>
+        <p class="text-assign-modulos"><i class="fa fa-cog"></i> Asigne los módulos para el nuevo usuario</p>
+        <table class="table table-hover tbl-modulos">
+          <tbody>
+            <tr>
+              <td>
+                <p-checkbox name="groupname" label="Correspondencia"></p-checkbox>
+              </td>
+              <td>
+                <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p-checkbox name="groupname" label="Archivo de Gestión"></p-checkbox>
+              </td>
+              <td>
+                <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p-checkbox name="groupname" label="Reportes"></p-checkbox>
+              </td>
+              <td>
+                <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p-checkbox name="groupname" label="Configuraciones"></p-checkbox>
+              </td>
+              <td>
+                <p>Módulo administrativo del sistema solo para usuarios con ROL de administrador</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center">
+        <button type="button" class="btn btn-info btn-sm btn-regresar" (click)="closePanelCrearUsuario()">
+            <i class="fa fa-backward"> Regresar</i>
+        </button>
+        <button type="submit" class="btn btn-success btn-sm btn-crear-user">
+            <i class="fa fa-user-plus"> Crear Usuario</i>
+        </button>
+      </div>
+    </form>
   </p-panel>
 </div>

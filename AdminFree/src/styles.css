@@ -133,6 +133,14 @@ body {
   margin-left: -.1em !important;
 }
 
+.btn-round-teal {
+  background-color: #009688 !important;
+}
+
+.btn-round-teal:hover {
+  background-color: #016b60 !important;
+}
+
 /* font para los valores de los tr de las tablas */
 .ui-table .ui-table-tbody>tr {
   font-family: "Roboto", "Helvetica Neue", sans-serif !important;
