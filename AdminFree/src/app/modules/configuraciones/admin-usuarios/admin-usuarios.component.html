@@ -39,24 +39,18 @@
         <td>{{user.nombre}}</td>
         <td>{{user.usuarioIngreso}}</td>
         <td>
-          <button *ngIf="user.estado === 1"
-            type="button"
-            class="btn btn-outline-success btn-sm btn-block">Activo
-          </button>
-          <button *ngIf="user.estado === 2"
-            type="button"
-            class="btn btn-outline-danger btn-sm btn-block">Inactivo
+          <button *ngIf="user.estado === 1" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
+          <button *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
+        </td>
+        <td class="text-center">
+          <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
+            <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
         <td class="text-center">
-            <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
-              <i class="pi pi-external-link icon-round-table"></i>
-            </button>
-        </td>
-        <td class="text-center">
-            <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
-              <i class="pi pi-unlock icon-round-table-2"></i>
-            </button>
+          <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
+            <i class="pi pi-unlock icon-round-table-2"></i>
+          </button>
         </td>
       </tr>
     </ng-template>
@@ -110,7 +104,11 @@
           <tbody>
             <tr>
               <td>
-                <p-checkbox name="group" label="Correspondencia"></p-checkbox>
+                <p-checkbox name="group"
+                  [(ngModel)]="selectedModulos"
+                  label="Correspondencia"
+                  value="1">
+                </p-checkbox>
               </td>
               <td>
                 <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular.</p>
@@ -118,7 +116,11 @@
             </tr>
             <tr>
               <td>
-                <p-checkbox name="group" label="Archivo de Gestión"></p-checkbox>
+                <p-checkbox name="group"
+                  label="Archivo de Gestión"
+                  [(ngModel)]="selectedModulos"
+                  value="2">
+                </p-checkbox>
               </td>
               <td>
                 <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales.</p>
@@ -126,7 +128,11 @@
             </tr>
             <tr>
               <td>
-                <p-checkbox name="group" label="Reportes"></p-checkbox>
+                <p-checkbox name="group"
+                  label="Reportes"
+                  [(ngModel)]="selectedModulos"
+                  value="3">
+                </p-checkbox>
               </td>
               <td>
                 <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos.</p>
@@ -134,7 +140,11 @@
             </tr>
             <tr>
               <td>
-                <p-checkbox name="group" label="Configuraciones"></p-checkbox>
+                <p-checkbox name="group"
+                  label="Configuraciones"
+                  [(ngModel)]="selectedModulos"
+                  value="4">
+                </p-checkbox>
               </td>
               <td>
                 <p>Módulo administrativo del sistema solo para usuarios con ROL de administrador</p>
@@ -146,10 +156,10 @@
 
       <div class="text-center">
         <button type="button" class="btn btn-info btn-sm btn-regresar" (click)="closePanelCrearUsuario()">
-            <i class="fa fa-backward"> Regresar</i>
+          <i class="fa fa-backward"> Regresar</i>
         </button>
         <button type="submit" class="btn btn-success btn-sm btn-crear-user">
-            <i class="fa fa-user-plus"> Crear Usuario</i>
+          <i class="fa fa-user-plus"> Crear Usuario</i>
         </button>
       </div>
     </form>
