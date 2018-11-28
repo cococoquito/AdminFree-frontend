@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
+import { MessagesModule } from 'primeng/messages';
 import { SharedCommonModule } from './shared-common.module';
 
 /**
@@ -15,13 +16,15 @@ import { SharedCommonModule } from './shared-common.module';
     SharedCommonModule,
     TableModule,
     PanelModule,
-    CheckboxModule
+    CheckboxModule,
+    MessagesModule
   ],
   exports: [
     SharedCommonModule,
     TableModule,
     PanelModule,
-    CheckboxModule
+    CheckboxModule,
+    MessagesModule
   ],
   declarations: [
   ]

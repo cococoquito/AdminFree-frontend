@@ -63,10 +63,6 @@ body {
   margin: 0px !important;
 }
 
-.title-padding-bottom {
-  padding-bottom: 15px;
-}
-
 .sub-title-page {
   font-family: Times, Times New Roman, serif !important;
   font-size: 1rem;
@@ -168,4 +164,11 @@ body {
   margin-bottom: 5px !important;
   text-align: center;
   font-family: Times, Times New Roman, serif !important;
+}
+
+/* para los messages de la app */
+.ui-messages {
+  padding: 0.425em 1em !important;
+  margin: 0px !important;
+  margin-bottom: 5px !important;
 }
