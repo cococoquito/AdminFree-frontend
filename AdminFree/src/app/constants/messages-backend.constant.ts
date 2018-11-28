@@ -22,5 +22,5 @@ export class MessagesBackendConstant {
   static readonly AUTORIZACION_FALLIDA: string = 'No estas autorizado para acceder a este recurso';
 
   /** Mensaje cuando se presenta un error interno en el servidor */
-  static readonly INTERNAL_SERVER_ERROR: string = 'Error interno del servidor: ';
+  static readonly INTERNAL_SERVER_ERROR: string = 'Se presentó un error interno en el servidor';
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util/common.component';
 import { AdminUsuarioService } from './../../../services/admin-usuario.service';
+import { MessagesState } from './../../../states/messages.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
@@ -33,10 +34,14 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   private clienteCurrent: ClienteDTO;
 
   /**
+   * @param messagesState, Se utiliza para la visualizacion
+   * de los mensajes en la pantalla
+   *
    * @param adminUsuarioService, se utiliza para consumir
    * los servicios relacionados al Usuario
    */
   constructor(
+    public messagesState: MessagesState,
     private adminUsuarioService: AdminUsuarioService) {
     super();
   }
@@ -72,7 +77,9 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
       data => {
         this.usuarios = data;
       },
-      error => {}
+      error => {
+        this.messagesState.showError('Error', this.showMensajeError(error));
+      }
     );
   }
 

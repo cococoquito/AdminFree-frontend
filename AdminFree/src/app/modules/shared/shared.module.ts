@@ -4,6 +4,7 @@ import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MessagesModule } from 'primeng/messages';
 import { SharedCommonModule } from './shared-common.module';
+import { TitleComponent } from './title/title.component';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -24,9 +25,11 @@ import { SharedCommonModule } from './shared-common.module';
     TableModule,
     PanelModule,
     CheckboxModule,
-    MessagesModule
+    MessagesModule,
+    TitleComponent
   ],
   declarations: [
+    TitleComponent
   ]
 })
 export class SharedModule {}
