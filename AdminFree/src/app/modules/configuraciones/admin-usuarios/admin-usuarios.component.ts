@@ -5,6 +5,8 @@ import { MessagesState } from './../../../states/messages.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
+import { MessagesFrontendConstant } from './../../../constants/messages-frontend.constant';
+import { ModulesTokenConstant } from './../../../constants/modules-token.constant';
 
 /**
  * Componente para la administracion de los Usuarios del sistema
@@ -41,7 +43,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * los servicios relacionados al Usuario
    */
   constructor(
-    public messagesState: MessagesState,
+    private messagesState: MessagesState,
     private adminUsuarioService: AdminUsuarioService) {
     super();
   }
@@ -54,21 +56,14 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que soporta el proceso de creacion del Usuario
-   */
-  public crearUsuario(): void {
-    if (this.usuarioCrear.nombre &&
-        this.usuarioCrear.usuarioIngreso) {
-      console.log(this.selectedModulos);
-    }
-  }
-
-  /**
    * Metodo que es invocado al momento de la creacion
    * del componente, donde se procede a consultar los
    * Usuarios parametrizados en el sistema
    */
   private init(): void {
+    // se limpia los mensajes de otros componentes
+    this.messagesState.clean();
+
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
@@ -78,9 +73,51 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         this.usuarios = data;
       },
       error => {
-        this.messagesState.showError('Error', this.showMensajeError(error));
+        this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error));
       }
     );
+  }
+
+  /**
+   * Metodo que soporta el proceso de creacion del Usuario
+   */
+  public crearUsuario(): void {
+    // se limpian error anteriores
+    this.messagesState.clean();
+
+    // programacion defensiva para nombre, usuario ingreso
+    if (this.usuarioCrear.nombre && this.usuarioCrear.usuarioIngreso) {
+
+      // se valida si seleccionaron modulos para el nuevo usuario
+      if (!this.selectedModulos || this.selectedModulos.length === 0) {
+          this.messagesState.showError(
+            MessagesFrontendConstant.ERROR_VALIDACION,
+            MessagesFrontendConstant.MODULOS_USER);
+      } else {
+
+        // se construye los datos a enviar para la creacion
+        this.prepararDatosAntesCrecion();
+
+        // se hace el llamado HTTP para la creacion del usuario
+        this.adminUsuarioService.crearUsuario(this.usuarioCrear).subscribe(
+          data => {
+            // lista visualizada en pantalla
+            this.usuarios.push(data);
+
+            // se muestra el mensaje exitoso mostrando la contraseña del user
+            this.messagesState.showSuccess(
+              MessagesFrontendConstant.EXITOSO,
+              MessagesFrontendConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>');
+
+            // se limpian los datos preseleccionados
+            this.initPanelCrearUsuario();
+          },
+          error => {
+            this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error));
+          }
+        );
+      }
+    }
   }
 
   /**
@@ -88,9 +125,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * Registrar Usuario del panel lista usuario
    */
   public showPanelCrearUsuario(): void {
-    this.usuarioCrear = new UsuarioDTO();
-    this.selectedModulos = [];
-    this.cleanSubmit();
+    this.initPanelCrearUsuario();
+    this.messagesState.clean();
   }
 
   /**
@@ -98,7 +134,52 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * Regresar del panel de creacion de usuario
    */
   public closePanelCrearUsuario(): void {
+    this.messagesState.clean();
     this.usuarioCrear = null;
     this.selectedModulos = null;
+  }
+
+  /**
+   * Metodo que permite configurar los datos del nuevo
+   * usuario antes de la creacion
+   */
+  private prepararDatosAntesCrecion(): void {
+    // se configura los datos basicos
+    this.usuarioCrear.cliente = this.clienteCurrent;
+    this.usuarioCrear.nombre = this.setTrim(this.usuarioCrear.nombre);
+    this.usuarioCrear.usuarioIngreso = this.setTrim(this.usuarioCrear.usuarioIngreso);
+
+    // se configura los modulos
+    const modulos: Array<string> = new Array<string>();
+    for (const idModulo of this.selectedModulos) {
+      switch (idModulo) {
+        case '1': {
+          modulos.push(ModulesTokenConstant.TK_CORRESPONDENCIA);
+          break;
+        }
+        case '2': {
+          modulos.push(ModulesTokenConstant.TK_ARCHIVO_GESTION);
+          break;
+        }
+        case '3': {
+          modulos.push(ModulesTokenConstant.TK_REPORTES);
+          break;
+        }
+        case '4': {
+          modulos.push(ModulesTokenConstant.TK_CONFIGURACIONES);
+          break;
+        }
+      }
+    }
+    this.usuarioCrear.modulosTokens = modulos;
+  }
+
+  /**
+   * Metodo que permite inicializar el panel de creacion de usuarios
+   */
+  private initPanelCrearUsuario () {
+    this.usuarioCrear = new UsuarioDTO();
+    this.selectedModulos = [];
+    this.cleanSubmit();
   }
 }

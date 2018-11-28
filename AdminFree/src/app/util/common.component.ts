@@ -92,6 +92,13 @@ export class CommonComponent {
   }
 
   /**
+   * Metodo remueve los espacios en blanco del comienzo y final
+   */
+  protected setTrim(valor: string): string {
+    return (valor) ? valor.trim() : null;
+  }
+
+  /**
    * Metodo que permite obtener el business mensaje que corresponsa al codigo
    */
   private getBusinessMessage(codBusinessMsj: string): string {
@@ -107,6 +114,11 @@ export class CommonComponent {
 
       case MessagesBackendConstant.COD_AUTENTICACION_FALLIDA_ADMIN: {
         businessMsj = MessagesBackendConstant.AUTENTICACION_FALLIDA_ADMIN;
+        break;
+      }
+
+      case MessagesBackendConstant.COD_USUARIO_INGRESO_EXISTE: {
+        businessMsj = MessagesBackendConstant.USUARIO_INGRESO_EXISTE;
         break;
       }
     }
