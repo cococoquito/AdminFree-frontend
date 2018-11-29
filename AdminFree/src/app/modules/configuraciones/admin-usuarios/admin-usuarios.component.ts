@@ -82,14 +82,19 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que es invocado antes de dar submit en el formulario creacion
+   */
+  public beforeOnSubmit(): boolean {
+    this.messagesState.clean();
+    return this.onSubmit();
+  }
+
+  /**
    * Metodo que es es llamado antes de crear el usuario
    */
   public beforeCrearUsuario(): boolean {
     // el modal se inicializa como visualizado
     this.isModalCrearUsuario = true;
-
-    // se limpian error anteriores
-    this.messagesState.clean();
 
     // programacion defensiva para nombre, usuario ingreso
     if (!this.usuarioCrear.nombre || !this.usuarioCrear.usuarioIngreso) {
@@ -110,7 +115,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    */
   public crearUsuario(): void {
     // se construye los datos a enviar para la creacion
-    this.prepararDatosAntesCrecion();
+    this.prepararDatosAntesCreacion();
 
     // se hace el llamado HTTP para la creacion del usuario
     this.adminUsuarioService.crearUsuario(this.usuarioCrear).subscribe(
@@ -138,13 +143,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que es es llamado para cerrar el modal de crear usuario
-   */
-  public closeModalCrearUsuario(): void {
-    this.isModalCrearUsuario = false;
-  }
-
-  /**
    * Metodo que soporta el evento click del boton
    * Registrar Usuario del panel lista usuario
    */
@@ -164,10 +162,17 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que es es llamado para cerrar el modal de crear usuario
+   */
+  public closeModalCrearUsuario(): void {
+    this.isModalCrearUsuario = false;
+  }
+
+  /**
    * Metodo que permite configurar los datos del nuevo
    * usuario antes de la creacion
    */
-  private prepararDatosAntesCrecion(): void {
+  private prepararDatosAntesCreacion(): void {
     // se configura los datos basicos
     this.usuarioCrear.cliente = this.clienteCurrent;
     this.usuarioCrear.nombre = this.setTrim(this.usuarioCrear.nombre);

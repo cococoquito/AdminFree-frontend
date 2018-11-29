@@ -45,3 +45,10 @@
 .margin-top-mdl {
   margin-top: 20px;
 }
+
+.info-text {
+  font-size: 14px;
+  margin-bottom: 5px !important;
+  text-align: center;
+  font-family: Times, Times New Roman, serif !important;
+}

@@ -74,7 +74,7 @@
     <form
       #f="ngForm" name="form"
       novalidate (keydown.enter)="$event.preventDefault()"
-      (ngSubmit)="onSubmit() && f.form.valid && beforeCrearUsuario()">
+      (ngSubmit)="beforeOnSubmit() && f.form.valid && beforeCrearUsuario()">
 
       <div class="form-row">
         <!-- nombre -->
@@ -133,7 +133,7 @@
   responsive="true">
 
   <div class="text-center title-modal-creacion">
-    <p class="font-weight-bold font-new-roman font-size-16">¿Está Seguro de crear el usuario con los siguientes datos?</p>
+    <p class="font-weight-bold font-new-roman font-size-16">¿Está seguro de crear el usuario con los siguientes datos?</p>
   </div>
 
   <div class="form-row nombre-usuario-in">

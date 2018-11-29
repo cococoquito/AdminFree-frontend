@@ -20,5 +20,5 @@ export class MessagesFrontendConstant {
   static readonly MODULOS_USER: string = 'Por favor seleccione los módulos que podrá acceder el nuevo usuario';
 
   /** Mensaje exitoso para la creacion del usuario */
-  static readonly USER_CREADO: string = 'El usuario fue registrado exitosamente y su contraseña es:';
+  static readonly USER_CREADO: string = 'El usuario fue registrado exitosamente en el sistema y su contraseña es:';
 }

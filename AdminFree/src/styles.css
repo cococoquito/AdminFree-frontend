@@ -162,12 +162,3 @@ body {
 .btn-round-teal:hover {
   background-color: #016b60 !important;
 }
-
-/* texto informacion */
-.info-text {
-  color: grey;
-  font-size: 14px;
-  margin-bottom: 5px !important;
-  text-align: center;
-  font-family: Times, Times New Roman, serif !important;
-}
