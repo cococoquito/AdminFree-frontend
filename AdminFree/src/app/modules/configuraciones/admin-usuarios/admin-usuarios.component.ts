@@ -147,8 +147,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * Registrar Usuario del panel lista usuario
    */
   public showPanelCrearUsuario(): void {
-    this.initPanelCrearUsuario();
     this.messagesState.clean();
+    this.initPanelCrearUsuario();
   }
 
   /**
