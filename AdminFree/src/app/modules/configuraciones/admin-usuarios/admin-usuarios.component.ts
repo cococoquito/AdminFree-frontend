@@ -29,6 +29,9 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   /** Se utiliza para encapsular los modulos seleccionados */
   public selectedModulos: string[];
 
+  /** bandera que se utiliza para la visualizacion del modal de creacion user */
+  public isModalCrearUsuario: boolean;
+
   /**
    * DTO que contiene los datos del cliente autenticado o
    * es el cliente asociados al usuario autenticado
@@ -79,45 +82,66 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que soporta el proceso de creacion del Usuario
+   * Metodo que es es llamado antes de crear el usuario
    */
-  public crearUsuario(): void {
+  public beforeCrearUsuario(): boolean {
+    // el modal se inicializa como visualizado
+    this.isModalCrearUsuario = true;
+
     // se limpian error anteriores
     this.messagesState.clean();
 
     // programacion defensiva para nombre, usuario ingreso
-    if (this.usuarioCrear.nombre && this.usuarioCrear.usuarioIngreso) {
-
-      // se valida si seleccionaron modulos para el nuevo usuario
-      if (!this.selectedModulos || this.selectedModulos.length === 0) {
-          this.messagesState.showError(
-            MessagesFrontendConstant.ERROR_VALIDACION,
-            MessagesFrontendConstant.MODULOS_USER);
-      } else {
-
-        // se construye los datos a enviar para la creacion
-        this.prepararDatosAntesCrecion();
-
-        // se hace el llamado HTTP para la creacion del usuario
-        this.adminUsuarioService.crearUsuario(this.usuarioCrear).subscribe(
-          data => {
-            // lista visualizada en pantalla
-            this.usuarios.push(data);
-
-            // se muestra el mensaje exitoso mostrando la contraseña del user
-            this.messagesState.showSuccess(
-              MessagesFrontendConstant.EXITOSO,
-              MessagesFrontendConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>');
-
-            // se limpian los datos preseleccionados
-            this.initPanelCrearUsuario();
-          },
-          error => {
-            this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error));
-          }
-        );
-      }
+    if (!this.usuarioCrear.nombre || !this.usuarioCrear.usuarioIngreso) {
+        this.isModalCrearUsuario = false;
     }
+
+    // se valida si seleccionaron modulos para el nuevo usuario
+    if (!this.selectedModulos || this.selectedModulos.length === 0) {
+        // se muestra el mensaje de error y el modal no se debe mostrar
+        this.messagesState.showError(MessagesFrontendConstant.ERROR_VALIDACION, MessagesFrontendConstant.MODULOS_USER);
+        this.isModalCrearUsuario = false;
+    }
+    return this.isModalCrearUsuario;
+  }
+
+  /**
+   * Metodo que soporta el proceso de creacion del Usuario
+   */
+  public crearUsuario(): void {
+    // se construye los datos a enviar para la creacion
+    this.prepararDatosAntesCrecion();
+
+    // se hace el llamado HTTP para la creacion del usuario
+    this.adminUsuarioService.crearUsuario(this.usuarioCrear).subscribe(
+      data => {
+        // se agrega el nuevo usuario en la lista visualizada en pantalla
+        this.usuarios.push(data);
+
+        // se muestra el mensaje exitoso mostrando la contraseña del user
+        this.messagesState.showSuccess(
+          MessagesFrontendConstant.EXITOSO,
+          MessagesFrontendConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'
+        );
+
+        // se limpian los datos del usuario ingresado
+        this.initPanelCrearUsuario();
+
+        // se cierra el modal de confirmacion creacion usuario
+        this.isModalCrearUsuario = false;
+      },
+      error => {
+        this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error));
+        this.isModalCrearUsuario = false;
+      }
+    );
+  }
+
+  /**
+   * Metodo que es es llamado para cerrar el modal de crear usuario
+   */
+  public closeModalCrearUsuario(): void {
+    this.isModalCrearUsuario = false;
   }
 
   /**
@@ -177,7 +201,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   /**
    * Metodo que permite inicializar el panel de creacion de usuarios
    */
-  private initPanelCrearUsuario () {
+  private initPanelCrearUsuario() {
     this.usuarioCrear = new UsuarioDTO();
     this.selectedModulos = [];
     this.cleanSubmit();

@@ -21,9 +21,11 @@
     [paginator]="true"
     [rows]="5"
     selectionMode="single">
+
     <ng-template pTemplate="caption">
       <i class="fa fa-users"> <span class="font-admin"> Usuarios Registrados</span></i>
     </ng-template>
+
     <ng-template pTemplate="header">
       <tr class="text-center">
         <th>Nombre Completo</th>
@@ -60,7 +62,6 @@
 <!-- panel creacion de usuarios -->
 <div *ngIf="usuarioCrear">
   <p-panel>
-
     <p-header>
       <i class="fa fa-user-plus font-size-14"> <span class="font-admin"> Creación de Usuario</span></i>
     </p-header>
@@ -70,9 +71,13 @@
       <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña</strong>
     </p>
 
-    <form name="form" #f="ngForm" (ngSubmit)="onSubmit() && f.form.valid && crearUsuario()" novalidate (keydown.enter)="$event.preventDefault()">
+    <form
+      #f="ngForm" name="form"
+      novalidate (keydown.enter)="$event.preventDefault()"
+      (ngSubmit)="onSubmit() && f.form.valid && beforeCrearUsuario()">
 
       <div class="form-row">
+        <!-- nombre -->
         <div class="form-group col-md-6">
           <label class="col-form-label font-weight-bold" for="username">Nombre Completo: *</label>
           <input type="text"
@@ -83,8 +88,10 @@
             adminRequired
             adminAutofocus
             class="form-control font-size-14"
-            [ngClass]="(submitted && !username.valid) ? 'input-invalido' : 'input-valido'"/>
+            [ngClass]="(submitted && !username.valid) ? 'input-invalido' : 'input-valido'" />
         </div>
+
+        <!-- usuario - ingreso -->
         <div class="form-group col-md-6">
           <label class="col-form-label font-weight-bold" for="useringreso">Usuario de Ingreso: *</label>
           <input type="text"
@@ -94,54 +101,17 @@
             maxlength="50"
             adminRequired
             class="form-control font-size-14"
-            [ngClass]="(submitted && !useringreso.valid) ? 'input-invalido' : 'input-valido'"/>
+            [ngClass]="(submitted && !useringreso.valid) ? 'input-invalido' : 'input-valido'" />
         </div>
       </div>
 
+      <!-- asignacion - modulos -->
       <div>
         <p class="text-assign-modulos"><i class="fa fa-cog"></i> Asigne los módulos para el nuevo usuario</p>
-        <table class="table table-hover tbl-modulos">
-          <tbody>
-            <tr>
-              <td>
-                <p-checkbox name="group" [(ngModel)]="selectedModulos" label="Correspondencia" value="1">
-                </p-checkbox>
-              </td>
-              <td>
-                <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p-checkbox name="group" label="Archivo de Gestión" [(ngModel)]="selectedModulos" value="2">
-                </p-checkbox>
-              </td>
-              <td>
-                <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p-checkbox name="group" label="Reportes" [(ngModel)]="selectedModulos" value="3">
-                </p-checkbox>
-              </td>
-              <td>
-                <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p-checkbox name="group" label="Configuraciones" [(ngModel)]="selectedModulos" value="4">
-                </p-checkbox>
-              </td>
-              <td>
-                <p>Módulo administrativo del sistema, solo para usuarios con ROL de administrador</p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <ng-container *ngTemplateOutlet="tblModulos"></ng-container>
       </div>
 
+      <!-- botones creacion - regresar -->
       <div class="text-center">
         <button type="button" class="btn btn-info btn-sm btn-regresar" (click)="closePanelCrearUsuario()">
           <i class="fa fa-backward"> Regresar</i>
@@ -153,3 +123,94 @@
     </form>
   </p-panel>
 </div>
+
+<!-- modal de confirmacion de crear usuario -->
+<p-dialog
+  header="Ventana Confirmación"
+  [(visible)]="isModalCrearUsuario"
+  *ngIf="usuarioCrear"
+  modal="true"
+  responsive="true">
+
+  <div class="text-center title-modal-creacion">
+    <p class="font-weight-bold font-new-roman font-size-16">¿Está Seguro de crear el usuario con los siguientes datos?</p>
+  </div>
+
+  <div class="form-row nombre-usuario-in">
+    <div class="form-group col-md-7">
+      <p><strong>Nombre Completo:</strong></p>
+      {{usuarioCrear.nombre}}
+    </div>
+    <div class="form-group col-md-5">
+      <p><strong>Usuario de Ingreso:</strong></p>
+      {{usuarioCrear.usuarioIngreso}}
+    </div>
+  </div>
+
+  <div class="form-row border-bottom-mdl">
+    <div class="form-group col-md-12">
+      <p class="text-center font-weight-bold font-new-roman font-size-16 margin-bottom-mdl">Módulos asignados</p>
+      <div class="custom-control custom-control-inline">
+        <p-checkbox [ngModel]="selectedModulos" label="Correspondencia" value="1" disabled></p-checkbox>
+      </div>
+      <div class="custom-control custom-control-inline">
+        <p-checkbox [ngModel]="selectedModulos" label="Archivo de Gestión" value="2" disabled></p-checkbox>
+      </div>
+      <div class="custom-control custom-control-inline">
+        <p-checkbox [ngModel]="selectedModulos" label="Reportes" value="3" disabled></p-checkbox>
+      </div>
+      <div class="custom-control custom-control-inline">
+        <p-checkbox [ngModel]="selectedModulos" label="Configuraciones" value="4" disabled></p-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center margin-top-mdl">
+    <button type="button" class="btn btn-secondary btn-sm btn-regresar" (click)="closeModalCrearUsuario()">
+      <i class="fa fa-times"> Salir</i>
+    </button>
+    <button type="button" class="btn btn-success btn-sm btn-crear-user" (click)="crearUsuario()">
+      <i class="fa fa-user-plus"> Crear Usuario</i>
+    </button>
+  </div>
+</p-dialog>
+
+<!-- template asignacion - edicion modulos -->
+<ng-template #tblModulos>
+  <table class="table table-hover tbl-modulos">
+    <tbody>
+      <tr>
+        <td>
+          <p-checkbox name="group" [(ngModel)]="selectedModulos" label="Correspondencia" value="1"></p-checkbox>
+        </td>
+        <td>
+          <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p-checkbox name="group" label="Archivo de Gestión" [(ngModel)]="selectedModulos" value="2"></p-checkbox>
+        </td>
+        <td>
+          <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p-checkbox name="group" label="Reportes" [(ngModel)]="selectedModulos" value="3"></p-checkbox>
+        </td>
+        <td>
+          <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p-checkbox name="group" label="Configuraciones" [(ngModel)]="selectedModulos" value="4"></p-checkbox>
+        </td>
+        <td>
+          <p>Módulo administrativo del sistema, solo para usuarios con ROL de administrador</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

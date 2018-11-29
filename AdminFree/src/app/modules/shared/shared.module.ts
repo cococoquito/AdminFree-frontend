@@ -3,6 +3,7 @@ import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MessagesModule } from 'primeng/messages';
+import { DialogModule } from 'primeng/dialog';
 import { SharedCommonModule } from './shared-common.module';
 import { TitleComponent } from './title/title.component';
 
@@ -18,7 +19,8 @@ import { TitleComponent } from './title/title.component';
     TableModule,
     PanelModule,
     CheckboxModule,
-    MessagesModule
+    MessagesModule,
+    DialogModule
   ],
   exports: [
     SharedCommonModule,
@@ -26,6 +28,7 @@ import { TitleComponent } from './title/title.component';
     PanelModule,
     CheckboxModule,
     MessagesModule,
+    DialogModule,
     TitleComponent
   ],
   declarations: [

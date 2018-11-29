@@ -23,3 +23,25 @@
 .btn-crear-user {
   min-width: 8em;
 }
+
+.title-modal-creacion {
+  margin-bottom: 20px;
+  background-color: #f4f4f4;
+}
+
+.nombre-usuario-in {
+  border-bottom: 1px solid #c8c8c8;
+  border-top: 1px solid #c8c8c8;
+}
+
+.border-bottom-mdl {
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.margin-bottom-mdl {
+  margin-bottom: 5px;
+}
+
+.margin-top-mdl {
+  margin-top: 20px;
+}
