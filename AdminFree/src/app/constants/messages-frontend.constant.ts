@@ -28,7 +28,4 @@ export class MessagesFrontendConstant {
   /** Mensaje para el cambio de estado del usuario */
   static readonly CAMBIAR_ESTADO_USER: string =
     '¿Está seguro de <strong>?1</strong> el siguiente usuario? <br/><div class="text-center"><strong>?2</strong></div>';
-
-  /** Mensaje para el cambio de estado exitoso */
-  static readonly CAMBIAR_ESTADO_USER_EXITOSO: string = 'El usuario fue <strong>?</strong> exitosamente en el sistema.';
 }

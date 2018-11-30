@@ -88,35 +88,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que es invocado antes de dar submit en el formulario creacion
-   */
-  public beforeOnSubmit(): boolean {
-    this.messagesState.clean();
-    return this.onSubmit();
-  }
-
-  /**
-   * Metodo que es es llamado antes de crear el usuario
-   */
-  public beforeCrearUsuario(): boolean {
-    // el modal se inicializa como visualizado
-    this.isModalCrearUsuario = true;
-
-    // programacion defensiva para nombre, usuario ingreso
-    if (!this.usuarioCrear.nombre || !this.usuarioCrear.usuarioIngreso) {
-        this.isModalCrearUsuario = false;
-    }
-
-    // se valida si seleccionaron modulos para el nuevo usuario
-    if (!this.selectedModulos || this.selectedModulos.length === 0) {
-      // se muestra el mensaje de error y el modal no se debe mostrar
-      this.messagesState.showError(MessagesFrontendConstant.ERROR_VALIDACION, MessagesFrontendConstant.MODULOS_USER);
-      this.isModalCrearUsuario = false;
-    }
-    return this.isModalCrearUsuario;
-  }
-
-  /**
    * Metodo que soporta el proceso de creacion del Usuario
    */
   public crearUsuario(): void {
@@ -146,32 +117,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         this.isModalCrearUsuario = false;
       }
     );
-  }
-
-  /**
-   * Metodo que soporta el evento click del boton
-   * Registrar Usuario del panel lista usuario
-   */
-  public showPanelCrearUsuario(): void {
-    this.messagesState.clean();
-    this.initPanelCrearUsuario();
-  }
-
-  /**
-   * Metodo que soporta el evento click del boton
-   * Regresar del panel de creacion de usuario
-   */
-  public closePanelCrearUsuario(): void {
-    this.messagesState.clean();
-    this.usuarioCrear = null;
-    this.selectedModulos = null;
-  }
-
-  /**
-   * Metodo que es es llamado para cerrar el modal de crear usuario
-   */
-  public closeModalCrearUsuario(): void {
-    this.isModalCrearUsuario = false;
   }
 
   /**
@@ -215,6 +160,59 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton
+   * Registrar Usuario del panel lista usuario
+   */
+  public showPanelCrearUsuario(): void {
+    this.messagesState.clean();
+    this.initPanelCrearUsuario();
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton
+   * Regresar del panel de creacion de usuario
+   */
+  public closePanelCrearUsuario(): void {
+    this.messagesState.clean();
+    this.usuarioCrear = null;
+    this.selectedModulos = null;
+  }
+
+  /**
+   * Metodo que es invocado antes de dar submit en el formulario creacion
+   */
+  public beforeOnSubmit(): boolean {
+    this.messagesState.clean();
+    return this.onSubmit();
+  }
+
+  /**
+   * Metodo que permite validar si se debe mostrar el modal de creacion
+   */
+  public showModalCrearUsuario(): void {
+    // el modal se inicializa como visualizado
+    this.isModalCrearUsuario = true;
+
+    // programacion defensiva para nombre, usuario ingreso
+    if (!this.usuarioCrear.nombre || !this.usuarioCrear.usuarioIngreso) {
+        this.isModalCrearUsuario = false;
+    }
+
+    // se valida si seleccionaron modulos para el nuevo usuario
+    if (!this.selectedModulos || this.selectedModulos.length === 0) {
+        this.messagesState.showError(MessagesFrontendConstant.ERROR_VALIDACION, MessagesFrontendConstant.MODULOS_USER);
+        this.isModalCrearUsuario = false;
+    }
+  }
+
+  /**
+   * Metodo que es es llamado para cerrar el modal de crear usuario
+   */
+  public closeModalCrearUsuario(): void {
+    this.isModalCrearUsuario = false;
   }
 
   /**

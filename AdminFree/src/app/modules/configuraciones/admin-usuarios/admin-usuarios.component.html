@@ -74,7 +74,7 @@
     <form
       #f="ngForm" name="form"
       novalidate (keydown.enter)="$event.preventDefault()"
-      (ngSubmit)="beforeOnSubmit() && f.form.valid && beforeCrearUsuario()">
+      (ngSubmit)="beforeOnSubmit() && f.form.valid && showModalCrearUsuario()">
 
       <div class="form-row">
         <!-- nombre -->
