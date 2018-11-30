@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { SharedCommonModule } from './../shared/shared-common.module';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './header/header.component';
 import { UserAccountComponent } from './header/user-account/user-account.component';
@@ -21,7 +23,8 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     SharedCommonModule,
     MenuModule,
-    SidebarModule
+    SidebarModule,
+    ConfirmDialogModule
   ],
   declarations: [
     ShellComponent,
@@ -36,6 +39,9 @@ import { FooterComponent } from './footer/footer.component';
   exports: [
     ShellComponent,
     SharedCommonModule
+  ],
+  providers: [
+    ConfirmationService
   ]
 })
 export class ShellModule {}

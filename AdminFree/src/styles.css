@@ -110,6 +110,11 @@ body {
   color: white !important;
 }
 
+.ui-confirmdialog-message {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+}
+
 /* Estilos para la obligatoriedad de los input */
 .input-invalido {
   border-left: 5px solid #a94442 !important;

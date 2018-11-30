@@ -41,8 +41,8 @@
         <td>{{user.nombre}}</td>
         <td>{{user.usuarioIngreso}}</td>
         <td>
-          <button *ngIf="user.estado === 1" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
-          <button *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
+          <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 1" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
+          <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
         </td>
         <td class="text-center">
           <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
@@ -129,8 +129,7 @@
   header="Ventana Confirmación"
   [(visible)]="isModalCrearUsuario"
   *ngIf="usuarioCrear"
-  modal="true"
-  responsive="true">
+  modal="true">
 
   <div class="text-center title-modal-creacion">
     <p class="font-weight-bold font-new-roman font-size-16">¿Está seguro de crear el usuario con los siguientes datos?</p>
@@ -166,11 +165,11 @@
   </div>
 
   <div class="text-center margin-top-mdl">
-    <button type="button" class="btn btn-secondary btn-sm btn-regresar" (click)="closeModalCrearUsuario()">
-      <i class="fa fa-times"> Salir</i>
-    </button>
-    <button type="button" class="btn btn-success btn-sm btn-crear-user" (click)="crearUsuario()">
+    <button type="button" class="btn btn-success btn-sm btn-regresar" (click)="crearUsuario()">
       <i class="fa fa-user-plus"> Crear Usuario</i>
+    </button>
+    <button type="button" class="btn btn-secondary btn-sm btn-crear-user" (click)="closeModalCrearUsuario()">
+      <i class="fa fa-times"> Salir</i>
     </button>
   </div>
 </p-dialog>

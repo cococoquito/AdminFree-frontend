@@ -1,3 +1,9 @@
 <admin-header> </admin-header>
 <admin-content> </admin-content>
 <admin-footer></admin-footer>
+<p-confirmDialog acceptLabel="Si" icon="pi pi-exclamation-triangle" #cd>
+    <p-footer>
+      <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+      <button class="btn-no" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    </p-footer>
+</p-confirmDialog>

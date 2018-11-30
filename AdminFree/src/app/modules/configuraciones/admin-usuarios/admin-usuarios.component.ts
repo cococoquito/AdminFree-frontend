@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util/common.component';
+import { ConfirmationService } from 'primeng/api';
 import { AdminUsuarioService } from './../../../services/admin-usuario.service';
 import { MessagesState } from './../../../states/messages.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
@@ -7,6 +8,7 @@ import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { MessagesFrontendConstant } from './../../../constants/messages-frontend.constant';
 import { ModulesTokenConstant } from './../../../constants/modules-token.constant';
+import { EstadoConstant } from './../../../constants/estado.constant';
 
 /**
  * Componente para la administracion de los Usuarios del sistema
@@ -44,10 +46,14 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    *
    * @param adminUsuarioService, se utiliza para consumir
    * los servicios relacionados al Usuario
+   *
+   * @param confirmationService, se utiliza para el cambio
+   * de estado y generacion de contrasenia
    */
   constructor(
     private messagesState: MessagesState,
-    private adminUsuarioService: AdminUsuarioService) {
+    private adminUsuarioService: AdminUsuarioService,
+    private confirmationService: ConfirmationService) {
     super();
   }
 
@@ -103,9 +109,9 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
     // se valida si seleccionaron modulos para el nuevo usuario
     if (!this.selectedModulos || this.selectedModulos.length === 0) {
-        // se muestra el mensaje de error y el modal no se debe mostrar
-        this.messagesState.showError(MessagesFrontendConstant.ERROR_VALIDACION, MessagesFrontendConstant.MODULOS_USER);
-        this.isModalCrearUsuario = false;
+      // se muestra el mensaje de error y el modal no se debe mostrar
+      this.messagesState.showError(MessagesFrontendConstant.ERROR_VALIDACION, MessagesFrontendConstant.MODULOS_USER);
+      this.isModalCrearUsuario = false;
     }
     return this.isModalCrearUsuario;
   }
@@ -166,6 +172,49 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    */
   public closeModalCrearUsuario(): void {
     this.isModalCrearUsuario = false;
+  }
+
+  /**
+   * Metodo que permite soportar el proceso de negocio
+   * de cambiar el estado de usuario ACTIVO/INACTIVO
+   *
+   * @param usuario a cambiar su estado
+   */
+  public cambiarEstadoUsuario(usuario: UsuarioDTO): void {
+    // se inicializa como usuario ACTIVO
+    let idEstado = EstadoConstant.ID_INACTIVO;
+    let estadoMsj = 'INACTIVAR';
+
+    // si el usuario esta inactivo se debe ACTIVAR
+    if (usuario.estado === EstadoConstant.ID_INACTIVO) {
+        idEstado = EstadoConstant.ID_ACTIVO;
+        estadoMsj = 'ACTIVAR';
+    }
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MessagesFrontendConstant.CAMBIAR_ESTADO_USER.replace('?1', estadoMsj).replace('?2', usuario.nombre),
+      header: MessagesFrontendConstant.CONFIRMACION,
+      accept: () => {
+
+        // si el usuario acepta la ventana de confirmacion
+        const usuarioUpdate: UsuarioDTO = new UsuarioDTO();
+        usuarioUpdate.id = usuario.id;
+        usuarioUpdate.estado = idEstado;
+
+        // se procede a modificar el estado del usuario
+        this.adminUsuarioService.modificarEstadoUsuario(usuarioUpdate).subscribe(
+          data => {
+            usuario.estado = idEstado;
+            usuario.estadoNombre = EstadoConstant.getNombreEstado(idEstado);
+          },
+          error => {
+            this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error)
+            );
+          }
+        );
+      }
+    });
   }
 
   /**
