@@ -6,7 +6,7 @@ import { MessagesState } from './../../../states/messages.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
-import { MessagesFrontendConstant } from './../../../constants/messages-frontend.constant';
+import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 import { ModulesTokenConstant } from './../../../constants/modules-token.constant';
 import { EstadoConstant } from './../../../constants/estado.constant';
 
@@ -82,7 +82,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         this.usuarios = data;
       },
       error => {
-        this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error));
+        this.messagesState.showError(MsjFrontConstant.ERROR, this.showMensajeError(error));
       }
     );
   }
@@ -102,8 +102,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
         // se muestra el mensaje exitoso mostrando la contraseña del user
         this.messagesState.showSuccess(
-          MessagesFrontendConstant.EXITOSO,
-          MessagesFrontendConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'
+          MsjFrontConstant.EXITOSO,
+          MsjFrontConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'
         );
 
         // se limpian los datos del usuario ingresado
@@ -113,7 +113,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         this.isModalCrearUsuario = false;
       },
       error => {
-        this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error));
+        this.messagesState.showError(MsjFrontConstant.ERROR, this.showMensajeError(error));
         this.isModalCrearUsuario = false;
       }
     );
@@ -122,10 +122,10 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   /**
    * Metodo que permite soportar el proceso de negocio
    * de cambiar el estado de usuario ACTIVO/INACTIVO
-   *
-   * @param usuario a cambiar su estado
    */
   public cambiarEstadoUsuario(usuario: UsuarioDTO): void {
+    this.messagesState.clean();
+
     // se inicializa como usuario ACTIVO
     let idEstado = EstadoConstant.ID_INACTIVO;
     let estadoMsj = 'INACTIVAR';
@@ -138,8 +138,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
-      message: MessagesFrontendConstant.CAMBIAR_ESTADO_USER.replace('?1', estadoMsj).replace('?2', usuario.nombre),
-      header: MessagesFrontendConstant.CONFIRMACION,
+      message: MsjFrontConstant.CAMBIAR_ESTADO_USER.replace('?1', estadoMsj).replace('?2', usuario.nombre),
+      header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
 
         // si el usuario acepta la ventana de confirmacion
@@ -154,8 +154,39 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
             usuario.estadoNombre = EstadoConstant.getNombreEstado(idEstado);
           },
           error => {
-            this.messagesState.showError(MessagesFrontendConstant.ERROR, this.showMensajeError(error)
-            );
+            this.messagesState.showError(MsjFrontConstant.ERROR, this.showMensajeError(error));
+          }
+        );
+      }
+    });
+  }
+
+  /**
+   * Metodo que soporta el proceso de negocio de crear
+   * una nueva constrasenia para el usuario seleccionado
+   */
+  public generarNuevaClave(usuario: UsuarioDTO): void {
+    this.messagesState.clean();
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.GENERAR_CLAVE_CONFI.replace('?1', usuario.nombre),
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // si el usuario acepta la ventana de confirmacion
+        const usuarioClave: UsuarioDTO = new UsuarioDTO();
+        usuarioClave.id = usuario.id;
+
+        // se procede a generar una nueva clave de ingreso
+        this.adminUsuarioService.generarClaveIngreso(usuarioClave).subscribe(
+          data => {
+            this.messagesState.showInfo(
+              MsjFrontConstant.INFORMACION,
+              MsjFrontConstant.GENERAR_CLAVE_EXITOSO.replace('?1', usuario.nombre).replace('?2', data.clave));
+          },
+          error => {
+            this.messagesState.showError(MsjFrontConstant.ERROR, this.showMensajeError(error));
           }
         );
       }
@@ -203,7 +234,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
     // se valida si seleccionaron modulos para el nuevo usuario
     if (!this.selectedModulos || this.selectedModulos.length === 0) {
-        this.messagesState.showError(MessagesFrontendConstant.ERROR_VALIDACION, MessagesFrontendConstant.MODULOS_USER);
+        this.messagesState.showError(MsjFrontConstant.ERROR_VALIDACION, MsjFrontConstant.MODULOS_USER);
         this.isModalCrearUsuario = false;
     }
   }
