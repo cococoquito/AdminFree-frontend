@@ -368,13 +368,13 @@ export class MenuST {
     // se crea el Modulo de CONFIGURACIONES
     const configuraciones = new MenuItem();
     configuraciones.nombre = LabelsConstant.MODULO_CONFIGURACIONES;
-    configuraciones.icono = 'fa-wrench';
+    configuraciones.icono = 'fa-cog';
 
     // ITEM1, Administracion de Usuarios
     const adminUsers = new MenuItem();
     adminUsers.nombre = LabelsConstant.MENU_ADMIN_USERS;
     adminUsers.router = RouterConstant.NAVIGATE_ADMIN_USERS;
-    adminUsers.icono = 'fa-user';
+    adminUsers.icono = 'fa-user-plus';
 
     // ITEM2, prueba
     const prueba = new MenuItem();

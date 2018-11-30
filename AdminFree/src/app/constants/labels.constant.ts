@@ -36,4 +36,16 @@ export class LabelsConstant {
 
   /** Label cerrar sesion*/
   public static readonly CERRAR_SESION: string = 'Cerrar Sesión';
+
+  /** Es el KEY para identificar el componente mensajes debajo del titulo */
+  public static readonly KEY_MESSAGE: string = 'msj';
+
+  /** Es el KEY para identificar el componente tipo TOAST */
+  public static readonly KEY_TOAST: string = 'toast';
+
+  /** Son los tipos de severity */
+  public static readonly SUCCESS: string = 'success';
+  public static readonly INFO: string = 'info';
+  public static readonly WARN: string = 'warn';
+  public static readonly ERROR: string = 'error';
 }
