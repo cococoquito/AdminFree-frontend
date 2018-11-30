@@ -1,4 +1,5 @@
 import { Message } from 'primeng/components/common/api';
+import { MsjFrontConstant } from './../constants/messages-frontend.constant';
 
 /**
  * Clase utilitaria para la administracion del los mensajes a visualizar en pantalla
@@ -22,57 +23,64 @@ export class MsjUtil {
   /**
    * Metodo que permite construir el mensaje de Exitoso
    */
-  public static getMsjSuccess(summary: string, detail: string): Message {
-    return this.getMsj(summary, detail, this.SUCCESS);
+  public static getMsjSuccess(detail: string): Message {
+    return this.getMsj(MsjFrontConstant.EXITOSO, detail, this.SUCCESS);
   }
 
   /**
    * Metodo que permite construir el mensaje de Informacion
    */
-  public static getMsjInfo(summary: string, detail: string): Message {
-    return this.getMsj(summary, detail, this.INFO);
+  public static getMsjInfo(detail: string): Message {
+    return this.getMsj(MsjFrontConstant.INFORMACION, detail, this.INFO);
   }
 
   /**
    * Metodo que permite construir el mensaje de Advertencia
    */
-  public static getMsjWarn(summary: string, detail: string): Message {
-    return this.getMsj(summary, detail, this.WARN);
+  public static getMsjWarn(detail: string): Message {
+    return this.getMsj(MsjFrontConstant.ADVERTENCIA, detail, this.WARN);
   }
 
   /**
    * Metodo que permite construir el mensaje de Error
    */
-  public static getMsjError(summary: string, detail: string): Message {
-    return this.getMsj(summary, detail, this.ERROR);
+  public static getMsjError(detail: string): Message {
+    return this.getMsj(MsjFrontConstant.ERROR, detail, this.ERROR);
+  }
+
+  /**
+   * Metodo que permite construir el mensaje de Error de validacion
+   */
+  public static getMsjErrorValidacion(detail: string): Message {
+    return this.getMsj(MsjFrontConstant.ERROR_VALIDACION, detail, this.ERROR);
   }
 
   /**
    * Metodo que permite construir el mensaje de Exitoso para toast
    */
-  public static getToastSuccess(summary: string, detail: string): Message {
-    return this.getToast(summary, detail, this.SUCCESS);
+  public static getToastSuccess(detail: string): Message {
+    return this.getToast(MsjFrontConstant.EXITOSO, detail, this.SUCCESS);
   }
 
   /**
    * Metodo que permite construir el mensaje de INFO para toast
    */
-  public static getToastInfo(summary: string, detail: string): Message {
-    return this.getToast(summary, detail, this.INFO);
+  public static getToastInfo(detail: string): Message {
+    return this.getToast(MsjFrontConstant.INFORMACION, detail, this.INFO);
   }
 
   /**
    * Metodo que permite construir el mensaje de Advertencia para toast
    */
-  public static getToastWarn(summary: string, detail: string): Message {
-    return this.getToast(summary, detail, this.WARN);
+  public static getToastWarn(detail: string): Message {
+    return this.getToast(MsjFrontConstant.ADVERTENCIA, detail, this.WARN);
   }
 
   /**
    * Metodo que permite construir el mensaje de ERROR para toast
    */
-  public static getToastError(summary: string, detail: string): Message {
-    return this.getToast(summary, detail, this.ERROR);
+  public static getToastError(detail: string): Message {
+    return this.getToast(MsjFrontConstant.ERROR, detail, this.ERROR);
   }
 
   /**

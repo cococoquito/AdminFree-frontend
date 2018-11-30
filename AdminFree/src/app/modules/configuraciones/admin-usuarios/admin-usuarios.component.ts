@@ -46,16 +46,18 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    *
+   * @param confirmationService, se utiliza para el cambio
+   * de estado y generacion de contrasenia
+   *
    * @param adminUsuarioService, se utiliza para consumir
    * los servicios relacionados al Usuario
    *
-   * @param confirmationService, se utiliza para el cambio
-   * de estado y generacion de contrasenia
+   * @param shellState, se utiliza para el titulo del componente
    */
   constructor(
     private messageService: MessageService,
-    private adminUsuarioService: AdminUsuarioService,
     private confirmationService: ConfirmationService,
+    private adminUsuarioService: AdminUsuarioService,
     private shellState: ShellState) {
     super();
   }
@@ -89,7 +91,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         this.usuarios = data;
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(MsjFrontConstant.ERROR, this.showMensajeError(error)));
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
   }
@@ -109,7 +111,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
         // se muestra el mensaje exitoso mostrando la contraseña del user
         this.messageService.add(MsjUtil.getMsjSuccess(
-          MsjFrontConstant.EXITOSO,
           MsjFrontConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'));
 
         // se limpian los datos del usuario ingresado
@@ -119,7 +120,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         this.isModalCrearUsuario = false;
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(MsjFrontConstant.ERROR, this.showMensajeError(error)));
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         this.isModalCrearUsuario = false;
       }
     );
@@ -158,10 +159,10 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
           data => {
             usuario.estado = idEstado;
             usuario.estadoNombre = EstadoConstant.getNombreEstado(idEstado);
-            this.messageService.add(MsjUtil.getToastSuccess('Exitoso:', 'El estado del usuario fue actualizado exitosamente'));
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USUARIO_ACTUALIZADO));
           },
           error => {
-            this.messageService.add(MsjUtil.getMsjError(MsjFrontConstant.ERROR, this.showMensajeError(error)));
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
           }
         );
       }
@@ -189,12 +190,11 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         this.adminUsuarioService.generarClaveIngreso(usuarioClave).subscribe(
           data => {
             this.messageService.add(MsjUtil.getMsjInfo(
-              MsjFrontConstant.INFORMACION,
               MsjFrontConstant.GENERAR_CLAVE_EXITOSO.replace('?1', usuario.nombre).replace('?2', data.clave)
             ));
           },
           error => {
-            this.messageService.add(MsjUtil.getMsjError(MsjFrontConstant.ERROR, this.showMensajeError(error)));
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
           }
         );
       }
@@ -242,9 +242,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
     // se valida si seleccionaron modulos para el nuevo usuario
     if (!this.selectedModulos || this.selectedModulos.length === 0) {
-        this.messageService.add(MsjUtil.getMsjError(
-          MsjFrontConstant.ERROR_VALIDACION,
-          MsjFrontConstant.MODULOS_USER));
+        this.messageService.add(MsjUtil.getMsjErrorValidacion(MsjFrontConstant.MODULOS_USER));
         this.isModalCrearUsuario = false;
     }
   }

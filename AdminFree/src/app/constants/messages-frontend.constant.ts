@@ -7,17 +7,20 @@
  */
 export class MsjFrontConstant {
 
-  /** Titulo de ERROR */
-  static readonly ERROR: string = 'Error:';
-
   /** Titulo de EXITOSO */
   static readonly EXITOSO: string = 'Exitoso:';
 
-  /** Titulo de CONFIRMACION */
-  static readonly CONFIRMACION: string = 'Ventana Confirmación';
+  /** Titulo de ERROR */
+  static readonly ERROR: string = 'Error:';
 
   /** Titulo de INFORMACION */
   static readonly INFORMACION: string = 'Información:';
+
+  /** Titulo de ADVERTENCIA */
+  static readonly ADVERTENCIA: string = 'Advertencia:';
+
+  /** Titulo de CONFIRMACION */
+  static readonly CONFIRMACION: string = 'Ventana Confirmación';
 
   /** Titulo de ERROR - VALIDACION */
   static readonly ERROR_VALIDACION: string = 'Error de validación:';
@@ -39,4 +42,7 @@ export class MsjFrontConstant {
 
   /** Mensaje exitoso generacion clave para el usuario */
   static readonly GENERAR_CLAVE_EXITOSO: string = 'La nueva contraseña para el usuario <strong>?1</strong> es:<strong>?2</strong>';
+
+  /** Mensaje cuando para alguna actualizacion del usuario */
+  static readonly USUARIO_ACTUALIZADO = 'Usuario Actualizado';
 }
