@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Screen } from './micro-state/screen';
-import { Menu } from './micro-state/menu';
-import { UserAccount } from './micro-state/user-account';
+import { ScreenST } from './shell-states/screen.st';
+import { MenuST } from './shell-states/menu.st';
+import { UserAccountST } from './shell-states/user-account.st';
+import { TitleST } from './shell-states/title.st';
 
 /**
  * Se utiliza para administrar el estado del Shell de la aplicacion
@@ -13,26 +14,32 @@ import { UserAccount } from './micro-state/user-account';
 export class ShellState {
 
   /** Administra el estado de la pantalla del dispositivo */
-  public screen: Screen;
+  public screen: ScreenST;
 
   /** Administra el estado del menu de la aplicacion */
-  public menu: Menu;
+  public menu: MenuST;
 
   /** Administra el estado de la cuenta de usuario */
-  public userAccount: UserAccount;
+  public userAccount: UserAccountST;
+
+  /** Se utiliza para la visualizacion de los titulos de las paginas */
+  public title: TitleST;
 
   /**
    * Constructor donde se crea todo el modelo del estado del Shell
    * @param router, se utiliza para ser notificado cuando el router cambia
    */
   constructor(private router: Router) {
+    // Estado de los titulos de las paginas
+    this.title = new TitleST();
+
     // Estado para notificar el tamanio de la pantalla
-    this.screen = new Screen();
+    this.screen = new ScreenST();
 
     // Estado para administrar la cuenta del usuario
-    this.userAccount = new UserAccount();
+    this.userAccount = new UserAccountST();
 
     // Se utiliza para administrar el estado del Menu
-    this.menu = new Menu(this.screen, this.router);
+    this.menu = new MenuST(this.screen, this.router);
   }
 }

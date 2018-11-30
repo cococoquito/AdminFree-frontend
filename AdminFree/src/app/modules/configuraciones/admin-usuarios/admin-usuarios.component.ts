@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util/common.component';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AdminUsuarioService } from './../../../services/admin-usuario.service';
 import { MessagesState } from './../../../states/messages.state';
+import { ShellState } from './../../../states/shell/shell.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 import { ModulesTokenConstant } from './../../../constants/modules-token.constant';
 import { EstadoConstant } from './../../../constants/estado.constant';
+import { LabelsConstant } from './../../../constants/labels.constant';
 
 /**
  * Componente para la administracion de los Usuarios del sistema
@@ -51,9 +53,11 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * de estado y generacion de contrasenia
    */
   constructor(
+    private messageService: MessageService,
     private messagesState: MessagesState,
     private adminUsuarioService: AdminUsuarioService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private shellState: ShellState) {
     super();
   }
 
@@ -72,6 +76,10 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   private init(): void {
     // se limpia los mensajes de otros componentes
     this.messagesState.clean();
+
+    // se configura el titulo y subtitulo de la pagina
+    this.shellState.title.titulo = LabelsConstant.TITLE_ADMIN_USER;
+    this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_ADMIN_USER;
 
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
@@ -152,6 +160,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
           data => {
             usuario.estado = idEstado;
             usuario.estadoNombre = EstadoConstant.getNombreEstado(idEstado);
+            this.messageService.add({key: 'tc', severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed'});
           },
           error => {
             this.messagesState.showError(MsjFrontConstant.ERROR, this.showMensajeError(error));

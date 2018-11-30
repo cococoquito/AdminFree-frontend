@@ -10,7 +10,7 @@ import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
  *
  * @author Carlos Andres Diaz
  */
-export class UserAccount {
+export class UserAccountST {
 
   /** Es el USUARIO autenticado en el sistema cuando aplica */
   public usuario: UsuarioDTO;

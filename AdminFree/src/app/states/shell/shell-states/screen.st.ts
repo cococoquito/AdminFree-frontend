@@ -5,7 +5,7 @@
  *
  * @author Carlos Andres Diaz
  */
-export class Screen {
+export class ScreenST {
 
   /** Es el largo minimo que identifica una resolucion grande **/
   public largeBreakpoint = 1024;

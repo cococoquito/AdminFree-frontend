@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
-import { MessagesModule } from 'primeng/messages';
 import { DialogModule } from 'primeng/dialog';
 import { SharedCommonModule } from './shared-common.module';
-import { TitleComponent } from './title/title.component';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -19,7 +17,6 @@ import { TitleComponent } from './title/title.component';
     TableModule,
     PanelModule,
     CheckboxModule,
-    MessagesModule,
     DialogModule
   ],
   exports: [
@@ -27,12 +24,7 @@ import { TitleComponent } from './title/title.component';
     TableModule,
     PanelModule,
     CheckboxModule,
-    MessagesModule,
-    DialogModule,
-    TitleComponent
-  ],
-  declarations: [
-    TitleComponent
+    DialogModule
   ]
 })
 export class SharedModule {}

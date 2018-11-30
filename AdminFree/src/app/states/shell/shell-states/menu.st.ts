@@ -1,6 +1,6 @@
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { Screen } from './screen';
+import { ScreenST } from './screen.st';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MenuItem } from './../../../model/menu-item';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
@@ -15,7 +15,7 @@ import { LabelsConstant } from './../../../constants/labels.constant';
  *
  * @author Carlos Andres Diaz
  */
-export class Menu {
+export class MenuST {
 
   /** Se utiliza para mostrar/ocultar el menu **/
   public isMenuOpen = false;
@@ -40,7 +40,7 @@ export class Menu {
    * @param router, se utiliza para ser notificado cuando el router cambia
    */
   constructor(
-    public screen: Screen,
+    public screen: ScreenST,
     private router: Router) {
     this.init();
   }

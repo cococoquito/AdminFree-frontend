@@ -1,8 +1,9 @@
+import { Component } from '@angular/core';
+import { ShellState } from './../../../states/shell/shell.state';
 import { MessagesState } from './../../../states/messages.state';
-import { Component, Input } from '@angular/core';
 
 /**
- * Componente compartido para los titulos de todas las paginas
+ * Componente para el titulo de cada pagina
  *
  * @author Carlos Andres Diaz
  */
@@ -13,15 +14,14 @@ import { Component, Input } from '@angular/core';
 })
 export class TitleComponent {
 
-  /** Titulo a mostrar en el componente */
-  @Input() public titulo: string;
-
-  /** Sub-titulo a mostrar en el componente */
-  @Input() public subtitulo: string;
-
   /**
+   * @param shellState, se utiliza para tomar los
+   * titulos y subtitulos a visualizar
+   *
    * @param messagesState, se utiliza para visualizar el
    * componente de mensajes en el componente del titulo
    */
-  constructor(public messagesState: MessagesState) {}
+  constructor(
+    public shellState: ShellState,
+    public messagesState: MessagesState) {}
 }

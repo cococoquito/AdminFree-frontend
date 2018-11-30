@@ -6,6 +6,13 @@
  */
 export class LabelsConstant {
 
+  /** Titulo para la pagina de administracion de usuario*/
+  public static readonly TITLE_ADMIN_USER: string = 'Administración de Usuarios';
+
+  /** Sub - Titulo para la pagina de administracion de usuario*/
+  public static readonly SUBTITLE_ADMIN_USER: string =
+    'Submódulo administrativo para las configuraciones de los <strong>usuarios del sistema</strong>';
+
   /** Titulo para el modulo de correspondencia*/
   public static readonly MODULO_CORRESPONDENCIA: string = 'Correspondencia';
 
