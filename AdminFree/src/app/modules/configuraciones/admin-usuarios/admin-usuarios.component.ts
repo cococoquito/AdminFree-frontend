@@ -238,7 +238,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
     // se procede a modificar los privilegios del usuario
     this.adminUsuarioService.modificarPrivilegiosUsuario(usuarioModificar).subscribe(
       data => {
-        // se actuliza los modulos para el usuario seleccionado
+        // se actualiza los modulos para el usuario seleccionado
         this.usuarioEdicionModulos.modulosTokens = modulos;
 
         // se cierra el modal de edicion de modulos
