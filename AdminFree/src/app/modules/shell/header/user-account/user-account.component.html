@@ -1,7 +1,7 @@
 <!-- Logo del user para dispositivos resolucion grande -->
 <a class="logo-container" *ngIf="shellState.screen.isBigScreen()">
-  <span *ngIf="!shellState.userAccount.credenciales?.administrador"><img class="logo" src="assets/avatar.png" alt="user"> {{shellState.userAccount.usuario?.nombre}}</span>
-  <span *ngIf="shellState.userAccount.credenciales?.administrador"><i class="fa fa-cog icon-admin"></i> Administrador</span>
+  <span *ngIf="!shellState.userAccount.credenciales?.administrador" class="font-new-roman font-size-16"><img class="logo" src="assets/avatar.png" alt="user"> {{shellState.userAccount.usuario?.nombre}}</span>
+  <span *ngIf="shellState.userAccount.credenciales?.administrador" class="font-new-roman font-size-16"><i class="fa fa-cog icon-admin"></i> {{shellState.userAccount.administrador?.nombre}}</span>
 </a>
 
 <!-- Logo del user para dispositivos resolucion pequenio -->
