@@ -15,6 +15,7 @@ import { MenuItemDetailComponent } from './menus/menu-item-detail/menu-item-deta
 import { ContentComponent } from './content/content.component';
 import { FooterComponent } from './footer/footer.component';
 import { TitleComponent } from './title/title.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 /**
  * Modulo que contiene todos los componentes y modulos que define
@@ -40,7 +41,8 @@ import { TitleComponent } from './title/title.component';
     MenuItemComponent,
     MenuItemDetailComponent,
     UserAccountComponent,
-    TitleComponent
+    TitleComponent,
+    BreadcrumbComponent
   ],
   exports: [
     ShellComponent,

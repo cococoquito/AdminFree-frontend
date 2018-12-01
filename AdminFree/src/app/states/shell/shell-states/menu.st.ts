@@ -1,6 +1,7 @@
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { ScreenST } from './screen.st';
+import { BreadCrumbST } from './breadcrumb.st';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MenuItem } from './../../../model/menu-item';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
@@ -26,9 +27,6 @@ export class MenuST {
   /** Son los modulos a visualizar en el menu **/
   public modulos: Array<MenuItem>;
 
-  /** Es la URL a visualizar en la miga de pan **/
-  public urlBreadcrumb: string;
-
   /** Contiene la subscripcion del router **/
   private subscriptionRouter: Subscription;
 
@@ -37,10 +35,12 @@ export class MenuST {
    * se debe tomar los datos del local-store, ya que en este punto son nulos
    *
    * @param screen, se utiliza para validar el tamanio de la pantalla
+   * @param bread, se utliza para configurar los datos de la miga de pan
    * @param router, se utiliza para ser notificado cuando el router cambia
    */
   constructor(
     public screen: ScreenST,
+    private bread: BreadCrumbST,
     private router: Router) {
     this.init();
   }
@@ -173,11 +173,10 @@ export class MenuST {
    * @param url, es la nueva url donde el usuario va navegar
    */
   private notificarItemSeleccionado(url: string): void {
-    this.urlBreadcrumb = null;
-
     // miga de pan para administracion de cuenta de usuario
     if (url.includes(RouterConstant.ROUTER_CUENTA_USER)) {
-      this.urlBreadcrumb = '/' + LabelsConstant.MENU_CUENTA_USER;
+      this.bread.url = '/' + LabelsConstant.MENU_CUENTA_USER;
+      this.bread.icono = 'fa-gear';
     }
 
     // programacion defensiva para los modulos
@@ -191,7 +190,8 @@ export class MenuST {
         if (modulo.isPaginaInicio) {
           modulo.isSeleccionado = modulo.router === url;
           if (modulo.isSeleccionado) {
-            this.urlBreadcrumb = '/' + modulo.nombre;
+            this.bread.url = '/' + modulo.nombre;
+            this.bread.icono = 'fa-dashboard';
           }
         } else {
 
@@ -201,7 +201,8 @@ export class MenuST {
               item.isSeleccionado = true;
               modulo.isSeleccionado = true;
               moduloFueSeleccionado = modulo;
-              this.urlBreadcrumb = '/' + modulo.nombre + '/' + item.nombre;
+              this.bread.url = '/' + modulo.nombre + '/' + item.nombre;
+              this.bread.icono = modulo.icono;
             } else {
               item.isSeleccionado = false;
               if (modulo !== moduloFueSeleccionado) {

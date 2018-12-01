@@ -4,6 +4,7 @@ import { ScreenST } from './shell-states/screen.st';
 import { MenuST } from './shell-states/menu.st';
 import { UserAccountST } from './shell-states/user-account.st';
 import { TitleST } from './shell-states/title.st';
+import { BreadCrumbST } from './shell-states/breadcrumb.st';
 
 /**
  * Se utiliza para administrar el estado del Shell de la aplicacion
@@ -15,6 +16,9 @@ export class ShellState {
 
   /** Administra el estado de la pantalla del dispositivo */
   public screen: ScreenST;
+
+  /** Administra el estado de la miga de pan */
+  public breadCrumb: BreadCrumbST;
 
   /** Administra el estado del menu de la aplicacion */
   public menu: MenuST;
@@ -39,7 +43,10 @@ export class ShellState {
     // Estado para administrar la cuenta del usuario
     this.userAccount = new UserAccountST();
 
+    // Estado para administar la miga de pan
+    this.breadCrumb = new BreadCrumbST();
+
     // Se utiliza para administrar el estado del Menu
-    this.menu = new MenuST(this.screen, this.router);
+    this.menu = new MenuST(this.screen, this.breadCrumb, this.router);
   }
 }
