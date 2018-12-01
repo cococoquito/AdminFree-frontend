@@ -44,4 +44,7 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando para alguna actualizacion del usuario */
   static readonly USUARIO_ACTUALIZADO = 'Usuario Actualizado';
+
+  /** Mensaje de error cuando los modulos son requeridos */
+  static readonly MODULOS_REQUERIDOS = 'Los módulos son requeridos';
 }

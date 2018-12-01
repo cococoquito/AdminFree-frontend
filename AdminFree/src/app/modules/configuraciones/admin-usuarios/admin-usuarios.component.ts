@@ -224,15 +224,27 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
     // se obtiene los modulos seleccionados
     const modulos: Array<string> = this.getModulosSeleccionados();
 
+    // se verifica si es valido la edicion
+    if (!this.isValidoEdicionModulos(modulos)) {
+      this.closeModalEdicionModulos();
+      return;
+    }
+
+    // se construye los datos para ser enviado
     const usuarioModificar = new UsuarioDTO();
     usuarioModificar.modulosTokens = modulos;
     usuarioModificar.id = this.usuarioEdicionModulos.id;
 
-    // se procede a modificar el estado del usuario
+    // se procede a modificar los privilegios del usuario
     this.adminUsuarioService.modificarPrivilegiosUsuario(usuarioModificar).subscribe(
       data => {
+        // se actuliza los modulos para el usuario seleccionado
         this.usuarioEdicionModulos.modulosTokens = modulos;
+
+        // se cierra el modal de edicion de modulos
         this.closeModalEdicionModulos();
+
+        // se muestra el toast del usuario actualizado
         this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USUARIO_ACTUALIZADO));
       },
       error => {
@@ -299,32 +311,19 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * Metodo que es es llamado para abrir el modal de edicion de modulos
    */
   public showModalEdicionModulos(userSeleccionado: UsuarioDTO): void {
-        // se limpia los mensajes de otros procesos
-        this.messageService.clear();
-    this.isModalEdicionModulos = true;
+
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // se configura el usuario seleccionado para la edicion
     this.usuarioEdicionModulos = userSeleccionado;
-    this.selectedModulos = [];
-    const modulos: Array<string> = userSeleccionado.modulosTokens;
-    for (const token of modulos) {
-      switch (token) {
-        case ModulesTokenConstant.TK_CORRESPONDENCIA: {
-          this.selectedModulos.push('1');
-          break;
-        }
-        case ModulesTokenConstant.TK_ARCHIVO_GESTION: {
-          this.selectedModulos.push('2');
-          break;
-        }
-        case ModulesTokenConstant.TK_REPORTES: {
-          this.selectedModulos.push('3');
-          break;
-        }
-        case ModulesTokenConstant.TK_CONFIGURACIONES: {
-          this.selectedModulos.push('4');
-          break;
-        }
-      }
-    }
+
+    // se visualiza el modal de edicion
+    this.isModalEdicionModulos = true;
+
+    // se configura los modulos que tiene el usuario en formato
+    // que pueda se leido por los values de los check del componente
+    this.setModulosSeleccionados(userSeleccionado.modulosTokens);
   }
 
   /**
@@ -353,8 +352,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
   /**
    * Metodo que permite configurar los modulos seleccionados
-   * por el usuario para la creacion del usuario o edicion de
-   * modulos
+   * para el proceso de creacion de usuario o edicion de modulos
    */
   private getModulosSeleccionados(): Array<string> {
 
@@ -385,6 +383,64 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
       }
     }
     return modulos;
+  }
+
+  /**
+   * Metodo que permite configurar los ids de los modulos
+   * asignados a un usuario especifico
+   */
+  private setModulosSeleccionados(modulos: Array<string>): void {
+
+    // esta lista es la que apunta el componente
+    this.selectedModulos = [];
+
+    // se recorren todos los token asignados a un usuario
+    for (const token of modulos) {
+      switch (token) {
+        case ModulesTokenConstant.TK_CORRESPONDENCIA: {
+          this.selectedModulos.push('1');
+          break;
+        }
+        case ModulesTokenConstant.TK_ARCHIVO_GESTION: {
+          this.selectedModulos.push('2');
+          break;
+        }
+        case ModulesTokenConstant.TK_REPORTES: {
+          this.selectedModulos.push('3');
+          break;
+        }
+        case ModulesTokenConstant.TK_CONFIGURACIONES: {
+          this.selectedModulos.push('4');
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Metodo que permite validar si hay alguna modificacion
+   * para la edicion de los modulos del usuario seleccionado
+   */
+  private isValidoEdicionModulos(modulos: Array<string>): boolean {
+    let isValido = true;
+
+    // los modulos son requeridos para la edicion
+    if (!modulos || modulos.length === 0) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.MODULOS_REQUERIDOS));
+      isValido = false;
+    } else {
+      // se valida si hay alguna modificacion
+      if (modulos.length === this.usuarioEdicionModulos.modulosTokens.length) {
+        isValido = false;
+        for (const token of this.usuarioEdicionModulos.modulosTokens) {
+          if (!modulos.includes(token)) {
+            isValido = true;
+            break;
+          }
+        }
+      }
+    }
+    return isValido;
   }
 
   /**
