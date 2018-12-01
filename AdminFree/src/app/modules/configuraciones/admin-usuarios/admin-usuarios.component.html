@@ -39,7 +39,7 @@
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
         </td>
         <td class="text-center">
-          <button type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
+          <button type="button" (click)="showModalEdicionModulos(user)" class="btn btn-info btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
@@ -163,6 +163,31 @@
       <i class="fa fa-user-plus"> Crear Usuario</i>
     </button>
     <button type="button" class="btn btn-secondary btn-sm btn-crear-user" (click)="closeModalCrearUsuario()">
+      <i class="fa fa-times"> Salir</i>
+    </button>
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Edición de Módulos"
+  [(visible)]="isModalEdicionModulos"
+  modal="true"
+  *ngIf="usuarioEdicionModulos">
+
+  <div class="text-center">
+    <p class="font-weight-bold font-new-roman font-size-16">{{usuarioEdicionModulos.nombre}}</p>
+  </div>
+
+  <div>
+    <p class="text-assign-modulos"><i class="fa fa-cog"></i> Módulos Asignados</p>
+    <ng-container *ngTemplateOutlet="tblModulos"></ng-container>
+  </div>
+
+  <div class="text-center margin-top-mdl">
+    <button type="button" class="btn btn-success btn-sm btn-regresar" (click)="editarModulos()">
+      <i class="fa fa-pencil"> Editar</i>
+    </button>
+    <button type="button" class="btn btn-secondary btn-sm btn-crear-user" (click)="closeModalEdicionModulos()">
       <i class="fa fa-times"> Salir</i>
     </button>
   </div>

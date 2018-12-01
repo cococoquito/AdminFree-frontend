@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonComponent } from './../../../util/common.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CommonComponent } from './../../../util/common.component';
 import { AdminUsuarioService } from './../../../services/admin-usuario.service';
 import { ShellState } from './../../../states/shell/shell.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
@@ -35,6 +35,12 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
 
   /** bandera que se utiliza para la visualizacion del modal de creacion user */
   public isModalCrearUsuario: boolean;
+
+  /** bandera que se utiliza para la visualizacion del modal de edicion de modulos */
+  public isModalEdicionModulos: boolean;
+
+  /** DTO que se utiliza para la edicion de los modulos */
+  public usuarioEdicionModulos: UsuarioDTO;
 
   /**
    * DTO que contiene los datos del cliente autenticado o
@@ -75,6 +81,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * Usuarios parametrizados en el sistema
    */
   private init(): void {
+
     // se limpia los mensajes de otros componentes
     this.messageService.clear();
 
@@ -100,6 +107,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * Metodo que soporta el proceso de creacion del Usuario
    */
   public crearUsuario(): void {
+
     // se construye los datos a enviar para la creacion
     this.prepararDatosAntesCreacion();
 
@@ -131,6 +139,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * de cambiar el estado de usuario ACTIVO/INACTIVO
    */
   public cambiarEstadoUsuario(usuario: UsuarioDTO): void {
+
+    // se limpia los mensajes de otros procesos
     this.messageService.clear();
 
     // se inicializa como usuario ACTIVO
@@ -174,6 +184,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * una nueva constrasenia para el usuario seleccionado
    */
   public generarNuevaClave(usuario: UsuarioDTO): void {
+
+    // se limpia los mensajes de otros procesos
     this.messageService.clear();
 
     // se muestra la ventana de confirmacion
@@ -199,6 +211,34 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**
+   * Metodo que permite soportar el evento de edicion de modulos
+   */
+  public editarModulos(): void {
+
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // se obtiene los modulos seleccionados
+    const modulos: Array<string> = this.getModulosSeleccionados();
+
+    const usuarioModificar = new UsuarioDTO();
+    usuarioModificar.modulosTokens = modulos;
+    usuarioModificar.id = this.usuarioEdicionModulos.id;
+
+    // se procede a modificar el estado del usuario
+    this.adminUsuarioService.modificarPrivilegiosUsuario(usuarioModificar).subscribe(
+      data => {
+        this.usuarioEdicionModulos.modulosTokens = modulos;
+        this.closeModalEdicionModulos();
+        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USUARIO_ACTUALIZADO));
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**
@@ -232,6 +272,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
    * Metodo que permite validar si se debe mostrar el modal de creacion
    */
   public showModalCrearUsuario(): void {
+
     // el modal se inicializa como visualizado
     this.isModalCrearUsuario = true;
 
@@ -255,38 +296,95 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que es es llamado para abrir el modal de edicion de modulos
+   */
+  public showModalEdicionModulos(userSeleccionado: UsuarioDTO): void {
+        // se limpia los mensajes de otros procesos
+        this.messageService.clear();
+    this.isModalEdicionModulos = true;
+    this.usuarioEdicionModulos = userSeleccionado;
+    this.selectedModulos = [];
+    const modulos: Array<string> = userSeleccionado.modulosTokens;
+    for (const token of modulos) {
+      switch (token) {
+        case ModulesTokenConstant.TK_CORRESPONDENCIA: {
+          this.selectedModulos.push('1');
+          break;
+        }
+        case ModulesTokenConstant.TK_ARCHIVO_GESTION: {
+          this.selectedModulos.push('2');
+          break;
+        }
+        case ModulesTokenConstant.TK_REPORTES: {
+          this.selectedModulos.push('3');
+          break;
+        }
+        case ModulesTokenConstant.TK_CONFIGURACIONES: {
+          this.selectedModulos.push('4');
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Metodo que es es llamado para cerrar el modal de edicion de modulos
+   */
+  public closeModalEdicionModulos(): void {
+    this.isModalEdicionModulos = false;
+    this.usuarioEdicionModulos = null;
+    this.selectedModulos = null;
+  }
+
+  /**
    * Metodo que permite configurar los datos del nuevo
    * usuario antes de la creacion
    */
   private prepararDatosAntesCreacion(): void {
+
     // se configura los datos basicos
     this.usuarioCrear.cliente = this.clienteCurrent;
     this.usuarioCrear.nombre = this.setTrim(this.usuarioCrear.nombre);
     this.usuarioCrear.usuarioIngreso = this.setTrim(this.usuarioCrear.usuarioIngreso);
 
     // se configura los modulos
+    this.usuarioCrear.modulosTokens = this.getModulosSeleccionados();
+  }
+
+  /**
+   * Metodo que permite configurar los modulos seleccionados
+   * por el usuario para la creacion del usuario o edicion de
+   * modulos
+   */
+  private getModulosSeleccionados(): Array<string> {
+
+    // contendra los modulos seleccionados
     const modulos: Array<string> = new Array<string>();
-    for (const idModulo of this.selectedModulos) {
-      switch (idModulo) {
-        case '1': {
-          modulos.push(ModulesTokenConstant.TK_CORRESPONDENCIA);
-          break;
-        }
-        case '2': {
-          modulos.push(ModulesTokenConstant.TK_ARCHIVO_GESTION);
-          break;
-        }
-        case '3': {
-          modulos.push(ModulesTokenConstant.TK_REPORTES);
-          break;
-        }
-        case '4': {
-          modulos.push(ModulesTokenConstant.TK_CONFIGURACIONES);
-          break;
+
+    // solo aplica si hay modulos seleccionados
+    if (this.selectedModulos && this.selectedModulos.length > 0) {
+      for (const idModulo of this.selectedModulos) {
+        switch (idModulo) {
+          case '1': {
+            modulos.push(ModulesTokenConstant.TK_CORRESPONDENCIA);
+            break;
+          }
+          case '2': {
+            modulos.push(ModulesTokenConstant.TK_ARCHIVO_GESTION);
+            break;
+          }
+          case '3': {
+            modulos.push(ModulesTokenConstant.TK_REPORTES);
+            break;
+          }
+          case '4': {
+            modulos.push(ModulesTokenConstant.TK_CONFIGURACIONES);
+            break;
+          }
         }
       }
     }
-    this.usuarioCrear.modulosTokens = modulos;
+    return modulos;
   }
 
   /**
