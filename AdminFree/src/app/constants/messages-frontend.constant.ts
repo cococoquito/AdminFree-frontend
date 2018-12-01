@@ -33,12 +33,11 @@ export class MsjFrontConstant {
 
   /** Mensaje para el cambio de estado del usuario */
   static readonly CAMBIAR_ESTADO_USER: string =
-    '¿Está seguro de <strong>?1</strong> el siguiente usuario? <br/><div class="text-center"><strong>?2</strong></div>';
+    '¿Seguro de <strong>?1</strong> el siguiente usuario? <br/><br/><div class="text-center"><strong>?2</strong></div>';
 
   /** Mensaje de confirmacion para la generacion de una nueva clave */
   static readonly GENERAR_CLAVE_CONFI: string =
-    '¿Está seguro de <strong>generar una nueva contraseña</strong> para el siguiente usuario? ' +
-    '<br/><div class="text-center"><strong>?1</strong></div>';
+    '¿Seguro de <strong>generar una nueva contraseña</strong> para? <br/><br/><div class="text-center"><strong>?1</strong></div>';
 
   /** Mensaje exitoso generacion clave para el usuario */
   static readonly GENERAR_CLAVE_EXITOSO: string = 'La nueva contraseña para el usuario <strong>?1</strong> es:<strong>?2</strong>';
