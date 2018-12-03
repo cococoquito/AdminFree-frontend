@@ -1,11 +1,10 @@
 .pnl-main {
-  background-color: #6f8899;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 50px;
+  padding-bottom: 15px;
 }
 
 .color-header {
-  background-color: #31404a;
+  background-color: #3f51b5;
 }
 
 .title {
@@ -25,5 +24,15 @@
 }
 
 .width-card {
-  width: 23rem;
+  width: 27rem;
+  height: 26rem;
+}
+
+.btn-login {
+  background-color: #3f51b5;
+  font-size: 1em !important;
+}
+
+.btn-login:hover {
+  background-color: #344397;
 }

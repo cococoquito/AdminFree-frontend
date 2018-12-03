@@ -1,54 +1,92 @@
 <div class="container-fluid ">
 
   <!-- Logo admin-free -->
-  <img class="rounded mx-auto d-block" src="assets/harmony-logo.png" alt="logo">
 
   <!-- panel principal -->
-  <div class="row pnl-main justify-content-center">
+  <div class="row pnl-main justify-content-center" style="background-color: #f8f8f8">
 
     <!-- card del login -->
-    <div class="card width-card">
+    <div class="card width-card" style="box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);">
 
       <!-- header - card -->
       <div class="card-header color-header">
         <div class="row">
-          <div class="col-md-12 text-center">
-            <small class="title">Bienvenido</small>
-            <br>
-            <small class="sub-title">Por favor use el formulario para iniciar sesión</small>
+          <div class="col-6 font-admin" style="margin-top: 15px; color: #c5cae9; font-size: 18px;
+          font-weight: 700;">
+              <p style="margin-bottom: 8px;">AUTENTICACIÓN</p>
+              <p style="font-size: 14px;
+              font-weight: normal;">Bienvenido</p>
           </div>
+          <div class="col-6 text-right">
+              <img class="rounded" src="assets/harmony-logo.png" alt="logo">
+
+            </div>
         </div>
       </div>
 
       <!-- header - body -->
       <div class="card-body">
+          <div style="width: 80%; margin-left: auto; margin-right: auto;" class="justify-content-center">
 
         <!-- form - login -->
         <form class="font-size-14" name="form" #f="ngForm" (ngSubmit)="beforeIniciarSesion() && f.form.valid && iniciarSesion()" novalidate (keydown.enter)="$event.preventDefault()">
 
           <!-- usuario y password o token-->
-          <div class="form-group row">
+          <div class="form-group row" style="margin-bottom: 30px">
+              <label for="username" style="color: #3f51b5;margin-bottom: .2rem;" class="font-new-roman">Usuario</label>
             <input type="text"
+            id="username"
+            autocomplete="off"
+            style="background: transparent no-repeat;
+            background-image: linear-gradient(to bottom, #3f51b5, #3f51b5), linear-gradient(to bottom, #bdbdbd, #bdbdbd);
+            background-size: 0 2px, 100% 1px;
+            background-position: 50% 100%, 50% 100%;
+            transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+            border-width: 0;
+            padding: 2px;
+            font-size: 1em;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            "
               name="username"
               #username="ngModel"
               [(ngModel)]="credenciales.usuario"
-              placeholder="Usuario"
               maxlength="50"
+              size="40"
               adminRequired
               adminAutofocus
-              class="form-control font-size-14"
-              [ngClass]="(submitted && !username.valid) ? 'input-invalido' : 'input-valido'"/>
+              class="ui-inputtext ui-corner-all ui-state-default ui-widget ui-state-filled"
+              />
           </div>
           <div class="form-group row">
+            <label for="clave" style="color: #3f51b5;margin-bottom: .2rem;" class="font-new-roman">{{credenciales.administrador ? 'Token' : 'Contraseña'}}</label>
+
+
             <input type="password"
+            id="clave"
+            autocomplete="off"
+            style="background: transparent no-repeat;
+            background-image: linear-gradient(to bottom, #3f51b5, #3f51b5), linear-gradient(to bottom, #bdbdbd, #bdbdbd);
+            background-size: 0 2px, 100% 1px;
+            background-position: 50% 100%, 50% 100%;
+            transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+            border-width: 0;
+            padding: 2px;
+            font-size: 1em;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;"
+
+
               name="clave"
               #clave="ngModel"
               [(ngModel)]="credenciales.clave"
-              placeholder="{{credenciales.administrador ? 'Token' : 'Contraseña'}}"
               maxlength="50"
+              size="40"
               adminRequired
-              class="form-control font-size-14"
-              [ngClass]="(submitted && !clave.valid) ? 'input-invalido' : 'input-valido'"/>
+              class="ui-inputtext ui-corner-all ui-state-default ui-widget ui-state-filled"
+             />
           </div>
 
           <!-- ckeck ingresar como admin-->
@@ -58,19 +96,21 @@
                 type="checkbox"
                 (click)="toogleAdmin()"
                 class="custom-control-input">
-              <label for="checkAdmin" class="custom-control-label">Ingresar como administrador</label>
+              <label for="checkAdmin" class="custom-control-label font-new-roman font-size-15">Ingresar como administrador</label>
             </div>
           </div>
 
           <!-- boton - ingreso-->
-          <br>
-          <div class="form-group row">
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="fa fa-sign-in"> Entrar</i>
+          <div class="form-group row" style="margin-bottom: 5px">
+            <button type="submit" class="btn btn-primary btn-sm w-100 btn-login">
+                <i class="fa fa-user-circle-o" style="font-size: 18px"></i>
+                <span class="font-new-roman" style="font-size: 16px"> Entrar</span>
+
             </button>
           </div>
-          <p class="text-danger text-center msj-error">{{msjError}}</p>
+          <p class="text-danger text-center msj-error font-new-roman font-size-15">{{msjError}}</p>
         </form>
+      </div>
       </div>
     </div>
 
