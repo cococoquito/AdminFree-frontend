@@ -39,12 +39,12 @@
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
         </td>
         <td class="text-center">
-          <button type="button" (click)="showModalEdicionModulos(user)" class="btn btn-info btn-sm btn-round-table btn-round-teal">
+          <button type="button" (click)="showModalEdicionModulos(user)" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
         <td class="text-center">
-          <button (click)="generarNuevaClave(user)" type="button" class="btn btn-info btn-sm btn-round-table btn-round-teal">
+          <button (click)="generarNuevaClave(user)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-unlock icon-round-table-2"></i>
           </button>
         </td>
@@ -107,7 +107,7 @@
 
       <!-- botones creacion - regresar -->
       <div class="text-center">
-        <button type="button" class="btn btn-info btn-sm btn-regresar btn-round-teal" (click)="closePanelCrearUsuario()">
+        <button type="button" class="btn btn-sm btn-regresar btn-round-teal" (click)="closePanelCrearUsuario()">
           <i class="fa fa-backward"> Regresar</i>
         </button>
         <button type="submit" class="btn btn-success btn-sm btn-crear-user">

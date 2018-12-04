@@ -45,8 +45,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     BreadcrumbComponent
   ],
   exports: [
-    ShellComponent,
-    SharedCommonModule
+    ShellComponent
   ],
   providers: [
     ConfirmationService,

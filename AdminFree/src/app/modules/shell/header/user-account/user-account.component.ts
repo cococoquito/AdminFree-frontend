@@ -30,16 +30,46 @@ export class UserAccountComponent implements OnInit {
     public shellState: ShellState,
     private router: Router) {}
 
+  /**
+   * Se construye el menu dependiendo del tipo de User autenticado
+   */
   ngOnInit() {
-    // se construye los items del menu
-    this.construirItems();
+    this.init();
+  }
+
+  /**
+   * Metodo que es invocado al momento de construir el componente
+   */
+  private init(): void {
+    // dependiendo del tipo de user autenticado se construye el menu
+    if (this.shellState.userAccount.credenciales) {
+
+      // Items para el administrador
+      if (this.shellState.userAccount.credenciales.administrador) {
+        this.construirItemsAdmin();
+      } else {
+        // Items para el usuario
+        this.construirItemsUser();
+      }
+    }
   }
 
   /**
    * Metodo que permite construir los items del menu
-   * de configuraciones para el usuario
+   * de configuraciones para el Administrador
    */
-  private construirItems(): void {
+  private construirItemsAdmin(): void {
+    this.items = [
+      { label: LabelsConstant.MENU_PAGINA_INICIO, icon: 'fa fa-fw fa-dashboard', command: (click) => this.goToBienvenida() },
+      { label: LabelsConstant.CERRAR_SESION, icon: 'fa fa-fw fa-power-off', command: (click) => this.cerrarSesion() }
+    ];
+  }
+
+  /**
+   * Metodo que permite construir los items del menu
+   * de configuraciones para el Usuario
+   */
+  private construirItemsUser(): void {
     this.items = [
       { label: LabelsConstant.MENU_PAGINA_INICIO, icon: 'fa fa-fw fa-dashboard', command: (click) => this.goToBienvenida() },
       { label: LabelsConstant.MENU_CUENTA_USER, icon: 'fa fa-fw fa-gear', command: (click) => this.goToConfiguracionCuenta() },

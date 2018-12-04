@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ShellModule } from './../shell/shell.module';
+import { SharedModule } from './../shared/shared.module';
 import { BienvenidaComponent } from './bienvenida/bienvenida.component';
 import { CuentaUserComponent } from './cuenta-user/cuenta-user.component';
 import { ROUTES } from './autenticado-routing';
@@ -14,7 +15,8 @@ import { ROUTES } from './autenticado-routing';
 @NgModule({
   imports: [
     RouterModule.forChild(ROUTES),
-    ShellModule
+    ShellModule,
+    SharedModule
   ],
   declarations: [
     BienvenidaComponent,

@@ -174,10 +174,12 @@ body {
 
 .btn-round-teal {
   background-color: #009688 !important;
+  color: #ffffff !important;
 }
 
 .btn-round-teal:hover {
   background-color: #016b60 !important;
+  color: #ffffff !important;
 }
 
 .mar-top {
