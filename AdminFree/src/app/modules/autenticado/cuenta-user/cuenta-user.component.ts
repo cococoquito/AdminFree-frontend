@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CuentaUserService } from './../../../services/cuenta-user.service';
 import { CommonComponent } from './../../../util/common.component';
+import { UserAccountST } from './../../../states/shell/shell-states/user-account.st';
 import { ShellState } from './../../../states/shell/shell.state';
+import { MsjUtil } from './../../../util/messages.util';
 import { LabelsConstant } from './../../../constants/labels.constant';
+import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 
 /**
  * Componente para la administracion de la cuenta
@@ -16,7 +19,19 @@ import { LabelsConstant } from './../../../constants/labels.constant';
   styleUrls: ['./cuenta-user.component.css'],
   providers: [CuentaUserService]
 })
-export class CuentaUserComponent extends CommonComponent implements OnInit {
+export class CuentaUserComponent extends CommonComponent implements OnInit, OnDestroy {
+
+  /** Contiene los datos de la cuenta */
+  public userAccount: UserAccountST;
+
+  /** nombre del usuario autenticado */
+  public nombre: string;
+
+  /** usuario de ingreso del usuario autenticado */
+  public usuarioIngreso: string;
+
+  public soloLecturaCuenta: boolean;
+  public soloLecturaClave: boolean;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -29,6 +44,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit {
    * los servicios relacionados a este proceso de negocio
    *
    * @param shellState, se utiliza para el titulo del componente
+   * y para obtener los datos del usuario autenticado
    */
   constructor(
     private messageService: MessageService,
@@ -46,17 +62,44 @@ export class CuentaUserComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Se utiliza para limpiar los mensajes visualizados pantalla
+   */
+  ngOnDestroy(): void {
+    this.messageService.clear();
+  }
+
+  /**
    * Metodo que es invocado al momento de la creacion
    * del componente, donde se procede a inicializar
    * las variables globales
    */
   private init(): void {
 
-    // se limpia los mensajes de otros componentes
-    this.messageService.clear();
-
     // se configura el titulo y subtitulo de la pagina
     this.shellState.title.titulo = LabelsConstant.MENU_CUENTA_USER;
     this.shellState.title.subTitulo = '';
+
+    // se obtiene los datos de la cuenta de autenticacion
+    this.userAccount = this.shellState.userAccount;
+
+    // Esta funcionalidad no aplica para el Administrador
+    if (this.userAccount.credenciales.administrador) {
+      setTimeout(() => {
+        this.messageService.add(MsjUtil.getMsjError(MsjFrontConstant.ADMIN_NO_APLICA));
+      }, 100);
+    } else {
+      this.nombre = this.userAccount.usuario.nombre;
+      this.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
+      this.soloLecturaCuenta = true;
+      this.soloLecturaClave = true;
+    }
+  }
+
+  public habilitarEdicionCuenta(): void {
+    this.soloLecturaCuenta = !this.soloLecturaCuenta;
+  }
+
+  public habilitarEdicionClave(): void {
+    this.soloLecturaClave = !this.soloLecturaClave;
   }
 }

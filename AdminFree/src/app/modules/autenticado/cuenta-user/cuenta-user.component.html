@@ -1,44 +1,45 @@
-<p-panel [toggleable]="true">
-  <p-header>
-    <i class="fa fa-pencil-square-o font-size-18"></i> <span class="font-admin font-size-14" style="margin-left:3px">
-      Modificar Datos de la Cuenta</span>
-  </p-header>
+<div *ngIf="!userAccount.credenciales.administrador;">
+  <p-panel [toggleable]="true">
+    <p-header>
+      <i class="fa fa-pencil-square-o font-size-18"></i> <span class="font-admin font-size-14" style="margin-left:3px">
+        Modificar Datos de la Cuenta</span>
+    </p-header>
 
-  <div class="form-row">
-    <div class="form-group col-md-12 text-left">
-      <button type="submit" class="btn btn-round-teal btn-sm">
-        <i class="fa fa-pencil"> Habilitar Edición</i>
-      </button>
+    <div class="form-row">
+      <div class="form-group col-md-12 text-left">
+        <button type="button" (click)="habilitarEdicionCuenta()" class="btn btn-sm"
+        [ngClass]="soloLecturaCuenta ? 'btn-round-teal' : 'btn-secondary'">
+          <i class="fa fa-pencil"> {{soloLecturaCuenta ? 'Activar Edición' : 'Desactivar Edición'}}</i>
+        </button>
+      </div>
     </div>
-  </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label class="col-form-label font-weight-bold" for="in02">Nombre Completo:</label>
-      <input type="email" class="form-control" id="in02" aria-describedby="emailHelp" placeholder="Enter email">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inNombre" class="col-form-label font-weight-bold">Nombre Completo:</label>
+        <input type="text" name="inNombre" #inNombre="ngModel" [(ngModel)]="nombre" maxlength="100" adminRequired
+          [readonly]="soloLecturaCuenta" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
+      </div>
+      <div class="form-group col-md-6">
+        <label class="col-form-label font-weight-bold" for="inUserIngreso">Usuario de Ingreso:</label>
+        <input type="text" name="inUserIngreso" #inUserIngreso="ngModel" [(ngModel)]="usuarioIngreso" maxlength="50"
+          adminRequired [readonly]="soloLecturaCuenta" class="form-control font-size-14" [ngClass]="(submitted && !inUserIngreso.valid) ? 'input-invalido' : 'input-valido'" />
+      </div>
     </div>
-    <div class="form-group col-md-6">
-      <label class="col-form-label font-weight-bold" for="in02">Usuario de Ingreso:</label>
-      <input type="email" class="form-control" id="in02" aria-describedby="emailHelp" placeholder="Enter email">
+
+    <div class="form-row">
+      <div class="form-group col-md-12 text-center" style="margin-top: 15px; margin-bottom: 5px;">
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="soloLecturaCuenta">
+          <i class="fa fa-user-circle-o"> Aplicar Cambios</i>
+        </button>
+      </div>
     </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-12 text-center" style="margin-top: 15px; margin-bottom: 5px;">
-      <button type="submit" class="btn btn-secondary btn-sm">
-        <i class="fa fa-user-circle-o"> Aplicar Cambios</i>
-      </button>
-    </div>
-  </div>
-</p-panel>
-
-
-
-
-<br/>
-<p-panel [toggleable]="true">
-  <p-header>
-    <i class="fa fa-unlock-alt font-size-18"></i> <span class="font-admin font-size-14" style="margin-left:5px">
-      Modificar Contraseña</span>
-  </p-header>
-</p-panel>
+  </p-panel>
+  <br />
+  <p-panel [toggleable]="true">
+    <p-header>
+      <i class="fa fa-unlock-alt font-size-18"></i> <span class="font-admin font-size-14" style="margin-left:5px">
+        Modificar Contraseña</span>
+    </p-header>
+  </p-panel>
+</div>

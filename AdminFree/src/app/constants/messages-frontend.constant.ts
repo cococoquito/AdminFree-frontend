@@ -47,4 +47,7 @@ export class MsjFrontConstant {
 
   /** Mensaje de error cuando los modulos son requeridos */
   static readonly MODULOS_REQUERIDOS = 'Los módulos son requeridos';
+
+  /** Mensaje cuando el administrador intenta ingresar a una funcionalidad que no aplica */
+  static readonly ADMIN_NO_APLICA = 'Esta funcionalidad no aplica para el <strong>Administrador</strong>';
 }

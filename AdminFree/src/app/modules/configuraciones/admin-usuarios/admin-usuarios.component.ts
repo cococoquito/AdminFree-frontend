@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CommonComponent } from './../../../util/common.component';
 import { AdminUsuarioService } from './../../../services/admin-usuario.service';
@@ -22,7 +22,7 @@ import { LabelsConstant } from './../../../constants/labels.constant';
   styleUrls: ['./admin-usuarios.component.css'],
   providers: [AdminUsuarioService]
 })
-export class AdminUsuariosComponent extends CommonComponent implements OnInit {
+export class AdminUsuariosComponent extends CommonComponent implements OnInit, OnDestroy {
 
   /** Lista de usuarios a visualizar en pantalla */
   public usuarios: Array<UsuarioDTO>;
@@ -76,14 +76,18 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Se utiliza para limpiar los mensajes visualizados pantalla
+   */
+  ngOnDestroy(): void {
+    this.messageService.clear();
+  }
+
+  /**
    * Metodo que es invocado al momento de la creacion
    * del componente, donde se procede a consultar los
    * Usuarios parametrizados en el sistema
    */
   private init(): void {
-
-    // se limpia los mensajes de otros componentes
-    this.messageService.clear();
 
     // se configura el titulo y subtitulo de la pagina
     this.shellState.title.titulo = LabelsConstant.MENU_ADMIN_USERS;
