@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from './../model/error-response';
 import { HttpStatusConstant } from './../constants/http-status.constant';
 import { MessagesBackendConstant } from './../constants/messages-backend.constant';
+import { MessagesBackendKeyConstant } from './../constants/messages-backend-key.constant';
 
 /**
  * Contiene los metodos comunes para los componentes de la aplicacion,
@@ -107,18 +108,43 @@ export class CommonComponent {
     // se verifica que tipo de business msj corresponde
     switch (codBusinessMsj) {
 
-      case MessagesBackendConstant.COD_AUTENTICACION_FALLIDA_USER: {
+      case MessagesBackendKeyConstant.KEY_AUTENTICACION_FALLIDA_USER: {
         businessMsj = MessagesBackendConstant.AUTENTICACION_FALLIDA_USER;
         break;
       }
 
-      case MessagesBackendConstant.COD_AUTENTICACION_FALLIDA_ADMIN: {
+      case MessagesBackendKeyConstant.KEY_AUTENTICACION_FALLIDA_ADMIN: {
         businessMsj = MessagesBackendConstant.AUTENTICACION_FALLIDA_ADMIN;
         break;
       }
 
-      case MessagesBackendConstant.COD_USUARIO_INGRESO_EXISTE: {
+      case MessagesBackendKeyConstant.KEY_USUARIO_INGRESO_EXISTE: {
         businessMsj = MessagesBackendConstant.USUARIO_INGRESO_EXISTE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_CLAVE_VERIFICACION_NO_COINCIDE: {
+        businessMsj = MessagesBackendConstant.CLAVE_VERIFICACION_NO_COINCIDE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_CLAVE_LONGITUD_NO_PERMITIDA: {
+        businessMsj = MessagesBackendConstant.CLAVE_LONGITUD_NO_PERMITIDA;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_CLAVE_ESPACIOS_BLANCO: {
+        businessMsj = MessagesBackendConstant.CLAVE_ESPACIOS_BLANCO;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_CLAVE_NO_COINCIDE: {
+        businessMsj = MessagesBackendConstant.CLAVE_NO_COINCIDE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_CLAVE_ACTUAL_IGUAL: {
+        businessMsj = MessagesBackendConstant.CLAVE_ACTUAL_IGUAL;
         break;
       }
     }
