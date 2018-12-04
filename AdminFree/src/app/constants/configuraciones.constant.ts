@@ -57,4 +57,16 @@ export class ConfiguracionesConstant {
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'generarclaveuser';
+
+  /** URL del recurso para la modificacion de los datos de la cuenta de usuario*/
+  static readonly URL_MODIFICAR_DATOS_CUENTA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'updateaccount';
+
+  /** URL del recurso para la modificacion de la clave de ingreso*/
+  static readonly URL_MODIFICAR_CLAVE: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'updateclaveuser';
 }
