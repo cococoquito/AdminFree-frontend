@@ -1,4 +1,8 @@
 <div *ngIf="!userAccount.credenciales.administrador;">
+
+
+
+
   <p-panel [toggleable]="true">
     <p-header>
       <i class="fa fa-pencil-square-o font-size-18"></i> <span class="font-admin font-size-14" style="margin-left:3px">
@@ -7,10 +11,13 @@
 
     <div class="form-row">
       <div class="form-group col-md-12 text-left">
-        <button type="button" (click)="habilitarEdicionCuenta()" class="btn btn-sm"
-        [ngClass]="soloLecturaCuenta ? 'btn-round-teal' : 'btn-secondary'">
-          <i class="fa fa-pencil"> {{soloLecturaCuenta ? 'Activar Edición' : 'Desactivar Edición'}}</i>
-        </button>
+          <div class="toggle btn" [ngClass]="soloLecturaCuenta?'btn-round-teal':'btn-secondary off'" (click)="habilitarEdicionCuenta()">
+              <div class="toggle-group">
+                  <label class="btn-toggle btn-round-teal toggle-on font-new-roman"><i class="fa fa-pencil"></i> Activar Edición</label>
+                  <label class="btn-toggle btn-secondary active toggle-off font-new-roman"><i class="fa fa-pencil"></i> Desactivar Edición</label>
+                  <span class="toggle-handle btn btn-handle"></span>
+              </div>
+           </div>
       </div>
     </div>
 
@@ -30,7 +37,7 @@
     <div class="form-row">
       <div class="form-group col-md-12 text-center" style="margin-top: 15px; margin-bottom: 5px;">
         <button type="submit" class="btn btn-primary btn-sm" [disabled]="soloLecturaCuenta">
-          <i class="fa fa-user-circle-o"> Aplicar Cambios</i>
+          <label class="btn-size-admin"><i class="fa fa-user-circle-o"></i> Aplicar Cambios</label>
         </button>
       </div>
     </div>

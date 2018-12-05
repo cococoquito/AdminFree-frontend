@@ -147,6 +147,11 @@ body {
   font-size: 18px !important;
 }
 
+.btn-size-admin {
+  font-family: Times, Times New Roman, serif !important;
+  margin: 0px !important;
+}
+
 /* font family para admin free */
 .font-admin {
   font-family: "Roboto", "Helvetica Neue", sans-serif !important
