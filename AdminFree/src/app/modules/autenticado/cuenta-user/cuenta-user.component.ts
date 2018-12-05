@@ -4,6 +4,8 @@ import { CuentaUserService } from './../../../services/cuenta-user.service';
 import { CommonComponent } from './../../../util/common.component';
 import { UserAccountST } from './../../../states/shell/shell-states/user-account.st';
 import { ShellState } from './../../../states/shell/shell.state';
+import { CambioClaveDTO } from './../../../dtos/configuraciones/cambio-clave.dto';
+import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { MsjUtil } from './../../../util/messages.util';
 import { LabelsConstant } from './../../../constants/labels.constant';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
@@ -24,16 +26,13 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   /** Contiene los datos de la cuenta */
   public userAccount: UserAccountST;
 
-  /** nombre del usuario autenticado */
-  public nombre: string;
+  public datosUserModificar: UsuarioDTO;
 
-  /** usuario de ingreso del usuario autenticado */
-  public usuarioIngreso: string;
+  public cambioClave: CambioClaveDTO;
 
   public soloLecturaCuenta: boolean;
   public soloLecturaClave: boolean;
   public isPanelClaveClose: boolean;
-
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -52,7 +51,8 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private cuentaUserService: CuentaUserService,
-    private shellState: ShellState) {
+    private shellState: ShellState
+  ) {
     super();
   }
 
@@ -76,12 +76,9 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
    * las variables globales
    */
   private init(): void {
-
-
     // se configura el titulo y subtitulo de la pagina
     this.shellState.title.titulo = LabelsConstant.MENU_CUENTA_USER;
-    this.shellState.title.subTitulo =
-    'Submódulo de seguridad que permite <strong>modificar los datos de la cuenta</strong> del usuario autenticado';
+    this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_ADMIN_CUENTA_USER;
 
     // se obtiene los datos de la cuenta de autenticacion
     this.userAccount = this.shellState.userAccount;
@@ -89,26 +86,95 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     // Esta funcionalidad no aplica para el Administrador
     if (this.userAccount.credenciales.administrador) {
       setTimeout(() => {
-        this.messageService.add(MsjUtil.getMsjError(MsjFrontConstant.ADMIN_NO_APLICA));
+        this.messageService.add(
+          MsjUtil.getMsjError(MsjFrontConstant.ADMIN_NO_APLICA)
+        );
       }, 100);
     } else {
-      this.nombre = this.userAccount.usuario.nombre;
-      this.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
+      this.datosUserModificar = new UsuarioDTO();
+      this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
+      this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
+      this.datosUserModificar.id = this.userAccount.usuario.id;
       this.soloLecturaCuenta = true;
       this.soloLecturaClave = true;
       this.isPanelClaveClose = true;
     }
   }
 
+  public modificarDatosCuenta(): void {
+    this.datosUserModificar.nombre = this.setTrim(
+      this.datosUserModificar.nombre
+    );
+    this.datosUserModificar.usuarioIngreso = this.setTrim(
+      this.datosUserModificar.usuarioIngreso
+    );
+
+    if (
+      this.datosUserModificar.nombre === this.userAccount.usuario.nombre &&
+      this.datosUserModificar.usuarioIngreso ===
+        this.userAccount.usuario.usuarioIngreso
+    ) {
+      this.soloLecturaCuenta = true;
+      return;
+    }
+
+    this.datosUserModificar.userIngresoModificado = false;
+    if (
+      this.datosUserModificar.usuarioIngreso !==
+      this.userAccount.usuario.usuarioIngreso
+    ) {
+      this.datosUserModificar.userIngresoModificado = true;
+    }
+
+    this.cuentaUserService
+      .modificarDatosCuenta(this.datosUserModificar)
+      .subscribe(
+        data => {
+          this.shellState.userAccount.usuario.nombre = this.datosUserModificar.nombre;
+          this.shellState.userAccount.usuario.usuarioIngreso = this.datosUserModificar.usuarioIngreso;
+
+          this.datosUserModificar = new UsuarioDTO();
+          this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
+          this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
+          this.datosUserModificar.id = this.userAccount.usuario.id;
+
+          this.soloLecturaCuenta = true;
+          this.messageService.add(
+            MsjUtil.getToastSuccess(MsjFrontConstant.DATOS_CUENTA_ACTUALIZADO)
+          );
+        },
+        error => {
+          this.messageService.add(
+            MsjUtil.getMsjError(this.showMensajeError(error))
+          );
+        }
+      );
+  }
+
   public habilitarEdicionCuenta(): void {
     this.soloLecturaCuenta = !this.soloLecturaCuenta;
+    this.messageService.clear();
+
+    if (this.soloLecturaCuenta) {
+      this.datosUserModificar = new UsuarioDTO();
+      this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
+      this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
+      this.datosUserModificar.id = this.userAccount.usuario.id;
+    }
   }
 
   public habilitarEdicionClave(): void {
     this.soloLecturaClave = !this.soloLecturaClave;
   }
-  public prueba() {
+  public togglePanel() {
     this.isPanelClaveClose = !this.isPanelClaveClose;
-    console.log('invocado');
+  }
+
+  /**
+   * Metodo que es invocado antes de dar submit en el formulario creacion
+   */
+  public beforeOnSubmit(): boolean {
+    this.messageService.clear();
+    return this.onSubmit();
   }
 }

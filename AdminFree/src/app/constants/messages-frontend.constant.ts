@@ -50,4 +50,7 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando el administrador intenta ingresar a una funcionalidad que no aplica */
   static readonly ADMIN_NO_APLICA = 'Esta funcionalidad no aplica para el <strong>Administrador</strong>';
+
+  /** Mensaje cuando los datos de la cuenta fue actuazalida */
+  static readonly DATOS_CUENTA_ACTUALIZADO = 'Datos de la cuenta actualizado';
 }

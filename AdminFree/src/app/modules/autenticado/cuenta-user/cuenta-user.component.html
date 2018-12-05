@@ -1,57 +1,63 @@
 <div *ngIf="!userAccount.credenciales.administrador;">
 
-
-
-
-  <p-panel [toggleable]="true" (onBeforeToggle)="prueba()" [collapsed]="!isPanelClaveClose">
+  <p-panel [toggleable]="true" (onBeforeToggle)="togglePanel()" [collapsed]="!isPanelClaveClose">
     <p-header>
       <i class="fa fa-pencil-square-o font-size-18"></i> <span class="font-admin font-size-14" style="margin-left:3px">
         Modificar Datos de la Cuenta</span>
     </p-header>
 
     <div style="width: 80%; margin-left: auto; margin-right: auto">
-        <p class="info-text font-new-roman text-center" style="color: #757575; margin-bottom: 15px">
-            <i class="fa fa-info-circle font-size-16"></i>
-            <strong> El Usuario de Ingreso debe tener al menos <strong>12 caracteres</strong> y no puede contener espacios en blanco</strong>
-          </p>
+      <p class="info-text font-new-roman text-center" style="color: #757575; margin-bottom: 15px">
+        <i class="fa fa-info-circle font-size-16"></i>
+        <strong> El Usuario de Ingreso debe tener al menos <strong>10 caracteres</strong> y no puede contener espacios
+          en blanco</strong>
+      </p>
 
-      <div class="form-row justify-content-center">
-        <div class="form-group col-md-6">
-          <label for="inNombre" class="col-form-label font-weight-bold">Nombre Completo:</label>
-          <input type="text" name="inNombre" #inNombre="ngModel" [(ngModel)]="nombre" maxlength="100" adminRequired
-            [readonly]="soloLecturaCuenta" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
-        </div>
-      </div>
+      <form #f="ngForm" name="form" novalidate (keydown.enter)="$event.preventDefault()" (ngSubmit)="beforeOnSubmit() && f.form.valid && modificarDatosCuenta()">
 
-      <div class="form-row justify-content-center">
-        <div class="form-group col-md-6">
-          <label class="col-form-label font-weight-bold" for="inUserIngreso">Usuario de Ingreso:</label>
-          <input type="text" name="inUserIngreso" #inUserIngreso="ngModel" [(ngModel)]="usuarioIngreso" maxlength="50"
-            adminRequired [readonly]="soloLecturaCuenta" class="form-control font-size-14" [ngClass]="(submitted && !inUserIngreso.valid) ? 'input-invalido' : 'input-valido'" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-12 text-center" style="margin-top: 15px; margin-bottom: 5px;">
-          <div class="toggle btn" [ngClass]="soloLecturaCuenta?'btn-round-teal':'btn-secondary off'" (click)="habilitarEdicionCuenta()">
-            <div class="toggle-group">
-              <label class="btn-toggle btn-round-teal toggle-on font-new-roman"><i class="fa fa-pencil"></i> Activar
-                Edición</label>
-              <label class="btn-toggle btn-secondary active toggle-off font-new-roman"><i class="fa fa-pencil"></i>
-                Desactivar Edición</label>
-              <span class="toggle-handle btn btn-handle"></span>
-            </div>
+        <div class="form-row justify-content-center">
+          <div class="form-group col-md-6">
+            <label for="inNombre" class="col-form-label font-weight-bold">Nombre Completo:</label>
+            <input autocomplete="off" type="text" name="inNombre" #inNombre="ngModel" [(ngModel)]="datosUserModificar.nombre"
+              maxlength="100" adminRequired [readonly]="soloLecturaCuenta" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
           </div>
-          <button type="submit" class="btn btn-primary btn-sm" [disabled]="soloLecturaCuenta" style="margin-left: 10px">
-            <label class="btn-size-admin"><i class="fa fa-user-circle-o"></i> Aplicar Cambios</label>
-          </button>
         </div>
-      </div>
+
+        <div class="form-row justify-content-center">
+          <div class="form-group col-md-6">
+            <label class="col-form-label font-weight-bold" for="inUserIngreso">Usuario de Ingreso:</label>
+            <input autocomplete="off" type="text" name="inUserIngreso" #inUserIngreso="ngModel" [(ngModel)]="datosUserModificar.usuarioIngreso"
+              maxlength="50" adminRequired [readonly]="soloLecturaCuenta" class="form-control font-size-14" [ngClass]="(submitted && !inUserIngreso.valid) ? 'input-invalido' : 'input-valido'" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12 text-center" style="margin-top: 15px; margin-bottom: 5px;">
+            <div class="toggle btn" [ngClass]="soloLecturaCuenta?'btn-round-teal':'btn-secondary off'" (click)="habilitarEdicionCuenta()">
+              <div class="toggle-group">
+                <label class="btn-toggle btn-round-teal toggle-on font-new-roman"><i class="fa fa-pencil"></i> Activar
+                  Edición</label>
+                <label class="btn-toggle btn-secondary active toggle-off font-new-roman"><i class="fa fa-pencil"></i>
+                  Desactivar Edición</label>
+                <span class="toggle-handle btn btn-handle"></span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="soloLecturaCuenta" style="margin-left: 10px">
+              <i class="fa fa-user-circle-o"></i>
+              <span class="btn-size-admin"> Aplicar Cambios</span>
+            </button>
+          </div>
+        </div>
+
+
+      </form>
+
+
     </div>
-
-
   </p-panel>
-  <p-panel [toggleable]="true" (onBeforeToggle)="prueba()" [collapsed]="isPanelClaveClose">
+
+
+  <p-panel [toggleable]="true" (onBeforeToggle)="togglePanel()" [collapsed]="isPanelClaveClose">
     <p-header>
       <i class="fa fa-unlock-alt font-size-18"></i> <span class="font-admin font-size-14" style="margin-left:5px">
         Modificar Contraseña</span>
@@ -60,33 +66,34 @@
 
     <div style="width: 80%; margin-left: auto; margin-right: auto">
 
-        <p class="info-text font-new-roman text-center" style="color: #757575; margin-bottom: 15px">
-            <i class="fa fa-info-circle font-size-16"></i>
-            <strong> La nueva contraseña debe tener al menos <strong>12 caracteres</strong> y no puede contener espacios en blanco</strong>
-          </p>
+      <p class="info-text font-new-roman text-center" style="color: #757575; margin-bottom: 15px">
+        <i class="fa fa-info-circle font-size-16"></i>
+        <strong> La nueva contraseña debe tener al menos <strong>12 caracteres</strong> y no puede contener espacios en
+          blanco</strong>
+      </p>
 
 
       <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
           <label for="inNombre" class="col-form-label font-weight-bold">Contraseña Actual:</label>
-          <input type="password" name="inNombre" #inNombre="ngModel" [(ngModel)]="nombre" maxlength="100" adminRequired
-            [readonly]="soloLecturaClave" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
+          <input type="password" name="inNombre" #inNombre="ngModel" [(ngModel)]="datosUserModificar.nombre" maxlength="100"
+            adminRequired [readonly]="soloLecturaClave" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
         </div>
       </div>
 
       <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
           <label for="inNombre" class="col-form-label font-weight-bold">Nueva Contraseña:</label>
-          <input type="password" name="inNombre" #inNombre="ngModel" [(ngModel)]="nombre" maxlength="100" adminRequired
-            [readonly]="soloLecturaClave" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
+          <input type="password" name="inNombre" #inNombre="ngModel" [(ngModel)]="datosUserModificar.nombre" maxlength="100"
+            adminRequired [readonly]="soloLecturaClave" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
         </div>
       </div>
 
       <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
           <label for="inNombre" class="col-form-label font-weight-bold">Confirmar Contraseña:</label>
-          <input type="password" name="inNombre" #inNombre="ngModel" [(ngModel)]="nombre" maxlength="100" adminRequired
-            [readonly]="soloLecturaClave" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
+          <input type="password" name="inNombre" #inNombre="ngModel" [(ngModel)]="datosUserModificar.nombre" maxlength="100"
+            adminRequired [readonly]="soloLecturaClave" class="form-control font-size-14" [ngClass]="(submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
         </div>
       </div>
 

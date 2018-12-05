@@ -49,4 +49,8 @@ export class MessagesBackendConstant {
   /** El usuario de ingreso debe tener al menos 10 caracteres */
   static readonly USER_INGRESO_LONGITUD_NO_PERMITIDA: string =
     'El <strong>Usuario de Ingreso</strong> debe tener al menos 10 caracteres';
+
+  /** El usuario de ingreso no puede contener espacios en blanco */
+  static readonly USER_INGRESO_ESPACIOS_BLANCO: string =
+    'El <strong>Usuario de Ingreso</strong> no puede contener espacios en blanco';
 }

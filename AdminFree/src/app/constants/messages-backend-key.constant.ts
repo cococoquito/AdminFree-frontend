@@ -32,4 +32,7 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - El usuario de ingreso debe tener al menos 10 caracteres*/
   static readonly KEY_USER_INGRESO_LONGITUD_NO_PERMITIDA: string = '9';
+
+  /** 400 - El usuario de ingreso no puede contener espacios en blanco*/
+  static readonly KEY_USER_INGRESO_ESPACIOS_BLANCO: string = '10';
 }
