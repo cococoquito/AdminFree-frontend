@@ -61,7 +61,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * @param shellState, se utiliza para el titulo del componente
    */
   constructor(
-    private messageService: MessageService,
+    protected messageService: MessageService,
     private confirmationService: ConfirmationService,
     private adminUsuarioService: AdminUsuarioService,
     private shellState: ShellState) {
@@ -274,14 +274,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.messageService.clear();
     this.usuarioCrear = null;
     this.selectedModulos = null;
-  }
-
-  /**
-   * Metodo que es invocado antes de dar submit en el formulario creacion
-   */
-  public beforeOnSubmit(): boolean {
-    this.messageService.clear();
-    return this.onSubmit();
   }
 
   /**

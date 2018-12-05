@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from './../model/error-response';
+import { MessageService } from 'primeng/api';
 import { HttpStatusConstant } from './../constants/http-status.constant';
 import { MessagesBackendConstant } from './../constants/messages-backend.constant';
 import { MessagesBackendKeyConstant } from './../constants/messages-backend-key.constant';
@@ -16,9 +17,18 @@ export class CommonComponent {
   protected submitted: boolean;
 
   /**
+   * @param messageService, Se utiliza para la visualizacion
+   * de los mensajes en la pantalla
+   */
+  constructor(protected messageService?: MessageService) {}
+
+  /**
    * Metodo que permite establecer que el user ya hizo submitted
    */
   protected onSubmit(): boolean {
+    if (this.messageService) {
+      this.messageService.clear();
+    }
     this.submitted = true;
     return this.submitted;
   }
