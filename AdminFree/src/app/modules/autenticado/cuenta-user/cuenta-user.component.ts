@@ -32,6 +32,8 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
 
   public soloLecturaCuenta: boolean;
   public soloLecturaClave: boolean;
+  public isPanelClaveClose: boolean;
+
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -75,9 +77,11 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
    */
   private init(): void {
 
+
     // se configura el titulo y subtitulo de la pagina
     this.shellState.title.titulo = LabelsConstant.MENU_CUENTA_USER;
-    this.shellState.title.subTitulo = '';
+    this.shellState.title.subTitulo =
+    'Submódulo de seguridad que permite <strong>modificar los datos de la cuenta</strong> del usuario autenticado';
 
     // se obtiene los datos de la cuenta de autenticacion
     this.userAccount = this.shellState.userAccount;
@@ -92,6 +96,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
       this.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
       this.soloLecturaCuenta = true;
       this.soloLecturaClave = true;
+      this.isPanelClaveClose = true;
     }
   }
 
@@ -101,5 +106,9 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
 
   public habilitarEdicionClave(): void {
     this.soloLecturaClave = !this.soloLecturaClave;
+  }
+  public prueba() {
+    this.isPanelClaveClose = !this.isPanelClaveClose;
+    console.log('invocado');
   }
 }
