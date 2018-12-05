@@ -29,4 +29,7 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - La nueva contrasenia debe ser diferente a la contrasenia actual*/
   static readonly KEY_CLAVE_ACTUAL_IGUAL: string = '8';
+
+  /** 400 - El usuario de ingreso debe tener al menos 10 caracteres*/
+  static readonly KEY_USER_INGRESO_LONGITUD_NO_PERMITIDA: string = '9';
 }

@@ -147,6 +147,11 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.CLAVE_ACTUAL_IGUAL;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_USER_INGRESO_LONGITUD_NO_PERMITIDA: {
+        businessMsj = MessagesBackendConstant.USER_INGRESO_LONGITUD_NO_PERMITIDA;
+        break;
+      }
     }
     return businessMsj;
   }
