@@ -13,32 +13,11 @@ import { MessagesBackendKeyConstant } from './../constants/messages-backend-key.
  */
 export class CommonComponent {
 
-  /** bandera que identifica si ya se hizo submit */
-  protected submitted: boolean;
-
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    */
   constructor(protected messageService?: MessageService) {}
-
-  /**
-   * Metodo que permite establecer que el user ya hizo submitted
-   */
-  protected onSubmit(): boolean {
-    if (this.messageService) {
-      this.messageService.clear();
-    }
-    this.submitted = true;
-    return this.submitted;
-  }
-
-  /**
-   * Metodo que permite limpiar el submit
-   */
-  protected cleanSubmit(): void {
-    this.submitted = false;
-  }
 
   /**
    * Metodo que permite limpiar los mensajes

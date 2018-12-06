@@ -46,7 +46,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
   /**
    * Metodo que soporta el evento click del boton iniciar sesion
    */
-  public iniciarSesion(): void {
+  public iniciarSesion(formLogin): void {
 
     // se valida la nulalidad de las credenciales
     if (this.credenciales &&
@@ -68,7 +68,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
         error => {
           this.msjError = this.showMensajeError(error);
           this.credenciales.clave = null;
-          this.cleanSubmit();
+          formLogin.submitted = false;
         }
       );
     }
@@ -78,7 +78,6 @@ export class LoginComponent extends CommonComponent implements OnInit {
    * Metodo que es ejecutado antes de invocar el metodo iniciar sesion
    */
   public beforeIniciarSesion(): boolean {
-    this.onSubmit();
     this.msjError = null;
     return true;
   }
