@@ -128,10 +128,8 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     }
 
     // se valida si el usuario de ingreso fue modificado
-    this.datosUserModificar.userIngresoModificado = false;
-    if (this.datosUserModificar.usuarioIngreso !== this.userAccount.usuario.usuarioIngreso) {
-        this.datosUserModificar.userIngresoModificado = true;
-    }
+    this.datosUserModificar.userIngresoModificado =
+    this.datosUserModificar.usuarioIngreso !== this.userAccount.usuario.usuarioIngreso;
 
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
@@ -142,13 +140,13 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
         // se procede a modificar los datos de la cuenta
         this.cuentaUserService.modificarDatosCuenta(this.datosUserModificar).subscribe(
           data => {
-            // se notifica el cambios de los datos en el shell de la aplicacion
+            // se notifica los cambios en el shell de la aplicacion
             this.userAccount.changeStateCuentaUser(this.datosUserModificar);
 
             // Se crea el DTO para la modificacion de la cuenta del usuario
             this.setDatosUserModificar();
 
-            // se desactiva el panel de la cuenta del user
+            // se desactiva los input del panel cuenta
             this.soloLecturaCuenta = true;
 
             // se muestra el mensaje exitoso en pantalla
@@ -183,7 +181,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
             // Se reinicia los datos
             this.cambioClave = new CambioClaveDTO();
 
-            // se desactiva el panel de la clave
+            // se desactiva los input del panel clave
             this.soloLecturaClave = true;
 
             // se reinicia el submitted del formulario de la cuenta
