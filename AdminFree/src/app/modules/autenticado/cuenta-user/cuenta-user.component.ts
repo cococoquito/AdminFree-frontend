@@ -99,7 +99,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     // Se crear el DTO para la modificacion de la cuenta del usuario
     this.setDatosUserModificar();
 
-    // DTO para la modificacion de la constrasenia
+    // DTO para la modificacion de la contrasenia
     this.cambioClave = new CambioClaveDTO();
 
     // se inicializa los paneles como solo lectura
@@ -234,7 +234,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     // se limpia los mensajes anteriores
     this.messageService.clear();
 
-    // se reinicia el submitted del formulario de la cuenta
+    // se reinicia el submitted del formulario clave
     formClave.submitted = false;
 
     // si se desactiva el panel se limpia los datos
