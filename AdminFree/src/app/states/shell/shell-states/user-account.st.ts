@@ -65,6 +65,23 @@ export class UserAccountST {
   }
 
   /**
+   * Metodo que es invocado cuando los datos del
+   * usuario cambia su estado
+   */
+  public changeStateCuentaUser(newData: UsuarioDTO): void {
+    // se configura el nombre y el usuario de ingreso
+    this.usuario.nombre = newData.nombre;
+    if (newData.userIngresoModificado) {
+      this.usuario.usuarioIngreso = newData.usuarioIngreso;
+    }
+
+    // se configur los cambios en el local-store
+    const welcomeDTO: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
+    welcomeDTO.usuario = this.usuario;
+    LocalStoreUtil.welcome(TipoEventoConstant.SET, welcomeDTO);
+  }
+
+  /**
    * Permite configurar los datos de la cuenta del usuario
    * @param welcomeDTO, Contiene los datos de la cuenta del user
    */

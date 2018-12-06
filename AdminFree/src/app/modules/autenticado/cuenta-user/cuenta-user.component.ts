@@ -143,8 +143,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
         this.cuentaUserService.modificarDatosCuenta(this.datosUserModificar).subscribe(
           data => {
             // se notifica el cambios de los datos en el shell de la aplicacion
-            this.shellState.userAccount.usuario.nombre = this.datosUserModificar.nombre;
-            this.shellState.userAccount.usuario.usuarioIngreso = this.datosUserModificar.usuarioIngreso;
+            this.userAccount.changeStateCuentaUser(this.datosUserModificar);
 
             // Se crea el DTO para la modificacion de la cuenta del usuario
             this.setDatosUserModificar();
