@@ -53,4 +53,7 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando los datos de la cuenta fue actuazalida */
   static readonly DATOS_CUENTA_ACTUALIZADO = 'Datos de la cuenta actualizado';
+
+  /** Mensaje para el cambio de los datos de la cuenta */
+  static readonly CAMBIAR_DATOS_CUENTA_USER: string = '¿Está seguro de modificar los datos de la cuenta?';
 }

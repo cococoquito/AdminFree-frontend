@@ -96,11 +96,8 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
       return;
     }
 
-    // DTO para la modificacion de la cuenta del usuario
-    this.datosUserModificar = new UsuarioDTO();
-    this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
-    this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
-    this.datosUserModificar.id = this.userAccount.usuario.id;
+    // Se crear el DTO para la modificacion de la cuenta del usuario
+    this.setDatosUserModificar();
 
     // DTO para la modificacion de la constrasenia
     this.cambioClave = new CambioClaveDTO();
@@ -113,72 +110,104 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     this.isPanelClaveClose = true;
   }
 
+  /**
+   * Metodo que permite modificar los datos de la Cuenta
+   * soporta el evento click del boton aplicar cambios
+   */
   public modificarDatosCuenta(): void {
-    this.datosUserModificar.nombre = this.setTrim(
-      this.datosUserModificar.nombre
-    );
-    this.datosUserModificar.usuarioIngreso = this.setTrim(
-      this.datosUserModificar.usuarioIngreso
-    );
 
-    if (
-      this.datosUserModificar.nombre === this.userAccount.usuario.nombre &&
-      this.datosUserModificar.usuarioIngreso ===
-        this.userAccount.usuario.usuarioIngreso
-    ) {
-      this.soloLecturaCuenta = true;
-      return;
+    // se eliminan los espacios en blanco inicio - final
+    this.datosUserModificar.nombre = this.setTrim(this.datosUserModificar.nombre);
+    this.datosUserModificar.usuarioIngreso = this.setTrim(this.datosUserModificar.usuarioIngreso);
+
+    // se valida si hay alguna modificacion en los datos de la cuenta
+    if (this.datosUserModificar.nombre === this.userAccount.usuario.nombre &&
+        this.datosUserModificar.usuarioIngreso === this.userAccount.usuario.usuarioIngreso) {
+        this.soloLecturaCuenta = true;
+        return;
     }
 
+    // se valida si el usuario de ingreso fue modificado
     this.datosUserModificar.userIngresoModificado = false;
-    if (
-      this.datosUserModificar.usuarioIngreso !==
-      this.userAccount.usuario.usuarioIngreso
-    ) {
-      this.datosUserModificar.userIngresoModificado = true;
+    if (this.datosUserModificar.usuarioIngreso !== this.userAccount.usuario.usuarioIngreso) {
+        this.datosUserModificar.userIngresoModificado = true;
     }
 
-    this.cuentaUserService
-      .modificarDatosCuenta(this.datosUserModificar)
-      .subscribe(
-        data => {
-          this.shellState.userAccount.usuario.nombre = this.datosUserModificar.nombre;
-          this.shellState.userAccount.usuario.usuarioIngreso = this.datosUserModificar.usuarioIngreso;
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CAMBIAR_DATOS_CUENTA_USER,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
 
-          this.datosUserModificar = new UsuarioDTO();
-          this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
-          this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
-          this.datosUserModificar.id = this.userAccount.usuario.id;
+        // se procede a modificar los datos de la cuenta
+        this.cuentaUserService.modificarDatosCuenta(this.datosUserModificar).subscribe(
+          data => {
+            // se notifica el cambios de los datos en el shell de la aplicacion
+            this.shellState.userAccount.usuario.nombre = this.datosUserModificar.nombre;
+            this.shellState.userAccount.usuario.usuarioIngreso = this.datosUserModificar.usuarioIngreso;
 
-          this.soloLecturaCuenta = true;
-          this.messageService.add(
-            MsjUtil.getToastSuccess(MsjFrontConstant.DATOS_CUENTA_ACTUALIZADO)
-          );
-        },
-        error => {
-          this.messageService.add(
-            MsjUtil.getMsjError(this.showMensajeError(error))
-          );
-        }
-      );
+            // Se crea el DTO para la modificacion de la cuenta del usuario
+            this.setDatosUserModificar();
+
+            // se desactiva el panel de la cuenta del user
+            this.soloLecturaCuenta = true;
+
+            // se muestra el mensaje exitoso en pantalla
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.DATOS_CUENTA_ACTUALIZADO));
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 
-  public habilitarEdicionCuenta(): void {
+  /**
+   * Metodo que soporta el evento click del boton
+   * para habilitar le edicion del panel cuenta user
+   */
+  public habilitarEdicionPanelCuenta(formCuenta): void {
+
+    // se cambia la bandera solo lectura del panel
     this.soloLecturaCuenta = !this.soloLecturaCuenta;
+
+    // se limpia los mensajes anteriores
     this.messageService.clear();
 
+    // se reinicia el submitted del formulario de la cuenta
+    formCuenta.submitted = false;
+
+    // si se desactiva el panel se deja los datos originales
     if (this.soloLecturaCuenta) {
-      this.datosUserModificar = new UsuarioDTO();
-      this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
-      this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
-      this.datosUserModificar.id = this.userAccount.usuario.id;
+      this.setDatosUserModificar();
     }
   }
 
-  public habilitarEdicionClave(): void {
+  /**
+   * Metodo que soporta el evento click del boton
+   * para habilitar le edicion del panel contrasenia
+   */
+  public habilitarEdicionPanelClave(): void {
     this.soloLecturaClave = !this.soloLecturaClave;
   }
-  public togglePanel() {
+
+  /**
+   * Se utiliza para abrir y cerrar los paneles de
+   * modificar cuenta user y contrasenia
+   */
+  public togglePaneles() {
     this.isPanelClaveClose = !this.isPanelClaveClose;
+  }
+
+  /**
+   * Metodo que permite crear el DTO para configurar
+   * los datos de la cuenta del usuario
+   */
+  private setDatosUserModificar(): void {
+    this.datosUserModificar = new UsuarioDTO();
+    this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
+    this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
+    this.datosUserModificar.id = this.userAccount.usuario.id;
   }
 }

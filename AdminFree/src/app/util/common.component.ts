@@ -41,6 +41,17 @@ export class CommonComponent {
   }
 
   /**
+   * Metodo que permite limpiar los mensajes
+   * visualizados en pantalla
+   */
+  protected limpiarMensajes(): boolean {
+    if (this.messageService) {
+      this.messageService.clear();
+    }
+    return true;
+  }
+
+  /**
    * Metodo que permite mostrar solo el mensaje de error
    *
    * @param error, Es el Http error retornado del servidor
