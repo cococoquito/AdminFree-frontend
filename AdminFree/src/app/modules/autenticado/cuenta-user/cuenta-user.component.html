@@ -60,8 +60,9 @@
           <div class="form-group col-md-12 text-center margin-name">
 
             <!-- toggle - activar-desactivar -->
-            <div class="toggle btn" [ngClass]="soloLecturaCuenta?'btn-round-teal':'btn-secondary off'"
-              (click)="habilitarEdicionPanelCuenta(formCuenta)">
+            <div class="toggle btn"
+              (click)="habilitarEdicionPanelCuenta(formCuenta)"
+              [ngClass]="soloLecturaCuenta?'btn-round-teal':'btn-secondary off'">
               <div class="toggle-group">
                 <label class="btn-toggle btn-round-teal toggle-on font-new-roman">
                   <i class="fa fa-pencil"></i> Activar Edición
@@ -100,7 +101,7 @@
       <form
         #formClave="ngForm" name="formClave"
         novalidate (keydown.enter)="$event.preventDefault()"
-        (ngSubmit)="onSubmit() && formClave.form.valid">
+        (ngSubmit)="limpiarMensajes() && formClave.form.valid && modificarClaveIngreso(formClave)">
 
         <!-- clave - actual -->
         <div class="form-row justify-content-center">
@@ -117,7 +118,7 @@
               adminRequired
               [readonly]="soloLecturaClave"
               class="form-control font-size-14"
-              [ngClass]="(submitted && !inClaveActual.valid) ? 'input-invalido' : 'input-valido'" />
+              [ngClass]="(formClave.submitted && !inClaveActual.valid) ? 'input-invalido' : 'input-valido'" />
           </div>
         </div>
 
@@ -136,7 +137,7 @@
               adminRequired
               [readonly]="soloLecturaClave"
               class="form-control font-size-14"
-              [ngClass]="(submitted && !inClaveNueva.valid) ? 'input-invalido' : 'input-valido'" />
+              [ngClass]="(formClave.submitted && !inClaveNueva.valid) ? 'input-invalido' : 'input-valido'" />
           </div>
         </div>
 
@@ -155,15 +156,17 @@
               adminRequired
               [readonly]="soloLecturaClave"
               class="form-control font-size-14"
-              [ngClass]="(submitted && !inConfClave.valid) ? 'input-invalido' : 'input-valido'" />
+              [ngClass]="(formClave.submitted && !inConfClave.valid) ? 'input-invalido' : 'input-valido'" />
           </div>
         </div>
 
-        <!-- submit -->
         <div class="form-row">
           <div class="form-group col-md-12 text-center margin-name">
+
             <!-- toggle - activar-desactivar -->
-            <div class="toggle btn" [ngClass]="soloLecturaClave?'btn-round-teal':'btn-secondary off'" (click)="habilitarEdicionPanelClave()">
+            <div class="toggle btn"
+              [ngClass]="soloLecturaClave?'btn-round-teal':'btn-secondary off'"
+              (click)="habilitarEdicionPanelClave(formClave)">
               <div class="toggle-group">
                 <label class="btn-toggle btn-round-teal toggle-on font-new-roman">
                   <i class="fa fa-pencil"></i> Activar Edición
@@ -176,7 +179,7 @@
             </div>
 
             <!-- cambiar - contrasenia -->
-            <button (click)="formClave.ngSubmit.emit()" type="button" class="btn btn-primary btn-sm mx-3" [disabled]="soloLecturaClave">
+            <button (click)="formClave.onSubmit()" type="button" class="btn btn-primary btn-sm mx-3" [disabled]="soloLecturaClave">
               <i class="fa fa-unlock-alt"></i>
               <span class="btn-size-admin"> Cambiar Contraseña</span>
             </button>

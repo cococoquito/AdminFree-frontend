@@ -164,6 +164,44 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   }
 
   /**
+   * Metodo que permite soportar el evento click
+   * del boton Cambiar Contrasenia
+   */
+  public modificarClaveIngreso(formCuenta): void {
+
+    // se configura el id del usuario autenticado
+    this.cambioClave.idUsuario = this.userAccount.usuario.id;
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CAMBIAR_CLAVE_INGRESO,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se procede a modificar la clave de ingreso
+        this.cuentaUserService.modificarClaveIngreso(this.cambioClave).subscribe(
+          data => {
+            // Se reinicia los datos
+            this.cambioClave = new CambioClaveDTO();
+
+            // se desactiva el panel de la clave
+            this.soloLecturaClave = true;
+
+            // se reinicia el submitted del formulario de la cuenta
+            formCuenta.submitted = false;
+
+            // se muestra el mensaje exitoso en pantalla
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CLAVE_INGRESO_ACTUALIZADO));
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
+  }
+
+  /**
    * Metodo que soporta el evento click del boton
    * para habilitar le edicion del panel cuenta user
    */
@@ -188,8 +226,21 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
    * Metodo que soporta el evento click del boton
    * para habilitar le edicion del panel contrasenia
    */
-  public habilitarEdicionPanelClave(): void {
+  public habilitarEdicionPanelClave(formClave): void {
+
+    // se cambia la bandera solo lectura del panel
     this.soloLecturaClave = !this.soloLecturaClave;
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se reinicia el submitted del formulario de la cuenta
+    formClave.submitted = false;
+
+    // si se desactiva el panel se limpia los datos
+    if (this.soloLecturaClave) {
+      this.cambioClave = new CambioClaveDTO();
+    }
   }
 
   /**
