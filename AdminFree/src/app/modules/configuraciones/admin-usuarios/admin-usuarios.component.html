@@ -66,9 +66,9 @@
     </p>
 
     <form
-      #f="ngForm" name="form"
+      #formUser="ngForm" name="formUser"
       novalidate (keydown.enter)="$event.preventDefault()"
-      (ngSubmit)="onSubmit() && f.form.valid && showModalCrearUsuario()">
+      (ngSubmit)="limpiarMensajes() && formUser.form.valid && showModalCrearUsuario(formUser)">
 
       <div class="form-row">
         <!-- nombre -->
@@ -82,7 +82,7 @@
             adminRequired
             adminAutofocus
             class="form-control font-size-14"
-            [ngClass]="(submitted && !username.valid) ? 'input-invalido' : 'input-valido'" />
+            [ngClass]="(formUser.submitted && !username.valid) ? 'input-invalido' : 'input-valido'" />
         </div>
 
         <!-- usuario - ingreso -->
@@ -95,7 +95,7 @@
             maxlength="50"
             adminRequired
             class="form-control font-size-14"
-            [ngClass]="(submitted && !useringreso.valid) ? 'input-invalido' : 'input-valido'" />
+            [ngClass]="(formUser.submitted && !useringreso.valid) ? 'input-invalido' : 'input-valido'" />
         </div>
       </div>
 
