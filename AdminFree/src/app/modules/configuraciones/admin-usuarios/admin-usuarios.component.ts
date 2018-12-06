@@ -42,9 +42,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** DTO que se utiliza para la edicion de los modulos */
   public usuarioEdicionModulos: UsuarioDTO;
 
-  /** Es el formulario de la creacion del usuario */
-  private formUser: any;
-
   /**
    * DTO que contiene los datos del cliente autenticado o
    * es el cliente asociados al usuario autenticado
@@ -130,9 +127,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
 
         // se limpian los datos del usuario ingresado
         this.initPanelCrearUsuario();
-
-        // se limpia el subtmit del formulario
-        this.formUser.submitted = false;
 
         // se cierra el modal de confirmacion creacion usuario
         this.isModalCrearUsuario = false;
@@ -286,9 +280,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * Metodo que permite validar si se debe mostrar el modal de creacion
    */
   public showModalCrearUsuario(formCreateUser): void {
-    // se configura el formulario
-    this.formUser = formCreateUser;
-
     // el modal se inicializa como visualizado
     this.isModalCrearUsuario = true;
 
@@ -302,6 +293,9 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         this.messageService.add(MsjUtil.getMsjErrorValidacion(MsjFrontConstant.MODULOS_USER));
         this.isModalCrearUsuario = false;
     }
+
+    // se configura el submmitted del formulario crear user
+    formCreateUser.submitted = !this.isModalCrearUsuario;
   }
 
   /**
