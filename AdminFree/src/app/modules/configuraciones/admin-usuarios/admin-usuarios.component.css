@@ -1,18 +1,8 @@
-.btn-registrar-user {
-  margin-bottom: 3px;
-}
-
 .text-assign-modulos {
   font-size: 14px;
   line-height: 1.8;
-  background-color: #f4f4f4;
-  color: #212121;
   font-weight: bold;
   text-align: center;
-}
-
-.tbl-modulos {
-  margin-bottom: 0px !important;
 }
 
 .btn-regresar {
@@ -24,11 +14,6 @@
   min-width: 8em;
 }
 
-.title-modal-creacion {
-  margin-bottom: 20px;
-  background-color: #f4f4f4;
-}
-
 .nombre-usuario-in {
   border-bottom: 1px solid #c8c8c8;
   border-top: 1px solid #c8c8c8;
@@ -38,18 +23,9 @@
   border-bottom: 1px solid #c8c8c8;
 }
 
-.margin-bottom-mdl {
-  margin-bottom: 5px;
-}
-
-.margin-top-mdl {
-  margin-top: 20px;
-}
-
 .info-text {
   font-size: 14px;
-  margin-bottom: 5px !important;
+  margin-bottom: 20px !important;
   text-align: center;
   font-family: Times, Times New Roman, serif !important;
-  background-color: #f4f4f4;
 }

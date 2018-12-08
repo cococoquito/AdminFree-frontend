@@ -2,7 +2,7 @@
 <div *ngIf="!usuarioCrear">
 
   <!-- boton crear usuario -->
-  <div class="text-right btn-registrar-user">
+  <div class="text-right mb-1">
     <button type="button" class="btn btn-success btn-sm" (click)="showPanelCrearUsuario()">
       <label class="btn-size-admin"><i class="fa fa-user-plus"></i> Registrar Usuario</label>
     </button>
@@ -61,7 +61,7 @@
     </p-header>
 
     <p class="info-text">
-      <i class="fa fa-info-circle font-size-16"></i>
+      <i class="fa fa-info-circle font-size-16 color-teal"></i>
       <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña</strong>
     </p>
 
@@ -70,10 +70,10 @@
       novalidate (keydown.enter)="$event.preventDefault()"
       (ngSubmit)="limpiarMensajes() && formUser.form.valid && showModalCrearUsuario(formUser)">
 
-      <div class="form-row">
+      <div class="form-row w-90 mx-auto">
         <!-- nombre -->
-        <div class="form-group col-md-6">
-          <label class="col-form-label font-weight-bold" for="username">Nombre Completo: *</label>
+        <div class="form-group col-md-6 pr-5">
+          <label class="ad-input-label font-weight-bold" for="username">Nombre Completo:</label>
           <input type="text"
             name="username"
             #username="ngModel"
@@ -81,27 +81,29 @@
             maxlength="100"
             adminRequired
             adminAutofocus
-            class="form-control font-size-14"
-            [ngClass]="(formUser.submitted && !username.valid) ? 'input-invalido' : 'input-valido'" />
+            class="ad-input ad-input-style w-100"
+            [ngClass]="{'ad-input-required' : (formUser.submitted && !username.valid)}"/>
+          <div class="focus-border"></div>
         </div>
 
         <!-- usuario - ingreso -->
-        <div class="form-group col-md-6">
-          <label class="col-form-label font-weight-bold" for="useringreso">Usuario de Ingreso: *</label>
+        <div class="form-group col-md-6 pr-5">
+          <label class="ad-input-label font-weight-bold" for="useringreso">Usuario de Ingreso:</label>
           <input type="text"
             name="useringreso"
             #useringreso="ngModel"
             [(ngModel)]="usuarioCrear.usuarioIngreso"
             maxlength="50"
             adminRequired
-            class="form-control font-size-14"
-            [ngClass]="(formUser.submitted && !useringreso.valid) ? 'input-invalido' : 'input-valido'" />
+            class="ad-input ad-input-style w-100"
+            [ngClass]="{'ad-input-required' : (formUser.submitted && !useringreso.valid)}"/>
+          <div class="focus-border"></div>
         </div>
       </div>
 
       <!-- asignacion - modulos -->
       <div>
-        <p class="text-assign-modulos"><i class="fa fa-cog"></i> Asigne los módulos para el nuevo usuario</p>
+        <p class="text-assign-modulos"><i class="fa fa-info-circle color-teal font-size-16"></i> Asigne los módulos para el nuevo usuario</p>
         <ng-container *ngTemplateOutlet="tblModulos"></ng-container>
       </div>
 
@@ -122,7 +124,7 @@
 <!-- modal de confirmacion de crear usuario -->
 <p-dialog header="Ventana de Confirmación" [(visible)]="isModalCrearUsuario" *ngIf="usuarioCrear" modal="true">
 
-  <div class="text-center title-modal-creacion">
+  <div class="text-center mb-3">
     <p class="font-weight-bold font-new-roman font-size-16">¿Está seguro de crear el usuario con los siguientes datos?</p>
   </div>
 
@@ -139,7 +141,7 @@
 
   <div class="form-row border-bottom-mdl">
     <div class="form-group col-md-12">
-      <p class="text-center font-weight-bold font-new-roman font-size-16 margin-bottom-mdl">Módulos asignados</p>
+      <p class="text-center font-weight-bold font-new-roman font-size-16 mb-3"> <i class="fa fa-info-circle color-teal font-size-16"></i> Módulos asignados</p>
       <div class="custom-control custom-control-inline">
         <p-checkbox [ngModel]="selectedModulos" label="Correspondencia" value="1" disabled></p-checkbox>
       </div>
@@ -155,7 +157,7 @@
     </div>
   </div>
 
-  <div class="text-center margin-top-mdl">
+  <div class="text-center mt-3">
     <button type="button" class="btn btn-success btn-sm btn-regresar" (click)="crearUsuario()">
       <label class="btn-size-admin"><i class="fa fa-user-plus"></i> Crear Usuario</label>
     </button>
@@ -168,12 +170,12 @@
 <!-- modal de edicion de modulos -->
 <p-dialog header="Edición de Módulos" [(visible)]="isModalEdicionModulos" *ngIf="usuarioEdicionModulos" modal="true">
 
-  <div class="text-center">
+  <div class="text-center mb-3">
     <p class="font-weight-bold font-new-roman font-size-16">{{usuarioEdicionModulos.nombre}}</p>
   </div>
 
   <div>
-    <p class="text-assign-modulos"><i class="fa fa-cog"></i> Módulos Asignados</p>
+    <p class="text-assign-modulos"><i class="fa fa-info-circle color-teal font-size-16"></i> Módulos Asignados</p>
     <ng-container *ngTemplateOutlet="tblModulos"></ng-container>
   </div>
 
@@ -189,7 +191,7 @@
 
 <!-- template asignacion - edicion modulos -->
 <ng-template #tblModulos>
-  <table class="table table-hover tbl-modulos">
+  <table class="table table-hover mb-0">
     <tbody>
       <tr>
         <td>
