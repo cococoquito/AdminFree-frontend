@@ -16,16 +16,12 @@
 }
 
 .sub-title {
-  margin-bottom: 8px;
-}
-
-.sub-title_ {
   font-size: 14px;
   font-weight: normal;
 }
 
 .msj-error {
-  font-size: 13px;
+  font-size: 14px;
   margin-bottom: 0px;
 }
 
@@ -44,16 +40,8 @@
   background-color: #344397;
 }
 
-.margin-bottom-30 {
-  margin-bottom: 30px;
-}
-
-.margin-bottom-5 {
-  margin-bottom: 5px;
-}
-
 .panel-form {
-  width: 80%;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -61,31 +49,4 @@
 .label-login {
   color: #3f51b5;
   margin-bottom: .2rem;
-}
-
-.input-login {
-  background: transparent no-repeat;
-  background-image: linear-gradient(to bottom, #3f51b5, #3f51b5), linear-gradient(to bottom, #bdbdbd, #bdbdbd);
-  background-size: 0 2px, 100% 1px;
-  background-position: 50% 100%, 50% 100%;
-  transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  border-width: 0 !important;
-  padding: 2px;
-  font-size: 1em;
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  border-radius: 0px;
-}
-
-.input-login-inv {
-  background-image: linear-gradient(to bottom, #a94442, #a94442), linear-gradient(to bottom, #a94442, #a94442);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
-}
-
-#clave:focus {
-  border-bottom: 1px solid #3F51B5!important;
-}
-
-#username:focus {
-  border-bottom: 1px solid #3F51B5!important;
 }

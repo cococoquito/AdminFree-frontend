@@ -10,8 +10,8 @@
       <div class="card-header color-header">
         <div class="row">
           <div class="col-6 font-admin title">
-            <p class="sub-title">INICIAR SESIÓN</p>
-            <p class="sub-title_">Bienvenido</p>
+            <p class="mb-2">INICIAR SESIÓN</p>
+            <p class="sub-title">Bienvenido</p>
           </div>
           <div class="col-6 text-right">
             <img class="rounded" src="assets/harmony-logo.png" alt="logo">
@@ -30,7 +30,7 @@
             (keydown.enter)="$event.preventDefault()" novalidate class="font-size-14">
 
             <!-- usuario y password o token-->
-            <div class="form-group row margin-bottom-30">
+            <div class="form-group mb-4">
               <label for="username" class="font-new-roman label-login">Usuario</label>
               <input
                 type="text"
@@ -40,13 +40,14 @@
                 #username="ngModel"
                 [(ngModel)]="credenciales.usuario"
                 maxlength="50"
-                size="40"
                 adminRequired
                 adminAutofocus
-                class="ui-inputtext input-login"
-                [ngClass]="(formLogin.submitted && !username.valid) ? 'input-login-inv' : ''"/>
+                class="ad-input ad-input-style w-100"
+                [ngClass]="{'ad-input-required' : (formLogin.submitted && !username.valid)}"/>
+              <div class="focus-border"></div>
             </div>
-            <div class="form-group row">
+
+            <div class="form-group">
               <label for="clave" class="font-new-roman label-login">{{credenciales.administrador ? 'Token' : 'Contraseña'}}</label>
               <input
                 type="password"
@@ -56,14 +57,14 @@
                 #clave="ngModel"
                 [(ngModel)]="credenciales.clave"
                 maxlength="50"
-                size="40"
                 adminRequired
-                class="ui-inputtext input-login"
-                [ngClass]="(formLogin.submitted && !clave.valid) ? 'input-login-inv' : ''"/>
+                class="ad-input ad-input-style w-100"
+                [ngClass]="{'ad-input-required' : (formLogin.submitted && !clave.valid)}"/>
+              <div class="focus-border"></div>
             </div>
 
             <!-- ckeck ingresar como admin-->
-            <div class="form-group row">
+            <div class="form-group">
               <div class="custom-control custom-checkbox">
                 <input id="checkAdmin" type="checkbox" (click)="toogleAdmin()" class="custom-control-input">
                 <label for="checkAdmin" class="custom-control-label font-new-roman font-size-15">Ingresar como administrador</label>
@@ -71,13 +72,13 @@
             </div>
 
             <!-- boton - ingreso-->
-            <div class="form-group row margin-bottom-5">
+            <div class="form-group mb-2 mt-4">
               <button type="submit" class="btn btn-primary btn-sm w-100 btn-login">
                 <i class="fa fa-user-circle-o font-size-18"></i>
                 <span class="font-new-roman font-size-16"> Entrar</span>
               </button>
             </div>
-            <p class="text-danger text-center msj-error font-new-roman font-size-15">{{msjError}}</p>
+            <p class="text-danger text-center msj-error font-new-roman">{{msjError}}</p>
           </form>
         </div>
       </div>
