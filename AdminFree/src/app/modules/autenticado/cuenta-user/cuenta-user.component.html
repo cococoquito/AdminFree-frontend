@@ -8,7 +8,7 @@
     </p-header>
 
     <div class="w-80 mx-auto">
-      <p class="info-text font-new-roman text-center m-bottom-15">
+      <p class="info-text font-new-roman text-center mb-4">
         <i class="fa fa-info-circle font-size-16"></i>
         <strong> El Usuario de Ingreso debe tener al menos 10 caracteres y no puede contener espacios en blanco</strong>
       </p>
@@ -19,9 +19,9 @@
         (ngSubmit)="limpiarMensajes() && formCuenta.form.valid && modificarDatosCuenta()">
 
         <!-- Nombre - user -->
-        <div class="form-row justify-content-center">
+        <div class="form-row justify-content-center mb-3">
           <div class="form-group col-md-6">
-            <label for="inNombre" class="col-form-label font-weight-bold">Nombre Completo:</label>
+            <label for="inNombre" class="ad-input-label font-weight-bold">Nombre Completo:</label>
             <input
               id="inNombre"
               type="text"
@@ -32,15 +32,16 @@
               maxlength="100"
               adminRequired
               [readonly]="soloLecturaCuenta"
-              class="form-control font-size-14"
-              [ngClass]="(formCuenta.submitted && !inNombre.valid) ? 'input-invalido' : 'input-valido'" />
+              class="ad-input ad-input-style w-100"
+              [ngClass]="(formCuenta.submitted && !inNombre.valid) ? 'ad-input-required' : ''" />
+            <div class="focus-border"></div>
           </div>
         </div>
 
         <!-- usuario - ingreso -->
         <div class="form-row justify-content-center">
           <div class="form-group col-md-6">
-            <label class="col-form-label font-weight-bold" for="inUserIngreso">Usuario de Ingreso:</label>
+            <label class="ad-input-label font-weight-bold" for="inUserIngreso">Usuario de Ingreso:</label>
             <input
               id="inUserIngreso"
               type="text"
@@ -51,8 +52,9 @@
               maxlength="50"
               adminRequired
               [readonly]="soloLecturaCuenta"
-              class="form-control font-size-14"
-              [ngClass]="(formCuenta.submitted && !inUserIngreso.valid) ? 'input-invalido' : 'input-valido'" />
+              class="ad-input ad-input-style w-100"
+              [ngClass]="(formCuenta.submitted && !inUserIngreso.valid) ? 'ad-input-required' : ''" />
+            <div class="focus-border"></div>
           </div>
         </div>
 
@@ -93,7 +95,7 @@
     </p-header>
 
     <div class="w-80 mx-auto">
-      <p class="info-text font-new-roman text-center m-bottom-15">
+      <p class="info-text font-new-roman text-center mb-4">
         <i class="fa fa-info-circle font-size-16"></i>
         <strong> La nueva contraseña debe tener al menos 12 caracteres y no puede contener espacios en blanco</strong>
       </p>
@@ -106,7 +108,7 @@
         <!-- clave - actual -->
         <div class="form-row justify-content-center">
           <div class="form-group col-md-6">
-            <label class="col-form-label font-weight-bold" for="inClaveActual">Contraseña Actual:</label>
+            <label class="ad-input-label font-weight-bold" for="inClaveActual">Contraseña Actual:</label>
             <input
               id="inClaveActual"
               type="password"
@@ -117,15 +119,16 @@
               maxlength="50"
               adminRequired
               [readonly]="soloLecturaClave"
-              class="form-control font-size-14"
-              [ngClass]="(formClave.submitted && !inClaveActual.valid) ? 'input-invalido' : 'input-valido'" />
+              class="ad-input ad-input-style w-100"
+              [ngClass]="(formClave.submitted && !inClaveActual.valid) ? 'ad-input-required' : ''" />
+            <div class="focus-border"></div>
           </div>
         </div>
 
         <!-- nueva - clave -->
         <div class="form-row justify-content-center">
           <div class="form-group col-md-6">
-            <label class="col-form-label font-weight-bold" for="inClaveNueva">Nueva Contraseña:</label>
+            <label class="ad-input-label font-weight-bold" for="inClaveNueva">Nueva Contraseña:</label>
             <input
               id="inClaveNueva"
               type="password"
@@ -136,15 +139,16 @@
               maxlength="50"
               adminRequired
               [readonly]="soloLecturaClave"
-              class="form-control font-size-14"
-              [ngClass]="(formClave.submitted && !inClaveNueva.valid) ? 'input-invalido' : 'input-valido'" />
+              class="ad-input ad-input-style w-100"
+              [ngClass]="(formClave.submitted && !inClaveNueva.valid) ? 'ad-input-required' : ''" />
+            <div class="focus-border"></div>
           </div>
         </div>
 
         <!-- confirmar - clave -->
         <div class="form-row justify-content-center">
           <div class="form-group col-md-6">
-            <label class="col-form-label font-weight-bold" for="inConfClave">Confirmar Contraseña:</label>
+            <label class="ad-input-label font-weight-bold" for="inConfClave">Confirmar Contraseña:</label>
             <input
               id="inConfClave"
               type="password"
@@ -155,8 +159,9 @@
               maxlength="50"
               adminRequired
               [readonly]="soloLecturaClave"
-              class="form-control font-size-14"
-              [ngClass]="(formClave.submitted && !inConfClave.valid) ? 'input-invalido' : 'input-valido'" />
+              class="ad-input ad-input-style w-100"
+              [ngClass]="(formClave.submitted && !inConfClave.valid) ? 'ad-input-required' : ''" />
+            <div class="focus-border"></div>
           </div>
         </div>
 
