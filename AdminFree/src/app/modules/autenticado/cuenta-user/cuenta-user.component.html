@@ -33,7 +33,7 @@
               adminRequired
               [readonly]="soloLecturaCuenta"
               class="ad-input ad-input-style w-100"
-              [ngClass]="(formCuenta.submitted && !inNombre.valid) ? 'ad-input-required' : ''" />
+              [ngClass]="{'ad-input-required' : (formCuenta.submitted && !inNombre.valid)}" />
             <div class="focus-border"></div>
           </div>
         </div>
@@ -53,7 +53,7 @@
               adminRequired
               [readonly]="soloLecturaCuenta"
               class="ad-input ad-input-style w-100"
-              [ngClass]="(formCuenta.submitted && !inUserIngreso.valid) ? 'ad-input-required' : ''" />
+              [ngClass]="{'ad-input-required' : (formCuenta.submitted && !inUserIngreso.valid)}"/>
             <div class="focus-border"></div>
           </div>
         </div>
@@ -120,7 +120,7 @@
               adminRequired
               [readonly]="soloLecturaClave"
               class="ad-input ad-input-style w-100"
-              [ngClass]="(formClave.submitted && !inClaveActual.valid) ? 'ad-input-required' : ''" />
+              [ngClass]="{'ad-input-required' : (formClave.submitted && !inClaveActual.valid)}"/>
             <div class="focus-border"></div>
           </div>
         </div>
@@ -140,7 +140,7 @@
               adminRequired
               [readonly]="soloLecturaClave"
               class="ad-input ad-input-style w-100"
-              [ngClass]="(formClave.submitted && !inClaveNueva.valid) ? 'ad-input-required' : ''" />
+              [ngClass]="{'ad-input-required' : (formClave.submitted && !inClaveNueva.valid)}"/>
             <div class="focus-border"></div>
           </div>
         </div>
@@ -160,7 +160,7 @@
               adminRequired
               [readonly]="soloLecturaClave"
               class="ad-input ad-input-style w-100"
-              [ngClass]="(formClave.submitted && !inConfClave.valid) ? 'ad-input-required' : ''" />
+              [ngClass]="{'ad-input-required' : (formClave.submitted && !inConfClave.valid)}"/>
             <div class="focus-border"></div>
           </div>
         </div>
