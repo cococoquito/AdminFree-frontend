@@ -143,16 +143,20 @@
     <div class="form-group col-md-12">
       <p class="text-center font-weight-bold font-new-roman font-size-16 mb-3"> <i class="fa fa-info-circle color-info font-size-16"></i> Módulos asignados</p>
       <div class="custom-control custom-control-inline">
-        <p-checkbox [ngModel]="selectedModulos" label="Correspondencia" value="1" disabled></p-checkbox>
+        <i [ngClass]="selectedModulos.correspondencia ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
+        <label class="font-weight-bold"> Correspondencia</label>
       </div>
       <div class="custom-control custom-control-inline">
-        <p-checkbox [ngModel]="selectedModulos" label="Archivo de Gestión" value="2" disabled></p-checkbox>
+        <i [ngClass]="selectedModulos.archivoGestion ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
+        <label class="font-weight-bold"> Archivo de Gestión</label>
       </div>
       <div class="custom-control custom-control-inline">
-        <p-checkbox [ngModel]="selectedModulos" label="Reportes" value="3" disabled></p-checkbox>
+        <i [ngClass]="selectedModulos.reportes ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
+        <label class="font-weight-bold"> Reportes</label>
       </div>
       <div class="custom-control custom-control-inline">
-        <p-checkbox [ngModel]="selectedModulos" label="Configuraciones" value="4" disabled></p-checkbox>
+        <i [ngClass]="selectedModulos.configuraciones ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
+        <label class="font-weight-bold"> Configuraciones</label>
       </div>
     </div>
   </div>
@@ -191,11 +195,15 @@
 
 <!-- template asignacion - edicion modulos -->
 <ng-template #tblModulos>
-  <table class="table table-hover mb-0">
+  <table class="table table-modulos table-hover mb-0">
     <tbody>
       <tr>
         <td>
-          <p-checkbox name="group" [(ngModel)]="selectedModulos" label="Correspondencia" value="1"></p-checkbox>
+          <admin-inputswitch
+            [isChecked]="selectedModulos.correspondencia"
+            label="Correspondencia"
+            (switchChange)="selectedModulos.correspondencia=$event">
+          </admin-inputswitch>
         </td>
         <td>
           <p>Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular</p>
@@ -203,7 +211,11 @@
       </tr>
       <tr>
         <td>
-          <p-checkbox name="group" label="Archivo de Gestión" [(ngModel)]="selectedModulos" value="2"></p-checkbox>
+          <admin-inputswitch
+            [isChecked]="selectedModulos.archivoGestion"
+            label="Archivo de Gestión"
+            (switchChange)="selectedModulos.archivoGestion=$event">
+          </admin-inputswitch>
         </td>
         <td>
           <p>Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales</p>
@@ -211,7 +223,11 @@
       </tr>
       <tr>
         <td>
-          <p-checkbox name="group" label="Reportes" [(ngModel)]="selectedModulos" value="3"></p-checkbox>
+          <admin-inputswitch
+            [isChecked]="selectedModulos.reportes"
+            label="Reportes"
+            (switchChange)="selectedModulos.reportes=$event">
+          </admin-inputswitch>
         </td>
         <td>
           <p>Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos</p>
@@ -219,7 +235,11 @@
       </tr>
       <tr>
         <td>
-          <p-checkbox name="group" label="Configuraciones" [(ngModel)]="selectedModulos" value="4"></p-checkbox>
+          <admin-inputswitch
+            [isChecked]="selectedModulos.configuraciones"
+            label="Configuraciones"
+            (switchChange)="selectedModulos.configuraciones=$event">
+          </admin-inputswitch>
         </td>
         <td>
           <p>Módulo administrativo del sistema, solo para usuarios con ROL de administrador</p>

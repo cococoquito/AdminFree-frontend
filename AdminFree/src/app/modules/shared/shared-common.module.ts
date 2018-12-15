@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NoEspaciosBlancoDirective } from './../../directives/validators/espacios-blanco/no-espacios-blanco.directive';
 import { AutofocusDirective } from './../../directives/focus/autofocus.directive';
+import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
 
 /**
  * Modulo que contiene los artefactos comunes,
@@ -21,11 +22,13 @@ import { AutofocusDirective } from './../../directives/focus/autofocus.directive
     CommonModule,
     FormsModule,
     NoEspaciosBlancoDirective,
-    AutofocusDirective
+    AutofocusDirective,
+    InputswitchComponent
   ],
   declarations: [
     NoEspaciosBlancoDirective,
-    AutofocusDirective
+    AutofocusDirective,
+    InputswitchComponent
   ]
 })
 export class SharedCommonModule {}

@@ -92,12 +92,12 @@
 }
 
 .color-on {
-  background-color: #2c41a5;
+  background-color: #007ad9;
   color: #fff;
 }
 
 .color-on:hover {
-  background-color: #3c50b4;
+  background-color: #1f90e7;
 }
 
 .color-off {

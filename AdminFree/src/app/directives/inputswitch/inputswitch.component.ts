@@ -13,6 +13,9 @@ export class InputswitchComponent {
   /** bandera que indica el valor seleccionado por el usuario */
   @Input() public isChecked: boolean;
 
+  /** texto al lado del componente */
+  @Input() public label: string;
+
   /** Se utiliza para notificar el cambio del input */
   @Output() public switchChange = new EventEmitter<boolean>();
 

@@ -7,6 +7,7 @@ import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MsjUtil } from './../../../util/messages.util';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
+import { ModulosCheck } from '../../../model/modulos-check';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 import { ModulesTokenConstant } from './../../../constants/modules-token.constant';
 import { EstadoConstant } from './../../../constants/estado.constant';
@@ -31,7 +32,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   public usuarioCrear: UsuarioDTO;
 
   /** Se utiliza para encapsular los modulos seleccionados */
-  public selectedModulos: string[];
+  public selectedModulos: ModulosCheck;
 
   /** bandera que se utiliza para la visualizacion del modal de creacion user */
   public isModalCrearUsuario: boolean;
@@ -289,9 +290,9 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     }
 
     // se valida si seleccionaron modulos para el nuevo usuario
-    if (!this.selectedModulos || this.selectedModulos.length === 0) {
-        this.messageService.add(MsjUtil.getMsjErrorValidacion(MsjFrontConstant.MODULOS_USER));
-        this.isModalCrearUsuario = false;
+    if (!this.selectedModulos.tieneModuloSeleccionado()) {
+      this.messageService.add(MsjUtil.getMsjErrorValidacion(MsjFrontConstant.MODULOS_USER));
+      this.isModalCrearUsuario = false;
     }
 
     // se configura el submmitted del formulario crear user
@@ -356,29 +357,17 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
 
     // contendra los modulos seleccionados
     const modulos: Array<string> = new Array<string>();
-
-    // solo aplica si hay modulos seleccionados
-    if (this.selectedModulos && this.selectedModulos.length > 0) {
-      for (const idModulo of this.selectedModulos) {
-        switch (idModulo) {
-          case '1': {
-            modulos.push(ModulesTokenConstant.TK_CORRESPONDENCIA);
-            break;
-          }
-          case '2': {
-            modulos.push(ModulesTokenConstant.TK_ARCHIVO_GESTION);
-            break;
-          }
-          case '3': {
-            modulos.push(ModulesTokenConstant.TK_REPORTES);
-            break;
-          }
-          case '4': {
-            modulos.push(ModulesTokenConstant.TK_CONFIGURACIONES);
-            break;
-          }
-        }
-      }
+    if (this.selectedModulos.configuraciones) {
+      modulos.push(ModulesTokenConstant.TK_CONFIGURACIONES);
+    }
+    if (this.selectedModulos.correspondencia) {
+      modulos.push(ModulesTokenConstant.TK_CORRESPONDENCIA);
+    }
+    if (this.selectedModulos.archivoGestion) {
+      modulos.push(ModulesTokenConstant.TK_ARCHIVO_GESTION);
+    }
+    if (this.selectedModulos.reportes) {
+      modulos.push(ModulesTokenConstant.TK_REPORTES);
     }
     return modulos;
   }
@@ -390,25 +379,25 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   private setModulosSeleccionados(modulos: Array<string>): void {
 
     // esta lista es la que apunta el componente
-    this.selectedModulos = [];
+    this.selectedModulos = new ModulosCheck();
 
     // se recorren todos los token asignados a un usuario
     for (const token of modulos) {
       switch (token) {
         case ModulesTokenConstant.TK_CORRESPONDENCIA: {
-          this.selectedModulos.push('1');
+          this.selectedModulos.correspondencia = true;
           break;
         }
         case ModulesTokenConstant.TK_ARCHIVO_GESTION: {
-          this.selectedModulos.push('2');
+          this.selectedModulos.archivoGestion = true;
           break;
         }
         case ModulesTokenConstant.TK_REPORTES: {
-          this.selectedModulos.push('3');
+          this.selectedModulos.reportes = true;
           break;
         }
         case ModulesTokenConstant.TK_CONFIGURACIONES: {
-          this.selectedModulos.push('4');
+          this.selectedModulos.configuraciones = true;
           break;
         }
       }
@@ -446,6 +435,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    */
   private initPanelCrearUsuario() {
     this.usuarioCrear = new UsuarioDTO();
-    this.selectedModulos = [];
+    this.selectedModulos = new ModulosCheck();
   }
 }
