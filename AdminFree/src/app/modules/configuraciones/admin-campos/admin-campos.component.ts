@@ -8,6 +8,7 @@ import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.d
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from './../../../util/messages.util';
 import { LabelsConstant } from './../../../constants/labels.constant';
+import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 
 /**
  * Componente para la administracion de los Campos de ingreso
@@ -91,5 +92,38 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que soporta el evento del boton eliminar campo de ingreso
+   */
+  public eliminar(campoEliminar: CampoEntradaDTO): void {
+
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.ELIMINAR_CAMPO_ENTRADA.replace('?1', campoEliminar.nombre),
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+        // se procede a eliminar el campo seleccionado
+        this.adminCampoService.eliminarCampoEntrada(campoEliminar.id).subscribe(
+          data => {
+            // se elimina lista visualizada en la pagina
+            const i = this.campos.indexOf(campoEliminar, 0);
+            if (i > -1) {
+              this.campos.splice(i, 1);
+            }
+
+            // Mensaje exitoso campo fue eliminado
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ENTRADA_ELIMINADO));
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 }

@@ -62,4 +62,11 @@ export class MsjFrontConstant {
 
   /** Mensaje para el cambio de la contrasenia */
   static readonly CAMBIAR_CLAVE_INGRESO: string = '¿Está seguro de cambiar la <strong>Contraseña</strong>?';
+
+  /** Mensaje para la eliminacion de un campo de entrada */
+  static readonly ELIMINAR_CAMPO_ENTRADA: string =
+    '¿Está seguro de eliminar el siguiente campo? <div class="text-center mt-2"><strong>?1</strong></div>';
+
+  /** Mensaje cuando el campo fue eliminado exitosamente */
+  static readonly CAMPO_ENTRADA_ELIMINADO: string = 'El campo fue eliminado';
 }
