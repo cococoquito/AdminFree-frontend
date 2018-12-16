@@ -74,7 +74,7 @@ export class ConfiguracionesConstant {
   static readonly URL_GET_RESTRICCIONES: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
-    'getrestricciones';
+    'getrestricciones?tipoCampo=';
 
   /** URL del recurso para validar si existe un campo entrada nombre, tipo*/
   static readonly URL_VALIDAR_CAMPO_ENTRADA: string =
@@ -92,25 +92,25 @@ export class ConfiguracionesConstant {
   static readonly URL_GET_CAMPOS_ENTRADA: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
-    'getcamposin';
+    'getcamposin?idCliente=';
 
   /** URL del recurso para obtener los detalles de un campo de entrada*/
   static readonly URL_GET_DETALLE_CAMPO_ENTRADA: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
-    'getdtlcampoin';
+    'getdtlcampoin?idCampo=';
 
   /** URL del recurso para eliminar un campo de entrada de informacion*/
   static readonly URL_DELETE_CAMPO_ENTRADA: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
-    'deletecampoin';
+    'deletecampoin?idCampo=';
 
   /** URL del recurso para obtener el detalle de un campo para editar*/
   static readonly URL_GET_DETALLE_CAMPO_EDITAR: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
-    'getdtlcampoedi';
+    'getdtlcampoedi?idCampo=';
 
   /** URL del recurso para editar un campo de entrada de informacion*/
   static readonly URL_EDITAR_CAMPO_ENTRADA: string =
