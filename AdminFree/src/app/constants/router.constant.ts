@@ -41,6 +41,9 @@ export class RouterConstant {
   /** Nombre del Router del ITEM administracion de usuarios*/
   public static readonly ROUTER_ADMIN_USERS: string = 'adminusers';
 
+  /** Nombre del Router del ITEM administracion de campos*/
+  public static readonly ROUTER_ADMIN_CAMPOS: string = 'admincampos';
+
   /** Constante para navegar al modulo de CLIENTES */
   public static readonly NAVIGATE_CLIENTES: string = `/${RouterConstant.ROUTER_CLIENTES}`;
 
@@ -59,4 +62,8 @@ export class RouterConstant {
   /** Constante para navegar a la pagina de ADMIN USERS */
   public static readonly NAVIGATE_ADMIN_USERS: string =
     `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CONFIGURACIONES}/${RouterConstant.ROUTER_ADMIN_USERS}`;
+
+  /** Constante para navegar a la pagina de ADMIN CAMPOS */
+  public static readonly NAVIGATE_ADMIN_CAMPOS: string =
+    `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CONFIGURACIONES}/${RouterConstant.ROUTER_ADMIN_CAMPOS}`;
 }

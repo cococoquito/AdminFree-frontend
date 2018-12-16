@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
-import { PruebaComponent } from './prueba/prueba.component';
+import { AdminCamposComponent } from './admin-campos/admin-campos.component';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -18,15 +18,15 @@ import { RouterConstant } from './../../constants/router.constant';
         component: AdminUsuariosComponent
       },
       {
-        path: 'prueba',
-        component: PruebaComponent
+        path: RouterConstant.ROUTER_ADMIN_CAMPOS,
+        component: AdminCamposComponent
       }
     ]),
     SharedModule
   ],
   declarations: [
     AdminUsuariosComponent,
-    PruebaComponent
+    AdminCamposComponent
   ]
 })
 export class ConfiguracionesModule { }

@@ -36,7 +36,7 @@ export class AdminCampoService {
   /**
    * Metodo que permite validar si el campo de entrada existe para el tipo, nombre y cliente
    *
-   * @param campoEntrada ,  DTO que contiene los datos del nuevo campo de entrada
+   * @param campoEntrada , DTO que contiene los datos del nuevo campo de entrada
    */
   public validarCampoEntradaExistente(campoEntrada: CampoEntradaDTO): Observable<MessageResponseDTO> {
     return this.http.post<MessageResponseDTO>(

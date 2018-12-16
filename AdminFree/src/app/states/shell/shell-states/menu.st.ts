@@ -377,15 +377,16 @@ export class MenuST {
     adminUsers.router = RouterConstant.NAVIGATE_ADMIN_USERS;
     adminUsers.icono = 'fa-user-plus';
 
-    // ITEM2, prueba
-    const prueba = new MenuItem();
-    prueba.nombre = 'Prueba Conf';
-    prueba.router = '/autenticado/configuraciones/prueba';
-    prueba.isUltimoItem = true;
+    // ITEM2, Administracion de Campos
+    const adminCampos = new MenuItem();
+    adminCampos.nombre = LabelsConstant.MENU_ADMIN_CAMPOS;
+    adminCampos.router = RouterConstant.NAVIGATE_ADMIN_CAMPOS;
+    adminCampos.icono = 'fa-list-alt';
+    adminCampos.isUltimoItem = true;
 
     // se agrega los items para este modulo
     configuraciones.agregarItem(adminUsers);
-    configuraciones.agregarItem(prueba);
+    configuraciones.agregarItem(adminCampos);
     return configuraciones;
   }
 }
