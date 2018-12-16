@@ -157,6 +157,16 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.USER_INGRESO_ESPACIOS_BLANCO;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_EXISTE_CAMPO_ENTRADA: {
+        businessMsj = MessagesBackendConstant.EXISTE_CAMPO_ENTRADA;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_DELETE_CAMPO_NOMENCLATURA_ASOCIADA: {
+        businessMsj = MessagesBackendConstant.DELETE_CAMPO_NOMENCLATURA_ASOCIADA;
+        break;
+      }
     }
     return businessMsj;
   }

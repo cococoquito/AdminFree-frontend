@@ -35,4 +35,10 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - El usuario de ingreso no puede contener espacios en blanco*/
   static readonly KEY_USER_INGRESO_ESPACIOS_BLANCO: string = '10';
+
+  /** 400 - Ya existe un campo de entrada de informacion con el mismo tipo y nombre*/
+  static readonly KEY_EXISTE_CAMPO_ENTRADA: string = '11';
+
+  /** 400 - El campo de entrada de información que intenta eliminar tiene una nomenclatura asociada*/
+  static readonly KEY_DELETE_CAMPO_NOMENCLATURA_ASOCIADA: string = '12';
 }

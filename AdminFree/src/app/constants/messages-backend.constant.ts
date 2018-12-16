@@ -53,4 +53,12 @@ export class MessagesBackendConstant {
   /** El usuario de ingreso no puede contener espacios en blanco */
   static readonly USER_INGRESO_ESPACIOS_BLANCO: string =
     'El <strong>Usuario de Ingreso</strong> no puede contener espacios en blanco';
+
+  /** Ya existe un campo de entrada de informacion con el mismo tipo y nombre*/
+  static readonly EXISTE_CAMPO_ENTRADA: string =
+    'Ya existe un campo de entrada de información con el mismo tipo y nombre';
+
+  /** El campo de entrada de información que intenta eliminar tiene una nomenclatura asociada*/
+  static readonly DELETE_CAMPO_NOMENCLATURA_ASOCIADA: string =
+    'El campo de entrada de información que intenta eliminar tiene una nomenclatura asociada';
 }

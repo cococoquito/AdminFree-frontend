@@ -3,6 +3,7 @@ import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { SharedCommonModule } from './shared-common.module';
+import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -21,7 +22,11 @@ import { SharedCommonModule } from './shared-common.module';
     SharedCommonModule,
     TableModule,
     PanelModule,
-    DialogModule
+    DialogModule,
+    InputswitchComponent
+  ],
+  declarations: [
+    InputswitchComponent
   ]
 })
 export class SharedModule {}
