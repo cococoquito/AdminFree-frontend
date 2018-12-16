@@ -65,11 +65,10 @@
 
             <!-- ckeck ingresar como admin-->
             <div class="form-group">
-              <admin-inputswitch
-                [isChecked]="credenciales.administrador"
-                (switchChange)="credenciales.administrador=$event">
-              </admin-inputswitch>
-              <label class="font-new-roman font-size-15 ml-1"> Ingresar como administrador</label>
+              <div class="custom-control custom-checkbox">
+                <input id="checkAdmin" type="checkbox" (click)="toogleAdmin()" class="custom-control-input">
+                <label for="checkAdmin" class="custom-control-label font-new-roman font-size-15">Ingresar como administrador</label>
+              </div>
             </div>
 
             <!-- boton - ingreso-->

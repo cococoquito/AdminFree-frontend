@@ -83,6 +83,14 @@ export class LoginComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que soporta el evento click del check
+   * ingresar como administrador
+   */
+  public toogleAdmin(): void {
+    this.credenciales.administrador = !this.credenciales.administrador;
+  }
+
+  /**
    * Metodo que permite inicializar las variables globales
    */
   private init(): void {
