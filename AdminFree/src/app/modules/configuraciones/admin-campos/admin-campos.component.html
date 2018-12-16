@@ -1,3 +1,56 @@
-<p>
-  admin-campos works!
-</p>
+<!-- panel lista de campos -->
+<div *ngIf="!campoCrear">
+
+  <!-- boton crear campo -->
+  <div class="text-right mb-1">
+    <button type="button" class="btn btn-success btn-sm">
+      <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
+    </button>
+  </div>
+
+  <!-- tabla - usuarios -->
+  <p-table id="tbl-campos"
+    [value]="campos"
+    [responsive]="true"
+    [paginator]="true"
+    [rows]="5"
+    selectionMode="single">
+
+    <ng-template pTemplate="caption">
+      <i class="fa fa-th-list"> <span class="font-admin"> Campos de Entrada</span></i>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr class="text-center">
+        <th>Tipo de Campo</th>
+        <th>Nombre del Campo</th>
+        <th style="width: 4%">Detalle</th>
+        <th style="width: 4%">Editar</th>
+        <th style="width: 4%">Eliminar</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-campo>
+      <tr [pSelectableRow]="campo">
+        <td>{{campo.tipoCampoNombre}}</td>
+        <td>{{campo.nombre}}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+            <i class="pi pi-external-link icon-round-table"></i>
+          </button>
+        </td>
+        <td class="text-center">
+          <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+            <i class="pi pi-external-link icon-round-table"></i>
+          </button>
+        </td>
+        <td class="text-center">
+            <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+                <i class="pi pi-external-link icon-round-table"></i>
+              </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>

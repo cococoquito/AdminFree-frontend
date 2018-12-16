@@ -14,6 +14,10 @@ export class LabelsConstant {
   public static readonly SUBTITLE_ADMIN_CUENTA_USER: string =
     'Submódulo de seguridad para modificar la <strong>cuenta de usuario</strong>';
 
+  /** Sub - Titulo para la pagina de administracion de campos*/
+  public static readonly SUBTITLE_ADMIN_CAMPOS: string =
+    'Submódulo administrativo para las configuraciones de los <strong>campos de entrada de información</strong>';
+
   /** Titulo para el modulo de correspondencia*/
   public static readonly MODULO_CORRESPONDENCIA: string = 'Correspondencia';
 
