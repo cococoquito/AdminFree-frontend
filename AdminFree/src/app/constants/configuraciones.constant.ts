@@ -69,4 +69,52 @@ export class ConfiguracionesConstant {
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'updateclaveuser';
+
+  /** URL del recurso para obtener las restricciones asociada al tipo campo*/
+  static readonly URL_GET_RESTRICCIONES: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'getrestricciones';
+
+  /** URL del recurso para validar si existe un campo entrada nombre, tipo*/
+  static readonly URL_VALIDAR_CAMPO_ENTRADA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'valcampoentrada';
+
+  /** URL del recurso para crear un campo de entrada de informacion*/
+  static readonly URL_CREAR_CAMPO_ENTRADA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'crearcampoin';
+
+  /** URL del recurso para listar los campos de entrada asociado a un cliente*/
+  static readonly URL_GET_CAMPOS_ENTRADA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'getcamposin';
+
+  /** URL del recurso para obtener los detalles de un campo de entrada*/
+  static readonly URL_GET_DETALLE_CAMPO_ENTRADA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'getdtlcampoin';
+
+  /** URL del recurso para eliminar un campo de entrada de informacion*/
+  static readonly URL_DELETE_CAMPO_ENTRADA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'deletecampoin';
+
+  /** URL del recurso para obtener el detalle de un campo para editar*/
+  static readonly URL_GET_DETALLE_CAMPO_EDITAR: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'getdtlcampoedi';
+
+  /** URL del recurso para editar un campo de entrada de informacion*/
+  static readonly URL_EDITAR_CAMPO_ENTRADA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'editarcampoin';
 }
