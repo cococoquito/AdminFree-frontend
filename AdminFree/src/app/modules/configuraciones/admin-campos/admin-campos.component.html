@@ -9,7 +9,7 @@
   </div>
 
   <!-- tabla - usuarios -->
-  <p-table id="tbl-campos"
+  <p-table id="tbl-common"
     [value]="campos"
     [responsive]="true"
     [paginator]="true"
@@ -45,9 +45,9 @@
           </button>
         </td>
         <td class="text-center">
-            <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
-                <i class="pi pi-external-link icon-round-table"></i>
-              </button>
+          <button type="button" class="btn btn-sm btn-round-table btn-round-del">
+            <i class="pi pi-times icon-round-del"></i>
+          </button>
         </td>
       </tr>
     </ng-template>

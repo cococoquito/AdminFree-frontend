@@ -104,7 +104,7 @@ body {
   color: #212121 !important;
 }
 
-#tbl-users .ui-state-highlight {
+#tbl-common .ui-state-highlight {
   background-color: white !important;
 }
 
@@ -228,18 +228,33 @@ body {
   margin-left: -.1em !important;
 }
 
+.icon-round-del {
+  margin-left: -.2em !important;
+  font-size: 20px !important;
+}
+
 .btn-round-teal {
   background-color: #009688 !important;
   color: #ffffff !important;
 }
 
-.color-info {
-  color: #555a63 !important;
-}
-
 .btn-round-teal:hover {
   background-color: #016b60 !important;
   color: #ffffff !important;
+}
+
+.btn-round-del {
+  background-color: #eca3ab !important;
+  color: #212121 !important;
+}
+
+.btn-round-del:hover {
+  background-color: #d68b94 !important;
+  color: #212121 !important;
+}
+
+.color-info {
+  color: #555a63 !important;
 }
 
 .w-80 {
