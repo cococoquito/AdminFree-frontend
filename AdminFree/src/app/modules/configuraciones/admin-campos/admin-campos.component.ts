@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { CommonComponent } from '../../../util/common.component';
 import { AdminCampoService } from '../../../services/admin-campo.service';
 import { ShellState } from '../../../states/shell/shell.state';
@@ -28,6 +28,10 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
   /** Lista de campos de entrada informacion asociado al cliente */
   public campos: Array<CampoEntradaDTO>;
+
+  items: MenuItem[];
+  activeIndex = 0;
+  ultimoTab = 3;
 
   /**
    * DTO que contiene los datos del cliente autenticado o
@@ -92,6 +96,36 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+
+    this.items = [{
+      label: 'Datos del Campo',
+      command: (event: any) => {
+          this.activeIndex = 0;
+          this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label});
+      }
+  },
+  {
+      label: 'Restricciones',
+      command: (event: any) => {
+          this.activeIndex = 1;
+          this.messageService.add({severity:'info', summary:'Seat Selection', detail: event.item.label});
+      }
+  },
+  {
+      label: 'Agregar Items',
+      command: (event: any) => {
+          this.activeIndex = 2;
+          this.messageService.add({severity:'info', summary:'Pay with CC', detail: event.item.label});
+      }
+  },
+  {
+      label: 'Confirmación',
+      command: (event: any) => {
+          this.activeIndex = 3;
+          this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label});
+      }
+  }
+];
   }
 
   /**
@@ -125,5 +159,30 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         );
       }
     });
+  }
+
+  /**
+   * Metodo que permite abrir el panel de creacion de campos
+   */
+  public showPanelCreacion(): void {
+    this.messageService.clear();
+    this.campoCrear = new CampoEntradaDTO();
+    this.activeIndex = 0;
+  }
+
+  /**
+   * Metodo que permite cerrar el panel de creacion de campos
+   */
+  public closePanelCreacion(): void {
+    this.messageService.clear();
+    this.campoCrear = null;
+  }
+
+  public siguiente(): void {
+    this.activeIndex = this.activeIndex + 1;
+  }
+
+  public regresar(): void {
+    this.activeIndex = this.activeIndex - 1;
   }
 }

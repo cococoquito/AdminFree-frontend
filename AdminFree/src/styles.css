@@ -99,11 +99,6 @@ body {
 }
 
 /* para la fila seleccionada del componente p-table */
-.ui-state-highlight {
-  background-color: #f5a96d !important;
-  color: #212121 !important;
-}
-
 #tbl-common .ui-state-highlight {
   background-color: white !important;
 }
@@ -263,4 +258,16 @@ body {
 
 .w-90 {
   width: 90% !important
+}
+
+#stepsCampos .ui-steps .ui-steps-item {
+  width: 25%;
+}
+
+#panelCampos .ui-panel-content {
+  padding: 0px !important;
+}
+
+#panelCampos .ui-panel-titlebar {
+  padding: 5px !important;
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
+import { StepsModule } from 'primeng/steps';
 import { SharedCommonModule } from './shared-common.module';
 import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
 
@@ -16,13 +17,15 @@ import { InputswitchComponent } from './../../directives/inputswitch/inputswitch
     SharedCommonModule,
     TableModule,
     PanelModule,
-    DialogModule
+    DialogModule,
+    StepsModule
   ],
   exports: [
     SharedCommonModule,
     TableModule,
     PanelModule,
     DialogModule,
+    StepsModule,
     InputswitchComponent
   ],
   declarations: [

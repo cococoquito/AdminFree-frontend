@@ -3,7 +3,7 @@
 
   <!-- boton crear campo -->
   <div class="text-right mb-1">
-    <button type="button" class="btn btn-success btn-sm">
+    <button type="button" (click)="showPanelCreacion()" class="btn btn-success btn-sm">
       <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
     </button>
   </div>
@@ -53,4 +53,42 @@
     </ng-template>
   </p-table>
 
+</div>
+
+<!-- panel crear campos -->
+<div *ngIf="campoCrear">
+
+    <p-panel id="panelCampos">
+        <p-header>
+          <i class="fa fa-list-alt font-size-14"> <span class="font-admin"> Creación de Campo</span></i>
+        </p-header>
+
+
+        <p-steps id="stepsCampos" [model]="items" [(activeIndex)]="activeIndex" styleClass="steps-custom"></p-steps>
+
+
+        <div class="text-center mb-1">
+            <button *ngIf="activeIndex !== 0" type="button" class="btn btn-sm btn-primary" (click)="regresar()"
+            style="width: 100px"
+            >
+                <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+              </button>
+            <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()"
+            style="width: 100px">
+              <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+            </button>
+            <button *ngIf="activeIndex !== ultimoTab" type="button" class="btn btn-sm btn-primary" (click)="siguiente()"
+            style="width: 100px">
+                <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+            </button>
+            <button *ngIf="activeIndex === ultimoTab" type="button" class="btn btn-success btn-sm">
+                <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
+              </button>
+          </div>
+
+
+
+
+
+    </p-panel>
 </div>
