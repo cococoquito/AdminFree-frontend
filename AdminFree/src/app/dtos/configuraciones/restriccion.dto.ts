@@ -11,9 +11,6 @@ export class RestriccionDTO {
   /** Es el identificador de la restriccion */
   public id: number;
 
-  /** Nombre de la restriccion */
-  public nombre: string;
-
   /** Descripcion de la restriccion */
   public descripcion: string;
 }

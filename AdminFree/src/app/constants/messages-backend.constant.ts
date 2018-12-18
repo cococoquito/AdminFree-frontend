@@ -20,7 +20,7 @@ export class MessagesBackendConstant {
 
   /** Mensaje cuando se presenta un error interno en el servidor */
   static readonly INTERNAL_SERVER_ERROR: string =
-    'Se presentó un error interno en el servidor';
+    'Se presentó un error interno en el servidor ';
 
   /** El valor del 'Usuario de Ingreso' ya se encuentra asociado a otro usuario */
   static readonly USUARIO_INGRESO_EXISTE: string =

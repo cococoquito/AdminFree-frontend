@@ -104,7 +104,7 @@ export class AdminCampoService {
 	 */
   public validarDatosCampoEntrada(datosCampo: CampoEntradaDTO): Observable<Array<RestriccionDTO>> {
     return this.http.post<Array<RestriccionDTO>>(
-      ConfiguracionesConstant.URL_EDITAR_CAMPO_ENTRADA,
+      ConfiguracionesConstant.URL_VALIDAR_DATOS_ENTRADA,
       datosCampo
     );
   }

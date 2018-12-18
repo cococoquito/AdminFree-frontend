@@ -281,3 +281,9 @@ body {
 #panelCampos .ui-panel-titlebar {
   padding: 5px !important;
 }
+
+.sub-title-page {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 1rem;
+  margin: 0px !important;
+}

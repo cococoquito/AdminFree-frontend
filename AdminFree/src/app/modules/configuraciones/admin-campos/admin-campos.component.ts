@@ -5,6 +5,7 @@ import { AdminCampoService } from '../../../services/admin-campo.service';
 import { ShellState } from '../../../states/shell/shell.state';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.dto';
+import { RestriccionDTO } from './../../../dtos/configuraciones/restriccion.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from './../../../util/messages.util';
 import { LabelsConstant } from './../../../constants/labels.constant';
@@ -30,6 +31,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   public campos: Array<CampoEntradaDTO>;
 
   public itemss: Array<ItemDTO>;
+  public restricciones: Array<RestriccionDTO>;
 
   public valorItem: string;
 
@@ -200,7 +202,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * para el panel de creacion de campo siguiente
    */
   public irRestricciones(): void {
-
+    this.restricciones = null;
     if (!this.campoCrear.tipoCampo) {
       this.messageService.add(
         MsjUtil.getToastError(MsjFrontConstant.TIPO_CAMPO_REQUERIDO)
@@ -209,6 +211,18 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     }
     this.campoCrear.nombre = this.setTrim(this.campoCrear.nombre);
     this.campoCrear.descripcion = this.setTrim(this.campoCrear.descripcion);
+
+    this.adminCampoService.validarDatosCampoEntrada(this.campoCrear).subscribe(
+      data => {
+        this.restricciones = data;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+
+
+
     this.activeIndex = this.TAB_RESTRICCIONES;
   }
 
@@ -236,6 +250,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   public showPanelCreacion(): void {
     this.messageService.clear();
     this.campoCrear = new CampoEntradaDTO();
+    this.campoCrear.idCliente = this.clienteCurrent.id;
     this.activeIndex = 0;
     this.itemss = new Array<ItemDTO>();
     this.valorItem = null;

@@ -150,51 +150,15 @@
         <i class="fa fa-info-circle color-info mr-1"></i>
         <strong>Asigne las restricciones para el nuevo campo</strong>
       </p>
-      <div class="ml-2 mr-2">
+      <div class="ml-2 mr-2" *ngIf="restricciones">
         <table class="table table-modulos table-hover mb-0">
           <tbody>
-            <tr>
-              <td>
+            <tr *ngFor="let restriccion of restricciones">
+              <td style="width: 8%">
                 <admin-inputswitch> </admin-inputswitch>
               </td>
               <td>
-                <p>
-                  Módulo que permite administrar los consecutivos de
-                  correspondencia tales como solicitar, modificar, anular
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <admin-inputswitch> </admin-inputswitch>
-              </td>
-              <td>
-                <p>
-                  Módulo que permite archivar los consecutivos de
-                  correspondencia solicitados en series documentales
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <admin-inputswitch> </admin-inputswitch>
-              </td>
-              <td>
-                <p>
-                  Módulo que permite generar reportes de los consecutivos de
-                  correspondencia solicitados en diferentes formatos
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <admin-inputswitch> </admin-inputswitch>
-              </td>
-              <td>
-                <p>
-                  El valor del campo debe ser único para
-                  <strong>todas las nomenclaturas asociadas al campo</strong>
-                </p>
+                <p class="sub-title-page">{{ restriccion.descripcion }}</p>
               </td>
             </tr>
           </tbody>
