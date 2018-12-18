@@ -9,6 +9,7 @@ import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from './../../../util/messages.util';
 import { LabelsConstant } from './../../../constants/labels.constant';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
+import { ItemDTO } from './../../../dtos/configuraciones/item.dto';
 
 /**
  * Componente para la administracion de los Campos de ingreso
@@ -22,16 +23,24 @@ import { MsjFrontConstant } from './../../../constants/messages-frontend.constan
   providers: [AdminCampoService]
 })
 export class AdminCamposComponent extends CommonComponent implements OnInit, OnDestroy {
-
   /** Se utiliza para crear un campo de entrada*/
   public campoCrear: CampoEntradaDTO;
 
   /** Lista de campos de entrada informacion asociado al cliente */
   public campos: Array<CampoEntradaDTO>;
 
+  public itemss: Array<ItemDTO>;
+
+  public valorItem: string;
+
   items: MenuItem[];
   activeIndex = 0;
   ultimoTab = 3;
+
+  public TAB_DATOS_CAMPO = 0;
+  public TAB_RESTRICCIONES = 1;
+  public TAB_AGREGAR_ITEMS = 2;
+  public TAB_CONFIRMACION = 3;
 
   /**
    * DTO que contiene los datos del cliente autenticado o
@@ -55,7 +64,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
     private adminCampoService: AdminCampoService,
-    private shellState: ShellState) {
+    private shellState: ShellState
+  ) {
     super();
   }
 
@@ -79,7 +89,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * campos de ingreso relacionado al cliente autenticado
    */
   private init(): void {
-
     // se configura el titulo y subtitulo de la pagina
     this.shellState.title.titulo = LabelsConstant.MENU_ADMIN_CAMPOS;
     this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_ADMIN_CAMPOS;
@@ -93,52 +102,73 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.campos = data;
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        this.messageService.add(
+          MsjUtil.getMsjError(this.showMensajeError(error))
+        );
       }
     );
 
-    this.items = [{
-      label: 'Datos del Campo',
-      command: (event: any) => {
+    this.items = [
+      {
+        label: 'Datos del Campo',
+        command: (event: any) => {
           this.activeIndex = 0;
-          this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label});
-      }
-  },
-  {
-      label: 'Restricciones',
-      command: (event: any) => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'First Step',
+            detail: event.item.label
+          });
+        }
+      },
+      {
+        label: 'Restricciones',
+        command: (event: any) => {
           this.activeIndex = 1;
-          this.messageService.add({severity:'info', summary:'Seat Selection', detail: event.item.label});
-      }
-  },
-  {
-      label: 'Agregar Items',
-      command: (event: any) => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Seat Selection',
+            detail: event.item.label
+          });
+        }
+      },
+      {
+        label: 'Agregar Items',
+        command: (event: any) => {
           this.activeIndex = 2;
-          this.messageService.add({severity:'info', summary:'Pay with CC', detail: event.item.label});
-      }
-  },
-  {
-      label: 'Confirmación',
-      command: (event: any) => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Pay with CC',
+            detail: event.item.label
+          });
+        }
+      },
+      {
+        label: 'Confirmación',
+        command: (event: any) => {
           this.activeIndex = 3;
-          this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label});
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Last Step',
+            detail: event.item.label
+          });
+        }
       }
-  }
-];
+    ];
   }
 
   /**
    * Metodo que soporta el evento del boton eliminar campo de ingreso
    */
-  public eliminar(campoEliminar: CampoEntradaDTO): void {
-
+  public eliminarCampo(campoEliminar: CampoEntradaDTO): void {
     // se limpia los mensajes de otros procesos
     this.messageService.clear();
 
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
-      message: MsjFrontConstant.ELIMINAR_CAMPO_ENTRADA.replace('?1', campoEliminar.nombre),
+      message: MsjFrontConstant.ELIMINAR_CAMPO_ENTRADA.replace(
+        '?1',
+        campoEliminar.nombre
+      ),
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
         // se procede a eliminar el campo seleccionado
@@ -151,14 +181,53 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
             }
 
             // Mensaje exitoso campo fue eliminado
-            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ENTRADA_ELIMINADO));
+            this.messageService.add(
+              MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ENTRADA_ELIMINADO)
+            );
           },
           error => {
-            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            this.messageService.add(
+              MsjUtil.getMsjError(this.showMensajeError(error))
+            );
           }
         );
       }
     });
+  }
+
+  /**
+   * Metodo que permite soporta el evento del boton siguiente
+   * para el panel de creacion de campo siguiente
+   */
+  public irRestricciones(): void {
+
+    if (!this.campoCrear.tipoCampo) {
+      this.messageService.add(
+        MsjUtil.getToastError(MsjFrontConstant.TIPO_CAMPO_REQUERIDO)
+      );
+      return;
+    }
+    this.campoCrear.nombre = this.setTrim(this.campoCrear.nombre);
+    this.campoCrear.descripcion = this.setTrim(this.campoCrear.descripcion);
+    this.activeIndex = this.TAB_RESTRICCIONES;
+  }
+
+  public agregarItem(): void {
+    if (this.valorItem) {
+      this.valorItem = this.setTrim(this.valorItem);
+      const itm = new ItemDTO();
+      itm.valor = this.valorItem;
+      itm.id = this.itemss.length + 1;
+      this.itemss.push(itm);
+      this.valorItem = null;
+    }
+  }
+
+  public eliminarItem(item: ItemDTO): void {
+    const i = this.itemss.indexOf(item, 0);
+    if (i > -1) {
+      this.itemss.splice(i, 1);
+    }
   }
 
   /**
@@ -168,6 +237,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.messageService.clear();
     this.campoCrear = new CampoEntradaDTO();
     this.activeIndex = 0;
+    this.itemss = new Array<ItemDTO>();
+    this.valorItem = null;
   }
 
   /**

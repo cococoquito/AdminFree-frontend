@@ -3,6 +3,7 @@ import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { StepsModule } from 'primeng/steps';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { SharedCommonModule } from './shared-common.module';
 import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
 
@@ -18,7 +19,8 @@ import { InputswitchComponent } from './../../directives/inputswitch/inputswitch
     TableModule,
     PanelModule,
     DialogModule,
-    StepsModule
+    StepsModule,
+    RadioButtonModule
   ],
   exports: [
     SharedCommonModule,
@@ -26,6 +28,7 @@ import { InputswitchComponent } from './../../directives/inputswitch/inputswitch
     PanelModule,
     DialogModule,
     StepsModule,
+    RadioButtonModule,
     InputswitchComponent
   ],
   declarations: [

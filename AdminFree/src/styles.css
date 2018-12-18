@@ -18,7 +18,6 @@ body {
   background-size: 0 2px, 100% 1px;
   background-position: 50% 100%, 50% 100%;
   border-width: 0;
-  padding-left: 4px;
   padding-bottom: 0px;
   padding-top: .25em;
   font-size: 1em;
@@ -171,6 +170,13 @@ body {
   font-size: 16px !important;
 }
 
+.ui-radiobutton-label {
+  margin: 0 0 0 .3em !important;
+  font-family: Times, Times New Roman, serif !important;
+  color: #212121 !important;
+  font-size: 0.95rem !important;
+}
+
 #confApp .ui-dialog-content {
   text-align: center !important;
 }
@@ -258,6 +264,10 @@ body {
 
 .w-90 {
   width: 90% !important
+}
+
+.w-100-px {
+  width: 100px !important
 }
 
 #stepsCampos .ui-steps .ui-steps-item {

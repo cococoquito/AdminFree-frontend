@@ -69,4 +69,7 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando el campo fue eliminado exitosamente */
   static readonly CAMPO_ENTRADA_ELIMINADO: string = 'El campo fue eliminado';
+
+  /** Mensaje el tipo de campo es requerido */
+  static readonly TIPO_CAMPO_REQUERIDO: string = 'Seleccione el tipo de campo';
 }

@@ -73,8 +73,9 @@
       <div class="form-row w-90 mx-auto">
         <!-- nombre -->
         <div class="form-group col-md-6 pr-5">
-          <label class="ad-input-label font-weight-bold" for="username">Nombre Completo:</label>
+          <label for="username" class="ad-input-label font-weight-bold">Nombre Completo:</label>
           <input type="text"
+            id="username"
             name="username"
             #username="ngModel"
             [(ngModel)]="usuarioCrear.nombre"
@@ -88,8 +89,9 @@
 
         <!-- usuario - ingreso -->
         <div class="form-group col-md-6 pr-5">
-          <label class="ad-input-label font-weight-bold" for="useringreso">Usuario de Ingreso:</label>
+          <label for="useringreso" class="ad-input-label font-weight-bold">Usuario de Ingreso:</label>
           <input type="text"
+            id="useringreso"
             name="useringreso"
             #useringreso="ngModel"
             [(ngModel)]="usuarioCrear.usuarioIngreso"

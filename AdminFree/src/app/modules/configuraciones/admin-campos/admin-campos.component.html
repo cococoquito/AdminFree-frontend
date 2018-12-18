@@ -17,7 +17,7 @@
     selectionMode="single">
 
     <ng-template pTemplate="caption">
-      <i class="fa fa-list-alt"> <span class="font-admin"> Campos de Entrada</span></i>
+      <i class="fa fa-list-alt"><span class="font-admin"> Campos de Entrada</span></i>
     </ng-template>
 
     <ng-template pTemplate="header">
@@ -32,8 +32,8 @@
 
     <ng-template pTemplate="body" let-campo>
       <tr [pSelectableRow]="campo">
-        <td>{{campo.tipoCampoNombre}}</td>
-        <td>{{campo.nombre}}</td>
+        <td>{{ campo.tipoCampoNombre }}</td>
+        <td>{{ campo.nombre }}</td>
         <td class="text-center">
           <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
@@ -45,50 +45,230 @@
           </button>
         </td>
         <td class="text-center">
-          <button type="button" (click)="eliminar(campo)" class="btn btn-sm btn-round-table btn-round-del">
+          <button type="button" (click)="eliminarCampo(campo)" class="btn btn-sm btn-round-table btn-round-del">
             <i class="pi pi-times icon-round-del"></i>
           </button>
         </td>
       </tr>
     </ng-template>
   </p-table>
-
 </div>
+
 
 <!-- panel crear campos -->
 <div *ngIf="campoCrear">
+  <p-panel id="panelCampos">
+    <p-header>
+      <i class="fa fa-list-alt font-size-14"><span class="font-admin"> Creación de Campo</span></i>
+    </p-header>
+    <p-steps id="stepsCampos" [model]="items" [(activeIndex)]="activeIndex"></p-steps>
 
-    <p-panel id="panelCampos">
-        <p-header>
-          <i class="fa fa-list-alt font-size-14"> <span class="font-admin"> Creación de Campo</span></i>
-        </p-header>
+    <!-- form datos basicos -->
+    <form *ngIf="activeIndex === TAB_DATOS_CAMPO"
+      #formDatos="ngForm" name="formDatos"
+      (ngSubmit)="limpiarMensajes() && formDatos.form.valid && irRestricciones()"
+      (keydown.enter)="$event.preventDefault()" novalidate>
 
+      <!-- titulo -->
+      <p class="text-center mb-3 st">
+        <i class="fa fa-info-circle color-info mr-1"></i>
+        <strong>Ingrese los datos del campo, todos los valores son obligatorios</strong>
+      </p>
+      <div class="w-75 m-auto">
 
-        <p-steps id="stepsCampos" [model]="items" [(activeIndex)]="activeIndex" styleClass="steps-custom"></p-steps>
-
-
-        <div class="text-center mb-1">
-            <button *ngIf="activeIndex !== 0" type="button" class="btn btn-sm btn-primary" (click)="regresar()"
-            style="width: 100px"
-            >
-                <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-              </button>
-            <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()"
-            style="width: 100px">
-              <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-            </button>
-            <button *ngIf="activeIndex !== ultimoTab" type="button" class="btn btn-sm btn-primary" (click)="siguiente()"
-            style="width: 100px">
-                <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-            </button>
-            <button *ngIf="activeIndex === ultimoTab" type="button" class="btn btn-success btn-sm">
-                <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
-              </button>
+        <!-- tipo -->
+        <div class="form-group">
+          <label class="font-weight-bold" for="useringreso">Tipo:</label>
+          <div class="form-row">
+            <div class="ml-3">
+              <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" value="1" label="Campo de Texto"></p-radioButton>
+            </div>
+            <div class="ml-3">
+              <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" value="2" label="Lista Desplegable"></p-radioButton>
+            </div>
+            <div class="ml-3">
+              <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" value="3" label="Casilla de Verificación"></p-radioButton>
+            </div>
+            <div class="ml-3">
+              <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" value="4" label="Campo de Fecha"></p-radioButton>
+            </div>
           </div>
+        </div>
+
+        <!-- nombre -->
+        <div class="form-group">
+          <label for="cnombre" class="ad-input-label font-weight-bold">Nombre:</label>
+          <input type="text"
+            id="cnombre"
+            autocomplete="off"
+            name="cnombre"
+            #cnombre="ngModel"
+            [(ngModel)]="campoCrear.nombre"
+            maxlength="100"
+            adminRequired
+            adminAutofocus
+            class="ad-input ad-input-style w-100"
+            [ngClass]="{'ad-input-required' : (formDatos.submitted && !cnombre.valid)}"/>
+          <div class="focus-border"></div>
+        </div>
+
+        <!-- descripcion -->
+        <div class="form-group">
+          <label for="cdescri" class="ad-input-label font-weight-bold">Descripción:</label>
+          <input type="text"
+            id="cdescri"
+            autocomplete="off"
+            name="cdescri"
+            #cdescri="ngModel"
+            [(ngModel)]="campoCrear.descripcion"
+            maxlength="255"
+            adminRequired
+            class="ad-input ad-input-style w-100"
+            [ngClass]="{'ad-input-required' : (formDatos.submitted && !cdescri.valid)}"/>
+          <div class="focus-border"></div>
+        </div>
+      </div>
+
+      <!-- botones salir - next-->
+      <div class="text-center mb-1">
+        <button type="button" (click)="closePanelCreacion()" class="btn btn-sm btn-secondary mr-1 w-100-px">
+          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+        <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
+          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+        </button>
+      </div>
+    </form>
 
 
 
 
 
-    </p-panel>
+    <form *ngIf="activeIndex === TAB_RESTRICCIONES">
+      <p class="text-center" style="color: #4b4f56; font-size: 0.98rem;
+        font-family: Times, Times New Roman, serif !important;">
+        <i class="fa fa-info-circle color-info mr-1"></i>
+        <strong>Asigne las restricciones para el nuevo campo</strong>
+      </p>
+      <div class="ml-2 mr-2">
+        <table class="table table-modulos table-hover mb-0">
+          <tbody>
+            <tr>
+              <td>
+                <admin-inputswitch> </admin-inputswitch>
+              </td>
+              <td>
+                <p>
+                  Módulo que permite administrar los consecutivos de
+                  correspondencia tales como solicitar, modificar, anular
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <admin-inputswitch> </admin-inputswitch>
+              </td>
+              <td>
+                <p>
+                  Módulo que permite archivar los consecutivos de
+                  correspondencia solicitados en series documentales
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <admin-inputswitch> </admin-inputswitch>
+              </td>
+              <td>
+                <p>
+                  Módulo que permite generar reportes de los consecutivos de
+                  correspondencia solicitados en diferentes formatos
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <admin-inputswitch> </admin-inputswitch>
+              </td>
+              <td>
+                <p>
+                  El valor del campo debe ser único para
+                  <strong>todas las nomenclaturas asociadas al campo</strong>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center mt-2 mb-1">
+          <button *ngIf="activeIndex !== 0" type="button" class="btn btn-sm btn-primary" (click)="regresar()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button *ngIf="activeIndex !== ultimoTab" type="button" class="btn btn-sm btn-primary" (click)="siguiente()"
+            style="width: 100px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+          <button *ngIf="activeIndex === ultimoTab" type="button" class="btn btn-success btn-sm">
+            <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
+          </button>
+        </div>
+      </div>
+    </form>
+    <form *ngIf="activeIndex === 2">
+      <p class="text-center mb-3" style="color: #4b4f56; font-size: 0.98rem;
+        font-family: Times, Times New Roman, serif !important;">
+        <i class="fa fa-info-circle color-info mr-1"></i>
+        <strong>Agrege los items asociados al nuevo campo</strong>
+      </p>
+      <div class="w-75 m-auto">
+        <div class="form-group">
+          <label class="ad-input-label font-weight-bold" for="useringreso">Nuevo Item:</label>
+          <input type="text" autocomplete="off" name="useringreso" [(ngModel)]="valorItem" maxlength="50" adminRequired
+            class="ad-input ad-input-style w-100" />
+          <div class="focus-border"></div>
+        </div>
+        <button type="button" class="btn btn-sm btn-success" (click)="agregarItem(); table.reset()">
+          <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Agregar</label>
+        </button>
+        <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="10"
+          selectionMode="single">
+          <ng-template pTemplate="header">
+            <tr class="text-center">
+              <th style="width: 4%">#</th>
+              <th>Item</th>
+              <th style="width: 4%">Eliminar</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr [pSelectableRow]="item">
+              <td>{{ item.id }}</td>
+              <td>{{ item.valor }}</td>
+              <td class="text-center">
+                <button type="button" (click)="eliminarItem(item); table.reset()" class="btn btn-sm btn-round-table btn-round-del">
+                  <i class="pi pi-times icon-round-del"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="text-center mt-2 mb-1">
+        <button *ngIf="activeIndex !== 0" type="button" class="btn btn-sm btn-primary" (click)="regresar()" style="width: 100px">
+          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+        </button>
+        <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
+          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+        <button *ngIf="activeIndex !== ultimoTab" type="button" class="btn btn-sm btn-primary" (click)="siguiente()"
+          style="width: 100px">
+          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+        </button>
+        <button *ngIf="activeIndex === ultimoTab" type="button" class="btn btn-success btn-sm">
+          <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
+        </button>
+      </div>
+    </form>
+  </p-panel>
 </div>

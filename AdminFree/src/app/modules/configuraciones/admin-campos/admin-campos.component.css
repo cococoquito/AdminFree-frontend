@@ -1,0 +1,10 @@
+.table-modulos td{
+  padding: .5rem !important;
+  vertical-align: middle !important;
+}
+
+.st {
+  color: #4b4f56;
+  font-size: 0.98rem;
+  font-family: Times, Times New Roman, serif;
+}
