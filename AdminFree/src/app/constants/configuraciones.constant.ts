@@ -70,18 +70,6 @@ export class ConfiguracionesConstant {
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'updateclaveuser';
 
-  /** URL del recurso para obtener las restricciones asociada al tipo campo*/
-  static readonly URL_GET_RESTRICCIONES: string =
-    AppDomainConstant.ADMINFREE +
-    ConfiguracionesConstant.CONFIGURACIONES_API +
-    'getrestricciones?tipoCampo=';
-
-  /** URL del recurso para validar si existe un campo entrada nombre, tipo*/
-  static readonly URL_VALIDAR_CAMPO_ENTRADA: string =
-    AppDomainConstant.ADMINFREE +
-    ConfiguracionesConstant.CONFIGURACIONES_API +
-    'valcampoentrada';
-
   /** URL del recurso para crear un campo de entrada de informacion*/
   static readonly URL_CREAR_CAMPO_ENTRADA: string =
     AppDomainConstant.ADMINFREE +
@@ -117,4 +105,10 @@ export class ConfiguracionesConstant {
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'editarcampoin';
+
+  /** URL del recurso para la validar los datos basicos de un campo de entrada*/
+  static readonly URL_VALIDAR_DATOS_ENTRADA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'vdatosin';
 }

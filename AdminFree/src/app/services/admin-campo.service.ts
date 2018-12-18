@@ -22,30 +22,6 @@ export class AdminCampoService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Metodo que permite obtener las restricciones asociadas a un tipo campo
-   *
-   * @param tipoCampo , id del tipo de campo
-   * @returns lista de DTO con los datos de las restricciones
-   */
-  public getRestriciones(tipoCampo: number): Observable<Array<RestriccionDTO>> {
-    return this.http.get<Array<RestriccionDTO>>(
-      ConfiguracionesConstant.URL_GET_RESTRICCIONES + tipoCampo
-    );
-  }
-
-  /**
-   * Metodo que permite validar si el campo de entrada existe para el tipo, nombre y cliente
-   *
-   * @param campoEntrada , DTO que contiene los datos del nuevo campo de entrada
-   */
-  public validarCampoEntradaExistente(campoEntrada: CampoEntradaDTO): Observable<MessageResponseDTO> {
-    return this.http.post<MessageResponseDTO>(
-      ConfiguracionesConstant.URL_VALIDAR_CAMPO_ENTRADA,
-      campoEntrada
-    );
-  }
-
-  /**
    * Metodo que permite soportar el proceso de negocio para
 	 * la creacion del campo de entrada de informacion
    *
@@ -116,6 +92,20 @@ export class AdminCampoService {
     return this.http.put<CampoEntradaDTO>(
       ConfiguracionesConstant.URL_EDITAR_CAMPO_ENTRADA,
       datosEditar
+    );
+  }
+
+  /**
+	 * Servicio que permite validar los datos de campo de entrada
+	 * esto aplica para el primer paso al momento de crear o editar el campo
+	 *
+	 * @param datosCampo, contiene los datos del campo de entrada
+	 * @return lista restricciones asociada al tipo de campo
+	 */
+  public validarDatosCampoEntrada(datosCampo: CampoEntradaDTO): Observable<Array<RestriccionDTO>> {
+    return this.http.post<Array<RestriccionDTO>>(
+      ConfiguracionesConstant.URL_EDITAR_CAMPO_ENTRADA,
+      datosCampo
     );
   }
 }
