@@ -274,16 +274,46 @@ body {
   width: 25%;
 }
 
-#panelCampos .ui-panel-content {
-  padding: 0px !important;
-}
-
-#panelCampos .ui-panel-titlebar {
-  padding: 5px !important;
-}
-
 .sub-title-page {
   font-family: Times, Times New Roman, serif !important;
   font-size: 1rem;
   margin: 0px !important;
+}
+
+.steps-pnl-main .ui-panel-content {
+  padding: 0px !important;
+}
+
+.steps-pnl-main .ui-panel-titlebar {
+  padding: 5px !important;
+}
+
+.steps-pnl .ui-panel-titlebar {
+  background-color: #f9f9f9 !important;
+  text-align: left !important;
+  color: #333333 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.steps-circle {
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+  background-color: #007ad9;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+.steps-tbl td{
+  padding: .5rem !important;
+  vertical-align: middle !important;
+}
+
+.steps-st {
+  font-family: Times, Times New Roman, serif;
+  font-weight:700;
+  font-size: 15px;
 }

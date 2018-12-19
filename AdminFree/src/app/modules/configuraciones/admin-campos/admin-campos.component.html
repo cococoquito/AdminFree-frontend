@@ -52,7 +52,7 @@
 
 <!-- panel crear campos -->
 <div *ngIf="campoCrear">
-  <p-panel id="panelCampos">
+  <p-panel class="steps-pnl-main">
     <p-header>
       <i class="fa fa-list-alt font-size-14"><span class="font-admin"> Creación de Campo</span></i>
     </p-header>
@@ -172,7 +172,7 @@
         <button type="button" class="btn btn-sm btn-success" (click)="agregarItem(); table.reset()">
           <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Agregar</label>
         </button>
-        <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="10"
+        <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
           selectionMode="single">
           <ng-template pTemplate="header">
             <tr class="text-center">
@@ -195,14 +195,13 @@
         </p-table>
       </div>
       <div class="text-center mt-2 mb-1">
-        <button  type="button" class="btn btn-sm btn-primary" (click)="regresarAgregarItem()" style="width: 100px">
+        <button type="button" class="btn btn-sm btn-primary" (click)="regresarAgregarItem()" style="width: 100px">
           <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
         </button>
         <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
           <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
         </button>
-        <button type="button" class="btn btn-sm btn-primary" (click)="siguienteTabAgregar()"
-          style="width: 100px">
+        <button type="button" class="btn btn-sm btn-primary" (click)="siguienteTabAgregar()" style="width: 100px">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
         </button>
       </div>
@@ -211,61 +210,90 @@
     <div *ngIf="activeIndex === TAB_CONFIRMACION">
 
 
-      <p class="text-center mb-3 st">
+      <p class="text-center st">
         <i class="fa fa-info-circle color-info mr-1"></i>
         <strong>¿Está seguro de crear el campo con los siguientes datos?</strong>
       </p>
 
-      <div class="w-75 m-auto">
-
-        <!-- tipo -->
-        <div class="form-group">
-          <label class="font-weight-bold">Tipo:</label> {{ campoCrear.tipoCampoNombre }}
-        </div>
-
-        <div class="form-group">
-          <label class="font-weight-bold">Nombre:</label> {{ campoCrear.nombre }}
-        </div>
-
-        <div class="form-group">
-          <label class="font-weight-bold">Descripción:</label> {{ campoCrear.descripcion }}
-        </div>
-      </div>
-
-      <div class="ml-2 mr-2" *ngIf="restricciones">
-        <table class="table table-modulos table-hover mb-0">
+      <p-panel styleClass="mr-4 ml-4 steps-pnl">
+        <p-header>
+          <span class="steps-circle">1</span>
+          <span> Datos del Campo</span>
+        </p-header>
+        <table class="table steps-tbl mb-0">
           <tbody>
-            <tr *ngFor="let restriccion of restricciones">
+            <tr>
               <td style="width: 8%">
-                <div class="custom-control custom-control-inline">
-                  <i [ngClass]="restriccion.aplica ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
-                </div>
+                <p class="steps-st">Tipo:</p>
               </td>
               <td>
-                <p class="sub-title-page">{{ restriccion.descripcion }}</p>
+                <p class="st">{{ campoCrear.tipoCampoNombre }}</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 8%">
+                <p class="steps-st">Nombre:</p>
+              </td>
+              <td>
+                <p class="st">{{ campoCrear.nombre }}</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 8%">
+                <p class="steps-st">Descripción:</p>
+              </td>
+              <td>
+                <p class="st">{{ campoCrear.descripcion }}</p>
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
+      </p-panel>
 
-      <div *ngIf="campoCrear.tipoCampo === LISTA_DESPLEGABLE">
-          <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="10"
-          selectionMode="single">
-          <ng-template pTemplate="header">
-            <tr class="text-center">
-              <th style="width: 4%">#</th>
-              <th>Item</th>
-            </tr>
-          </ng-template>
+      <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl">
+        <p-header>
+          <span class="steps-circle">2</span>
+          <span> Restricciones</span>
+        </p-header>
+        <div class="ml-2 mr-2" *ngIf="campoCrear.restricciones">
+          <table class="table steps-tbl mb-0">
+            <tbody>
+              <tr *ngFor="let restriccion of campoCrear.restricciones">
+                <td style="width: 8%">
+                  <div class="custom-control custom-control-inline">
+                    <i class="pi pi-check icon-sel"></i>
+                  </div>
+                </td>
+                <td>
+                  <p class="sub-title-page">{{ restriccion.descripcion }}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="!campoCrear.restricciones" class="text-center pt-2 pb-2 ">
+          <p class="st font-weight-bold font-size-14">No hay restricciones para el nuevo campo</p>
+        </div>
+
+      </p-panel>
+
+
+      <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl" *ngIf="campoCrear.tipoCampo === LISTA_DESPLEGABLE">
+        <p-header>
+          <span class="steps-circle">3</span>
+          <span> Ítems Agregados</span>
+        </p-header>
+        <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5">
           <ng-template pTemplate="body" let-item>
-            <tr [pSelectableRow]="item">
-              <td>{{ item.id }}</td>
+            <tr>
+              <td style="width: 4%">{{ item.id }}</td>
               <td>{{ item.valor }}</td>
             </tr>
           </ng-template>
         </p-table>
-      </div>
+      </p-panel>
+
 
 
       <div class="text-center mt-2 mb-1">

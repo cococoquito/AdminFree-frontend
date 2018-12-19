@@ -333,6 +333,19 @@ export class AdminCamposComponent extends CommonComponent
   }
 
   public siguienteTabRestricciones(): void {
+    let restriccionesSeleccionadas: Array<RestriccionDTO>;
+    for (const restriccion of this.restricciones) {
+      if (restriccion.aplica) {
+        if (!restriccionesSeleccionadas) {
+          restriccionesSeleccionadas = new Array<RestriccionDTO>();
+        }
+        restriccionesSeleccionadas.push(restriccion);
+      }
+    }
+
+    this.campoCrear.restricciones = restriccionesSeleccionadas;
+
+
     this.spinnerState.displaySpinner();
     setTimeout(() => {
       this.spinnerState.hideSpinner();
@@ -366,17 +379,7 @@ export class AdminCamposComponent extends CommonComponent
   }
 
   public crearCampo(): void {
-    let restriccionesSeleccionadas: Array<RestriccionDTO>;
-    for (const restriccion of this.restricciones) {
-      if (restriccion.aplica) {
-        if (!restriccionesSeleccionadas) {
-          restriccionesSeleccionadas = new Array<RestriccionDTO>();
-        }
-        restriccionesSeleccionadas.push(restriccion);
-      }
-    }
 
-    this.campoCrear.restricciones = restriccionesSeleccionadas;
 
     if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
       this.campoCrear.items = this.itemss;
