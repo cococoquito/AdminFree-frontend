@@ -13,4 +13,7 @@ export class RestriccionDTO {
 
   /** Descripcion de la restriccion */
   public descripcion: string;
+
+  /** indica si la restriccion aplica para algun campo */
+  public aplica: boolean;
 }

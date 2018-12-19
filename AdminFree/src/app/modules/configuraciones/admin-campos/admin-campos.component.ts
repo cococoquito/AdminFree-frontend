@@ -1,3 +1,5 @@
+import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
+import { SpinnerState } from './../../../states/spinner.state';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { CommonComponent } from '../../../util/common.component';
@@ -23,9 +25,11 @@ import { ItemDTO } from './../../../dtos/configuraciones/item.dto';
   styleUrls: ['./admin-campos.component.css'],
   providers: [AdminCampoService]
 })
-export class AdminCamposComponent extends CommonComponent implements OnInit, OnDestroy {
+export class AdminCamposComponent extends CommonComponent
+  implements OnInit, OnDestroy {
   /** Se utiliza para crear un campo de entrada*/
   public campoCrear: CampoEntradaDTO;
+  public campoOrigen: CampoEntradaDTO;
 
   /** Lista de campos de entrada informacion asociado al cliente */
   public campos: Array<CampoEntradaDTO>;
@@ -37,12 +41,17 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
   items: MenuItem[];
   activeIndex = 0;
-  ultimoTab = 3;
+
 
   public TAB_DATOS_CAMPO = 0;
   public TAB_RESTRICCIONES = 1;
-  public TAB_AGREGAR_ITEMS = 2;
-  public TAB_CONFIRMACION = 3;
+  public TAB_CONFIRMACION = 2;
+  public TAB_AGREGAR_ITEMS = -1;
+
+  public CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
+  public LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
+  public CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
+  public CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
 
   /**
    * DTO que contiene los datos del cliente autenticado o
@@ -66,7 +75,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
     private adminCampoService: AdminCampoService,
-    private shellState: ShellState
+    private shellState: ShellState,
+    private spinnerState: SpinnerState
   ) {
     super();
   }
@@ -134,17 +144,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         }
       },
       {
-        label: 'Agregar Items',
-        command: (event: any) => {
-          this.activeIndex = 2;
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Pay with CC',
-            detail: event.item.label
-          });
-        }
-      },
-      {
         label: 'Confirmación',
         command: (event: any) => {
           this.activeIndex = 3;
@@ -202,7 +201,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * para el panel de creacion de campo siguiente
    */
   public irRestricciones(): void {
-    this.restricciones = null;
     if (!this.campoCrear.tipoCampo) {
       this.messageService.add(
         MsjUtil.getToastError(MsjFrontConstant.TIPO_CAMPO_REQUERIDO)
@@ -212,18 +210,137 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCrear.nombre = this.setTrim(this.campoCrear.nombre);
     this.campoCrear.descripcion = this.setTrim(this.campoCrear.descripcion);
 
+    if (
+      this.campoOrigen &&
+      this.campoOrigen.nombre === this.campoCrear.nombre &&
+      this.campoOrigen.tipoCampo === this.campoCrear.tipoCampo
+    ) {
+      this.activeIndex = this.TAB_RESTRICCIONES;
+      return;
+    }
     this.adminCampoService.validarDatosCampoEntrada(this.campoCrear).subscribe(
       data => {
-        this.restricciones = data;
+        this.activeIndex = this.TAB_RESTRICCIONES;
+
+        if (this.campoOrigen) {
+          if (this.campoOrigen.tipoCampo !== this.campoCrear.tipoCampo) {
+            this.restricciones = data;
+          }
+        } else {
+          this.restricciones = data;
+        }
+        this.campoOrigen = new CampoEntradaDTO();
+        this.campoOrigen.nombre = this.campoCrear.nombre;
+        this.campoOrigen.tipoCampo = this.campoCrear.tipoCampo;
+        this.campoCrear.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCrear.tipoCampo);
+        if (
+          this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE
+        ) {
+          this.TAB_CONFIRMACION = 3;
+          this.TAB_AGREGAR_ITEMS = 2;
+          this.items = [
+            {
+              label: 'Datos del Campo',
+              command: (event: any) => {
+                this.activeIndex = 0;
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'First Step',
+                  detail: event.item.label
+                });
+              }
+            },
+            {
+              label: 'Restricciones',
+              command: (event: any) => {
+                this.activeIndex = 1;
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'Seat Selection',
+                  detail: event.item.label
+                });
+              }
+            },
+            {
+              label: 'Agregar Items',
+              command: (event: any) => {
+                this.activeIndex = 2;
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'Pay with CC',
+                  detail: event.item.label
+                });
+              }
+            },
+            {
+              label: 'Confirmación',
+              command: (event: any) => {
+                this.activeIndex = 3;
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'Last Step',
+                  detail: event.item.label
+                });
+              }
+            }
+          ];
+        } else {
+          this.TAB_CONFIRMACION = 2;
+          this.TAB_AGREGAR_ITEMS = -1;
+          this.items = [
+            {
+              label: 'Datos del Campo',
+              command: (event: any) => {
+                this.activeIndex = 0;
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'First Step',
+                  detail: event.item.label
+                });
+              }
+            },
+            {
+              label: 'Restricciones',
+              command: (event: any) => {
+                this.activeIndex = 1;
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'Seat Selection',
+                  detail: event.item.label
+                });
+              }
+            },
+            {
+              label: 'Confirmación',
+              command: (event: any) => {
+                this.activeIndex = 3;
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'Last Step',
+                  detail: event.item.label
+                });
+              }
+            }
+          ];
+        }
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        this.messageService.add(
+          MsjUtil.getMsjError(this.showMensajeError(error))
+        );
       }
     );
+  }
 
-
-
-    this.activeIndex = this.TAB_RESTRICCIONES;
+  public siguienteTabRestricciones(): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.spinnerState.hideSpinner();
+      this.activeIndex = this.TAB_CONFIRMACION;
+      if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
+        this.activeIndex = this.TAB_AGREGAR_ITEMS;
+      }
+    }, 200);
   }
 
   public agregarItem(): void {
@@ -237,11 +354,63 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     }
   }
 
+  public regresarConfirmacion(): void {
+    this.activeIndex = this.TAB_RESTRICCIONES;
+    if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
+      this.activeIndex = this.TAB_AGREGAR_ITEMS;
+    }
+  }
+
+  public regresarAgregarItem() {
+    this.activeIndex = this.TAB_RESTRICCIONES;
+  }
+
+  public crearCampo(): void {
+    let restriccionesSeleccionadas: Array<RestriccionDTO>;
+    for (const restriccion of this.restricciones) {
+      if (restriccion.aplica) {
+        if (!restriccionesSeleccionadas) {
+          restriccionesSeleccionadas = new Array<RestriccionDTO>();
+        }
+        restriccionesSeleccionadas.push(restriccion);
+      }
+    }
+
+    this.campoCrear.restricciones = restriccionesSeleccionadas;
+
+    if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
+      this.campoCrear.items = this.itemss;
+    }
+
+    this.adminCampoService.crearCampoEntrada(this.campoCrear).subscribe(
+      data => {
+        this.campoCrear = null;
+        this.campos.push(data);
+
+        // Mensaje exitoso campo fue eliminado
+        this.messageService.add(
+          MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_CREADO_EXITOSO)
+        );
+      },
+      error => {
+        this.messageService.add(
+          MsjUtil.getMsjError(this.showMensajeError(error))
+        );
+      }
+    );
+
+
+  }
+
   public eliminarItem(item: ItemDTO): void {
     const i = this.itemss.indexOf(item, 0);
     if (i > -1) {
       this.itemss.splice(i, 1);
     }
+  }
+
+  public regresarRestricciones(): void {
+    this.activeIndex = this.TAB_DATOS_CAMPO;
   }
 
   /**
@@ -254,6 +423,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.activeIndex = 0;
     this.itemss = new Array<ItemDTO>();
     this.valorItem = null;
+    this.campoOrigen = null;
+    this.restricciones = null;
   }
 
   /**
@@ -264,8 +435,14 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCrear = null;
   }
 
-  public siguiente(): void {
-    this.activeIndex = this.activeIndex + 1;
+  public siguienteTabAgregar(): void {
+    if (!this.itemss || this.itemss.length === 0) {
+      this.messageService.add(
+        MsjUtil.getToastError(MsjFrontConstant.ITEMS_REQUERIDO)
+      );
+      return;
+    }
+    this.activeIndex = this.TAB_CONFIRMACION;
   }
 
   public regresar(): void {

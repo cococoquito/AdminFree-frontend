@@ -72,4 +72,10 @@ export class MsjFrontConstant {
 
   /** Mensaje el tipo de campo es requerido */
   static readonly TIPO_CAMPO_REQUERIDO: string = 'Seleccione el tipo de campo';
+
+  /** Mensaje cuando el campo se registra un nuevo campo en el sistema */
+  static readonly CAMPO_CREADO_EXITOSO: string = 'Campo creado exitosamente';
+
+  /** Mensaje el tipo de campo es requerido */
+  static readonly ITEMS_REQUERIDO: string = 'Los ítems son requeridos';
 }

@@ -56,7 +56,7 @@ export class MessagesBackendConstant {
 
   /** Ya existe un campo de entrada de informacion con el mismo tipo y nombre*/
   static readonly EXISTE_CAMPO_ENTRADA: string =
-    'Ya existe un campo de entrada de información con el mismo tipo y nombre';
+    'Ya existe un campo de entrada de información con el mismo <strong>tipo y nombre</strong>';
 
   /** El campo de entrada de información que intenta eliminar tiene una nomenclatura asociada*/
   static readonly DELETE_CAMPO_NOMENCLATURA_ASOCIADA: string =

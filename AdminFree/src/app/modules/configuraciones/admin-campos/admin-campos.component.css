@@ -1,6 +1,7 @@
 .table-modulos td{
   padding: .5rem !important;
   vertical-align: middle !important;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .st {
