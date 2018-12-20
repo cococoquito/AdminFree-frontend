@@ -262,7 +262,7 @@ export class AdminCamposComponent extends CommonComponent
               }
             },
             {
-              label: 'Agregar Items',
+              label: 'Agregar Ítems',
               command: (event: any) => {
                 this.activeIndex = 2;
                 this.messageService.add({
@@ -357,11 +357,10 @@ export class AdminCamposComponent extends CommonComponent
   }
 
   public agregarItem(): void {
+    this.valorItem = this.setTrim(this.valorItem);
     if (this.valorItem) {
-      this.valorItem = this.setTrim(this.valorItem);
       const itm = new ItemDTO();
       itm.valor = this.valorItem;
-      itm.id = this.itemss.length + 1;
       this.itemss.push(itm);
       this.valorItem = null;
     }
