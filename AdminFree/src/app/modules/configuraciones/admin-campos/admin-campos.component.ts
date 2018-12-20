@@ -1,6 +1,6 @@
 import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
 import { SpinnerState } from './../../../states/spinner.state';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { CommonComponent } from '../../../util/common.component';
 import { AdminCampoService } from '../../../services/admin-campo.service';
@@ -52,6 +52,8 @@ export class AdminCamposComponent extends CommonComponent
   public LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
   public CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
   public CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
+
+  @ViewChild('inItem') inItem: ElementRef;
 
   /**
    * DTO que contiene los datos del cliente autenticado o
@@ -215,7 +217,11 @@ export class AdminCamposComponent extends CommonComponent
       this.campoOrigen.nombre === this.campoCrear.nombre &&
       this.campoOrigen.tipoCampo === this.campoCrear.tipoCampo
     ) {
-      this.activeIndex = this.TAB_RESTRICCIONES;
+      this.spinnerState.displaySpinner();
+      setTimeout(() => {
+        this.spinnerState.hideSpinner();
+        this.activeIndex = this.TAB_RESTRICCIONES;
+      }, 100);
       return;
     }
     this.adminCampoService.validarDatosCampoEntrada(this.campoCrear).subscribe(
@@ -353,7 +359,7 @@ export class AdminCamposComponent extends CommonComponent
       if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
         this.activeIndex = this.TAB_AGREGAR_ITEMS;
       }
-    }, 200);
+    }, 100);
   }
 
   public agregarItem(): void {
@@ -364,6 +370,11 @@ export class AdminCamposComponent extends CommonComponent
       this.itemss.push(itm);
       this.valorItem = null;
     }
+    if (this.inItem) {
+      this.inItem.nativeElement.focus();
+    }
+
+
   }
 
   public regresarConfirmacion(): void {
@@ -433,8 +444,15 @@ export class AdminCamposComponent extends CommonComponent
    * Metodo que permite cerrar el panel de creacion de campos
    */
   public closePanelCreacion(): void {
-    this.messageService.clear();
-    this.campoCrear = null;
+
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.SEGURO_SALIR,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+        this.messageService.clear();
+        this.campoCrear = null;
+      }
+    });
   }
 
   public siguienteTabAgregar(): void {
@@ -444,7 +462,12 @@ export class AdminCamposComponent extends CommonComponent
       );
       return;
     }
-    this.activeIndex = this.TAB_CONFIRMACION;
+
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.spinnerState.hideSpinner();
+      this.activeIndex = this.TAB_CONFIRMACION;
+    }, 100);
   }
 
   public regresar(): void {

@@ -24,7 +24,6 @@
         <th style="width: 4%">Eliminar</th>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-campo>
       <tr [pSelectableRow]="campo">
         <td>{{ campo.tipoCampoNombre }}</td>
@@ -48,160 +47,139 @@
     </ng-template>
   </p-table>
 </div>
-
-
 <!-- panel crear campos -->
 <div *ngIf="campoCrear">
-  <p-panel class="steps-pnl-main">
+  <p-panel styleClass="steps-pnl-main">
     <p-header>
       <i class="fa fa-list-alt font-size-14"><span class="font-admin"> Creación de Campo</span></i>
     </p-header>
     <p-steps id="stepsCampos" [model]="items" [(activeIndex)]="activeIndex"></p-steps>
-
-    <!-- form datos basicos -->
-    <form *ngIf="activeIndex === TAB_DATOS_CAMPO" #formDatos="ngForm" name="formDatos" (ngSubmit)="limpiarMensajes() && formDatos.form.valid && irRestricciones()"
-      (keydown.enter)="$event.preventDefault()" novalidate>
-
-
-      <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-        <p-header>
-          <i class="fa fa-info-circle font-size-18"></i>
-          <span> Ingrese los datos del campo, todos los valores son obligatorios</span>
-        </p-header>
-
-        <table class="table steps-tbl mb-0">
-          <tbody>
-            <tr>
-              <td style="width: 8%">
-                <p class="steps-st">Tipo:</p>
-              </td>
-              <td>
-
-                <div class="form-row">
-                  <div class="mr-3">
-                    <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="CAMPO_TEXTO" label="Campo de Texto"></p-radioButton>
+    <div style="min-height: 200px">
+      <!-- form datos basicos -->
+      <form *ngIf="activeIndex === TAB_DATOS_CAMPO" #formDatos="ngForm" name="formDatos" (ngSubmit)="limpiarMensajes() && formDatos.form.valid && irRestricciones()"
+        (keydown.enter)="$event.preventDefault()" novalidate>
+        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+          <p-header>
+            <i class="fa fa-info-circle font-size-18"></i>
+            <span> Ingrese los datos del campo, todos los valores son obligatorios</span>
+          </p-header>
+          <table class="table steps-tbl mb-0">
+            <tbody>
+              <tr>
+                <td style="width: 8%">
+                  <p class="steps-st">Tipo:</p>
+                </td>
+                <td>
+                  <div class="form-row">
+                    <div class="mr-3">
+                      <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="CAMPO_TEXTO" label="Campo de Texto"></p-radioButton>
+                    </div>
+                    <div class="mr-3">
+                      <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="LISTA_DESPLEGABLE" label="Lista Desplegable"></p-radioButton>
+                    </div>
+                    <div class="mr-3">
+                      <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="CASILLA_VERIFICACION"
+                        label="Casilla de Verificación"></p-radioButton>
+                    </div>
+                    <div>
+                      <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="CAMPO_FECHA" label="Campo de Fecha"></p-radioButton>
+                    </div>
                   </div>
-                  <div class="mr-3">
-                    <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="LISTA_DESPLEGABLE" label="Lista Desplegable"></p-radioButton>
-                  </div>
-                  <div class="mr-3">
-                    <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="CASILLA_VERIFICACION"
-                      label="Casilla de Verificación"></p-radioButton>
-                  </div>
-                  <div>
-                    <p-radioButton [(ngModel)]="campoCrear.tipoCampo" name="campos" [value]="CAMPO_FECHA" label="Campo de Fecha"></p-radioButton>
-                  </div>
-                </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 8%">
+                  <p class="steps-st">Nombre:</p>
+                </td>
+                <td>
+                  <input type="text" id="cnombre" autocomplete="off" name="cnombre" #cnombre="ngModel" [(ngModel)]="campoCrear.nombre"
+                    maxlength="100" adminRequired adminAutofocus class="ad-input ad-input-style w-100" [ngClass]="{'ad-input-required' : (formDatos.submitted && !cnombre.valid)}" />
+                  <div class="focus-border"></div>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 8%">
+                  <p class="steps-st">Descripción:</p>
+                </td>
+                <td>
+                  <input type="text" id="cdescri" autocomplete="off" name="cdescri" #cdescri="ngModel" [(ngModel)]="campoCrear.descripcion"
+                    maxlength="255" adminRequired class="ad-input ad-input-style w-100" [ngClass]="{'ad-input-required' : (formDatos.submitted && !cdescri.valid)}" />
+                  <div class="focus-border"></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </p-panel>
 
-
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 8%">
-                <p class="steps-st">Nombre:</p>
-              </td>
-              <td>
-
-                <input type="text" id="cnombre" autocomplete="off" name="cnombre" #cnombre="ngModel" [(ngModel)]="campoCrear.nombre"
-                  maxlength="100" adminRequired adminAutofocus class="ad-input ad-input-style w-100" [ngClass]="{'ad-input-required' : (formDatos.submitted && !cnombre.valid)}" />
-                <div class="focus-border"></div>
-
-
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 8%">
-                <p class="steps-st">Descripción:</p>
-              </td>
-              <td>
-                <input type="text" id="cdescri" autocomplete="off" name="cdescri" #cdescri="ngModel" [(ngModel)]="campoCrear.descripcion"
-                  maxlength="255" adminRequired class="ad-input ad-input-style w-100" [ngClass]="{'ad-input-required' : (formDatos.submitted && !cdescri.valid)}" />
-                <div class="focus-border"></div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </p-panel>
-
-      <!-- botones salir - next-->
-      <div class="text-center mb-1">
-        <button type="button" (click)="closePanelCreacion()" class="btn btn-sm btn-secondary mr-1 w-100-px">
-          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-        </button>
-        <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
-          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-        </button>
+        <!-- botones salir - next-->
+        <div class="text-center mb-1">
+          <button type="button" (click)="closePanelCreacion()" class="btn btn-sm btn-secondary mr-1 w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+        </div>
+      </form>
+      <!-- panel restricciones -->
+      <div *ngIf="activeIndex === TAB_RESTRICCIONES">
+        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+          <p-header>
+            <i class="fa fa-info-circle font-size-18"></i>
+            <span> Asigne las restricciones para el nuevo campo</span>
+          </p-header>
+          <table class="table steps-tbl table-hover mb-0">
+            <tbody>
+              <tr *ngFor="let restriccion of restricciones">
+                <td style="width: 8%">
+                  <admin-inputswitch [isChecked]="restriccion.aplica" (switchChange)="restriccion.aplica=$event">
+                  </admin-inputswitch>
+                </td>
+                <td>
+                  <p class="sub-title-page">{{ restriccion.descripcion }}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </p-panel>
+        <div class="text-center mt-2 mb-1">
+          <button type="button" class="btn btn-sm btn-primary" (click)="regresarRestricciones()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" (click)="siguienteTabRestricciones()" style="width: 100px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+        </div>
       </div>
-    </form>
+      <div *ngIf="activeIndex === TAB_AGREGAR_ITEMS">
+        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+          <p-header>
+            <i class="fa fa-info-circle font-size-18"></i>
+            <span> Agrege los ítems asociados al nuevo campo</span>
+          </p-header>
 
-
-
-
-    <!-- panel restricciones -->
-    <div *ngIf="activeIndex === TAB_RESTRICCIONES">
-      <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-        <p-header>
-          <i class="fa fa-info-circle font-size-18"></i>
-          <span> Asigne las restricciones para el nuevo campo</span>
-        </p-header>
-        <table class="table steps-tbl table-hover mb-0">
-          <tbody>
-            <tr *ngFor="let restriccion of restricciones">
-              <td style="width: 8%">
-                <admin-inputswitch [isChecked]="restriccion.aplica" (switchChange)="restriccion.aplica=$event">
-                </admin-inputswitch>
-              </td>
-              <td>
-                <p class="sub-title-page">{{ restriccion.descripcion }}</p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </p-panel>
-      <div class="text-center mt-2 mb-1">
-        <button type="button" class="btn btn-sm btn-primary" (click)="regresarRestricciones()" style="width: 100px">
-          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
-          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-        </button>
-        <button type="button" class="btn btn-sm btn-primary" (click)="siguienteTabRestricciones()" style="width: 100px">
-          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-        </button>
-      </div>
-    </div>
-
-
-    <div *ngIf="activeIndex === TAB_AGREGAR_ITEMS">
-
-
-      <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-        <p-header>
-          <i class="fa fa-info-circle font-size-18"></i>
-          <span> Agrege los ítems asociados al nuevo campo</span>
-        </p-header>
-
-        <table class="table steps-tbl mb-0">
-          <tbody>
-            <tr>
-              <td style="width: 10%">
-                <p class="steps-st">Nuevo Ítem:</p>
-              </td>
-              <td>
-                <input type="text" autocomplete="off" name="useringreso" [(ngModel)]="valorItem" maxlength="255"
-                  adminAutofocus class="ad-input ad-input-style w-100" />
-                <div class="focus-border"></div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="button" class="btn btn-sm btn-success ml-2" (click)="agregarItem(); table.reset()">
-          <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Agregar</label>
-        </button>
-
-            <p-table  id="tbl-common1"  #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
+          <table class="table steps-tbl mb-0">
+            <tbody>
+              <tr>
+                <td style="width: 10%">
+                  <p class="steps-st">Nuevo Ítem:</p>
+                </td>
+                <td>
+                  <input type="text" autocomplete="off" #inItem name="useringreso" [(ngModel)]="valorItem" maxlength="255"
+                    adminAutofocus class="ad-input ad-input-style w-100" />
+                  <div class="focus-border"></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" class="btn btn-sm btn-success ml-2" (click)="agregarItem(); table.reset()">
+            <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Agregar</label>
+          </button>
+          <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
             selectionMode="single" styleClass="ml-2 mr-2 mb-2" [alwaysShowPaginator]="false">
-
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
               <tr [pSelectableRow]="item">
                 <td style="width: 4%">{{rowIndex + 1}}</td>
@@ -214,120 +192,105 @@
               </tr>
             </ng-template>
           </p-table>
-
-
-
-
-      </p-panel>
-
-      <div class="text-center mt-2 mb-1">
-        <button type="button" class="btn btn-sm btn-primary" (click)="regresarAgregarItem()" style="width: 100px">
-          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
-          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-        </button>
-        <button type="button" class="btn btn-sm btn-primary" (click)="siguienteTabAgregar()" style="width: 100px">
-          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-        </button>
+        </p-panel>
+        <div class="text-center mt-2 mb-1">
+          <button type="button" class="btn btn-sm btn-primary" (click)="regresarAgregarItem()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" (click)="siguienteTabAgregar()" style="width: 100px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+        </div>
       </div>
-    </div>
-
-
-    <div *ngIf="activeIndex === TAB_CONFIRMACION">
-
-
-      <p-panel styleClass="mr-4 ml-4 steps-pnl">
-        <p-header>
-          <span class="steps-circle">1</span>
-          <span> Datos del Campo</span>
-        </p-header>
-        <table class="table steps-tbl mb-0">
-          <tbody>
-            <tr>
-              <td style="width: 8%">
-                <p class="steps-st">Tipo:</p>
-              </td>
-              <td>
-                <p class="st">{{ campoCrear.tipoCampoNombre }}</p>
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 8%">
-                <p class="steps-st">Nombre:</p>
-              </td>
-              <td>
-                <p class="st">{{ campoCrear.nombre }}</p>
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 8%">
-                <p class="steps-st">Descripción:</p>
-              </td>
-              <td>
-                <p class="st">{{ campoCrear.descripcion }}</p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </p-panel>
-
-      <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl">
-        <p-header>
-          <span class="steps-circle">2</span>
-          <span> Restricciones</span>
-        </p-header>
-        <div class="ml-2 mr-2" *ngIf="campoCrear.restricciones">
+      <div *ngIf="activeIndex === TAB_CONFIRMACION">
+        <p-panel styleClass="mr-4 ml-4 steps-pnl">
+          <p-header>
+            <span class="steps-circle">1</span>
+            <span> Datos del Campo</span>
+          </p-header>
           <table class="table steps-tbl mb-0">
             <tbody>
-              <tr *ngFor="let restriccion of campoCrear.restricciones">
+              <tr>
                 <td style="width: 8%">
-                  <div class="custom-control custom-control-inline">
-                    <i class="pi pi-check icon-sel"></i>
-                  </div>
+                  <p class="steps-st">Tipo:</p>
                 </td>
                 <td>
-                  <p class="sub-title-page">{{ restriccion.descripcion }}</p>
+                  <p class="st">{{ campoCrear.tipoCampoNombre }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 8%">
+                  <p class="steps-st">Nombre:</p>
+                </td>
+                <td>
+                  <p class="st">{{ campoCrear.nombre }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 8%">
+                  <p class="steps-st">Descripción:</p>
+                </td>
+                <td>
+                  <p class="st">{{ campoCrear.descripcion }}</p>
                 </td>
               </tr>
             </tbody>
           </table>
+        </p-panel>
+        <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl">
+          <p-header>
+            <span class="steps-circle">2</span>
+            <span> Restricciones</span>
+          </p-header>
+          <div class="ml-2 mr-2" *ngIf="campoCrear.restricciones">
+            <table class="table steps-tbl mb-0">
+              <tbody>
+                <tr *ngFor="let restriccion of campoCrear.restricciones">
+                  <td style="width: 8%">
+                    <div class="custom-control custom-control-inline">
+                      <i class="pi pi-check icon-sel"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="sub-title-page">{{ restriccion.descripcion }}</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="!campoCrear.restricciones" class="text-center pt-2 pb-2 ">
+            <p class="st font-weight-bold font-size-14">No hay restricciones para el nuevo campo</p>
+          </div>
+        </p-panel>
+        <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl" *ngIf="campoCrear.tipoCampo === LISTA_DESPLEGABLE">
+          <p-header>
+            <span class="steps-circle">3</span>
+            <span> Ítems Agregados</span>
+          </p-header>
+          <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
+            [alwaysShowPaginator]="false">
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+              <tr>
+                <td style="width: 4%">{{rowIndex + 1}}</td>
+                <td>{{ item.valor }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-panel>
+        <div class="text-center mt-2 mb-1">
+          <button type="button" class="btn btn-sm btn-primary" (click)="regresarConfirmacion()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button type="button" (click)="crearCampo()" class="btn btn-success btn-sm">
+            <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
+          </button>
         </div>
-
-        <div *ngIf="!campoCrear.restricciones" class="text-center pt-2 pb-2 ">
-          <p class="st font-weight-bold font-size-14">No hay restricciones para el nuevo campo</p>
-        </div>
-
-      </p-panel>
-
-
-      <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl" *ngIf="campoCrear.tipoCampo === LISTA_DESPLEGABLE">
-        <p-header>
-          <span class="steps-circle">3</span>
-          <span> Ítems Agregados</span>
-        </p-header>
-        <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5" [alwaysShowPaginator]="false">
-          <ng-template pTemplate="body" let-item>
-            <tr>
-              <td style="width: 4%">{{ item.id }}</td>
-              <td>{{ item.valor }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </p-panel>
-
-
-
-      <div class="text-center mt-2 mb-1">
-        <button type="button" class="btn btn-sm btn-primary" (click)="regresarConfirmacion()" style="width: 100px">
-          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-        </button>
-        <button type="button" class="btn btn-sm btn-secondary mr-1 ml-1" (click)="closePanelCreacion()" style="width: 100px">
-          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-        </button>
-        <button type="button" (click)="crearCampo()" class="btn btn-success btn-sm">
-          <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
-        </button>
       </div>
     </div>
   </p-panel>

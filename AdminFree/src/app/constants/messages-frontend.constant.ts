@@ -78,4 +78,7 @@ export class MsjFrontConstant {
 
   /** Mensaje el tipo de campo es requerido */
   static readonly ITEMS_REQUERIDO: string = 'Los ítems son requeridos';
+
+  /** Mensaje cuando quieren salir de una pagina de creacion o edicion */
+  static readonly SEGURO_SALIR: string = '¿Está seguro que desea salir?';
 }
