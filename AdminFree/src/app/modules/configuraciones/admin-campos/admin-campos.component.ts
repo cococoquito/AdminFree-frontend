@@ -39,13 +39,13 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
   public stepsModel: StepsModel;
 
-  public itemss: Array<ItemDTO>;
+  public itemsAgregados: Array<ItemDTO>;
   public restricciones: Array<RestriccionDTO>;
 
-  public CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
-  public LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
-  public CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
-  public CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
+  public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
+  public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
+  public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
+  public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
 
   @ViewChild('inItem') inItem: ElementRef;
 
@@ -196,7 +196,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.campoOrigen.tipoCampo = this.campoCrear.tipoCampo;
         this.campoCrear.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCrear.tipoCampo);
 
-        if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
+        if (this.campoCrear.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
           this.stepsModel.stepsParaAdminCampos(true);
         } else {
           this.stepsModel.stepsParaAdminCampos(false);
@@ -236,7 +236,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     input.value = this.setTrim(input.value);
     if (input.value) {
 
-      for (const item of this.itemss) {
+      for (const item of this.itemsAgregados) {
         if (item.valor === input.value) {
           if (this.inItem) {
             this.inItem.nativeElement.focus();
@@ -250,7 +250,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
       const itm = new ItemDTO();
       itm.valor = input.value;
-      this.itemss.push(itm);
+      this.itemsAgregados.push(itm);
       input.value = null;
     }
 
@@ -274,8 +274,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   public crearCampo(): void {
 
 
-    if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
-      this.campoCrear.items = this.itemss;
+    if (this.campoCrear.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
+      this.campoCrear.items = this.itemsAgregados;
     }
 
     this.adminCampoService.crearCampoEntrada(this.campoCrear).subscribe(
@@ -299,9 +299,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   public eliminarItem(item: ItemDTO): void {
-    const i = this.itemss.indexOf(item, 0);
+    const i = this.itemsAgregados.indexOf(item, 0);
     if (i > -1) {
-      this.itemss.splice(i, 1);
+      this.itemsAgregados.splice(i, 1);
     }
   }
 
@@ -316,7 +316,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.messageService.clear();
     this.campoCrear = new CampoEntradaDTO();
     this.campoCrear.idCliente = this.clienteCurrent.id;
-    this.itemss = new Array<ItemDTO>();
+    this.itemsAgregados = new Array<ItemDTO>();
     this.campoOrigen = null;
     this.restricciones = null;
     this.stepsModel = new StepsModel();
@@ -339,7 +339,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   public siguienteTabAgregar(): void {
-    if (!this.itemss || this.itemss.length === 0) {
+    if (!this.itemsAgregados || this.itemsAgregados.length === 0) {
       this.messageService.add(
         MsjUtil.getToastError(MsjFrontConstant.ITEMS_REQUERIDO)
       );
@@ -351,10 +351,5 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       this.spinnerState.hideSpinner();
       this.stepsModel.irUltimoStep();
     }, 100);
-  }
-
-  public isAgregarItemsAcitvo(): boolean {
-    return (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) &&
-    (this.stepsModel.activeIndex === this.stepsModel.STEP_TRES);
   }
 }
