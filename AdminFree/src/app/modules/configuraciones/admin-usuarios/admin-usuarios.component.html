@@ -9,11 +9,11 @@
   </div>
 
   <!-- tabla - usuarios -->
-  <p-table id="tbl-common"
-    [value]="usuarios"
+  <p-table [value]="usuarios"
+    styleClass="tbl-admin"
     [responsive]="true"
     [paginator]="true"
-    [rows]="5"
+    [rows]="10"
     selectionMode="single">
 
     <ng-template pTemplate="caption">

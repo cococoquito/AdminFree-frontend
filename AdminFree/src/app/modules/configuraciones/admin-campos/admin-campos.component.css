@@ -9,3 +9,7 @@
   font-size: 0.98rem;
   font-family: Times, Times New Roman, serif;
 }
+
+.mh-pnl-create {
+  min-height: 200px;
+}

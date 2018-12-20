@@ -56,4 +56,10 @@ export class LabelsConstant {
   public static readonly INFO: string = 'info';
   public static readonly WARN: string = 'warn';
   public static readonly ERROR: string = 'error';
+
+  /** labels para la administracion de los campos de entrada */
+  public static readonly DATOS_CAMPO: string = 'Datos del Campo';
+  public static readonly RESTRICCIONES: string = 'Restricciones';
+  public static readonly AGREGAR_ITEMS: string = 'Agregar Ítems';
+  public static readonly CONFIRMACION: string = 'Confirmación';
 }

@@ -1,7 +1,8 @@
+import { StepsModel } from './../../../model/steps-model';
 import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
 import { SpinnerState } from './../../../states/spinner.state';
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { CommonComponent } from '../../../util/common.component';
 import { AdminCampoService } from '../../../services/admin-campo.service';
 import { ShellState } from '../../../states/shell/shell.state';
@@ -14,6 +15,8 @@ import { LabelsConstant } from './../../../constants/labels.constant';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 import { ItemDTO } from './../../../dtos/configuraciones/item.dto';
 
+
+
 /**
  * Componente para la administracion de los Campos de ingreso
  * de informacion al momento de solicitar un consecutivo
@@ -25,8 +28,8 @@ import { ItemDTO } from './../../../dtos/configuraciones/item.dto';
   styleUrls: ['./admin-campos.component.css'],
   providers: [AdminCampoService]
 })
-export class AdminCamposComponent extends CommonComponent
-  implements OnInit, OnDestroy {
+export class AdminCamposComponent extends CommonComponent implements OnInit, OnDestroy {
+
   /** Se utiliza para crear un campo de entrada*/
   public campoCrear: CampoEntradaDTO;
   public campoOrigen: CampoEntradaDTO;
@@ -34,19 +37,10 @@ export class AdminCamposComponent extends CommonComponent
   /** Lista de campos de entrada informacion asociado al cliente */
   public campos: Array<CampoEntradaDTO>;
 
+  public stepsModel: StepsModel;
+
   public itemss: Array<ItemDTO>;
   public restricciones: Array<RestriccionDTO>;
-
-  public valorItem: string;
-
-  items: MenuItem[];
-  activeIndex = 0;
-
-
-  public TAB_DATOS_CAMPO = 0;
-  public TAB_RESTRICCIONES = 1;
-  public TAB_CONFIRMACION = 2;
-  public TAB_AGREGAR_ITEMS = -1;
 
   public CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
   public LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
@@ -121,42 +115,6 @@ export class AdminCamposComponent extends CommonComponent
         );
       }
     );
-
-    this.items = [
-      {
-        label: 'Datos del Campo',
-        command: (event: any) => {
-          this.activeIndex = 0;
-          this.messageService.add({
-            severity: 'info',
-            summary: 'First Step',
-            detail: event.item.label
-          });
-        }
-      },
-      {
-        label: 'Restricciones',
-        command: (event: any) => {
-          this.activeIndex = 1;
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Seat Selection',
-            detail: event.item.label
-          });
-        }
-      },
-      {
-        label: 'Confirmación',
-        command: (event: any) => {
-          this.activeIndex = 3;
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Last Step',
-            detail: event.item.label
-          });
-        }
-      }
-    ];
   }
 
   /**
@@ -220,14 +178,12 @@ export class AdminCamposComponent extends CommonComponent
       this.spinnerState.displaySpinner();
       setTimeout(() => {
         this.spinnerState.hideSpinner();
-        this.activeIndex = this.TAB_RESTRICCIONES;
+        this.stepsModel.irSegundoStep();
       }, 100);
       return;
     }
     this.adminCampoService.validarDatosCampoEntrada(this.campoCrear).subscribe(
       data => {
-        this.activeIndex = this.TAB_RESTRICCIONES;
-
         if (this.campoOrigen) {
           if (this.campoOrigen.tipoCampo !== this.campoCrear.tipoCampo) {
             this.restricciones = data;
@@ -239,96 +195,13 @@ export class AdminCamposComponent extends CommonComponent
         this.campoOrigen.nombre = this.campoCrear.nombre;
         this.campoOrigen.tipoCampo = this.campoCrear.tipoCampo;
         this.campoCrear.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCrear.tipoCampo);
-        if (
-          this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE
-        ) {
-          this.TAB_CONFIRMACION = 3;
-          this.TAB_AGREGAR_ITEMS = 2;
-          this.items = [
-            {
-              label: 'Datos del Campo',
-              command: (event: any) => {
-                this.activeIndex = 0;
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'First Step',
-                  detail: event.item.label
-                });
-              }
-            },
-            {
-              label: 'Restricciones',
-              command: (event: any) => {
-                this.activeIndex = 1;
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'Seat Selection',
-                  detail: event.item.label
-                });
-              }
-            },
-            {
-              label: 'Agregar Ítems',
-              command: (event: any) => {
-                this.activeIndex = 2;
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'Pay with CC',
-                  detail: event.item.label
-                });
-              }
-            },
-            {
-              label: 'Confirmación',
-              command: (event: any) => {
-                this.activeIndex = 3;
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'Last Step',
-                  detail: event.item.label
-                });
-              }
-            }
-          ];
+
+        if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
+          this.stepsModel.stepsParaAdminCampos(true);
         } else {
-          this.TAB_CONFIRMACION = 2;
-          this.TAB_AGREGAR_ITEMS = -1;
-          this.items = [
-            {
-              label: 'Datos del Campo',
-              command: (event: any) => {
-                this.activeIndex = 0;
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'First Step',
-                  detail: event.item.label
-                });
-              }
-            },
-            {
-              label: 'Restricciones',
-              command: (event: any) => {
-                this.activeIndex = 1;
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'Seat Selection',
-                  detail: event.item.label
-                });
-              }
-            },
-            {
-              label: 'Confirmación',
-              command: (event: any) => {
-                this.activeIndex = 3;
-                this.messageService.add({
-                  severity: 'info',
-                  summary: 'Last Step',
-                  detail: event.item.label
-                });
-              }
-            }
-          ];
+          this.stepsModel.stepsParaAdminCampos(false);
         }
+        this.stepsModel.irSegundoStep();
       },
       error => {
         this.messageService.add(
@@ -355,21 +228,34 @@ export class AdminCamposComponent extends CommonComponent
     this.spinnerState.displaySpinner();
     setTimeout(() => {
       this.spinnerState.hideSpinner();
-      this.activeIndex = this.TAB_CONFIRMACION;
-      if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
-        this.activeIndex = this.TAB_AGREGAR_ITEMS;
-      }
+      this.stepsModel.irTercerStep();
     }, 100);
   }
 
-  public agregarItem(): void {
-    this.valorItem = this.setTrim(this.valorItem);
-    if (this.valorItem) {
+  public agregarItem(input): void {
+    input.value = this.setTrim(input.value);
+    if (input.value) {
+
+      for (const item of this.itemss) {
+        if (item.valor === input.value) {
+          if (this.inItem) {
+            this.inItem.nativeElement.focus();
+          }
+          return;
+        }
+      }
+
+
+
+
       const itm = new ItemDTO();
-      itm.valor = this.valorItem;
+      itm.valor = input.value;
       this.itemss.push(itm);
-      this.valorItem = null;
+      input.value = null;
     }
+
+
+
     if (this.inItem) {
       this.inItem.nativeElement.focus();
     }
@@ -378,14 +264,11 @@ export class AdminCamposComponent extends CommonComponent
   }
 
   public regresarConfirmacion(): void {
-    this.activeIndex = this.TAB_RESTRICCIONES;
-    if (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) {
-      this.activeIndex = this.TAB_AGREGAR_ITEMS;
-    }
+    this.stepsModel.irPenultimoStep();
   }
 
   public regresarAgregarItem() {
-    this.activeIndex = this.TAB_RESTRICCIONES;
+    this.stepsModel.irSegundoStep();
   }
 
   public crearCampo(): void {
@@ -423,7 +306,7 @@ export class AdminCamposComponent extends CommonComponent
   }
 
   public regresarRestricciones(): void {
-    this.activeIndex = this.TAB_DATOS_CAMPO;
+    this.stepsModel.irPrimerStep();
   }
 
   /**
@@ -433,11 +316,11 @@ export class AdminCamposComponent extends CommonComponent
     this.messageService.clear();
     this.campoCrear = new CampoEntradaDTO();
     this.campoCrear.idCliente = this.clienteCurrent.id;
-    this.activeIndex = 0;
     this.itemss = new Array<ItemDTO>();
-    this.valorItem = null;
     this.campoOrigen = null;
     this.restricciones = null;
+    this.stepsModel = new StepsModel();
+    this.stepsModel.stepsParaAdminCampos(false);
   }
 
   /**
@@ -466,11 +349,12 @@ export class AdminCamposComponent extends CommonComponent
     this.spinnerState.displaySpinner();
     setTimeout(() => {
       this.spinnerState.hideSpinner();
-      this.activeIndex = this.TAB_CONFIRMACION;
+      this.stepsModel.irUltimoStep();
     }, 100);
   }
 
-  public regresar(): void {
-    this.activeIndex = this.activeIndex - 1;
+  public isAgregarItemsAcitvo(): boolean {
+    return (this.campoCrear.tipoCampo === TipoCamposConstant.ID_LISTA_DESPLEGABLE) &&
+    (this.stepsModel.activeIndex === this.stepsModel.STEP_TRES);
   }
 }

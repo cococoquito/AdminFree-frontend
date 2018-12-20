@@ -3,13 +3,18 @@
 
   <!-- boton crear campo -->
   <div class="text-right mb-1">
-    <button type="button" (click)="showPanelCreacion()" class="btn btn-success btn-sm">
+    <button (click)="showPanelCreacion()" type="button" class="btn btn-success btn-sm">
       <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
     </button>
   </div>
 
   <!-- tabla - usuarios -->
-  <p-table id="tbl-common" [value]="campos" [responsive]="true" [paginator]="true" [rows]="5" selectionMode="single">
+  <p-table [value]="campos"
+    styleClass="tbl-admin"
+    [responsive]="true"
+    [paginator]="true"
+    [rows]="10"
+    selectionMode="single">
 
     <ng-template pTemplate="caption">
       <i class="fa fa-list-alt"><span class="font-admin"> Campos de Entrada</span></i>
@@ -24,6 +29,7 @@
         <th style="width: 4%">Eliminar</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-campo>
       <tr [pSelectableRow]="campo">
         <td>{{ campo.tipoCampoNombre }}</td>
@@ -39,7 +45,7 @@
           </button>
         </td>
         <td class="text-center">
-          <button type="button" (click)="eliminarCampo(campo)" class="btn btn-sm btn-round-table btn-round-del">
+          <button (click)="eliminarCampo(campo)" type="button" class="btn btn-sm btn-round-table btn-round-del">
             <i class="pi pi-times icon-round-del"></i>
           </button>
         </td>
@@ -47,21 +53,33 @@
     </ng-template>
   </p-table>
 </div>
+
+
 <!-- panel crear campos -->
 <div *ngIf="campoCrear">
+
+  <!-- panel principal -->
   <p-panel styleClass="steps-pnl-main">
     <p-header>
       <i class="fa fa-list-alt font-size-14"><span class="font-admin"> Creación de Campo</span></i>
     </p-header>
-    <p-steps id="stepsCampos" [model]="items" [(activeIndex)]="activeIndex"></p-steps>
-    <div style="min-height: 200px">
-      <!-- form datos basicos -->
-      <form *ngIf="activeIndex === TAB_DATOS_CAMPO" #formDatos="ngForm" name="formDatos" (ngSubmit)="limpiarMensajes() && formDatos.form.valid && irRestricciones()"
+
+    <!-- pasos de creacion -->
+    <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+    <div class="mh-pnl-create">
+
+      <!-- datos del campo -->
+      <form
+        *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO"
+        (ngSubmit)="limpiarMensajes() && formDatos.form.valid && irRestricciones()"
+        #formDatos="ngForm" name="formDatos"
         (keydown.enter)="$event.preventDefault()" novalidate>
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
-            <span> Ingrese los datos del campo, todos los valores son obligatorios</span>
+            <span>
+              Ingrese los datos del campo, todos los valores son
+              obligatorios</span>
           </p-header>
           <table class="table steps-tbl mb-0">
             <tbody>
@@ -93,7 +111,9 @@
                 </td>
                 <td>
                   <input type="text" id="cnombre" autocomplete="off" name="cnombre" #cnombre="ngModel" [(ngModel)]="campoCrear.nombre"
-                    maxlength="100" adminRequired adminAutofocus class="ad-input ad-input-style w-100" [ngClass]="{'ad-input-required' : (formDatos.submitted && !cnombre.valid)}" />
+                    maxlength="100" adminRequired adminAutofocus class="ad-input ad-input-style w-100" [ngClass]="{
+                      'ad-input-required': formDatos.submitted && !cnombre.valid
+                    }" />
                   <div class="focus-border"></div>
                 </td>
               </tr>
@@ -103,7 +123,9 @@
                 </td>
                 <td>
                   <input type="text" id="cdescri" autocomplete="off" name="cdescri" #cdescri="ngModel" [(ngModel)]="campoCrear.descripcion"
-                    maxlength="255" adminRequired class="ad-input ad-input-style w-100" [ngClass]="{'ad-input-required' : (formDatos.submitted && !cdescri.valid)}" />
+                    maxlength="255" adminRequired class="ad-input ad-input-style w-100" [ngClass]="{
+                      'ad-input-required': formDatos.submitted && !cdescri.valid
+                    }" />
                   <div class="focus-border"></div>
                 </td>
               </tr>
@@ -122,7 +144,7 @@
         </div>
       </form>
       <!-- panel restricciones -->
-      <div *ngIf="activeIndex === TAB_RESTRICCIONES">
+      <div *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
@@ -132,7 +154,7 @@
             <tbody>
               <tr *ngFor="let restriccion of restricciones">
                 <td style="width: 8%">
-                  <admin-inputswitch [isChecked]="restriccion.aplica" (switchChange)="restriccion.aplica=$event">
+                  <admin-inputswitch [isChecked]="restriccion.aplica" (switchChange)="restriccion.aplica = $event">
                   </admin-inputswitch>
                 </td>
                 <td>
@@ -154,7 +176,7 @@
           </button>
         </div>
       </div>
-      <div *ngIf="activeIndex === TAB_AGREGAR_ITEMS">
+      <div *ngIf="isAgregarItemsAcitvo()">
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
@@ -168,21 +190,20 @@
                   <p class="steps-st">Nuevo Ítem:</p>
                 </td>
                 <td>
-                  <input type="text" autocomplete="off" #inItem name="useringreso" [(ngModel)]="valorItem" maxlength="255"
-                    adminAutofocus class="ad-input ad-input-style w-100" />
+                  <input type="text" autocomplete="off" #inItem name="useringreso" maxlength="255" adminAutofocus class="ad-input ad-input-style w-100" />
                   <div class="focus-border"></div>
                 </td>
               </tr>
             </tbody>
           </table>
-          <button type="button" class="btn btn-sm btn-success ml-2" (click)="agregarItem(); table.reset()">
+          <button type="button" class="btn btn-sm btn-success ml-2" (click)="agregarItem(inItem); table.reset()">
             <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Agregar</label>
           </button>
-          <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
-            selectionMode="single" styleClass="ml-2 mr-2 mb-2" [alwaysShowPaginator]="false">
+          <p-table #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
+            selectionMode="single" styleClass="ml-2 mr-2 mb-2 tbl-admin" [alwaysShowPaginator]="false">
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
               <tr [pSelectableRow]="item">
-                <td style="width: 4%">{{rowIndex + 1}}</td>
+                <td style="width: 4%">{{ rowIndex + 1 }}</td>
                 <td>{{ item.valor }}</td>
                 <td style="width: 4%" class="text-center">
                   <button type="button" (click)="eliminarItem(item); table.reset()" class="btn btn-sm btn-round-table btn-round-del">
@@ -205,11 +226,10 @@
           </button>
         </div>
       </div>
-      <div *ngIf="activeIndex === TAB_CONFIRMACION">
+      <div *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
         <p-panel styleClass="mr-4 ml-4 steps-pnl">
           <p-header>
-            <span class="steps-circle">1</span>
-            <span> Datos del Campo</span>
+            <span class="steps-circle">1</span> <span> Datos del Campo</span>
           </p-header>
           <table class="table steps-tbl mb-0">
             <tbody>
@@ -242,8 +262,7 @@
         </p-panel>
         <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl">
           <p-header>
-            <span class="steps-circle">2</span>
-            <span> Restricciones</span>
+            <span class="steps-circle">2</span> <span> Restricciones</span>
           </p-header>
           <div class="ml-2 mr-2" *ngIf="campoCrear.restricciones">
             <table class="table steps-tbl mb-0">
@@ -262,19 +281,20 @@
             </table>
           </div>
           <div *ngIf="!campoCrear.restricciones" class="text-center pt-2 pb-2 ">
-            <p class="st font-weight-bold font-size-14">No hay restricciones para el nuevo campo</p>
+            <p class="st font-weight-bold font-size-14">
+              No hay restricciones para el nuevo campo
+            </p>
           </div>
         </p-panel>
         <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl" *ngIf="campoCrear.tipoCampo === LISTA_DESPLEGABLE">
           <p-header>
-            <span class="steps-circle">3</span>
-            <span> Ítems Agregados</span>
+            <span class="steps-circle">3</span> <span> Ítems Agregados</span>
           </p-header>
-          <p-table id="tbl-common1" #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
+          <p-table #table [value]="itemss" [responsive]="true" [paginator]="true" [rows]="5"
             [alwaysShowPaginator]="false">
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
               <tr>
-                <td style="width: 4%">{{rowIndex + 1}}</td>
+                <td style="width: 4%">{{ rowIndex + 1 }}</td>
                 <td>{{ item.valor }}</td>
               </tr>
             </ng-template>

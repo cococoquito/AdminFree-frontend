@@ -98,7 +98,7 @@ body {
 }
 
 /* para la fila seleccionada del componente p-table */
-#tbl-common .ui-state-highlight {
+.tbl-admin .ui-state-highlight {
   background-color: white !important;
 }
 
@@ -270,8 +270,12 @@ body {
   width: 100px !important
 }
 
-#stepsCampos .ui-steps .ui-steps-item {
-  width: 25%;
+.steps-3 .ui-steps-item {
+  width: 33% !important;
+}
+
+.steps-4 .ui-steps-item {
+  width: 25% !important;
 }
 
 .sub-title-page {
