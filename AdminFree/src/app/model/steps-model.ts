@@ -1,4 +1,5 @@
 import { MenuItem } from 'primeng/api';
+import { SpinnerState } from './../states/spinner.state';
 import { LabelsConstant } from './../constants/labels.constant';
 
 /**
@@ -90,24 +91,39 @@ export class StepsModel {
     this.init();
   }
 
+  /**
+   * Metodo que permite regresar un paso
+   */
+  public regresar(): void {
+    this.activeIndex = this.activeIndex - 1;
+  }
+
   /** Metodos para navegar entre los steps del componente */
-  public irPrimerStep(): void {
-    this.activeIndex = this.STEP_UNO;
+  public irPrimerStep(spinnerState?: SpinnerState): void {
+    this.ir(this.STEP_UNO, spinnerState);
   }
 
-  public irSegundoStep(): void {
-    this.activeIndex = this.STEP_DOS;
+  public irSegundoStep(spinnerState?: SpinnerState): void {
+    this.ir(this.STEP_DOS, spinnerState);
   }
 
-  public irTercerStep(): void {
-    this.activeIndex = this.STEP_TRES;
+  public irTercerStep(spinnerState?: SpinnerState): void {
+    this.ir(this.STEP_TRES, spinnerState);
   }
 
-  public irPenultimoStep(): void {
-    this.activeIndex = this.ulitmoIndex - 1;
+  public irUltimoStep(spinnerState?: SpinnerState): void {
+    this.ir(this.ulitmoIndex, spinnerState);
   }
 
-  public irUltimoStep(): void {
-    this.activeIndex = this.ulitmoIndex;
+  private ir(step: number, spinnerState?: SpinnerState): void {
+    if (spinnerState) {
+      spinnerState.displaySpinner();
+      setTimeout(() => {
+        spinnerState.hideSpinner();
+        this.activeIndex = step;
+      }, 100);
+    } else {
+      this.activeIndex = step;
+    }
   }
 }

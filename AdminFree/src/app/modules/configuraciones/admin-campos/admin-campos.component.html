@@ -70,13 +70,13 @@
       <!-- Paso 1 Datos campo-->
       <form *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO"
         name="formDatos" #formDatos="ngForm"
-        (ngSubmit)="limpiarMensajes() && formDatos.form.valid && irRestricciones()"
+        (ngSubmit)="limpiarMensajes() && formDatos.form.valid && siguienteDatosCampo()"
         (keydown.enter)="$event.preventDefault()" novalidate>
 
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
-            <span>Ingrese los datos del campo, todos los valores son obligatorios</span>
+            <span> Ingrese los datos del campo, todos los valores son obligatorios</span>
           </p-header>
 
           <table class="table steps-tbl mb-0">
@@ -88,7 +88,7 @@
                 </td>
                 <td>
                   <div class="form-row">
-                    <div class="mr-3">
+                    <div class="mr-4">
                       <p-radioButton
                         [(ngModel)]="campoCrear.tipoCampo"
                         [value]="ID_CAMPO_TEXTO"
@@ -96,7 +96,7 @@
                         name="campos">
                       </p-radioButton>
                     </div>
-                    <div class="mr-3">
+                    <div class="mr-4">
                       <p-radioButton
                         [(ngModel)]="campoCrear.tipoCampo"
                         [value]="ID_LISTA_DESPLEGABLE"
@@ -104,7 +104,7 @@
                         name="campos">
                       </p-radioButton>
                     </div>
-                    <div class="mr-3">
+                    <div class="mr-4">
                       <p-radioButton
                         [(ngModel)]="campoCrear.tipoCampo"
                         [value]="ID_CASILLA_VERIFICACION"
@@ -208,13 +208,13 @@
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
-          <button (click)="regresarRestricciones()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
           </button>
           <button (click)="closePanelCreacion()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button (click)="siguienteTabRestricciones()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <button (click)="siguienteRestricciones()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
           </button>
         </div>
@@ -249,7 +249,7 @@
               </tr>
             </tbody>
           </table>
-          <button (click)="agregarItem(inItem); tblitems.reset()" type="button" class="btn btn-sm btn-success ml-2 w-100-px">
+          <button (click)="agregarItem(inItem.value); inItem.value=null; tblitems.reset()" type="button" class="btn btn-sm btn-success ml-2 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Agregar</label>
           </button>
 
@@ -279,13 +279,13 @@
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
-          <button (click)="regresarAgregarItem()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
           </button>
           <button (click)="closePanelCreacion()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button (click)="siguienteTabAgregar()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <button (click)="siguienteAgregarItems()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
           </button>
         </div>
@@ -377,13 +377,13 @@
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
-          <button (click)="regresarConfirmacion()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
           </button>
           <button (click)="closePanelCreacion()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button (click)="crearCampo()" type="button" class="btn btn-success btn-sm">
+          <button (click)="crearCampoEntrada()" type="button" class="btn btn-success btn-sm">
             <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
           </button>
         </div>
