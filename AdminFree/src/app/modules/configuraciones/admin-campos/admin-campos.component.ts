@@ -49,6 +49,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** restricciones que se utiliza para la edicion o creacion*/
   public restricciones: Array<RestriccionDTO>;
 
+  /** permite visualizar el modal de ver detalle del campo*/
+  public isModalVerDetalle: boolean;
+
   /** se utiliza para el focus componente agregar items*/
   @ViewChild('inItem') inItem: ElementRef;
 
@@ -183,6 +186,21 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
+   * Metodo que soporta el evento click del boton ver detalle del campo
+   */
+  public verDetalleCampo(campo: CampoEntradaDTO): void {
+    this.adminCampoService.getDetalleCampoEntrada(campo.id).subscribe(
+      data => {
+        this.campoVerDetalle = data;
+        this.isModalVerDetalle = true;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
    * Es el evento del boton siguiente para el paso (Datos del Campo)
    */
   public siguienteDatosCampo(): void {
@@ -309,6 +327,14 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.limpiarCamposCreacion();
       }
     });
+  }
+
+  /**
+   * Metodo que permite cerrar el modal de ver detalle
+   */
+  public closeModalVerDetalle(): void {
+    this.isModalVerDetalle = false;
+    this.verDetalleCampo = null;
   }
 
   /**

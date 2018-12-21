@@ -35,7 +35,7 @@
         <td>{{ campo.tipoCampoNombre }}</td>
         <td>{{ campo.nombre }}</td>
         <td class="text-center">
-          <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+          <button (click)="verDetalleCampo(campo)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
@@ -317,7 +317,7 @@
 <ng-template #ref_detalle_campo>
 
   <!-- pnl datos campo -->
-  <p-panel styleClass="mr-4 ml-4 steps-pnl">
+  <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
     <p-header>
       <span class="steps-circle">1</span> <span> Datos del Campo</span>
     </p-header>
@@ -352,11 +352,11 @@
   </p-panel>
 
   <!-- pnl restricciones -->
-  <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl">
+  <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
     <p-header>
       <span class="steps-circle">2</span> <span> Restricciones</span>
     </p-header>
-    <div *ngIf="campoVerDetalle.restricciones" class="ml-2 mr-2">
+    <ng-container *ngIf="campoVerDetalle.restricciones">
       <table class="table steps-tbl mb-0">
         <tbody>
           <tr *ngFor="let restriccion of campoVerDetalle.restricciones">
@@ -371,14 +371,14 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </ng-container>
     <div *ngIf="!campoVerDetalle.restricciones" class="text-center pt-2 pb-2 ">
       <p class="st font-weight-bold font-size-14">No hay restricciones para el nuevo campo</p>
     </div>
   </p-panel>
 
   <!-- pnl items -->
-  <p-panel *ngIf="campoVerDetalle.tipoCampo === ID_LISTA_DESPLEGABLE" styleClass="mr-4 ml-4 mt-2 steps-pnl">
+  <p-panel *ngIf="campoVerDetalle.tipoCampo === ID_LISTA_DESPLEGABLE" styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
     <p-header>
       <span class="steps-circle">3</span> <span> Ítems Agregados</span>
     </p-header>
@@ -397,3 +397,20 @@
     </p-table>
   </p-panel>
 </ng-template>
+
+<!-- modal de edicion de modulos -->
+<p-dialog header="Detalle del Campo"
+  [(visible)]="isModalVerDetalle"
+  *ngIf="campoVerDetalle"
+  modal="true"
+  responsive="true"
+  dismissableMask="true">
+  <div class="mx-w-mdl">
+      <ng-container *ngTemplateOutlet="ref_detalle_campo"></ng-container>
+      <div class="text-center">
+        <button (click)="closeModalVerDetalle()" type="button" class="btn btn-secondary btn-sm w-100-px mt-2">
+          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+      </div>
+  </div>
+</p-dialog>

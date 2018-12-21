@@ -7,3 +7,7 @@
 .mh-pnl-create {
   min-height: 200px;
 }
+
+.mx-w-mdl {
+  max-width: 700px
+}
