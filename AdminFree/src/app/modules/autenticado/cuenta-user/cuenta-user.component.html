@@ -1,5 +1,4 @@
-<div *ngIf="!userAccount.credenciales.administrador;">
-
+<ng-container *ngIf="!userAccount.credenciales.administrador">
   <!-- panel modificacion de la cuenta -->
   <p-panel [toggleable]="true" (onBeforeToggle)="togglePaneles()" [collapsed]="!isPanelClaveClose">
     <p-header>
@@ -193,4 +192,4 @@
       </form>
     </div>
   </p-panel>
-</div>
+</ng-container>
