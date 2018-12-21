@@ -46,9 +46,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Se utiliza para para la creacion o edicion*/
   public stepsModel: StepsModel;
 
-  /** Son los items agregados para la creacion o edicion*/
-  public itemsAgregados: Array<ItemDTO>;
-
   /** restricciones que se utiliza para la edicion o creacion*/
   public restricciones: Array<RestriccionDTO>;
 
@@ -130,8 +127,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   public crearCampoEntrada(): void {
 
     // se configura los items agregados solo si el campo es lista desplegable
-    if (this.campoCrear.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
-        this.campoCrear.items = this.itemsAgregados;
+    if (this.campoCrear.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
+        this.campoCrear.items = null;
     }
 
     // se procede a invocar el servicio para la creacion
@@ -266,7 +263,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   public siguienteAgregarItems(): void {
 
     // los items son requeridos
-    if (!this.itemsAgregados || this.itemsAgregados.length === 0) {
+    if (this.campoCrear.items.length === 0) {
       this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.ITEMS_REQUERIDO));
       return;
     }
@@ -285,13 +282,13 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
     // se define el campo que permite visualizar el panel
     this.campoCrear = new CampoEntradaDTO();
+    this.campoCrear.items = new Array<ItemDTO>();
     this.campoCrear.idCliente = this.clienteCurrent.id;
 
     // variable que se utiliza para ver el detalle, es utilizada en confirmacion
     this.campoVerDetalle = this.campoCrear;
 
     // se establece las variables utilizadas para la creacion
-    this.itemsAgregados = new Array<ItemDTO>();
     this.campoCrearClone = null;
     this.restricciones = null;
 
@@ -328,7 +325,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     if (value) {
 
       // se verifica si existe un item con el mismo valor
-      for (const item of this.itemsAgregados) {
+      for (const item of this.campoCrear.items) {
         if (item.valor === value) {
           this.setFocusAgregarItems();
           return;
@@ -338,7 +335,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       // si llega este punto se puede agregar el item
       const nuevoItem = new ItemDTO();
       nuevoItem.valor = value;
-      this.itemsAgregados.push(nuevoItem);
+      this.campoCrear.items.push(nuevoItem);
     }
     this.setFocusAgregarItems();
   }
@@ -349,7 +346,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * @param item , es el item seleccionado para eliminar
    */
   public eliminarItem(item: ItemDTO): void {
-    this.itemsAgregados.splice(this.itemsAgregados.indexOf(item, 0), 1);
+    this.campoCrear.items.splice(this.campoCrear.items.indexOf(item, 0), 1);
   }
 
   /**
@@ -377,7 +374,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   private limpiarCamposCreacion(): void {
     this.campoCrear = null;
-    this.itemsAgregados = null;
     this.campoCrearClone = null;
     this.restricciones = null;
     this.stepsModel = null;
