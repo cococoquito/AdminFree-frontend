@@ -1,5 +1,5 @@
-<!-- panel lista de campos -->
-<div *ngIf="!campoCrear">
+<!-- container lista de campos -->
+<ng-container *ngIf="!campoCrear">
 
   <!-- boton crear campo -->
   <div class="text-right mb-1">
@@ -52,10 +52,10 @@
       </tr>
     </ng-template>
   </p-table>
-</div>
+</ng-container>
 
-<!-- panel crear campos -->
-<div *ngIf="campoCrear">
+<!-- container crear campos -->
+<ng-container *ngIf="campoCrear">
 
   <!-- panel principal -->
   <p-panel styleClass="steps-pnl-main">
@@ -68,120 +68,120 @@
     <div class="mh-pnl-create">
 
       <!-- Paso 1 Datos campo-->
-      <form *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO"
-        name="formDatos" #formDatos="ngForm"
-        (ngSubmit)="limpiarMensajes() && formDatos.form.valid && siguienteDatosCampo()"
-        (keydown.enter)="$event.preventDefault()" novalidate>
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
+        <form name="formDatos" #formDatos="ngForm"
+          (ngSubmit)="limpiarMensajes() && formDatos.form.valid && siguienteDatosCampo()"
+          (keydown.enter)="$event.preventDefault()" novalidate>
 
-        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-          <p-header>
-            <i class="fa fa-info-circle font-size-18"></i>
-            <span> Ingrese los datos del campo, todos los valores son obligatorios</span>
-          </p-header>
+          <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+            <p-header>
+              <i class="fa fa-info-circle font-size-18"></i>
+              <span> Ingrese los datos del campo, todos los valores son obligatorios</span>
+            </p-header>
 
-          <table class="table steps-tbl mb-0">
-            <tbody>
-              <!-- Tipo -->
-              <tr>
-                <td style="width: 8%">
-                  <p class="steps-st">Tipo:</p>
-                </td>
-                <td>
-                  <div class="form-row">
-                    <div class="mr-4">
-                      <p-radioButton
-                        [(ngModel)]="campoCrear.tipoCampo"
-                        [value]="ID_CAMPO_TEXTO"
-                        label="Campo de Texto"
-                        name="campos">
-                      </p-radioButton>
+            <table class="table steps-tbl mb-0">
+              <tbody>
+                <!-- Tipo -->
+                <tr>
+                  <td style="width: 8%">
+                    <p class="steps-st">Tipo:</p>
+                  </td>
+                  <td>
+                    <div class="form-row">
+                      <div class="mr-4">
+                        <p-radioButton
+                          [(ngModel)]="campoCrear.tipoCampo"
+                          [value]="ID_CAMPO_TEXTO"
+                          label="Campo de Texto"
+                          name="campos">
+                        </p-radioButton>
+                      </div>
+                      <div class="mr-4">
+                        <p-radioButton
+                          [(ngModel)]="campoCrear.tipoCampo"
+                          [value]="ID_LISTA_DESPLEGABLE"
+                          label="Lista Desplegable"
+                          name="campos">
+                        </p-radioButton>
+                      </div>
+                      <div class="mr-4">
+                        <p-radioButton
+                          [(ngModel)]="campoCrear.tipoCampo"
+                          [value]="ID_CASILLA_VERIFICACION"
+                          label="Casilla de Verificación"
+                          name="campos">
+                        </p-radioButton>
+                      </div>
+                      <div>
+                        <p-radioButton
+                          [(ngModel)]="campoCrear.tipoCampo"
+                          [value]="ID_CAMPO_FECHA"
+                          label="Campo de Fecha"
+                          name="campos">
+                        </p-radioButton>
+                      </div>
                     </div>
-                    <div class="mr-4">
-                      <p-radioButton
-                        [(ngModel)]="campoCrear.tipoCampo"
-                        [value]="ID_LISTA_DESPLEGABLE"
-                        label="Lista Desplegable"
-                        name="campos">
-                      </p-radioButton>
-                    </div>
-                    <div class="mr-4">
-                      <p-radioButton
-                        [(ngModel)]="campoCrear.tipoCampo"
-                        [value]="ID_CASILLA_VERIFICACION"
-                        label="Casilla de Verificación"
-                        name="campos">
-                      </p-radioButton>
-                    </div>
-                    <div>
-                      <p-radioButton
-                        [(ngModel)]="campoCrear.tipoCampo"
-                        [value]="ID_CAMPO_FECHA"
-                        label="Campo de Fecha"
-                        name="campos">
-                      </p-radioButton>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
 
-              <!-- nombre -->
-              <tr>
-                <td style="width: 8%">
-                  <label for="cnombre" class="steps-st mb-0">Nombre:</label>
-                </td>
-                <td>
-                  <input type="text"
-                    id="cnombre"
-                    name="cnombre"
-                    [(ngModel)]="campoCrear.nombre"
-                    #cnombre="ngModel"
-                    maxlength="100"
-                    adminRequired
-                    adminAutofocus
-                    autocomplete="off"
-                    class="ad-input ad-input-style w-100"
-                    [ngClass]="{'ad-input-required': formDatos.submitted && !cnombre.valid}" />
-                  <div class="focus-border"></div>
-                </td>
-              </tr>
+                <!-- nombre -->
+                <tr>
+                  <td style="width: 8%">
+                    <label for="cnombre" class="steps-st mb-0">Nombre:</label>
+                  </td>
+                  <td>
+                    <input type="text"
+                      id="cnombre"
+                      name="cnombre"
+                      [(ngModel)]="campoCrear.nombre"
+                      #cnombre="ngModel"
+                      maxlength="100"
+                      adminRequired
+                      adminAutofocus
+                      autocomplete="off"
+                      class="ad-input ad-input-style w-100"
+                      [ngClass]="{'ad-input-required': formDatos.submitted && !cnombre.valid}" />
+                    <div class="focus-border"></div>
+                  </td>
+                </tr>
 
-              <!-- descripcion -->
-              <tr>
-                <td style="width: 8%">
-                  <label for="cdescri" class="steps-st mb-0">Descripción:</label>
-                </td>
-                <td>
-                  <input type="text"
-                    id="cdescri"
-                    name="cdescri"
-                    [(ngModel)]="campoCrear.descripcion"
-                    #cdescri="ngModel"
-                    maxlength="255"
-                    adminRequired
-                    autocomplete="off"
-                    class="ad-input ad-input-style w-100"
-                    [ngClass]="{'ad-input-required': formDatos.submitted && !cdescri.valid}" />
-                  <div class="focus-border"></div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </p-panel>
+                <!-- descripcion -->
+                <tr>
+                  <td style="width: 8%">
+                    <label for="cdescri" class="steps-st mb-0">Descripción:</label>
+                  </td>
+                  <td>
+                    <input type="text"
+                      id="cdescri"
+                      name="cdescri"
+                      [(ngModel)]="campoCrear.descripcion"
+                      #cdescri="ngModel"
+                      maxlength="255"
+                      adminRequired
+                      autocomplete="off"
+                      class="ad-input ad-input-style w-100"
+                      [ngClass]="{'ad-input-required': formDatos.submitted && !cdescri.valid}" />
+                    <div class="focus-border"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </p-panel>
 
-        <!-- botones salir - next-->
-        <div class="text-center mb-1">
-          <button type="button" (click)="closePanelCreacion()" class="btn btn-sm btn-secondary mr-1 w-100-px">
-            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-          </button>
-          <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
-            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-          </button>
-        </div>
-      </form>
+          <!-- botones salir - next-->
+          <div class="text-center mb-1">
+            <button type="button" (click)="closePanelCreacion()" class="btn btn-sm btn-secondary mr-1 w-100-px">
+              <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+            </button>
+            <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
+              <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+            </button>
+          </div>
+        </form>
+      </ng-container>
 
       <!-- Paso 2 Restricciones -->
-      <div *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
-
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
@@ -218,11 +218,10 @@
             <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
           </button>
         </div>
-      </div>
+      </ng-container>
 
       <!-- Paso 3 agregar items -->
-      <div *ngIf="campoCrear.tipoCampo === ID_LISTA_DESPLEGABLE && stepsModel.activeIndex === stepsModel.STEP_TRES">
-
+      <ng-container *ngIf="campoCrear.tipoCampo === ID_LISTA_DESPLEGABLE && stepsModel.activeIndex === stepsModel.STEP_TRES">
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
@@ -289,10 +288,10 @@
             <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
           </button>
         </div>
-      </div>
+      </ng-container>
 
       <!-- Paso 4 confirmacion -->
-      <div *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
         <!-- pnl datos campo -->
         <p-panel styleClass="mr-4 ml-4 steps-pnl">
@@ -334,7 +333,7 @@
           <p-header>
             <span class="steps-circle">2</span> <span> Restricciones</span>
           </p-header>
-          <div class="ml-2 mr-2" *ngIf="campoCrear.restricciones">
+          <div *ngIf="campoCrear.restricciones" class="ml-2 mr-2">
             <table class="table steps-tbl mb-0">
               <tbody>
                 <tr *ngFor="let restriccion of campoCrear.restricciones">
@@ -387,7 +386,7 @@
             <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
           </button>
         </div>
-      </div>
+      </ng-container>
     </div>
   </p-panel>
-</div>
+</ng-container>

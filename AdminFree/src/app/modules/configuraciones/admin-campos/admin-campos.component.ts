@@ -37,6 +37,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Se utiliza para crear un campo de entrada*/
   public campoCrear: CampoEntradaDTO;
 
+  /** Se utiliza para ver el detalle de un campo de entrada*/
+  public campoVerDetalle: CampoEntradaDTO;
+
   /** Se utiliza para clonar los datos ingresados por el usuario*/
   private campoCrearClone: CampoEntradaDTO;
 
@@ -284,6 +287,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCrear = new CampoEntradaDTO();
     this.campoCrear.idCliente = this.clienteCurrent.id;
 
+    // variable que se utiliza para ver el detalle, es utilizada en confirmacion
+    this.campoVerDetalle = this.campoCrear;
+
     // se establece las variables utilizadas para la creacion
     this.itemsAgregados = new Array<ItemDTO>();
     this.campoCrearClone = null;
@@ -375,6 +381,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCrearClone = null;
     this.restricciones = null;
     this.stepsModel = null;
+    this.campoVerDetalle = null;
   }
 
   /**
