@@ -43,7 +43,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Se utiliza para clonar los datos ingresados por el usuario*/
   private campoCrearClone: CampoEntradaDTO;
 
-  /** Se utiliza para para la creacion o edicion*/
+  /** Se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
   /** restricciones que se utiliza para la edicion o creacion*/
@@ -230,7 +230,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
           return;
     }
 
-    // se procede a validar los datos ingresado para la creacion
+    // se procede a validar los datos ingresados para la creacion
     this.adminCampoService.validarDatosCampoEntrada(this.campoCrear).subscribe(
       data => {
 

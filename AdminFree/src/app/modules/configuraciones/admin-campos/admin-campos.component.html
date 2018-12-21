@@ -267,7 +267,7 @@
                 <td style="width: 4%">{{ rowIndex + 1 }}</td>
                 <td>{{ item.valor }}</td>
                 <td style="width: 4%" class="text-center">
-                  <span class="del-round-min" (click)="eliminarItem(item); tblitems.reset()">
+                  <span (click)="eliminarItem(item); tblitems.reset()" class="del-round-min">
                     <i class="pi pi-times del-round-min-pi"></i>
                   </span>
                 </td>
