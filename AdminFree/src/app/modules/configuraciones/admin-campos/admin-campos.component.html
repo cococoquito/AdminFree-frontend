@@ -35,7 +35,7 @@
         <td>{{ campo.tipoCampoNombre }}</td>
         <td>{{ campo.nombre }}</td>
         <td class="text-center">
-          <button (click)="verDetalleCampo(campo)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
+          <button (click)="showModalVerDetalle(campo)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
@@ -404,13 +404,10 @@
   *ngIf="campoVerDetalle"
   modal="true"
   responsive="true"
-  dismissableMask="true">
-  <div class="mx-w-mdl">
+  dismissableMask="true"
+  styleClass="splr-dl"
+  (onHide)="closeModalVerDetalle()">
+    <div class="mx-w-mdl">
       <ng-container *ngTemplateOutlet="ref_detalle_campo"></ng-container>
-      <div class="text-center">
-        <button (click)="closeModalVerDetalle()" type="button" class="btn btn-secondary btn-sm w-100-px mt-2">
-          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-        </button>
-      </div>
-  </div>
+    </div>
 </p-dialog>

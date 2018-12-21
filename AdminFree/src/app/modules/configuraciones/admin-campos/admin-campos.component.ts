@@ -188,7 +188,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /**
    * Metodo que soporta el evento click del boton ver detalle del campo
    */
-  public verDetalleCampo(campo: CampoEntradaDTO): void {
+  public showModalVerDetalle(campo: CampoEntradaDTO): void {
     this.adminCampoService.getDetalleCampoEntrada(campo.id).subscribe(
       data => {
         this.campoVerDetalle = data;
@@ -198,6 +198,13 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que es invocado cuando se cierra el modal de ver detalle
+   */
+  public closeModalVerDetalle(): void {
+    this.campoVerDetalle = null;
   }
 
   /**
@@ -327,14 +334,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.limpiarCamposCreacion();
       }
     });
-  }
-
-  /**
-   * Metodo que permite cerrar el modal de ver detalle
-   */
-  public closeModalVerDetalle(): void {
-    this.isModalVerDetalle = false;
-    this.verDetalleCampo = null;
   }
 
   /**
