@@ -326,3 +326,23 @@ body {
   font-weight:700;
   font-size: 15px;
 }
+
+.del-round-min {
+  border-radius: 50%;
+  display: inline-block;
+  color: #212121;
+  background-color: #d68b94;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.del-round-min:hover {
+  background-color: #c47d86 !important;
+  color: #212121 !important;
+}
+
+.del-round-min-pi {
+  line-height: 1.4 !important;
+}

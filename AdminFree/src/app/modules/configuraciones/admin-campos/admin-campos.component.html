@@ -267,9 +267,9 @@
                 <td style="width: 4%">{{ rowIndex + 1 }}</td>
                 <td>{{ item.valor }}</td>
                 <td style="width: 4%" class="text-center">
-                  <button (click)="eliminarItem(item); tblitems.reset()" type="button" class="btn btn-sm btn-round-table btn-round-del">
-                    <i class="pi pi-times icon-round-del"></i>
-                  </button>
+                  <span class="del-round-min" (click)="eliminarItem(item); tblitems.reset()">
+                    <i class="pi pi-times del-round-min-pi"></i>
+                  </span>
                 </td>
               </tr>
             </ng-template>
