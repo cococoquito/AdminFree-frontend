@@ -203,6 +203,10 @@ body {
   font-size: 18px !important;
 }
 
+.font-size-22 {
+  font-size: 22px !important;
+}
+
 .btn-size-admin {
   font-family: Times, Times New Roman, serif !important;
   margin: 0px !important;
@@ -230,6 +234,11 @@ body {
   line-height: 1.2 !important;
 }
 
+.icon-round-edit {
+  margin-left: -.2em !important;
+  line-height: 0.9 !important;
+}
+
 .icon-round-table-2 {
   margin-left: -.1em !important;
 }
@@ -252,6 +261,16 @@ body {
 .btn-round-del {
   background-color: #d68b94 !important;
   color: #212121 !important;
+}
+
+.btn-round-edit {
+  background-color: #007ad9 !important;
+  color: #ffffff !important;
+}
+
+.btn-round-edit:hover {
+  background-color: #0762a8 !important;
+  color: #ffffff !important;
 }
 
 .btn-round-del:hover {
