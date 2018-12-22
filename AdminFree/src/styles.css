@@ -365,3 +365,9 @@ body {
 .del-round-min-pi {
   line-height: 1.4 !important;
 }
+
+.st {
+  color: #4b4f56;
+  font-size: 0.98rem;
+  font-family: Times, Times New Roman, serif;
+}

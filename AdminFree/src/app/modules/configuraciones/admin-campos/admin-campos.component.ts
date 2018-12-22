@@ -46,9 +46,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
-  /** restricciones que se utiliza para la edicion o creacion*/
-  public restricciones: Array<RestriccionDTO>;
-
   /** permite visualizar el modal de ver detalle del campo*/
   public isModalVerDetalle: boolean;
 
@@ -129,10 +126,12 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   public crearCampoEntrada(): void {
 
-    // se configura los items agregados solo si el campo es lista desplegable
-    if (this.campoCrear.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
-        this.campoCrear.items = null;
-    }
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // se configuran los datos ingresados para la creacion
+    const restricciones = this.campoCrear.restricciones;
+    this.setDatosAntesCreacion(restricciones);
 
     // se procede a invocar el servicio para la creacion
     this.adminCampoService.crearCampoEntrada(this.campoCrear).subscribe(
@@ -147,6 +146,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.limpiarCamposCreacion();
       },
       error => {
+        this.campoCrear.restricciones = restricciones;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
@@ -265,20 +265,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Es el evento del boton siguiente para el paso (Restricciones)
    */
   public siguienteRestricciones(): void {
-
-    // se configuran las restricciones que fueron seleccionadas
-    let seleccionadas: Array<RestriccionDTO>;
-    for (const restriccion of this.restricciones) {
-      if (restriccion.aplica) {
-        if (!seleccionadas) {
-          seleccionadas = new Array<RestriccionDTO>();
-        }
-        seleccionadas.push(restriccion);
-      }
-    }
-    this.campoCrear.restricciones = seleccionadas;
-
-    // se procede a ir al tercer paso
     this.stepsModel.irTercerStep(this.spinnerState);
   }
 
@@ -309,13 +295,10 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCrear = new CampoEntradaDTO();
     this.campoCrear.items = new Array<ItemDTO>();
     this.campoCrear.idCliente = this.clienteCurrent.id;
+    this.campoCrearClone = null;
 
     // variable que se utiliza para ver el detalle, es utilizada en confirmacion
     this.campoVerDetalle = this.campoCrear;
-
-    // se establece las variables utilizadas para la creacion
-    this.campoCrearClone = null;
-    this.restricciones = null;
 
     // se define el componente steps para la creacion
     this.stepsModel = new StepsModel();
@@ -381,7 +364,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   private setRestriccionesSteps(data): void {
 
     // se configura las restricciones
-    this.restricciones = data;
+    this.campoCrear.restricciones = data;
 
     // si el tipo de campo es lista desplegable se habilita el paso 3
     if (this.campoCrear.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
@@ -400,7 +383,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   private limpiarCamposCreacion(): void {
     this.campoCrear = null;
     this.campoCrearClone = null;
-    this.restricciones = null;
     this.stepsModel = null;
     this.campoVerDetalle = null;
   }
@@ -412,5 +394,28 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     if (this.inItem) {
       this.inItem.nativeElement.focus();
     }
+  }
+
+  /**
+   * Metodo que permite configurar los datos antes de la creacion del campo
+   */
+  private setDatosAntesCreacion(restricciones: Array<RestriccionDTO>): void {
+
+    // los items no aplica para el tipo lista desplegable
+    if (this.campoCrear.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
+      this.campoCrear.items = null;
+    }
+
+    // se configuran las restricciones seleccionadas
+    let seleccionadas: Array<RestriccionDTO>;
+    for (const restriccion of restricciones) {
+      if (restriccion.aplica) {
+        if (!seleccionadas) {
+          seleccionadas = new Array<RestriccionDTO>();
+        }
+        seleccionadas.push(restriccion);
+      }
+    }
+    this.campoCrear.restricciones = seleccionadas;
   }
 }

@@ -191,7 +191,7 @@
           <!-- lista Restricciones -->
           <table class="table steps-tbl table-hover mb-0">
             <tbody>
-              <tr *ngFor="let restriccion of restricciones">
+              <tr *ngFor="let restriccion of campoCrear.restricciones">
                 <td style="width: 8%">
                   <admin-inputswitch
                     [isChecked]="restriccion.aplica"
@@ -294,7 +294,7 @@
       <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
         <!-- detalle - campo -->
-        <ng-container *ngTemplateOutlet="ref_detalle_campo"></ng-container>
+        <admin-detalle-campo [campo]="campoVerDetalle"></admin-detalle-campo>
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
@@ -313,91 +313,6 @@
   </p-panel>
 </ng-container>
 
-<!-- ref-detalle campo -->
-<ng-template #ref_detalle_campo>
-
-  <!-- pnl datos campo -->
-  <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
-    <p-header>
-      <span class="steps-circle">1</span> <span> Datos del Campo</span>
-    </p-header>
-    <table class="table steps-tbl mb-0">
-      <tbody>
-        <tr>
-          <td style="width: 8%">
-            <p class="steps-st">Tipo:</p>
-          </td>
-          <td>
-            <p class="st">{{ campoVerDetalle.tipoCampoNombre }}</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="width: 8%">
-            <p class="steps-st">Nombre:</p>
-          </td>
-          <td>
-            <p class="st">{{ campoVerDetalle.nombre }}</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="width: 8%">
-            <p class="steps-st">Descripción:</p>
-          </td>
-          <td>
-            <p class="st">{{ campoVerDetalle.descripcion }}</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </p-panel>
-
-  <!-- pnl restricciones -->
-  <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
-    <p-header>
-      <span class="steps-circle">2</span> <span> Restricciones</span>
-    </p-header>
-    <ng-container *ngIf="campoVerDetalle.restricciones">
-      <table class="table steps-tbl mb-0">
-        <tbody>
-          <tr *ngFor="let restriccion of campoVerDetalle.restricciones">
-            <td style="width: 8%">
-              <div class="custom-control custom-control-inline">
-                <i class="pi pi-check icon-sel"></i>
-              </div>
-            </td>
-            <td>
-              <p class="sub-title-page">{{ restriccion.descripcion }}</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </ng-container>
-    <div *ngIf="!campoVerDetalle.restricciones" class="text-center pt-2 pb-2 ">
-      <p class="st font-weight-bold font-size-14">No hay restricciones para el nuevo campo</p>
-    </div>
-  </p-panel>
-
-  <!-- pnl items -->
-  <p-panel *ngIf="campoVerDetalle.tipoCampo === ID_LISTA_DESPLEGABLE" styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
-    <p-header>
-      <span class="steps-circle">3</span> <span> Ítems Agregados</span>
-    </p-header>
-    <p-table
-      [value]="campoVerDetalle.items"
-      [alwaysShowPaginator]="false"
-      [responsive]="true"
-      [paginator]="true"
-      [rows]="5">
-      <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-        <tr>
-          <td style="width: 4%">{{ rowIndex + 1 }}</td>
-          <td>{{ item.valor }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </p-panel>
-</ng-template>
-
 <!-- modal de edicion de modulos -->
 <p-dialog header="Detalle del Campo"
   [(visible)]="isModalVerDetalle"
@@ -408,6 +323,6 @@
   styleClass="splr-dl"
   (onHide)="closeModalVerDetalle()">
     <div class="mx-w-mdl">
-      <ng-container *ngTemplateOutlet="ref_detalle_campo"></ng-container>
+      <admin-detalle-campo [campo]="campoVerDetalle"></admin-detalle-campo>
     </div>
 </p-dialog>

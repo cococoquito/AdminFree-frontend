@@ -42,7 +42,7 @@
     <table class="table steps-tbl mb-0">
       <tbody>
         <tr *ngFor="let restriccion of campo.restricciones">
-          <ng-container *ngIf="!restriccion.aplica">
+          <ng-container *ngIf="restriccion.aplica">
             <td style="width: 8%">
               <div class="custom-control custom-control-inline">
                 <i class="pi pi-check icon-sel"></i>
