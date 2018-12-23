@@ -557,10 +557,10 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   private siguienteRestriccionEdicion(): void {
 
-    // se limpia la bandera que permite editar las restricciones
+    // se inicializa como restricciones modificadas
     this.campoEditarOrigen.restriccionesEditar = true;
 
-    // se valida si hay alguna modificacion
+    // se obtiene los datos del campo origen
     const campoOrigen = this.campoEditarOrigen.campoEntrada;
 
     // se utiliza para identificar las restricciones modificadas
