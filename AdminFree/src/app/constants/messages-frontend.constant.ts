@@ -81,4 +81,7 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando quieren salir de una pagina de creacion o edicion */
   static readonly SEGURO_SALIR: string = '¿Está seguro que desea salir?';
+
+  /** Mensaje cuando quieren salir sin aplicar cambios*/
+  static readonly SEGURO_SALIR_EDICION: string = '¿Seguro que desea salir sin aplicar los cambios?';
 }

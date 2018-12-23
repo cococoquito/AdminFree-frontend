@@ -136,9 +136,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   public crearCampoEntrada(): void {
 
-    // se limpia los mensajes de otros procesos
-    this.messageService.clear();
-
     // se configuran los datos ingresados para la creacion
     const restricciones = this.campoCU.restricciones;
     this.setDatosAntesCreacion(restricciones);
@@ -277,14 +274,33 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Metodo que permite cerrar el panel de creacion de campos
    */
   public closePanelCU(): void {
-    this.confirmationService.confirm({
-      message: MsjFrontConstant.SEGURO_SALIR,
-      header: MsjFrontConstant.CONFIRMACION,
-      accept: () => {
-        this.messageService.clear();
+
+    // para creacion se pregunta directamente
+    if (this.isCreacion) {
+        this.confirmationService.confirm({
+        message: MsjFrontConstant.SEGURO_SALIR,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.limpiarCamposCU();
+        }
+      });
+    } else {
+
+      // si hay modificaciones se muestra el modal confirmacion
+      if (this.campoEditarOrigen.datosBasicosEditar ||
+          this.campoEditarOrigen.restriccionesEditar ||
+          this.campoEditarOrigen.itemsEditar) {
+          this.confirmationService.confirm({
+            message: MsjFrontConstant.SEGURO_SALIR_EDICION,
+            header: MsjFrontConstant.CONFIRMACION,
+            accept: () => {
+              this.limpiarCamposCU();
+            }
+          });
+      } else {
         this.limpiarCamposCU();
       }
-    });
+    }
   }
 
   /**
@@ -384,6 +400,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Metodo que permite limpiar los datos utilizado para la creacion campo
    */
   private limpiarCamposCU(): void {
+    this.messageService.clear();
     this.campoCU = null;
     this.campoCrearOrigen = null;
     this.campoEditarOrigen = null;
@@ -500,7 +517,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       // se indica que los datos fueron modificados
       this.campoEditarOrigen.datosBasicosEditar = true;
 
-      // se llama la validacion si el nombre o tipo fueron modificados
+      // se llama la validacion si el nombre fue modificado
       if (campoOrigen.nombre !== this.campoCU.nombre) {
 
         // se valida que no exista otro campo con el mismo tipo y nombre
