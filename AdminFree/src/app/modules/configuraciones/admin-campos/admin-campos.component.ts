@@ -41,11 +41,11 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Bandera que indica si el proceso es edicion */
   public isEdicion: boolean;
 
-  /** Se utiliza para clonar los datos ingresados por el usuario*/
-  private campoCrearClone: CampoEntradaDTO;
+  /** Es el backup del los atributos nombre y tipo para la creacion*/
+  private campoCrearOrigen: CampoEntradaDTO;
 
-  /** Se utiliza para clonar los atributos del campo a editar*/
-  private campoEditarClone: CampoEntradaEdicionDTO;
+  /** Es el backup del los atributos del campo a editar*/
+  private campoEditarOrigen: CampoEntradaEdicionDTO;
 
   /** Esta es la variable que se utiliza para la creacion o edicion del campo*/
   public campoCU: CampoEntradaDTO;
@@ -233,9 +233,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCU.descripcion = this.setTrim(this.campoCU.descripcion);
 
     // si no hay ningun cambio solamente se pasa al segundo paso
-    if (this.campoCrearClone &&
-        this.campoCrearClone.nombre === this.campoCU.nombre &&
-        this.campoCrearClone.tipoCampo === this.campoCU.tipoCampo) {
+    if (this.campoCrearOrigen &&
+        this.campoCrearOrigen.nombre === this.campoCU.nombre &&
+        this.campoCrearOrigen.tipoCampo === this.campoCU.tipoCampo) {
           this.stepsModel.irSegundoStep(this.spinnerState);
           return;
     }
@@ -246,8 +246,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
         // solamente se reemplaza las restricciones si el tipo campo
         // fue modificado o si apenas es la primera entrada para el paso UNO
-        if (this.campoCrearClone) {
-          if (this.campoCrearClone.tipoCampo !== this.campoCU.tipoCampo) {
+        if (this.campoCrearOrigen) {
+          if (this.campoCrearOrigen.tipoCampo !== this.campoCU.tipoCampo) {
             this.setRestriccionesSteps(data);
           }
         } else {
@@ -258,9 +258,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.campoCU.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCU.tipoCampo);
 
         // se crea el clone por si regresan a este punto de la creacion
-        this.campoCrearClone = new CampoEntradaDTO();
-        this.campoCrearClone.nombre = this.campoCU.nombre;
-        this.campoCrearClone.tipoCampo = this.campoCU.tipoCampo;
+        this.campoCrearOrigen = new CampoEntradaDTO();
+        this.campoCrearOrigen.nombre = this.campoCU.nombre;
+        this.campoCrearOrigen.tipoCampo = this.campoCU.tipoCampo;
 
         // se procede a seguir al segundo paso
         this.stepsModel.irSegundoStep();
@@ -305,7 +305,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCU = new CampoEntradaDTO();
     this.campoCU.items = new Array<ItemDTO>();
     this.campoCU.idCliente = this.clienteCurrent.id;
-    this.campoCrearClone = null;
+    this.campoCrearOrigen = null;
 
     // esta bandera visualiza el panel de creacion
     this.isCreacion = true;
@@ -343,8 +343,10 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.adminCampoService.getDetalleCampoEntradaEdicion(campo.id).subscribe(
       data => {
         // se configura el detalle del campo
-        this.campoEditarClone = data;
-        this.campoCU = this.campoEditarClone.campoEntrada;
+        this.campoEditarOrigen = data;
+
+        // se hace el backup de los atributos
+        this.campoCU = JSON.parse(JSON.stringify(this.campoEditarOrigen.campoEntrada));
 
         // se visualiza el panel para la edicion
         this.isEdicion = true;
@@ -411,7 +413,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       this.stepsModel.stepsParaAdminCampos(true);
     } else {
       // se refresca los steps, ya que volvieron al primer paso
-      if (this.campoCrearClone) {
+      if (this.campoCrearOrigen) {
         this.stepsModel.stepsParaAdminCampos(false);
       }
     }
@@ -422,8 +424,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   private limpiarCamposCU(): void {
     this.campoCU = null;
-    this.campoCrearClone = null;
-    this.campoEditarClone = null;
+    this.campoCrearOrigen = null;
+    this.campoEditarOrigen = null;
     this.stepsModel = null;
     this.isCreacion = false;
     this.isEdicion = false;
