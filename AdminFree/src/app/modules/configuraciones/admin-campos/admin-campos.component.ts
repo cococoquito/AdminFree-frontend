@@ -160,6 +160,12 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
+   * Metodo que permite soportar el evento click del boton Aplicar Cambios
+   */
+  public editarCampoEntrada(): void {
+  }
+
+  /**
    * Metodo que soporta el evento del boton eliminar campo entrada
    *
    * @param campoEliminar, es el campo seleccionado para eliminar
@@ -229,7 +235,11 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Es el evento del boton siguiente para el paso (Restricciones)
    */
   public siguienteRestricciones(): void {
-    this.stepsModel.irTercerStep(this.spinnerState);
+    if (this.isCreacion) {
+      this.siguienteRestriccionCreacion();
+    } else {
+      this.siguienteRestriccionEdicion();
+    }
   }
 
   /**
@@ -500,7 +510,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   private siguienteDatosCampoEdicion(): void {
 
-    // se limpian las banderas que permite editar los valores
+    // se limpia la bandera que permite editar los valores
     this.campoEditarOrigen.datosBasicosEditar = false;
 
     // se obtiene el origen de los datos del campo
@@ -533,5 +543,54 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       }
     }
     this.stepsModel.irSegundoStep(this.spinnerState);
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Restricciones) para creacion
+   */
+  private siguienteRestriccionCreacion(): void {
+    this.stepsModel.irTercerStep(this.spinnerState);
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Restricciones) para edicion
+   */
+  private siguienteRestriccionEdicion(): void {
+
+    // se limpia la bandera que permite editar las restricciones
+    this.campoEditarOrigen.restriccionesEditar = true;
+
+    // se valida si hay alguna modificacion
+    const campoOrigen = this.campoEditarOrigen.campoEntrada;
+
+    // se utiliza para identificar las restricciones modificadas
+    const restriccionesOrigen: Array<number> = new Array<number>();
+    const restriccionesEditar: Array<number> = new Array<number>();
+
+    // se configuran las restricciones seleccionadas origen
+    for (const origen of campoOrigen.restricciones) {
+      if (origen.aplica) {
+        restriccionesOrigen.push(origen.id);
+      }
+    }
+
+    // se configuran las restricciones modificadas
+    for (const editada of this.campoCU.restricciones) {
+      if (editada.aplica) {
+        restriccionesEditar.push(editada.id);
+      }
+    }
+
+    // se valida si hay alguna modificacion
+    if (restriccionesOrigen.length === restriccionesEditar.length) {
+      this.campoEditarOrigen.restriccionesEditar = false;
+      for (const editada of restriccionesEditar) {
+        if (!restriccionesOrigen.includes(editada)) {
+          this.campoEditarOrigen.restriccionesEditar = true;
+          break;
+        }
+      }
+    }
+    this.stepsModel.irTercerStep(this.spinnerState);
   }
 }

@@ -311,8 +311,11 @@
           <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button (click)="crearCampoEntrada()" type="button" class="btn btn-success btn-sm">
+          <button (click)="crearCampoEntrada()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
             <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
+          </button>
+          <button (click)="editarCampoEntrada()" *ngIf="isEdicion" [disabled]="!(campoEditarOrigen.datosBasicosEditar || campoEditarOrigen.restriccionesEditar || campoEditarOrigen.itemsEditar)" type="button" class="btn btn-success btn-sm">
+            <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
           </button>
         </div>
       </ng-container>
