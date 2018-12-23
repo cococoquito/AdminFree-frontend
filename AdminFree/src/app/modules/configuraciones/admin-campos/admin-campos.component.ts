@@ -8,6 +8,7 @@ import { StepsModel } from './../../../model/steps-model';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.dto';
 import { RestriccionDTO } from './../../../dtos/configuraciones/restriccion.dto';
+import { CampoEntradaEdicionDTO } from './../../../dtos/configuraciones/campo-entrada-edicion.dto';
 import { ItemDTO } from './../../../dtos/configuraciones/item.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from './../../../util/messages.util';
@@ -34,14 +35,23 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Lista de campos de entrada informacion asociado al cliente */
   public campos: Array<CampoEntradaDTO>;
 
-  /** Se utiliza para crear un campo de entrada*/
-  public campoCrear: CampoEntradaDTO;
+  /** Bandera que indica si el proceso es creacion */
+  public isCreacion: boolean;
 
-  /** Se utiliza para ver el detalle de un campo de entrada*/
-  public campoVerDetalle: CampoEntradaDTO;
+  /** Bandera que indica si el proceso es edicion */
+  public isEdicion: boolean;
 
   /** Se utiliza para clonar los datos ingresados por el usuario*/
   private campoCrearClone: CampoEntradaDTO;
+
+  /** Se utiliza para clonar los atributos del campo a editar*/
+  private campoEditarClone: CampoEntradaEdicionDTO;
+
+  /** Esta es la variable que se utiliza para la creacion o edicion del campo*/
+  public campoCU: CampoEntradaDTO;
+
+  /** Se utiliza para ver el detalle de un campo de entrada*/
+  public campoVerDetalle: CampoEntradaDTO;
 
   /** Se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
@@ -130,11 +140,11 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.messageService.clear();
 
     // se configuran los datos ingresados para la creacion
-    const restricciones = this.campoCrear.restricciones;
+    const restricciones = this.campoCU.restricciones;
     this.setDatosAntesCreacion(restricciones);
 
     // se procede a invocar el servicio para la creacion
-    this.adminCampoService.crearCampoEntrada(this.campoCrear).subscribe(
+    this.adminCampoService.crearCampoEntrada(this.campoCU).subscribe(
       data => {
         // Mensaje exitoso campo creado
         this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_CREADO_EXITOSO));
@@ -146,7 +156,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.limpiarCamposCreacion();
       },
       error => {
-        this.campoCrear.restricciones = restricciones;
+        this.campoCU.restricciones = restricciones;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
@@ -213,31 +223,31 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   public siguienteDatosCampo(): void {
 
     // el tipo de campo es obligatorio
-    if (!this.campoCrear.tipoCampo) {
+    if (!this.campoCU.tipoCampo) {
       this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.TIPO_CAMPO_REQUERIDO));
       return;
     }
 
     // se limpian los espacios para el nombre y descripcion
-    this.campoCrear.nombre = this.setTrim(this.campoCrear.nombre);
-    this.campoCrear.descripcion = this.setTrim(this.campoCrear.descripcion);
+    this.campoCU.nombre = this.setTrim(this.campoCU.nombre);
+    this.campoCU.descripcion = this.setTrim(this.campoCU.descripcion);
 
     // si no hay ningun cambio solamente se pasa al segundo paso
     if (this.campoCrearClone &&
-        this.campoCrearClone.nombre === this.campoCrear.nombre &&
-        this.campoCrearClone.tipoCampo === this.campoCrear.tipoCampo) {
+        this.campoCrearClone.nombre === this.campoCU.nombre &&
+        this.campoCrearClone.tipoCampo === this.campoCU.tipoCampo) {
           this.stepsModel.irSegundoStep(this.spinnerState);
           return;
     }
 
     // se procede a validar los datos ingresados para la creacion
-    this.adminCampoService.validarDatosCampoEntrada(this.campoCrear).subscribe(
+    this.adminCampoService.validarDatosCampoEntrada(this.campoCU).subscribe(
       data => {
 
         // solamente se reemplaza las restricciones si el tipo campo
         // fue modificado o si apenas es la primera entrada para el paso UNO
         if (this.campoCrearClone) {
-          if (this.campoCrearClone.tipoCampo !== this.campoCrear.tipoCampo) {
+          if (this.campoCrearClone.tipoCampo !== this.campoCU.tipoCampo) {
             this.setRestriccionesSteps(data);
           }
         } else {
@@ -245,12 +255,12 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         }
 
         // se configura el nombre del tipo de campo seleccionado
-        this.campoCrear.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCrear.tipoCampo);
+        this.campoCU.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCU.tipoCampo);
 
         // se crea el clone por si regresan a este punto de la creacion
         this.campoCrearClone = new CampoEntradaDTO();
-        this.campoCrearClone.nombre = this.campoCrear.nombre;
-        this.campoCrearClone.tipoCampo = this.campoCrear.tipoCampo;
+        this.campoCrearClone.nombre = this.campoCU.nombre;
+        this.campoCrearClone.tipoCampo = this.campoCU.tipoCampo;
 
         // se procede a seguir al segundo paso
         this.stepsModel.irSegundoStep();
@@ -274,7 +284,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   public siguienteAgregarItems(): void {
 
     // los items son requeridos
-    if (this.campoCrear.items.length === 0) {
+    if (this.campoCU.items.length === 0) {
       this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.ITEMS_REQUERIDO));
       return;
     }
@@ -292,13 +302,13 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.messageService.clear();
 
     // se define el campo que permite visualizar el panel
-    this.campoCrear = new CampoEntradaDTO();
-    this.campoCrear.items = new Array<ItemDTO>();
-    this.campoCrear.idCliente = this.clienteCurrent.id;
+    this.campoCU = new CampoEntradaDTO();
+    this.campoCU.items = new Array<ItemDTO>();
+    this.campoCU.idCliente = this.clienteCurrent.id;
     this.campoCrearClone = null;
 
-    // variable que se utiliza para ver el detalle, es utilizada en confirmacion
-    this.campoVerDetalle = this.campoCrear;
+    // esta bandera visualiza el panel de creacion
+    this.isCreacion = true;
 
     // se define el componente steps para la creacion
     this.stepsModel = new StepsModel();
@@ -333,7 +343,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     if (value) {
 
       // se verifica si existe un item con el mismo valor
-      for (const item of this.campoCrear.items) {
+      for (const item of this.campoCU.items) {
         if (item.valor === value) {
           this.setFocusAgregarItems();
           return;
@@ -343,7 +353,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       // si llega este punto se puede agregar el item
       const nuevoItem = new ItemDTO();
       nuevoItem.valor = value;
-      this.campoCrear.items.push(nuevoItem);
+      this.campoCU.items.push(nuevoItem);
     }
     this.setFocusAgregarItems();
   }
@@ -354,7 +364,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * @param item , es el item seleccionado para eliminar
    */
   public eliminarItem(item: ItemDTO): void {
-    this.campoCrear.items.splice(this.campoCrear.items.indexOf(item, 0), 1);
+    this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
   }
 
   /**
@@ -364,10 +374,10 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   private setRestriccionesSteps(data): void {
 
     // se configura las restricciones
-    this.campoCrear.restricciones = data;
+    this.campoCU.restricciones = data;
 
     // si el tipo de campo es lista desplegable se habilita el paso 3
-    if (this.campoCrear.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
+    if (this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
       this.stepsModel.stepsParaAdminCampos(true);
     } else {
       // se refresca los steps, ya que volvieron al primer paso
@@ -381,10 +391,10 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Metodo que permite limpiar los datos utilizado para la creacion campo
    */
   private limpiarCamposCreacion(): void {
-    this.campoCrear = null;
+    this.campoCU = null;
     this.campoCrearClone = null;
     this.stepsModel = null;
-    this.campoVerDetalle = null;
+    this.isCreacion = false;
   }
 
   /**
@@ -402,8 +412,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   private setDatosAntesCreacion(restricciones: Array<RestriccionDTO>): void {
 
     // los items no aplica para el tipo lista desplegable
-    if (this.campoCrear.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
-      this.campoCrear.items = null;
+    if (this.campoCU.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
+      this.campoCU.items = null;
     }
 
     // se configuran las restricciones seleccionadas
@@ -416,6 +426,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         seleccionadas.push(restriccion);
       }
     }
-    this.campoCrear.restricciones = seleccionadas;
+    this.campoCU.restricciones = seleccionadas;
   }
 }

@@ -1,5 +1,5 @@
 <!-- container lista de campos -->
-<ng-container *ngIf="!campoCrear">
+<ng-container *ngIf="!isCreacion && !isEdicion">
 
   <!-- boton crear campo -->
   <div class="text-right mb-1">
@@ -55,7 +55,7 @@
 </ng-container>
 
 <!-- container crear campos -->
-<ng-container *ngIf="campoCrear">
+<ng-container *ngIf="isCreacion || isEdicion">
 
   <!-- panel principal -->
   <p-panel styleClass="steps-pnl-main">
@@ -90,7 +90,7 @@
                     <div class="form-row">
                       <div class="mr-4">
                         <p-radioButton
-                          [(ngModel)]="campoCrear.tipoCampo"
+                          [(ngModel)]="campoCU.tipoCampo"
                           [value]="ID_CAMPO_TEXTO"
                           label="Campo de Texto"
                           name="campos">
@@ -98,7 +98,7 @@
                       </div>
                       <div class="mr-4">
                         <p-radioButton
-                          [(ngModel)]="campoCrear.tipoCampo"
+                          [(ngModel)]="campoCU.tipoCampo"
                           [value]="ID_LISTA_DESPLEGABLE"
                           label="Lista Desplegable"
                           name="campos">
@@ -106,7 +106,7 @@
                       </div>
                       <div class="mr-4">
                         <p-radioButton
-                          [(ngModel)]="campoCrear.tipoCampo"
+                          [(ngModel)]="campoCU.tipoCampo"
                           [value]="ID_CASILLA_VERIFICACION"
                           label="Casilla de Verificación"
                           name="campos">
@@ -114,7 +114,7 @@
                       </div>
                       <div>
                         <p-radioButton
-                          [(ngModel)]="campoCrear.tipoCampo"
+                          [(ngModel)]="campoCU.tipoCampo"
                           [value]="ID_CAMPO_FECHA"
                           label="Campo de Fecha"
                           name="campos">
@@ -133,7 +133,7 @@
                     <input type="text"
                       id="cnombre"
                       name="cnombre"
-                      [(ngModel)]="campoCrear.nombre"
+                      [(ngModel)]="campoCU.nombre"
                       #cnombre="ngModel"
                       maxlength="100"
                       adminRequired
@@ -154,7 +154,7 @@
                     <input type="text"
                       id="cdescri"
                       name="cdescri"
-                      [(ngModel)]="campoCrear.descripcion"
+                      [(ngModel)]="campoCU.descripcion"
                       #cdescri="ngModel"
                       maxlength="255"
                       adminRequired
@@ -191,7 +191,7 @@
           <!-- lista Restricciones -->
           <table class="table steps-tbl table-hover mb-0">
             <tbody>
-              <tr *ngFor="let restriccion of campoCrear.restricciones">
+              <tr *ngFor="let restriccion of campoCU.restricciones">
                 <td style="width: 8%">
                   <admin-inputswitch
                     [isChecked]="restriccion.aplica"
@@ -221,7 +221,7 @@
       </ng-container>
 
       <!-- Paso 3 agregar items -->
-      <ng-container *ngIf="campoCrear.tipoCampo === ID_LISTA_DESPLEGABLE && stepsModel.activeIndex === stepsModel.STEP_TRES">
+      <ng-container *ngIf="campoCU.tipoCampo === ID_LISTA_DESPLEGABLE && stepsModel.activeIndex === stepsModel.STEP_TRES">
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
@@ -254,7 +254,7 @@
 
           <!-- lista items -->
           <p-table
-            [value]="campoCrear.items"
+            [value]="campoCU.items"
             [responsive]="true"
             [paginator]="true"
             [rows]="5" #tblitems
@@ -294,7 +294,7 @@
       <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
         <!-- detalle - campo -->
-        <admin-detalle-campo [campo]="campoVerDetalle"></admin-detalle-campo>
+        <admin-detalle-campo [campo]="campoCU"></admin-detalle-campo>
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
