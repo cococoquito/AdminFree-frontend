@@ -153,7 +153,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.campos.push(data);
 
         // se limpia las variables de creacion
-        this.limpiarCamposCreacion();
+        this.limpiarCamposCU();
       },
       error => {
         this.campoCU.restricciones = restricciones;
@@ -318,15 +318,45 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /**
    * Metodo que permite cerrar el panel de creacion de campos
    */
-  public closePanelCreacion(): void {
+  public closePanelCU(): void {
     this.confirmationService.confirm({
       message: MsjFrontConstant.SEGURO_SALIR,
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
         this.messageService.clear();
-        this.limpiarCamposCreacion();
+        this.limpiarCamposCU();
       }
     });
+  }
+
+  /**
+   * Metodo que soporta el evento del boton editar el campo
+   *
+   * @param campo , campo seleccionado para editar
+   */
+  public showPanelEdicion(campo: CampoEntradaDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se procede a consultar el detalle del campo para editar
+    this.adminCampoService.getDetalleCampoEntradaEdicion(campo.id).subscribe(
+      data => {
+        // se configura el detalle del campo
+        this.campoEditarClone = data;
+        this.campoCU = this.campoEditarClone.campoEntrada;
+
+        // se visualiza el panel para la edicion
+        this.isEdicion = true;
+
+        // se define el componente steps para la edicion
+        this.stepsModel = new StepsModel();
+        this.stepsModel.stepsParaAdminCampos(this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**
@@ -390,11 +420,13 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /**
    * Metodo que permite limpiar los datos utilizado para la creacion campo
    */
-  private limpiarCamposCreacion(): void {
+  private limpiarCamposCU(): void {
     this.campoCU = null;
     this.campoCrearClone = null;
+    this.campoEditarClone = null;
     this.stepsModel = null;
     this.isCreacion = false;
+    this.isEdicion = false;
   }
 
   /**

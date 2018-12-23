@@ -40,7 +40,7 @@
           </button>
         </td>
         <td class="text-center">
-          <button type="button" class="btn btn-sm btn-round-table btn-round-edit">
+          <button (click)="showPanelEdicion(campo)" type="button" class="btn btn-sm btn-round-table btn-round-edit">
             <i class="pi pi-pencil icon-round-edit font-size-22"></i>
           </button>
         </td>
@@ -60,7 +60,7 @@
   <!-- panel principal -->
   <p-panel styleClass="steps-pnl-main">
     <p-header>
-      <i class="fa fa-list-alt font-size-14"><span class="font-admin"> Creación de Campo</span></i>
+      <i class="fa fa-list-alt font-size-14"><span class="font-admin"> {{isCreacion ? 'Creación del Campo': 'Edición del Campo'}}</span></i>
     </p-header>
 
     <!-- pasos de creacion -->
@@ -170,7 +170,7 @@
 
           <!-- botones salir - next-->
           <div class="text-center mb-1">
-            <button type="button" (click)="closePanelCreacion()" class="btn btn-sm btn-secondary mr-1 w-100-px">
+            <button type="button" (click)="closePanelCU()" class="btn btn-sm btn-secondary mr-1 w-100-px">
               <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
             </button>
             <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
@@ -211,7 +211,7 @@
           <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
           </button>
-          <button (click)="closePanelCreacion()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
           <button (click)="siguienteRestricciones()" type="button" class="btn btn-sm btn-primary w-100-px">
@@ -281,7 +281,7 @@
           <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
           </button>
-          <button (click)="closePanelCreacion()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
           <button (click)="siguienteAgregarItems()" type="button" class="btn btn-sm btn-primary w-100-px">
@@ -301,7 +301,7 @@
           <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
           </button>
-          <button (click)="closePanelCreacion()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
           <button (click)="crearCampoEntrada()" type="button" class="btn btn-success btn-sm">
