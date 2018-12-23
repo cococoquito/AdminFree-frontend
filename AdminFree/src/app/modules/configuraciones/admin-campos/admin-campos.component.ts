@@ -523,7 +523,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         // se valida que no exista otro campo con el mismo tipo y nombre
         this.adminCampoService.validarDatosCampoEntrada(this.campoCU).subscribe(
           data => {
-            this.stepsModel.irSegundoStep(this.spinnerState);
+            this.stepsModel.irSegundoStep();
           },
           error => {
             this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));

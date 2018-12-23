@@ -54,7 +54,7 @@
   </p-table>
 </ng-container>
 
-<!-- container crear campos -->
+<!-- container crear o editar campos -->
 <ng-container *ngIf="isCreacion || isEdicion">
 
   <!-- panel principal -->
@@ -320,7 +320,7 @@
   </p-panel>
 </ng-container>
 
-<!-- modal de edicion de modulos -->
+<!-- modal ver detalle -->
 <p-dialog header="Detalle del Campo"
   [(visible)]="isModalVerDetalle"
   *ngIf="campoVerDetalle"
