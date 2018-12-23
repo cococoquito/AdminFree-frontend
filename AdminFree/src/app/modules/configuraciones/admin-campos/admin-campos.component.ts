@@ -45,7 +45,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   private campoCrearOrigen: CampoEntradaDTO;
 
   /** Es el backup del los atributos del campo a editar*/
-  private campoEditarOrigen: CampoEntradaEdicionDTO;
+  public campoEditarOrigen: CampoEntradaEdicionDTO;
 
   /** Esta es la variable que se utiliza para la creacion o edicion del campo*/
   public campoCU: CampoEntradaDTO;
@@ -221,54 +221,11 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Es el evento del boton siguiente para el paso (Datos del Campo)
    */
   public siguienteDatosCampo(): void {
-
-    // el tipo de campo es obligatorio
-    if (!this.campoCU.tipoCampo) {
-      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.TIPO_CAMPO_REQUERIDO));
-      return;
+    if (this.isCreacion) {
+      this.siguienteDatosCampoCreacion();
+    } else {
+      this.siguienteDatosCampoEdicion();
     }
-
-    // se limpian los espacios para el nombre y descripcion
-    this.campoCU.nombre = this.setTrim(this.campoCU.nombre);
-    this.campoCU.descripcion = this.setTrim(this.campoCU.descripcion);
-
-    // si no hay ningun cambio solamente se pasa al segundo paso
-    if (this.campoCrearOrigen &&
-        this.campoCrearOrigen.nombre === this.campoCU.nombre &&
-        this.campoCrearOrigen.tipoCampo === this.campoCU.tipoCampo) {
-          this.stepsModel.irSegundoStep(this.spinnerState);
-          return;
-    }
-
-    // se procede a validar los datos ingresados para la creacion
-    this.adminCampoService.validarDatosCampoEntrada(this.campoCU).subscribe(
-      data => {
-
-        // solamente se reemplaza las restricciones si el tipo campo
-        // fue modificado o si apenas es la primera entrada para el paso UNO
-        if (this.campoCrearOrigen) {
-          if (this.campoCrearOrigen.tipoCampo !== this.campoCU.tipoCampo) {
-            this.setRestriccionesSteps(data);
-          }
-        } else {
-          this.setRestriccionesSteps(data);
-        }
-
-        // se configura el nombre del tipo de campo seleccionado
-        this.campoCU.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCU.tipoCampo);
-
-        // se crea el clone por si regresan a este punto de la creacion
-        this.campoCrearOrigen = new CampoEntradaDTO();
-        this.campoCrearOrigen.nombre = this.campoCU.nombre;
-        this.campoCrearOrigen.tipoCampo = this.campoCU.tipoCampo;
-
-        // se procede a seguir al segundo paso
-        this.stepsModel.irSegundoStep();
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
   }
 
   /**
@@ -305,6 +262,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCU = new CampoEntradaDTO();
     this.campoCU.items = new Array<ItemDTO>();
     this.campoCU.idCliente = this.clienteCurrent.id;
+    this.campoCU.consultarRestricciones = true;
     this.campoCrearOrigen = null;
 
     // esta bandera visualiza el panel de creacion
@@ -350,6 +308,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
         // se visualiza el panel para la edicion
         this.isEdicion = true;
+
+        // bandera indica no se debe consultar restricciones para validar tipo nombre
+        this.campoCU.consultarRestricciones = false;
 
         // se define el componente steps para la edicion
         this.stepsModel = new StepsModel();
@@ -461,5 +422,99 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       }
     }
     this.campoCU.restricciones = seleccionadas;
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Datos del Campo) para creacion
+   */
+  private siguienteDatosCampoCreacion(): void {
+
+    // el tipo de campo es obligatorio
+    if (!this.campoCU.tipoCampo) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.TIPO_CAMPO_REQUERIDO));
+      return;
+    }
+
+    // se limpian los espacios para el nombre y descripcion
+    this.campoCU.nombre = this.setTrim(this.campoCU.nombre);
+    this.campoCU.descripcion = this.setTrim(this.campoCU.descripcion);
+
+    // si no hay ningun cambio solamente se pasa al segundo paso
+    if (this.campoCrearOrigen &&
+        this.campoCrearOrigen.nombre === this.campoCU.nombre &&
+        this.campoCrearOrigen.tipoCampo === this.campoCU.tipoCampo) {
+          this.stepsModel.irSegundoStep(this.spinnerState);
+          return;
+    }
+
+    // se procede a validar los datos ingresados para la creacion
+    this.adminCampoService.validarDatosCampoEntrada(this.campoCU).subscribe(
+      data => {
+
+        // solamente se reemplaza las restricciones si el tipo campo
+        // fue modificado o si apenas es la primera entrada para el paso UNO
+        if (this.campoCrearOrigen) {
+          if (this.campoCrearOrigen.tipoCampo !== this.campoCU.tipoCampo) {
+            this.setRestriccionesSteps(data);
+          }
+        } else {
+          this.setRestriccionesSteps(data);
+        }
+
+        // se configura el nombre del tipo de campo seleccionado
+        this.campoCU.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCU.tipoCampo);
+
+        // se crea el clone por si regresan a este punto de la creacion
+        this.campoCrearOrigen = new CampoEntradaDTO();
+        this.campoCrearOrigen.nombre = this.campoCU.nombre;
+        this.campoCrearOrigen.tipoCampo = this.campoCU.tipoCampo;
+
+        // se procede a seguir al segundo paso
+        this.stepsModel.irSegundoStep();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Datos del Campo) para edicion
+   */
+  private siguienteDatosCampoEdicion(): void {
+
+    // se limpian las banderas que permite editar los valores
+    this.campoEditarOrigen.datosBasicosEditar = false;
+
+    // se obtiene el origen de los datos del campo
+    const campoOrigen = this.campoEditarOrigen.campoEntrada;
+
+    // se limpian los espacios para el nombre y descripcion
+    this.campoCU.nombre = this.setTrim(this.campoCU.nombre);
+    this.campoCU.descripcion = this.setTrim(this.campoCU.descripcion);
+
+    // si no hay ningun cambio solamente se pasa al segundo paso
+    if (campoOrigen.nombre !== this.campoCU.nombre ||
+        campoOrigen.descripcion !== this.campoCU.descripcion) {
+
+      // se indica que los datos fueron modificados
+      this.campoEditarOrigen.datosBasicosEditar = true;
+
+      // se llama la validacion si el nombre o tipo fueron modificados
+      if (campoOrigen.nombre !== this.campoCU.nombre) {
+
+        // se valida que no exista otro campo con el mismo tipo y nombre
+        this.adminCampoService.validarDatosCampoEntrada(this.campoCU).subscribe(
+          data => {
+            this.stepsModel.irSegundoStep(this.spinnerState);
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+        return;
+      }
+    }
+    this.stepsModel.irSegundoStep(this.spinnerState);
   }
 }

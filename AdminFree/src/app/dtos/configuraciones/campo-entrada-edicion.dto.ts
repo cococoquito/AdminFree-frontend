@@ -22,9 +22,6 @@ export class CampoEntradaEdicionDTO {
   /** Indica si los datos basicas del campo se debe editar */
   public datosBasicosEditar: boolean;
 
-  /** Indica si el tipo y nombre fueron modificados */
-  public tipoNombreEditar: boolean;
-
   /** Indica si las restricciones fueron modificados */
   public restriccionesEditar: boolean;
 

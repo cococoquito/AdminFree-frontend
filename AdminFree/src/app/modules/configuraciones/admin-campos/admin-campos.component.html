@@ -86,42 +86,49 @@
                   <td style="width: 8%">
                     <p class="steps-st">Tipo:</p>
                   </td>
-                  <td>
-                    <div class="form-row">
-                      <div class="mr-4">
-                        <p-radioButton
-                          [(ngModel)]="campoCU.tipoCampo"
-                          [value]="ID_CAMPO_TEXTO"
-                          label="Campo de Texto"
-                          name="campos">
-                        </p-radioButton>
+                  <ng-container *ngIf="isEdicion; else ref_tipo_campo">
+                    <td>
+                      <p class="steps-st">{{campoCU.tipoCampoNombre}}</p>
+                    </td>
+                  </ng-container>
+                  <ng-template #ref_tipo_campo>
+                    <td>
+                      <div class="form-row">
+                        <div class="mr-4">
+                          <p-radioButton
+                            [(ngModel)]="campoCU.tipoCampo"
+                            [value]="ID_CAMPO_TEXTO"
+                            label="Campo de Texto"
+                            name="campos">
+                          </p-radioButton>
+                        </div>
+                        <div class="mr-4">
+                          <p-radioButton
+                            [(ngModel)]="campoCU.tipoCampo"
+                            [value]="ID_LISTA_DESPLEGABLE"
+                            label="Lista Desplegable"
+                            name="campos">
+                          </p-radioButton>
+                        </div>
+                        <div class="mr-4">
+                          <p-radioButton
+                            [(ngModel)]="campoCU.tipoCampo"
+                            [value]="ID_CASILLA_VERIFICACION"
+                            label="Casilla de Verificación"
+                            name="campos">
+                          </p-radioButton>
+                        </div>
+                        <div>
+                          <p-radioButton
+                            [(ngModel)]="campoCU.tipoCampo"
+                            [value]="ID_CAMPO_FECHA"
+                            label="Campo de Fecha"
+                            name="campos">
+                          </p-radioButton>
+                        </div>
                       </div>
-                      <div class="mr-4">
-                        <p-radioButton
-                          [(ngModel)]="campoCU.tipoCampo"
-                          [value]="ID_LISTA_DESPLEGABLE"
-                          label="Lista Desplegable"
-                          name="campos">
-                        </p-radioButton>
-                      </div>
-                      <div class="mr-4">
-                        <p-radioButton
-                          [(ngModel)]="campoCU.tipoCampo"
-                          [value]="ID_CASILLA_VERIFICACION"
-                          label="Casilla de Verificación"
-                          name="campos">
-                        </p-radioButton>
-                      </div>
-                      <div>
-                        <p-radioButton
-                          [(ngModel)]="campoCU.tipoCampo"
-                          [value]="ID_CAMPO_FECHA"
-                          label="Campo de Fecha"
-                          name="campos">
-                        </p-radioButton>
-                      </div>
-                    </div>
-                  </td>
+                    </td>
+                  </ng-template>
                 </tr>
 
                 <!-- nombre -->

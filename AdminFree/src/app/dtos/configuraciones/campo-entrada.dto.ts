@@ -32,4 +32,7 @@ export class CampoEntradaDTO {
 
   /** Son los items para este campo, solo aplica para lista desplegable */
   public items: Array<ItemDTO>;
+
+  /** indica si se debe consultar las restricciones */
+  public consultarRestricciones: boolean;
 }
