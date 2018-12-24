@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { HttpStatusConstant } from './../constants/http-status.constant';
 import { MessagesBackendConstant } from './../constants/messages-backend.constant';
 import { MessagesBackendKeyConstant } from './../constants/messages-backend-key.constant';
+import { LabelsConstant } from './../constants/labels.constant';
 
 /**
  * Contiene los metodos comunes para los componentes de la aplicacion,
@@ -25,7 +26,7 @@ export class CommonComponent {
    */
   protected limpiarMensajes(): boolean {
     if (this.messageService) {
-      this.messageService.clear();
+      this.messageService.clear(LabelsConstant.KEY_MESSAGE);
     }
     return true;
   }

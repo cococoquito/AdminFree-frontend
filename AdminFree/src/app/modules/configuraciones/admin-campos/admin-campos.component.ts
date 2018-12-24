@@ -375,15 +375,22 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         // se hace el backup de los atributos
         this.campoCU = JSON.parse(JSON.stringify(this.campoEditarOrigen.campoEntrada));
 
-        // se visualiza el panel para la edicion
-        this.isEdicion = true;
+        // se define el componente steps para la edicion
+        this.stepsModel = new StepsModel();
+        this.stepsModel.stepsParaAdminCampos(this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE);
+
+        // mensaje cuando el campo tiene consecutivos o nomenclaturas asociadas
+        if (this.campoEditarOrigen.tieneConsecutivos) {
+          this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.CAMPO_CON_CONSECUTIVO));
+        } else if (this.campoEditarOrigen.tieneNomenclaturas) {
+          this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.CAMPO_CON_NOMENCLATURAS));
+        }
 
         // bandera indica no se debe consultar restricciones para validar tipo nombre
         this.campoCU.consultarRestricciones = false;
 
-        // se define el componente steps para la edicion
-        this.stepsModel = new StepsModel();
-        this.stepsModel.stepsParaAdminCampos(this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE);
+        // se visualiza el panel para la edicion
+        this.isEdicion = true;
 
         // se configura el campo de edicion
         this.campoEdicion = campo;

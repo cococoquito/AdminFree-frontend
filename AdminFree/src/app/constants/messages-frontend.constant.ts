@@ -87,4 +87,10 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando quieren salir sin aplicar cambios*/
   static readonly SEGURO_SALIR_EDICION: string = '¿Seguro que desea salir sin aplicar los cambios?';
+
+  /** Mensaje cuando el campo tiene un consecutivo asociado */
+  static readonly CAMPO_CON_CONSECUTIVO: string = 'Existen <strong>consecutivos de correspondencia</strong> asociados a este campo';
+
+  /** Mensaje cuando el campo tiene un nomenclaturas asociado */
+  static readonly CAMPO_CON_NOMENCLATURAS: string = 'Existen <strong>nomenclaturas</strong> asociados a este campo';
 }

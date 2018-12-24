@@ -48,6 +48,9 @@ export class LabelsConstant {
   /** Es el KEY para identificar el componente mensajes debajo del titulo */
   public static readonly KEY_MESSAGE: string = 'msj';
 
+  /** Es el KEY para identificar el componente mensajes debajo del titulo informativo */
+  public static readonly KEY_MESSAGE_INFO: string = 'inf';
+
   /** Es el KEY para identificar el componente tipo TOAST */
   public static readonly KEY_TOAST: string = 'toast';
 

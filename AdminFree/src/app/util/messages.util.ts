@@ -73,6 +73,18 @@ export class MsjUtil {
   }
 
   /**
+   * Metodo que permite construir el mensaje informativo
+   */
+  public static getInfo(detail: string): Message {
+    return {
+      key: LabelsConstant.KEY_MESSAGE_INFO,
+      severity: LabelsConstant.INFO,
+      summary: MsjFrontConstant.INFORMACION,
+      detail: detail
+    };
+  }
+
+  /**
    * Metodo que permite construir el mensaje
    */
   private static getMsj(summary: string, detail: string, severity: string): Message {
