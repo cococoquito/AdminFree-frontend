@@ -50,6 +50,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Esta es la variable que se utiliza para la creacion o edicion del campo*/
   public campoCU: CampoEntradaDTO;
 
+  /** Es el campo que esta en edicion*/
+  public campoEdicion: CampoEntradaDTO;
+
   /** Se utiliza para ver el detalle de un campo de entrada*/
   public campoVerDetalle: CampoEntradaDTO;
 
@@ -136,9 +139,12 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   public crearCampoEntrada(): void {
 
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
     // se configuran los datos ingresados para la creacion
-    const restricciones = this.campoCU.restricciones;
-    this.setDatosAntesCreacion(restricciones);
+    const restriccionesBK = this.campoCU.restricciones;
+    this.setDatosAntesCreacion(restriccionesBK);
 
     // se procede a invocar el servicio para la creacion
     this.adminCampoService.crearCampoEntrada(this.campoCU).subscribe(
@@ -153,7 +159,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.limpiarCamposCU();
       },
       error => {
-        this.campoCU.restricciones = restricciones;
+        this.campoCU.restricciones = restriccionesBK;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
@@ -163,6 +169,40 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Metodo que permite soportar el evento click del boton Aplicar Cambios
    */
   public editarCampoEntrada(): void {
+
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
+    // backup para el campo origen y las restricciones por si hay errores
+    const campoBK = this.campoEditarOrigen.campoEntrada;
+    const restriccionesBK = this.campoCU.restricciones;
+
+    // se configuran los datos modificados para la edicion
+    this.setDatosAntesEdicion(restriccionesBK);
+
+    // se configura el campo de entrada modificado
+    this.campoEditarOrigen.campoEntrada = this.campoCU;
+
+    // se procede a invocar el servicio para la edicion
+    this.adminCampoService.editarCampoEntradaInformacion(this.campoEditarOrigen).subscribe(
+      data => {
+        // Mensaje exitoso campo modificado
+        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ACTUALIZADO_EXITOSO));
+
+        // se configuran los datos del campo en edicion
+        this.campoEdicion.nombre = data.nombre;
+        this.campoEdicion.tipoCampo = data.tipoCampo;
+        this.campoEdicion.tipoCampoNombre = data.tipoCampoNombre;
+
+        // se limpia las variables de la edicion
+        this.limpiarCamposCU();
+      },
+      error => {
+        this.campoEditarOrigen.campoEntrada = campoBK;
+        this.campoCU.restricciones = restriccionesBK;
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**
@@ -291,6 +331,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         message: MsjFrontConstant.SEGURO_SALIR,
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
+          this.messageService.clear();
           this.limpiarCamposCU();
         }
       });
@@ -304,10 +345,12 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
             message: MsjFrontConstant.SEGURO_SALIR_EDICION,
             header: MsjFrontConstant.CONFIRMACION,
             accept: () => {
+              this.messageService.clear();
               this.limpiarCamposCU();
             }
           });
       } else {
+        this.messageService.clear();
         this.limpiarCamposCU();
       }
     }
@@ -341,6 +384,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         // se define el componente steps para la edicion
         this.stepsModel = new StepsModel();
         this.stepsModel.stepsParaAdminCampos(this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE);
+
+        // se configura el campo de edicion
+        this.campoEdicion = campo;
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -410,8 +456,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Metodo que permite limpiar los datos utilizado para la creacion campo
    */
   private limpiarCamposCU(): void {
-    this.messageService.clear();
     this.campoCU = null;
+    this.campoEdicion = null;
     this.campoCrearOrigen = null;
     this.campoEditarOrigen = null;
     this.stepsModel = null;
@@ -439,6 +485,30 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     }
 
     // se configuran las restricciones seleccionadas
+    this.configurarRestricciones(restricciones);
+  }
+
+  /**
+   * Metodo que permite configurar los datos antes de la edicion del campo
+   */
+  private setDatosAntesEdicion(restricciones: Array<RestriccionDTO>): void {
+
+    // los items no aplica para el tipo lista desplegable
+    if (this.campoCU.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
+      this.campoCU.items = null;
+      this.campoEditarOrigen.itemsEditar = false;
+    }
+
+    // se configuran las restricciones seleccionadas
+    if (this.campoEditarOrigen.restriccionesEditar) {
+      this.configurarRestricciones(restricciones);
+    }
+  }
+
+  /**
+   * Metodo que permite configurar las restricciones para editar o crear
+   */
+  private configurarRestricciones(restricciones: Array<RestriccionDTO>): void {
     let seleccionadas: Array<RestriccionDTO>;
     for (const restriccion of restricciones) {
       if (restriccion.aplica) {

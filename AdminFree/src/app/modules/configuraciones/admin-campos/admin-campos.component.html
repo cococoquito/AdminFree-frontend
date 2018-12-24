@@ -63,7 +63,7 @@
       <i class="fa fa-list-alt font-size-14"><span class="font-admin"> {{isCreacion ? 'Creación del Campo': 'Edición del Campo'}}</span></i>
     </p-header>
 
-    <!-- pasos de creacion -->
+    <!-- pasos de creacion o edicion -->
     <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
     <div class="mh-pnl-create">
 
@@ -76,7 +76,7 @@
           <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
             <p-header>
               <i class="fa fa-info-circle font-size-18"></i>
-              <span> Ingrese los datos del campo, todos los valores son obligatorios</span>
+              <span> Datos del campo, todos los valores son obligatorios</span>
             </p-header>
 
             <table class="table steps-tbl mb-0">
@@ -192,7 +192,7 @@
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
-            <span> Asigne las restricciones para el nuevo campo</span>
+            <span> Asigne las restricciones para el campo</span>
           </p-header>
 
           <!-- lista Restricciones -->
