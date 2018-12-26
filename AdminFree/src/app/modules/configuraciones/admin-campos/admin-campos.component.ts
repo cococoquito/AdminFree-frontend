@@ -564,7 +564,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   private setDatosAntesEdicion(restricciones: Array<RestriccionDTO>): void {
 
     // si hay modificaciones de los items solo para lista desplegable
-    if (this.campoCU.tipoCampo !== this.ID_LISTA_DESPLEGABLE && this.campoEditarOrigen.itemsEditar) {
+    if (this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE && this.campoEditarOrigen.itemsEditar) {
       const itemsPersistir = Array<ItemDTO>();
 
       // se configura los items eliminados

@@ -71,9 +71,10 @@
     [alwaysShowPaginator]="false"
     [responsive]="true"
     [paginator]="true"
-    [rows]="5">
+    [rows]="5"
+    rowHover="true">
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-      <tr>
+      <tr [pSelectableRow]="item">
         <td style="width: 6%" class="text-center">
           <i *ngIf="item.modificado" class="fa fa-asterisk text-danger font-size-12"></i> {{ rowIndex + 1 }}
         </td>
