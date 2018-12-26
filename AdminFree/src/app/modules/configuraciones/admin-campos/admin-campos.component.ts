@@ -56,7 +56,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Se utiliza para ver el detalle de un campo de entrada*/
   public campoVerDetalle: CampoEntradaDTO;
 
-  /** Se utiliza para la creacion o edicion*/
+  /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
   /** permite visualizar el modal de ver detalle del campo*/
@@ -75,8 +75,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    *
-   * @param confirmationService, se utiliza para el cambio
-   * de estado y generacion de contrasenia
+   * @param confirmationService, se utiliza para mostrar el
+   * modal de confirmacion para diferente procesos
    *
    * @param adminCampoService, se utiliza para consumir
    * los servicios relacionados a este proceso negocio
