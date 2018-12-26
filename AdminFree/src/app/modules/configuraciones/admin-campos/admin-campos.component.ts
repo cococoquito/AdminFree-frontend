@@ -62,6 +62,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** permite visualizar el modal de ver detalle del campo*/
   public isModalVerDetalle: boolean;
 
+  /** Es el item que esta en modo edicion*/
+  public itemEdicion: ItemDTO;
+
   /** se utiliza para el focus componente agregar items*/
   @ViewChild('inItem') inItem: ElementRef;
 
@@ -432,7 +435,22 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * @param item , es el item seleccionado para eliminar
    */
   public eliminarItem(item: ItemDTO): void {
-    this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
+    if (this.isCreacion) {
+      this.eliminarItemCreacion(item);
+    } else {
+      this.eliminarItemEdicion(item);
+    }
+  }
+
+
+
+  /**
+   * Metodo que soporta el evento click del boton editar los items
+   *
+   * @param item , item seleccionado para la edicion
+   */
+  public setItemEdicion(item: ItemDTO): void {
+    this.itemEdicion = item;
   }
 
   /**
@@ -463,6 +481,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoEdicion = null;
     this.campoCrearOrigen = null;
     this.campoEditarOrigen = null;
+    this.itemEdicion = null;
     this.stepsModel = null;
     this.isCreacion = false;
     this.isEdicion = false;
@@ -687,5 +706,23 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   private siguienteAgregarItemsEdicion(): void {
 
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton eliminar item (creacion)
+   */
+  private eliminarItemCreacion(item: ItemDTO): void {
+    this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton eliminar item (edicion)
+   */
+  private eliminarItemEdicion(item: ItemDTO): void {
+    if (item.id) {
+      item.borrar = true;
+    } else {
+      this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
+    }
   }
 }

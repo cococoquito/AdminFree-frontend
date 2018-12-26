@@ -8,13 +8,12 @@
     </button>
   </div>
 
-  <!-- tabla - usuarios -->
+  <!-- tabla - campos -->
   <p-table [value]="campos"
-    styleClass="tbl-admin"
     [responsive]="true"
     [paginator]="true"
     [rows]="10"
-    selectionMode="single">
+    rowHover="true">
 
     <ng-template pTemplate="caption">
       <i class="fa fa-list-alt"><span class="font-admin"> Campos de Entrada</span></i>
@@ -266,19 +265,36 @@
             [paginator]="true"
             [rows]="5" #tblitems
             [alwaysShowPaginator]="false"
-            selectionMode="single"
-            styleClass="ml-2 mr-2 mb-2 tbl-admin">
+            rowHover="true"
+            styleClass="ml-2 mr-2 mb-2">
 
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
               <tr [pSelectableRow]="item">
                 <td style="width: 4%">{{ rowIndex + 1 }}</td>
-                <td>{{ item.valor }}</td>
+                <td>
+                  <p *ngIf="!(isEdicion && itemEdicion && itemEdicion.id === item.id)">{{ item.valor }}</p>
+                  <input type="text"
+                    *ngIf="isEdicion && itemEdicion && itemEdicion.id === item.id"
+                    id="inItemEdit"
+                    [(ngModel)]="item.valor"
+                    #inItemEdit
+                    maxlength="255"
+                    adminAutofocus
+                    autocomplete="off"
+                    class="ad-input ad-input-style w-100" />
+                  <div class="focus-border"></div>
+                </td>
                 <td *ngIf="isEdicion" style="width: 4%" class="text-center">
-                  <span class="edit-round-min">
+                  <span (click)="setItemEdicion(item)" *ngIf="item.id" class="edit-round-min">
                     <i class="pi pi-pencil del-round-min-pi"></i>
                   </span>
                 </td>
-                <td style="width: 4%" class="text-center">
+                <td *ngIf="isEdicion" style="width: 4%" class="text-center">
+                  <span *ngIf="!campoEditarOrigen.tieneConsecutivos || !item.id" (click)="eliminarItem(item); tblitems.reset()" class="del-round-min">
+                    <i class="pi pi-times del-round-min-pi"></i>
+                  </span>
+                  </td>
+                <td *ngIf="isCreacion" style="width: 4%" class="text-center">
                   <span (click)="eliminarItem(item); tblitems.reset()" class="del-round-min">
                     <i class="pi pi-times del-round-min-pi"></i>
                   </span>

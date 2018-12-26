@@ -10,11 +10,10 @@
 
   <!-- tabla - usuarios -->
   <p-table [value]="usuarios"
-    styleClass="tbl-admin"
     [responsive]="true"
     [paginator]="true"
     [rows]="10"
-    selectionMode="single">
+    rowHover="true">
 
     <ng-template pTemplate="caption">
       <i class="fa fa-users"> <span class="font-admin"> Usuarios Registrados</span></i>

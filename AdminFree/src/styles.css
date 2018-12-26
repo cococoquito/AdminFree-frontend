@@ -97,11 +97,6 @@ body {
   color: white !important;
 }
 
-/* para la fila seleccionada del componente p-table */
-.tbl-admin .ui-state-highlight {
-  background-color: white !important;
-}
-
 /* circulo redondo paginador */
 .ui-paginator-page.ui-state-active {
   background-color: #f5a96d !important;
