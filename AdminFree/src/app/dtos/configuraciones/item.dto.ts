@@ -17,4 +17,7 @@ export class ItemDTO {
 
   /** indica si el item se debe borrar */
   public borrar: boolean;
+
+  /** indica si el item fue modificado */
+  public modificado: boolean;
 }

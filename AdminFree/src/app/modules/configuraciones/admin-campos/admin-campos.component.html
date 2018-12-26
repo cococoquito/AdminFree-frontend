@@ -270,12 +270,15 @@
 
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
               <tr [pSelectableRow]="item">
-                <td style="width: 4%">{{ rowIndex + 1 }}</td>
+                <td style="width: 6%" class="text-center">
+                  <i *ngIf="isEdicion && item.modificado" class="fa fa-asterisk text-danger font-size-12"></i> {{ rowIndex + 1 }}
+                </td>
                 <td>
                   <p *ngIf="!(isEdicion && itemEdicion && itemEdicion.id === item.id)">{{ item.valor }}</p>
                   <input type="text"
                     *ngIf="isEdicion && itemEdicion && itemEdicion.id === item.id"
                     id="inItemEdit"
+                    (change)="changeItemUpdate()"
                     [(ngModel)]="item.valor"
                     #inItemEdit
                     maxlength="255"
@@ -293,7 +296,7 @@
                   <span *ngIf="!campoEditarOrigen.tieneConsecutivos || !item.id" (click)="eliminarItem(item); tblitems.reset()" class="del-round-min">
                     <i class="pi pi-times del-round-min-pi"></i>
                   </span>
-                  </td>
+                </td>
                 <td *ngIf="isCreacion" style="width: 4%" class="text-center">
                   <span (click)="eliminarItem(item); tblitems.reset()" class="del-round-min">
                     <i class="pi pi-times del-round-min-pi"></i>

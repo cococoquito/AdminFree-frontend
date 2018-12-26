@@ -65,6 +65,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Es el item que esta en modo edicion*/
   public itemEdicion: ItemDTO;
 
+  /** Lista de items seleccionados para eliminarlos del sistema */
+  private itemsEliminados: Array<ItemDTO>;
+
   /** se utiliza para el focus componente agregar items*/
   @ViewChild('inItem') inItem: ElementRef;
 
@@ -179,6 +182,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     // backup para el campo origen y las restricciones por si hay errores
     const campoBK = this.campoEditarOrigen.campoEntrada;
     const restriccionesBK = this.campoCU.restricciones;
+    const itemsBK =  this.campoCU.items;
 
     // se configuran los datos modificados para la edicion
     this.setDatosAntesEdicion(restriccionesBK);
@@ -203,6 +207,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       error => {
         this.campoEditarOrigen.campoEntrada = campoBK;
         this.campoCU.restricciones = restriccionesBK;
+        this.campoCU.items = itemsBK;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
@@ -442,8 +447,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     }
   }
 
-
-
   /**
    * Metodo que soporta el evento click del boton editar los items
    *
@@ -451,6 +454,50 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   public setItemEdicion(item: ItemDTO): void {
     this.itemEdicion = item;
+  }
+
+  /**
+   * Metodo que es invocado cuando el valor del input edicion del item cambia
+   */
+  public changeItemUpdate(): void {
+
+    // arranca como no modificado
+    this.itemEdicion.modificado = false;
+
+    // se busca el items del origen para identificar si el valor fue modificado
+    for (const i of this.campoEditarOrigen.campoEntrada.items) {
+      if (i.id === this.itemEdicion.id) {
+        if (i.valor !== this.itemEdicion.valor) {
+          this.itemEdicion.modificado = true;
+        }
+        break;
+      }
+    }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton eliminar item (creacion)
+   */
+  private eliminarItemCreacion(item: ItemDTO): void {
+    this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton eliminar item (edicion)
+   */
+  private eliminarItemEdicion(item: ItemDTO): void {
+    if (item.id) {
+
+      // se coloca la marca de borrado
+      item.borrar = true;
+
+      // se agrega en la lista de eliminados
+      if (!this.itemsEliminados) {
+        this.itemsEliminados = new Array<ItemDTO>();
+      }
+      this.itemsEliminados.push(item);
+    }
+    this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
   }
 
   /**
@@ -481,6 +528,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoEdicion = null;
     this.campoCrearOrigen = null;
     this.campoEditarOrigen = null;
+    this.itemsEliminados = null;
     this.itemEdicion = null;
     this.stepsModel = null;
     this.isCreacion = false;
@@ -515,8 +563,25 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   private setDatosAntesEdicion(restricciones: Array<RestriccionDTO>): void {
 
-    // los items no aplica para el tipo lista desplegable
-    if (this.campoCU.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
+    // si hay modificaciones de los items solo para lista desplegable
+    if (this.campoCU.tipoCampo !== this.ID_LISTA_DESPLEGABLE && this.campoEditarOrigen.itemsEditar) {
+      const itemsPersistir = Array<ItemDTO>();
+
+      // se configura los items eliminados
+      if (this.itemsEliminados && this.itemsEliminados.length !== 0) {
+        for (const idelete of this.itemsEliminados) {
+          itemsPersistir.push(idelete);
+        }
+      }
+
+      // se configura los items modificados o agregados
+      for (const iupdate of this.campoCU.items) {
+        if (!iupdate.id || iupdate.modificado) {
+          itemsPersistir.push(iupdate);
+        }
+      }
+      this.campoCU.items = itemsPersistir;
+    } else {
       this.campoCU.items = null;
       this.campoEditarOrigen.itemsEditar = false;
     }
@@ -706,23 +771,37 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   private siguienteAgregarItemsEdicion(): void {
 
-  }
+    // los items son requeridos
+    if (!this.campoCU.items || this.campoCU.items.length === 0) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.ITEMS_REQUERIDO));
+      return;
+    }
 
-  /**
-   * Metodo que soporta el evento click del boton eliminar item (creacion)
-   */
-  private eliminarItemCreacion(item: ItemDTO): void {
-    this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
-  }
+    // se procede a ir al ultimo paso
+    this.itemEdicion = null;
+    this.stepsModel.irUltimoStep(this.spinnerState);
 
-  /**
-   * Metodo que soporta el evento click del boton eliminar item (edicion)
-   */
-  private eliminarItemEdicion(item: ItemDTO): void {
-    if (item.id) {
-      item.borrar = true;
-    } else {
-      this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
+    // se inicializa sin modificaciones
+    this.campoEditarOrigen.itemsEditar = false;
+
+    // si hay items eliminados
+    if (this.itemsEliminados && this.itemsEliminados.length !== 0) {
+      this.campoEditarOrigen.itemsEditar = true;
+      return;
+    }
+
+    // si la lista tiene tamanio diferentes es por que hay nuevos items
+    if (this.campoCU.items.length !== this.campoEditarOrigen.campoEntrada.items.length) {
+      this.campoEditarOrigen.itemsEditar = true;
+      return;
+    }
+
+    // si hay items modificados
+    for (const i of this.campoCU.items) {
+      if (i.modificado) {
+        this.campoEditarOrigen.itemsEditar = true;
+        break;
+      }
     }
   }
 }

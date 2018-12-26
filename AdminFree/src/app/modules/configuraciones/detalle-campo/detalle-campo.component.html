@@ -74,7 +74,9 @@
     [rows]="5">
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
       <tr>
-        <td style="width: 4%">{{ rowIndex + 1 }}</td>
+        <td style="width: 6%" class="text-center">
+          <i *ngIf="item.modificado" class="fa fa-asterisk text-danger font-size-12"></i> {{ rowIndex + 1 }}
+        </td>
         <td>{{ item.valor }}</td>
       </tr>
     </ng-template>
