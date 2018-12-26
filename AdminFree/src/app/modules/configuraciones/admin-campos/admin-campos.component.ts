@@ -286,15 +286,11 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Es el evento del boton siguiente para el paso (Agregar items)
    */
   public siguienteAgregarItems(): void {
-
-    // los items son requeridos
-    if (this.campoCU.items.length === 0) {
-      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.ITEMS_REQUERIDO));
-      return;
+    if (this.isCreacion) {
+      this.siguienteAgregarItemsCreacion();
+    } else {
+      this.siguienteAgregarItemsEdicion();
     }
-
-    // se procede a ir al ultimo paso
-    this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
@@ -669,5 +665,27 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       }
     }
     this.stepsModel.irTercerStep(this.spinnerState);
+  }
+
+  /**
+   *  Es el evento del boton siguiente para el paso (Agregar items) creacion
+   */
+  private siguienteAgregarItemsCreacion(): void {
+
+    // los items son requeridos
+    if (this.campoCU.items.length === 0) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.ITEMS_REQUERIDO));
+      return;
+    }
+
+    // se procede a ir al ultimo paso
+    this.stepsModel.irUltimoStep(this.spinnerState);
+  }
+
+  /**
+   *  Es el evento del boton siguiente para el paso (Agregar items) edicion
+   */
+  private siguienteAgregarItemsEdicion(): void {
+
   }
 }

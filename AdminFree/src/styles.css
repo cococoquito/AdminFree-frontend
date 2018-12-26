@@ -366,6 +366,21 @@ body {
   line-height: 1.4 !important;
 }
 
+.edit-round-min {
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+  background-color: #007ad9;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.edit-round-min:hover {
+  background-color: #0762a8;
+}
+
 .st {
   color: #4b4f56;
   font-size: 0.98rem;
