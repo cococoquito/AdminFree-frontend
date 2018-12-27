@@ -13,7 +13,6 @@
   border-color: #6c757d !important;
 }
 
-.btn-si {
-  background-color: #009688 !important;
-  border-color: #009688 !important;
+.btn-no:hover {
+  background-color: #5d5f61 !important;
 }
