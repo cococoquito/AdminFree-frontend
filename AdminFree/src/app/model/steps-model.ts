@@ -92,6 +92,24 @@ export class StepsModel {
   }
 
   /**
+   * Metodo que agrega los items para el submodulo
+   * de administrar usuarios en el sistema
+   */
+  public stepsParaAdminUsers(): void {
+
+    // se limpia el modelo por si hay registros anteriores
+    this.cleanSteps();
+
+    // se agregan los items para este submodulo
+    this.agregarStep(LabelsConstant.DATOS_USER);
+    this.agregarStep(LabelsConstant.MODULOS);
+    this.agregarStep(LabelsConstant.CONFIRMACION);
+
+    // se inicializa el model del componente
+    this.init();
+  }
+
+  /**
    * Metodo que permite regresar un paso
    */
   public regresar(): void {

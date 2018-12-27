@@ -65,4 +65,8 @@ export class LabelsConstant {
   public static readonly RESTRICCIONES: string = 'Restricciones';
   public static readonly AGREGAR_ITEMS: string = 'Agregar Ítems';
   public static readonly CONFIRMACION: string = 'Confirmación';
+
+  /** labels para la administracion de los usuarios */
+  public static readonly DATOS_USER: string = 'Datos del Usuario';
+  public static readonly MODULOS: string = 'Modulos';
 }
