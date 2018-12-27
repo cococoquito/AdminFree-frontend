@@ -486,9 +486,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Metodo que soporta el evento click del boton eliminar item (edicion)
    */
   private eliminarItemEdicion(item: ItemDTO): void {
-    if (item.id) {
 
-      // se coloca la marca de borrado
+    // se coloca la marca de borrado
+    if (item.id) {
       item.borrar = true;
 
       // se agrega en la lista de eliminados

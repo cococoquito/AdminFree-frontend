@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CampoEntradaEdicionDTO } from './../../../dtos/configuraciones/campo-entrada-edicion.dto';
 import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.dto';
 import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
 
@@ -15,6 +16,9 @@ export class DetalleCampoComponent implements OnInit {
 
   /** Se utiliza para visualizar el detalle del campo*/
   @Input() public campo: CampoEntradaDTO;
+
+  /** Se utiliza para saber que steps fueron modificados */
+  @Input() public camposEditado: CampoEntradaEdicionDTO;
 
   /** Identifica si el campo tiene restricciones*/
   public tieneRestriccion: boolean;
