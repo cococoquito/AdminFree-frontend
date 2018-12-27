@@ -36,6 +36,18 @@ export class AdminUsuarioService {
   }
 
   /**
+	 * Servicio que permite validar los datos del usuario para la creacion o modificacion
+	 *
+	 * @param usuario, DTO con los datos del usuario a crear o modificar
+	 */
+  public validarDatosUsuario(usuario: UsuarioDTO): Observable<MessageResponseDTO> {
+    return this.http.post<MessageResponseDTO>(
+      ConfiguracionesConstant.URL_VALIDAR_DATOS_USER,
+      usuario
+    );
+  }
+
+  /**
    * Servicio que permite crear el usuario con sus privilegios en el sistema
    *
    * @param usuario, DTO que contiene los datos del usuarios
