@@ -134,84 +134,49 @@
           </div>
         </form>
       </ng-container>
+
+      <!-- Paso 2 modulos -->
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
+        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+          <p-header>
+            <i class="fa fa-info-circle font-size-18"></i>
+            <span> Asigne los módulos para el usuario</span>
+          </p-header>
+
+          <!-- lista modulos -->
+          <table class="table steps-tbl table-hover mb-0">
+            <tbody>
+              <tr *ngFor="let modulo of selectedModulos.modulos">
+                <td style="width: 5%">
+                  <admin-inputswitch
+                    [isChecked]="modulo.aplica"
+                    (switchChange)="modulo.aplica = $event">
+                  </admin-inputswitch>
+                </td>
+                <td style="width: 18%">
+                  <p class="lbl-mdl font-weight-bold">{{ modulo.nombre }}</p>
+                </td>
+                <td>
+                  <p class="lbl-mdl">{{ modulo.descripcion }}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </p-panel>
+
+        <!-- botones salir - next-->
+        <div class="text-center mt-2 mb-1">
+          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+          </button>
+          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button type="button" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+        </div>
+      </ng-container>
     </div>
   </p-panel>
 </ng-container>
-
-<!-- modal de edicion de modulos -->
-<p-dialog header="Edición de Módulos" [(visible)]="isModalEdicionModulos" *ngIf="usuarioEdicionModulos" modal="true">
-
-  <div class="text-center mb-3">
-    <p class="font-weight-bold font-new-roman font-size-16">{{usuarioEdicionModulos.nombre}}</p>
-  </div>
-
-  <div>
-    <p class="text-assign-modulos"><i class="fa fa-info-circle color-info font-size-16"></i> Módulos Asignados</p>
-    <ng-container *ngTemplateOutlet="tblModulos"></ng-container>
-  </div>
-
-  <div class="text-center">
-    <button type="button" class="btn btn-success btn-sm btn-regresar" (click)="editarModulos()">
-      <label class="btn-size-admin"><i class="fa fa-pencil"></i> Editar</label>
-    </button>
-    <button type="button" class="btn btn-secondary btn-sm btn-crear-user" (click)="closeModalEdicionModulos()">
-      <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-    </button>
-  </div>
-</p-dialog>
-
-<!-- template asignacion - edicion modulos -->
-<ng-template #tblModulos>
-  <table class="table table-modulos table-hover mb-0">
-    <tbody>
-      <tr>
-        <td>
-          <admin-inputswitch
-            [isChecked]="selectedModulos.correspondencia"
-            label="Correspondencia"
-            (switchChange)="selectedModulos.correspondencia=$event">
-          </admin-inputswitch>
-        </td>
-        <td>
-          <p class="sub-title-page">Módulo que permite administrar los consecutivos de correspondencia tales como solicitar, modificar, anular</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <admin-inputswitch
-            [isChecked]="selectedModulos.archivoGestion"
-            label="Archivo de Gestión"
-            (switchChange)="selectedModulos.archivoGestion=$event">
-          </admin-inputswitch>
-        </td>
-        <td>
-          <p class="sub-title-page">Módulo que permite archivar los consecutivos de correspondencia solicitados en series documentales</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <admin-inputswitch
-            [isChecked]="selectedModulos.reportes"
-            label="Reportes"
-            (switchChange)="selectedModulos.reportes=$event">
-          </admin-inputswitch>
-        </td>
-        <td>
-          <p class="sub-title-page">Módulo que permite generar reportes de los consecutivos de correspondencia solicitados en diferentes formatos</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <admin-inputswitch
-            [isChecked]="selectedModulos.configuraciones"
-            label="Configuraciones"
-            (switchChange)="selectedModulos.configuraciones=$event">
-          </admin-inputswitch>
-        </td>
-        <td>
-          <p class="sub-title-page">Módulo administrativo del sistema, solo para usuarios con ROL de administrador</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</ng-template>

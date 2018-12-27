@@ -11,7 +11,6 @@ import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { StepsModel } from './../../../model/steps-model';
 import { ModulosCheck } from '../../../model/modulos-check';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
-import { ModulesTokenConstant } from './../../../constants/modules-token.constant';
 import { EstadoConstant } from './../../../constants/estado.constant';
 import { LabelsConstant } from './../../../constants/labels.constant';
 
@@ -47,9 +46,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
 
   /** Se utiliza para encapsular los modulos seleccionados */
   public selectedModulos: ModulosCheck;
-
-  /** bandera que se utiliza para la visualizacion del modal de edicion de modulos */
-  public isModalEdicionModulos: boolean;
 
   /** DTO que se utiliza para la edicion de los modulos */
   public usuarioEdicionModulos: UsuarioDTO;
@@ -279,7 +275,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.usuarioCU = new UsuarioDTO();
 
     // se utiliza para identificar los modulos seleccionados
-    this.selectedModulos = new ModulosCheck();
+    this.initSelectedModulos();
 
     // se define el componente steps para la creacion
     this.stepsModel = new StepsModel();
@@ -333,20 +329,12 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
 
     // se configura el usuario seleccionado para la edicion
     this.usuarioEdicionModulos = userSeleccionado;
-
-    // se visualiza el modal de edicion
-    this.isModalEdicionModulos = true;
-
-    // se configura los modulos que tiene el usuario en formato
-    // que pueda se leido por los values de los check del componente
-    this.setModulosSeleccionados(userSeleccionado.modulosTokens);
   }
 
   /**
    * Metodo que es es llamado para cerrar el modal de edicion de modulos
    */
   public closeModalEdicionModulos(): void {
-    this.isModalEdicionModulos = false;
     this.usuarioEdicionModulos = null;
     this.selectedModulos = null;
   }
@@ -386,53 +374,16 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    */
   private getModulosSeleccionados(): Array<string> {
 
-    // contendra los modulos seleccionados
-    const modulos: Array<string> = new Array<string>();
-    if (this.selectedModulos.configuraciones) {
-      modulos.push(ModulesTokenConstant.TK_CONFIGURACIONES);
-    }
-    if (this.selectedModulos.correspondencia) {
-      modulos.push(ModulesTokenConstant.TK_CORRESPONDENCIA);
-    }
-    if (this.selectedModulos.archivoGestion) {
-      modulos.push(ModulesTokenConstant.TK_ARCHIVO_GESTION);
-    }
-    if (this.selectedModulos.reportes) {
-      modulos.push(ModulesTokenConstant.TK_REPORTES);
-    }
-    return modulos;
-  }
+    // contiene los token de los modulos seleccionados
+    const seleccionados: Array<string> = new Array<string>();
 
-  /**
-   * Metodo que permite configurar los ids de los modulos
-   * asignados a un usuario especifico
-   */
-  private setModulosSeleccionados(modulos: Array<string>): void {
-
-    // esta lista es la que apunta el componente
-    this.selectedModulos = new ModulosCheck();
-
-    // se recorren todos los token asignados a un usuario
-    for (const token of modulos) {
-      switch (token) {
-        case ModulesTokenConstant.TK_CORRESPONDENCIA: {
-          this.selectedModulos.correspondencia = true;
-          break;
-        }
-        case ModulesTokenConstant.TK_ARCHIVO_GESTION: {
-          this.selectedModulos.archivoGestion = true;
-          break;
-        }
-        case ModulesTokenConstant.TK_REPORTES: {
-          this.selectedModulos.reportes = true;
-          break;
-        }
-        case ModulesTokenConstant.TK_CONFIGURACIONES: {
-          this.selectedModulos.configuraciones = true;
-          break;
-        }
+    // se recorre todos los modulos para identificar cual fue seleccionados
+    for (const modulo of this.selectedModulos.modulos) {
+      if (modulo.aplica) {
+        seleccionados.push(modulo.token);
       }
     }
+    return seleccionados;
   }
 
   /**
@@ -467,9 +418,20 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   private limpiarCamposCU(): void {
     this.usuarioCU = null;
     this.usuarioOrigen = null;
-    this.selectedModulos = null;
     this.stepsModel = null;
     this.isCreacion = false;
     this.isEdicion = false;
+  }
+
+  /**
+   * Permite inicializar los modulos para ser seleccionados
+   */
+  private initSelectedModulos(): void {
+    if (!this.selectedModulos) {
+      this.selectedModulos = new ModulosCheck();
+      this.selectedModulos.init();
+    } else {
+      this.selectedModulos.clean();
+    }
   }
 }
