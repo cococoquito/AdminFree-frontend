@@ -68,5 +68,5 @@ export class LabelsConstant {
 
   /** labels para la administracion de los usuarios */
   public static readonly DATOS_USER: string = 'Datos del Usuario';
-  public static readonly MODULOS: string = 'Modulos';
+  public static readonly MODULOS: string = 'Módulos';
 }
