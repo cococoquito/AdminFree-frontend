@@ -1,5 +1,5 @@
 <!-- panel lista de usuarios -->
-<div *ngIf="!usuarioCrear">
+<ng-container *ngIf="!usuarioCrear">
 
   <!-- boton crear usuario -->
   <div class="text-right mb-1">
@@ -50,10 +50,10 @@
       </tr>
     </ng-template>
   </p-table>
-</div>
+</ng-container>
 
 <!-- panel creacion de usuarios -->
-<div *ngIf="usuarioCrear">
+<ng-container *ngIf="usuarioCrear">
   <p-panel>
     <p-header>
       <i class="fa fa-user-plus font-size-14"> <span class="font-admin"> Creación de Usuario</span></i>
@@ -120,7 +120,7 @@
       </div>
     </form>
   </p-panel>
-</div>
+</ng-container>
 
 <!-- modal de confirmacion de crear usuario -->
 <p-dialog header="Ventana de Confirmación" [(visible)]="isModalCrearUsuario" *ngIf="usuarioCrear" modal="true">

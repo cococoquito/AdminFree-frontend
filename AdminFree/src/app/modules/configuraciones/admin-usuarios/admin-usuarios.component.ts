@@ -25,6 +25,9 @@ import { LabelsConstant } from './../../../constants/labels.constant';
 })
 export class AdminUsuariosComponent extends CommonComponent implements OnInit, OnDestroy {
 
+  /** cliente autenticado o es el cliente asociado al usuario */
+  private clienteCurrent: ClienteDTO;
+
   /** Lista de usuarios a visualizar en pantalla */
   public usuarios: Array<UsuarioDTO>;
 
@@ -42,12 +45,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
 
   /** DTO que se utiliza para la edicion de los modulos */
   public usuarioEdicionModulos: UsuarioDTO;
-
-  /**
-   * DTO que contiene los datos del cliente autenticado o
-   * es el cliente asociados al usuario autenticado
-   */
-  private clienteCurrent: ClienteDTO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
