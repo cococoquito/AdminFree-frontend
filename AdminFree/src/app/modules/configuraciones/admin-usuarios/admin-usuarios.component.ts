@@ -3,10 +3,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { CommonComponent } from './../../../util/common.component';
 import { AdminUsuarioService } from './../../../services/admin-usuario.service';
 import { ShellState } from './../../../states/shell/shell.state';
+import { SpinnerState } from './../../../states/spinner.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MsjUtil } from './../../../util/messages.util';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
+import { StepsModel } from './../../../model/steps-model';
 import { ModulosCheck } from '../../../model/modulos-check';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 import { ModulesTokenConstant } from './../../../constants/modules-token.constant';
@@ -31,20 +33,29 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** Lista de usuarios a visualizar en pantalla */
   public usuarios: Array<UsuarioDTO>;
 
-  /** DTO que se utiliza para la creacion del Usuario */
-  public usuarioCrear: UsuarioDTO;
+  /** Bandera que indica si el proceso es creacion */
+  public isCreacion: boolean;
+
+  /** Bandera que indica si el proceso es edicion */
+  public isEdicion: boolean;
+
+  /** Se utiliza para hacer le backup para la creacion o modificacion*/
+  private usuarioOrigen: UsuarioDTO;
+
+  /** Esta es la variable que se utiliza para la creacion o edicion del usuario*/
+  public usuarioCU: UsuarioDTO;
 
   /** Se utiliza para encapsular los modulos seleccionados */
   public selectedModulos: ModulosCheck;
-
-  /** bandera que se utiliza para la visualizacion del modal de creacion user */
-  public isModalCrearUsuario: boolean;
 
   /** bandera que se utiliza para la visualizacion del modal de edicion de modulos */
   public isModalEdicionModulos: boolean;
 
   /** DTO que se utiliza para la edicion de los modulos */
   public usuarioEdicionModulos: UsuarioDTO;
+
+  /** Modelo del componente steps, se utiliza para la creacion o edicion*/
+  public stepsModel: StepsModel;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -57,12 +68,16 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * los servicios relacionados al Usuario
    *
    * @param shellState, se utiliza para el titulo del componente
+   *
+   * @param spinnerState, se utiliza para simular el spinner cuando
+   * cambian entre los steps
    */
   constructor(
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
     private adminUsuarioService: AdminUsuarioService,
-    private shellState: ShellState) {
+    private shellState: ShellState,
+    private spinnerState: SpinnerState) {
     super();
   }
 
@@ -114,7 +129,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.prepararDatosAntesCreacion();
 
     // se hace el llamado HTTP para la creacion del usuario
-    this.adminUsuarioService.crearUsuario(this.usuarioCrear).subscribe(
+    this.adminUsuarioService.crearUsuario(this.usuarioCU).subscribe(
       data => {
         // se agrega el nuevo usuario en la lista visualizada en pantalla
         this.usuarios.push(data);
@@ -124,14 +139,10 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
           MsjFrontConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'));
 
         // se limpian los datos del usuario ingresado
-        this.initPanelCrearUsuario();
-
-        // se cierra el modal de confirmacion creacion usuario
-        this.isModalCrearUsuario = false;
+        this.limpiarCamposCU();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        this.isModalCrearUsuario = false;
       }
     );
   }
@@ -260,47 +271,56 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * Registrar Usuario del panel lista usuario
    */
   public showPanelCrearUsuario(): void {
+
+    // se limpia los mensajes anteriores
     this.messageService.clear();
-    this.initPanelCrearUsuario();
+
+    // se define el usuario que permite visualizar el panel
+    this.usuarioCU = new UsuarioDTO();
+
+    // se utiliza para identificar los modulos seleccionados
+    this.selectedModulos = new ModulosCheck();
+
+    // se define el componente steps para la creacion
+    this.stepsModel = new StepsModel();
+    this.stepsModel.stepsParaAdminUsers();
+
+    // se visualiza el panel
+    this.isCreacion = true;
   }
 
   /**
-   * Metodo que soporta el evento click del boton
-   * Regresar del panel de creacion de usuario
+   * Es el evento del boton siguiente para el paso (Datos del User)
    */
-  public closePanelCrearUsuario(): void {
-    this.messageService.clear();
-    this.usuarioCrear = null;
-    this.selectedModulos = null;
-  }
+  public siguienteDatosUser(): void {
 
-  /**
-   * Metodo que permite validar si se debe mostrar el modal de creacion
-   */
-  public showModalCrearUsuario(formCreateUser): void {
-    // el modal se inicializa como visualizado
-    this.isModalCrearUsuario = true;
+    // se limpian los espacios
+    this.usuarioCU.nombre = this.setTrim(this.usuarioCU.nombre);
+    this.usuarioCU.usuarioIngreso = this.setTrim(this.usuarioCU.usuarioIngreso);
 
-    // programacion defensiva para nombre, usuario ingreso
-    if (!this.usuarioCrear.nombre || !this.usuarioCrear.usuarioIngreso) {
-        this.isModalCrearUsuario = false;
+    // si no hay ningun cambio solamente se pasa al segundo paso
+    if (this.usuarioOrigen &&
+        this.usuarioOrigen.nombre === this.usuarioCU.nombre &&
+        this.usuarioOrigen.usuarioIngreso === this.usuarioCU.usuarioIngreso) {
+        this.stepsModel.irSegundoStep(this.spinnerState);
+        return;
     }
 
-    // se valida si seleccionaron modulos para el nuevo usuario
-    if (!this.selectedModulos.tieneModuloSeleccionado()) {
-      this.messageService.add(MsjUtil.getMsjErrorValidacion(MsjFrontConstant.MODULOS_USER));
-      this.isModalCrearUsuario = false;
-    }
+    // se procede a validar los datos ingresados para la creacion
+    this.adminUsuarioService.validarDatosUsuario(this.usuarioCU).subscribe(
+      data => {
+        // se crea el clone por si regresan a este punto de la creacion
+        this.usuarioOrigen = new UsuarioDTO();
+        this.usuarioOrigen.nombre = this.usuarioCU.nombre;
+        this.usuarioOrigen.usuarioIngreso = this.usuarioCU.usuarioIngreso;
 
-    // se configura el submmitted del formulario crear user
-    formCreateUser.submitted = !this.isModalCrearUsuario;
-  }
-
-  /**
-   * Metodo que es es llamado para cerrar el modal de crear usuario
-   */
-  public closeModalCrearUsuario(): void {
-    this.isModalCrearUsuario = false;
+        // se procede a seguir al segundo paso
+        this.stepsModel.irSegundoStep();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**
@@ -332,18 +352,32 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
+   * Metodo que permite cerrar el panel de creacion o edicion usuarios
+   */
+  public closePanelCU(): void {
+
+    // para creacion se pregunta directamente
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.SEGURO_SALIR,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+        this.messageService.clear();
+        this.limpiarCamposCU();
+      }
+    });
+  }
+
+  /**
    * Metodo que permite configurar los datos del nuevo
    * usuario antes de la creacion
    */
   private prepararDatosAntesCreacion(): void {
 
     // se configura los datos basicos
-    this.usuarioCrear.cliente = this.clienteCurrent;
-    this.usuarioCrear.nombre = this.setTrim(this.usuarioCrear.nombre);
-    this.usuarioCrear.usuarioIngreso = this.setTrim(this.usuarioCrear.usuarioIngreso);
+    this.usuarioCU.cliente = this.clienteCurrent;
 
     // se configura los modulos
-    this.usuarioCrear.modulosTokens = this.getModulosSeleccionados();
+    this.usuarioCU.modulosTokens = this.getModulosSeleccionados();
   }
 
   /**
@@ -428,10 +462,14 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
-   * Metodo que permite inicializar el panel de creacion de usuarios
+   * Permite limpiar los datos utilizado para la creacion o edicion del usuario
    */
-  private initPanelCrearUsuario() {
-    this.usuarioCrear = new UsuarioDTO();
-    this.selectedModulos = new ModulosCheck();
+  private limpiarCamposCU(): void {
+    this.usuarioCU = null;
+    this.usuarioOrigen = null;
+    this.selectedModulos = null;
+    this.stepsModel = null;
+    this.isCreacion = false;
+    this.isEdicion = false;
   }
 }

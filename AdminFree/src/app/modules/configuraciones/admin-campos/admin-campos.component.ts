@@ -325,7 +325,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
-   * Metodo que permite cerrar el panel de creacion de campos
+   * Metodo que permite cerrar el panel de creacion o edicion de campos
    */
   public closePanelCU(): void {
 
@@ -521,7 +521,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
-   * Metodo que permite limpiar los datos utilizado para la creacion campo
+   * Permite limpiar los datos utilizado para la creacion o edicion del campo
    */
   private limpiarCamposCU(): void {
     this.campoCU = null;

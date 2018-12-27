@@ -1,5 +1,5 @@
 <!-- panel lista de usuarios -->
-<ng-container *ngIf="!usuarioCrear">
+<ng-container *ngIf="!isCreacion && !isEdicion">
 
   <!-- boton crear usuario -->
   <div class="text-right mb-1">
@@ -53,124 +53,90 @@
 </ng-container>
 
 <!-- panel creacion de usuarios -->
-<ng-container *ngIf="usuarioCrear">
-  <p-panel>
+<ng-container *ngIf="isCreacion || isEdicion">
+
+  <!-- panel principal -->
+  <p-panel styleClass="steps-pnl-main">
     <p-header>
-      <i class="fa fa-user-plus font-size-14"> <span class="font-admin"> Creación de Usuario</span></i>
+      <i class="fa fa-list-alt font-size-14"><span class="font-admin"> Creación de Usuario</span></i>
     </p-header>
 
-    <p class="info-text">
-      <i class="fa fa-info-circle font-size-16 color-info"></i>
-      <strong> El sistema generará la contraseña para el nuevo usuario, Una vez que el usuario ingrese al sistema podrá cambiar la contraseña</strong>
-    </p>
+    <!-- pasos de creacion o edicion -->
+    <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+    <div class="mh-pnl-create">
 
-    <form
-      #formUser="ngForm" name="formUser"
-      novalidate (keydown.enter)="$event.preventDefault()"
-      (ngSubmit)="limpiarMensajes() && formUser.form.valid && showModalCrearUsuario(formUser)">
+      <!-- Paso 1 Datos Usuario-->
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
+        <form name="formUser" #formUser="ngForm"
+        (ngSubmit)="limpiarMensajes() && formUser.form.valid && siguienteDatosUser()"
+        (keydown.enter)="$event.preventDefault()" novalidate>
 
-      <div class="form-row w-90 mx-auto">
-        <!-- nombre -->
-        <div class="form-group col-md-6 pr-5">
-          <label for="username" class="ad-input-label font-weight-bold">Nombre Completo:</label>
-          <input type="text"
-            id="username"
-            name="username"
-            #username="ngModel"
-            [(ngModel)]="usuarioCrear.nombre"
-            maxlength="100"
-            adminRequired
-            adminAutofocus
-            class="ad-input ad-input-style w-100"
-            [ngClass]="{'ad-input-required' : (formUser.submitted && !username.valid)}"/>
-          <div class="focus-border"></div>
-        </div>
+          <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+            <p-header>
+              <i class="fa fa-info-circle font-size-18"></i>
+              <span> Datos del usuario, todos los valores son obligatorios</span>
+            </p-header>
 
-        <!-- usuario - ingreso -->
-        <div class="form-group col-md-6 pr-5">
-          <label for="useringreso" class="ad-input-label font-weight-bold">Usuario de Ingreso:</label>
-          <input type="text"
-            id="useringreso"
-            name="useringreso"
-            #useringreso="ngModel"
-            [(ngModel)]="usuarioCrear.usuarioIngreso"
-            maxlength="50"
-            adminRequired
-            class="ad-input ad-input-style w-100"
-            [ngClass]="{'ad-input-required' : (formUser.submitted && !useringreso.valid)}"/>
-          <div class="focus-border"></div>
-        </div>
-      </div>
+            <table class="table steps-tbl mb-0">
+              <tbody>
+                <!-- nombre -->
+                <tr>
+                  <td style="width: 17%">
+                    <label for="username" class="steps-st mb-0">Nombre Completo:</label>
+                  </td>
+                  <td>
+                    <input type="text"
+                      id="username"
+                      name="username"
+                      [(ngModel)]="usuarioCU.nombre"
+                      #username="ngModel"
+                      maxlength="100"
+                      adminRequired
+                      adminAutofocus
+                      autocomplete="off"
+                      class="ad-input ad-input-style w-100"
+                      [ngClass]="{'ad-input-required' : (formUser.submitted && !username.valid)}"/>
+                    <div class="focus-border"></div>
+                  </td>
+                </tr>
 
-      <!-- asignacion - modulos -->
-      <div>
-        <p class="text-assign-modulos"><i class="fa fa-info-circle color-info font-size-16"></i> Asigne los módulos para el nuevo usuario</p>
-        <ng-container *ngTemplateOutlet="tblModulos"></ng-container>
-      </div>
+                <!-- usuario - ingreso -->
+                <tr>
+                  <td style="width: 17%">
+                    <label for="useringreso" class="steps-st mb-0">Usuario Ingreso:</label>
+                  </td>
+                  <td>
+                    <input type="text"
+                      id="useringreso"
+                      name="useringreso"
+                      [(ngModel)]="usuarioCU.usuarioIngreso"
+                      #useringreso="ngModel"
+                      maxlength="50"
+                      adminRequired
+                      autocomplete="off"
+                      class="ad-input ad-input-style w-100"
+                      [ngClass]="{'ad-input-required' : (formUser.submitted && !useringreso.valid)}"/>
+                    <div class="focus-border"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </p-panel>
 
-      <!-- botones creacion - regresar -->
-      <div class="text-center">
-        <button type="button" class="btn btn-sm btn-regresar btn-round-teal" (click)="closePanelCrearUsuario()">
-          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-        </button>
-        <button type="submit" class="btn btn-success btn-sm btn-crear-user">
-          <i class="fa fa-user-plus"></i>
-          <span class="btn-size-admin"> Crear Usuario</span>
-        </button>
-      </div>
-    </form>
+          <!-- botones salir - next-->
+          <div class="text-center mb-1">
+            <button type="button" (click)="closePanelCU()" class="btn btn-sm btn-secondary mr-1 w-100-px">
+              <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+            </button>
+            <button type="button" (click)="formUser.onSubmit()" class="btn btn-sm btn-primary w-100-px">
+              <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+            </button>
+          </div>
+        </form>
+      </ng-container>
+    </div>
   </p-panel>
 </ng-container>
-
-<!-- modal de confirmacion de crear usuario -->
-<p-dialog header="Ventana de Confirmación" [(visible)]="isModalCrearUsuario" *ngIf="usuarioCrear" modal="true">
-
-  <div class="text-center mb-3">
-    <p class="font-weight-bold font-new-roman font-size-16">¿Está seguro de crear el usuario con los siguientes datos?</p>
-  </div>
-
-  <div class="form-row nombre-usuario-in">
-    <div class="form-group col-md-7">
-      <p><strong>Nombre Completo:</strong></p>
-      {{usuarioCrear.nombre}}
-    </div>
-    <div class="form-group col-md-5">
-      <p><strong>Usuario de Ingreso:</strong></p>
-      {{usuarioCrear.usuarioIngreso}}
-    </div>
-  </div>
-
-  <div class="form-row border-bottom-mdl">
-    <div class="form-group col-md-12">
-      <p class="text-center font-weight-bold font-new-roman font-size-16 mb-3"> <i class="fa fa-info-circle color-info font-size-16"></i> Módulos asignados</p>
-      <div class="custom-control custom-control-inline">
-        <i [ngClass]="selectedModulos.correspondencia ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
-        <label class="font-weight-bold"> Correspondencia</label>
-      </div>
-      <div class="custom-control custom-control-inline">
-        <i [ngClass]="selectedModulos.archivoGestion ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
-        <label class="font-weight-bold"> Archivo de Gestión</label>
-      </div>
-      <div class="custom-control custom-control-inline">
-        <i [ngClass]="selectedModulos.reportes ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
-        <label class="font-weight-bold"> Reportes</label>
-      </div>
-      <div class="custom-control custom-control-inline">
-        <i [ngClass]="selectedModulos.configuraciones ? 'pi pi-check icon-sel' : 'pi pi-times icon-nosel'"></i>
-        <label class="font-weight-bold"> Configuraciones</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="text-center mt-3">
-    <button type="button" class="btn btn-success btn-sm btn-regresar" (click)="crearUsuario()">
-      <label class="btn-size-admin"><i class="fa fa-user-plus"></i> Crear Usuario</label>
-    </button>
-    <button type="button" class="btn btn-secondary btn-sm btn-crear-user" (click)="closeModalCrearUsuario()">
-      <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-    </button>
-  </div>
-</p-dialog>
 
 <!-- modal de edicion de modulos -->
 <p-dialog header="Edición de Módulos" [(visible)]="isModalEdicionModulos" *ngIf="usuarioEdicionModulos" modal="true">
