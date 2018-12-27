@@ -47,9 +47,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** Se utiliza para encapsular los modulos seleccionados */
   public selectedModulos: ModulosCheck;
 
-  /** DTO que se utiliza para la edicion de los modulos */
-  public usuarioEdicionModulos: UsuarioDTO;
-
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
@@ -92,9 +89,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
-   * Metodo que es invocado al momento de la creacion
-   * del componente, donde se procede a consultar los
-   * Usuarios parametrizados en el sistema
+   * Se procede a consultar los usuarios parametrizados en el sistema
+   * relacionados al cliente autenticado
    */
   private init(): void {
 
@@ -109,33 +105,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.adminUsuarioService.getUsuariosCliente(this.clienteCurrent).subscribe(
       data => {
         this.usuarios = data;
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
-  }
-
-  /**
-   * Metodo que soporta el proceso de creacion del Usuario
-   */
-  public crearUsuario(): void {
-
-    // se construye los datos a enviar para la creacion
-    this.prepararDatosAntesCreacion();
-
-    // se hace el llamado HTTP para la creacion del usuario
-    this.adminUsuarioService.crearUsuario(this.usuarioCU).subscribe(
-      data => {
-        // se agrega el nuevo usuario en la lista visualizada en pantalla
-        this.usuarios.push(data);
-
-        // se muestra el mensaje exitoso mostrando la contraseña del user
-        this.messageService.add(MsjUtil.getMsjSuccess(
-          MsjFrontConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'));
-
-        // se limpian los datos del usuario ingresado
-        this.limpiarCamposCU();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -223,38 +192,25 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
-   * Metodo que permite soportar el evento de edicion de modulos
+   * Metodo que soporta el proceso de creacion del Usuario
    */
-  public editarModulos(): void {
+  public crearUsuario(): void {
 
-    // se limpia los mensajes de otros procesos
-    this.messageService.clear();
+    // se construye los datos a enviar para la creacion
+    this.prepararDatosAntesCreacion();
 
-    // se obtiene los modulos seleccionados
-    const modulos: Array<string> = this.getModulosSeleccionados();
-
-    // se verifica si es valido la edicion
-    if (!this.isValidoEdicionModulos(modulos)) {
-      this.closeModalEdicionModulos();
-      return;
-    }
-
-    // se construye los datos para ser enviado
-    const usuarioModificar = new UsuarioDTO();
-    usuarioModificar.modulosTokens = modulos;
-    usuarioModificar.id = this.usuarioEdicionModulos.id;
-
-    // se procede a modificar los privilegios del usuario
-    this.adminUsuarioService.modificarPrivilegiosUsuario(usuarioModificar).subscribe(
+    // se hace el llamado HTTP para la creacion del usuario
+    this.adminUsuarioService.crearUsuario(this.usuarioCU).subscribe(
       data => {
-        // se actualiza los modulos para el usuario seleccionado
-        this.usuarioEdicionModulos.modulosTokens = modulos;
+        // se agrega el nuevo usuario en la lista visualizada en pantalla
+        this.usuarios.push(data);
 
-        // se cierra el modal de edicion de modulos
-        this.closeModalEdicionModulos();
+        // se muestra el mensaje exitoso mostrando la contraseña del user
+        this.messageService.add(MsjUtil.getMsjSuccess(
+          MsjFrontConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'));
 
-        // se muestra el toast del usuario actualizado
-        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USUARIO_ACTUALIZADO));
+        // se limpian los datos del usuario ingresado
+        this.limpiarCamposCU();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -273,6 +229,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
 
     // se define el usuario que permite visualizar el panel
     this.usuarioCU = new UsuarioDTO();
+    this.usuarioCU.cliente = this.clienteCurrent;
 
     // se utiliza para identificar los modulos seleccionados
     this.initSelectedModulos();
@@ -320,23 +277,18 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
-   * Metodo que es es llamado para abrir el modal de edicion de modulos
+   * Es el evento del boton siguiente para el paso (modulos)
    */
-  public showModalEdicionModulos(userSeleccionado: UsuarioDTO): void {
+  public siguienteModulos(): void {
 
-    // se limpia los mensajes de otros procesos
-    this.messageService.clear();
+    // los modulos son requeridos
+    if (!this.selectedModulos.tieneModuloSeleccionado()) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.MODULOS_REQUERIDOS));
+      return;
+    }
 
-    // se configura el usuario seleccionado para la edicion
-    this.usuarioEdicionModulos = userSeleccionado;
-  }
-
-  /**
-   * Metodo que es es llamado para cerrar el modal de edicion de modulos
-   */
-  public closeModalEdicionModulos(): void {
-    this.usuarioEdicionModulos = null;
-    this.selectedModulos = null;
+    // se procede a ir al ultimo paso
+    this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
@@ -361,55 +313,14 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    */
   private prepararDatosAntesCreacion(): void {
 
-    // se configura los datos basicos
-    this.usuarioCU.cliente = this.clienteCurrent;
-
     // se configura los modulos
-    this.usuarioCU.modulosTokens = this.getModulosSeleccionados();
-  }
-
-  /**
-   * Metodo que permite configurar los modulos seleccionados
-   * para el proceso de creacion de usuario o edicion de modulos
-   */
-  private getModulosSeleccionados(): Array<string> {
-
-    // contiene los token de los modulos seleccionados
     const seleccionados: Array<string> = new Array<string>();
-
-    // se recorre todos los modulos para identificar cual fue seleccionados
     for (const modulo of this.selectedModulos.modulos) {
       if (modulo.aplica) {
         seleccionados.push(modulo.token);
       }
     }
-    return seleccionados;
-  }
-
-  /**
-   * Metodo que permite validar si hay alguna modificacion
-   * para la edicion de los modulos del usuario seleccionado
-   */
-  private isValidoEdicionModulos(modulos: Array<string>): boolean {
-    let isValido = true;
-
-    // los modulos son requeridos para la edicion
-    if (!modulos || modulos.length === 0) {
-      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.MODULOS_REQUERIDOS));
-      isValido = false;
-    } else {
-      // se valida si hay alguna modificacion
-      if (modulos.length === this.usuarioEdicionModulos.modulosTokens.length) {
-        isValido = false;
-        for (const token of this.usuarioEdicionModulos.modulosTokens) {
-          if (!modulos.includes(token)) {
-            isValido = true;
-            break;
-          }
-        }
-      }
-    }
-    return isValido;
+    this.usuarioCU.modulosTokens = seleccionados;
   }
 
   /**

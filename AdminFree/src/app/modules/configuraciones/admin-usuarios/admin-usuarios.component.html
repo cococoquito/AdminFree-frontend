@@ -24,7 +24,8 @@
         <th>Nombre Completo</th>
         <th>Usuario de Ingreso</th>
         <th style="width: 4%">Estado</th>
-        <th style="width: 4%">Módulos Asignados</th>
+        <th style="width: 4%">Detalle</th>
+        <th style="width: 4%">Editar</th>
         <th style="width: 4%">Generar Clave</th>
       </tr>
     </ng-template>
@@ -38,12 +39,17 @@
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
         </td>
         <td class="text-center">
-          <button type="button" (click)="showModalEdicionModulos(user)" class="btn btn-sm btn-round-table btn-round-teal">
+          <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
         <td class="text-center">
-          <button (click)="generarNuevaClave(user)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
+          <button type="button" class="btn btn-sm btn-round-table btn-round-edit">
+            <i class="pi pi-pencil icon-round-edit font-size-22"></i>
+          </button>
+        </td>
+        <td class="text-center">
+          <button (click)="generarNuevaClave(user)" type="button" class="btn btn-sm btn-round-table btn-round-edit">
             <i class="pi pi-unlock icon-round-table-2"></i>
           </button>
         </td>
@@ -63,101 +69,59 @@
 
     <!-- pasos de creacion o edicion -->
     <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
-    <div class="mh-pnl-create">
 
-      <!-- Paso 1 Datos Usuario-->
-      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
-        <form name="formUser" #formUser="ngForm"
-        (ngSubmit)="limpiarMensajes() && formUser.form.valid && siguienteDatosUser()"
-        (keydown.enter)="$event.preventDefault()" novalidate>
+    <!-- Paso 1 Datos Usuario-->
+    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
+      <form name="formUser" #formUser="ngForm"
+      (ngSubmit)="limpiarMensajes() && formUser.form.valid && siguienteDatosUser()"
+      (keydown.enter)="$event.preventDefault()" novalidate>
 
-          <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-            <p-header>
-              <i class="fa fa-info-circle font-size-18"></i>
-              <span> Datos del usuario, todos los valores son obligatorios</span>
-            </p-header>
-
-            <table class="table steps-tbl mb-0">
-              <tbody>
-                <!-- nombre -->
-                <tr>
-                  <td style="width: 17%">
-                    <label for="username" class="steps-st mb-0">Nombre Completo:</label>
-                  </td>
-                  <td>
-                    <input type="text"
-                      id="username"
-                      name="username"
-                      [(ngModel)]="usuarioCU.nombre"
-                      #username="ngModel"
-                      maxlength="100"
-                      adminRequired
-                      adminAutofocus
-                      autocomplete="off"
-                      class="ad-input ad-input-style w-100"
-                      [ngClass]="{'ad-input-required' : (formUser.submitted && !username.valid)}"/>
-                    <div class="focus-border"></div>
-                  </td>
-                </tr>
-
-                <!-- usuario - ingreso -->
-                <tr>
-                  <td style="width: 17%">
-                    <label for="useringreso" class="steps-st mb-0">Usuario Ingreso:</label>
-                  </td>
-                  <td>
-                    <input type="text"
-                      id="useringreso"
-                      name="useringreso"
-                      [(ngModel)]="usuarioCU.usuarioIngreso"
-                      #useringreso="ngModel"
-                      maxlength="50"
-                      adminRequired
-                      autocomplete="off"
-                      class="ad-input ad-input-style w-100"
-                      [ngClass]="{'ad-input-required' : (formUser.submitted && !useringreso.valid)}"/>
-                    <div class="focus-border"></div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </p-panel>
-
-          <!-- botones salir - next-->
-          <div class="text-center mb-1">
-            <button type="button" (click)="closePanelCU()" class="btn btn-sm btn-secondary mr-1 w-100-px">
-              <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-            </button>
-            <button type="button" (click)="formUser.onSubmit()" class="btn btn-sm btn-primary w-100-px">
-              <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-            </button>
-          </div>
-        </form>
-      </ng-container>
-
-      <!-- Paso 2 modulos -->
-      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
-            <span> Asigne los módulos para el usuario</span>
+            <span> Datos del usuario, todos los valores son obligatorios</span>
           </p-header>
 
-          <!-- lista modulos -->
-          <table class="table steps-tbl table-hover mb-0">
+          <table class="table steps-tbl mb-0">
             <tbody>
-              <tr *ngFor="let modulo of selectedModulos.modulos">
-                <td style="width: 5%">
-                  <admin-inputswitch
-                    [isChecked]="modulo.aplica"
-                    (switchChange)="modulo.aplica = $event">
-                  </admin-inputswitch>
-                </td>
-                <td style="width: 18%">
-                  <p class="lbl-mdl font-weight-bold">{{ modulo.nombre }}</p>
+              <!-- nombre -->
+              <tr>
+                <td style="width: 17%">
+                  <label for="username" class="steps-st mb-0">Nombre Completo:</label>
                 </td>
                 <td>
-                  <p class="lbl-mdl">{{ modulo.descripcion }}</p>
+                  <input type="text"
+                    id="username"
+                    name="username"
+                    [(ngModel)]="usuarioCU.nombre"
+                    #username="ngModel"
+                    maxlength="100"
+                    adminRequired
+                    adminAutofocus
+                    autocomplete="off"
+                    class="ad-input ad-input-style w-100"
+                    [ngClass]="{'ad-input-required' : (formUser.submitted && !username.valid)}"/>
+                  <div class="focus-border"></div>
+                </td>
+              </tr>
+
+              <!-- usuario - ingreso -->
+              <tr>
+                <td style="width: 17%">
+                  <label for="useringreso" class="steps-st mb-0">Usuario Ingreso:</label>
+                </td>
+                <td>
+                  <input type="text"
+                    id="useringreso"
+                    name="useringreso"
+                    [(ngModel)]="usuarioCU.usuarioIngreso"
+                    #useringreso="ngModel"
+                    maxlength="50"
+                    adminRequired
+                    autocomplete="off"
+                    class="ad-input ad-input-style w-100"
+                    [ngClass]="{'ad-input-required' : (formUser.submitted && !useringreso.valid)}"/>
+                  <div class="focus-border"></div>
                 </td>
               </tr>
             </tbody>
@@ -165,18 +129,58 @@
         </p-panel>
 
         <!-- botones salir - next-->
-        <div class="text-center mt-2 mb-1">
-          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
-            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-          </button>
-          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+        <div class="text-center mb-1">
+          <button type="button" (click)="closePanelCU()" class="btn btn-sm btn-secondary mr-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button type="button" class="btn btn-sm btn-primary w-100-px">
+          <button type="button" (click)="formUser.onSubmit()" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
           </button>
         </div>
-      </ng-container>
-    </div>
+      </form>
+    </ng-container>
+
+    <!-- Paso 2 modulos -->
+    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
+      <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+        <p-header>
+          <i class="fa fa-info-circle font-size-18"></i>
+          <span> Asigne los módulos para el usuario</span>
+        </p-header>
+
+        <!-- lista modulos -->
+        <table class="table steps-tbl table-hover mb-0">
+          <tbody>
+            <tr *ngFor="let modulo of selectedModulos.modulos">
+              <td style="width: 5%">
+                <admin-inputswitch
+                  [isChecked]="modulo.aplica"
+                  (switchChange)="modulo.aplica = $event">
+                </admin-inputswitch>
+              </td>
+              <td style="width: 18%">
+                <p class="lbl-mdl font-weight-bold">{{ modulo.nombre }}</p>
+              </td>
+              <td>
+                <p class="lbl-mdl">{{ modulo.descripcion }}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </p-panel>
+
+      <!-- botones salir - next-->
+      <div class="text-center mt-2 mb-1">
+        <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+        </button>
+        <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+        <button (click)="siguienteModulos()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+        </button>
+      </div>
+    </ng-container>
   </p-panel>
 </ng-container>
