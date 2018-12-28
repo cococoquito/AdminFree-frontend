@@ -5,6 +5,7 @@ import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
+import { UsuarioEdicionDTO } from '../dtos/configuraciones/usuario-edicion.dto';
 import { ConfiguracionesConstant } from './../constants/configuraciones.constant';
 
 /**
@@ -57,6 +58,18 @@ export class AdminUsuarioService {
     return this.http.post<UsuarioDTO>(
       ConfiguracionesConstant.URL_CREAR_USUARIO,
       usuario
+    );
+  }
+
+  /**
+	 * Servicio que permite editar los datos de un usuario
+	 *
+	 * @param datos, DTO que contiene los datos a modificar
+	 */
+  public editarUsuario(datos: UsuarioEdicionDTO): Observable<MessageResponseDTO> {
+    return this.http.post<MessageResponseDTO>(
+      ConfiguracionesConstant.URL_EDITAR_USUARIO,
+      datos
     );
   }
 

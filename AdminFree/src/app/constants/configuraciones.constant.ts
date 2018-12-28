@@ -40,6 +40,12 @@ export class ConfiguracionesConstant {
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'crearuser';
 
+  /** URL del recurso para la edicion de los usuarios*/
+  static readonly URL_EDITAR_USUARIO: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'editaruser';
+
   /** URL del recurso para validar los datos del usuario*/
   static readonly URL_VALIDAR_DATOS_USER: string =
     AppDomainConstant.ADMINFREE +
