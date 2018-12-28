@@ -79,4 +79,18 @@ export class ModulosCheck {
       modulo.aplica = false;
     }
   }
+
+  /**
+   * Metodo que permite asignar los modulos asignados de un usuario
+   */
+  public setModulosAsignados(tokens: Array<string>): void {
+    for (const token of tokens) {
+      for (const modulo of this.modulos) {
+        if (modulo.token === token) {
+          modulo.aplica = true;
+          break;
+        }
+      }
+    }
+  }
 }

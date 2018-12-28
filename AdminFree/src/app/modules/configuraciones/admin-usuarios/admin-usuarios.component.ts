@@ -44,6 +44,12 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** Esta es la variable que se utiliza para la creacion o edicion del usuario*/
   public usuarioCU: UsuarioDTO;
 
+  /** Se utiliza para ver el detalle de un Usuario*/
+  public userVerDetalle: UsuarioDTO;
+
+  /** permite visualizar el modal de ver detalle del User*/
+  public isModalVerDetalle: boolean;
+
   /** Se utiliza para encapsular los modulos seleccionados */
   public selectedModulos: ModulosCheck;
 
@@ -155,6 +161,27 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         );
       }
     });
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton ver detalle del User
+   */
+  public showModalVerDetalle(user: UsuarioDTO): void {
+
+    // se configura los modulos asignados del usuario seleccionado
+    this.initSelectedModulos();
+    this.selectedModulos.setModulosAsignados(user.modulosTokens);
+
+    // se asigna usuario seleccionado para ver detalle y se muestra el modal
+    this.userVerDetalle = user;
+    this.isModalVerDetalle = true;
+  }
+
+  /**
+   * Metodo que es invocado cuando se cierra el modal de ver detalle
+   */
+  public closeModalVerDetalle(): void {
+    this.userVerDetalle = null;
   }
 
   /**

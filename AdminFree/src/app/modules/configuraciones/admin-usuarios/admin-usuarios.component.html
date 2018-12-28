@@ -39,7 +39,7 @@
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
         </td>
         <td class="text-center">
-          <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+          <button (click)="showModalVerDetalle(user)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
@@ -204,3 +204,17 @@
     </ng-container>
   </p-panel>
 </ng-container>
+
+<!-- modal ver detalle -->
+<p-dialog header="Detalle del Usuario"
+  [(visible)]="isModalVerDetalle"
+  *ngIf="userVerDetalle"
+  modal="true"
+  responsive="true"
+  dismissableMask="true"
+  styleClass="splr-dl"
+  (onHide)="closeModalVerDetalle()">
+    <div class="mx-w-mdl">
+      <admin-detalle-user [user]="userVerDetalle" [selectedModulos]="selectedModulos"></admin-detalle-user>
+    </div>
+</p-dialog>
