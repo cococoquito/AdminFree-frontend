@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CommonComponent } from './../../../util/common.component';
 import { AdminUsuarioService } from './../../../services/admin-usuario.service';
+import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from './../../../states/shell/shell.state';
 import { SpinnerState } from './../../../states/spinner.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
@@ -38,7 +38,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** Bandera que indica si el proceso es edicion */
   public isEdicion: boolean;
 
-  /** Se utiliza para hacer le backup para la creacion o modificacion*/
+  /** Se utiliza para hacer el backup para la creacion o modificacion*/
   private usuarioOrigen: UsuarioDTO;
 
   /** Esta es la variable que se utiliza para la creacion o edicion del usuario*/
@@ -64,7 +64,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * de estado y generacion de contrasenia
    *
    * @param adminUsuarioService, se utiliza para consumir
-   * los servicios relacionados al Usuario
+   * los servicios relacionados al admin Usuario
    *
    * @param shellState, se utiliza para el titulo del componente
    *
@@ -95,8 +95,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
-   * Se procede a consultar los usuarios parametrizados en el sistema
-   * relacionados al cliente autenticado
+   * Se procede a consultar los usuarios parametrizados
+   * en el sistema relacionados al cliente autenticado
    */
   private init(): void {
 
@@ -164,27 +164,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
-   * Metodo que soporta el evento click del boton ver detalle del User
-   */
-  public showModalVerDetalle(user: UsuarioDTO): void {
-
-    // se configura los modulos asignados del usuario seleccionado
-    this.initSelectedModulos();
-    this.selectedModulos.setModulosAsignados(user.modulosTokens);
-
-    // se asigna usuario seleccionado para ver detalle y se muestra el modal
-    this.userVerDetalle = user;
-    this.isModalVerDetalle = true;
-  }
-
-  /**
-   * Metodo que es invocado cuando se cierra el modal de ver detalle
-   */
-  public closeModalVerDetalle(): void {
-    this.userVerDetalle = null;
-  }
-
-  /**
    * Metodo que soporta el proceso de negocio de crear
    * una nueva constrasenia para el usuario seleccionado
    */
@@ -246,10 +225,31 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
+   * Metodo que soporta el evento click del boton ver detalle del User
+   */
+  public showModalVerDetalle(user: UsuarioDTO): void {
+
+    // se configura los modulos asignados del usuario seleccionado
+    this.initSelectedModulos();
+    this.selectedModulos.setModulosAsignados(user.modulosTokens);
+
+    // se asigna usuario seleccionado para ver detalle y se muestra el modal
+    this.userVerDetalle = user;
+    this.isModalVerDetalle = true;
+  }
+
+  /**
+   * Metodo que es invocado cuando se cierra el modal de ver detalle
+   */
+  public closeModalVerDetalle(): void {
+    this.userVerDetalle = null;
+  }
+
+  /**
    * Metodo que soporta el evento click del boton
    * Registrar Usuario del panel lista usuario
    */
-  public showPanelCrearUsuario(): void {
+  public showPanelCreacion(): void {
 
     // se limpia los mensajes anteriores
     this.messageService.clear();
@@ -267,6 +267,14 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
 
     // se visualiza el panel
     this.isCreacion = true;
+  }
+
+  /**
+   * Metodo que soporta el evento del boton editar el campo
+   *
+   * @param user , usuario seleccionado para editar
+   */
+  public showPanelEdicion(user: UsuarioDTO): void {
   }
 
   /**
@@ -340,7 +348,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    */
   private prepararDatosAntesCreacion(): void {
 
-    // se configura los modulos
+    // se configura los modulos seleccionados
     const seleccionados: Array<string> = new Array<string>();
     for (const modulo of this.selectedModulos.modulos) {
       if (modulo.aplica) {

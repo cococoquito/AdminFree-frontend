@@ -11,7 +11,7 @@ export class ModulosCheck {
   /** identificador del modulo */
   public token: string;
 
-  /** nombre del modulos */
+  /** nombre del modulo */
   public nombre: string;
 
   /** descripcion de que es lo que hace el modulo */
@@ -72,7 +72,7 @@ export class ModulosCheck {
   }
 
   /**
-   * reinicia la bandera si aplica de todos los modulos
+   * reinicia la bandera (aplica) de todos los modulos
    */
   public clean(): void {
     for (const modulo of this.modulos) {
