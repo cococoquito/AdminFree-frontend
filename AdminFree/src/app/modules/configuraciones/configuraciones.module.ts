@@ -3,8 +3,9 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
 import { AdminCamposComponent } from './admin-campos/admin-campos.component';
-import { RouterConstant } from './../../constants/router.constant';
 import { DetalleCampoComponent } from './detalle-campo/detalle-campo.component';
+import { DetalleUserComponent } from './detalle-user/detalle-user.component';
+import { RouterConstant } from './../../constants/router.constant';
 
 /**
  * Modulo que contiene todas las configuraciones iniciales de la aplicacion
@@ -28,7 +29,8 @@ import { DetalleCampoComponent } from './detalle-campo/detalle-campo.component';
   declarations: [
     AdminUsuariosComponent,
     AdminCamposComponent,
-    DetalleCampoComponent
+    DetalleCampoComponent,
+    DetalleUserComponent
   ]
 })
 export class ConfiguracionesModule { }

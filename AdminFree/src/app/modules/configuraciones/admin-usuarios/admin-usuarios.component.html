@@ -159,10 +159,10 @@
                 </admin-inputswitch>
               </td>
               <td style="width: 18%">
-                <p class="lbl-mdl font-weight-bold">{{ modulo.nombre }}</p>
+                <p class="font-new-roman font-size-15 font-weight-bold">{{ modulo.nombre }}</p>
               </td>
               <td>
-                <p class="lbl-mdl">{{ modulo.descripcion }}</p>
+                <p class="font-new-roman font-size-15">{{ modulo.descripcion }}</p>
               </td>
             </tr>
           </tbody>
@@ -179,6 +179,26 @@
         </button>
         <button (click)="siguienteModulos()" type="button" class="btn btn-sm btn-primary w-100-px">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- Paso 3 confirmacion -->
+    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
+
+      <!-- detalle - user -->
+      <admin-detalle-user [user]="usuarioCU" [selectedModulos]="selectedModulos"></admin-detalle-user>
+
+      <!-- botones salir - next-->
+      <div class="text-center mt-2 mb-1">
+        <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+        </button>
+        <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+        <button (click)="crearUsuario()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
+          <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Usuario</label>
         </button>
       </div>
     </ng-container>

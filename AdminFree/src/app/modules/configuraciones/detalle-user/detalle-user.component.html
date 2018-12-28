@@ -1,0 +1,52 @@
+<!-- pnl datos user -->
+<p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
+  <p-header>
+    <span class="steps-circle">1</span> <span> Datos del Usuario </span>
+  </p-header>
+  <table class="table steps-tbl mb-0">
+    <tbody>
+      <tr>
+        <td style="width: 17%">
+          <p class="steps-st">Nombre Completo:</p>
+        </td>
+        <td>
+          <p class="st">{{ user.nombre }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 17%">
+          <p class="steps-st">Usuario Ingreso:</p>
+        </td>
+        <td>
+          <p class="st">{{ user.usuarioIngreso }}</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</p-panel>
+
+<!-- pnl modulos -->
+<p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
+  <p-header>
+    <span class="steps-circle">2</span> <span> Módulos </span>
+  </p-header>
+  <table class="table steps-tbl mb-0">
+    <tbody>
+      <tr *ngFor="let modulo of selectedModulos.modulos">
+        <ng-container *ngIf="modulo.aplica">
+          <td>
+            <div class="custom-control custom-control-inline">
+              <i class="pi pi-check icon-sel"></i>
+            </div>
+          </td>
+          <td style="width: 18%">
+            <p class="font-new-roman font-size-15 font-weight-bold">{{ modulo.nombre }}</p>
+          </td>
+          <td>
+            <p class="font-new-roman font-size-15">{{ modulo.descripcion }}</p>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</p-panel>
