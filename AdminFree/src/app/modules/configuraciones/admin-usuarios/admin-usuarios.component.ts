@@ -286,9 +286,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.usuarioCU.nombre = this.setTrim(this.usuarioCU.nombre);
     this.usuarioCU.usuarioIngreso = this.setTrim(this.usuarioCU.usuarioIngreso);
 
-    // si no hay ningun cambio solamente se pasa al segundo paso
+    // si valida si se modifico el usuario de ingreso
     if (this.usuarioOrigen &&
-        this.usuarioOrigen.nombre === this.usuarioCU.nombre &&
         this.usuarioOrigen.usuarioIngreso === this.usuarioCU.usuarioIngreso) {
         this.stepsModel.irSegundoStep(this.spinnerState);
         return;
@@ -299,7 +298,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
       data => {
         // se crea el clone por si regresan a este punto de la creacion
         this.usuarioOrigen = new UsuarioDTO();
-        this.usuarioOrigen.nombre = this.usuarioCU.nombre;
         this.usuarioOrigen.usuarioIngreso = this.usuarioCU.usuarioIngreso;
 
         // se procede a seguir al segundo paso
