@@ -74,19 +74,6 @@ export class AdminUsuarioService {
   }
 
   /**
-   * Servicio que permite modificar los privilegios de un Usuario
-   *
-   * @param usuario, DTO que contiene el identificador y los privilegios a modificar
-   * @returns OK, si todo el proceso se ejecuto sin errores
-   */
-  public modificarPrivilegiosUsuario(usuario: UsuarioDTO): Observable<MessageResponseDTO> {
-    return this.http.post<MessageResponseDTO>(
-      ConfiguracionesConstant.URL_MODIFICAR_PRIVILEGIOS_USUARIO,
-      usuario
-    );
-  }
-
-  /**
    * Servicio que permite generar una nueva clave
 	 * de ingreso para el usuario que llega por parametro
    *

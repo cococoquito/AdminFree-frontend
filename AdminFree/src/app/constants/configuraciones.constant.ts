@@ -52,12 +52,6 @@ export class ConfiguracionesConstant {
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'updatestateuser';
 
-  /** URL del recurso para la modificacion de los privilegios del usuario*/
-  static readonly URL_MODIFICAR_PRIVILEGIOS_USUARIO: string =
-    AppDomainConstant.ADMINFREE +
-    ConfiguracionesConstant.CONFIGURACIONES_API +
-    'updateprivilegiosuser';
-
   /** URL del recurso para la generacion de la clave de ingreso del usuario*/
   static readonly URL_GENERAR_CLAVE_USUARIO: string =
     AppDomainConstant.ADMINFREE +
