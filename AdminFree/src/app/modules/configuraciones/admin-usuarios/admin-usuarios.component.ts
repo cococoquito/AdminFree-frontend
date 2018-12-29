@@ -22,7 +22,6 @@ import { LabelsConstant } from './../../../constants/labels.constant';
  */
 @Component({
   templateUrl: './admin-usuarios.component.html',
-  styleUrls: ['./admin-usuarios.component.css'],
   providers: [AdminUsuarioService]
 })
 export class AdminUsuariosComponent extends CommonComponent implements OnInit, OnDestroy {
