@@ -79,6 +79,9 @@ export class MsjFrontConstant {
   /** Mensaje cuando se modifica un campo en el sistema */
   static readonly CAMPO_ACTUALIZADO_EXITOSO: string = 'Campo modificado exitosamente';
 
+  /** Mensaje cuando se modifica un usuario en el sistema */
+  static readonly USER_ACTUALIZADO_EXITOSO: string = 'Usuario modificado exitosamente';
+
   /** Mensaje el tipo de campo es requerido */
   static readonly ITEMS_REQUERIDO: string = 'Los ítems son requeridos';
 

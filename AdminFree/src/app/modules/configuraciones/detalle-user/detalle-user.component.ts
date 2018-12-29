@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ModulosCheck } from './../../../model/modulos-check';
+import { UsuarioEdicionDTO } from './../../../dtos/configuraciones/usuario-edicion.dto';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 
 /**
@@ -18,4 +19,7 @@ export class DetalleUserComponent {
 
   /** Se utiliza para visualizar los modulos asignados al usuario */
   @Input() public selectedModulos: ModulosCheck;
+
+  /** Se utiliza para validar los pasos modificados */
+  @Input() public modificaciones: UsuarioEdicionDTO;
 }

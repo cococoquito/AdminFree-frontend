@@ -187,7 +187,7 @@
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
       <!-- detalle - user -->
-      <admin-detalle-user [user]="usuarioCU" [selectedModulos]="selectedModulos"></admin-detalle-user>
+      <admin-detalle-user [user]="usuarioCU" [selectedModulos]="selectedModulos" [modificaciones]="usuarioEditarOrigen"></admin-detalle-user>
 
       <!-- botones salir - next-->
       <div class="text-center mt-2 mb-1">
@@ -199,6 +199,9 @@
         </button>
         <button (click)="crearUsuario()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
           <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Usuario</label>
+        </button>
+        <button (click)="editarUsuario()" *ngIf="isEdicion" [disabled]="!(usuarioEditarOrigen.datosBasicosEditar || usuarioEditarOrigen.modulosEditar)" type="button" class="btn btn-success btn-sm">
+          <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
         </button>
       </div>
     </ng-container>

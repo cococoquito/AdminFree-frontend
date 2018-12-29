@@ -6,6 +6,7 @@ import { ShellState } from './../../../states/shell/shell.state';
 import { SpinnerState } from './../../../states/spinner.state';
 import { LocalStoreUtil } from './../../../util/local-store.util';
 import { MsjUtil } from './../../../util/messages.util';
+import { UsuarioEdicionDTO } from './../../../dtos/configuraciones/usuario-edicion.dto';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { StepsModel } from './../../../model/steps-model';
@@ -38,8 +39,11 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** Bandera que indica si el proceso es edicion */
   public isEdicion: boolean;
 
-  /** Se utiliza para hacer el backup para la creacion o modificacion*/
-  private usuarioOrigen: UsuarioDTO;
+  /** Se utiliza para hacer el backup para la creacion*/
+  private usuarioCrearOrigen: UsuarioDTO;
+
+  /** Se utiliza para hacer el backup para la edicion*/
+  public usuarioEditarOrigen: UsuarioEdicionDTO;
 
   /** Esta es la variable que se utiliza para la creacion o edicion del usuario*/
   public usuarioCU: UsuarioDTO;
@@ -203,7 +207,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   public crearUsuario(): void {
 
     // se construye los datos a enviar para la creacion
-    this.prepararDatosAntesCreacion();
+    this.setDatosAntesCreacion();
 
     // se hace el llamado HTTP para la creacion del usuario
     this.adminUsuarioService.crearUsuario(this.usuarioCU).subscribe(
@@ -219,6 +223,42 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         this.limpiarCamposCU();
       },
       error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que soporta el proceso de edicion del Usuario
+   */
+  public editarUsuario(): void {
+
+    // se construye los datos a enviar para la creacion
+    const usuarioBK = this.usuarioEditarOrigen.usuario;
+    this.setDatosAntesEdicion();
+
+    // se hace el llamado HTTP para la edicion del usuario
+    this.adminUsuarioService.editarUsuario(this.usuarioEditarOrigen).subscribe(
+      data => {
+        // Mensaje exitoso campo modificado
+        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USER_ACTUALIZADO_EXITOSO));
+
+        // datos basicos modificados
+        if (this.usuarioEditarOrigen.datosBasicosEditar) {
+          usuarioBK.nombre = this.usuarioCU.nombre;
+          usuarioBK.usuarioIngreso = this.usuarioCU.usuarioIngreso;
+        }
+
+        // modulos modificados
+        if (this.usuarioEditarOrigen.modulosEditar) {
+          usuarioBK.modulosTokens = this.usuarioCU.modulosTokens;
+        }
+
+        // se limpian los datos del usuario ingresado
+        this.limpiarCamposCU();
+      },
+      error => {
+        this.usuarioEditarOrigen.usuario = usuarioBK;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
@@ -275,53 +315,47 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * @param user , usuario seleccionado para editar
    */
   public showPanelEdicion(user: UsuarioDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se hace el backup de los atributos
+    this.usuarioEditarOrigen = new UsuarioEdicionDTO();
+    this.usuarioEditarOrigen.usuario = user;
+    this.usuarioCU = JSON.parse(JSON.stringify(user));
+
+    // se configura los modulos asignados para el usuario edicion
+    this.initSelectedModulos();
+    this.selectedModulos.setModulosAsignados(user.modulosTokens);
+
+    // se define el componente steps para la edicion
+    this.stepsModel = new StepsModel();
+    this.stepsModel.stepsParaAdminUsers();
+
+    // se visualiza el panel
+    this.isEdicion = true;
   }
 
   /**
    * Es el evento del boton siguiente para el paso (Datos del User)
    */
   public siguienteDatosUser(): void {
-
-    // se limpian los espacios
-    this.usuarioCU.nombre = this.setTrim(this.usuarioCU.nombre);
-    this.usuarioCU.usuarioIngreso = this.setTrim(this.usuarioCU.usuarioIngreso);
-
-    // si valida si se modifico el usuario de ingreso
-    if (this.usuarioOrigen &&
-        this.usuarioOrigen.usuarioIngreso === this.usuarioCU.usuarioIngreso) {
-        this.stepsModel.irSegundoStep(this.spinnerState);
-        return;
+    if (this.isCreacion) {
+      this.siguienteDatosUserCreacion();
+    } else {
+      this.siguienteDatosUserEdicion();
     }
-
-    // se procede a validar los datos ingresados para la creacion
-    this.adminUsuarioService.validarDatosUsuario(this.usuarioCU).subscribe(
-      data => {
-        // se crea el clone por si regresan a este punto de la creacion
-        this.usuarioOrigen = new UsuarioDTO();
-        this.usuarioOrigen.usuarioIngreso = this.usuarioCU.usuarioIngreso;
-
-        // se procede a seguir al segundo paso
-        this.stepsModel.irSegundoStep();
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
   }
 
   /**
    * Es el evento del boton siguiente para el paso (modulos)
    */
   public siguienteModulos(): void {
-
-    // los modulos son requeridos
-    if (!this.selectedModulos.tieneModuloSeleccionado()) {
-      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.MODULOS_REQUERIDOS));
-      return;
+    if (this.isCreacion) {
+      this.siguienteModulosCreacion();
+    } else {
+      this.siguienteModulosEdicion();
     }
-
-    // se procede a ir al ultimo paso
-    this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
@@ -341,19 +375,145 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   }
 
   /**
-   * Metodo que permite configurar los datos del nuevo
-   * usuario antes de la creacion
+   * Metodo que permite organizar los datos antes de la creacion del usuario
    */
-  private prepararDatosAntesCreacion(): void {
+  private setDatosAntesCreacion(): void {
+    this.usuarioCU.modulosTokens = this.selectedModulos.getSeleccionados();
+  }
 
-    // se configura los modulos seleccionados
-    const seleccionados: Array<string> = new Array<string>();
-    for (const modulo of this.selectedModulos.modulos) {
-      if (modulo.aplica) {
-        seleccionados.push(modulo.token);
+  /**
+   * Metodo que permite organizar los datos antes de la edicion del usuario
+   */
+  private setDatosAntesEdicion(): void {
+
+    // se configuran los modulos seleccionados si fueron modificados
+    this.usuarioCU.modulosTokens = null;
+    if (this.usuarioEditarOrigen.modulosEditar) {
+      this.usuarioCU.modulosTokens = this.selectedModulos.getSeleccionados();
+    }
+
+    // se configura el usuario modificado
+    this.usuarioEditarOrigen.usuario = this.usuarioCU;
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Datos del User) creacion
+   */
+  private siguienteDatosUserCreacion(): void {
+
+    // se limpian los espacios
+    this.usuarioCU.nombre = this.setTrim(this.usuarioCU.nombre);
+    this.usuarioCU.usuarioIngreso = this.setTrim(this.usuarioCU.usuarioIngreso);
+
+    // si valida si se modifico el usuario de ingreso
+    if (this.usuarioCrearOrigen &&
+        this.usuarioCrearOrigen.usuarioIngreso === this.usuarioCU.usuarioIngreso) {
+        this.stepsModel.irSegundoStep(this.spinnerState);
+        return;
+    }
+
+    // se procede a validar los datos ingresados para la creacion
+    this.adminUsuarioService.validarDatosUsuario(this.usuarioCU).subscribe(
+      data => {
+        // se crea el clone por si regresan a este punto de la creacion
+        this.usuarioCrearOrigen = new UsuarioDTO();
+        this.usuarioCrearOrigen.usuarioIngreso = this.usuarioCU.usuarioIngreso;
+
+        // se procede a seguir al segundo paso
+        this.stepsModel.irSegundoStep();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Datos del User) edicion
+   */
+  private siguienteDatosUserEdicion(): void {
+
+    // se limpia la bandera que permite editar los valores
+    this.usuarioEditarOrigen.datosBasicosEditar = false;
+
+    // se obtiene el origen de los datos del usuario
+    const userOrigen = this.usuarioEditarOrigen.usuario;
+
+    // se limpian los espacios
+    this.usuarioCU.nombre = this.setTrim(this.usuarioCU.nombre);
+    this.usuarioCU.usuarioIngreso = this.setTrim(this.usuarioCU.usuarioIngreso);
+
+    // se valida si se modifico algun dato
+    if (userOrigen.nombre !== this.usuarioCU.nombre ||
+        userOrigen.usuarioIngreso !== this.usuarioCU.usuarioIngreso) {
+
+      // se indica que los datos fueron modificados
+      this.usuarioEditarOrigen.datosBasicosEditar = true;
+
+      // se llama la validacion si el user ingreso fue modificado
+      if (userOrigen.usuarioIngreso !== this.usuarioCU.usuarioIngreso) {
+
+        // se procede a validar el usuario de ingreso
+        this.adminUsuarioService.validarDatosUsuario(this.usuarioCU).subscribe(
+          data => {
+            this.stepsModel.irSegundoStep();
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+        return;
       }
     }
-    this.usuarioCU.modulosTokens = seleccionados;
+    this.stepsModel.irSegundoStep(this.spinnerState);
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (modulos) Creacion
+   */
+  public siguienteModulosCreacion(): void {
+
+    // los modulos son requeridos
+    if (!this.selectedModulos.tieneModuloSeleccionado()) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.MODULOS_REQUERIDOS));
+      return;
+    }
+
+    // se procede a ir al ultimo paso
+    this.stepsModel.irUltimoStep(this.spinnerState);
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (modulos) Edicion
+   */
+  public siguienteModulosEdicion(): void {
+
+    // los modulos son requeridos
+    if (!this.selectedModulos.tieneModuloSeleccionado()) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.MODULOS_REQUERIDOS));
+      return;
+    }
+
+    // se inicializa como modulos modificadas
+    this.usuarioEditarOrigen.modulosEditar = true;
+
+    // se obtiene el origen de los datos del usuario
+    const userOrigen = this.usuarioEditarOrigen.usuario;
+
+    // se obtiene los modulos seleccionados
+    const seleccionados = this.selectedModulos.getSeleccionados();
+
+    // se valida si hay alguna modificacion
+    if (userOrigen.modulosTokens.length === seleccionados.length) {
+      this.usuarioEditarOrigen.modulosEditar = false;
+      for (const editada of seleccionados) {
+        if (!userOrigen.modulosTokens.includes(editada)) {
+          this.usuarioEditarOrigen.modulosEditar = true;
+          break;
+        }
+      }
+    }
+    this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
@@ -361,7 +521,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    */
   private limpiarCamposCU(): void {
     this.usuarioCU = null;
-    this.usuarioOrigen = null;
+    this.usuarioCrearOrigen = null;
+    this.usuarioEditarOrigen = null;
     this.stepsModel = null;
     this.isCreacion = false;
     this.isEdicion = false;

@@ -93,4 +93,17 @@ export class ModulosCheck {
       }
     }
   }
+
+  /**
+   * Metodo que permite configurar los modulos seleccionados
+   */
+  public getSeleccionados(): Array<string> {
+    const seleccionados = new Array<string>();
+    for (const modulo of this.modulos) {
+      if (modulo.aplica) {
+        seleccionados.push(modulo.token);
+      }
+    }
+    return seleccionados;
+  }
 }

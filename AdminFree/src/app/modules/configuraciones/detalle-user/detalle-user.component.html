@@ -2,6 +2,7 @@
 <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
   <p-header>
     <span class="steps-circle">1</span> <span> Datos del Usuario </span>
+    <i *ngIf="modificaciones && modificaciones.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <table class="table steps-tbl mb-0">
     <tbody>
@@ -29,6 +30,7 @@
 <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
   <p-header>
     <span class="steps-circle">2</span> <span> Módulos Asignados </span>
+    <i *ngIf="modificaciones && modificaciones.modulosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <table class="table steps-tbl mb-0">
     <tbody>
