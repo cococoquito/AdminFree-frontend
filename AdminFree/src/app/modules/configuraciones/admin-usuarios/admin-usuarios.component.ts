@@ -364,14 +364,32 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   public closePanelCU(): void {
 
     // para creacion se pregunta directamente
-    this.confirmationService.confirm({
-      message: MsjFrontConstant.SEGURO_SALIR,
-      header: MsjFrontConstant.CONFIRMACION,
-      accept: () => {
+    if (this.isCreacion) {
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.SEGURO_SALIR,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.messageService.clear();
+          this.limpiarCamposCU();
+        }
+      });
+    } else {
+        // si hay modificaciones se muestra el modal confirmacion
+        if (this.usuarioEditarOrigen.datosBasicosEditar ||
+            this.usuarioEditarOrigen.modulosEditar) {
+          this.confirmationService.confirm({
+            message: MsjFrontConstant.SEGURO_SALIR_EDICION,
+            header: MsjFrontConstant.CONFIRMACION,
+            accept: () => {
+              this.messageService.clear();
+              this.limpiarCamposCU();
+            }
+          });
+      } else {
         this.messageService.clear();
         this.limpiarCamposCU();
       }
-    });
+    }
   }
 
   /**
