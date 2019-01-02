@@ -169,8 +169,8 @@ export class CommonComponent {
         break;
       }
 
-      case MessagesBackendKeyConstant.KEY_NOMENCLAUTARA_EXISTE: {
-        businessMsj = MessagesBackendConstant.NOMENCLAUTARA_EXISTE;
+      case MessagesBackendKeyConstant.KEY_NOMENCLATURA_EXISTE: {
+        businessMsj = MessagesBackendConstant.NOMENCLATURA_EXISTE;
         break;
       }
 

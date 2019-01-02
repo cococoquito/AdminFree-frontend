@@ -43,7 +43,7 @@ export class MessagesBackendKeyConstant {
   static readonly KEY_DELETE_CAMPO_NOMENCLATURA_ASOCIADA: string = '12';
 
   /** 400 - La nomenclatura '?' ya se encuentra registrada en el sistema*/
-  static readonly KEY_NOMENCLAUTARA_EXISTE: string = '13';
+  static readonly KEY_NOMENCLATURA_EXISTE: string = '13';
 
   /** 400 - La nomenclatura que intenta eliminar tiene un consecutivo asociado*/
   static readonly KEY_DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA: string = '14';
