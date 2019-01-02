@@ -16,7 +16,7 @@ export class CampoEntradaEdicionDTO {
   /** indica si el campo de entrada tiene restricciones */
   public tieneRestricciones: boolean;
 
-  /** Es el identificador del campo de entrada */
+  /** Indica si el campo de entrada esta asociado algun consecutivo */
   public tieneConsecutivos: boolean;
 
   /** Indica si los datos basicas del campo se debe editar */
