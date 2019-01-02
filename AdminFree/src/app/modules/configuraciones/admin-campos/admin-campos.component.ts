@@ -123,7 +123,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   private init(): void {
 
     // se configura el titulo y subtitulo de la pagina
-    this.shellState.title.titulo = LabelsConstant.MENU_ADMIN_CAMPOS;
+    this.shellState.title.titulo = LabelsConstant.TITLE_ADMIN_CAMPOS;
     this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_ADMIN_CAMPOS;
 
     // se procede a obtener el cliente autenticado

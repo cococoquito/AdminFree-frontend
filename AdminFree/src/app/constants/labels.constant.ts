@@ -6,6 +6,12 @@
  */
 export class LabelsConstant {
 
+  /** Titulo Administracion de usuarios para el menu*/
+  public static readonly TITLE_ADMIN_USERS: string = 'Administración de Usuarios';
+
+  /** Titulo Administracion de campos para el menu*/
+  public static readonly TITLE_ADMIN_CAMPOS: string = 'Administración de Campos';
+
   /** Sub - Titulo para la pagina de administracion de usuario*/
   public static readonly SUBTITLE_ADMIN_USER: string =
     'Submódulo administrativo para las configuraciones de los <strong>usuarios del sistema</strong>';
@@ -37,10 +43,10 @@ export class LabelsConstant {
   public static readonly MENU_CUENTA_USER: string = 'Configuración de Cuenta';
 
   /** Titulo Administracion de usuarios para el menu*/
-  public static readonly MENU_ADMIN_USERS: string = 'Administración de Usuarios';
+  public static readonly MENU_ADMIN_USERS: string = 'Usuarios';
 
   /** Titulo Administracion de campos para el menu*/
-  public static readonly MENU_ADMIN_CAMPOS: string = 'Administración de Campos';
+  public static readonly MENU_ADMIN_CAMPOS: string = 'Campos';
 
   /** Label cerrar sesion*/
   public static readonly CERRAR_SESION: string = 'Cerrar Sesión';

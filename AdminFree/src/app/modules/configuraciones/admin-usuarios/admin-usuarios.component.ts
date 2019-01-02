@@ -104,7 +104,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   private init(): void {
 
     // se configura el titulo y subtitulo de la pagina
-    this.shellState.title.titulo = LabelsConstant.MENU_ADMIN_USERS;
+    this.shellState.title.titulo = LabelsConstant.TITLE_ADMIN_USERS;
     this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_ADMIN_USER;
 
     // se procede a obtener el cliente autenticado
