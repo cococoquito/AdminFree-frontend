@@ -168,6 +168,16 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.DELETE_CAMPO_NOMENCLATURA_ASOCIADA;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_NOMENCLAUTARA_EXISTE: {
+        businessMsj = MessagesBackendConstant.NOMENCLAUTARA_EXISTE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA: {
+        businessMsj = MessagesBackendConstant.DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA;
+        break;
+      }
     }
     return businessMsj;
   }

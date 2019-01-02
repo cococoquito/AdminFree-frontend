@@ -6,10 +6,10 @@
  */
 export class LabelsConstant {
 
-  /** Titulo Administracion de usuarios para el menu*/
+  /** Titulo para el componente Administracion de usuarios*/
   public static readonly TITLE_ADMIN_USERS: string = 'Administración de Usuarios';
 
-  /** Titulo Administracion de campos para el menu*/
+  /** Titulo para el componente Administracion de campos*/
   public static readonly TITLE_ADMIN_CAMPOS: string = 'Administración de Campos';
 
   /** Sub - Titulo para la pagina de administracion de usuario*/
