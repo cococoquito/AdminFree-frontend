@@ -86,7 +86,7 @@
     <div style="max-width: 700px;min-width: 700px;">
       <admin-detalle-campo [campo]="campoVerDetalle" [ocultarItems]="true"></admin-detalle-campo>
     </div>
-    <div class="text-center mt-2 mb-1">
+    <div *ngIf="showBtnClose" class="text-center mt-2 mb-1">
       <button (click)="closeModalVerDetalle()" type="button" class="btn btn-secondary btn-sm">
         <label class="btn-size-admin w-80-px"><i class="fa fa-times"></i> Salir</label>
       </button>
