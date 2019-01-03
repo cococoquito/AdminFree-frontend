@@ -1,0 +1,62 @@
+<!-- pnl datos nomenclatura -->
+<p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
+  <p-header>
+    <span class="steps-circle">1</span> <span> Datos de la Nomenclatura </span>
+    <i *ngIf="detalle.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+  </p-header>
+  <table class="table steps-tbl mb-0">
+    <tbody>
+      <tr>
+        <td style="width: 17%">
+          <p class="steps-st">Nomenclatura:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.nomenclatura.nomenclatura }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 17%">
+          <p class="steps-st">Descripción:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.nomenclatura.descripcion }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 17%">
+          <p class="steps-st">Consecutivo Inicial:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.nomenclatura.consecutivoInicial }}</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</p-panel>
+
+<!-- pnl Campos -->
+<p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
+  <p-header>
+    <span class="steps-circle">2</span> <span> Campos Asociados </span>
+    <i *ngIf="detalle.camposEntradaEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+  </p-header>
+  <ng-container *ngIf="detalle.campos">
+    <p-table
+    [value]="detalle.campos"
+    [responsive]="true"
+    [paginator]="true"
+    [alwaysShowPaginator]="false"
+    [rows]="5"
+    rowHover="true">
+      <ng-template pTemplate="body" let-campo>
+        <tr [pSelectableRow]="campo">
+          <td style="width: 25%">{{ campo.tipoCampo }}</td>
+          <td>{{ campo.nombreCampo }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+  <div *ngIf="!detalle.campos" class="text-center pt-2 pb-2 ">
+    <p class="st font-weight-bold font-size-14">No hay campos asociados para la nomenclatura</p>
+  </div>
+</p-panel>

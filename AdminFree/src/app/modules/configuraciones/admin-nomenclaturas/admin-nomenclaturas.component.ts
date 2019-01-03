@@ -4,6 +4,7 @@ import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.s
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
+import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
@@ -34,6 +35,12 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** Bandera que indica si el proceso es edicion */
   public isEdicion: boolean;
+
+  /** permite visualizar el modal de ver detalle de la nomenclatura*/
+  public isModalVerDetalle: boolean;
+
+  /** Se utiliza para ver el detalle de una nomenclatura*/
+  public nomenclaturaVerDetalle: NomenclaturaEdicionDTO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -128,5 +135,27 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         );
       }
     });
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton ver detalle
+   */
+  public showModalVerDetalle(nomenclatura: NomenclaturaDTO): void {
+    this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
+      data => {
+        this.nomenclaturaVerDetalle = data;
+        this.isModalVerDetalle = true;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que es invocado cuando se cierra el modal de ver detalle
+   */
+  public closeModalVerDetalle(): void {
+    this.nomenclaturaVerDetalle = null;
   }
 }

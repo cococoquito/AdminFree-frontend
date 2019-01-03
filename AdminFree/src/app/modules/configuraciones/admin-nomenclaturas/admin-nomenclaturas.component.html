@@ -36,7 +36,7 @@
         <td>{{ nomenclatura.descripcion }}</td>
         <td class="text-center">{{ nomenclatura.consecutivoInicial }}</td>
         <td class="text-center">
-          <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+          <button (click)="showModalVerDetalle(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
             <i class="pi pi-external-link icon-round-table"></i>
           </button>
         </td>
@@ -54,3 +54,17 @@
     </ng-template>
   </p-table>
 </ng-container>
+
+<!-- modal ver detalle -->
+<p-dialog header="Detalle de la Nomenclatura"
+  [(visible)]="isModalVerDetalle"
+  *ngIf="nomenclaturaVerDetalle"
+  modal="true"
+  responsive="true"
+  dismissableMask="true"
+  styleClass="splr-dl"
+  (onHide)="closeModalVerDetalle()">
+    <div class="mx-w-mdl">
+      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle"></admin-detalle-nomenclatura>
+    </div>
+</p-dialog>
