@@ -96,4 +96,11 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando el campo tiene un nomenclaturas asociado */
   static readonly CAMPO_CON_NOMENCLATURAS: string = 'Existen <strong>nomenclaturas</strong> asociados a este campo';
+
+  /** Mensaje cuando la nomenclatura fue eliminado exitosamente */
+  static readonly NOMENCLATURA_ELIMINADO: string = 'La nomenclatura fue eliminada';
+
+  /** Mensaje para la eliminacion de una nomenclatura */
+  static readonly ELIMINAR_NOMENCLATURA: string =
+    '¿Está seguro de eliminar la siguiente nomenclatura? <div class="text-center mt-2"><strong>?1</strong></div>';
 }

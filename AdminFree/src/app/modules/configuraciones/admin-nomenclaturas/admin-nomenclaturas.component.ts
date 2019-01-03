@@ -9,6 +9,7 @@ import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
+import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 
 /**
  * Componente para la administracion de las Nomenclaturas
@@ -80,7 +81,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // se configura el titulo y subtitulo de la pagina
     this.shellState.title.titulo = LabelsConstant.TITLE_ADMIN_NOMENCLATURAS;
-    this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_ADMIN_CAMPOS;
+    this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_ADMIN_NOMENCLATURAS;
 
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
@@ -94,5 +95,38 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que soporta el evento del boton eliminar nomenclatura
+   *
+   * @param nomenclatura, es la nomenclatura seleccionada para eliminar
+   */
+  public eliminarNomenclatura(nomenclatura: NomenclaturaDTO): void {
+
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.ELIMINAR_NOMENCLATURA.replace('?1', nomenclatura.nomenclatura),
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se procede a eliminar la nomenclatura seleccionada
+        this.service.eliminarNomenclatura(nomenclatura.id).subscribe(
+          data => {
+            // Mensaje exitoso, nomenclatura fue eliminado
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.NOMENCLATURA_ELIMINADO));
+
+            // se elimina de la lista visualizada en la pagina
+            this.nomenclaturas.splice(this.nomenclaturas.indexOf(nomenclatura, 0), 1);
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 }
