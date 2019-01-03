@@ -382,11 +382,18 @@ export class MenuST {
     adminCampos.nombre = LabelsConstant.MENU_ADMIN_CAMPOS;
     adminCampos.router = RouterConstant.NAVIGATE_ADMIN_CAMPOS;
     adminCampos.icono = 'fa-list-alt';
-    adminCampos.isUltimoItem = true;
+
+    // ITEM3, Administracion de Nomenclaturas
+    const adminNomenclaturas = new MenuItem();
+    adminNomenclaturas.nombre = LabelsConstant.MENU_ADMIN_NOMENCLATURAS;
+    adminNomenclaturas.router = RouterConstant.NAVIGATE_ADMIN_NOMENCLATURAS;
+    adminNomenclaturas.icono = 'fa-ils';
+    adminNomenclaturas.isUltimoItem = true;
 
     // se agrega los items para este modulo
     configuraciones.agregarItem(adminUsers);
     configuraciones.agregarItem(adminCampos);
+    configuraciones.agregarItem(adminNomenclaturas);
     return configuraciones;
   }
 }

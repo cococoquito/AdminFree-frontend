@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
 import { AdminCamposComponent } from './admin-campos/admin-campos.component';
+import { AdminNomenclaturasComponent } from './admin-nomenclaturas/admin-nomenclaturas.component';
 import { DetalleCampoComponent } from './detalle-campo/detalle-campo.component';
 import { DetalleUserComponent } from './detalle-user/detalle-user.component';
 import { RouterConstant } from './../../constants/router.constant';
@@ -22,6 +23,10 @@ import { RouterConstant } from './../../constants/router.constant';
       {
         path: RouterConstant.ROUTER_ADMIN_CAMPOS,
         component: AdminCamposComponent
+      },
+      {
+        path: RouterConstant.ROUTER_ADMIN_NOMENCLATURAS,
+        component: AdminNomenclaturasComponent
       }
     ]),
     SharedModule
@@ -29,8 +34,9 @@ import { RouterConstant } from './../../constants/router.constant';
   declarations: [
     AdminUsuariosComponent,
     AdminCamposComponent,
+    AdminNomenclaturasComponent,
     DetalleCampoComponent,
-    DetalleUserComponent
+    DetalleUserComponent,
   ]
 })
 export class ConfiguracionesModule { }

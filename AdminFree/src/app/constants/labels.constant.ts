@@ -12,6 +12,9 @@ export class LabelsConstant {
   /** Titulo para el componente Administracion de campos*/
   public static readonly TITLE_ADMIN_CAMPOS: string = 'Administración de Campos';
 
+  /** Titulo para el componente Administracion de nomenclaturas*/
+  public static readonly TITLE_ADMIN_NOMENCLATURAS: string = 'Administración de Nomenclaturas';
+
   /** Sub - Titulo para la pagina de administracion de usuario*/
   public static readonly SUBTITLE_ADMIN_USER: string =
     'Submódulo administrativo para las configuraciones de los <strong>usuarios del sistema</strong>';
@@ -47,6 +50,9 @@ export class LabelsConstant {
 
   /** Titulo Administracion de campos para el menu*/
   public static readonly MENU_ADMIN_CAMPOS: string = 'Campos';
+
+  /** Titulo Administracion de nomenclaturas para el menu*/
+  public static readonly MENU_ADMIN_NOMENCLATURAS: string = 'Nomenclaturas';
 
   /** Label cerrar sesion*/
   public static readonly CERRAR_SESION: string = 'Cerrar Sesión';
