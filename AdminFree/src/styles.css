@@ -180,6 +180,10 @@ body {
   padding-right: 0px !important;
 }
 
+.child-dl .ui-dialog-content {
+  background-color: #f9f9f9 !important;
+}
+
 /* font-size */
 .font-size-12 {
   font-size: 12px !important;
@@ -290,6 +294,10 @@ body {
 
 .w-100-px {
   width: 100px !important
+}
+
+.w-80-px {
+  width: 80px !important
 }
 
 .steps-3 .ui-steps-item {

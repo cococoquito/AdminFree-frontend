@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { AdminCampoService } from './../../../services/admin-campo.service';
 import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.service';
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
@@ -20,7 +21,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
 @Component({
   templateUrl: './admin-nomenclaturas.component.html',
   styleUrls: ['./admin-nomenclaturas.component.css'],
-  providers: [AdminNomenclaturaService]
+  providers: [AdminNomenclaturaService, AdminCampoService]
 })
 export class AdminNomenclaturasComponent extends CommonComponent implements OnInit, OnDestroy {
 

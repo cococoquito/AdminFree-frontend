@@ -20,6 +20,9 @@ export class DetalleCampoComponent implements OnInit {
   /** Se utiliza para saber que steps fueron modificados */
   @Input() public camposEditado: CampoEntradaEdicionDTO;
 
+  /** Se utiliza para ocultar los items del detalle */
+  @Input() public ocultarItems: boolean;
+
   /** Identifica si el campo tiene restricciones*/
   public tieneRestriccion: boolean;
 
