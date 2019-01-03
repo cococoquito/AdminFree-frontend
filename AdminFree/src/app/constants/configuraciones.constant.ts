@@ -117,4 +117,40 @@ export class ConfiguracionesConstant {
     AppDomainConstant.ADMINFREE +
     ConfiguracionesConstant.CONFIGURACIONES_API +
     'vdatosin';
+
+  /** URL del recurso que permite obtener todas las nomenclaturas asociadas a un cliente*/
+  static readonly URL_GET_NOMENCLATURAS: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'getnomenclaturas?idCliente=';
+
+  /** URL del recurso que permite crear una nomenclatura*/
+  static readonly URL_CREAR_NOMENCLATURA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'crearnomenclatura';
+
+  /** URL del recurso que permite editar la nomenclatura*/
+  static readonly URL_EDITAR_NOMENCLATURA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'editarnomenclatura';
+
+  /** URL del recurso que permite validar si la nomenclatura ya existe en el sistema*/
+  static readonly URL_VALIDAR_EXISTE_NOMENCLATURA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'existenomenclatura';
+
+  /** URL del recurso que permite eliminar una nomenclatura del sistema*/
+  static readonly URL_ELIMINAR_NOMENCLATURA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'deletenomenclatura?idNomenclatura=';
+
+  /** URL del recurso que permite consultar el detalle de la nomenclatura*/
+  static readonly URL_GET_DETALLE_NOMENCLATURA: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesConstant.CONFIGURACIONES_API +
+    'getdtlnomenclatura?idNomenclatura=';
 }
