@@ -21,7 +21,7 @@
 
     <ng-template pTemplate="header">
       <tr class="text-center">
-        <th>Nomenclatura</th>
+        <th style="width: 5%">Nomenclatura</th>
         <th>Descripción</th>
         <th style="width: 4%">Consec. Inicial</th>
         <th style="width: 4%">Detalle</th>
@@ -32,7 +32,7 @@
 
     <ng-template pTemplate="body" let-nomenclatura>
       <tr [pSelectableRow]="nomenclatura">
-        <td>{{ nomenclatura.nomenclatura }}</td>
+        <td class="text-center">{{ nomenclatura.nomenclatura }}</td>
         <td>{{ nomenclatura.descripcion }}</td>
         <td class="text-center">{{ nomenclatura.consecutivoInicial }}</td>
         <td class="text-center">

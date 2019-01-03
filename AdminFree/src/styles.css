@@ -360,6 +360,22 @@ body {
   color: #212121 !important;
 }
 
+.dtl-round-min {
+  border-radius: 50%;
+  display: inline-block;
+  color: #ffffff !important;
+  background-color: #009688;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dtl-round-min:hover {
+  background-color: #016b60 !important;
+  color: #ffffff !important;
+}
+
 .del-round-min-pi {
   line-height: 1.4 !important;
 }
