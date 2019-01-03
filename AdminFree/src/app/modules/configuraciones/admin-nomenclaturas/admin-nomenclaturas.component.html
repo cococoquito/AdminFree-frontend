@@ -1,3 +1,56 @@
-<p>
-  admin-nomenclaturas works!
-</p>
+<!-- container lista de nomenclaturas -->
+<ng-container *ngIf="!isCreacion && !isEdicion">
+
+  <!-- boton crear nomenclatura -->
+  <div class="text-right mb-1">
+    <button type="button" class="btn btn-success btn-sm">
+      <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
+    </button>
+  </div>
+
+  <!-- tabla - nomenclaturas -->
+  <p-table [value]="nomenclaturas"
+    [responsive]="true"
+    [paginator]="true"
+    [rows]="10"
+    rowHover="true">
+
+    <ng-template pTemplate="caption">
+      <i class="fa fa-ils"><span class="font-admin"> Nomenclaturas</span></i>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr class="text-center">
+        <th>Nomenclatura</th>
+        <th>Descripción</th>
+        <th style="width: 4%">Consec. Inicial</th>
+        <th style="width: 4%">Detalle</th>
+        <th style="width: 4%">Editar</th>
+        <th style="width: 4%">Eliminar</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-nomenclatura>
+      <tr [pSelectableRow]="nomenclatura">
+        <td>{{ nomenclatura.nomenclatura }}</td>
+        <td>{{ nomenclatura.descripcion }}</td>
+        <td class="text-center">{{ nomenclatura.consecutivoInicial }}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+            <i class="pi pi-external-link icon-round-table"></i>
+          </button>
+        </td>
+        <td class="text-center">
+          <button type="button" class="btn btn-sm btn-round-table btn-round-edit">
+            <i class="pi pi-pencil icon-round-edit font-size-22"></i>
+          </button>
+        </td>
+        <td class="text-center">
+          <button type="button" class="btn btn-sm btn-round-table btn-round-del">
+            <i class="pi pi-times icon-round-del"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>

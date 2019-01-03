@@ -4,8 +4,10 @@ import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.s
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
+import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
+import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 
 /**
@@ -22,6 +24,15 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** cliente autenticado o es el cliente asociado al usuario */
   private clienteCurrent: ClienteDTO;
+
+  /** Lista de nomenclaturas asociado al cliente */
+  public nomenclaturas: Array<NomenclaturaDTO>;
+
+  /** Bandera que indica si el proceso es creacion */
+  public isCreacion: boolean;
+
+  /** Bandera que indica si el proceso es edicion */
+  public isEdicion: boolean;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -73,5 +84,15 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
+
+    // se consulta las nomenclaturas asociados al cliente autenticado
+    this.service.getNomenclaturas(this.clienteCurrent.id).subscribe(
+      data => {
+        this.nomenclaturas = data;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 }
