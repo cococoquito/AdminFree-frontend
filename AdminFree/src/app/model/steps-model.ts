@@ -110,6 +110,24 @@ export class StepsModel {
   }
 
   /**
+   * Metodo que agrega los items para el submodulo
+   * de administrar nomenclaturas en el sistema
+   */
+  public stepsParaAdminNomenclaturas(): void {
+
+    // se limpia el modelo por si hay registros anteriores
+    this.cleanSteps();
+
+    // se agregan los items para este submodulo
+    this.agregarStep(LabelsConstant.DATOS_NOMENCLATURA);
+    this.agregarStep(LabelsConstant.CAMPOS);
+    this.agregarStep(LabelsConstant.CONFIRMACION);
+
+    // se inicializa el model del componente
+    this.init();
+  }
+
+  /**
    * Metodo que permite regresar un paso
    */
   public regresar(): void {

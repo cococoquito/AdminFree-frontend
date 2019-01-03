@@ -85,4 +85,8 @@ export class LabelsConstant {
   /** labels para la administracion de los usuarios */
   public static readonly DATOS_USER: string = 'Datos del Usuario';
   public static readonly MODULOS: string = 'Módulos';
+
+  /** labels para la administracion de las nomenclaturas */
+  public static readonly DATOS_NOMENCLATURA: string = 'Datos de la Nomenclatura';
+  public static readonly CAMPOS: string = 'Campos';
 }

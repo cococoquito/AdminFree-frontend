@@ -6,8 +6,10 @@ import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
+import { NomenclaturaCreacionDTO } from '../../../dtos/configuraciones/nomenclatura-creacion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
+import { StepsModel } from '../../../model/steps-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -42,6 +44,12 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** Se utiliza para ver el detalle de una nomenclatura*/
   public nomenclaturaVerDetalle: NomenclaturaEdicionDTO;
+
+  /** Modelo del componente steps, se utiliza para la creacion o edicion*/
+  public stepsModel: StepsModel;
+
+  /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
+  public nomenclaturaCreacion: NomenclaturaCreacionDTO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -139,6 +147,54 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
+   * Metodo que soporta el evento click del boton crear nomenclaturas
+   */
+  public showPanelCreacion(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se define el campo que permite visualizar el panel
+    this.nomenclaturaCreacion = new NomenclaturaCreacionDTO();
+    this.nomenclaturaCreacion.idsCampos = new Array<number>();
+    this.nomenclaturaCreacion.nomenclatura = new NomenclaturaDTO();
+    this.nomenclaturaCreacion.nomenclatura.idCliente = this.clienteCurrent.id;
+
+    // esta bandera visualiza el panel de creacion
+    this.isCreacion = true;
+
+    // se define el componente steps para la creacion
+    this.stepsModel = new StepsModel();
+    this.stepsModel.stepsParaAdminNomenclaturas();
+  }
+
+  /**
+   * Metodo que permite cerrar el panel de creacion o edicion de nomenclaturas
+   */
+  public closePanelCU(): void {
+
+    // para creacion se pregunta directamente
+    if (this.isCreacion) {
+        this.confirmationService.confirm({
+        message: MsjFrontConstant.SEGURO_SALIR,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.messageService.clear();
+          this.limpiarCamposCU();
+        }
+      });
+    } else {
+
+      // si hay modificaciones se muestra el modal confirmacion
+      if (true) {
+      } else {
+        this.messageService.clear();
+        this.limpiarCamposCU();
+      }
+    }
+  }
+
+  /**
    * Metodo que soporta el evento click del boton ver detalle
    */
   public showModalVerDetalle(nomenclatura: NomenclaturaDTO): void {
@@ -158,5 +214,15 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   public closeModalVerDetalle(): void {
     this.nomenclaturaVerDetalle = null;
+  }
+
+  /**
+   * Permite limpiar los datos utilizado para la creacion o edicion de la nomenclatura
+   */
+  private limpiarCamposCU(): void {
+    this.nomenclaturaCreacion = null;
+    this.stepsModel = null;
+    this.isCreacion = false;
+    this.isEdicion = false;
   }
 }

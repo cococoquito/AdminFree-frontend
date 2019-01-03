@@ -3,7 +3,7 @@
 
   <!-- boton crear nomenclatura -->
   <div class="text-right mb-1">
-    <button type="button" class="btn btn-success btn-sm">
+    <button (click)="showPanelCreacion()" type="button" class="btn btn-success btn-sm">
       <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
     </button>
   </div>
@@ -53,6 +53,123 @@
       </tr>
     </ng-template>
   </p-table>
+</ng-container>
+
+<!-- container crear o editar nomenclaturas -->
+<ng-container *ngIf="isCreacion || isEdicion">
+
+  <!-- panel principal -->
+  <p-panel styleClass="steps-pnl-main">
+    <p-header>
+      <i class="fa fa-ils font-size-14"><span class="font-admin"> {{isCreacion ? 'Creación de la Nomenclatura': 'Edición de la Nomenclatura'}}</span></i>
+    </p-header>
+
+    <!-- pasos de creacion o edicion -->
+    <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+
+    <!-- Paso 1 Datos de la nomenclatura-->
+    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
+      <form name="formDatos" #formDatos="ngForm"
+        (ngSubmit)="limpiarMensajes() && formDatos.form.valid"
+        (keydown.enter)="$event.preventDefault()" novalidate>
+
+        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+          <p-header>
+            <i class="fa fa-info-circle font-size-18"></i>
+            <span> Datos de la nomenclatura, todos los valores son obligatorios</span>
+          </p-header>
+
+          <table class="table steps-tbl mb-0">
+            <tbody>
+              <!-- Nomenclatura -->
+              <tr>
+                <td>
+                  <label for="nomen" class="steps-st mb-0">Nomenclatura:</label>
+                </td>
+                <td>
+                  <input type="text"
+                    id="nomen"
+                    name="nomen"
+                    [(ngModel)]="nomenclaturaCreacion.nomenclatura.nomenclatura"
+                    #nomen="ngModel"
+                    maxlength="15"
+                    adminRequired
+                    adminAutofocus
+                    autocomplete="off"
+                    class="ad-input ad-input-style w-100"
+                    [ngClass]="{'ad-input-required' : (formDatos.submitted && !nomen.valid)}"/>
+                  <div class="focus-border"></div>
+                </td>
+              </tr>
+
+              <!-- Descripcion -->
+              <tr>
+                <td>
+                  <label for="descr" class="steps-st mb-0">Descripción:</label>
+                </td>
+                <td>
+                  <input type="text"
+                    id="descr"
+                    name="descr"
+                    [(ngModel)]="nomenclaturaCreacion.nomenclatura.descripcion"
+                    #descr="ngModel"
+                    maxlength="255"
+                    adminRequired
+                    autocomplete="off"
+                    class="ad-input ad-input-style w-100"
+                    [ngClass]="{'ad-input-required' : (formDatos.submitted && !descr.valid)}"/>
+                  <div class="focus-border"></div>
+                </td>
+              </tr>
+
+              <!-- Consecutivo Inicial -->
+              <tr>
+                <td style="width: 15%">
+                  <label for="coninit" class="steps-st mb-0 pb-3">Consecutivo Inicial:</label>
+                </td>
+                <td>
+                  <input type="text"
+                    id="coninit"
+                    name="coninit"
+                    [(ngModel)]="nomenclaturaCreacion.nomenclatura.consecutivoInicial"
+                    #coninit="ngModel"
+                    maxlength="4"
+                    adminRequired
+                    autocomplete="off"
+                    class="ad-input ad-input-style w-100"
+                    [ngClass]="{'ad-input-required': formDatos.submitted && !coninit.valid}" />
+                  <div class="focus-border"></div>
+                  <i class="fa fa-info-circle font-size-14">
+                    <span class="steps-st"> Es el número que inicia el consecutivo, ejemplo, si este valor es 1 el primer consecutivo será 1</span>
+                  </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </p-panel>
+
+        <!-- botones salir - next-->
+        <div class="text-center mb-1">
+          <button type="button" (click)="closePanelCU()" class="btn btn-sm btn-secondary mr-1 w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+        </div>
+      </form>
+    </ng-container>
+
+    <!-- Paso 2 Asociar Campos -->
+    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
+
+    </ng-container>
+
+    <!-- Paso 3 confirmacion -->
+    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
+
+    </ng-container>
+  </p-panel>
 </ng-container>
 
 <!-- modal ver detalle -->
