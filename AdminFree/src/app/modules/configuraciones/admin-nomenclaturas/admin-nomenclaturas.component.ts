@@ -238,6 +238,31 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
+   * Es el evento del boton siguiente para el paso (Campos)
+   */
+  public siguienteCampos(): void {
+    if (this.isCreacion) {
+      this.siguienteCamposCreacion();
+    } else {
+      this.siguienteCamposEdicion();
+    }
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Campos) Creacion
+   */
+  private siguienteCamposCreacion(): void {
+
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Campos) Edicion
+   */
+  private siguienteCamposEdicion(): void {
+
+  }
+
+  /**
    * Es el evento del boton siguiente para el paso
    * (Datos de la Nomenclatura) creacion
    */

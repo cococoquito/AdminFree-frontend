@@ -164,7 +164,25 @@
 
     <!-- Paso 2 Asociar Campos -->
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
+      <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+        <p-header>
+          <i class="fa fa-info-circle font-size-18"></i>
+          <span> Asigne los campos para la nomenclatura</span>
+        </p-header>
 
+        <!-- botones salir - next-->
+        <div class="text-center mt-2 mb-1">
+          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+          </button>
+          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button (click)="siguienteCampos()" type="button" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+        </div>
+      </p-panel>
     </ng-container>
 
     <!-- Paso 3 confirmacion -->
