@@ -128,19 +128,21 @@
                   <label for="coninit" class="steps-st mb-0 pb-3">Consecutivo Inicial:</label>
                 </td>
                 <td>
-                  <input type="number"
+                  <input type="text"
                     id="coninit"
                     name="coninit"
                     [(ngModel)]="nomenclaturaCreacion.nomenclatura.consecutivoInicial"
                     #coninit="ngModel"
-                    pattern="^[0-9]+"
-                    min="0"
+                    [pKeyFilter]="regex.SOLO_NUMEROS"
+                    maxlength="3"
+                    adminRequired
                     autocomplete="off"
+                    placeholder="Campo Numérico"
                     class="ad-input ad-input-style w-100"
                     [ngClass]="{'ad-input-required': formDatos.submitted && !coninit.valid}" />
                   <div class="focus-border"></div>
                   <i class="fa fa-info-circle font-size-14">
-                    <span class="steps-st"> Es el número que inicia el consecutivo, ejemplo, si este valor es 1 el primer consecutivo será 1</span>
+                    <span class="steps-st"> Número que inicia el consecutivo, ejemplo, si este valor es 1 el primer consecutivo para esta nomenclatura será 1</span>
                   </i>
                 </td>
               </tr>
@@ -150,10 +152,10 @@
 
         <!-- botones salir - next-->
         <div class="text-center mb-1">
-          <button type="button" (click)="closePanelCU()" class="btn btn-sm btn-secondary mr-1 w-100-px">
+          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button type="button" (click)="formDatos.onSubmit()" class="btn btn-sm btn-primary w-100-px">
+          <button (click)="formDatos.onSubmit()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
           </button>
         </div>

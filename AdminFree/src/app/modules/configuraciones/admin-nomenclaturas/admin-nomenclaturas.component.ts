@@ -11,6 +11,7 @@ import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto'
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { StepsModel } from '../../../model/steps-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
+import { RegexUtil } from '../../../util/regex-util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
@@ -42,7 +43,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** permite visualizar el modal de ver detalle de la nomenclatura*/
   public isModalVerDetalle: boolean;
 
-  /** Se utiliza para ver el detalle de una nomenclatura*/
+  /** Contiene los datos de la nomenclatura para ver el detalle*/
   public nomenclaturaVerDetalle: NomenclaturaEdicionDTO;
 
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
@@ -53,6 +54,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** Contiene los datos de la nomenclatura a crear origen*/
   public nomenclaturaOrigen: NomenclaturaDTO;
+
+  /** Se utiliza para validar los valores de los inputs*/
+  public regex: RegexUtil;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -104,6 +108,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
+
+    /** Se utiliza para validar los valores de los inputs*/
+    this.regex = new RegexUtil();
 
     // se consulta las nomenclaturas asociados al cliente autenticado
     this.service.getNomenclaturas(this.clienteCurrent.id).subscribe(
@@ -235,35 +242,40 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * (Datos de la Nomenclatura) creacion
    */
   private siguienteDatosCreacion(): void {
+
+    // se obtiene la nomenclatura para la creacion
     const nomenclaturaIn = this.nomenclaturaCreacion.nomenclatura;
+
+    // el consecutivo inicial debe ser numerico
+    if (!this.regex.isValorNumerico(nomenclaturaIn.consecutivoInicial + '')) {
+        this.messageService.add(MsjUtil.getToastError(this.regex.SOLO_NUMEROS_MSJ.replace('?', 'Consecutivo Inicial')));
+        return;
+    }
 
     // se limpian los espacios
     nomenclaturaIn.nomenclatura = this.setTrim(nomenclaturaIn.nomenclatura);
     nomenclaturaIn.descripcion = this.setTrim(nomenclaturaIn.descripcion);
 
-    // si valida si se modifico algun dato
+    // se verifica si se debe validar la nomenclatura
     if (this.nomenclaturaOrigen &&
-      this.nomenclaturaOrigen.nomenclatura === nomenclaturaIn.nomenclatura &&
-      this.nomenclaturaOrigen.descripcion === nomenclaturaIn.descripcion &&
-      this.nomenclaturaOrigen.consecutivoInicial === nomenclaturaIn.consecutivoInicial) {
-      this.stepsModel.irSegundoStep(this.spinnerState);
-      return;
+        this.nomenclaturaOrigen.nomenclatura === nomenclaturaIn.nomenclatura) {
+        this.stepsModel.irSegundoStep(this.spinnerState);
+        return;
     }
 
-    // se procede a validar los datos ingresados para la creacion
+    // se procede a validar si ya existe la nomenclatura ingresada
     this.service.validarExisteNomenclatura(nomenclaturaIn).subscribe(
       data => {
         // se crea el clone por si regresan a este punto de la creacion
         this.nomenclaturaOrigen = new NomenclaturaDTO();
         this.nomenclaturaOrigen.nomenclatura = nomenclaturaIn.nomenclatura;
-        this.nomenclaturaOrigen.descripcion = nomenclaturaIn.descripcion;
-        this.nomenclaturaOrigen.consecutivoInicial = nomenclaturaIn.consecutivoInicial;
 
         // se procede a seguir al segundo paso
         this.stepsModel.irSegundoStep();
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        const msj = this.showMensajeError(error);
+        this.messageService.add(MsjUtil.getMsjError(msj.replace('?', nomenclaturaIn.nomenclatura)));
       }
     );
   }
