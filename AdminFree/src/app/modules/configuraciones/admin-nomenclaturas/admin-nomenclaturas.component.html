@@ -70,7 +70,7 @@
     <!-- Paso 1 Datos de la nomenclatura-->
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
       <form name="formDatos" #formDatos="ngForm"
-        (ngSubmit)="limpiarMensajes() && formDatos.form.valid"
+        (ngSubmit)="limpiarMensajes() && formDatos.form.valid && siguienteDatosNomenclatura()"
         (keydown.enter)="$event.preventDefault()" novalidate>
 
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
@@ -128,13 +128,13 @@
                   <label for="coninit" class="steps-st mb-0 pb-3">Consecutivo Inicial:</label>
                 </td>
                 <td>
-                  <input type="text"
+                  <input type="number"
                     id="coninit"
                     name="coninit"
                     [(ngModel)]="nomenclaturaCreacion.nomenclatura.consecutivoInicial"
                     #coninit="ngModel"
-                    maxlength="4"
-                    adminRequired
+                    pattern="^[0-9]+"
+                    min="0"
                     autocomplete="off"
                     class="ad-input ad-input-style w-100"
                     [ngClass]="{'ad-input-required': formDatos.submitted && !coninit.valid}" />

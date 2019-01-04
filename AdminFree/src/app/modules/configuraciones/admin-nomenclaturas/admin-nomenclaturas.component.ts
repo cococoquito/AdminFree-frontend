@@ -51,6 +51,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
   public nomenclaturaCreacion: NomenclaturaCreacionDTO;
 
+  /** Contiene los datos de la nomenclatura a crear origen*/
+  public nomenclaturaOrigen: NomenclaturaDTO;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -214,6 +217,63 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   public closeModalVerDetalle(): void {
     this.nomenclaturaVerDetalle = null;
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Datos de la Nomenclatura)
+   */
+  public siguienteDatosNomenclatura(): void {
+    if (this.isCreacion) {
+      this.siguienteDatosCreacion();
+    } else {
+      this.siguienteDatosEdicion();
+    }
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso
+   * (Datos de la Nomenclatura) creacion
+   */
+  private siguienteDatosCreacion(): void {
+    const nomenclaturaIn = this.nomenclaturaCreacion.nomenclatura;
+
+    // se limpian los espacios
+    nomenclaturaIn.nomenclatura = this.setTrim(nomenclaturaIn.nomenclatura);
+    nomenclaturaIn.descripcion = this.setTrim(nomenclaturaIn.descripcion);
+
+    // si valida si se modifico algun dato
+    if (this.nomenclaturaOrigen &&
+      this.nomenclaturaOrigen.nomenclatura === nomenclaturaIn.nomenclatura &&
+      this.nomenclaturaOrigen.descripcion === nomenclaturaIn.descripcion &&
+      this.nomenclaturaOrigen.consecutivoInicial === nomenclaturaIn.consecutivoInicial) {
+      this.stepsModel.irSegundoStep(this.spinnerState);
+      return;
+    }
+
+    // se procede a validar los datos ingresados para la creacion
+    this.service.validarExisteNomenclatura(nomenclaturaIn).subscribe(
+      data => {
+        // se crea el clone por si regresan a este punto de la creacion
+        this.nomenclaturaOrigen = new NomenclaturaDTO();
+        this.nomenclaturaOrigen.nomenclatura = nomenclaturaIn.nomenclatura;
+        this.nomenclaturaOrigen.descripcion = nomenclaturaIn.descripcion;
+        this.nomenclaturaOrigen.consecutivoInicial = nomenclaturaIn.consecutivoInicial;
+
+        // se procede a seguir al segundo paso
+        this.stepsModel.irSegundoStep();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso
+   * (Datos de la Nomenclatura) edicion
+   */
+  private siguienteDatosEdicion(): void {
+
   }
 
   /**
