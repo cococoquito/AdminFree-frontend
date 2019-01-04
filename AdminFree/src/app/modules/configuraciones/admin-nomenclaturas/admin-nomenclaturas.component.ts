@@ -5,6 +5,7 @@ import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.s
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
+import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.dto';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
 import { NomenclaturaCreacionDTO } from '../../../dtos/configuraciones/nomenclatura-creacion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
@@ -58,12 +59,27 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
 
+  /** Lista de campos de entrada informacion asociado al cliente origen */
+  public camposOrigen: Array<CampoEntradaDTO>;
+
+  /** Estos son los campos que se visualizara en la pantalla */
+  public camposView: Array<CampoEntradaDTO>;
+
+  /** permite visualizar el modal de ver detalle del campo*/
+  public isModalVerDetalleCampo: boolean;
+
+  /** Se utiliza para ver el detalle de un campo de entrada*/
+  public campoVerDetalle: CampoEntradaDTO;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    *
    * @param confirmationService, se utiliza para mostrar el
    * modal de confirmacion para diferente procesos
+   *
+   * @param adminCampoService, se utiliza para obtener los campos
+   * asociados al cliente autenticado
    *
    * @param service, se utiliza para consumir
    * los servicios relacionados a este proceso negocio
@@ -75,6 +91,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   constructor(protected messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private adminCampoService: AdminCampoService,
     private service: AdminNomenclaturaService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
@@ -176,6 +193,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se define el componente steps para la creacion
     this.stepsModel = new StepsModel();
     this.stepsModel.stepsParaAdminNomenclaturas();
+
+    // se consulta los campos asociados al cliente
+    this.getCampos();
   }
 
   /**
@@ -224,6 +244,28 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   public closeModalVerDetalle(): void {
     this.nomenclaturaVerDetalle = null;
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton ver detalle del campo
+   */
+  public showModalVerDetalleCampo(campo: CampoEntradaDTO): void {
+    this.adminCampoService.getDetalleCampoEntrada(campo.id).subscribe(
+      data => {
+        this.campoVerDetalle = data;
+        this.isModalVerDetalleCampo = true;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que es invocado cuando se cierra el modal de ver detalle del campo
+   */
+  public closeModalVerDetalleCampo(): void {
+    this.campoVerDetalle = null;
   }
 
   /**
@@ -321,5 +363,25 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.stepsModel = null;
     this.isCreacion = false;
     this.isEdicion = false;
+  }
+
+  /**
+   * Metodo para obtener los campos asociados al cliente
+   */
+  private getCampos(): void {
+    if (!this.camposOrigen) {
+
+      // se consulta los campos asociados al cliente autenticado
+      this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
+        data => {
+          console.log(data);
+          this.camposOrigen = data;
+          this.camposView = this.camposOrigen;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
   }
 }

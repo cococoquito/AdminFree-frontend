@@ -169,6 +169,44 @@
           <i class="fa fa-info-circle font-size-18"></i>
           <span> Asigne los campos para la nomenclatura</span>
         </p-header>
+        <p-table
+        [value]="camposView"
+        [responsive]="true"
+        [paginator]="true"
+        [alwaysShowPaginator]="false"
+        [rows]="5"
+        rowHover="true">
+          <ng-template pTemplate="header">
+            <tr class="text-center">
+              <th class="font-new-roman font-size-14">¿Aplica?</th>
+              <th class="font-new-roman font-size-14">Tipo Campo</th>
+              <th class="font-new-roman font-size-14">Nombre Campo</th>
+              <th class="font-new-roman font-size-14">Detalle</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-campo>
+            <tr [pSelectableRow]="campo">
+              <td style="width: 5%">
+                <admin-inputswitch>
+                </admin-inputswitch>
+              </td>
+              <td style="width: 20%" class="text-center">{{ campo.tipoCampoNombre }}</td>
+              <td>{{ campo.nombre }}</td>
+              <td style="width: 4%" class="text-center">
+                <span (click)="showModalVerDetalleCampo(campo)" class="dtl-round-min">
+                  <i class="pi pi-external-link del-round-min-pi font-size-16"></i>
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="4">
+                <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay campos parametrizados en el sistema</p>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
@@ -194,8 +232,8 @@
 
 <!-- modal ver detalle -->
 <p-dialog header="Detalle de la Nomenclatura"
-  [(visible)]="isModalVerDetalle"
   *ngIf="nomenclaturaVerDetalle"
+  [(visible)]="isModalVerDetalle"
   modal="true"
   responsive="true"
   dismissableMask="true"
@@ -203,5 +241,19 @@
   (onHide)="closeModalVerDetalle()">
     <div class="mx-w-mdl">
       <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle" [showBtnClose]="true"></admin-detalle-nomenclatura>
+    </div>
+</p-dialog>
+
+<!-- modal ver detalle campo -->
+<p-dialog header="Detalle del Campo"
+  *ngIf="campoVerDetalle"
+  [(visible)]="isModalVerDetalleCampo"
+  [modal]="true"
+  responsive="true"
+  dismissableMask="true"
+  styleClass="splr-dl"
+  (onHide)="closeModalVerDetalleCampo()">
+    <div class="mx-w-mdl">
+      <admin-detalle-campo [campo]="campoVerDetalle" [ocultarItems]="true"></admin-detalle-campo>
     </div>
 </p-dialog>

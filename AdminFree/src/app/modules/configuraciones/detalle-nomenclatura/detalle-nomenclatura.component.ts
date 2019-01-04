@@ -15,14 +15,14 @@ import { CampoEntradaDTO } from '../../../dtos/configuraciones/campo-entrada.dto
 })
 export class DetalleNomenclaturaComponent {
 
-  /** permite visualizar el modal de ver detalle del campo*/
-  public isModalVerDetalle: boolean;
-
   /** Se utiliza para visualizar el detalle de la nomenclatura*/
   @Input() public detalle: NomenclaturaEdicionDTO;
 
   /** Se utiliza para visualizar el boton Salir del modal detalle del campo*/
   @Input() public showBtnClose: boolean;
+
+  /** permite visualizar el modal de ver detalle del campo*/
+  public isModalVerDetalle: boolean;
 
   /** Se utiliza para ver el detalle de un campo de entrada*/
   public campoVerDetalle: CampoEntradaDTO;
