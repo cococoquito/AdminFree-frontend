@@ -234,6 +234,24 @@
     <!-- Paso 3 confirmacion -->
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
+      <!-- detalle - nomenclatura -->
+      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle"></admin-detalle-nomenclatura>
+
+      <!-- botones salir - next-->
+      <div class="text-center mt-2 mb-1">
+        <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+        </button>
+        <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+        <button *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
+          <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
+        </button>
+        <button *ngIf="isEdicion" type="button" class="btn btn-success btn-sm">
+          <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
+        </button>
+      </div>
     </ng-container>
   </p-panel>
 </ng-container>
@@ -248,7 +266,7 @@
   styleClass="splr-dl"
   (onHide)="closeModalVerDetalle()">
     <div class="mx-w-mdl">
-      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle" [showBtnClose]="true"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle" [isSubmodal]="true"></admin-detalle-nomenclatura>
     </div>
 </p-dialog>
 

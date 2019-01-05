@@ -18,8 +18,8 @@ export class DetalleNomenclaturaComponent {
   /** Se utiliza para visualizar el detalle de la nomenclatura*/
   @Input() public detalle: NomenclaturaEdicionDTO;
 
-  /** Se utiliza para visualizar el boton Salir del modal detalle del campo*/
-  @Input() public showBtnClose: boolean;
+  /** bandera que identifica si este es un submodal*/
+  @Input() public isSubmodal: boolean;
 
   /** permite visualizar el modal de ver detalle del campo*/
   public isModalVerDetalle: boolean;

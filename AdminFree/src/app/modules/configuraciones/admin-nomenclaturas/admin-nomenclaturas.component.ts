@@ -7,6 +7,7 @@ import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.dto';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
+import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatura-campo.dto';
 import { NomenclaturaCreacionDTO } from '../../../dtos/configuraciones/nomenclatura-creacion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
@@ -294,7 +295,25 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Es el evento del boton siguiente para el paso (Campos) Creacion
    */
   private siguienteCamposCreacion(): void {
+    this.nomenclaturaVerDetalle = new NomenclaturaEdicionDTO();
+    this.nomenclaturaVerDetalle.nomenclatura = this.nomenclaturaCreacion.nomenclatura;
+    let campos: Array<NomenclaturaCampoDTO>;
 
+
+    for (const campo of this.camposView) {
+      if (campo.aplica) {
+          if (!campos) {
+            campos = new Array<NomenclaturaCampoDTO>();
+          }
+          const seleccionado = new NomenclaturaCampoDTO();
+          seleccionado.idCampo = campo.id;
+          seleccionado.nombreCampo = campo.nombre;
+          seleccionado.tipoCampo = campo.tipoCampoNombre;
+          campos.push(seleccionado);
+      }
+    }
+    this.nomenclaturaVerDetalle.campos = campos;
+    this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
@@ -360,6 +379,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   private limpiarCamposCU(): void {
     this.nomenclaturaCreacion = null;
+    this.nomenclaturaVerDetalle = null;
     this.stepsModel = null;
     this.isCreacion = false;
     this.isEdicion = false;
