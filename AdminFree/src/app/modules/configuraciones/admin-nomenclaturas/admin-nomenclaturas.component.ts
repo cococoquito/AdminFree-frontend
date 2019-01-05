@@ -60,11 +60,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
 
-  /** Lista de campos de entrada informacion asociado al cliente origen */
-  public camposOrigen: Array<CampoEntradaDTO>;
-
-  /** Estos son los campos que se visualizara en la pantalla */
-  public camposView: Array<CampoEntradaDTO>;
+  /** Estos son los campos que se visualizara en la pantalla para creacion o edicion*/
+  public campos: Array<CampoEntradaDTO>;
 
   /** permite visualizar el modal de ver detalle del campo*/
   public isModalVerDetalleCampo: boolean;
@@ -142,6 +139,32 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
+   * Metodo que permite crear la nomenclatura en el sistema
+   */
+  public crearNomenclatura(): void {
+
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
+    // se hace el llamado HTTP para la creacion de la nomenclatura
+    this.service.crearNomenclatura(this.nomenclaturaCreacion).subscribe(
+      data => {
+        // se agrega la nueva nomenclatura en la lista visualizada en pantalla
+        this.nomenclaturas.push(data);
+
+        // se muestra el mensaje exitoso
+        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.NOMENCLATURA_CREADA_EXITOSO));
+
+        // se limpian los datos de la creacion
+        this.limpiarCamposCU();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
    * Metodo que soporta el evento del boton eliminar nomenclatura
    *
    * @param nomenclatura, es la nomenclatura seleccionada para eliminar
@@ -192,8 +215,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.isCreacion = true;
 
     // se define el componente steps para la creacion
-    this.stepsModel = new StepsModel();
-    this.stepsModel.stepsParaAdminNomenclaturas();
+    this.getStepsModel();
 
     // se consulta los campos asociados al cliente
     this.getCampos();
@@ -295,24 +317,35 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Es el evento del boton siguiente para el paso (Campos) Creacion
    */
   private siguienteCamposCreacion(): void {
+
+    // En el paso confirmacion se utiliza estos datos
     this.nomenclaturaVerDetalle = new NomenclaturaEdicionDTO();
     this.nomenclaturaVerDetalle.nomenclatura = this.nomenclaturaCreacion.nomenclatura;
-    let campos: Array<NomenclaturaCampoDTO>;
+    this.nomenclaturaCreacion.idsCampos = null;
 
-
-    for (const campo of this.camposView) {
+    // se configura los campos seleccionados para la nomenclatura
+    for (const campo of this.campos) {
       if (campo.aplica) {
-          if (!campos) {
-            campos = new Array<NomenclaturaCampoDTO>();
-          }
+
+          // se construye este campo dado que es seleccionado
           const seleccionado = new NomenclaturaCampoDTO();
           seleccionado.idCampo = campo.id;
           seleccionado.nombreCampo = campo.nombre;
           seleccionado.tipoCampo = campo.tipoCampoNombre;
-          campos.push(seleccionado);
+
+          // se agrega en la lista del detalle
+          if (!this.nomenclaturaVerDetalle.campos) {
+              this.nomenclaturaVerDetalle.campos = new Array<NomenclaturaCampoDTO>();
+          }
+          this.nomenclaturaVerDetalle.campos.push(seleccionado);
+
+          // se agrega en la lista de creacion
+          if (!this.nomenclaturaCreacion.idsCampos) {
+              this.nomenclaturaCreacion.idsCampos = new Array<number>();
+          }
+          this.nomenclaturaCreacion.idsCampos.push(campo.id);
       }
     }
-    this.nomenclaturaVerDetalle.campos = campos;
     this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
@@ -380,7 +413,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   private limpiarCamposCU(): void {
     this.nomenclaturaCreacion = null;
     this.nomenclaturaVerDetalle = null;
-    this.stepsModel = null;
+    this.nomenclaturaOrigen = null;
     this.isCreacion = false;
     this.isEdicion = false;
   }
@@ -389,18 +422,34 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Metodo para obtener los campos asociados al cliente
    */
   private getCampos(): void {
-    if (!this.camposOrigen) {
 
+    // si los campos ya fueron consultados se limpia la bandera 'aplica'
+    if (this.campos) {
+      for (const campo of this.campos) {
+        campo.aplica = false;
+      }
+    } else {
       // se consulta los campos asociados al cliente autenticado
       this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
         data => {
-          this.camposOrigen = data;
-          this.camposView = this.camposOrigen;
+          this.campos = data;
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
+    }
+  }
+
+  /**
+   * Se utiliza para definir el modelo del componente steps
+   */
+  private getStepsModel(): void {
+    if (this.stepsModel) {
+      this.stepsModel.irPrimerStep();
+    } else {
+      this.stepsModel = new StepsModel();
+      this.stepsModel.stepsParaAdminNomenclaturas();
     }
   }
 }

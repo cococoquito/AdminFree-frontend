@@ -176,7 +176,7 @@
           <span> Asigne los campos para la nomenclatura</span>
         </p-header>
         <p-table
-        [value]="camposView"
+        [value]="campos"
         [responsive]="true"
         [paginator]="true"
         [alwaysShowPaginator]="false"
@@ -245,7 +245,7 @@
         <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
           <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
         </button>
-        <button *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
+        <button (click)="crearNomenclatura()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
           <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
         </button>
         <button *ngIf="isEdicion" type="button" class="btn btn-success btn-sm">

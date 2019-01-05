@@ -103,4 +103,7 @@ export class MsjFrontConstant {
   /** Mensaje para la eliminacion de una nomenclatura */
   static readonly ELIMINAR_NOMENCLATURA: string =
     '¿Está seguro de eliminar la siguiente nomenclatura? <div class="text-center mt-2"><strong>?1</strong></div>';
+
+  /** Mensaje cuando se registra una nueva nomeclatura */
+  static readonly NOMENCLATURA_CREADA_EXITOSO: string = 'Nomenclatura Creada';
 }
