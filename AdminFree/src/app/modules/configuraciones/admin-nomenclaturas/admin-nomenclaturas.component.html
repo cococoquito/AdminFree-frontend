@@ -98,7 +98,7 @@
                   <input type="text"
                     id="nomen"
                     name="nomen"
-                    [(ngModel)]="nomenclaturaCreacion.nomenclatura.nomenclatura"
+                    [(ngModel)]="nomenclaturaCU.nomenclatura"
                     #nomen="ngModel"
                     maxlength="15"
                     adminRequired
@@ -119,7 +119,7 @@
                   <input type="text"
                     id="descr"
                     name="descr"
-                    [(ngModel)]="nomenclaturaCreacion.nomenclatura.descripcion"
+                    [(ngModel)]="nomenclaturaCU.descripcion"
                     #descr="ngModel"
                     maxlength="255"
                     adminRequired
@@ -139,7 +139,7 @@
                   <input type="text"
                     id="coninit"
                     name="coninit"
-                    [(ngModel)]="nomenclaturaCreacion.nomenclatura.consecutivoInicial"
+                    [(ngModel)]="nomenclaturaCU.consecutivoInicial"
                     #coninit="ngModel"
                     [pKeyFilter]="regex.SOLO_NUMEROS"
                     maxlength="3"

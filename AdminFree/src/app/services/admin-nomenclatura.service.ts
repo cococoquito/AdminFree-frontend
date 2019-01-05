@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { NomenclaturaDTO } from './../dtos/configuraciones/nomenclatura.dto';
-import { NomenclaturaCreacionDTO } from '../dtos/configuraciones/nomenclatura-creacion.dto';
 import { NomenclaturaEdicionDTO } from '../dtos/configuraciones/nomenclatura-edicion.dto';
 import { MessageResponseDTO } from '../dtos/transversal/message-response.dto';
 import { ConfiguracionesConstant } from './../constants/configuraciones.constant';
@@ -36,10 +35,10 @@ export class AdminNomenclaturaService {
   /**
 	 * Servicio que permite crear una nomenclatura
 	 *
-	 * @param datos, contiene los datos de la creacion
+	 * @param nomenclatura, contiene los datos de la creacion
 	 * @return Nomenclatura con el identificador generado
 	 */
-  public crearNomenclatura(datos: NomenclaturaCreacionDTO): Observable<NomenclaturaDTO> {
+  public crearNomenclatura(datos: NomenclaturaDTO): Observable<NomenclaturaDTO> {
     return this.http.post<NomenclaturaDTO>(
       ConfiguracionesConstant.URL_CREAR_NOMENCLATURA,
       datos

@@ -20,4 +20,7 @@ export class NomenclaturaDTO {
 
   /** Nro donde inicia el consecutivo a generar */
   public consecutivoInicial: number;
+
+  /** Son los campos asociados a la nomenclatura se utiliza para la creacion */
+  public idsCampos: Array<number>;
 }
