@@ -374,7 +374,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       // se consulta los campos asociados al cliente autenticado
       this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
         data => {
-          console.log(data);
           this.camposOrigen = data;
           this.camposView = this.camposOrigen;
         },

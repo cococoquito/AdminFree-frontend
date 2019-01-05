@@ -149,9 +149,7 @@
                     class="ad-input ad-input-style w-100"
                     [ngClass]="{'ad-input-required': formDatos.submitted && !coninit.valid}" />
                   <div class="focus-border"></div>
-                  <i class="fa fa-info-circle font-size-14">
-                    <span class="steps-st"> Número que inicia el consecutivo, ejemplo, si este valor es 1 el primer consecutivo para esta nomenclatura será 1</span>
-                  </i>
+                  <p class="st font-weight-bold font-size-14 mb-0"><i class="fa fa-info-circle font-size-14"></i> Número que inicia el consecutivo, ejemplo, si este valor es 1 el primer consecutivo para esta nomenclatura será 1</p>
                 </td>
               </tr>
             </tbody>
@@ -182,28 +180,30 @@
         [responsive]="true"
         [paginator]="true"
         [alwaysShowPaginator]="false"
-        [rows]="5"
+        [rows]="10"
         rowHover="true">
           <ng-template pTemplate="header">
             <tr class="text-center">
               <th class="font-new-roman font-size-14">¿Aplica?</th>
-              <th class="font-new-roman font-size-14">Tipo Campo</th>
-              <th class="font-new-roman font-size-14">Nombre Campo</th>
+              <th class="font-new-roman font-size-14">Tipo de Campo</th>
+              <th class="font-new-roman font-size-14">Nombre del Campo</th>
               <th class="font-new-roman font-size-14">Detalle</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-campo>
             <tr [pSelectableRow]="campo">
               <td style="width: 5%">
-                <admin-inputswitch>
+                <admin-inputswitch
+                  [isChecked]="campo.aplica"
+                  (switchChange)="campo.aplica = $event">
                 </admin-inputswitch>
               </td>
               <td style="width: 20%" class="text-center">{{ campo.tipoCampoNombre }}</td>
               <td>{{ campo.nombre }}</td>
               <td style="width: 4%" class="text-center">
-                <span (click)="showModalVerDetalleCampo(campo)" class="dtl-round-min">
-                  <i class="pi pi-external-link del-round-min-pi font-size-16"></i>
-                </span>
+                <button (click)="showModalVerDetalleCampo(campo)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
+                  <i class="pi pi-external-link icon-round-table"></i>
+                </button>
               </td>
             </tr>
           </ng-template>

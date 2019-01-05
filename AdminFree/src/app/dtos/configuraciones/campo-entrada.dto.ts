@@ -35,4 +35,7 @@ export class CampoEntradaDTO {
 
   /** indica si se debe consultar las restricciones */
   public consultarRestricciones: boolean;
+
+  /** Se utiliza al momento de crear la nomenclatura */
+  public aplica: boolean;
 }

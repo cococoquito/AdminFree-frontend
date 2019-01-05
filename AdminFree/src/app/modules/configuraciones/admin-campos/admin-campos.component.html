@@ -21,7 +21,7 @@
 
     <ng-template pTemplate="header">
       <tr class="text-center">
-        <th>Tipo de Campo</th>
+        <th style="width: 18%">Tipo de Campo</th>
         <th>Nombre del Campo</th>
         <th style="width: 4%">Detalle</th>
         <th style="width: 4%">Editar</th>
@@ -31,7 +31,7 @@
 
     <ng-template pTemplate="body" let-campo>
       <tr [pSelectableRow]="campo">
-        <td>{{ campo.tipoCampoNombre }}</td>
+        <td class="text-center">{{ campo.tipoCampoNombre }}</td>
         <td>{{ campo.nombre }}</td>
         <td class="text-center">
           <button (click)="showModalVerDetalle(campo)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
