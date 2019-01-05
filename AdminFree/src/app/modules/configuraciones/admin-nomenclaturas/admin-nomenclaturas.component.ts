@@ -51,10 +51,10 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
-  /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
+  /** Esta es la variable que se utiliza para la creacion de la nomenclatura*/
   public nomenclaturaCreacion: NomenclaturaCreacionDTO;
 
-  /** Contiene los datos de la nomenclatura a crear origen*/
+  /** Contiene los datos de la nomenclatura origen*/
   public nomenclaturaOrigen: NomenclaturaDTO;
 
   /** Se utiliza para validar los valores de los inputs*/
@@ -66,7 +66,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** permite visualizar el modal de ver detalle del campo*/
   public isModalVerDetalleCampo: boolean;
 
-  /** Se utiliza para ver el detalle de un campo de entrada*/
+  /** Se utiliza para ver el detalle del campo asociado a la nomenclatura*/
   public campoVerDetalle: CampoEntradaDTO;
 
   /**
@@ -165,6 +165,13 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
+   * Metodo que permite editar la nomenclatura seleccionada
+   */
+  public editarNomenclatura(): void {
+
+  }
+
+  /**
    * Metodo que soporta el evento del boton eliminar nomenclatura
    *
    * @param nomenclatura, es la nomenclatura seleccionada para eliminar
@@ -207,7 +214,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // se define el campo que permite visualizar el panel
     this.nomenclaturaCreacion = new NomenclaturaCreacionDTO();
-    this.nomenclaturaCreacion.idsCampos = new Array<number>();
     this.nomenclaturaCreacion.nomenclatura = new NomenclaturaDTO();
     this.nomenclaturaCreacion.nomenclatura.idCliente = this.clienteCurrent.id;
 
@@ -249,6 +255,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /**
    * Metodo que soporta el evento click del boton ver detalle
+   *
+   * @param nomenclatura , nomenclatura seleccionada para ver el detalle
    */
   public showModalVerDetalle(nomenclatura: NomenclaturaDTO): void {
     this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
@@ -271,6 +279,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /**
    * Metodo que soporta el evento click del boton ver detalle del campo
+   *
+   * @param campo , campo seleccionado para ver su detalle
    */
   public showModalVerDetalleCampo(campo: CampoEntradaDTO): void {
     this.adminCampoService.getDetalleCampoEntrada(campo.id).subscribe(
@@ -367,7 +377,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // el consecutivo inicial debe ser numerico
     if (!this.regex.isValorNumerico(nomenclaturaIn.consecutivoInicial + '')) {
-        this.messageService.add(MsjUtil.getToastError(this.regex.SOLO_NUMEROS_MSJ.replace('?', 'Consecutivo Inicial')));
+        this.messageService.add(MsjUtil.getToastError(this.regex.getMsjSoloNumeros('Consecutivo Inicial')));
         return;
     }
 

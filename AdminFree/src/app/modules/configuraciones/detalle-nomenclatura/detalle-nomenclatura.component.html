@@ -77,8 +77,8 @@
 <p-dialog header="Detalle del Campo"
   *ngIf="campoVerDetalle"
   [(visible)]="isModalVerDetalle"
-  [modal]="!isSubmodal"
-  [autoZIndex]="!isSubmodal"
+  [modal]="!isModal"
+  [autoZIndex]="!isModal"
   responsive="true"
   dismissableMask="true"
   styleClass="child-dl"
@@ -86,7 +86,7 @@
     <div style="max-width: 700px;min-width: 700px;">
       <admin-detalle-campo [campo]="campoVerDetalle" [ocultarItems]="true"></admin-detalle-campo>
     </div>
-    <div *ngIf="isSubmodal" class="text-center mt-2 mb-1">
+    <div *ngIf="isModal" class="text-center mt-2 mb-1">
       <button (click)="closeModalVerDetalle()" type="button" class="btn btn-secondary btn-sm">
         <label class="btn-size-admin w-80-px"><i class="fa fa-times"></i> Salir</label>
       </button>

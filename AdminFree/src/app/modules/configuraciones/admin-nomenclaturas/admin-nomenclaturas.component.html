@@ -248,7 +248,7 @@
         <button (click)="crearNomenclatura()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
           <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
         </button>
-        <button *ngIf="isEdicion" type="button" class="btn btn-success btn-sm">
+        <button (click)="editarNomenclatura()" *ngIf="isEdicion" type="button" class="btn btn-success btn-sm">
           <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
         </button>
       </div>
@@ -256,7 +256,7 @@
   </p-panel>
 </ng-container>
 
-<!-- modal ver detalle -->
+<!-- modal ver detalle nomenclatura -->
 <p-dialog header="Detalle de la Nomenclatura"
   *ngIf="nomenclaturaVerDetalle"
   [(visible)]="isModalVerDetalle"
@@ -266,7 +266,7 @@
   styleClass="splr-dl"
   (onHide)="closeModalVerDetalle()">
     <div class="mx-w-mdl">
-      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle" [isSubmodal]="true"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle" [isModal]="true"></admin-detalle-nomenclatura>
     </div>
 </p-dialog>
 
@@ -274,7 +274,7 @@
 <p-dialog header="Detalle del Campo"
   *ngIf="campoVerDetalle"
   [(visible)]="isModalVerDetalleCampo"
-  [modal]="true"
+  modal="true"
   responsive="true"
   dismissableMask="true"
   styleClass="splr-dl"
