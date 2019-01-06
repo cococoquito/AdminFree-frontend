@@ -253,11 +253,11 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         // se define el componente steps para la creacion
         this.getStepsModel();
 
-        // se consulta los campos asociados al cliente
-        this.getCampos();
-
         // se visualiza el panel para la edicion
         this.isEdicion = true;
+
+        // se consulta los campos asociados al cliente
+        this.getCampos();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -523,12 +523,15 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     if (this.campos) {
       for (const campo of this.campos) {
         campo.aplica = false;
+        campo.soloLectura = false;
       }
+      this.setCamposEdicion();
     } else {
       // se consulta los campos asociados al cliente autenticado
       this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
         data => {
           this.campos = data;
+          this.setCamposEdicion();
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -546,6 +549,33 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     } else {
       this.stepsModel = new StepsModel();
       this.stepsModel.stepsParaAdminNomenclaturas();
+    }
+  }
+
+  /**
+   * Metodo que permite configurar los campos
+   * que tiene una nomenclatura para ser modificados
+   */
+  private setCamposEdicion(): void {
+
+    // se verifica que si hay campos parametrizados en el sistema
+    if (this.isEdicion && this.campos && this.campos.length > 0) {
+
+      // se verifica si la nomenclatura a editar si tiene campos asociados
+      const nCampos: Array<NomenclaturaCampoDTO> = this.nomenclaturaOrigen.campos;
+      if (nCampos && nCampos.length > 0) {
+
+        // se configura los campos de la nomenclatura
+        for (const ncampo of nCampos) {
+          for (const campo of this.campos) {
+            if (ncampo.idCampo === campo.id) {
+              campo.aplica = true;
+              campo.soloLectura = this.nomenclaturaOrigen.tieneConsecutivos;
+              break;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -192,11 +192,12 @@
           </ng-template>
           <ng-template pTemplate="body" let-campo>
             <tr [pSelectableRow]="campo">
-              <td style="width: 5%">
-                <admin-inputswitch
+              <td style="width: 5%" class="text-center">
+                <admin-inputswitch *ngIf="!campo.soloLectura"
                   [isChecked]="campo.aplica"
                   (switchChange)="campo.aplica = $event">
                 </admin-inputswitch>
+                <i *ngIf="campo.soloLectura" class="pi pi-check icon-sel font-size-22"></i>
               </td>
               <td style="width: 20%" class="text-center">{{ campo.tipoCampoNombre }}</td>
               <td>{{ campo.nombre }}</td>
