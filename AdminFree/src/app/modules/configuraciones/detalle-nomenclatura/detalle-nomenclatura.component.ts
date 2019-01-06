@@ -3,6 +3,7 @@ import { AdminCampoService } from './../../../services/admin-campo.service';
 import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatura-campo.dto';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
 import { CampoEntradaDTO } from '../../../dtos/configuraciones/campo-entrada.dto';
+import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 
 /**
  * Componente para visualizar el detalle de la NOMENCLATURA
@@ -15,8 +16,11 @@ import { CampoEntradaDTO } from '../../../dtos/configuraciones/campo-entrada.dto
 })
 export class DetalleNomenclaturaComponent {
 
-  /** Se utiliza para visualizar el detalle de la nomenclatura*/
-  @Input() public detalle: NomenclaturaEdicionDTO;
+  /** Contiene los datos del detalle de la nomenclatura a visualizar*/
+  @Input() public detalle: NomenclaturaDTO;
+
+  /** Se utiliza mostrar que pasos fueron modificados, aplica solo para edicion*/
+  @Input() public modificaciones: NomenclaturaEdicionDTO;
 
   /** bandera que identifica si este ver detalle se va mostrar como modal*/
   @Input() public isModal: boolean;

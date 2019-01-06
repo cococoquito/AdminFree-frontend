@@ -18,6 +18,6 @@ export class NomenclaturaCampoDTO {
   /** Es el tipo de campo */
   public tipoCampo: string;
 
-  /** indica si el item se debe borrar */
-  public borrar: boolean;
+  /** Identifica si este campo para la nomenclatura tiene consecutivos asociados*/
+  public tieneConsecutivo: boolean;
 }

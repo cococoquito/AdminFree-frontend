@@ -2,7 +2,7 @@
 <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
   <p-header>
     <span class="steps-circle">1</span> <span> Datos de la Nomenclatura </span>
-    <i *ngIf="detalle.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+    <i *ngIf="modificaciones && modificaciones.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <table class="table steps-tbl mb-0">
     <tbody>
@@ -11,7 +11,7 @@
           <p class="steps-st">Nomenclatura:</p>
         </td>
         <td>
-          <p class="st">{{ detalle.nomenclatura.nomenclatura }}</p>
+          <p class="st">{{ detalle.nomenclatura }}</p>
         </td>
       </tr>
       <tr>
@@ -19,7 +19,7 @@
           <p class="steps-st">Descripción:</p>
         </td>
         <td>
-          <p class="st">{{ detalle.nomenclatura.descripcion }}</p>
+          <p class="st">{{ detalle.descripcion }}</p>
         </td>
       </tr>
       <tr>
@@ -27,7 +27,7 @@
           <p class="steps-st">Consecutivo Inicial:</p>
         </td>
         <td>
-          <p class="st">{{ detalle.nomenclatura.consecutivoInicial }}</p>
+          <p class="st">{{ detalle.consecutivoInicial }}</p>
         </td>
       </tr>
     </tbody>
@@ -38,7 +38,7 @@
 <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
   <p-header>
     <span class="steps-circle">2</span> <span> Campos Asociados </span>
-    <i *ngIf="detalle.camposEntradaEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+    <i *ngIf="modificaciones && modificaciones.camposEntradaEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <ng-container *ngIf="detalle.campos">
     <p-table
@@ -48,6 +48,7 @@
     [alwaysShowPaginator]="false"
     [rows]="5"
     rowHover="true">
+
       <ng-template pTemplate="header">
         <tr class="text-center">
           <th class="font-new-roman font-size-14">Tipo Campo</th>
@@ -55,6 +56,7 @@
           <th class="font-new-roman font-size-14">Detalle</th>
         </tr>
       </ng-template>
+
       <ng-template pTemplate="body" let-campo>
         <tr [pSelectableRow]="campo">
           <td style="width: 25%" class="text-center">{{ campo.tipoCampo }}</td>
@@ -68,6 +70,7 @@
       </ng-template>
     </p-table>
   </ng-container>
+
   <div *ngIf="!detalle.campos" class="text-center pt-2 pb-2 ">
     <p class="st font-weight-bold font-size-14">No hay campos asociados para la nomenclatura</p>
   </div>

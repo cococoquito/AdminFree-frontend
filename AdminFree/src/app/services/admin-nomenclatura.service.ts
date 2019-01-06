@@ -84,8 +84,8 @@ export class AdminNomenclaturaService {
 	 *
 	 * @param idNomenclatura, identificador de la nomenclatura
 	 */
-  public getDetalleNomenclatura(idNomenclatura: number): Observable<NomenclaturaEdicionDTO> {
-    return this.http.get<NomenclaturaEdicionDTO>(
+  public getDetalleNomenclatura(idNomenclatura: number): Observable<NomenclaturaDTO> {
+    return this.http.get<NomenclaturaDTO>(
       ConfiguracionesConstant.URL_GET_DETALLE_NOMENCLATURA + idNomenclatura
     );
   }

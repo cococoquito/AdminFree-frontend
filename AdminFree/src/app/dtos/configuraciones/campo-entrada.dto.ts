@@ -38,7 +38,4 @@ export class CampoEntradaDTO {
 
   /** Se utiliza al momento de crear la nomenclatura */
   public aplica: boolean;
-
-  /** Cuando nomenclatura tiene asociada consecutivos el campo no puede editar */
-  public soloLectura: boolean;
 }

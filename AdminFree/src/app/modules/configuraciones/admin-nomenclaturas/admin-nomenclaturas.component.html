@@ -175,6 +175,7 @@
           <i class="fa fa-info-circle font-size-18"></i>
           <span> Asigne los campos para la nomenclatura</span>
         </p-header>
+
         <p-table
         [value]="campos"
         [responsive]="true"
@@ -182,6 +183,7 @@
         [alwaysShowPaginator]="false"
         [rows]="10"
         rowHover="true">
+
           <ng-template pTemplate="header">
             <tr class="text-center">
               <th class="font-new-roman font-size-14">¿Aplica?</th>
@@ -190,14 +192,14 @@
               <th class="font-new-roman font-size-14">Detalle</th>
             </tr>
           </ng-template>
+
           <ng-template pTemplate="body" let-campo>
             <tr [pSelectableRow]="campo">
               <td style="width: 5%" class="text-center">
-                <admin-inputswitch *ngIf="!campo.soloLectura"
+                <admin-inputswitch
                   [isChecked]="campo.aplica"
                   (switchChange)="campo.aplica = $event">
                 </admin-inputswitch>
-                <i *ngIf="campo.soloLectura" class="pi pi-check icon-sel font-size-22"></i>
               </td>
               <td style="width: 20%" class="text-center">{{ campo.tipoCampoNombre }}</td>
               <td>{{ campo.nombre }}</td>
@@ -208,6 +210,7 @@
               </td>
             </tr>
           </ng-template>
+
           <ng-template pTemplate="emptymessage">
             <tr>
               <td [attr.colspan]="4">
@@ -236,7 +239,7 @@
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
       <!-- detalle - nomenclatura -->
-      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura [detalle]="nomenclaturaCU"></admin-detalle-nomenclatura>
 
       <!-- botones salir - next-->
       <div class="text-center mt-2 mb-1">

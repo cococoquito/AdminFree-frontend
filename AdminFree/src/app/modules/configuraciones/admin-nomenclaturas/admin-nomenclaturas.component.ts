@@ -44,14 +44,23 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** permite visualizar el modal de ver detalle de la nomenclatura*/
   public isModalVerDetalle: boolean;
 
+  /** Contiene los datos de la nomenclatura para ver el detalle*/
+  public nomenclaturaVerDetalle: NomenclaturaDTO;
+
+  /** permite visualizar el modal de ver detalle del campo*/
+  public isModalVerDetalleCampo: boolean;
+
+  /** Se utiliza para ver el detalle del campo asociado a la nomenclatura*/
+  public campoVerDetalle: CampoEntradaDTO;
+
   /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
   public nomenclaturaCU: NomenclaturaDTO;
 
-  /** Se utiliza para la creacion o edicion de la nomenclatura*/
-  public nomenclaturaOrigen: NomenclaturaEdicionDTO;
+  /** Se utiliza para comprobar si se debe hacer la validacion al momento de la creacion*/
+  private nomeclaturaValueBK: string;
 
-  /** Contiene los datos de la nomenclatura para ver el detalle*/
-  public nomenclaturaVerDetalle: NomenclaturaEdicionDTO;
+  /** Se utiliza para la edicion de la nomenclatura*/
+  public datosEdicion: NomenclaturaEdicionDTO;
 
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
@@ -61,12 +70,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** Estos son los campos que se visualizara en la pantalla para creacion o edicion*/
   public campos: Array<CampoEntradaDTO>;
-
-  /** permite visualizar el modal de ver detalle del campo*/
-  public isModalVerDetalleCampo: boolean;
-
-  /** Se utiliza para ver el detalle del campo asociado a la nomenclatura*/
-  public campoVerDetalle: CampoEntradaDTO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -204,103 +207,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
-   * Metodo que soporta el evento click del boton crear nomenclaturas
-   */
-  public showPanelCreacion(): void {
-
-    // se limpia los mensajes anteriores
-    this.messageService.clear();
-
-    // se define el campo que permite visualizar el panel
-    this.nomenclaturaCU = new NomenclaturaDTO();
-    this.nomenclaturaCU.idCliente = this.clienteCurrent.id;
-
-    // esta bandera visualiza el panel de creacion
-    this.isCreacion = true;
-
-    // se define el componente steps para la creacion
-    this.getStepsModel();
-
-    // se consulta los campos asociados al cliente
-    this.getCampos();
-  }
-
-  /**
-   * Metodo que soporta el evento click del boton editar nomenclaturas
-   *
-   * @param nomenclatura , DTO que contiene los datos de la nomenclatura
-   */
-  public showPanelEdicion(nomenclatura: NomenclaturaDTO): void {
-
-    // se limpia los mensajes anteriores
-    this.messageService.clear();
-
-    // se consulta el detalle de la nomenclatura para la edicion
-    this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
-      data => {
-        // se configura el detalle de la nomenclatura
-        this.nomenclaturaOrigen = data;
-        this.nomenclaturaOrigen.nomenclatura.idCliente = this.clienteCurrent.id;
-
-        // se hace el backup de los atributos
-        this.nomenclaturaCU = JSON.parse(JSON.stringify(this.nomenclaturaOrigen.nomenclatura));
-
-        // mensaje cuando la nomenclatura tiene consecutivos
-        if (this.nomenclaturaOrigen.tieneConsecutivos) {
-          this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.NOMENCLATURA_CON_CONSECUTIVO));
-        }
-
-        // se define el componente steps para la creacion
-        this.getStepsModel();
-
-        // se visualiza el panel para la edicion
-        this.isEdicion = true;
-
-        // se consulta los campos asociados al cliente
-        this.getCampos();
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
-  }
-
-  /**
-   * Metodo que permite cerrar el panel de creacion o edicion de nomenclaturas
-   */
-  public closePanelCU(): void {
-
-    // para creacion se pregunta directamente
-    if (this.isCreacion) {
-        this.confirmationService.confirm({
-        message: MsjFrontConstant.SEGURO_SALIR,
-        header: MsjFrontConstant.CONFIRMACION,
-        accept: () => {
-          this.messageService.clear();
-          this.limpiarCamposCU();
-        }
-      });
-    } else {
-
-      // si hay modificaciones se muestra el modal confirmacion
-      if (this.nomenclaturaOrigen.datosBasicosEditar ||
-          this.nomenclaturaOrigen.camposEntradaEditar) {
-          this.confirmationService.confirm({
-          message: MsjFrontConstant.SEGURO_SALIR_EDICION,
-          header: MsjFrontConstant.CONFIRMACION,
-          accept: () => {
-            this.messageService.clear();
-            this.limpiarCamposCU();
-          }
-        });
-      } else {
-        this.messageService.clear();
-        this.limpiarCamposCU();
-      }
-    }
-  }
-
-  /**
    * Metodo que soporta el evento click del boton ver detalle
    *
    * @param nomenclatura , nomenclatura seleccionada para ver el detalle
@@ -348,6 +254,107 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.campoVerDetalle = null;
   }
 
+
+
+
+
+  /**
+   * Metodo que permite abrir el panel de creacion de la nomenclatura
+   */
+  public showPanelCreacion(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se define el campo que permite visualizar el panel
+    this.nomenclaturaCU = new NomenclaturaDTO();
+    this.nomenclaturaCU.idCliente = this.clienteCurrent.id;
+
+    // esta bandera visualiza el panel de creacion
+    this.isCreacion = true;
+
+    // se define el componente steps para la creacion
+    this.getStepsModel();
+
+    // se consulta los campos asociados al cliente
+    this.getCampos();
+  }
+
+  /**
+   * Metodo que permite abrir el panel de edicion de la nomenclatura
+   *
+   * @param nomenclatura , DTO que contiene los datos de la nomenclatura
+   */
+  public showPanelEdicion(nomenclatura: NomenclaturaDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se consulta el detalle de la nomenclatura para la edicion
+    this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
+      data => {
+        // se configura los datos de la edicion de la nomenclatura
+        this.datosEdicion = new NomenclaturaEdicionDTO();
+        this.datosEdicion.nomenclatura = data;
+        this.datosEdicion.nomenclatura.idCliente = this.clienteCurrent.id;
+
+        // se hace el backup de los atributos
+        this.nomenclaturaCU = JSON.parse(JSON.stringify(this.datosEdicion.nomenclatura));
+
+        // mensaje cuando la nomenclatura tiene consecutivos
+        if (this.nomenclaturaCU.tieneConsecutivos) {
+          this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.NOMENCLATURA_CON_CONSECUTIVO));
+        }
+
+        // se define el componente steps para la creacion
+        this.getStepsModel();
+
+        // se visualiza el panel para la edicion
+        this.isEdicion = true;
+
+        // se consulta los campos asociados al cliente
+        this.getCampos();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que permite cerrar el panel de creacion o edicion de nomenclaturas
+   */
+  public closePanelCU(): void {
+
+    // para creacion se pregunta directamente
+    if (this.isCreacion) {
+        this.confirmationService.confirm({
+        message: MsjFrontConstant.SEGURO_SALIR,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.messageService.clear();
+          this.limpiarCamposCU();
+        }
+      });
+    } else {
+      // si hay modificaciones se muestra el modal confirmacion
+      if (this.datosEdicion.datosBasicosEditar ||
+          this.datosEdicion.camposEntradaEditar) {
+          this.confirmationService.confirm({
+          message: MsjFrontConstant.SEGURO_SALIR_EDICION,
+          header: MsjFrontConstant.CONFIRMACION,
+          accept: () => {
+            this.messageService.clear();
+            this.limpiarCamposCU();
+          }
+        });
+      } else {
+        this.messageService.clear();
+        this.limpiarCamposCU();
+      }
+    }
+  }
+
   /**
    * Es el evento del boton siguiente para el paso (Datos de la Nomenclatura)
    */
@@ -375,32 +382,22 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   private siguienteCamposCreacion(): void {
 
-    // En el paso confirmacion se utiliza estos datos
-    this.nomenclaturaVerDetalle = new NomenclaturaEdicionDTO();
-    this.nomenclaturaVerDetalle.nomenclatura = this.nomenclaturaCU;
-    this.nomenclaturaCU.idsCampos = null;
-
     // se configura los campos seleccionados para la nomenclatura
+    this.nomenclaturaCU.campos = null;
     for (const campo of this.campos) {
       if (campo.aplica) {
 
-          // se construye este campo dado que es seleccionado
-          const seleccionado = new NomenclaturaCampoDTO();
-          seleccionado.idCampo = campo.id;
-          seleccionado.nombreCampo = campo.nombre;
-          seleccionado.tipoCampo = campo.tipoCampoNombre;
+        // se construye este campo dado que es seleccionado
+        const seleccionado = new NomenclaturaCampoDTO();
+        seleccionado.idCampo = campo.id;
+        seleccionado.nombreCampo = campo.nombre;
+        seleccionado.tipoCampo = campo.tipoCampoNombre;
 
-          // se agrega en la lista del detalle
-          if (!this.nomenclaturaVerDetalle.campos) {
-              this.nomenclaturaVerDetalle.campos = new Array<NomenclaturaCampoDTO>();
-          }
-          this.nomenclaturaVerDetalle.campos.push(seleccionado);
-
-          // se agrega en la lista de creacion
-          if (!this.nomenclaturaCU.idsCampos) {
-              this.nomenclaturaCU.idsCampos = new Array<number>();
-          }
-          this.nomenclaturaCU.idsCampos.push(campo.id);
+        // se agrega en la lista de creacion
+        if (!this.nomenclaturaCU.campos) {
+            this.nomenclaturaCU.campos = new Array<NomenclaturaCampoDTO>();
+        }
+        this.nomenclaturaCU.campos.push(seleccionado);
       }
     }
     this.stepsModel.irUltimoStep(this.spinnerState);
@@ -430,8 +427,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.nomenclaturaCU.descripcion = this.setTrim(this.nomenclaturaCU.descripcion);
 
     // se verifica si se debe validar la nomenclatura
-    if (this.nomenclaturaOrigen && this.nomenclaturaOrigen.nomenclatura &&
-        this.nomenclaturaOrigen.nomenclatura.nomenclatura === this.nomenclaturaCU.nomenclatura) {
+    if (this.nomeclaturaValueBK && this.nomeclaturaValueBK === this.nomenclaturaCU.nomenclatura) {
         this.stepsModel.irSegundoStep(this.spinnerState);
         return;
     }
@@ -439,10 +435,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se procede a validar si ya existe la nomenclatura ingresada
     this.service.validarExisteNomenclatura(this.nomenclaturaCU).subscribe(
       data => {
-        // se crea el clone por si regresan a este punto de la creacion
-        this.nomenclaturaOrigen = new NomenclaturaEdicionDTO();
-        this.nomenclaturaOrigen.nomenclatura = new NomenclaturaDTO();
-        this.nomenclaturaOrigen.nomenclatura.nomenclatura = this.nomenclaturaCU.nomenclatura;
+        // copia del valor de la nomenclatura por si regresan a este punto
+        this.nomeclaturaValueBK = this.nomenclaturaCU.nomenclatura;
 
         // se procede a seguir al segundo paso
         this.stepsModel.irSegundoStep();
@@ -461,7 +455,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   private siguienteDatosEdicion(): void {
 
     // se limpia la bandera que permite editar los valores
-    this.nomenclaturaOrigen.datosBasicosEditar = false;
+    this.datosEdicion.datosBasicosEditar = false;
 
     // el consecutivo inicial debe ser numerico
     if (!this.regex.isValorNumerico(this.nomenclaturaCU.consecutivoInicial + '')) {
@@ -474,7 +468,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.nomenclaturaCU.descripcion = this.setTrim(this.nomenclaturaCU.descripcion);
 
     // se obtiene el origen de los datos de la nomenclatura
-    const nomenclaturaBK = this.nomenclaturaOrigen.nomenclatura;
+    const nomenclaturaBK = this.datosEdicion.nomenclatura;
 
     // si no hay ningun cambio solamente se pasa al segundo paso
     if (nomenclaturaBK.nomenclatura !== this.nomenclaturaCU.nomenclatura ||
@@ -482,7 +476,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         nomenclaturaBK.consecutivoInicial !== this.nomenclaturaCU.consecutivoInicial) {
 
       // se indica que hay modificaciones en los datos basicos
-      this.nomenclaturaOrigen.datosBasicosEditar = true;
+      this.datosEdicion.datosBasicosEditar = true;
 
       // se llama la validacion si la nomenclatura fue modificado
       if (nomenclaturaBK.nomenclatura !== this.nomenclaturaCU.nomenclatura) {
@@ -507,9 +501,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Permite limpiar los datos utilizado para la creacion o edicion de la nomenclatura
    */
   private limpiarCamposCU(): void {
+    this.nomeclaturaValueBK = null;
     this.nomenclaturaCU = null;
-    this.nomenclaturaOrigen = null;
-    this.nomenclaturaVerDetalle = null;
+    this.datosEdicion = null;
     this.isCreacion = false;
     this.isEdicion = false;
   }
@@ -523,7 +517,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     if (this.campos) {
       for (const campo of this.campos) {
         campo.aplica = false;
-        campo.soloLectura = false;
       }
       this.setCamposEdicion();
     } else {
@@ -562,7 +555,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     if (this.isEdicion && this.campos && this.campos.length > 0) {
 
       // se verifica si la nomenclatura a editar si tiene campos asociados
-      const nCampos: Array<NomenclaturaCampoDTO> = this.nomenclaturaOrigen.campos;
+      const nCampos: Array<NomenclaturaCampoDTO> = this.datosEdicion.nomenclatura.campos;
       if (nCampos && nCampos.length > 0) {
 
         // se configura los campos de la nomenclatura
@@ -570,7 +563,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
           for (const campo of this.campos) {
             if (ncampo.idCampo === campo.id) {
               campo.aplica = true;
-              campo.soloLectura = this.nomenclaturaOrigen.tieneConsecutivos;
               break;
             }
           }
