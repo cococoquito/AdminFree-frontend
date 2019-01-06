@@ -41,7 +41,7 @@
           </button>
         </td>
         <td class="text-center">
-          <button type="button" class="btn btn-sm btn-round-table btn-round-edit">
+          <button (click)="showPanelEdicion(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-edit">
             <i class="pi pi-pencil icon-round-edit font-size-22"></i>
           </button>
         </td>
@@ -143,7 +143,7 @@
                     #coninit="ngModel"
                     [pKeyFilter]="regex.SOLO_NUMEROS"
                     maxlength="3"
-                    adminRequired
+                    required
                     autocomplete="off"
                     placeholder="Campo Numérico"
                     class="ad-input ad-input-style w-100"

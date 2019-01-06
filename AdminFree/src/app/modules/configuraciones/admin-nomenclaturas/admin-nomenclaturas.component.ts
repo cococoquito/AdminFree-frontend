@@ -47,8 +47,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
   public nomenclaturaCU: NomenclaturaDTO;
 
-  /** Contiene los datos de la nomenclatura origen*/
-  public nomenclaturaOrigen: NomenclaturaDTO;
+  /** Se utiliza para la creacion o edicion de la nomenclatura*/
+  public nomenclaturaOrigen: NomenclaturaEdicionDTO;
 
   /** Contiene los datos de la nomenclatura para ver el detalle*/
   public nomenclaturaVerDetalle: NomenclaturaEdicionDTO;
@@ -226,6 +226,46 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
+   * Metodo que soporta el evento click del boton editar nomenclaturas
+   *
+   * @param nomenclatura , DTO que contiene los datos de la nomenclatura
+   */
+  public showPanelEdicion(nomenclatura: NomenclaturaDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se consulta el detalle de la nomenclatura para la edicion
+    this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
+      data => {
+        // se configura el detalle de la nomenclatura
+        this.nomenclaturaOrigen = data;
+        this.nomenclaturaOrigen.nomenclatura.idCliente = this.clienteCurrent.id;
+
+        // se hace el backup de los atributos
+        this.nomenclaturaCU = JSON.parse(JSON.stringify(this.nomenclaturaOrigen.nomenclatura));
+
+        // mensaje cuando la nomenclatura tiene consecutivos
+        if (this.nomenclaturaOrigen.tieneConsecutivos) {
+          this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.NOMENCLATURA_CON_CONSECUTIVO));
+        }
+
+        // se define el componente steps para la creacion
+        this.getStepsModel();
+
+        // se consulta los campos asociados al cliente
+        this.getCampos();
+
+        // se visualiza el panel para la edicion
+        this.isEdicion = true;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
    * Metodo que permite cerrar el panel de creacion o edicion de nomenclaturas
    */
   public closePanelCU(): void {
@@ -243,7 +283,16 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     } else {
 
       // si hay modificaciones se muestra el modal confirmacion
-      if (true) {
+      if (this.nomenclaturaOrigen.datosBasicosEditar ||
+          this.nomenclaturaOrigen.camposEntradaEditar) {
+          this.confirmationService.confirm({
+          message: MsjFrontConstant.SEGURO_SALIR_EDICION,
+          header: MsjFrontConstant.CONFIRMACION,
+          accept: () => {
+            this.messageService.clear();
+            this.limpiarCamposCU();
+          }
+        });
       } else {
         this.messageService.clear();
         this.limpiarCamposCU();
@@ -381,8 +430,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.nomenclaturaCU.descripcion = this.setTrim(this.nomenclaturaCU.descripcion);
 
     // se verifica si se debe validar la nomenclatura
-    if (this.nomenclaturaOrigen &&
-        this.nomenclaturaOrigen.nomenclatura === this.nomenclaturaCU.nomenclatura) {
+    if (this.nomenclaturaOrigen && this.nomenclaturaOrigen.nomenclatura &&
+        this.nomenclaturaOrigen.nomenclatura.nomenclatura === this.nomenclaturaCU.nomenclatura) {
         this.stepsModel.irSegundoStep(this.spinnerState);
         return;
     }
@@ -391,8 +440,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.service.validarExisteNomenclatura(this.nomenclaturaCU).subscribe(
       data => {
         // se crea el clone por si regresan a este punto de la creacion
-        this.nomenclaturaOrigen = new NomenclaturaDTO();
-        this.nomenclaturaOrigen.nomenclatura = this.nomenclaturaCU.nomenclatura;
+        this.nomenclaturaOrigen = new NomenclaturaEdicionDTO();
+        this.nomenclaturaOrigen.nomenclatura = new NomenclaturaDTO();
+        this.nomenclaturaOrigen.nomenclatura.nomenclatura = this.nomenclaturaCU.nomenclatura;
 
         // se procede a seguir al segundo paso
         this.stepsModel.irSegundoStep();
@@ -410,6 +460,47 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   private siguienteDatosEdicion(): void {
 
+    // se limpia la bandera que permite editar los valores
+    this.nomenclaturaOrigen.datosBasicosEditar = false;
+
+    // el consecutivo inicial debe ser numerico
+    if (!this.regex.isValorNumerico(this.nomenclaturaCU.consecutivoInicial + '')) {
+      this.messageService.add(MsjUtil.getToastError(this.regex.getMsjSoloNumeros('Consecutivo Inicial')));
+      return;
+    }
+
+    // se limpian los espacios
+    this.nomenclaturaCU.nomenclatura = this.setTrim(this.nomenclaturaCU.nomenclatura);
+    this.nomenclaturaCU.descripcion = this.setTrim(this.nomenclaturaCU.descripcion);
+
+    // se obtiene el origen de los datos de la nomenclatura
+    const nomenclaturaBK = this.nomenclaturaOrigen.nomenclatura;
+
+    // si no hay ningun cambio solamente se pasa al segundo paso
+    if (nomenclaturaBK.nomenclatura !== this.nomenclaturaCU.nomenclatura ||
+        nomenclaturaBK.descripcion !== this.nomenclaturaCU.descripcion ||
+        nomenclaturaBK.consecutivoInicial !== this.nomenclaturaCU.consecutivoInicial) {
+
+      // se indica que hay modificaciones en los datos basicos
+      this.nomenclaturaOrigen.datosBasicosEditar = true;
+
+      // se llama la validacion si la nomenclatura fue modificado
+      if (nomenclaturaBK.nomenclatura !== this.nomenclaturaCU.nomenclatura) {
+
+        // se procede a validar si ya existe la nomenclatura modificada
+        this.service.validarExisteNomenclatura(this.nomenclaturaCU).subscribe(
+          data => {
+            this.stepsModel.irSegundoStep();
+          },
+          error => {
+            const msj = this.showMensajeError(error);
+            this.messageService.add(MsjUtil.getMsjError(msj.replace('?', this.nomenclaturaCU.nomenclatura)));
+          }
+        );
+        return;
+      }
+    }
+    this.stepsModel.irSegundoStep(this.spinnerState);
   }
 
   /**
