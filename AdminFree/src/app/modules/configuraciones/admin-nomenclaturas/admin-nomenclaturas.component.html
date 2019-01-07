@@ -261,29 +261,31 @@
 </ng-container>
 
 <!-- modal ver detalle nomenclatura -->
-<p-dialog header="Detalle de la Nomenclatura"
-  *ngIf="nomenclaturaVerDetalle"
-  [(visible)]="isModalVerDetalle"
+<ng-container *ngIf="verDetalleNomenclatura && verDetalleNomenclatura.data">
+  <p-dialog header="Detalle de la Nomenclatura"
+  [(visible)]="verDetalleNomenclatura.isShowModal"
   modal="true"
   responsive="true"
   dismissableMask="true"
   styleClass="splr-dl"
-  (onHide)="closeModalVerDetalle()">
+  (onHide)="verDetalleNomenclatura.closeModal()">
     <div class="mx-w-mdl">
-      <admin-detalle-nomenclatura [detalle]="nomenclaturaVerDetalle" [isModal]="true"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura [detalle]="verDetalleNomenclatura.data" [isModal]="true"></admin-detalle-nomenclatura>
     </div>
-</p-dialog>
+  </p-dialog>
+</ng-container>
 
 <!-- modal ver detalle campo -->
-<p-dialog header="Detalle del Campo"
-  *ngIf="campoVerDetalle"
-  [(visible)]="isModalVerDetalleCampo"
+<ng-container *ngIf="verDetalleCampo && verDetalleCampo.data">
+  <p-dialog header="Detalle del Campo"
+  [(visible)]="verDetalleCampo.isShowModal"
   modal="true"
   responsive="true"
   dismissableMask="true"
   styleClass="splr-dl"
-  (onHide)="closeModalVerDetalleCampo()">
+  (onHide)="verDetalleCampo.closeModal()">
     <div class="mx-w-mdl">
-      <admin-detalle-campo [campo]="campoVerDetalle" [ocultarItems]="true"></admin-detalle-campo>
+      <admin-detalle-campo [campo]="verDetalleCampo.data" [ocultarItems]="true"></admin-detalle-campo>
     </div>
-</p-dialog>
+  </p-dialog>
+</ng-container>

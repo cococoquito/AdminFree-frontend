@@ -11,6 +11,7 @@ import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatu
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { StepsModel } from '../../../model/steps-model';
+import { ModalData } from '../../../model/modal-data';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { RegexUtil } from '../../../util/regex-util';
 import { MsjUtil } from '../../../util/messages.util';
@@ -41,17 +42,11 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Bandera que indica si el proceso es edicion */
   public isEdicion: boolean;
 
-  /** permite visualizar el modal de ver detalle de la nomenclatura*/
-  public isModalVerDetalle: boolean;
+  /** se utiliza para visualizar el detalle de la nomenclatura*/
+  public verDetalleNomenclatura: ModalData;
 
-  /** Contiene los datos de la nomenclatura para ver el detalle*/
-  public nomenclaturaVerDetalle: NomenclaturaDTO;
-
-  /** permite visualizar el modal de ver detalle del campo*/
-  public isModalVerDetalleCampo: boolean;
-
-  /** Se utiliza para ver el detalle del campo asociado a la nomenclatura*/
-  public campoVerDetalle: CampoEntradaDTO;
+  /** se utiliza para visualizar el detalle del campo asociado a la nomenclatura*/
+  public verDetalleCampo: ModalData;
 
   /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
   public nomenclaturaCU: NomenclaturaDTO;
@@ -214,20 +209,15 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   public showModalVerDetalle(nomenclatura: NomenclaturaDTO): void {
     this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
       data => {
-        this.nomenclaturaVerDetalle = data;
-        this.isModalVerDetalle = true;
+        if (!this.verDetalleNomenclatura) {
+          this.verDetalleNomenclatura = new ModalData();
+        }
+        this.verDetalleNomenclatura.showModal(data);
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
-  }
-
-  /**
-   * Metodo que es invocado cuando se cierra el modal de ver detalle
-   */
-  public closeModalVerDetalle(): void {
-    this.nomenclaturaVerDetalle = null;
   }
 
   /**
@@ -238,25 +228,16 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   public showModalVerDetalleCampo(campo: CampoEntradaDTO): void {
     this.adminCampoService.getDetalleCampoEntrada(campo.id).subscribe(
       data => {
-        this.campoVerDetalle = data;
-        this.isModalVerDetalleCampo = true;
+        if (!this.verDetalleCampo) {
+          this.verDetalleCampo = new ModalData();
+        }
+        this.verDetalleCampo.showModal(data);
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
   }
-
-  /**
-   * Metodo que es invocado cuando se cierra el modal de ver detalle del campo
-   */
-  public closeModalVerDetalleCampo(): void {
-    this.campoVerDetalle = null;
-  }
-
-
-
-
 
   /**
    * Metodo que permite abrir el panel de creacion de la nomenclatura
