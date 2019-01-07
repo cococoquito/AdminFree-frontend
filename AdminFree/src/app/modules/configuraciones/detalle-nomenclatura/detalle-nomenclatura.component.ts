@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { AdminCampoService } from './../../../services/admin-campo.service';
 import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatura-campo.dto';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
-import { CampoEntradaDTO } from '../../../dtos/configuraciones/campo-entrada.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
+import { ModalData } from './../../../model/modal-data';
 
 /**
  * Componente para visualizar el detalle de la NOMENCLATURA
@@ -25,11 +25,8 @@ export class DetalleNomenclaturaComponent {
   /** bandera que identifica si este ver detalle se va mostrar como modal*/
   @Input() public isModal: boolean;
 
-  /** permite visualizar el modal de ver detalle del campo*/
-  public isModalVerDetalle: boolean;
-
-  /** Se utiliza para ver el detalle de un campo de entrada*/
-  public campoVerDetalle: CampoEntradaDTO;
+  /** se utiliza para visualizar el detalle del campo asociado a la nomenclatura*/
+  public verDetalleCampo: ModalData;
 
   /**
    * @param service , se utiliza para consultar el detalle
@@ -41,22 +38,16 @@ export class DetalleNomenclaturaComponent {
    * Metodo que soporta el evento click del boton ver detalle del campo
    */
   public showModalVerDetalle(campo: NomenclaturaCampoDTO): void {
-    if (!this.isModalVerDetalle) {
+    if (!this.verDetalleCampo || !this.verDetalleCampo.isShowModal) {
       this.service.getDetalleCampoEntrada(campo.idCampo).subscribe(
         data => {
-          this.campoVerDetalle = data;
-          this.isModalVerDetalle = true;
+          if (!this.verDetalleCampo) {
+            this.verDetalleCampo = new ModalData();
+          }
+          this.verDetalleCampo.showModal(data);
         },
         error => {}
       );
     }
-  }
-
-  /**
-   * Metodo que es invocado cuando se cierra el modal de ver detalle del campo
-   */
-  public closeModalVerDetalle(): void {
-    this.isModalVerDetalle = false;
-    this.campoVerDetalle = null;
   }
 }

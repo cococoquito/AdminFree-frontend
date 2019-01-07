@@ -77,21 +77,22 @@
 </p-panel>
 
 <!-- modal ver detalle -->
-<p-dialog header="Detalle del Campo"
-  *ngIf="campoVerDetalle"
-  [(visible)]="isModalVerDetalle"
+<ng-container *ngIf="verDetalleCampo && verDetalleCampo.data">
+  <p-dialog header="Detalle del Campo"
+  [(visible)]="verDetalleCampo.isShowModal"
   [modal]="!isModal"
   [autoZIndex]="!isModal"
   responsive="true"
   dismissableMask="true"
   styleClass="child-dl"
-  (onHide)="closeModalVerDetalle()">
+  (onHide)="verDetalleCampo.closeModal()">
     <div style="max-width: 700px;min-width: 700px;">
-      <admin-detalle-campo [campo]="campoVerDetalle" [ocultarItems]="true"></admin-detalle-campo>
+      <admin-detalle-campo [campo]="verDetalleCampo.data" [ocultarItems]="true"></admin-detalle-campo>
     </div>
     <div *ngIf="isModal" class="text-center mt-2 mb-1">
-      <button (click)="closeModalVerDetalle()" type="button" class="btn btn-secondary btn-sm">
+      <button (click)="verDetalleCampo.closeModal()" type="button" class="btn btn-secondary btn-sm">
         <label class="btn-size-admin w-80-px"><i class="fa fa-times"></i> Salir</label>
       </button>
     </div>
-</p-dialog>
+  </p-dialog>
+</ng-container>
