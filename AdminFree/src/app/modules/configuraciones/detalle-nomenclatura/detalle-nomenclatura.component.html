@@ -1,3 +1,11 @@
+<!-- mensaje consecutivo asociado -->
+<div *ngIf="isModal && detalle.tieneConsecutivos" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-info">
+  <span class="ui-messages-icon pi pi-info-circle"></span>
+  <span class="ui-messages-detail">
+    Existen <strong>consecutivos de correspondencia</strong> asociados a esta nomenclatura
+  </span>
+</div>
+
 <!-- pnl datos nomenclatura -->
 <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
   <p-header>
@@ -86,7 +94,7 @@
   dismissableMask="true"
   styleClass="child-dl"
   (onHide)="verDetalleCampo.closeModal()">
-    <div style="max-width: 700px;min-width: 700px;">
+    <div style="max-width: 800px;min-width: 800px;">
       <admin-detalle-campo [campo]="verDetalleCampo.data" [ocultarItems]="true"></admin-detalle-campo>
     </div>
     <div *ngIf="isModal" class="text-center mt-2 mb-1">
