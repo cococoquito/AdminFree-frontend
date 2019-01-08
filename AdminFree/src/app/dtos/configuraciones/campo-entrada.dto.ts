@@ -38,4 +38,7 @@ export class CampoEntradaDTO {
 
   /** Se utiliza al momento de crear la nomenclatura */
   public aplica: boolean;
+
+  /** Identifica si este campo para la nomenclatura tiene consecutivos asociados*/
+  public tieneConsecutivo: boolean;
 }

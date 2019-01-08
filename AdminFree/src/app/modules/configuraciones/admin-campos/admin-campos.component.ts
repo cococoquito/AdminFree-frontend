@@ -721,8 +721,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     const campoOrigen = this.campoEditarOrigen.campoEntrada;
 
     // se utiliza para identificar las restricciones modificadas
-    const restriccionesOrigen: Array<number> = new Array<number>();
-    const restriccionesEditar: Array<number> = new Array<number>();
+    const restriccionesOrigen = new Array<number>();
+    const restriccionesEditar = new Array<number>();
 
     // se configuran las restricciones seleccionadas origen
     for (const origen of campoOrigen.restricciones) {

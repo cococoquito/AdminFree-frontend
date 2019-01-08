@@ -110,4 +110,7 @@ export class MsjFrontConstant {
   /** Mensaje cuando la nomenclatura tiene un consecutivo asociado */
   static readonly NOMENCLATURA_CON_CONSECUTIVO: string =
     'Existen <strong>consecutivos de correspondencia</strong> asociados a esta nomenclatura';
+
+  /** Mensaje cuando se modifica una nomenclatura */
+  static readonly NOMENCLATURA_ACTUALIZADO_EXITOSO: string = 'Nomenclatura Modificado';
 }

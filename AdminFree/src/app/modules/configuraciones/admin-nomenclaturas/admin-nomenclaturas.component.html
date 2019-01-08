@@ -196,10 +196,11 @@
           <ng-template pTemplate="body" let-campo>
             <tr [pSelectableRow]="campo">
               <td style="width: 5%" class="text-center">
-                <admin-inputswitch
+                <admin-inputswitch *ngIf="!campo.tieneConsecutivo"
                   [isChecked]="campo.aplica"
                   (switchChange)="campo.aplica = $event">
                 </admin-inputswitch>
+                <i *ngIf="campo.tieneConsecutivo" class="pi pi-check icon-sel font-size-22"></i>
               </td>
               <td style="width: 20%" class="text-center">{{ campo.tipoCampoNombre }}</td>
               <td>{{ campo.nombre }}</td>
@@ -228,7 +229,7 @@
           <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button (click)="siguienteCampos()" type="button" class="btn btn-sm btn-primary w-100-px">
+          <button (click)="siguienteCamposEntrada()" type="button" class="btn btn-sm btn-primary w-100-px">
             <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
           </button>
         </div>
@@ -239,7 +240,7 @@
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
       <!-- detalle - nomenclatura -->
-      <admin-detalle-nomenclatura [detalle]="nomenclaturaCU"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura [detalle]="nomenclaturaCU" [modificaciones]="datosEdicion"></admin-detalle-nomenclatura>
 
       <!-- botones salir - next-->
       <div class="text-center mt-2 mb-1">
@@ -252,7 +253,7 @@
         <button (click)="crearNomenclatura()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
           <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
         </button>
-        <button (click)="editarNomenclatura()" *ngIf="isEdicion" type="button" class="btn btn-success btn-sm">
+        <button (click)="editarNomenclatura()" *ngIf="isEdicion" [disabled]="!(datosEdicion.datosBasicosEditar || datosEdicion.camposEntradaEditar)" type="button" class="btn btn-success btn-sm">
           <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
         </button>
       </div>

@@ -57,6 +57,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Se utiliza para la edicion de la nomenclatura*/
   public datosEdicion: NomenclaturaEdicionDTO;
 
+  /** Es la nomenclatura que esta en edicion*/
+  public nomenclaturaEdicion: NomenclaturaDTO;
+
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
@@ -65,6 +68,12 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** Estos son los campos que se visualizara en la pantalla para creacion o edicion*/
   public campos: Array<CampoEntradaDTO>;
+
+  /** Son los nuevos campos para la edicion de la nomenclatura*/
+  private camposNuevoEdicion: Array<NomenclaturaCampoDTO>;
+
+  /** Son los campos seleccionados de la nomenclatura sin consecutivos asociados*/
+  private camposNomenclaturaSC: Array<number>;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -166,6 +175,36 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   public editarNomenclatura(): void {
 
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
+    const camposBK = this.nomenclaturaCU.campos;
+    const nomenclaturaBK = this.datosEdicion.nomenclatura;
+    this.nomenclaturaCU.campos = this.camposNuevoEdicion;
+    this.datosEdicion.nomenclatura = this.nomenclaturaCU;
+
+    // se hace el llamado HTTP para la edicion de la nomenclatura
+    this.service.editarNomenclatura(this.datosEdicion).subscribe(
+      data => {
+        // se muestra el mensaje exitoso
+        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.NOMENCLATURA_ACTUALIZADO_EXITOSO));
+
+        // se refresca los datos basicos de la nomenclatura si fueron modificados
+        if (this.datosEdicion.datosBasicosEditar) {
+          this.nomenclaturaEdicion.nomenclatura = this.nomenclaturaCU.nomenclatura;
+          this.nomenclaturaEdicion.descripcion = this.nomenclaturaCU.descripcion;
+          this.nomenclaturaEdicion.consecutivoInicial = this.nomenclaturaCU.consecutivoInicial;
+        }
+
+        // se limpian los datos de la creacion
+        this.limpiarCamposCU();
+      },
+      error => {
+        this.nomenclaturaCU.campos = camposBK;
+        this.datosEdicion.nomenclatura = nomenclaturaBK;
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**
@@ -293,6 +332,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         // se visualiza el panel para la edicion
         this.isEdicion = true;
 
+        // se configura la nomenclatura como en edicion
+        this.nomenclaturaEdicion = nomenclatura;
+
         // se consulta los campos asociados al cliente
         this.getCampos();
       },
@@ -350,45 +392,68 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /**
    * Es el evento del boton siguiente para el paso (Campos)
    */
-  public siguienteCampos(): void {
+  public siguienteCamposEntrada(): void {
     if (this.isCreacion) {
-      this.siguienteCamposCreacion();
+      this.siguienteCamposEntradaCreacion();
     } else {
-      this.siguienteCamposEdicion();
+      this.siguienteCamposEntradaEdicion();
     }
   }
 
   /**
    * Es el evento del boton siguiente para el paso (Campos) Creacion
    */
-  private siguienteCamposCreacion(): void {
+  private siguienteCamposEntradaCreacion(): void {
 
     // se configura los campos seleccionados para la nomenclatura
-    this.nomenclaturaCU.campos = null;
-    for (const campo of this.campos) {
-      if (campo.aplica) {
+    this.getCamposSeleccionados();
 
-        // se construye este campo dado que es seleccionado
-        const seleccionado = new NomenclaturaCampoDTO();
-        seleccionado.idCampo = campo.id;
-        seleccionado.nombreCampo = campo.nombre;
-        seleccionado.tipoCampo = campo.tipoCampoNombre;
-
-        // se agrega en la lista de creacion
-        if (!this.nomenclaturaCU.campos) {
-            this.nomenclaturaCU.campos = new Array<NomenclaturaCampoDTO>();
-        }
-        this.nomenclaturaCU.campos.push(seleccionado);
-      }
-    }
+    // Ultimo paso, confirmacion
     this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
    * Es el evento del boton siguiente para el paso (Campos) Edicion
    */
-  private siguienteCamposEdicion(): void {
+  private siguienteCamposEntradaEdicion(): void {
 
+    // se limpia la bandera que permite editar los valores
+    this.datosEdicion.camposEntradaEditar = true;
+
+    // se configura los campos seleccionados para la nomenclatura
+    this.getCamposSeleccionados();
+
+    // es la cantidad de campos seleccionados
+    let cantSeleccionados = 0;
+    if (this.camposNuevoEdicion) {
+      cantSeleccionados = this.camposNuevoEdicion.length;
+    }
+
+    // es la cantidad de campos que tiene la nomenclatura seleccionados
+    let cantOrigen = 0;
+    if (this.camposNomenclaturaSC) {
+      cantOrigen = this.camposNomenclaturaSC.length;
+    }
+
+    // si son diferentes es porque hay modificaciones
+    if (cantSeleccionados === cantOrigen) {
+
+      // si son iguales se procede a validar si hay alguna modificacion
+      this.datosEdicion.camposEntradaEditar = false;
+      if (cantSeleccionados > 0) {
+
+        // se valida si los campos seleccionados son nuevos
+        for (const campoSeleccionado of this.camposNuevoEdicion) {
+          if (!this.camposNomenclaturaSC.includes(campoSeleccionado.idCampo)) {
+            this.datosEdicion.camposEntradaEditar = true;
+            break;
+          }
+        }
+      }
+    }
+
+    // Ultimo paso, confirmacion
+    this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
@@ -482,7 +547,10 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Permite limpiar los datos utilizado para la creacion o edicion de la nomenclatura
    */
   private limpiarCamposCU(): void {
+    this.nomenclaturaEdicion = null;
     this.nomeclaturaValueBK = null;
+    this.camposNuevoEdicion = null;
+    this.camposNomenclaturaSC = null;
     this.nomenclaturaCU = null;
     this.datosEdicion = null;
     this.isCreacion = false;
@@ -497,15 +565,16 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // si los campos ya fueron consultados se limpia la bandera 'aplica'
     if (this.campos) {
       for (const campo of this.campos) {
-        campo.aplica = false;
+          campo.aplica = false;
+          campo.tieneConsecutivo = false;
       }
-      this.setCamposEdicion();
+      this.getCamposNomenclatura();
     } else {
       // se consulta los campos asociados al cliente autenticado
       this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
         data => {
           this.campos = data;
-          this.setCamposEdicion();
+          this.getCamposNomenclatura();
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -527,25 +596,82 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
-   * Metodo que permite configurar los campos
-   * que tiene una nomenclatura para ser modificados
+   * Metodo que permite configurar los campos que
+   * le pertenece una nomenclatura para ser modificados
    */
-  private setCamposEdicion(): void {
+  private getCamposNomenclatura(): void {
 
-    // se verifica que si hay campos parametrizados en el sistema
-    if (this.isEdicion && this.campos && this.campos.length > 0) {
+    // solo aplica para edicion
+    if (this.isEdicion) {
 
-      // se verifica si la nomenclatura a editar si tiene campos asociados
-      const nCampos: Array<NomenclaturaCampoDTO> = this.datosEdicion.nomenclatura.campos;
-      if (nCampos && nCampos.length > 0) {
+      // se verifica si hay campos parametrizados en el sistema
+      if (this.campos && this.campos.length > 0) {
 
-        // se configura los campos de la nomenclatura
-        for (const ncampo of nCampos) {
-          for (const campo of this.campos) {
-            if (ncampo.idCampo === campo.id) {
-              campo.aplica = true;
-              break;
+        // se verifica si la nomenclatura a editar si tiene campos asociados
+        const camposNomenclatura = this.datosEdicion.nomenclatura.campos;
+        if (camposNomenclatura && camposNomenclatura.length > 0) {
+
+          // se configura los campos asociados de la nomenclatura
+          for (const campoNomenclatura of camposNomenclatura) {
+
+            // se agrega el campo como seleccionado
+            if (!campoNomenclatura.tieneConsecutivo) {
+              if (!this.camposNomenclaturaSC) {
+                  this.camposNomenclaturaSC = new Array<number>();
+              }
+              this.camposNomenclaturaSC.push(campoNomenclatura.idCampo);
             }
+
+            // se visualiza en pantalla como seleccionado
+            for (const campo of this.campos) {
+              if (campoNomenclatura.idCampo === campo.id) {
+                  campo.aplica = true;
+                  campo.tieneConsecutivo = campoNomenclatura.tieneConsecutivo;
+                  break;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Metodo que permite configurar los campos seleccionados
+   * para creacion o modificacion de la nomenclatura
+   */
+  private getCamposSeleccionados(): void {
+
+    // se configura los campos seleccionados para la nomenclatura
+    this.nomenclaturaCU.campos = null;
+    this.camposNuevoEdicion = null;
+
+    // se valida si hay campos parametrizados en el sistema
+    if (this.campos && this.campos.length > 0) {
+
+      // se recorre todos los campos en busqueda de los seleccionados
+      for (const campo of this.campos) {
+        if (campo.aplica) {
+
+          // se construye este campo dado que es seleccionado
+          const seleccionado = new NomenclaturaCampoDTO();
+          seleccionado.idCampo = campo.id;
+          seleccionado.nombreCampo = campo.nombre;
+          seleccionado.tipoCampo = campo.tipoCampoNombre;
+          seleccionado.tieneConsecutivo = campo.tieneConsecutivo;
+
+          // se agrega en la lista de creacion
+          if (!this.nomenclaturaCU.campos) {
+              this.nomenclaturaCU.campos = new Array<NomenclaturaCampoDTO>();
+          }
+          this.nomenclaturaCU.campos.push(seleccionado);
+
+          // se agrega el campo para la edicion
+          if (this.isEdicion && !campo.tieneConsecutivo) {
+            if (!this.camposNuevoEdicion) {
+              this.camposNuevoEdicion = new Array<NomenclaturaCampoDTO>();
+            }
+            this.camposNuevoEdicion.push(seleccionado);
           }
         }
       }
