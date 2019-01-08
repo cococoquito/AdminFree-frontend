@@ -66,5 +66,6 @@ export class MessagesBackendConstant {
   static readonly NOMENCLATURA_EXISTE: string = 'La nomenclatura <strong>?</strong> ya se encuentra registrada en el sistema';
 
   /** La nomenclatura que intenta eliminar tiene un consecutivo asociado*/
-  static readonly DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA: string = 'La nomenclatura que intenta eliminar tiene un consecutivo asociado';
+  static readonly DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA: string =
+    'La nomenclatura que intenta eliminar tiene un <strong>consecutivo de correspondencia asociado</strong>';
 }
