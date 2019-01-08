@@ -25,7 +25,6 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
  */
 @Component({
   templateUrl: './admin-nomenclaturas.component.html',
-  styleUrls: ['./admin-nomenclaturas.component.css'],
   providers: [AdminNomenclaturaService, AdminCampoService]
 })
 export class AdminNomenclaturasComponent extends CommonComponent implements OnInit, OnDestroy {
@@ -178,8 +177,11 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se limpia mensajes de otros procesos
     this.messageService.clear();
 
+    // se hace el backup por si hay errores en la edicion
     const camposBK = this.nomenclaturaCU.campos;
     const nomenclaturaBK = this.datosEdicion.nomenclatura;
+
+    // se configura los datos a modificar
     this.nomenclaturaCU.campos = this.camposNuevoEdicion;
     this.datosEdicion.nomenclatura = this.nomenclaturaCU;
 
@@ -562,19 +564,19 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   private getCampos(): void {
 
-    // si los campos ya fueron consultados se limpia la bandera 'aplica'
+    // si los campos ya fueron consultados se limpia las banderas 'aplica,tieneConsecutivo'
     if (this.campos) {
       for (const campo of this.campos) {
           campo.aplica = false;
           campo.tieneConsecutivo = false;
       }
-      this.getCamposNomenclatura();
+      this.setCamposNomenclatura();
     } else {
       // se consulta los campos asociados al cliente autenticado
       this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
         data => {
           this.campos = data;
-          this.getCamposNomenclatura();
+          this.setCamposNomenclatura();
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -599,7 +601,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Metodo que permite configurar los campos que
    * le pertenece una nomenclatura para ser modificados
    */
-  private getCamposNomenclatura(): void {
+  private setCamposNomenclatura(): void {
 
     // solo aplica para edicion
     if (this.isEdicion) {

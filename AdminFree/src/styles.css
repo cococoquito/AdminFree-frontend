@@ -408,3 +408,8 @@ body {
   font-size: 0.98rem;
   font-family: Times, Times New Roman, serif;
 }
+
+.mx-dtl-mdl {
+  max-width: 800px;
+  min-width: 800px;
+}
