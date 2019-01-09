@@ -234,10 +234,10 @@ export class MenuST {
 
       // el administrador tiene todo los privilegios
       if (welcomeDTO.credenciales.administrador) {
-          this.modulos.push(this.getModuloConfiguraciones());
           this.modulos.push(this.getModuloCorrespondencia());
           this.modulos.push(this.getModuloArchivoGestion());
           this.modulos.push(this.getModuloReportes());
+          this.modulos.push(this.getModuloConfiguraciones());
       } else {
 
         // se verifica si el funcionario tiene privilegios asignados
