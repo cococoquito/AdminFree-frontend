@@ -1,15 +1,96 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.service';
+import { CommonComponent } from './../../../util/common.component';
+import { ShellState } from '../../../states/shell/shell.state';
+import { SpinnerState } from '../../../states/spinner.state';
+import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
+import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
+import { MsjUtil } from '../../../util/messages.util';
+import { RegexUtil } from './../../../util/regex-util';
+import { LocalStoreUtil } from '../../../util/local-store.util';
+import { LabelsConstant } from '../../../constants/labels.constant';
 
+/**
+ * Componente para la solicitud de consecutivos de correspondencia
+ *
+ * @author Carlos Andres Diaz
+ */
 @Component({
-  selector: 'admin-solicitar-consecutivos',
   templateUrl: './solicitar-consecutivos.component.html',
-  styleUrls: ['./solicitar-consecutivos.component.css']
+  styleUrls: ['./solicitar-consecutivos.component.css'],
+  providers: [ AdminNomenclaturaService ]
 })
-export class SolicitarConsecutivosComponent implements OnInit {
+export class SolicitarConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  /** cliente autenticado o es el cliente asociado al usuario */
+  private clienteCurrent: ClienteDTO;
 
-  ngOnInit() {
+  /** Lista de nomenclaturas asociado al cliente */
+  public nomenclaturas: Array<NomenclaturaDTO>;
+
+  /** Se utiliza para validar los valores de los inputs*/
+  public regex: RegexUtil;
+
+  /**
+   * @param messageService, Se utiliza para la visualizacion
+   * de los mensajes en la pantalla
+   *
+   * @param adminNomenclaturaService, Se utiliza para consultar
+   * las nomenclatura que tiene el cliente autenticado
+   *
+   * @param shellState, se utiliza para el titulo del componente
+   *
+   * @param spinnerState, se utiliza para simular el spinner cuando
+   * cambian entre los steps
+   */
+  constructor(
+    protected messageService: MessageService,
+    private adminNomenclaturaService: AdminNomenclaturaService,
+    private shellState: ShellState,
+    private spinnerState: SpinnerState) {
+    super();
   }
 
+  /**
+   * Se debe consultar las nomenclaturas asociados al cliente autenticado
+   */
+  ngOnInit() {
+    this.init();
+  }
+
+  /**
+   * Se utiliza para limpiar los mensajes visualizados pantalla
+   */
+  ngOnDestroy(): void {
+    this.messageService.clear();
+  }
+
+  /**
+   * Metodo que es invocado al momento de la creacion
+   * del componente, donde se procede a consultar las
+   * nomenclaturas relacionado al cliente autenticado
+   */
+  private init(): void {
+
+    // se configura el titulo y subtitulo de la pagina
+    this.shellState.title.titulo = LabelsConstant.TITLE_SOLICITAR_CONSECUTIVOS;
+    this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_SOLICITAR_CONSECUTIVOS;
+
+    // se procede a obtener el cliente autenticado
+    this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
+
+    /** Se utiliza para validar los valores de los inputs*/
+    this.regex = new RegexUtil();
+
+    // se consulta las nomenclaturas asociados al cliente autenticado
+    this.adminNomenclaturaService.getNomenclaturas(this.clienteCurrent.id).subscribe(
+      data => {
+        this.nomenclaturas = data;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
 }

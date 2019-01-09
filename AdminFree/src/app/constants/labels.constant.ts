@@ -6,6 +6,9 @@
  */
 export class LabelsConstant {
 
+  /** Titulo para el componente Solicitar consecutivos*/
+  public static readonly TITLE_SOLICITAR_CONSECUTIVOS: string = 'Solicitar Consecutivos de Correspondencia';
+
   /** Titulo para el componente Administracion de usuarios*/
   public static readonly TITLE_ADMIN_USERS: string = 'Administración de Usuarios';
 
@@ -14,6 +17,10 @@ export class LabelsConstant {
 
   /** Titulo para el componente Administracion de nomenclaturas*/
   public static readonly TITLE_ADMIN_NOMENCLATURAS: string = 'Administración de Nomenclaturas';
+
+  /** Sub - Titulo para la pagina de solicitar consecutivos*/
+  public static readonly SUBTITLE_SOLICITAR_CONSECUTIVOS: string =
+    'Submódulo de correspondencia para solicitudes de <strong>consecutivos asociados a una nomenclatura</strong>';
 
   /** Sub - Titulo para la pagina de administracion de usuario*/
   public static readonly SUBTITLE_ADMIN_USER: string =
