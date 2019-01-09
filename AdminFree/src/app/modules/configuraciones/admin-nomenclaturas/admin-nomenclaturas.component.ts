@@ -514,6 +514,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se limpian los espacios
     this.nomenclaturaCU.nomenclatura = this.setTrim(this.nomenclaturaCU.nomenclatura);
     this.nomenclaturaCU.descripcion = this.setTrim(this.nomenclaturaCU.descripcion);
+    this.nomenclaturaCU.consecutivoInicial = Number(this.nomenclaturaCU.consecutivoInicial);
 
     // se obtiene el origen de los datos de la nomenclatura
     const nomenclaturaBK = this.datosEdicion.nomenclatura;
