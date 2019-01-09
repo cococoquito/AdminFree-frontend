@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { SolicitarConsecutivoComponent } from './solicitar-consecutivo/solicitar-consecutivo.component';
-import { PruebaComponent } from './prueba/prueba.component';
+import { SolicitarConsecutivosComponent } from './solicitar-consecutivos/solicitar-consecutivos.component';
+import { RouterConstant } from './../../constants/router.constant';
 
 /**
  * Modulo que contiene todos los procesos de negocio
@@ -14,16 +14,14 @@ import { PruebaComponent } from './prueba/prueba.component';
   imports: [
     RouterModule.forChild([
       {
-        path: 'solicitar',
-        component: SolicitarConsecutivoComponent
-      },
-      {
-        path: 'prueba',
-        component: PruebaComponent
+        path: RouterConstant.ROUTER_SOLICITAR_CONSECUTIVOS,
+        component: SolicitarConsecutivosComponent
       }
     ]),
     SharedModule
   ],
-  declarations: [SolicitarConsecutivoComponent, PruebaComponent]
+  declarations: [
+    SolicitarConsecutivosComponent
+  ]
 })
 export class CorrespondenciaModule {}

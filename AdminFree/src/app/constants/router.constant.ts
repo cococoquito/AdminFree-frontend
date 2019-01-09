@@ -47,6 +47,9 @@ export class RouterConstant {
   /** Nombre del Router del ITEM administracion de Nomenclaturas*/
   public static readonly ROUTER_ADMIN_NOMENCLATURAS: string = 'adminnomen';
 
+  /** Nombre del Router del ITEM Solicitar consecutivos*/
+  public static readonly ROUTER_SOLICITAR_CONSECUTIVOS: string = 'solicitarconse';
+
   /** Constante para navegar al modulo de CLIENTES */
   public static readonly NAVIGATE_CLIENTES: string = `/${RouterConstant.ROUTER_CLIENTES}`;
 
@@ -73,4 +76,8 @@ export class RouterConstant {
   /** Constante para navegar a la pagina de ADMIN NOMENCLATURAS */
   public static readonly NAVIGATE_ADMIN_NOMENCLATURAS: string =
     `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CONFIGURACIONES}/${RouterConstant.ROUTER_ADMIN_NOMENCLATURAS}`;
+
+  /** Constante para navegar a la pagina de SOLICITAR CONSECUTIVOS */
+  public static readonly NAVIGATE_SOLICITAR_CONSECUTIVOS: string =
+    `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CORRESPONDENCIA}/${RouterConstant.ROUTER_SOLICITAR_CONSECUTIVOS}`;
 }

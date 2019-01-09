@@ -294,19 +294,14 @@ export class MenuST {
     correspondencia.icono = 'fa-envelope';
 
     // ITEM1, Solicitar consecutivo de correspondencia
-    const solicitarConsecutivo = new MenuItem();
-    solicitarConsecutivo.nombre = 'Solicitar Consecutivo';
-    solicitarConsecutivo.router = '/autenticado/correspondencia/solicitar';
-
-    // ITEM2, prueba
-    const prueba = new MenuItem();
-    prueba.nombre = 'Prueba';
-    prueba.router = '/autenticado/correspondencia/prueba';
-    prueba.isUltimoItem = true;
+    const solicitarConsecutivos = new MenuItem();
+    solicitarConsecutivos.nombre = LabelsConstant.MENU_SOLICITAR_CONSECUTIVOS;
+    solicitarConsecutivos.router = RouterConstant.NAVIGATE_SOLICITAR_CONSECUTIVOS;
+    solicitarConsecutivos.icono = 'fa-envelope-open';
+    solicitarConsecutivos.isUltimoItem = true;
 
     // se agrega los items para este modulo
-    correspondencia.agregarItem(solicitarConsecutivo);
-    correspondencia.agregarItem(prueba);
+    correspondencia.agregarItem(solicitarConsecutivos);
     return correspondencia;
   }
 

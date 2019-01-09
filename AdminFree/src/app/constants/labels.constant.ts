@@ -58,6 +58,9 @@ export class LabelsConstant {
   /** Titulo Administracion de nomenclaturas para el menu*/
   public static readonly MENU_ADMIN_NOMENCLATURAS: string = 'Nomenclaturas';
 
+  /** Titulo solicitar consecutivos*/
+  public static readonly MENU_SOLICITAR_CONSECUTIVOS: string = 'Solicitar Consecutivos';
+
   /** Label cerrar sesion*/
   public static readonly CERRAR_SESION: string = 'Cerrar Sesión';
 
