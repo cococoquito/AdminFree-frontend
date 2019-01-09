@@ -128,6 +128,25 @@ export class StepsModel {
   }
 
   /**
+   * Metodo que agrega los items para el submodulo
+   * de solicitar consecutivos correspondencia
+   */
+  public stepsParaSolicitarConsecutivo(): void {
+
+    // se limpia el modelo por si hay registros anteriores
+    this.cleanSteps();
+
+    // se agregan los items para este submodulo
+    this.agregarStep(LabelsConstant.NOMENCLATURA);
+    this.agregarStep(LabelsConstant.ENTRADA_INFORMACION);
+    this.agregarStep(LabelsConstant.DOCUMENTOS);
+    this.agregarStep(LabelsConstant.CONFIRMACION);
+
+    // se inicializa el model del componente
+    this.init();
+  }
+
+  /**
    * Metodo que permite regresar un paso
    */
   public regresar(): void {

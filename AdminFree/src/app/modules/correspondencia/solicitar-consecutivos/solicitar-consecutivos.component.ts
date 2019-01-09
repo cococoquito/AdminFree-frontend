@@ -4,6 +4,7 @@ import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.s
 import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
+import { StepsModel } from './../../../model/steps-model';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { MsjUtil } from '../../../util/messages.util';
@@ -31,6 +32,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
+
+  /** Modelo del componente steps para la solicitud del consecutivo*/
+  public stepsModel: StepsModel;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -82,6 +86,10 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
     /** Se utiliza para validar los valores de los inputs*/
     this.regex = new RegexUtil();
+
+    // se configura el componente steps
+    this.stepsModel = new StepsModel();
+    this.stepsModel.stepsParaSolicitarConsecutivo();
 
     // se consulta las nomenclaturas asociados al cliente autenticado
     this.adminNomenclaturaService.getNomenclaturas(this.clienteCurrent.id).subscribe(
