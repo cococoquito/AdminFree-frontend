@@ -60,7 +60,7 @@ export class MessagesBackendConstant {
 
   /** El campo de entrada de información que intenta eliminar tiene una nomenclatura asociada*/
   static readonly DELETE_CAMPO_NOMENCLATURA_ASOCIADA: string =
-    'El campo de entrada de información que intenta eliminar tiene una nomenclatura asociada';
+    'El campo de entrada de información que intenta eliminar <strong>tiene una nomenclatura asociada</strong>';
 
   /** La nomenclatura ? ya se encuentra registrada en el sistema*/
   static readonly NOMENCLATURA_EXISTE: string = 'La nomenclatura <strong>?</strong> ya se encuentra registrada en el sistema';
