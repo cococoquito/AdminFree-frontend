@@ -1,2 +1,26 @@
-    <!-- pasos para la solicitud -->
-    <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+<!-- pasos para la solicitud -->
+<p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+
+<!-- Paso 1 nomenclatura-->
+<ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
+
+  <p-panel styleClass="mb-2 steps-pnl">
+    <p-header>
+      <i class="fa fa-info-circle font-size-18"></i>
+      <span> Seleccione la Nomenclatura</span>
+    </p-header>
+
+    <!-- Hay nomenclaturas-->
+    <ng-container *ngIf="nomenclaturas && nomenclaturas.length > 0">
+
+    </ng-container>
+
+    <!-- No Hay nomenclaturas-->
+    <div *ngIf="!(nomenclaturas && nomenclaturas.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
+      <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+      <span class="ui-messages-detail">
+        <strong>No hay nomenclaturas</strong> parametrizadas en el sistema
+      </span>
+    </div>
+  </p-panel>
+</ng-container>
