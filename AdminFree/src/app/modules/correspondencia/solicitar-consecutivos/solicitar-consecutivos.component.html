@@ -13,6 +13,31 @@
     <!-- Hay nomenclaturas-->
     <ng-container *ngIf="nomenclaturas && nomenclaturas.length > 0">
 
+      <!-- tabla - nomenclaturas -->
+      <p-table [value]="nomenclaturas"
+        [alwaysShowPaginator]="false"
+        [responsive]="true"
+        [paginator]="true"
+        [rows]="10"
+        rowHover="true"
+        selectionMode="single"
+        >
+
+        <ng-template pTemplate="header">
+          <tr class="text-center">
+            <th style="width: 5%">Nomenclatura</th>
+            <th>Descripción</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-nomenclatura>
+          <tr [pSelectableRow]="nomenclatura">
+            <td class="text-center font-size-14">
+              <strong style="color: #F25423; font-family: 'palatino linotype', palatino, serif;">{{ nomenclatura.nomenclatura }}</strong></td>
+            <td>{{ nomenclatura.descripcion }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </ng-container>
 
     <!-- No Hay nomenclaturas-->
