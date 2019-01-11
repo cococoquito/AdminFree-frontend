@@ -101,4 +101,14 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       }
     );
   }
+
+  /**
+   * Metodo que soporta el evento click del boton ver detalle nomenclatura
+   *
+   * @param event , se utiliza para no propagar el evento y asi evitar
+   * que seleccione o deseleccione la fila de la tabla de nomenclatura
+   */
+  public verDetalleNomenclatura(event): void {
+    event.stopPropagation();
+  }
 }

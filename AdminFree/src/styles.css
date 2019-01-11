@@ -103,6 +103,10 @@ body {
   color: #212121 !important;
 }
 
+.ui-table .ui-table-tbody .ui-state-highlight {
+  background-color: #f5a96d !important;
+}
+
 .ui-paginator .ui-paginator-pages .ui-paginator-page {
   border-radius: 50% !important;
 }
@@ -267,6 +271,16 @@ body {
 .btn-round-del {
   background-color: #d68b94 !important;
   color: #212121 !important;
+}
+
+.btn-pup {
+  background-color: #3F51B5 !important;
+  color: #ffffff !important;
+}
+
+.btn-pup:hover {
+  background-color: rgb(50, 64, 146) !important;
+  color: #ffffff !important;
 }
 
 .btn-round-edit {
