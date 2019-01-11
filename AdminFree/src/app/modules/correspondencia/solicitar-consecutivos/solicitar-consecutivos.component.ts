@@ -11,6 +11,7 @@ import { MsjUtil } from '../../../util/messages.util';
 import { RegexUtil } from './../../../util/regex-util';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
+import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 
 /**
  * Componente para la solicitud de consecutivos de correspondencia
@@ -113,5 +114,17 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   public verDetalleNomenclatura(event): void {
     event.stopPropagation();
+  }
+
+  /**
+   * Metodo que soporta el evento del boton siguiente de nomenclatura
+   */
+  public siguienteNomenclatura(): void {
+
+    // la seleccion de la nomenclatura es obligatorio
+    if (!this.nomenclaturaSel) {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.NOMENCLATURA_REQUERIDO));
+      return;
+    }
   }
 }

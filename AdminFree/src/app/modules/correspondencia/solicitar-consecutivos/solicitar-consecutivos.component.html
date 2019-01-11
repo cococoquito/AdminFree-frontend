@@ -15,6 +15,7 @@
 
       <!-- tabla - nomenclaturas -->
       <p-table [value]="nomenclaturas"
+        [(selection)]="nomenclaturaSel"
         [alwaysShowPaginator]="false"
         [responsive]="true"
         [paginator]="true"
@@ -47,7 +48,7 @@
 
       <!-- botones - next-->
       <div class="text-center mt-2 mb-1">
-        <button type="button" class="btn btn-sm btn-primary w-100-px">
+        <button (click)="siguienteNomenclatura()" type="button" class="btn btn-sm btn-primary w-100-px" [disabled]="!nomenclaturaSel">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
         </button>
       </div>
