@@ -20,21 +20,27 @@
         [paginator]="true"
         [rows]="10"
         rowHover="true"
-        selectionMode="single"
-        >
+        selectionMode="single">
 
         <ng-template pTemplate="header">
           <tr class="text-center">
             <th style="width: 5%">Nomenclatura</th>
             <th>Descripción</th>
+            <th style="width: 4%">Detalle</th>
           </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-nomenclatura>
           <tr [pSelectableRow]="nomenclatura">
             <td class="text-center font-size-14">
-              <strong style="color: #F25423; font-family: 'palatino linotype', palatino, serif;">{{ nomenclatura.nomenclatura }}</strong></td>
+              <strong>{{ nomenclatura.nomenclatura }}</strong>
+            </td>
             <td>{{ nomenclatura.descripcion }}</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-sm btn-round-table btn-round-teal">
+                <i class="pi pi-external-link icon-round-table"></i>
+              </button>
+            </td>
           </tr>
         </ng-template>
       </p-table>
