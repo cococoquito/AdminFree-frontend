@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.service';
 import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
@@ -28,8 +29,11 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** cliente autenticado o es el cliente asociado al usuario */
   private clienteCurrent: ClienteDTO;
 
-  /** Lista de nomenclaturas asociado al cliente */
-  public nomenclaturas: Array<NomenclaturaDTO>;
+  /** Backup de las nomenclaturas consultadas */
+  public nomenclaturasOrigen: Array<NomenclaturaDTO>;
+
+  /** Son las nomenclaturas a mostrar en pantalla */
+  public nomenclaturasView: Array<NomenclaturaDTO>;
 
   /** Es la nomenclatura seleccionada para solicitar el consecutivo */
   public nomenclaturaSel: NomenclaturaDTO;
@@ -39,6 +43,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Modelo del componente steps para la solicitud del consecutivo*/
   public stepsModel: StepsModel;
+
+  /** Es el modelo de la tabla de nomenclaturas*/
+  @ViewChild('tblNomen') tblNomen: Table;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -98,7 +105,8 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     // se consulta las nomenclaturas asociados al cliente autenticado
     this.adminNomenclaturaService.getNomenclaturas(this.clienteCurrent.id).subscribe(
       data => {
-        this.nomenclaturas = data;
+        this.nomenclaturasOrigen = data;
+        this.nomenclaturasView = data;
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -114,6 +122,31 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   public verDetalleNomenclatura(event): void {
     event.stopPropagation();
+  }
+
+  /**
+   * Metodo que permite soportar el evento filter por nomenclatura
+   *
+   * @param event , contiene el valor ingresado
+   */
+  public busquedaNomenclatura(event: any): void {
+
+    // se crea la instancia de la lista nomenclaturas a visualizar
+    this.nomenclaturasView = new Array<NomenclaturaDTO>();
+
+    // es el nuevo valor ingresado
+    const value = event.target.value;
+
+    // se busca la nomenclatura que coincide con el valor
+    for (const nomenclatura of this.nomenclaturasOrigen) {
+        if (nomenclatura.nomenclatura &&
+            nomenclatura.nomenclatura.toUpperCase().includes(value.toUpperCase())) {
+            this.nomenclaturasView.push(nomenclatura);
+        }
+    }
+
+    // se refresca la tabla de nomenclaturas
+    this.tblNomen.reset();
   }
 
   /**
