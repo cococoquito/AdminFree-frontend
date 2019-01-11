@@ -30,6 +30,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** Lista de nomenclaturas asociado al cliente */
   public nomenclaturas: Array<NomenclaturaDTO>;
 
+  /** Es la nomenclatura seleccionada para solicitar el consecutivo */
+  public nomenclaturaSel: NomenclaturaDTO;
+
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
 
