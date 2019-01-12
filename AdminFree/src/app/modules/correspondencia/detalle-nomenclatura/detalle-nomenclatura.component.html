@@ -1,0 +1,41 @@
+<p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
+  <p-header>
+    <span> Datos de la Nomenclatura </span>
+  </p-header>
+  <table class="table steps-tbl mb-0">
+    <tbody>
+      <tr>
+        <td>
+          <p class="steps-st">Nomenclatura:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.nomenclatura }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="steps-st">Descripción:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.descripcion }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 25%">
+          <p class="steps-st">Consecutivo Inicial:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.consecutivoInicial }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 25%">
+          <p class="steps-st">Cantidad Consecutivos Solicitados:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.cantidadConsecutivos }}</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</p-panel>

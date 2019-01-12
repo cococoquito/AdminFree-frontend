@@ -1,5 +1,3 @@
-import { NomenclaturaDetalleCamposDTO } from './nomenclatura-detalle-campos.dto';
-
 /**
  * Contiene el detalle de la nomenclatura para el modulo de correspondencia
  *
@@ -22,7 +20,4 @@ export class NomenclaturaDetalleDTO {
 
   /** Cantidad de consecutivos solicitados para la nomenclatura */
   public cantidadConsecutivos: number;
-
-  /** Lista de campos de entrada informacion asociada a la nomenclatura */
-  public campos: Array<NomenclaturaDetalleCamposDTO>;
 }

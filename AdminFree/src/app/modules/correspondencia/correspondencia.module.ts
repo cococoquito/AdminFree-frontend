@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { SolicitarConsecutivosComponent } from './solicitar-consecutivos/solicitar-consecutivos.component';
+import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -21,7 +22,8 @@ import { RouterConstant } from './../../constants/router.constant';
     SharedModule
   ],
   declarations: [
-    SolicitarConsecutivosComponent
+    SolicitarConsecutivosComponent,
+    DetalleNomenclaturaComponent
   ]
 })
 export class CorrespondenciaModule {}

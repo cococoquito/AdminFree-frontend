@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { MessageService } from 'primeng/api';
 import { ConfiguracionesService } from './../../../services/configuraciones.service';
+import { CorrespondenciaService } from './../../../services/correspondencia.service';
 import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { StepsModel } from './../../../model/steps-model';
+import { ModalData } from '../../../model/modal-data';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { MsjUtil } from '../../../util/messages.util';
@@ -22,7 +24,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
 @Component({
   templateUrl: './solicitar-consecutivos.component.html',
   styleUrls: ['./solicitar-consecutivos.component.css'],
-  providers: [ ConfiguracionesService ]
+  providers: [ ConfiguracionesService, CorrespondenciaService ]
 })
 export class SolicitarConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -44,6 +46,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** Modelo del componente steps para la solicitud del consecutivo*/
   public stepsModel: StepsModel;
 
+  /** Contiene el modelo del modal ver detalle de la nomenclatura*/
+  public detalleNomenclatura: ModalData;
+
   /** Es el modelo de la tabla de nomenclaturas*/
   @ViewChild('tblNomen') tblNomen: Table;
 
@@ -54,6 +59,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    * @param configuracionesService, Se utiliza para consultar
    * las nomenclatura que tiene el cliente autenticado
    *
+   * @param correspondenciaService, contiene los servicios
+   * del modulo de correspondencia
+   *
    * @param shellState, se utiliza para el titulo del componente
    *
    * @param spinnerState, se utiliza para simular el spinner cuando
@@ -62,6 +70,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   constructor(
     protected messageService: MessageService,
     private configuracionesService: ConfiguracionesService,
+    private correspondenciaService: CorrespondenciaService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
@@ -119,8 +128,23 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    *
    * @param event , se utiliza para no propagar el evento y asi evitar
    * que seleccione o deseleccione la fila de la tabla de nomenclatura
+   *
+   * @param nomenclatura , nomenclatura seleccionada para ver el detalle
    */
-  public verDetalleNomenclatura(event): void {
+  public verDetalleNomenclatura(event, nomenclatura: NomenclaturaDTO): void {
+    this.correspondenciaService.getDetalleNomenclatura(nomenclatura.id).subscribe(
+      data => {
+        if (!this.detalleNomenclatura) {
+          this.detalleNomenclatura = new ModalData();
+        }
+        this.detalleNomenclatura.showModal(data);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+
+    // es para la progacion del evento
     event.stopPropagation();
   }
 

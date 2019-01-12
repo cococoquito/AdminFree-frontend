@@ -55,7 +55,7 @@
             </td>
             <td>{{ nomenclatura.descripcion }}</td>
             <td class="text-center">
-              <button type="button" (click)="verDetalleNomenclatura($event)" class="btn btn-sm btn-round-table btn-pup">
+              <button type="button" (click)="verDetalleNomenclatura($event, nomenclatura)" class="btn btn-sm btn-round-table btn-pup">
                 <i class="pi pi-external-link icon-round-table"></i>
               </button>
             </td>
@@ -79,4 +79,19 @@
       </span>
     </div>
   </p-panel>
+</ng-container>
+
+<!-- modal ver detalle nomenclatura -->
+<ng-container *ngIf="detalleNomenclatura && detalleNomenclatura.data">
+  <p-dialog header="Detalle de la Nomenclatura"
+  [(visible)]="detalleNomenclatura.isShowModal"
+  modal="true"
+  responsive="true"
+  dismissableMask="true"
+  styleClass="splr-dl"
+  (onHide)="detalleNomenclatura.closeModal()">
+    <div class="mx-dtl-mdl">
+      <admin-detalle-nomenclatura [detalle]="detalleNomenclatura.data"></admin-detalle-nomenclatura>
+    </div>
+  </p-dialog>
 </ng-container>
