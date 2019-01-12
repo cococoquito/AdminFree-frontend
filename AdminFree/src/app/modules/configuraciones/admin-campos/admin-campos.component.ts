@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { AdminCampoService } from '../../../services/admin-campo.service';
+import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from './../../../states/spinner.state';
@@ -25,7 +25,7 @@ import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
 @Component({
   templateUrl: './admin-campos.component.html',
   styleUrls: ['./admin-campos.component.css'],
-  providers: [AdminCampoService]
+  providers: [ ConfiguracionesService ]
 })
 export class AdminCamposComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -84,7 +84,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * @param confirmationService, se utiliza para mostrar el
    * modal de confirmacion para diferente procesos
    *
-   * @param adminCampoService, se utiliza para consumir
+   * @param configuracionesService, se utiliza para consumir
    * los servicios relacionados a este proceso negocio
    *
    * @param shellState, se utiliza para el titulo del componente
@@ -95,7 +95,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   constructor(
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private adminCampoService: AdminCampoService,
+    private configuracionesService: ConfiguracionesService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
@@ -130,7 +130,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
     // se consulta los campos asociados al cliente autenticado
-    this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
+    this.configuracionesService.getCamposEntrada(this.clienteCurrent.id).subscribe(
       data => {
         this.campos = data;
       },
@@ -153,7 +153,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.setDatosAntesCreacion(restriccionesBK);
 
     // se procede a invocar el servicio para la creacion
-    this.adminCampoService.crearCampoEntrada(this.campoCU).subscribe(
+    this.configuracionesService.crearCampoEntrada(this.campoCU).subscribe(
       data => {
         // Mensaje exitoso campo creado
         this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_CREADO_EXITOSO));
@@ -191,7 +191,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoEditarOrigen.campoEntrada = this.campoCU;
 
     // se procede a invocar el servicio para la edicion
-    this.adminCampoService.editarCampoEntradaInformacion(this.campoEditarOrigen).subscribe(
+    this.configuracionesService.editarCampoEntradaInformacion(this.campoEditarOrigen).subscribe(
       data => {
         // Mensaje exitoso campo modificado
         this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ACTUALIZADO_EXITOSO));
@@ -230,7 +230,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       accept: () => {
 
         // se procede a eliminar el campo seleccionado
-        this.adminCampoService.eliminarCampoEntrada(campoEliminar.id).subscribe(
+        this.configuracionesService.eliminarCampoEntrada(campoEliminar.id).subscribe(
           data => {
             // Mensaje exitoso, campo fue eliminado
             this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ENTRADA_ELIMINADO));
@@ -250,7 +250,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    * Metodo que soporta el evento click del boton ver detalle del campo
    */
   public showModalVerDetalle(campo: CampoEntradaDTO): void {
-    this.adminCampoService.getDetalleCampoEntrada(campo.id).subscribe(
+    this.configuracionesService.getDetalleCampoEntrada(campo.id).subscribe(
       data => {
         this.campoVerDetalle = data;
         this.isModalVerDetalle = true;
@@ -371,7 +371,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.messageService.clear();
 
     // se procede a consultar el detalle del campo para editar
-    this.adminCampoService.getDetalleCampoEntradaEdicion(campo.id).subscribe(
+    this.configuracionesService.getDetalleCampoEntradaEdicion(campo.id).subscribe(
       data => {
         // se configura el detalle del campo
         this.campoEditarOrigen = data;
@@ -632,7 +632,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     }
 
     // se procede a validar los datos ingresados para la creacion
-    this.adminCampoService.validarDatosCampoEntrada(this.campoCU).subscribe(
+    this.configuracionesService.validarDatosCampoEntrada(this.campoCU).subscribe(
       data => {
 
         // solamente se reemplaza las restricciones si el tipo campo
@@ -688,7 +688,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       if (campoOrigen.nombre !== this.campoCU.nombre) {
 
         // se valida que no exista otro campo con el mismo tipo y nombre
-        this.adminCampoService.validarDatosCampoEntrada(this.campoCU).subscribe(
+        this.configuracionesService.validarDatosCampoEntrada(this.campoCU).subscribe(
           data => {
             this.stepsModel.irSegundoStep();
           },

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.service';
+import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
@@ -22,7 +22,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
 @Component({
   templateUrl: './solicitar-consecutivos.component.html',
   styleUrls: ['./solicitar-consecutivos.component.css'],
-  providers: [ AdminNomenclaturaService ]
+  providers: [ ConfiguracionesService ]
 })
 export class SolicitarConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -51,7 +51,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    *
-   * @param adminNomenclaturaService, Se utiliza para consultar
+   * @param configuracionesService, Se utiliza para consultar
    * las nomenclatura que tiene el cliente autenticado
    *
    * @param shellState, se utiliza para el titulo del componente
@@ -61,7 +61,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   constructor(
     protected messageService: MessageService,
-    private adminNomenclaturaService: AdminNomenclaturaService,
+    private configuracionesService: ConfiguracionesService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
@@ -103,7 +103,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     this.stepsModel.stepsParaSolicitarConsecutivo();
 
     // se consulta las nomenclaturas asociados al cliente autenticado
-    this.adminNomenclaturaService.getNomenclaturas(this.clienteCurrent.id).subscribe(
+    this.configuracionesService.getNomenclaturas(this.clienteCurrent.id).subscribe(
       data => {
         this.nomenclaturasOrigen = data;
         this.nomenclaturasView = data;

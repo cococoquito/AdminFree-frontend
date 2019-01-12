@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CuentaUserService } from './../../../services/cuenta-user.service';
+import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CommonComponent } from './../../../util/common.component';
 import { UserAccountST } from './../../../states/shell/shell-states/user-account.st';
 import { ShellState } from './../../../states/shell/shell.state';
@@ -19,7 +19,7 @@ import { MsjFrontConstant } from './../../../constants/messages-frontend.constan
 @Component({
   templateUrl: './cuenta-user.component.html',
   styleUrls: ['./cuenta-user.component.css'],
-  providers: [CuentaUserService]
+  providers: [ ConfiguracionesService ]
 })
 export class CuentaUserComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -57,7 +57,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   constructor(
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private cuentaUserService: CuentaUserService,
+    private configuracionesService: ConfiguracionesService,
     private shellState: ShellState) {
     super();
   }
@@ -138,7 +138,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
       accept: () => {
 
         // se procede a modificar los datos de la cuenta
-        this.cuentaUserService.modificarDatosCuenta(this.datosUserModificar).subscribe(
+        this.configuracionesService.modificarDatosCuenta(this.datosUserModificar).subscribe(
           data => {
             // se notifica los cambios en el shell de la aplicacion
             this.userAccount.changeStateCuentaUser(this.datosUserModificar);
@@ -176,7 +176,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
       accept: () => {
 
         // se procede a modificar la clave de ingreso
-        this.cuentaUserService.modificarClaveIngreso(this.cambioClave).subscribe(
+        this.configuracionesService.modificarClaveIngreso(this.cambioClave).subscribe(
           data => {
             // Se reinicia los datos
             this.cambioClave = new CambioClaveDTO();

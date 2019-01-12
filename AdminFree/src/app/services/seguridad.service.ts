@@ -4,16 +4,15 @@ import { Observable } from 'rxjs/Observable';
 import { AdminClientesDTO } from './../dtos/configuraciones/admin-clientes.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
-import { SeguridadConstant } from './../constants/seguridad.constant';
+import { SeguridadAPIConstant } from './../constants/apis/seguridad-api.constant';
 
 /**
- * Clase que contiene los servicios para la autenticacion
- * en el sistema para todo tipo de usuarios
+ * Clase que contiene los servicios del modulo de seguridad del sistema
  *
  * @author Carlos Andres Diaz
  */
 @Injectable()
-export class AutenticacionService {
+export class SeguridadService {
 
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
@@ -28,7 +27,7 @@ export class AutenticacionService {
    */
   public iniciarSesionAdminClientes(credenciales: CredencialesDTO): Observable<AdminClientesDTO> {
     return this.http.post<AdminClientesDTO>(
-      SeguridadConstant.URL_ADMIN_CLIENTES_AUTH,
+      SeguridadAPIConstant.URL_ADMIN_CLIENTES_AUTH,
       credenciales
     );
   }
@@ -41,7 +40,7 @@ export class AutenticacionService {
    */
   public iniciarSesion(credenciales: CredencialesDTO): Observable<WelcomeDTO> {
     return this.http.post<WelcomeDTO>(
-      SeguridadConstant.URL_AUTH,
+      SeguridadAPIConstant.URL_AUTH,
       credenciales
     );
   }

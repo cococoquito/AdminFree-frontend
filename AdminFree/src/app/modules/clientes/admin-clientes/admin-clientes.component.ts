@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonComponent } from './../../../util/common.component';
-import { AdminClienteService } from './../../../services/admin-cliente.service';
-import { AutenticacionService } from './../../../services/autenticacion.service';
+import { SeguridadService } from './../../../services/seguridad.service';
+import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
@@ -15,7 +15,7 @@ import { LocalStoreUtil } from '../../../util/local-store.util';
  */
 @Component({
   templateUrl: './admin-clientes.component.html',
-  providers: [AdminClienteService, AutenticacionService]
+  providers: [ SeguridadService, ConfiguracionesService ]
 })
 export class AdminClientesComponent extends CommonComponent implements OnInit {
 
@@ -43,12 +43,12 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   /**
    * Creates an instance of AdminClientesComponent.
    *
-   * @param autenticacionService, contiene los servicios para la autenticacion
-   * @param adminService, contiene los servicios para la administracion de clientes
+   * @param seguridadService, contiene los servicios para la autenticacion
+   * @param configuracionesService, contiene los servicios para la administracion de clientes
    */
   constructor(
-    private autenticacionService: AutenticacionService,
-    private adminService: AdminClienteService) {
+    private seguridadService: SeguridadService,
+    private configuracionesService: ConfiguracionesService) {
     super();
   }
 
@@ -76,7 +76,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
         this.credenciales.usuario) {
 
       // se procede a iniciar sesion ante el sistema
-      this.autenticacionService.iniciarSesionAdminClientes(this.credenciales).subscribe(
+      this.seguridadService.iniciarSesionAdminClientes(this.credenciales).subscribe(
         data => {
 
           // se configura el response
@@ -104,7 +104,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     this.msjError = null;
 
     // se procede a crear el cliente en el sistema
-    this.adminService.crearCliente(this.clienteCrear).subscribe(
+    this.configuracionesService.crearCliente(this.clienteCrear).subscribe(
       data => {
 
         // se procede agregar el cliente en la lista visualizada en la pagina
@@ -132,7 +132,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
     if (confirm('¿Está seguro de ELIMINAR el siguiente cliente? ' + cliente.nombre)) {
 
       // se procede a eliminar el cliente del sistema
-      this.adminService.eliminarCliente(cliente).subscribe(
+      this.configuracionesService.eliminarCliente(cliente).subscribe(
         data => {
 
           // se elimina el cliente de la lista visualizada en la pagina
@@ -167,7 +167,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a inactivar el cliente en el sistema
       cliente.tipoEvento = TipoEventoConstant.INACTIVAR;
-      this.adminService.activarInactivarCliente(cliente).subscribe(
+      this.configuracionesService.activarInactivarCliente(cliente).subscribe(
         data => {
 
           // se configura los datos retornado del servidor
@@ -202,7 +202,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a ACTIVAR el cliente en el sistema
       cliente.tipoEvento = TipoEventoConstant.ACTIVAR;
-      this.adminService.activarInactivarCliente(cliente).subscribe(
+      this.configuracionesService.activarInactivarCliente(cliente).subscribe(
         data => {
 
           // se configura los datos retornado del servidor
@@ -237,7 +237,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
       // se procede a MODIFICAR el cliente en el sistema
       this.clienteModificar.tipoEvento = TipoEventoConstant.ACTUALIZAR;
-      this.adminService.modificarCliente(this.clienteModificar).subscribe(
+      this.configuracionesService.modificarCliente(this.clienteModificar).subscribe(
         data => {
 
           // se cierra el modo de edicion

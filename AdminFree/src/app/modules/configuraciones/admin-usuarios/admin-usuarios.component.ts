@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AdminUsuarioService } from './../../../services/admin-usuario.service';
+import { ConfiguracionesService } from '../../../services/configuraciones.service';
 import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from './../../../states/shell/shell.state';
 import { SpinnerState } from './../../../states/spinner.state';
@@ -22,7 +22,7 @@ import { LabelsConstant } from './../../../constants/labels.constant';
  */
 @Component({
   templateUrl: './admin-usuarios.component.html',
-  providers: [AdminUsuarioService]
+  providers: [ ConfiguracionesService ]
 })
 export class AdminUsuariosComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -66,7 +66,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * @param confirmationService, se utiliza para el cambio
    * de estado y generacion de contrasenia
    *
-   * @param adminUsuarioService, se utiliza para consumir
+   * @param configuracionesService, se utiliza para consumir
    * los servicios relacionados al admin Usuario
    *
    * @param shellState, se utiliza para el titulo del componente
@@ -77,7 +77,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   constructor(
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private adminUsuarioService: AdminUsuarioService,
+    private configuracionesService: ConfiguracionesService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
@@ -111,7 +111,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
     // se consulta los usuarios asociados al cliente autenticado
-    this.adminUsuarioService.getUsuariosCliente(this.clienteCurrent).subscribe(
+    this.configuracionesService.getUsuariosCliente(this.clienteCurrent).subscribe(
       data => {
         this.usuarios = data;
       },
@@ -152,7 +152,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         usuarioUpdate.estado = idEstado;
 
         // se procede a modificar el estado del usuario
-        this.adminUsuarioService.modificarEstadoUsuario(usuarioUpdate).subscribe(
+        this.configuracionesService.modificarEstadoUsuario(usuarioUpdate).subscribe(
           data => {
             usuario.estado = idEstado;
             usuario.estadoNombre = EstadoConstant.getNombreEstado(idEstado);
@@ -186,7 +186,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         usuarioClave.id = usuario.id;
 
         // se procede a generar una nueva clave de ingreso
-        this.adminUsuarioService.generarClaveIngreso(usuarioClave).subscribe(
+        this.configuracionesService.generarClaveIngreso(usuarioClave).subscribe(
           data => {
             this.messageService.add(MsjUtil.getMsjInfo(
               MsjFrontConstant.GENERAR_CLAVE_EXITOSO.replace('?1', usuario.nombre).replace('?2', data.clave)
@@ -209,7 +209,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.setDatosAntesCreacion();
 
     // se hace el llamado HTTP para la creacion del usuario
-    this.adminUsuarioService.crearUsuario(this.usuarioCU).subscribe(
+    this.configuracionesService.crearUsuario(this.usuarioCU).subscribe(
       data => {
         // se agrega el nuevo usuario en la lista visualizada en pantalla
         this.usuarios.push(data);
@@ -237,7 +237,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.setDatosAntesEdicion();
 
     // se hace el llamado HTTP para la edicion del usuario
-    this.adminUsuarioService.editarUsuario(this.usuarioEditarOrigen).subscribe(
+    this.configuracionesService.editarUsuario(this.usuarioEditarOrigen).subscribe(
       data => {
         // Mensaje exitoso campo modificado
         this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USER_ACTUALIZADO_EXITOSO));
@@ -430,7 +430,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     }
 
     // se procede a validar los datos ingresados para la creacion
-    this.adminUsuarioService.validarDatosUsuario(this.usuarioCU).subscribe(
+    this.configuracionesService.validarDatosUsuario(this.usuarioCU).subscribe(
       data => {
         // se crea el clone por si regresan a este punto de la creacion
         this.usuarioCrearOrigen = new UsuarioDTO();
@@ -471,7 +471,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
       if (userOrigen.usuarioIngreso !== this.usuarioCU.usuarioIngreso) {
 
         // se procede a validar el usuario de ingreso
-        this.adminUsuarioService.validarDatosUsuario(this.usuarioCU).subscribe(
+        this.configuracionesService.validarDatosUsuario(this.usuarioCU).subscribe(
           data => {
             this.stepsModel.irSegundoStep();
           },

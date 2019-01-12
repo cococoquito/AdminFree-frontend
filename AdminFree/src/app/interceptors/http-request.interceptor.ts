@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
 import { SpinnerState } from './../states/spinner.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
-import { SeguridadConstant } from '../constants/seguridad.constant';
+import { SeguridadAPIConstant } from '../constants/apis/seguridad-api.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
 import { LocalStoreUtil } from '../util/local-store.util';
 import {
@@ -43,8 +43,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     let securityHeader;
 
     // si la peticion es para autenticacion se agrega la seguridad correspondiente
-    if (SeguridadConstant.URL_AUTH === req.url ||
-        SeguridadConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
+    if (SeguridadAPIConstant.URL_AUTH === req.url ||
+        SeguridadAPIConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
           securityHeader = this.getSecurityHeader(
             AppSecurityConstant.AUTH_USER,
             AppSecurityConstant.AUTH_PASS,

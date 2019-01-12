@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SeguridadService } from '../../../services/seguridad.service';
 import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from './../../../states/shell/shell.state';
-import { AutenticacionService } from './../../../services/autenticacion.service';
 import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { RouterConstant } from './../../../constants/router.constant';
 
@@ -14,7 +14,7 @@ import { RouterConstant } from './../../../constants/router.constant';
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [AutenticacionService]
+  providers: [SeguridadService]
 })
 export class LoginComponent extends CommonComponent implements OnInit {
 
@@ -26,12 +26,12 @@ export class LoginComponent extends CommonComponent implements OnInit {
 
   /**
    * @param shellState, se utiliza para notificar el inicio de sesion
-   * @param autenticacionService, contiene los servicios para la autenticacion
+   * @param seguridadService, contiene los servicios para la autenticacion
    * @param router, Router para la navegacion a la pagina bienvenida
    */
   constructor(
     private shellState: ShellState,
-    private autenticacionService: AutenticacionService,
+    private seguridadService: SeguridadService,
     private router: Router) {
     super();
   }
@@ -54,7 +54,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
         this.credenciales.usuario) {
 
       // se procede a iniciar sesion en el sistema
-      this.autenticacionService.iniciarSesion(this.credenciales).subscribe(
+      this.seguridadService.iniciarSesion(this.credenciales).subscribe(
         data => {
           // se cambia el estado de la cuenta a sesion iniciada
           this.shellState.userAccount.changeStateAutenticado(data);

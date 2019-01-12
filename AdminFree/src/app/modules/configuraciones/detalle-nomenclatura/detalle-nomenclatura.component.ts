@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AdminCampoService } from './../../../services/admin-campo.service';
+import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatura-campo.dto';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
@@ -32,7 +32,7 @@ export class DetalleNomenclaturaComponent {
    * @param service , se utiliza para consultar el detalle
    * del campo asociado a la nomenclatura
    */
-  constructor(private service: AdminCampoService) {}
+  constructor(private service: ConfiguracionesService) {}
 
   /**
    * Metodo que soporta el evento click del boton ver detalle del campo

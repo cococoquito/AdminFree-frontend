@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { AdminCampoService } from './../../../services/admin-campo.service';
-import { AdminNomenclaturaService } from '../../../services/admin-nomenclatura.service';
+import { ConfiguracionesService } from '../../../services/configuraciones.service';
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
@@ -25,7 +24,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
  */
 @Component({
   templateUrl: './admin-nomenclaturas.component.html',
-  providers: [AdminNomenclaturaService, AdminCampoService]
+  providers: [ ConfiguracionesService ]
 })
 export class AdminNomenclaturasComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -81,11 +80,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * @param confirmationService, se utiliza para mostrar el
    * modal de confirmacion para diferente procesos
    *
-   * @param adminCampoService, se utiliza para obtener los campos
+   * @param configuracionesService, se utiliza para obtener los campos
    * asociados al cliente autenticado
-   *
-   * @param service, se utiliza para consumir
-   * los servicios relacionados a este proceso negocio
    *
    * @param shellState, se utiliza para el titulo del componente
    *
@@ -94,8 +90,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   constructor(protected messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private adminCampoService: AdminCampoService,
-    private service: AdminNomenclaturaService,
+    private configuracionesService: ConfiguracionesService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
@@ -133,7 +128,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.regex = new RegexUtil();
 
     // se consulta las nomenclaturas asociados al cliente autenticado
-    this.service.getNomenclaturas(this.clienteCurrent.id).subscribe(
+    this.configuracionesService.getNomenclaturas(this.clienteCurrent.id).subscribe(
       data => {
         this.nomenclaturas = data;
       },
@@ -152,7 +147,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.messageService.clear();
 
     // se hace el llamado HTTP para la creacion de la nomenclatura
-    this.service.crearNomenclatura(this.nomenclaturaCU).subscribe(
+    this.configuracionesService.crearNomenclatura(this.nomenclaturaCU).subscribe(
       data => {
         // se agrega la nueva nomenclatura en la lista visualizada en pantalla
         this.nomenclaturas.push(data);
@@ -186,7 +181,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.datosEdicion.nomenclatura = this.nomenclaturaCU;
 
     // se hace el llamado HTTP para la edicion de la nomenclatura
-    this.service.editarNomenclatura(this.datosEdicion).subscribe(
+    this.configuracionesService.editarNomenclatura(this.datosEdicion).subscribe(
       data => {
         // se muestra el mensaje exitoso
         this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.NOMENCLATURA_ACTUALIZADO_EXITOSO));
@@ -226,7 +221,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       accept: () => {
 
         // se procede a eliminar la nomenclatura seleccionada
-        this.service.eliminarNomenclatura(nomenclatura.id).subscribe(
+        this.configuracionesService.eliminarNomenclatura(nomenclatura.id).subscribe(
           data => {
             // Mensaje exitoso, nomenclatura fue eliminado
             this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.NOMENCLATURA_ELIMINADO));
@@ -248,7 +243,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * @param nomenclatura , nomenclatura seleccionada para ver el detalle
    */
   public showModalVerDetalle(nomenclatura: NomenclaturaDTO): void {
-    this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
+    this.configuracionesService.getDetalleNomenclatura(nomenclatura.id).subscribe(
       data => {
         if (!this.verDetalleNomenclatura) {
           this.verDetalleNomenclatura = new ModalData();
@@ -267,7 +262,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * @param campo , campo seleccionado para ver su detalle
    */
   public showModalVerDetalleCampo(campo: CampoEntradaDTO): void {
-    this.adminCampoService.getDetalleCampoEntrada(campo.id).subscribe(
+    this.configuracionesService.getDetalleCampoEntrada(campo.id).subscribe(
       data => {
         if (!this.verDetalleCampo) {
           this.verDetalleCampo = new ModalData();
@@ -313,7 +308,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.messageService.clear();
 
     // se consulta el detalle de la nomenclatura para la edicion
-    this.service.getDetalleNomenclatura(nomenclatura.id).subscribe(
+    this.configuracionesService.getDetalleNomenclatura(nomenclatura.id).subscribe(
       data => {
         // se configura los datos de la edicion de la nomenclatura
         this.datosEdicion = new NomenclaturaEdicionDTO();
@@ -481,7 +476,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     }
 
     // se procede a validar si ya existe la nomenclatura ingresada
-    this.service.validarExisteNomenclatura(this.nomenclaturaCU).subscribe(
+    this.configuracionesService.validarExisteNomenclatura(this.nomenclaturaCU).subscribe(
       data => {
         // copia del valor de la nomenclatura por si regresan a este punto
         this.nomeclaturaValueBK = this.nomenclaturaCU.nomenclatura;
@@ -531,7 +526,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       if (nomenclaturaBK.nomenclatura !== this.nomenclaturaCU.nomenclatura) {
 
         // se procede a validar si ya existe la nomenclatura modificada
-        this.service.validarExisteNomenclatura(this.nomenclaturaCU).subscribe(
+        this.configuracionesService.validarExisteNomenclatura(this.nomenclaturaCU).subscribe(
           data => {
             this.stepsModel.irSegundoStep();
           },
@@ -574,7 +569,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       this.setCamposNomenclatura();
     } else {
       // se consulta los campos asociados al cliente autenticado
-      this.adminCampoService.getCamposEntrada(this.clienteCurrent.id).subscribe(
+      this.configuracionesService.getCamposEntrada(this.clienteCurrent.id).subscribe(
         data => {
           this.campos = data;
           this.setCamposNomenclatura();
