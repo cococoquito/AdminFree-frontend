@@ -44,6 +44,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** Es la nomenclatura seleccionada para solicitar el consecutivo */
   public nomenclaturaSel: NomenclaturaDTO;
 
+  /** Se utiliza para identificar si es la misma nomenclatura del paso 1 */
+  private idNomeclaturaSel: number;
+
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
 
@@ -188,10 +191,18 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       return;
     }
 
+    // se verifica que no sea la misma nomenclatura seleccionada
+    if (this.idNomeclaturaSel &&
+        this.idNomeclaturaSel === this.nomenclaturaSel.id) {
+        this.stepsModel.irSegundoStep(this.spinnerState);
+        return;
+    }
+
     // se procede a buscar los campos asociados a la nomenclatura seleccionada
     this.correspondenciaService.getCamposNomenclatura(this.nomenclaturaSel.id).subscribe(
       data => {
         this.campos = data;
+        this.idNomeclaturaSel = this.nomenclaturaSel.id;
         this.stepsModel.irSegundoStep();
       },
       error => {
