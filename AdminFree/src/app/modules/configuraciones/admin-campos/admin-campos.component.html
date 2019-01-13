@@ -209,7 +209,7 @@
                 <td style="width: 8%">
                   <admin-inputswitch
                     [isChecked]="restriccion.aplica"
-                    (switchChange)="restriccion.aplica = $event">
+                    (switchChange)="restriccion.aplica = $event; changeRestriccion(restriccion)">
                   </admin-inputswitch>
                 </td>
                 <td>

@@ -14,6 +14,9 @@ export class RestriccionDTO {
   /** Descripcion de la restriccion */
   public descripcion: string;
 
+  /** Contiene los IDS por la cual esta restriccion no es compatible */
+  public compatible: string;
+
   /** indica si la restriccion aplica para algun campo */
   public aplica: boolean;
 }

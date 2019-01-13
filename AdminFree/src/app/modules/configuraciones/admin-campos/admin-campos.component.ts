@@ -476,6 +476,29 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
+   * Metodo que es invocado cuando cambian una restriccion
+   */
+  public changeRestriccion(restriccion: RestriccionDTO): void {
+
+    // se valida si este campo tiene campo no compatibles
+    if (restriccion.compatible) {
+
+      // se recorre todo los demas campos para validar si es compatible
+      for (const other of this.campoCU.restricciones) {
+
+        // se verifica si esta restriccion aplica
+        if (other.id !== restriccion.id && other.aplica) {
+
+          // si la compatibilidad lo incluye la restriccion no debe ser aplicada
+          if (restriccion.compatible.includes(other.id + '')) {
+              other.aplica = false;
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Metodo que soporta el evento click del boton eliminar item (creacion)
    */
   private eliminarItemCreacion(item: ItemDTO): void {
