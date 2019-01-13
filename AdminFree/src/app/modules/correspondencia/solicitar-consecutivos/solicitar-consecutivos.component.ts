@@ -8,6 +8,7 @@ import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { StepsModel } from './../../../model/steps-model';
 import { ModalData } from '../../../model/modal-data';
+import { CampoEntradaDetalleDTO } from './../../../dtos/correspondencia/campo-entrada-detalle.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { MsjUtil } from '../../../util/messages.util';
@@ -36,6 +37,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Son las nomenclaturas a mostrar en pantalla */
   public nomenclaturasView: Array<NomenclaturaDTO>;
+
+  /** Son los campos asociados a la nomenclatura seleccionada */
+  public campos: Array<CampoEntradaDetalleDTO>;
 
   /** Es la nomenclatura seleccionada para solicitar el consecutivo */
   public nomenclaturaSel: NomenclaturaDTO;
@@ -183,5 +187,16 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.NOMENCLATURA_REQUERIDO));
       return;
     }
+
+    // se procede a buscar los campos asociados a la nomenclatura seleccionada
+    this.correspondenciaService.getCamposNomenclatura(this.nomenclaturaSel.id).subscribe(
+      data => {
+        this.campos = data;
+        this.stepsModel.irSegundoStep();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 }

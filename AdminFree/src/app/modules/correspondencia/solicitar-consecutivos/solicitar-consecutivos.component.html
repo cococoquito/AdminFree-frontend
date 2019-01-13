@@ -81,6 +81,33 @@
   </p-panel>
 </ng-container>
 
+<!-- Paso 2 entrada informacion-->
+<ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
+
+  <p-panel styleClass="mb-2 steps-pnl">
+    <p-header>
+      <i class="fa fa-info-circle font-size-18"></i>
+      <span> Ingrese la información solicitada</span>
+    </p-header>
+
+    <p class="txt-nom">
+      <span (click)="verDetalleNomenclatura($event, nomenclaturaSel)" class="edit-round-min btn-pup">
+        <i class="pi pi-external-link del-round-min-pi"></i>
+      </span> Nomenclatura:{{nomenclaturaSel.nomenclatura}}
+    </p>
+
+    <!-- botones regresar - next-->
+    <div class="text-center mt-2 mb-1">
+      <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
+        <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+      </button>
+      <button type="button" class="btn btn-sm btn-primary w-100-px">
+        <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+      </button>
+    </div>
+  </p-panel>
+</ng-container>
+
 <!-- modal ver detalle nomenclatura -->
 <ng-container *ngIf="detalleNomenclatura && detalleNomenclatura.data">
   <p-dialog header="Detalle de la Nomenclatura"
