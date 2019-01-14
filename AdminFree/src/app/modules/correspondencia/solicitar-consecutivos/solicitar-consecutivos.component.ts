@@ -41,6 +41,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** Son los campos asociados a la nomenclatura seleccionada */
   public campos: Array<CampoEntradaDetalleDTO>;
 
+  /** Es el filter ingresado para la busqueda de nomenclatura */
+  public filterValue: string;
+
   /** Es la nomenclatura seleccionada para solicitar el consecutivo */
   public nomenclaturaSel: NomenclaturaDTO;
 
@@ -157,21 +160,16 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /**
    * Metodo que permite soportar el evento filter por nomenclatura
-   *
-   * @param event , contiene el valor ingresado
    */
-  public busquedaNomenclatura(event: any): void {
+  public busquedaNomenclatura(): void {
 
     // se crea la instancia de la lista nomenclaturas a visualizar
     this.nomenclaturasView = new Array<NomenclaturaDTO>();
 
-    // es el nuevo valor ingresado
-    const value = event.target.value;
-
     // se busca la nomenclatura que coincide con el valor
     for (const nomenclatura of this.nomenclaturasOrigen) {
         if (nomenclatura.nomenclatura &&
-            nomenclatura.nomenclatura.toUpperCase().includes(value.toUpperCase())) {
+            nomenclatura.nomenclatura.toUpperCase().includes(this.filterValue.toUpperCase())) {
             this.nomenclaturasView.push(nomenclatura);
         }
     }
