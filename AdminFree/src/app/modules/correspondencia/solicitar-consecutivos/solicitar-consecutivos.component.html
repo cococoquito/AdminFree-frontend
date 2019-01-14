@@ -12,15 +12,18 @@
           <span> Seleccione la Nomenclatura</span>
         </div>
         <div *ngIf="nomenclaturasOrigen && nomenclaturasOrigen.length > 5" class="ui-g-6 p-0">
-          <input type="text"
-            (keyup)="busquedaNomenclatura()"
-            [(ngModel)]="filterValue"
-            maxlength="15"
-            adminAutofocus
-            autocomplete="off"
-            placeholder="Busqueda Nomenclatura"
-            class="ad-input ad-input-style w-100 pt-0" />
-          <div class="focus-border"></div>
+          <div class="inner-addon left-addon">
+            <i class="fa fa-search-plus font-size-18 aico"></i>
+            <input type="text"
+              (keyup)="busquedaNomenclatura()"
+              [(ngModel)]="filterValue"
+              maxlength="15"
+              adminAutofocus
+              autocomplete="off"
+              placeholder="Busqueda por Nomenclatura"
+              class="ad-input ad-input-style w-100 pt-0" />
+            <div class="focus-border"></div>
+          </div>
         </div>
       </div>
     </p-header>

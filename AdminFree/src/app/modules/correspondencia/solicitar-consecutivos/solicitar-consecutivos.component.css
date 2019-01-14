@@ -1,0 +1,27 @@
+.inner-addon {
+  position: relative;
+}
+
+/* style icon */
+.inner-addon .aico {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .aico {
+  left: 0px;
+}
+
+.right-addon .aico {
+  right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+  padding-left: 30px;
+}
+
+.right-addon input {
+  padding-right: 30px;
+}
