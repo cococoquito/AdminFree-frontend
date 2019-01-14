@@ -163,15 +163,21 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   public busquedaNomenclatura(): void {
 
-    // se crea la instancia de la lista nomenclaturas a visualizar
-    this.nomenclaturasView = new Array<NomenclaturaDTO>();
+    // el valor del filtro no puede ser indefinido
+    if (this.filterValue && this.filterValue.length > 0) {
 
-    // se busca la nomenclatura que coincide con el valor
-    for (const nomenclatura of this.nomenclaturasOrigen) {
+      // se crea la instancia de la lista nomenclaturas a visualizar
+      this.nomenclaturasView = new Array<NomenclaturaDTO>();
+
+      // se busca la nomenclatura que coincide con el valor
+      for (const nomenclatura of this.nomenclaturasOrigen) {
         if (nomenclatura.nomenclatura &&
             nomenclatura.nomenclatura.toUpperCase().includes(this.filterValue.toUpperCase())) {
             this.nomenclaturasView.push(nomenclatura);
         }
+      }
+    } else {
+      this.nomenclaturasView = this.nomenclaturasOrigen;
     }
 
     // se refresca la tabla de nomenclaturas

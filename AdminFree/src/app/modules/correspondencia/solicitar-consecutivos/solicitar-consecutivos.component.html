@@ -95,15 +95,24 @@
 
   <p-panel styleClass="mb-2 steps-pnl">
     <p-header>
-      <i class="fa fa-info-circle font-size-18"></i>
-      <span> Ingrese la información solicitada</span>
+      <div class="ui-g">
+        <div class="ui-g-6 p-0">
+          <p>
+            <i class="fa fa-info-circle font-size-22"></i>
+            Ingrese la información solicitada
+          </p>
+        </div>
+        <div class="ui-g-6 p-0 text-right">
+          <p>
+            <span (click)="verDetalleNomenclatura($event, nomenclaturaSel)" class="edit-round-min btn-pup">
+              <i class="pi pi-external-link del-round-min-pi"></i>
+            </span> Nomenclatura: <span style="color: #F25423">{{nomenclaturaSel.nomenclatura}}</span>
+          </p>
+        </div>
+      </div>
     </p-header>
 
-    <p class="txt-nom">
-      <span (click)="verDetalleNomenclatura($event, nomenclaturaSel)" class="edit-round-min btn-pup">
-        <i class="pi pi-external-link del-round-min-pi"></i>
-      </span> Nomenclatura:{{nomenclaturaSel.nomenclatura}}
-    </p>
+
 
     <!-- campos de informacion-->
     <admin-campos-informacion [campos]="campos"></admin-campos-informacion>

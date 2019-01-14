@@ -1,5 +1,43 @@
+<!-- Hay campos-->
 <ng-container *ngIf="campos && campos.length > 0">
-Si hay campos
+  <table class="table steps-tbl mb-0">
+    <tbody>
+      <tr *ngFor="let campo of campos">
+
+        <!-- campo de texto-->
+        <ng-container *ngIf="campo.tipoCampo === ID_CAMPO_TEXTO">
+          <td style="width: 15%">
+            <label for="cnombre" class="steps-st mb-0">{{campo.nombre}}</label>
+          </td>
+          <td>
+            <input type="text"
+              id="cnombre"
+              name="cnombre"
+              maxlength="100"
+              adminAutofocus
+              autocomplete="off"
+              class="ad-input ad-input-style w-100"/>
+            <div class="focus-border"></div>
+          </td>
+        </ng-container>
+
+        <!-- lista desplegable-->
+        <ng-container *ngIf="campo.tipoCampo === ID_LISTA_DESPLEGABLE">
+            LISTA DESPLEGABLE
+        </ng-container>
+
+        <!-- casilla de verificacion-->
+        <ng-container *ngIf="campo.tipoCampo === ID_CASILLA_VERIFICACION">
+            CASILLA_VERIFICACION
+        </ng-container>
+
+        <!-- campo de fecha-->
+        <ng-container *ngIf="campo.tipoCampo === ID_CAMPO_FECHA">
+            CAMPO_FECHA
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
 </ng-container>
 
 <!-- No Hay campos-->
