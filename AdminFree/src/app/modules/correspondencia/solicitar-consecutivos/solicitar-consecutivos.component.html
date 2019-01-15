@@ -96,26 +96,28 @@
 <!-- Paso 2 entrada informacion-->
 <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
 
-  <p-panel styleClass="mb-2 steps-pnl">
+  <p-panel styleClass="mb-2 steps-pnl steps-pnl-main">
     <p-header>
-      <div class="ui-g">
-        <div class="ui-g-6 p-0">
-          <p>
-            <i class="fa fa-info-circle font-size-22"></i>
-            Ingrese la información solicitada
-          </p>
-        </div>
-        <div class="ui-g-6 p-0 text-right">
-          <p>
-            <span (click)="verDetalleNomenclatura($event, nomenclaturaSel)" class="edit-round-min btn-pup">
-              <i class="pi pi-external-link del-round-min-pi"></i>
-            </span> Nomenclatura: <span style="color: #F25423">{{nomenclaturaSel.nomenclatura}}</span>
-          </p>
-        </div>
-      </div>
+      <i class="fa fa-info-circle font-size-18"></i>
+      <span> Ingrese la información solicitada</span>
     </p-header>
 
+    <!-- title nomenclatura-->
+    <div class="text-center pt-2 pb-2 st">
+      <p>
+        <span (click)="verDetalleNomenclatura($event, nomenclaturaSel)" class="edit-round-min btn-pup">
+          <i class="pi pi-external-link del-round-min-pi"></i>
+        </span>
 
+
+
+       <span style="color: #F25423"> {{nomenclaturaSel.nomenclatura}}</span>
+       <span style="color: #333333 !important;
+       font-weight: 700 !important;
+       font-size: 14px !important;
+       font-family: Times, Times New Roman, serif !important;"> ({{nomenclaturaSel.descripcion}})</span>
+      </p>
+    </div>
 
     <!-- campos de informacion-->
     <admin-campos-informacion [campos]="campos"></admin-campos-informacion>
