@@ -18,12 +18,14 @@
         <input type="text"
           id="ctx{{i}}"
           name="ctx{{i}}"
+          [(ngModel)]="campoModel.valor"
           maxlength="100"
           tooltipEvent="focus"
           tooltipPosition="right"
+          [placeholder]="campoModel.isSoloNumeros ? 'Campo Numérico': ''"
           [pTooltip]="campoModel.campo.descripcion"
           class="ad-input ad-input-style w-100"
-          [ngClass]="{'ad-input-required' : campoModel.pintarError}"/>
+          [ngClass]="{'ad-input-required' : campoModel.pintarError, 'font-new-roman' : campoModel.isSoloNumeros}"/>
         <div class="focus-border"></div>
       </div>
       <div class="ui-g-2">
