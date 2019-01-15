@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CampoEntradaDetalleDTO } from '../../../dtos/correspondencia/campo-entrada-detalle.dto';
 import { CampoInformacionModel } from './../../../model/campo-informacion.model';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
+import { RegexUtil } from './../../../util/regex-util';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 
 /**
@@ -23,6 +24,9 @@ export class CamposInformacionComponent implements OnInit {
   /** Esta es la lista a visualizar en pantalla*/
   public camposVisualizar: Array<CampoInformacionModel>;
 
+  /** Se utiliza para validar los valores de los inputs*/
+  public regex: RegexUtil;
+
   /** identificadores de cada tipo de campo*/
   public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
   public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
@@ -33,7 +37,19 @@ export class CamposInformacionComponent implements OnInit {
    * Se construye el modelo de cada campo, donde se indica sus restricciones
    */
   ngOnInit() {
+
+    // se configura las variables iniciales
+    this.init();
+
+    // se configura el modelo de los campos
     this.setCamposModel();
+  }
+
+  /**
+   * Metodo que permite configurar las variables iniciales
+   */
+  private init(): void {
+    this.regex = new RegexUtil();
   }
 
   /**

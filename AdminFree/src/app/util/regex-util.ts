@@ -8,6 +8,9 @@ export class RegexUtil {
   /** Se utiliza para validar que la expresion sea solo numeros */
   public readonly SOLO_NUMEROS: RegExp = /^[0-9]*$/;
 
+  /** Alfanumerico sin caracteres especiales */
+  public readonly ALFANUMERICO: RegExp = /^[^!]+$/;
+
   /** Mensaje cuando el valor no es numerico */
   private readonly SOLO_NUMEROS_MSJ = '? debe ser numérico';
 
