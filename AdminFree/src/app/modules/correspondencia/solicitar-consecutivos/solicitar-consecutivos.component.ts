@@ -3,6 +3,7 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CorrespondenciaService } from './../../../services/correspondencia.service';
+import { CamposInformacionComponent } from '../campos-informacion/campos-informacion.component';
 import { CommonComponent } from './../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
@@ -57,6 +58,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Es el modelo de la tabla de nomenclaturas*/
   @ViewChild('tblNomen') tblNomen: Table;
+
+  /** Es el componente de campos de informacion*/
+  @ViewChild(CamposInformacionComponent) camposInformacion: CamposInformacionComponent;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -206,5 +210,13 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que soporta el evento del boton siguiente de entrada informacion
+   */
+  public siguienteEntradaInformacion(): void {
+    const resultado = this.camposInformacion.esInformacionValida();
+    console.log(resultado);
   }
 }

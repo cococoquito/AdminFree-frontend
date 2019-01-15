@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CampoEntradaDetalleDTO } from '../../../dtos/correspondencia/campo-entrada-detalle.dto';
 import { CampoInformacionModel } from './../../../model/campo-informacion.model';
-import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RegexUtil } from './../../../util/regex-util';
+import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 
 /**
@@ -43,6 +43,46 @@ export class CamposInformacionComponent implements OnInit {
 
     // se configura el modelo de los campos
     this.setCamposModel();
+  }
+
+  /**
+   * Metodo que comprueba si la informacion ingresada es valida
+   */
+  public esInformacionValida(): boolean {
+    let resultado = true;
+
+    // se verifica si hay campos de informacion para esta nomenclatura
+    if (this.camposVisualizar && this.camposVisualizar.length > 0) {
+
+      // se recorre cada campo
+      for (const campoModel of this.camposVisualizar) {
+
+        // se valida dependiendo del tipo de campo
+        switch (campoModel.campo.tipoCampo) {
+
+          case this.ID_CAMPO_TEXTO: {
+            resultado = this.esCampoTextoOK(campoModel);
+            break;
+          }
+
+          case this.ID_LISTA_DESPLEGABLE: {
+            resultado = this.esRequeridoOK(campoModel);
+            break;
+          }
+
+          case this.ID_CASILLA_VERIFICACION: {
+            resultado = this.esRequeridoOK(campoModel);
+            break;
+          }
+
+          case this.ID_CAMPO_FECHA: {
+            resultado = this.esCampoFechaOK(campoModel);
+            break;
+          }
+        }
+      }
+    }
+    return resultado;
   }
 
   /**
@@ -106,5 +146,69 @@ export class CamposInformacionComponent implements OnInit {
         }
       }
     }
+  }
+
+  /**
+   * Metodo que permite validar si el valor para el campo de texto es valido
+   */
+  private esCampoTextoOK(campoModel: CampoInformacionModel): boolean {
+
+    // se valida si el campo es requerido
+    let resultado: boolean = this.esRequeridoOK(campoModel);
+
+    // si el resultado es valido se procede a validar si el campo es numerico
+    if (resultado) {
+      resultado = this.esCampoNumerico(campoModel);
+    }
+    return resultado;
+  }
+
+  /**
+   * Metodo que permite validar si el valor para el campo de texto es valido
+   */
+  private esCampoFechaOK(campoModel: CampoInformacionModel): boolean {
+    return true;
+  }
+
+  /**
+   * Metodo que permite validar si el campo es requerido y su valor
+   */
+  private esRequeridoOK(campoModel: CampoInformacionModel): boolean {
+    campoModel.pintarError = false;
+
+    // se limpian los espacios solamente para campo de texto
+    if (this.ID_CAMPO_TEXTO === campoModel.campo.tipoCampo) {
+      campoModel.valor = this.setTrim(campoModel.valor);
+    }
+
+    // se valida si este campo es requerido
+    if (campoModel.isRequerido) {
+
+      // se valida si el valor fue ingresado por el usuario
+      if (!campoModel.valor) {
+        campoModel.pintarError = true;
+      }
+    }
+    return !campoModel.pintarError;
+  }
+
+  /**
+   * Permite validar si el campo es numerico y su valor
+   */
+  private esCampoNumerico(campoModel: CampoInformacionModel): boolean {
+    campoModel.pintarError = false;
+
+    // se valida si el campo debe ser solo numeros
+    if (campoModel.isSoloNumeros) {
+      campoModel.pintarError = !this.regex.isValorNumerico(campoModel.valor);
+    }
+    return !campoModel.pintarError;
+  }
+
+  /**
+   * Metodo remueve los espacios en blanco del comienzo y final
+   */
+  private setTrim(valor: string): string {
+    return (valor) ? valor.trim() : null;
   }
 }
