@@ -12,7 +12,6 @@ import { CampoEntradaDetalleDTO } from './../../../dtos/correspondencia/campo-en
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { MsjUtil } from '../../../util/messages.util';
-import { RegexUtil } from './../../../util/regex-util';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
@@ -49,9 +48,6 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Se utiliza para identificar si es la misma nomenclatura del paso 1 */
   private idNomeclaturaSel: number;
-
-  /** Se utiliza para validar los valores de los inputs*/
-  public regex: RegexUtil;
 
   /** Modelo del componente steps para la solicitud del consecutivo*/
   public stepsModel: StepsModel;
@@ -113,9 +109,6 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
-
-    /** Se utiliza para validar los valores de los inputs*/
-    this.regex = new RegexUtil();
 
     // se configura el componente steps
     this.stepsModel = new StepsModel();

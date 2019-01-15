@@ -1,21 +1,29 @@
 <!-- Hay campos-->
 <ng-container *ngIf="campos && campos.length > 0">
 
-  <ng-container *ngFor="let campo of campos; let i = index">
-    <div *ngIf="campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g">
+  <!-- For para cada campo -->
+  <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
+
+    <!-- CAMPO DE TEXTO -->
+    <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g">
+
+      <!-- label-->
       <div class="ui-g-2 text-right">
-        <label for="ctx{{i}}" class="steps-st mb-0 mt-1">{{campo.nombre}}:</label>
+        <label for="ctx{{i}}" class="steps-st mb-0 mt-1">{{campoModel.campo.nombre}}:</label>
+        <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
       </div>
+
+      <!-- input-->
       <div class="ui-g-8">
         <input type="text"
           id="ctx{{i}}"
           name="ctx{{i}}"
           maxlength="100"
-          autocomplete="off"
-          [pTooltip]="campo.descripcion"
           tooltipEvent="focus"
           tooltipPosition="right"
-          class="ad-input ad-input-style w-100"/>
+          [pTooltip]="campoModel.campo.descripcion"
+          class="ad-input ad-input-style w-100"
+          [ngClass]="{'ad-input-required' : campoModel.pintarError}"/>
         <div class="focus-border"></div>
       </div>
       <div class="ui-g-2">

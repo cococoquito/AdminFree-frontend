@@ -25,3 +25,14 @@
 .right-addon input {
   padding-right: 30px;
 }
+
+.scc-txt {
+  color: #333333;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: Times, Times New Roman, serif;
+}
+
+.scc-color-txt {
+  color: #F25423
+}
