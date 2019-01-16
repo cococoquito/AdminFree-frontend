@@ -2,34 +2,41 @@
 <ng-container *ngIf="campos && campos.length > 0">
 
   <!-- For para cada campo -->
-  <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
+  <div class="ui-g mr-4 ml-4 pt-0">
 
-    <!-- CAMPO DE TEXTO -->
-    <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g mr-5 ml-5 border-bottom-0 scc-border">
+    <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
 
-      <!-- label-->
-      <div class="ui-g-3 text-left">
-        <i class="fa fa-question-circle pr-1 font-size-18" [pTooltip]="campoModel.campo.descripcion" tooltipPosition="left"></i>
-        <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
-        <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
+      <div class="ui-g-6 pt-0 pb-0" *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO">
+        <!-- label-->
+        <div class="ui-g-12 pb-0">
+          <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
+          <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
+        </div>
+
+        <!-- input-->
+        <div class="ui-g-12 pb-0 pt-0 float-none">
+
+            <div class="inner-addon left-addon float-none">
+                <i class="fa fa-question-circle font-size-20 aico" [pTooltip]="campoModel.campo.descripcion" tooltipPosition="left"></i>
+                  <input type="text"
+                  id="ctx{{i}}"
+                  name="ctx{{i}}"
+                  [(ngModel)]="campoModel.valor"
+                  maxlength="100"
+                  [placeholder]="campoModel.isSoloNumeros ? 'Campo Numérico': ''"
+                  [pKeyFilter]="campoModel.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
+                  class="ad-input ad-input-style w-100 pt-0"
+                  [ngClass]="{'ad-input-required' : !campoModel.isValido, 'font-new-roman' : campoModel.isSoloNumeros}"/>
+                <div class="focus-border"></div>
+              </div>
+
+
+        </div>
+
       </div>
+    </ng-container>
 
-      <!-- input-->
-      <div class="ui-g-9">
-        <input type="text"
-          id="ctx{{i}}"
-          name="ctx{{i}}"
-          [(ngModel)]="campoModel.valor"
-          maxlength="100"
-          [placeholder]="campoModel.isSoloNumeros ? 'Campo Numérico': ''"
-          [pKeyFilter]="campoModel.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
-          class="ad-input ad-input-style w-100"
-          [ngClass]="{'ad-input-required' : !campoModel.isValido, 'font-new-roman' : campoModel.isSoloNumeros}"/>
-        <div class="focus-border"></div>
-      </div>
-    </div>
-    <div *ngIf="camposVisualizar.length === i+1" class="mr-5 ml-5 scc-border-top"></div>
-  </ng-container>
+  </div>
 </ng-container>
 
 <!-- No Hay campos-->
