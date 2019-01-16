@@ -173,7 +173,7 @@ export class CamposInformacionComponent implements OnInit {
     this.esRequeridoOK(campoModel);
 
     // se valida si el campo es solo numeros
-    if (campoModel.isSoloNumeros && campoModel.isValido) {
+    if (campoModel.isSoloNumeros && campoModel.valor) {
 
       // se verifica el valor ingresado para este campo
       campoModel.isValido = this.regex.isValorNumerico(campoModel.valor);

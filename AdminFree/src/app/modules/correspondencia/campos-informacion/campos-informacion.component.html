@@ -8,14 +8,14 @@
     <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g mr-5 ml-5 border-bottom-0 scc-border">
 
       <!-- label-->
-      <div class="ui-g-2 text-left">
+      <div class="ui-g-3 text-left">
         <i class="fa fa-question-circle pr-1 font-size-18" [pTooltip]="campoModel.campo.descripcion" tooltipPosition="left"></i>
         <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
         <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
       </div>
 
       <!-- input-->
-      <div class="ui-g-10">
+      <div class="ui-g-9">
         <input type="text"
           id="ctx{{i}}"
           name="ctx{{i}}"
