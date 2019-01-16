@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { CampoEntradaDetalleDTO } from '../../../dtos/correspondencia/campo-entrada-detalle.dto';
 import { CampoInformacionModel } from './../../../model/campo-informacion.model';
 import { RegexUtil } from './../../../util/regex-util';
+import { MsjUtil } from './../../../util/messages.util';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 
@@ -34,6 +36,11 @@ export class CamposInformacionComponent implements OnInit {
   public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
 
   /**
+   * @param messageService, mensajes en pantalla
+   */
+  constructor(private messageService: MessageService) {}
+
+  /**
    * Se construye el modelo de cada campo, donde se indica sus restricciones
    */
   ngOnInit() {
@@ -61,24 +68,32 @@ export class CamposInformacionComponent implements OnInit {
         switch (campoModel.campo.tipoCampo) {
 
           case this.ID_CAMPO_TEXTO: {
-            resultado = this.esCampoTextoOK(campoModel);
+            this.esCampoTextoOK(campoModel);
             break;
           }
 
           case this.ID_LISTA_DESPLEGABLE: {
-            resultado = this.esRequeridoOK(campoModel);
+            this.esRequeridoOK(campoModel);
             break;
           }
 
           case this.ID_CASILLA_VERIFICACION: {
-            resultado = this.esRequeridoOK(campoModel);
+            this.esRequeridoOK(campoModel);
             break;
           }
 
           case this.ID_CAMPO_FECHA: {
-            resultado = this.esCampoFechaOK(campoModel);
+            this.esCampoFechaOK(campoModel);
             break;
           }
+        }
+      }
+
+      // se verifica el resultado a retornar
+      for (const campoModel of this.camposVisualizar) {
+        if (!campoModel.isValido) {
+          resultado = false;
+          break;
         }
       }
     }
@@ -109,6 +124,7 @@ export class CamposInformacionComponent implements OnInit {
 
         // se crea el modelo del campo
         campoModel = new CampoInformacionModel();
+        campoModel.isValido = true;
         campoModel.campo = campo;
 
         // se configura las restricciones de este campo
@@ -151,30 +167,35 @@ export class CamposInformacionComponent implements OnInit {
   /**
    * Metodo que permite validar si el valor para el campo de texto es valido
    */
-  private esCampoTextoOK(campoModel: CampoInformacionModel): boolean {
+  private esCampoTextoOK(campoModel: CampoInformacionModel): void {
 
-    // se valida si el campo es requerido
-    let resultado: boolean = this.esRequeridoOK(campoModel);
+    // se valida la obligatorieda del campo
+    this.esRequeridoOK(campoModel);
 
-    // si el resultado es valido se procede a validar si el campo es numerico
-    if (resultado) {
-      resultado = this.esCampoNumerico(campoModel);
+    // se valida si el campo es solo numeros
+    if (campoModel.isSoloNumeros && campoModel.isValido) {
+
+      // se verifica el valor ingresado para este campo
+      campoModel.isValido = this.regex.isValorNumerico(campoModel.valor);
+
+      // se muestra el mensaje en pantalla
+      if (!campoModel.isValido) {
+        this.messageService.add(MsjUtil.getToastError(this.regex.getMsjSoloNumeros(campoModel.campo.nombre)));
+      }
     }
-    return resultado;
   }
 
   /**
-   * Metodo que permite validar si el valor para el campo de texto es valido
+   * Metodo que permite validar si el valor para la fecha es valido
    */
-  private esCampoFechaOK(campoModel: CampoInformacionModel): boolean {
-    return true;
+  private esCampoFechaOK(campoModel: CampoInformacionModel): void {
   }
 
   /**
    * Metodo que permite validar si el campo es requerido y su valor
    */
-  private esRequeridoOK(campoModel: CampoInformacionModel): boolean {
-    campoModel.pintarError = false;
+  private esRequeridoOK(campoModel: CampoInformacionModel): void {
+    campoModel.isValido = true;
 
     // se limpian los espacios solamente para campo de texto
     if (this.ID_CAMPO_TEXTO === campoModel.campo.tipoCampo) {
@@ -186,23 +207,9 @@ export class CamposInformacionComponent implements OnInit {
 
       // se valida si el valor fue ingresado por el usuario
       if (!campoModel.valor) {
-        campoModel.pintarError = true;
+        campoModel.isValido = false;
       }
     }
-    return !campoModel.pintarError;
-  }
-
-  /**
-   * Permite validar si el campo es numerico y su valor
-   */
-  private esCampoNumerico(campoModel: CampoInformacionModel): boolean {
-    campoModel.pintarError = false;
-
-    // se valida si el campo debe ser solo numeros
-    if (campoModel.isSoloNumeros) {
-      campoModel.pintarError = !this.regex.isValorNumerico(campoModel.valor);
-    }
-    return !campoModel.pintarError;
   }
 
   /**

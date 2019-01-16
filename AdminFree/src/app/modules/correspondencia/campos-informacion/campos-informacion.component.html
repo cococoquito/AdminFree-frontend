@@ -24,7 +24,7 @@
           [placeholder]="campoModel.isSoloNumeros ? 'Campo Numérico': ''"
           [pKeyFilter]="campoModel.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
           class="ad-input ad-input-style w-100"
-          [ngClass]="{'ad-input-required' : campoModel.pintarError, 'font-new-roman' : campoModel.isSoloNumeros}"/>
+          [ngClass]="{'ad-input-required' : !campoModel.isValido, 'font-new-roman' : campoModel.isSoloNumeros}"/>
         <div class="focus-border"></div>
       </div>
     </div>

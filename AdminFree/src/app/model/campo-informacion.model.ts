@@ -23,6 +23,6 @@ export class CampoInformacionModel {
   /** Indica si el campo de texto debe ser solo numeros */
   public isSoloNumeros: boolean;
 
-  /** Indica si el componente se debe pintar error */
-  public pintarError: boolean;
+  /** Indica si el componente tiene un valor valido */
+  public isValido: boolean;
 }
