@@ -3,6 +3,10 @@ body {
 }
 
 /* Estilos para el menu de la app */
+.ui-panelmenu .ui-panelmenu-header {
+  margin: -2px 0 0 0 !important;
+}
+
 .ui-panelmenu .ui-panelmenu-panel {
   margin-top: 0px !important;
 }
