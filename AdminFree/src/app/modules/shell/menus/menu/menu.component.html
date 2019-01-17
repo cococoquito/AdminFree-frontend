@@ -1,8 +1,5 @@
-<nav>
-  <ul>
-    <li *ngFor="let modulo of shellState.menu.modulos">
-      <admin-menu-item [item]="modulo">
-      </admin-menu-item>
-    </li>
-  </ul>
-</nav>
+<p-panelMenu
+  [model]="shellState.menu.modulos"
+  [style]="{'width':'234px'}"
+  [multiple]="false">
+</p-panelMenu>

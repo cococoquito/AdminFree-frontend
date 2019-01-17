@@ -3,9 +3,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { ScreenST } from './screen.st';
 import { BreadCrumbST } from './breadcrumb.st';
 import { LocalStoreUtil } from './../../../util/local-store.util';
-import { MenuItem } from './../../../model/menu-item';
+import { MenuItem } from 'primeng/api';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
-import { MenuBackup } from './../../../model/menu-backup';
 import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 import { RouterConstant } from '../../../constants/router.constant';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
@@ -49,20 +48,19 @@ export class MenuST {
    * Metodo que es invocado del constructor de este State
    */
   private init(): void {
+
     // se obtiene los datos de la autenticacion del local-store
     const welcomeDTO: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
 
     // se valida que el user si este autenticado
     if (welcomeDTO && welcomeDTO.credenciales) {
 
-      // se obtiene el backup del menu del localstore
-      const menuBackup: MenuBackup = LocalStoreUtil.menu(TipoEventoConstant.GET);
-      if (menuBackup) {
+      // se obtiene los items del menu del localstore
+      const items: Array<MenuItem> = LocalStoreUtil.menu(TipoEventoConstant.GET);
+      if (items && items.length > 0) {
 
-        // se configurar los atributos del localstore
-        this.isMenuOpen = menuBackup.isMenuOpen;
-        this.isToogleMenuFirstTime = menuBackup.isToogleMenuFirstTime;
-        this.modulos = menuBackup.modulos;
+        // se configura los items
+        this.modulos = items;
 
         // se obtiene la suscripcion del router para ser notificado
         this.getSuscribeRouter();
@@ -82,14 +80,15 @@ export class MenuST {
    * @param welcomeDTO, datos de la autenticacion
    */
   public initMenu(welcomeDTO: WelcomeDTO): void {
+
     // se construye los modulos con sus items dependiendo de los privilegios del usuario
     this.construirMenu(welcomeDTO);
 
     // se obtiene la suscripcion del router para ser notificado
     this.getSuscribeRouter();
 
-    // se configura los datos del menu en el localstore
-    this.setMenuOnLocalStore();
+    // se configura los items del menu en el localstore
+    LocalStoreUtil.menu(TipoEventoConstant.SET, this.modulos);
   }
 
   /**
@@ -114,43 +113,6 @@ export class MenuST {
     }
     this.isMenuOpen = !this.isMenuOpen;
     this.isToogleMenuFirstTime = false;
-
-    // se actualiza los datos del menu en el localstore
-    this.setMenuOnLocalStore();
-  }
-
-  /**
-   * Metodo que soporta el evento click del Modulo
-   * en el menu, donde se visualiza o esconde sus items
-   *
-   * @param modulo, es el modulo seleccionado para
-   * abrir/ocultar sus items
-   */
-  public toggleMenuModulo(modulo: MenuItem): void {
-    // se cambie el estado de la variable 'isOPen' de este modulo
-    modulo.isOpen = !modulo.isOpen;
-
-    // se recorre los demas modulos para cerrar sus items
-    for (const otherModulo of this.modulos) {
-      // no aplica para el modulo que llega por parametro ni para p-inicio
-      if (otherModulo !== modulo && !otherModulo.isPaginaInicio) {
-          otherModulo.isOpen = false;
-      }
-    }
-
-    // se actualiza los datos del menu en el localstore
-    this.setMenuOnLocalStore();
-  }
-
-  /**
-   * Metodo que permite configurar el Menu en el localstore
-   */
-  private setMenuOnLocalStore() {
-    const menuBackup: MenuBackup = new MenuBackup();
-    menuBackup.isMenuOpen = this.isMenuOpen;
-    menuBackup.isToogleMenuFirstTime = this.isToogleMenuFirstTime;
-    menuBackup.modulos = this.modulos;
-    LocalStoreUtil.menu(TipoEventoConstant.SET, menuBackup);
   }
 
   /**
@@ -166,13 +128,13 @@ export class MenuST {
   }
 
   /**
-   * Metodo que permite configurar el modulo/item seleccionado
-   * por el usuario a navegar, esto aplica en el menu o cualquier
-   * cambio que se realice en el router
+   * Metodo que permite notificar el cambio de navegacion
+   * al componente miga de pan, para asi pintar la ubicacion
    *
    * @param url, es la nueva url donde el usuario va navegar
    */
   private notificarItemSeleccionado(url: string): void {
+
     // miga de pan para administracion de cuenta de usuario
     if (url.includes(RouterConstant.ROUTER_CUENTA_USER)) {
       this.bread.url = '/' + LabelsConstant.MENU_CUENTA_USER;
@@ -181,39 +143,31 @@ export class MenuST {
 
     // programacion defensiva para los modulos
     if (this.modulos) {
-      let moduloFueSeleccionado: MenuItem;
 
       // se recorre todos los modulos para validar el router de sus items
       for (const modulo of this.modulos) {
 
         // el modulo de la pagina inicio no tiene items pero si router
-        if (modulo.isPaginaInicio) {
-          modulo.isSeleccionado = modulo.router === url;
-          if (modulo.isSeleccionado) {
-            this.bread.url = '/' + modulo.nombre;
-            this.bread.icono = 'fa-dashboard';
+        if (!modulo.items) {
+          if (modulo.routerLink[0] === url) {
+            this.bread.url = '/' + modulo.label;
+            this.bread.icono = modulo.id;
           }
         } else {
+          modulo.expanded = false;
 
           // se recorre los items de este modulo validando su router
           for (const item of modulo.items) {
-            if (item.router === url) {
-              item.isSeleccionado = true;
-              modulo.isSeleccionado = true;
-              moduloFueSeleccionado = modulo;
-              this.bread.url = '/' + modulo.nombre + '/' + item.nombre;
-              this.bread.icono = modulo.icono;
-            } else {
-              item.isSeleccionado = false;
-              if (modulo !== moduloFueSeleccionado) {
-                modulo.isSeleccionado = false;
-              }
+            const submodulo = item as MenuItem;
+            if (submodulo.routerLink[0] === url) {
+              this.bread.url = '/' + modulo.label + '/' + submodulo.label;
+              this.bread.icono = modulo.id;
+              modulo.expanded = true;
+              break;
             }
           }
         }
       }
-      // se actualiza los datos del menu en el localstore
-      this.setMenuOnLocalStore();
     }
   }
 
@@ -277,118 +231,107 @@ export class MenuST {
    * Metodo que permite construir el Item-Menu de la pagina de inicio
    */
   private getItemPaginaInicio(): MenuItem {
-    const inicio = new MenuItem();
-    inicio.nombre = LabelsConstant.MENU_PAGINA_INICIO;
-    inicio.router = RouterConstant.NAVIGATE_BIENVENIDA;
-    inicio.isPaginaInicio = true;
-    return inicio;
+    return {
+      id: 'fa-dashboard',
+      label: LabelsConstant.MENU_PAGINA_INICIO,
+      icon: 'fa fa-fw fa-dashboard font-size-20',
+      routerLink: [RouterConstant.NAVIGATE_BIENVENIDA]
+    };
   }
 
   /**
    * Metodo que permite construir el modulo del CORRESPONDENCIA
    */
   private getModuloCorrespondencia(): MenuItem {
-    // se crea el Modulo de correspondencia
-    const correspondencia = new MenuItem();
-    correspondencia.nombre = LabelsConstant.MODULO_CORRESPONDENCIA;
-    correspondencia.icono = 'fa-envelope';
-
-    // ITEM1, Solicitar consecutivo de correspondencia
-    const solicitarConsecutivos = new MenuItem();
-    solicitarConsecutivos.nombre = LabelsConstant.MENU_SOLICITAR_CONSECUTIVOS;
-    solicitarConsecutivos.router = RouterConstant.NAVIGATE_SOLICITAR_CONSECUTIVOS;
-    solicitarConsecutivos.icono = 'fa-envelope-open';
-    solicitarConsecutivos.isUltimoItem = true;
-
-    // se agrega los items para este modulo
-    correspondencia.agregarItem(solicitarConsecutivos);
-    return correspondencia;
+    return {
+      id: 'fa-envelope',
+      label: LabelsConstant.MODULO_CORRESPONDENCIA,
+      icon: 'fa fa-fw fa-envelope pl-1 mr-2',
+      items: [
+        {
+          id: 'fa-envelope-open',
+          label: LabelsConstant.MENU_SOLICITAR_CONSECUTIVOS,
+          icon: 'fa fa-fw fa-envelope-open',
+          routerLink: [RouterConstant.NAVIGATE_SOLICITAR_CONSECUTIVOS],
+        }
+      ]
+    };
   }
 
   /**
    * Metodo que permite construir el modulo de ARCHIVO GESTION
    */
   private getModuloArchivoGestion(): MenuItem {
-    // se crea el Modulo de Archivo de Gestion
-    const archivoGestion = new MenuItem();
-    archivoGestion.nombre = LabelsConstant.MODULO_ARCHIVO_GESTION;
-    archivoGestion.icono = 'fa-folder-open';
-
-    // ITEM1, Admin Series documentales
-    const series = new MenuItem();
-    series.nombre = 'Series Documentales';
-    series.router = '/autenticado/archivogestion/series';
-
-    // ITEM2, prueba
-    const prueba = new MenuItem();
-    prueba.nombre = 'Prueba Archivo';
-    prueba.router = '/autenticado/archivogestion/prueba';
-    prueba.isUltimoItem = true;
-
-    // se agrega los items para este modulo
-    archivoGestion.agregarItem(series);
-    archivoGestion.agregarItem(prueba);
-    return archivoGestion;
+    return {
+      id: 'fa-folder-open',
+      label: LabelsConstant.MODULO_ARCHIVO_GESTION,
+      icon: 'fa fa-fw fa-folder-open pl-1 mr-2',
+      items: [
+        {
+          label: 'Series Documentales',
+          icon: '',
+          routerLink: ['/autenticado/archivogestion/series'],
+        },
+        {
+          label: 'Prueba Archivo',
+          icon: '',
+          routerLink: ['/autenticado/archivogestion/prueba'],
+        }
+      ]
+    };
   }
 
   /**
    * Metodo que permite construir el modulo de REPORTES
    */
   private getModuloReportes(): MenuItem {
-    // se crea el Modulo de REPORTES
-    const reportes = new MenuItem();
-    reportes.nombre = LabelsConstant.MODULO_REPORTES;
-    reportes.icono = 'fa-bar-chart';
-
-    // ITEM1, Generar reportes
-    const generar = new MenuItem();
-    generar.nombre = 'Generar Reportes';
-    generar.router = '/autenticado/reportes/generar';
-
-    // ITEM2, prueba
-    const prueba = new MenuItem();
-    prueba.nombre = 'Prueba Reportes';
-    prueba.router = '/autenticado/reportes/prueba';
-    prueba.isUltimoItem = true;
-
-    // se agrega los items para este modulo
-    reportes.agregarItem(generar);
-    reportes.agregarItem(prueba);
-    return reportes;
+    return {
+      id: 'fa-bar-chart',
+      label: LabelsConstant.MODULO_REPORTES,
+      icon: 'fa fa-fw fa-bar-chart pl-1 mr-2',
+      items: [
+        {
+          label: 'Generar Reportes',
+          icon: '',
+          routerLink: ['/autenticado/reportes/generar'],
+        },
+        {
+          label: 'Prueba Reportes',
+          icon: '',
+          routerLink: ['/autenticado/reportes/prueba'],
+        }
+      ]
+    };
   }
 
   /**
    * Metodo que permite construir el modulo de CONFIGURACIONES
    */
   private getModuloConfiguraciones(): MenuItem {
-    // se crea el Modulo de CONFIGURACIONES
-    const configuraciones = new MenuItem();
-    configuraciones.nombre = LabelsConstant.MODULO_CONFIGURACIONES;
-    configuraciones.icono = 'fa-cog';
-
-    // ITEM1, Administracion de Usuarios
-    const adminUsers = new MenuItem();
-    adminUsers.nombre = LabelsConstant.MENU_ADMIN_USERS;
-    adminUsers.router = RouterConstant.NAVIGATE_ADMIN_USERS;
-    adminUsers.icono = 'fa-user-plus';
-
-    // ITEM2, Administracion de Campos
-    const adminCampos = new MenuItem();
-    adminCampos.nombre = LabelsConstant.MENU_ADMIN_CAMPOS;
-    adminCampos.router = RouterConstant.NAVIGATE_ADMIN_CAMPOS;
-    adminCampos.icono = 'fa-list-alt';
-
-    // ITEM3, Administracion de Nomenclaturas
-    const adminNomenclaturas = new MenuItem();
-    adminNomenclaturas.nombre = LabelsConstant.MENU_ADMIN_NOMENCLATURAS;
-    adminNomenclaturas.router = RouterConstant.NAVIGATE_ADMIN_NOMENCLATURAS;
-    adminNomenclaturas.icono = 'fa-ils';
-    adminNomenclaturas.isUltimoItem = true;
-
-    // se agrega los items para este modulo
-    configuraciones.agregarItem(adminUsers);
-    configuraciones.agregarItem(adminCampos);
-    configuraciones.agregarItem(adminNomenclaturas);
-    return configuraciones;
+    return {
+      id: 'fa-cog',
+      label: LabelsConstant.MODULO_CONFIGURACIONES,
+      icon: 'fa fa-fw fa-cog font-size-20',
+      items: [
+        {
+          id: 'fa-user-plus',
+          label: LabelsConstant.MENU_ADMIN_USERS,
+          icon: 'fa fa-fw fa-user-plus',
+          routerLink: [RouterConstant.NAVIGATE_ADMIN_USERS]
+        },
+        {
+          id: 'fa-list-alt',
+          label: LabelsConstant.MENU_ADMIN_CAMPOS,
+          icon: 'fa fa-fw fa-list-alt',
+          routerLink: [RouterConstant.NAVIGATE_ADMIN_CAMPOS]
+        },
+        {
+          id: 'fa-ils',
+          label: LabelsConstant.MENU_ADMIN_NOMENCLATURAS,
+          icon: 'fa fa-fw fa-ils',
+          routerLink: [RouterConstant.NAVIGATE_ADMIN_NOMENCLATURAS]
+        }
+      ]
+    };
   }
 }

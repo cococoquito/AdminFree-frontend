@@ -2,6 +2,39 @@ body {
   font-family: 'Open Sans', sans-serif !important;
 }
 
+/* Estilos para el menu de la app */
+.ui-panelmenu .ui-panelmenu-panel {
+  margin-top: 0px !important;
+}
+
+.ui-panelmenu .ui-state-active {
+  background-color: #e0ebf1 !important;
+  cursor: auto !important;
+  color: #333333 !important;
+}
+
+.ui-panelmenu .ui-panelmenu-header.ui-state-active > a {
+  border: 1px solid #aabac3 !important;
+  background-color: #aabac3 !important;
+  color: #333333 !important;
+}
+
+.ui-panelmenu .ui-panelmenu-header.ui-state-active > a .ui-panelmenu-icon {
+  color: #333333 !important;
+}
+
+.ui-panelmenu .ui-panelmenu-header > a {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 16px !important;
+}
+
+.ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
+  padding: 0.514em 0.857em !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+  padding-left: 42px !important;
+}
+
 /* Estilos para los inputs */
 .ad-input-label {
   margin-bottom: .2rem;

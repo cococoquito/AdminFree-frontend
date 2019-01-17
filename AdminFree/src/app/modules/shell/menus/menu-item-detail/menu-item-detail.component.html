@@ -1,6 +1,0 @@
-<div [ngClass]="hiddenMenu && !modulo.isOpen ? 'd-none' : ''">
-  <li *ngFor="let item of modulo.items" [@openCloseModulo]="modulo.isOpen ? 'open' : 'closed'">
-    <admin-menu-item [item]="item">
-    </admin-menu-item>
-  </li>
-</div>

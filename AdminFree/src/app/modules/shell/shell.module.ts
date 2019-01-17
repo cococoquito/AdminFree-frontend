@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { SharedCommonModule } from './../shared/shared-common.module';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
@@ -10,8 +11,6 @@ import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './header/header.component';
 import { UserAccountComponent } from './header/user-account/user-account.component';
 import { MenuComponent } from './menus/menu/menu.component';
-import { MenuItemComponent } from './menus/menu-item/menu-item.component';
-import { MenuItemDetailComponent } from './menus/menu-item-detail/menu-item-detail.component';
 import { ContentComponent } from './content/content.component';
 import { FooterComponent } from './footer/footer.component';
 import { TitleComponent } from './title/title.component';
@@ -28,6 +27,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     SharedCommonModule,
     MenuModule,
     SidebarModule,
+    PanelMenuModule,
     MessagesModule,
     ConfirmDialogModule,
     ToastModule
@@ -38,8 +38,6 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     ContentComponent,
     FooterComponent,
     MenuComponent,
-    MenuItemComponent,
-    MenuItemDetailComponent,
     UserAccountComponent,
     TitleComponent,
     BreadcrumbComponent
