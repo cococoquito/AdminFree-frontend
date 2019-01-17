@@ -1,7 +1,7 @@
+import { MenuItem } from 'primeng/api';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
-import { MenuItem } from 'primeng/api';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
 
 /**
@@ -47,7 +47,7 @@ export class LocalStoreUtil {
   }
 
   /**
-   * Metodo que permite administrar los datos del backup del Menu
+   * Metodo que permite administrar los items del menu
    */
   public static menu(evento: TipoEventoConstant, items?: Array<MenuItem>): Array<MenuItem> {
     return this.implementarEvento(evento, this.KEY_MENU, items);

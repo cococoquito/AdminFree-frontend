@@ -1,9 +1,9 @@
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { MenuItem } from 'primeng/api';
 import { ScreenST } from './screen.st';
 import { BreadCrumbST } from './breadcrumb.st';
 import { LocalStoreUtil } from './../../../util/local-store.util';
-import { MenuItem } from 'primeng/api';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
 import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 import { RouterConstant } from '../../../constants/router.constant';
@@ -92,7 +92,8 @@ export class MenuST {
   }
 
   /**
-   * Metodo que permite destruir el Menu liberando memoria
+   * Metodo que permite destruir el Menu liberando memoria,
+   * es llamado cuando se cierra la sesion del usuario
    */
   public destroyMenu(): void {
     this.isMenuOpen = false;
@@ -232,10 +233,10 @@ export class MenuST {
    */
   private getItemPaginaInicio(): MenuItem {
     return {
-      id: 'fa-dashboard',
       label: LabelsConstant.MENU_PAGINA_INICIO,
+      routerLink: [RouterConstant.NAVIGATE_BIENVENIDA],
       icon: 'fa fa-fw fa-dashboard font-size-20',
-      routerLink: [RouterConstant.NAVIGATE_BIENVENIDA]
+      id: 'fa-dashboard'
     };
   }
 
@@ -244,15 +245,15 @@ export class MenuST {
    */
   private getModuloCorrespondencia(): MenuItem {
     return {
-      id: 'fa-envelope',
       label: LabelsConstant.MODULO_CORRESPONDENCIA,
       icon: 'fa fa-fw fa-envelope pl-1 mr-2',
+      id: 'fa-envelope',
       items: [
         {
-          id: 'fa-envelope-open',
           label: LabelsConstant.MENU_SOLICITAR_CONSECUTIVOS,
-          icon: 'fa fa-fw fa-envelope-open',
           routerLink: [RouterConstant.NAVIGATE_SOLICITAR_CONSECUTIVOS],
+          icon: 'fa fa-fw fa-envelope-open',
+          id: 'fa-envelope-open'
         }
       ]
     };
@@ -263,9 +264,9 @@ export class MenuST {
    */
   private getModuloArchivoGestion(): MenuItem {
     return {
-      id: 'fa-folder-open',
       label: LabelsConstant.MODULO_ARCHIVO_GESTION,
       icon: 'fa fa-fw fa-folder-open pl-1 mr-2',
+      id: 'fa-folder-open',
       items: [
         {
           label: 'Series Documentales',
@@ -286,9 +287,9 @@ export class MenuST {
    */
   private getModuloReportes(): MenuItem {
     return {
-      id: 'fa-bar-chart',
       label: LabelsConstant.MODULO_REPORTES,
       icon: 'fa fa-fw fa-bar-chart pl-1 mr-2',
+      id: 'fa-bar-chart',
       items: [
         {
           label: 'Generar Reportes',
@@ -309,27 +310,27 @@ export class MenuST {
    */
   private getModuloConfiguraciones(): MenuItem {
     return {
-      id: 'fa-cog',
       label: LabelsConstant.MODULO_CONFIGURACIONES,
       icon: 'fa fa-fw fa-cog font-size-20',
+      id: 'fa-cog',
       items: [
         {
-          id: 'fa-user-plus',
           label: LabelsConstant.MENU_ADMIN_USERS,
+          routerLink: [RouterConstant.NAVIGATE_ADMIN_USERS],
           icon: 'fa fa-fw fa-user-plus',
-          routerLink: [RouterConstant.NAVIGATE_ADMIN_USERS]
+          id: 'fa-user-plus'
         },
         {
-          id: 'fa-list-alt',
           label: LabelsConstant.MENU_ADMIN_CAMPOS,
+          routerLink: [RouterConstant.NAVIGATE_ADMIN_CAMPOS],
           icon: 'fa fa-fw fa-list-alt',
-          routerLink: [RouterConstant.NAVIGATE_ADMIN_CAMPOS]
+          id: 'fa-list-alt'
         },
         {
-          id: 'fa-ils',
           label: LabelsConstant.MENU_ADMIN_NOMENCLATURAS,
+          routerLink: [RouterConstant.NAVIGATE_ADMIN_NOMENCLATURAS],
           icon: 'fa fa-fw fa-ils',
-          routerLink: [RouterConstant.NAVIGATE_ADMIN_NOMENCLATURAS]
+          id: 'fa-ils'
         }
       ]
     };
