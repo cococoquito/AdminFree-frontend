@@ -217,6 +217,8 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   public siguienteEntradaInformacion(): void {
     const resultado = this.camposInformacion.esInformacionValida();
-    console.log(resultado);
+    if (resultado) {
+      alert('exitoso');
+    }
   }
 }

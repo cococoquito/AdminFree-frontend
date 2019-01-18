@@ -15,6 +15,7 @@ import { MsjUtil } from './../../../util/messages.util';
 import { LabelsConstant } from './../../../constants/labels.constant';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
+import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 
 /**
  * Componente para la administracion de los Campos de ingreso
@@ -536,9 +537,20 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     if (this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
       this.stepsModel.stepsParaAdminCampos(true);
     } else {
+
       // se refresca los steps, ya que volvieron al primer paso
       if (this.campoCrearOrigen) {
         this.stepsModel.stepsParaAdminCampos(false);
+      }
+
+      // para la casilla de verificacion se debe colocar el valor NO seleccionado
+      if (this.campoCU.tipoCampo === this.ID_CASILLA_VERIFICACION) {
+        for (const restriccion of this.campoCU.restricciones) {
+          if (RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO === restriccion.id) {
+            restriccion.aplica = true;
+            break;
+          }
+        }
       }
     }
   }

@@ -74,10 +74,6 @@ export class CamposInformacionComponent implements OnInit {
             this.esRequeridoOK(campoModel);
             break;
           }
-          case this.ID_CASILLA_VERIFICACION: {
-            this.esRequeridoOK(campoModel);
-            break;
-          }
           case this.ID_CAMPO_FECHA: {
             this.esCampoFechaOK(campoModel);
             break;
@@ -152,6 +148,14 @@ export class CamposInformacionComponent implements OnInit {
           }
           case RestriccionesKeyConstant.KEY_CAMPO_SOLO_NUMEROS: {
             campoModel.isSoloNumeros = true;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO + '': {
+            campoModel.valor = false;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_SI: {
+            campoModel.valor = true;
             break;
           }
         }

@@ -2,7 +2,7 @@
 <ng-container *ngIf="campos && campos.length > 0">
 
   <!-- pnal main -->
-  <div class="ui-g mr-4 ml-4 scc-border pb-3 pt-2">
+  <div class="ui-g mr-4 ml-4 scc-border rounded pb-3 pt-2">
 
     <!-- For para cada campo -->
     <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
@@ -67,6 +67,27 @@
               [styleClass]="campoModel.isValido ? 'ad-select' : 'ad-select-required'">
             </p-dropdown>
           </div>
+        </div>
+      </div>
+
+      <!-- casilla verificacion -->
+      <div class="ui-g-6 pt-0 pb-0" *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION">
+
+        <!-- label-->
+        <div class="ui-g-12 pb-0">
+          <label class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
+        </div>
+
+        <!-- casilla-->
+        <div class="ui-g-12 pt-0">
+          <admin-inputswitch
+            [isChecked]="campoModel.valor"
+            (switchChange)="campoModel.valor = $event;">
+          </admin-inputswitch>
+          <i class="fa fa-question-circle font-size-20 ml-2"
+            [pTooltip]="campoModel.campo.descripcion"
+            tooltipPosition="right">
+          </i>
         </div>
       </div>
     </ng-container>
