@@ -11,11 +11,8 @@ export class CampoInformacionModel {
   /** Contiene los datos del campo */
   public campo: CampoEntradaDetalleDTO;
 
-  /** Es el valor ingresado del campo de informacion */
+  /** Es el valor ingresado o seleccionado */
   public valor: any;
-
-  /** Id del Item seleccionado, aplica solamente para lista desplegable */
-  public idItem: number;
 
   /** Indica si el campo es requerido */
   public isRequerido: boolean;

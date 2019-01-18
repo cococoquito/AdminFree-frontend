@@ -61,6 +61,7 @@
               placeholder="Seleccione una Opción"
               showClear="true"
               emptyFilterMessage="No hay resultados"
+              [(ngModel)]="campoModel.valor"
               [filter]="campoModel.campo.items.length > 6"
               [options]="campoModel.campo.items"
               [styleClass]="campoModel.isValido ? 'ad-select' : 'ad-select-required'">

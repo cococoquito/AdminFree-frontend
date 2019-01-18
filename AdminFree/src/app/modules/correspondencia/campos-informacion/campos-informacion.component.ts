@@ -70,17 +70,14 @@ export class CamposInformacionComponent implements OnInit {
             this.esCampoTextoOK(campoModel);
             break;
           }
-
           case this.ID_LISTA_DESPLEGABLE: {
             this.esRequeridoOK(campoModel);
             break;
           }
-
           case this.ID_CASILLA_VERIFICACION: {
             this.esRequeridoOK(campoModel);
             break;
           }
-
           case this.ID_CAMPO_FECHA: {
             this.esCampoFechaOK(campoModel);
             break;
