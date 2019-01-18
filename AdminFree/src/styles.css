@@ -39,6 +39,26 @@ body {
   padding-left: 42px !important;
 }
 
+/* Estilos para dropdown */
+.ui-dropdown-trigger-icon {
+  display: none !important
+}
+
+.ui-dropdown label.ui-dropdown-label {
+  padding: 0px !important;
+  font-family: Times, Times New Roman, serif!important;
+  font-size: 14px !important
+}
+
+.ui-dropdown-items {
+  font-family: Times, Times New Roman, serif!important;
+  font-size: 16px !important
+}
+
+.ui-dropdown {
+  display: block !important;
+}
+
 /* Estilos para los inputs */
 .ad-input-label {
   margin-bottom: .2rem;
@@ -87,6 +107,21 @@ body {
   -ms-transition: 0.4s;
   -o-transition: 0.4s;
   left: 0;
+}
+
+.ad-select {
+  border: 0px !important;
+  border-bottom: 1px solid #a6a6a6 !important;
+  border-radius: 0px !important;
+  width:100%!important;
+}
+
+.ad-select-required {
+  border: 0px !important;
+  border-bottom: 1px solid #a94442 !important;
+  border-radius: 0px !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6)!important;
+  width:100%!important;
 }
 
 /* Estilos para el modal de menu de usuario */

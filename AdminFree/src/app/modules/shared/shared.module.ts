@@ -5,6 +5,7 @@ import { DialogModule } from 'primeng/dialog';
 import { StepsModule } from 'primeng/steps';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TooltipModule } from 'primeng/tooltip';
+import { DropdownModule } from 'primeng/dropdown';
 import { SharedCommonModule } from './shared-common.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
@@ -24,6 +25,7 @@ import { InputswitchComponent } from './../../directives/inputswitch/inputswitch
     StepsModule,
     RadioButtonModule,
     TooltipModule,
+    DropdownModule,
     KeyFilterModule
   ],
   exports: [
@@ -34,6 +36,7 @@ import { InputswitchComponent } from './../../directives/inputswitch/inputswitch
     StepsModule,
     RadioButtonModule,
     TooltipModule,
+    DropdownModule,
     KeyFilterModule,
     InputswitchComponent
   ],

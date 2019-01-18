@@ -56,7 +56,6 @@ export class CamposInformacionComponent implements OnInit {
    * Metodo que comprueba si la informacion ingresada es valida
    */
   public esInformacionValida(): boolean {
-    let resultado = true;
 
     // se verifica si hay campos de informacion para esta nomenclatura
     if (this.camposVisualizar && this.camposVisualizar.length > 0) {
@@ -92,12 +91,11 @@ export class CamposInformacionComponent implements OnInit {
       // se verifica el resultado a retornar
       for (const campoModel of this.camposVisualizar) {
         if (!campoModel.isValido) {
-          resultado = false;
-          break;
+          return false;
         }
       }
     }
-    return resultado;
+    return true;
   }
 
   /**
