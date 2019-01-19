@@ -36,3 +36,8 @@
 .scc-color-txt {
   color: #F25423
 }
+
+.scc-mx-dtl-cmp {
+  max-width: 700px;
+  min-width: 700px;
+}
