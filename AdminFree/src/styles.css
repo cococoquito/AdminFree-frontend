@@ -17,17 +17,17 @@ body {
   color: #333333 !important;
 }
 
-.ui-panelmenu .ui-panelmenu-header.ui-state-active > a {
+.ui-panelmenu .ui-panelmenu-header.ui-state-active>a {
   border: 1px solid #aabac3 !important;
   background-color: #aabac3 !important;
   color: #333333 !important;
 }
 
-.ui-panelmenu .ui-panelmenu-header.ui-state-active > a .ui-panelmenu-icon {
+.ui-panelmenu .ui-panelmenu-header.ui-state-active>a .ui-panelmenu-icon {
   color: #333333 !important;
 }
 
-.ui-panelmenu .ui-panelmenu-header > a {
+.ui-panelmenu .ui-panelmenu-header>a {
   font-family: Times, Times New Roman, serif !important;
   font-size: 16px !important;
 }
@@ -46,12 +46,12 @@ body {
 
 .ui-dropdown label.ui-dropdown-label {
   padding: 0px !important;
-  font-family: Times, Times New Roman, serif!important;
+  font-family: Times, Times New Roman, serif !important;
   font-size: 14px !important
 }
 
 .ui-dropdown-items {
-  font-family: Times, Times New Roman, serif!important;
+  font-family: Times, Times New Roman, serif !important;
   font-size: 16px !important
 }
 
@@ -113,15 +113,23 @@ body {
   border: 0px !important;
   border-bottom: 1px solid #a6a6a6 !important;
   border-radius: 0px !important;
-  width:100%!important;
+  width: 100% !important;
 }
 
 .ad-select-required {
   border: 0px !important;
   border-bottom: 1px solid #a94442 !important;
   border-radius: 0px !important;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6)!important;
-  width:100%!important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
+  width: 100% !important;
+}
+
+.ad-calendar {
+  border: 0px !important;
+  border-bottom: 1px solid #a6a6a6 !important;
+  border-radius: 0px !important;
+  width: 100% !important;
+  padding: 0px !important;
 }
 
 /* Estilos para el modal de menu de usuario */
@@ -439,14 +447,14 @@ body {
   text-align: center;
 }
 
-.steps-tbl td{
+.steps-tbl td {
   padding: .5rem !important;
   vertical-align: middle !important;
 }
 
 .steps-st {
   font-family: Times, Times New Roman, serif;
-  font-weight:700;
+  font-weight: 700;
   font-size: 15px;
 }
 
