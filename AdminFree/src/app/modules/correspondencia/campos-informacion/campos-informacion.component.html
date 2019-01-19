@@ -8,7 +8,7 @@
     <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
 
       <!-- campo de texto -->
-      <div class="ui-g-6 pt-0 pb-0" *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO">
+      <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g-6 pt-0 pb-0">
 
         <!-- label-->
         <div class="ui-g-12 pb-0">
@@ -39,7 +39,7 @@
       </div>
 
       <!-- lista desplegable -->
-      <div class="ui-g-6 pt-0 pb-0" *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE">
+      <div *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE" class="ui-g-6 pt-0 pb-0">
 
         <!-- label-->
         <div class="ui-g-12 pb-0">
@@ -71,7 +71,7 @@
       </div>
 
       <!-- casilla verificacion -->
-      <div class="ui-g-6 pt-0 pb-0" *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION">
+      <div *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION" class="ui-g-6 pt-0 pb-0">
 
         <!-- label-->
         <div class="ui-g-12 pb-0">
@@ -88,6 +88,35 @@
             [pTooltip]="campoModel.campo.descripcion"
             tooltipPosition="right">
           </i>
+        </div>
+      </div>
+
+      <!-- calendar -->
+      <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA" class="ui-g-6 pt-0 pb-0">
+
+        <!-- label-->
+        <div class="ui-g-12 pb-0">
+          <label for="ld{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
+          <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
+        </div>
+
+        <!-- calendar-->
+        <div class="ui-g-12 pt-0">
+          <div class="inner-addon left-addon">
+            <i class="fa fa-question-circle font-size-20 aico"
+              [pTooltip]="campoModel.campo.descripcion"
+              tooltipPosition="left">
+            </i>
+            <p-calendar
+              inputId="ld{{i}}"
+              [(ngModel)]="campoModel.valor"
+              [locale]="calendarEspanish"
+              showButtonBar="true"
+              readonlyInput="true"
+              [inputStyleClass]="campoModel.isValido ? 'ad-calendar' : 'ad-calendar-required'"
+              dateFormat="dd/mm/yy">
+            </p-calendar>
+          </div>
         </div>
       </div>
     </ng-container>

@@ -59,6 +59,77 @@ body {
   display: block !important;
 }
 
+/* Estilos para los calendar */
+.ui-calendar {
+  display: block !important;
+}
+
+.ui-datepicker {
+  min-width: auto !important;
+  padding: 0 !important;
+}
+
+.ui-datepicker table {
+  font-size: 12px !important;
+  margin: 0px !important;
+}
+
+.ui-datepicker:not(.ui-state-disabled) table td a:not(.ui-state-active):not(.ui-state-highlight):hover {
+  background-color: #e8e8e8 !important;
+  color: #000000 !important;
+}
+
+.ui-datepicker tbody td a {
+  padding: 0.25em !important;
+  margin: 0 !important;
+  text-align: center !important;
+  color: #212121 !important;
+  display: inline-block !important;
+  height: 2.25em !important;
+  width: 2.25em !important;
+  -moz-border-radius: 50% !important;
+  -webkit-border-radius: 50% !important;
+  border-radius: 50% !important;
+  line-height: 1.8em !important;
+}
+
+.ui-datepicker tbody td a.ui-state-active {
+  background-color: #7CB342 !important;
+  color: #ffffff !important;
+}
+
+.ui-datepicker thead tr {
+  color: #ffffff !important;
+  background: #607D8B !important;
+}
+
+.ui-datepicker th {
+  padding: .5em !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  border: 0 !important;
+}
+
+.ui-datepicker .ui-datepicker-header {
+  padding: 0.625em 1em !important;
+  font-size: 1em !important;
+  background: #455A64 !important;
+  border-color: #455A64 !important;
+  color: #fff !important;
+}
+
+.ui-datepicker-next {
+  color: #fff !important;
+}
+
+.ui-datepicker-prev {
+  color: #fff !important;
+}
+
+.ui-datepicker-buttonbar {
+  padding: .3em !important;
+}
+
 /* Estilos para los inputs */
 .ad-input-label {
   margin-bottom: .2rem;
@@ -130,6 +201,15 @@ body {
   border-radius: 0px !important;
   width: 100% !important;
   padding: 0px !important;
+}
+
+.ad-calendar-required {
+  border: 0px !important;
+  border-radius: 0px !important;
+  width: 100% !important;
+  padding: 0px !important;
+  border-bottom: 1px solid #a94442 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
 }
 
 /* Estilos para el modal de menu de usuario */

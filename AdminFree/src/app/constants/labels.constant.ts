@@ -104,4 +104,17 @@ export class LabelsConstant {
   public static readonly NOMENCLATURA: string = 'Nomenclatura';
   public static readonly ENTRADA_INFORMACION: string = 'Entrada de Información';
   public static readonly DOCUMENTOS: string = 'Documentos';
+
+  /** labels para el componente de los calendars */
+  public static readonly calendarEspanish: any = {
+    firstDayOfWeek: 1,
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+      'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+    today: 'Hoy',
+    clear: 'Borrar'
+  };
 }

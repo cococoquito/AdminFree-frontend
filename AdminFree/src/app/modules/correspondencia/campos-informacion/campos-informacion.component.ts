@@ -6,6 +6,7 @@ import { RegexUtil } from './../../../util/regex-util';
 import { MsjUtil } from './../../../util/messages.util';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
+import { LabelsConstant } from '../../../constants/labels.constant';
 
 /**
  * Componente para la administracion de los campos de informacion
@@ -28,6 +29,9 @@ export class CamposInformacionComponent implements OnInit {
 
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
+
+  /** labels para el componente de los calendars */
+  public calendarEspanish: any;
 
   /** identificadores de cada tipo de campo*/
   public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
@@ -96,6 +100,7 @@ export class CamposInformacionComponent implements OnInit {
    */
   private init(): void {
     this.regex = new RegexUtil();
+    this.calendarEspanish = LabelsConstant.calendarEspanish;
   }
 
   /**
