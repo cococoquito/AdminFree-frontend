@@ -193,6 +193,9 @@ export class CamposInformacionComponent implements OnInit {
    * Metodo que permite validar si el valor para la fecha es valido
    */
   private esCampoFechaOK(campoModel: CampoInformacionModel): void {
+
+    // se valida la obligatorieda del campo
+    this.esRequeridoOK(campoModel);
   }
 
   /**

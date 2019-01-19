@@ -7,8 +7,7 @@
     <!-- For para cada campo -->
     <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
 
-      <!-- campo de texto -->
-      <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g-6 pt-0 pb-0">
+      <div class="ui-g-6 pt-0 pb-0">
 
         <!-- label-->
         <div class="ui-g-12 pb-0">
@@ -17,7 +16,7 @@
         </div>
 
         <!-- input-->
-        <div class="ui-g-12 pt-0">
+        <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g-12 pt-0">
           <div class="inner-addon left-addon">
             <i class="fa fa-question-circle font-size-20 aico"
               [pTooltip]="campoModel.campo.descripcion"
@@ -36,27 +35,17 @@
             <div class="focus-border"></div>
           </div>
         </div>
-      </div>
-
-      <!-- lista desplegable -->
-      <div *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE" class="ui-g-6 pt-0 pb-0">
-
-        <!-- label-->
-        <div class="ui-g-12 pb-0">
-          <label for="ld{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
-          <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
-        </div>
 
         <!-- select-->
-        <div class="ui-g-12 pt-0">
+        <div *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE" class="ui-g-12 pt-0">
           <div class="inner-addon left-addon">
             <i class="fa fa-question-circle font-size-20 aico"
               [pTooltip]="campoModel.campo.descripcion"
               tooltipPosition="left">
             </i>
             <p-dropdown
-              name="ld{{i}}"
-              selectId="ld{{i}}"
+              name="ctx{{i}}"
+              selectId="ctx{{i}}"
               optionLabel="valor"
               placeholder="Seleccione una Opción"
               showClear="true"
@@ -68,18 +57,9 @@
             </p-dropdown>
           </div>
         </div>
-      </div>
-
-      <!-- casilla verificacion -->
-      <div *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION" class="ui-g-6 pt-0 pb-0">
-
-        <!-- label-->
-        <div class="ui-g-12 pb-0">
-          <label class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
-        </div>
 
         <!-- casilla-->
-        <div class="ui-g-12 pt-0">
+        <div *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
           <admin-inputswitch
             [isChecked]="campoModel.valor"
             (switchChange)="campoModel.valor = $event;">
@@ -89,32 +69,23 @@
             tooltipPosition="right">
           </i>
         </div>
-      </div>
-
-      <!-- calendar -->
-      <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA" class="ui-g-6 pt-0 pb-0">
-
-        <!-- label-->
-        <div class="ui-g-12 pb-0">
-          <label for="ld{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
-          <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
-        </div>
 
         <!-- calendar-->
-        <div class="ui-g-12 pt-0">
+        <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA" class="ui-g-12 pt-0">
           <div class="inner-addon left-addon">
             <i class="fa fa-question-circle font-size-20 aico"
               [pTooltip]="campoModel.campo.descripcion"
               tooltipPosition="left">
             </i>
             <p-calendar
-              inputId="ld{{i}}"
+              name="ctx{{i}}"
+              inputId="ctx{{i}}"
               [(ngModel)]="campoModel.valor"
               [locale]="calendarEspanish"
               showButtonBar="true"
               readonlyInput="true"
               [inputStyleClass]="campoModel.isValido ? 'ad-calendar' : 'ad-calendar-required'"
-              dateFormat="dd/mm/yy">
+              dateFormat="dd/MM/yy">
             </p-calendar>
           </div>
         </div>
