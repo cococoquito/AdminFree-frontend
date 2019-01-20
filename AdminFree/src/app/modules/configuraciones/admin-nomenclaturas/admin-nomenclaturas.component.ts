@@ -149,6 +149,15 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se limpia mensajes de otros procesos
     this.messageService.clear();
 
+    // se configura el orden de los campos
+    if (this.nomenclaturaCU.campos && this.nomenclaturaCU.campos.length > 0) {
+      let orden = 1;
+      for (const campo of this.nomenclaturaCU.campos) {
+        campo.orden = orden;
+        orden = orden + 1;
+      }
+    }
+
     // se hace el llamado HTTP para la creacion de la nomenclatura
     this.configuracionesService.crearNomenclatura(this.nomenclaturaCU).subscribe(
       data => {
@@ -397,6 +406,17 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       this.siguienteCamposEntradaCreacion();
     } else {
       this.siguienteCamposEntradaEdicion();
+    }
+  }
+
+  /**
+   * Es el evento del boton siguiente para el paso (Ordenacion)
+   */
+  public siguienteOrdenacion(): void {
+    if (this.isCreacion) {
+      this.stepsModel.irUltimoStep(this.spinnerState);
+    } else {
+
     }
   }
 

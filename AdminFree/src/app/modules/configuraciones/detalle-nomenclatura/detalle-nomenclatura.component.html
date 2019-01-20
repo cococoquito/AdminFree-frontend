@@ -59,14 +59,18 @@
 
       <ng-template pTemplate="header">
         <tr class="text-center">
+          <th class="font-new-roman font-size-14">Orden</th>
           <th class="font-new-roman font-size-14">Tipo Campo</th>
           <th class="font-new-roman font-size-14">Nombre Campo</th>
           <th class="font-new-roman font-size-14">Detalle</th>
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="body" let-campo>
+      <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex">
         <tr [pSelectableRow]="campo">
+          <td style="width: 3%" class="text-center">
+            <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
+          </td>
           <td style="width: 25%" class="text-center">{{ campo.tipoCampo }}</td>
           <td>{{ campo.nombreCampo }}</td>
           <td style="width: 4%" class="text-center">
