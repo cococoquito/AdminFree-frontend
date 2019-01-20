@@ -238,7 +238,63 @@
       </p-panel>
     </ng-container>
 
-    <!-- Paso 3 confirmacion -->
+    <!-- Paso 3 Ordear Campos -->
+    <ng-container *ngIf="nomenclaturaCU.campos && nomenclaturaCU.campos.length > 1 && stepsModel.activeIndex === stepsModel.STEP_TRES">
+      <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+        <p-header>
+          <i class="fa fa-info-circle font-size-18"></i>
+          <span> Ordene los campos en la cual será visualizado en todos los módulos</span>
+        </p-header>
+
+        <div class="ui-g">
+          <div class="ui-g-1 text-center p-0" style="align-self: center;">
+            <div>
+              <span class="round-up-down"><i class="pi pi-caret-up round-up-down-i"></i></span>
+              <div class="mb-2"></div>
+              <span class="round-up-down"><i class="pi pi-caret-down round-up-down-i"></i></span>
+            </div>
+          </div>
+          <div class="ui-g-11 p-0">
+            <p-table
+            [value]="nomenclaturaCU.campos"
+            [responsive]="true"
+            rowHover="true">
+
+              <ng-template pTemplate="header">
+                <tr class="text-center">
+                  <th class="font-new-roman font-size-14">Orden</th>
+                  <th class="font-new-roman font-size-14">Nombre del Campo</th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex">
+                <tr [pSelectableRow]="campo">
+                  <td style="width: 3%" class="text-center">
+                    <p class="font-size-14 font-weight-bold">{{ campo.orden }}</p>
+                  </td>
+                  <td>{{ campo.nombreCampo }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+
+        <!-- botones salir - next-->
+        <div class="text-center mt-2 mb-1">
+          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+          </button>
+          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+          </button>
+          <button (click)="siguienteCamposEntrada()" type="button" class="btn btn-sm btn-primary w-100-px">
+            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          </button>
+        </div>
+      </p-panel>
+    </ng-container>
+
+    <!-- Paso 4 confirmacion -->
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
       <!-- detalle - nomenclatura -->

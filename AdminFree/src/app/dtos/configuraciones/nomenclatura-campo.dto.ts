@@ -18,6 +18,9 @@ export class NomenclaturaCampoDTO {
   /** Es el tipo de campo */
   public tipoCampo: string;
 
+  /** Indica el orden en la que se va mostrar este campo en los modulos */
+  public orden: number;
+
   /** Identifica si este campo para la nomenclatura tiene consecutivos asociados*/
   public tieneConsecutivo: boolean;
 }

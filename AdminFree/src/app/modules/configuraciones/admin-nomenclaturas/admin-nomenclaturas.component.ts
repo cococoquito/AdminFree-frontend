@@ -405,8 +405,11 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se configura los campos seleccionados para la nomenclatura
     this.getCamposSeleccionados();
 
-    // Ultimo paso, confirmacion
-    this.stepsModel.irUltimoStep(this.spinnerState);
+    // se configura los pasos por si se activa el paso ordenar campos
+    this.getStepsModel();
+
+    // tercer paso, puede ser ordenar o confirmacion
+    this.stepsModel.irTercerStep(this.spinnerState);
   }
 
   /**
@@ -585,12 +588,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Se utiliza para definir el modelo del componente steps
    */
   private getStepsModel(): void {
-    if (this.stepsModel) {
-      this.stepsModel.irPrimerStep();
-    } else {
-      this.stepsModel = new StepsModel();
-      this.stepsModel.stepsParaAdminNomenclaturas();
-    }
+    this.stepsModel = new StepsModel();
+    this.stepsModel.stepsParaAdminNomenclaturas(this.nomenclaturaCU.campos && this.nomenclaturaCU.campos.length > 1);
   }
 
   /**
