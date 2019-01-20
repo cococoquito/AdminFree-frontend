@@ -249,16 +249,18 @@
         <div class="ui-g">
           <div class="ui-g-1 text-center p-0" style="align-self: center;">
             <div>
-              <span class="round-up-down"><i class="pi pi-caret-up round-up-down-i"></i></span>
+              <span (click)="ordernar(1)" class="round-up-down"><i class="pi pi-caret-up round-up-down-i"></i></span>
               <div class="mb-2"></div>
-              <span class="round-up-down"><i class="pi pi-caret-down round-up-down-i"></i></span>
+              <span (click)="ordernar()" class="round-up-down"><i class="pi pi-caret-down round-up-down-i"></i></span>
             </div>
           </div>
           <div class="ui-g-11 p-0">
             <p-table
             [value]="nomenclaturaCU.campos"
+            [(selection)]="campoOrden"
             [responsive]="true"
-            rowHover="true">
+            rowHover="true"
+            selectionMode="single">
 
               <ng-template pTemplate="header">
                 <tr class="text-center">
@@ -270,7 +272,7 @@
               <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex">
                 <tr [pSelectableRow]="campo">
                   <td style="width: 3%" class="text-center">
-                    <p class="font-size-14 font-weight-bold">{{ campo.orden }}</p>
+                    <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
                   </td>
                   <td>{{ campo.nombreCampo }}</td>
                 </tr>

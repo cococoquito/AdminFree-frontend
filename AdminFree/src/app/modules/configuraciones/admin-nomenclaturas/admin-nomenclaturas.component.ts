@@ -67,6 +67,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Estos son los campos que se visualizara en la pantalla para creacion o edicion*/
   public campos: Array<CampoEntradaDTO>;
 
+  /** Es el campo seleccionado para ordenar*/
+  public campoOrden: NomenclaturaCampoDTO;
+
   /** Son los nuevos campos para la edicion de la nomenclatura*/
   private camposNuevoEdicion: Array<NomenclaturaCampoDTO>;
 
@@ -398,6 +401,46 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
+   * Soporta el evento click para ordernar
+   *
+   * @param tipo, identifica el tipo de ordenacion UP o DOWN
+   */
+  public ordernar(tipo: number): void {
+
+    // debe existir un campo seleccionado para la ordenacion
+    if (this.campoOrden && this.campoOrden.idCampo) {
+
+      // se busca el index del campo seleccionado
+      let index = 0;
+      for (const campo of this.nomenclaturaCU.campos) {
+        if (campo.idCampo === this.campoOrden.idCampo) {
+          break;
+        }
+        index = index + 1;
+      }
+
+      // se valida el tipo de ordenacion, 1=up, 0=down
+      if (tipo === 1) {
+
+        // para UP el index debe ser mayor que ZERO
+        if (index > 0) {
+          const campoUP = this.nomenclaturaCU.campos[index - 1];
+          this.nomenclaturaCU.campos[index] = campoUP;
+          this.nomenclaturaCU.campos[index - 1] = this.campoOrden;
+        }
+      } else {
+
+        // para DOWN el index debe ser menor que el tamanio de la lista
+        if (index < (this.nomenclaturaCU.campos.length - 1)) {
+          const campoDOWN = this.nomenclaturaCU.campos[index + 1];
+          this.nomenclaturaCU.campos[index] = campoDOWN;
+          this.nomenclaturaCU.campos[index + 1] = this.campoOrden;
+        }
+      }
+    }
+  }
+
+  /**
    * Es el evento del boton siguiente para el paso (Campos) Creacion
    */
   private siguienteCamposEntradaCreacion(): void {
@@ -552,6 +595,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.nomeclaturaValueBK = null;
     this.camposNuevoEdicion = null;
     this.camposNomenclaturaSC = null;
+    this.campoOrden = null;
     this.nomenclaturaCU = null;
     this.datosEdicion = null;
     this.isCreacion = false;
