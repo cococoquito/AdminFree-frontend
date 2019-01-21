@@ -68,7 +68,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   public campos: Array<CampoEntradaDTO>;
 
   /** Es el campo seleccionado para ordenar*/
-  public campoOrden: NomenclaturaCampoDTO;
+  public campoOrden: CampoEntradaDTO;
 
   /** Son los nuevos campos para la edicion de la nomenclatura*/
   private camposNuevoEdicion: Array<NomenclaturaCampoDTO>;
@@ -271,9 +271,12 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /**
    * Metodo que soporta el evento click del boton ver detalle del campo
    *
+   * @param event , se utiliza para no propagar el evento y asi evitar
+   * que seleccione o deseleccione la fila de la tabla de nomenclatura
+   *
    * @param campo , campo seleccionado para ver su detalle
    */
-  public showModalVerDetalleCampo(campo: CampoEntradaDTO): void {
+  public showModalVerDetalleCampo(event, campo: CampoEntradaDTO): void {
     this.configuracionesService.getDetalleCampoEntrada(campo.id).subscribe(
       data => {
         if (!this.verDetalleCampo) {
@@ -285,6 +288,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+
+    // es para la progacion del evento
+    event.stopPropagation();
   }
 
   /**
@@ -410,17 +416,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
-   * Es el evento del boton siguiente para el paso (Ordenacion)
-   */
-  public siguienteOrdenacion(): void {
-    if (this.isCreacion) {
-      this.stepsModel.irUltimoStep(this.spinnerState);
-    } else {
-
-    }
-  }
-
-  /**
    * Soporta el evento click para ordernar
    *
    * @param tipo, identifica el tipo de ordenacion UP o DOWN
@@ -428,12 +423,12 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   public ordernar(tipo: number): void {
 
     // debe existir un campo seleccionado para la ordenacion
-    if (this.campoOrden && this.campoOrden.idCampo) {
+    if (this.campoOrden && this.campoOrden.id) {
 
       // se busca el index del campo seleccionado
       let index = 0;
-      for (const campo of this.nomenclaturaCU.campos) {
-        if (campo.idCampo === this.campoOrden.idCampo) {
+      for (const campo of this.campos) {
+        if (campo.id === this.campoOrden.id) {
           break;
         }
         index = index + 1;
@@ -444,17 +439,17 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
         // para UP el index debe ser mayor que ZERO
         if (index > 0) {
-          const campoUP = this.nomenclaturaCU.campos[index - 1];
-          this.nomenclaturaCU.campos[index] = campoUP;
-          this.nomenclaturaCU.campos[index - 1] = this.campoOrden;
+          const campoUP = this.campos[index - 1];
+          this.campos[index] = campoUP;
+          this.campos[index - 1] = this.campoOrden;
         }
       } else {
 
         // para DOWN el index debe ser menor que el tamanio de la lista
-        if (index < (this.nomenclaturaCU.campos.length - 1)) {
-          const campoDOWN = this.nomenclaturaCU.campos[index + 1];
-          this.nomenclaturaCU.campos[index] = campoDOWN;
-          this.nomenclaturaCU.campos[index + 1] = this.campoOrden;
+        if (index < (this.campos.length - 1)) {
+          const campoDOWN = this.campos[index + 1];
+          this.campos[index] = campoDOWN;
+          this.campos[index + 1] = this.campoOrden;
         }
       }
     }
@@ -468,11 +463,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se configura los campos seleccionados para la nomenclatura
     this.getCamposSeleccionados();
 
-    // se configura los pasos por si se activa el paso ordenar campos
-    this.getStepsModel();
-
-    // tercer paso, puede ser ordenar o confirmacion
-    this.stepsModel.irTercerStep(this.spinnerState);
+    // Ultimo paso, confirmacion
+    this.stepsModel.irUltimoStep(this.spinnerState);
   }
 
   /**
@@ -652,8 +644,12 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    * Se utiliza para definir el modelo del componente steps
    */
   private getStepsModel(): void {
-    this.stepsModel = new StepsModel();
-    this.stepsModel.stepsParaAdminNomenclaturas(this.nomenclaturaCU.campos && this.nomenclaturaCU.campos.length > 1);
+    if (this.stepsModel) {
+      this.stepsModel.irPrimerStep();
+    } else {
+      this.stepsModel = new StepsModel();
+      this.stepsModel.stepsParaAdminNomenclaturas();
+    }
   }
 
   /**

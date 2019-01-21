@@ -151,7 +151,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       }
     );
 
-    // es para la progacion del evento
+    // se para la propagacion del evento
     event.stopPropagation();
   }
 

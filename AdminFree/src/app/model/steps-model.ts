@@ -113,7 +113,7 @@ export class StepsModel {
    * Metodo que agrega los items para el submodulo
    * de administrar nomenclaturas en el sistema
    */
-  public stepsParaAdminNomenclaturas(agregarOrdenar: boolean): void {
+  public stepsParaAdminNomenclaturas(): void {
 
     // se limpia el modelo por si hay registros anteriores
     this.cleanSteps();
@@ -121,9 +121,6 @@ export class StepsModel {
     // se agregan los items para este submodulo
     this.agregarStep(LabelsConstant.DATOS_NOMENCLATURA);
     this.agregarStep(LabelsConstant.CAMPOS);
-    if (agregarOrdenar) {
-      this.agregarStep(LabelsConstant.CAMPOS_ORDENAR);
-    }
     this.agregarStep(LabelsConstant.CONFIRMACION);
 
     // se inicializa el model del componente

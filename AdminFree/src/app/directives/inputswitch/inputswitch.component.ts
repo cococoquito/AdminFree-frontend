@@ -21,12 +21,18 @@ export class InputswitchComponent {
 
   /**
    * Metodo que soporta el evento click del input-switch
+   *
+   * @param event , se utiliza para no propagar el evento y asi evitar
+   * que seleccione o deseleccione la fila de la tabla
    */
-  public change() {
+  public change(event) {
     // se cambia la bandera
     this.isChecked = !this.isChecked;
 
     // se notifica el cambio
     this.switchChange.emit(this.isChecked);
+
+    // se para la propagacion del evento
+    event.stopPropagation();
   }
 }

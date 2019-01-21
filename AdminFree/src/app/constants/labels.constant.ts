@@ -97,9 +97,8 @@ export class LabelsConstant {
   public static readonly MODULOS: string = 'Módulos';
 
   /** labels para la administracion de las nomenclaturas */
-  public static readonly DATOS_NOMENCLATURA: string = 'Datos Nomenclatura';
+  public static readonly DATOS_NOMENCLATURA: string = 'Datos de la Nomenclatura';
   public static readonly CAMPOS: string = 'Campos';
-  public static readonly CAMPOS_ORDENAR: string = 'Ordenación de Campos';
 
   /** labels para solicitar consecutivos correspondencia */
   public static readonly NOMENCLATURA: string = 'Nomenclatura';
