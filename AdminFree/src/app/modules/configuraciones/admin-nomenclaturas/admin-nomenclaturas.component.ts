@@ -777,11 +777,15 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       camposEditar && camposEditar.length > 0) {
 
       // se recorre todos los items para validar si fueron modificados
+      formain:
       for (const origen of camposOrigen) {
         for (const campo of camposEditar) {
-          if (origen.idCampo === campo.idCampo && origen.orden !== campo.orden) {
-            this.datosEdicion.camposEntradaEditar = true;
-            return;
+          if (origen.idCampo === campo.idCampo) {
+            if (origen.orden !== campo.orden) {
+              this.datosEdicion.camposEntradaEditar = true;
+              break formain;
+            }
+            break;
           }
         }
       }
