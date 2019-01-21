@@ -70,12 +70,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Es el campo seleccionado para ordenar*/
   public campoOrden: CampoEntradaDTO;
 
-  /** Son los nuevos campos para la edicion de la nomenclatura*/
-  private camposNuevoEdicion: Array<NomenclaturaCampoDTO>;
-
-  /** Son los campos seleccionados de la nomenclatura sin consecutivos asociados*/
-  private camposNomenclaturaSC: Array<number>;
-
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -150,13 +144,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.messageService.clear();
 
     // se configura el orden de los campos
-    if (this.nomenclaturaCU.campos && this.nomenclaturaCU.campos.length > 0) {
-      let orden = 1;
-      for (const campo of this.nomenclaturaCU.campos) {
-        campo.orden = orden;
-        orden = orden + 1;
-      }
-    }
+    this.configurarOrdenacionCampos();
 
     // se hace el llamado HTTP para la creacion de la nomenclatura
     this.configuracionesService.crearNomenclatura(this.nomenclaturaCU).subscribe(
@@ -185,11 +173,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.messageService.clear();
 
     // se hace el backup por si hay errores en la edicion
-    const camposBK = this.nomenclaturaCU.campos;
     const nomenclaturaBK = this.datosEdicion.nomenclatura;
 
-    // se configura los datos a modificar
-    this.nomenclaturaCU.campos = this.camposNuevoEdicion;
+    // se configura la nomenclatura a modificar
     this.datosEdicion.nomenclatura = this.nomenclaturaCU;
 
     // se hace el llamado HTTP para la edicion de la nomenclatura
@@ -209,7 +195,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         this.limpiarCamposCU();
       },
       error => {
-        this.nomenclaturaCU.campos = camposBK;
         this.datosEdicion.nomenclatura = nomenclaturaBK;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
@@ -472,39 +457,18 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   private siguienteCamposEntradaEdicion(): void {
 
-    // se limpia la bandera que permite editar los valores
-    this.datosEdicion.camposEntradaEditar = true;
-
     // se configura los campos seleccionados para la nomenclatura
     this.getCamposSeleccionados();
 
-    // es la cantidad de campos seleccionados
-    let cantSeleccionados = 0;
-    if (this.camposNuevoEdicion) {
-      cantSeleccionados = this.camposNuevoEdicion.length;
-    }
+    // se configura la ordenacion de los campos
+    this.configurarOrdenacionCampos();
 
-    // es la cantidad de campos que tiene la nomenclatura seleccionados
-    let cantOrigen = 0;
-    if (this.camposNomenclaturaSC) {
-      cantOrigen = this.camposNomenclaturaSC.length;
-    }
+    // Se valida si hay campos modificados
+    this.isCamposModificados();
 
-    // si son diferentes es porque hay modificaciones
-    if (cantSeleccionados === cantOrigen) {
-
-      // si son iguales se procede a validar si hay alguna modificacion
-      this.datosEdicion.camposEntradaEditar = false;
-      if (cantSeleccionados > 0) {
-
-        // se valida si los campos seleccionados son nuevos
-        for (const campoSeleccionado of this.camposNuevoEdicion) {
-          if (!this.camposNomenclaturaSC.includes(campoSeleccionado.idCampo)) {
-            this.datosEdicion.camposEntradaEditar = true;
-            break;
-          }
-        }
-      }
+    // si no hay campos modificados se valida si el orden se modifico
+    if (!this.datosEdicion.camposEntradaEditar) {
+      this.isOrdenModificado();
     }
 
     // Ultimo paso, confirmacion
@@ -605,8 +569,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   private limpiarCamposCU(): void {
     this.nomenclaturaEdicion = null;
     this.nomeclaturaValueBK = null;
-    this.camposNuevoEdicion = null;
-    this.camposNomenclaturaSC = null;
     this.campoOrden = null;
     this.nomenclaturaCU = null;
     this.datosEdicion = null;
@@ -668,26 +630,38 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         const camposNomenclatura = this.datosEdicion.nomenclatura.campos;
         if (camposNomenclatura && camposNomenclatura.length > 0) {
 
+          // son los campos a visualizar en pantalla
+          const camposBK = new Array<CampoEntradaDTO>();
+
           // se configura los campos asociados de la nomenclatura
           for (const campoNomenclatura of camposNomenclatura) {
-
-            // se agrega el campo como seleccionado
-            if (!campoNomenclatura.tieneConsecutivo) {
-              if (!this.camposNomenclaturaSC) {
-                  this.camposNomenclaturaSC = new Array<number>();
-              }
-              this.camposNomenclaturaSC.push(campoNomenclatura.idCampo);
-            }
 
             // se visualiza en pantalla como seleccionado
             for (const campo of this.campos) {
               if (campoNomenclatura.idCampo === campo.id) {
-                  campo.aplica = true;
-                  campo.tieneConsecutivo = campoNomenclatura.tieneConsecutivo;
-                  break;
+
+                // se configura la bandera aplica
+                campo.aplica = true;
+
+                // se indica si este campo tiene o no consecutivo
+                campo.tieneConsecutivo = campoNomenclatura.tieneConsecutivo;
+
+                // se agrega en la lista a visualizar en pantalla
+                camposBK.push(campo);
+                break;
               }
             }
           }
+
+          // se agrega el resto de campos que no fueron seleccionados
+          for (const campo of this.campos) {
+            if (!campo.aplica) {
+              camposBK.push(campo);
+            }
+          }
+
+          // se reemplaza los campos por los nuevos ordenados
+          this.campos = camposBK;
         }
       }
     }
@@ -701,7 +675,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // se configura los campos seleccionados para la nomenclatura
     this.nomenclaturaCU.campos = null;
-    this.camposNuevoEdicion = null;
 
     // se valida si hay campos parametrizados en el sistema
     if (this.campos && this.campos.length > 0) {
@@ -722,13 +695,93 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
               this.nomenclaturaCU.campos = new Array<NomenclaturaCampoDTO>();
           }
           this.nomenclaturaCU.campos.push(seleccionado);
+        }
+      }
+    }
+  }
 
-          // se agrega el campo para la edicion
-          if (this.isEdicion && !campo.tieneConsecutivo) {
-            if (!this.camposNuevoEdicion) {
-              this.camposNuevoEdicion = new Array<NomenclaturaCampoDTO>();
+  /**
+   * Permite configurar el orden de los campos
+   */
+  private configurarOrdenacionCampos(): void {
+    if (this.nomenclaturaCU.campos && this.nomenclaturaCU.campos.length > 0) {
+      let orden = 1;
+      for (const campo of this.nomenclaturaCU.campos) {
+        campo.orden = orden;
+        orden = orden + 1;
+      }
+    }
+  }
+
+  /**
+   * Se verifica si hay campos agregados o eliminados
+   */
+  private isCamposModificados(): void {
+
+    // se limpia la bandera que permite editar los valores
+    this.datosEdicion.camposEntradaEditar = true;
+
+    // es la cantidad de campos seleccionados
+    let cantSeleccionados = 0;
+    if (this.nomenclaturaCU.campos) {
+      cantSeleccionados = this.nomenclaturaCU.campos.length;
+    }
+
+    // es la cantidad de campos que tiene la nomenclatura seleccionados
+    let cantOrigen = 0;
+    if (this.datosEdicion.nomenclatura.campos) {
+      cantOrigen = this.datosEdicion.nomenclatura.campos.length;
+    }
+
+    // si son diferentes es porque hay modificaciones
+    if (cantSeleccionados === cantOrigen) {
+
+      this.datosEdicion.camposEntradaEditar = false;
+      if (cantSeleccionados > 0) {
+
+        // se valida si los campos seleccionados son nuevos
+        let existe;
+        for (const campoSeleccionado of this.nomenclaturaCU.campos) {
+          existe = false;
+
+          for (const campoOrigen of this.datosEdicion.nomenclatura.campos) {
+            if (campoSeleccionado.idCampo === campoOrigen.idCampo) {
+              existe = true;
+              break;
             }
-            this.camposNuevoEdicion.push(seleccionado);
+          }
+
+          if (!existe) {
+            this.datosEdicion.camposEntradaEditar = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Se verifica si el orden de los campos fueron modificados
+   */
+  private isOrdenModificado(): void {
+
+    // se limpia la bandera que permite editar los valores
+    this.datosEdicion.camposEntradaEditar = false;
+
+    // se obtiene los campos de origen y de edicion
+    const camposOrigen = this.datosEdicion.nomenclatura.campos;
+    const camposEditar = this.nomenclaturaCU.campos;
+
+    // se valida que si exista items
+    if (camposOrigen && camposOrigen.length > 0 &&
+      camposEditar && camposEditar.length > 0) {
+
+      // se recorre todos los items para validar si fueron modificados
+      for (const origen of camposOrigen) {
+        for (const campo of camposEditar) {
+          if (origen.idCampo === campo.idCampo && origen.orden !== campo.orden) {
+            this.datosEdicion.camposEntradaEditar = true;
+            return;
           }
         }
       }
