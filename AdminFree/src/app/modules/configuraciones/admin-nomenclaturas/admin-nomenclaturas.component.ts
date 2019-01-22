@@ -424,16 +424,14 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
         // para UP el index debe ser mayor que ZERO
         if (index > 0) {
-          const campoUP = this.campos[index - 1];
-          this.campos[index] = campoUP;
+          this.campos[index] = this.campos[index - 1];
           this.campos[index - 1] = this.campoOrden;
         }
       } else {
 
         // para DOWN el index debe ser menor que el tamanio de la lista
         if (index < (this.campos.length - 1)) {
-          const campoDOWN = this.campos[index + 1];
-          this.campos[index] = campoDOWN;
+          this.campos[index] = this.campos[index + 1];
           this.campos[index + 1] = this.campoOrden;
         }
       }
