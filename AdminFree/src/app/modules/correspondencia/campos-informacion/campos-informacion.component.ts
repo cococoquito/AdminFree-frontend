@@ -45,62 +45,23 @@ export class CamposInformacionComponent implements OnInit {
   constructor(private messageService: MessageService) {}
 
   /**
-   * Se construye el modelo de cada campo, donde se indica sus restricciones
+   * Metodo que define las variables globales
    */
   ngOnInit() {
-
-    // se configura las variables iniciales
     this.init();
-
-    // se configura el modelo de los campos
-    this.setCamposModel();
-  }
-
-  /**
-   * Metodo que comprueba si la informacion ingresada es valida
-   */
-  public esInformacionValida(): boolean {
-
-    // se verifica si hay campos de informacion para esta nomenclatura
-    if (this.camposVisualizar && this.camposVisualizar.length > 0) {
-
-      // se recorre cada campo
-      for (const campoModel of this.camposVisualizar) {
-
-        // se valida dependiendo del tipo de campo
-        switch (campoModel.campo.tipoCampo) {
-
-          case this.ID_CAMPO_TEXTO: {
-            this.esCampoTextoOK(campoModel);
-            break;
-          }
-          case this.ID_LISTA_DESPLEGABLE: {
-            this.esRequeridoOK(campoModel);
-            break;
-          }
-          case this.ID_CAMPO_FECHA: {
-            this.esCampoFechaOK(campoModel);
-            break;
-          }
-        }
-      }
-
-      // se verifica el resultado a retornar
-      for (const campoModel of this.camposVisualizar) {
-        if (!campoModel.isValido) {
-          return false;
-        }
-      }
-    }
-    return true;
   }
 
   /**
    * Metodo que permite configurar las variables iniciales
    */
   private init(): void {
+
+    // se define las variables globales
     this.regex = new RegexUtil();
     this.calendarEspanish = LabelsConstant.calendarEspanish;
+
+    // se configura el modelo de los campos
+    this.setCamposModel();
   }
 
   /**
@@ -111,7 +72,7 @@ export class CamposInformacionComponent implements OnInit {
     // se valida si hay campos para esta nomenclatura
     if (this.campos && this.campos.length > 0) {
 
-      // se crea el campo a visualizar en pantalla
+      // se crea los campos a visualizar en pantalla
       this.camposVisualizar = new Array<CampoInformacionModel>();
 
       // se recorre todos los campos
@@ -155,6 +116,22 @@ export class CamposInformacionComponent implements OnInit {
             campoModel.isSoloNumeros = true;
             break;
           }
+          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
+            campoModel.isFechaActualNoEditable = true;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
+            campoModel.isFechaActualSiEditable = true;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_ACTUAL: {
+            campoModel.isFechaMayorActual = true;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_MENOR_ACTUAL: {
+            campoModel.isFechaMenorActual = true;
+            break;
+          }
           case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO + '': {
             campoModel.valor = false;
             break;
@@ -166,6 +143,45 @@ export class CamposInformacionComponent implements OnInit {
         }
       }
     }
+  }
+
+  /**
+   * Metodo que comprueba si la informacion ingresada es valida
+   */
+  public esInformacionValida(): boolean {
+
+    // se verifica si hay campos de informacion para esta nomenclatura
+    if (this.camposVisualizar && this.camposVisualizar.length > 0) {
+
+      // se recorre cada campo
+      for (const campoModel of this.camposVisualizar) {
+
+        // se valida dependiendo del tipo de campo
+        switch (campoModel.campo.tipoCampo) {
+
+          case this.ID_CAMPO_TEXTO: {
+            this.esCampoTextoOK(campoModel);
+            break;
+          }
+          case this.ID_LISTA_DESPLEGABLE: {
+            this.esRequeridoOK(campoModel);
+            break;
+          }
+          case this.ID_CAMPO_FECHA: {
+            this.esCampoFechaOK(campoModel);
+            break;
+          }
+        }
+      }
+
+      // se verifica el resultado a retornar
+      for (const campoModel of this.camposVisualizar) {
+        if (!campoModel.isValido) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   /**
@@ -190,15 +206,6 @@ export class CamposInformacionComponent implements OnInit {
   }
 
   /**
-   * Metodo que permite validar si el valor para la fecha es valido
-   */
-  private esCampoFechaOK(campoModel: CampoInformacionModel): void {
-
-    // se valida la obligatorieda del campo
-    this.esRequeridoOK(campoModel);
-  }
-
-  /**
    * Metodo que permite validar si el campo es requerido y su valor
    */
   private esRequeridoOK(campoModel: CampoInformacionModel): void {
@@ -206,7 +213,7 @@ export class CamposInformacionComponent implements OnInit {
 
     // se limpian los espacios solamente para campo de texto
     if (this.ID_CAMPO_TEXTO === campoModel.campo.tipoCampo) {
-      campoModel.valor = this.setTrim(campoModel.valor);
+      campoModel.valor = (campoModel.valor) ? campoModel.valor.trim() : null;
     }
 
     // se valida si este campo es requerido
@@ -220,9 +227,11 @@ export class CamposInformacionComponent implements OnInit {
   }
 
   /**
-   * Metodo remueve los espacios en blanco del comienzo y final
+   * Metodo que permite validar si el valor para la fecha es valido
    */
-  private setTrim(valor: string): string {
-    return (valor) ? valor.trim() : null;
+  private esCampoFechaOK(campoModel: CampoInformacionModel): void {
+
+    // se valida la obligatorieda del campo
+    this.esRequeridoOK(campoModel);
   }
 }
