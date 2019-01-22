@@ -1,5 +1,6 @@
 import { ItemDTO } from './item.dto';
 import { RestriccionDTO } from './restriccion.dto';
+import { NomenclaturaCampoDTO } from './nomenclatura-campo.dto';
 
 /**
  * DTO que contiene los atributos para los campos de entrada de informacion
@@ -39,6 +40,6 @@ export class CampoEntradaDTO {
   /** Se utiliza al momento de crear la nomenclatura */
   public aplica: boolean;
 
-  /** Identifica si este campo para la nomenclatura tiene consecutivos asociados*/
-  public tieneConsecutivo: boolean;
+  /** Se utiliza para la edicion de la nomenclatura */
+  public campoNomenclatura: NomenclaturaCampoDTO;
 }

@@ -585,7 +585,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     if (this.campos) {
       for (const campo of this.campos) {
           campo.aplica = false;
-          campo.tieneConsecutivo = false;
+          campo.campoNomenclatura = null;
       }
       this.setCamposNomenclatura();
     } else {
@@ -643,8 +643,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
                 // se configura la bandera aplica
                 campo.aplica = true;
 
-                // se indica si este campo tiene o no consecutivo
-                campo.tieneConsecutivo = campoNomenclatura.tieneConsecutivo;
+                // se configura el campo nomenclatura
+                campo.campoNomenclatura = campoNomenclatura;
 
                 // se agrega en la lista a visualizar en pantalla
                 camposBK.push(campo);
@@ -688,7 +688,10 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
           seleccionado.idCampo = campo.id;
           seleccionado.nombreCampo = campo.nombre;
           seleccionado.tipoCampo = campo.tipoCampoNombre;
-          seleccionado.tieneConsecutivo = campo.tieneConsecutivo;
+          if (campo.campoNomenclatura) {
+            seleccionado.tieneConsecutivo = campo.campoNomenclatura.tieneConsecutivo;
+            seleccionado.id = campo.campoNomenclatura.id;
+          }
 
           // se agrega en la lista de creacion
           if (!this.nomenclaturaCU.campos) {
