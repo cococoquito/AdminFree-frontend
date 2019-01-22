@@ -110,12 +110,12 @@
           <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
         </span>
         <br/>
-        <span class="scc-txt">{{nomenclaturaSel.descripcion}}</span>
+        <span class="scc-txt font-size-16">{{nomenclaturaSel.descripcion}}</span>
       </p>
     </div>
 
     <!-- campos de informacion-->
-    <admin-campos-informacion [campos]="campos"></admin-campos-informacion>
+    <admin-campos-informacion [model]="campoInformacionModel"></admin-campos-informacion>
 
     <!-- botones regresar - next-->
     <div class="text-center mt-2 mb-1">

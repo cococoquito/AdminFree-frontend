@@ -1,5 +1,5 @@
 <!-- Hay campos-->
-<ng-container *ngIf="campos && campos.length > 0">
+<ng-container *ngIf="model?.campos?.length > 0">
 
   <!-- pnal main -->
   <div class="ui-g mr-4 ml-4 scc-border rounded pb-3 pt-2">
@@ -95,7 +95,7 @@
 </ng-container>
 
 <!-- No Hay campos-->
-<div *ngIf="!(campos && campos.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
+<div *ngIf="!(model?.campos?.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
   <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
   <span class="ui-messages-detail">
     <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada

@@ -5,11 +5,11 @@ import { ConfiguracionesService } from './../../../services/configuraciones.serv
 import { CorrespondenciaService } from './../../../services/correspondencia.service';
 import { CamposInformacionComponent } from '../campos-informacion/campos-informacion.component';
 import { CommonComponent } from './../../../util/common.component';
+import { CampoInformacionModel } from './../../../model/campo-informacion.model';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { StepsModel } from './../../../model/steps-model';
 import { ModalData } from '../../../model/modal-data';
-import { CampoEntradaDetalleDTO } from './../../../dtos/correspondencia/campo-entrada-detalle.dto';
 import { InitSolicitarConsecutivoDTO } from '../../../dtos/correspondencia/init-solicitar-consecutivo.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
@@ -39,8 +39,8 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** Son las nomenclaturas a mostrar en pantalla */
   public nomenclaturas: Array<NomenclaturaDTO>;
 
-  /** Son los campos asociados a la nomenclatura seleccionada */
-  public campos: Array<CampoEntradaDetalleDTO>;
+  /** Es el modelo para el componente campos de informacion */
+  public campoInformacionModel: CampoInformacionModel;
 
   /** Es el filter ingresado para la busqueda de nomenclatura */
   public filterValue: string;
@@ -199,7 +199,13 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     // se procede a buscar los campos asociados a la nomenclatura seleccionada
     this.correspondenciaService.getCamposNomenclatura(this.nomenclaturaSel.id).subscribe(
       data => {
-        this.campos = data;
+
+        // se configura el modelo del componente
+        this.campoInformacionModel = new CampoInformacionModel();
+        this.campoInformacionModel.campos = data;
+        this.campoInformacionModel.fechaActual = new Date(this.datosIniciales.fechaActual);
+
+        // se utiliza por si regresan a este punto
         this.idNomeclaturaSel = this.nomenclaturaSel.id;
         this.stepsModel.irSegundoStep();
       },

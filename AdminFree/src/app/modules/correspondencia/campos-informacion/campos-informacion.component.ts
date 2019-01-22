@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { CampoEntradaDetalleDTO } from '../../../dtos/correspondencia/campo-entrada-detalle.dto';
 import { CampoInformacionModel } from './../../../model/campo-informacion.model';
+import { CampoModel } from './../../../model/campo-model';
 import { RegexUtil } from './../../../util/regex-util';
 import { MsjUtil } from './../../../util/messages.util';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
@@ -22,10 +22,10 @@ import { LabelsConstant } from '../../../constants/labels.constant';
 export class CamposInformacionComponent implements OnInit {
 
   /** Contiene el detalle de los campos de entrada informacion*/
-  @Input() public campos: Array<CampoEntradaDetalleDTO>;
+  @Input() public model: CampoInformacionModel;
 
-  /** Esta es la lista a visualizar en pantalla*/
-  public camposVisualizar: Array<CampoInformacionModel>;
+  /** Esta es la lista de campos a visualizar en pantalla*/
+  public camposVisualizar: Array<CampoModel>;
 
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
@@ -70,17 +70,17 @@ export class CamposInformacionComponent implements OnInit {
   private setCamposModel(): void {
 
     // se valida si hay campos para esta nomenclatura
-    if (this.campos && this.campos.length > 0) {
+    if (this.model && this.model.campos && this.model.campos.length > 0) {
 
       // se crea los campos a visualizar en pantalla
-      this.camposVisualizar = new Array<CampoInformacionModel>();
+      this.camposVisualizar = new Array<CampoModel>();
 
       // se recorre todos los campos
-      let campoModel: CampoInformacionModel;
-      for (const campo of this.campos) {
+      let campoModel;
+      for (const campo of this.model.campos) {
 
         // se crea el modelo del campo
-        campoModel = new CampoInformacionModel();
+        campoModel = new CampoModel();
         campoModel.isValido = true;
         campoModel.campo = campo;
 
@@ -96,7 +96,7 @@ export class CamposInformacionComponent implements OnInit {
   /**
    * Metodo que permite configurar las restricciones de un campo
    */
-  private setRestricciones(campoModel: CampoInformacionModel): void {
+  private setRestricciones(campoModel: CampoModel): void {
 
     // se valida si este campo tiene restricciones
     const restricciones: Array<string> = campoModel.campo.restricciones;
@@ -187,7 +187,7 @@ export class CamposInformacionComponent implements OnInit {
   /**
    * Metodo que permite validar si el valor para el campo de texto es valido
    */
-  private esCampoTextoOK(campoModel: CampoInformacionModel): void {
+  private esCampoTextoOK(campoModel: CampoModel): void {
 
     // se valida la obligatorieda del campo
     this.esRequeridoOK(campoModel);
@@ -208,7 +208,7 @@ export class CamposInformacionComponent implements OnInit {
   /**
    * Metodo que permite validar si el campo es requerido y su valor
    */
-  private esRequeridoOK(campoModel: CampoInformacionModel): void {
+  private esRequeridoOK(campoModel: CampoModel): void {
     campoModel.isValido = true;
 
     // se limpian los espacios solamente para campo de texto
@@ -229,7 +229,7 @@ export class CamposInformacionComponent implements OnInit {
   /**
    * Metodo que permite validar si el valor para la fecha es valido
    */
-  private esCampoFechaOK(campoModel: CampoInformacionModel): void {
+  private esCampoFechaOK(campoModel: CampoModel): void {
 
     // se valida la obligatorieda del campo
     this.esRequeridoOK(campoModel);
