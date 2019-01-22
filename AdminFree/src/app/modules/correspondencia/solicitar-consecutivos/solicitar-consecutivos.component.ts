@@ -10,6 +10,7 @@ import { SpinnerState } from '../../../states/spinner.state';
 import { StepsModel } from './../../../model/steps-model';
 import { ModalData } from '../../../model/modal-data';
 import { CampoEntradaDetalleDTO } from './../../../dtos/correspondencia/campo-entrada-detalle.dto';
+import { InitSolicitarConsecutivoDTO } from '../../../dtos/correspondencia/init-solicitar-consecutivo.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { MsjUtil } from '../../../util/messages.util';
@@ -32,11 +33,11 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** cliente autenticado o es el cliente asociado al usuario */
   private clienteCurrent: ClienteDTO;
 
-  /** Backup de las nomenclaturas consultadas */
-  public nomenclaturasOrigen: Array<NomenclaturaDTO>;
+  /** son los datos iniciales para este modulo */
+  public datosIniciales: InitSolicitarConsecutivoDTO;
 
   /** Son las nomenclaturas a mostrar en pantalla */
-  public nomenclaturasView: Array<NomenclaturaDTO>;
+  public nomenclaturas: Array<NomenclaturaDTO>;
 
   /** Son los campos asociados a la nomenclatura seleccionada */
   public campos: Array<CampoEntradaDetalleDTO>;
@@ -66,9 +67,6 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    *
-   * @param configuracionesService, Se utiliza para consultar
-   * las nomenclatura que tiene el cliente autenticado
-   *
    * @param correspondenciaService, contiene los servicios
    * del modulo de correspondencia
    *
@@ -79,7 +77,6 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   constructor(
     protected messageService: MessageService,
-    private configuracionesService: ConfiguracionesService,
     private correspondenciaService: CorrespondenciaService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
@@ -118,11 +115,11 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     this.stepsModel = new StepsModel();
     this.stepsModel.stepsParaSolicitarConsecutivo();
 
-    // se consulta las nomenclaturas asociados al cliente autenticado
-    this.configuracionesService.getNomenclaturas(this.clienteCurrent.id).subscribe(
+    // se consulta los datos iniciales para este modulo
+    this.correspondenciaService.getInitSolicitarConsecutivo(this.clienteCurrent.id).subscribe(
       data => {
-        this.nomenclaturasOrigen = data;
-        this.nomenclaturasView = data;
+        this.datosIniciales = data;
+        this.nomenclaturas = data.nomenclaturas;
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -164,17 +161,17 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     if (this.filterValue && this.filterValue.length > 0) {
 
       // se crea la instancia de la lista nomenclaturas a visualizar
-      this.nomenclaturasView = new Array<NomenclaturaDTO>();
+      this.nomenclaturas = new Array<NomenclaturaDTO>();
 
       // se busca la nomenclatura que coincide con el valor
-      for (const nomenclatura of this.nomenclaturasOrigen) {
+      for (const nomenclatura of this.datosIniciales.nomenclaturas) {
         if (nomenclatura.nomenclatura &&
             nomenclatura.nomenclatura.toUpperCase().includes(this.filterValue.toUpperCase())) {
-            this.nomenclaturasView.push(nomenclatura);
+            this.nomenclaturas.push(nomenclatura);
         }
       }
     } else {
-      this.nomenclaturasView = this.nomenclaturasOrigen;
+      this.nomenclaturas = this.datosIniciales.nomenclaturas;
     }
 
     // se refresca la tabla de nomenclaturas

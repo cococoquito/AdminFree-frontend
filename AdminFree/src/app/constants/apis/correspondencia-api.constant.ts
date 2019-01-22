@@ -21,4 +21,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'dtlnomenclaturacampos?idNomenclatura=';
+
+  /** URL del recurso para obtener los datos iniciales para solicitar consecutivos*/
+  static readonly INIT_CORRESPONDENCIA: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'initcorrespondencia?idCliente=';
 }
