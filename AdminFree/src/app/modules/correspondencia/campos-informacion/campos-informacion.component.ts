@@ -118,10 +118,12 @@ export class CamposInformacionComponent implements OnInit {
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
             campoModel.isFechaActualNoEditable = true;
+            campoModel.valor = this.model.fechaActual;
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
             campoModel.isFechaActualSiEditable = true;
+            campoModel.valor = this.model.fechaActual;
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MAYOR_ACTUAL: {

@@ -64,6 +64,11 @@ body {
   display: block !important;
 }
 
+
+.ui-calendar .ui-widget:disabled {
+  opacity: 1 !important;
+}
+
 .ui-datepicker {
   min-width: auto !important;
   padding: 0 !important;
