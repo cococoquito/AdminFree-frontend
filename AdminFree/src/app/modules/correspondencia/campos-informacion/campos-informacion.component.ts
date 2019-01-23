@@ -4,6 +4,7 @@ import { CampoInformacionModel } from './../../../model/campo-informacion.model'
 import { CampoModel } from './../../../model/campo-model';
 import { RegexUtil } from './../../../util/regex-util';
 import { MsjUtil } from './../../../util/messages.util';
+import { FechaUtil } from '../../../util/fecha.util';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -235,5 +236,13 @@ export class CamposInformacionComponent implements OnInit {
 
     // se valida la obligatorieda del campo
     this.esRequeridoOK(campoModel);
+
+    // para la demas validaciones debe existir el valor
+    if (campoModel.valor) {
+
+      if (campoModel.isFechaMayorActual) {
+        // FechaUtil.compareDate();
+      }
+    }
   }
 }
