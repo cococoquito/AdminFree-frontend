@@ -4,6 +4,7 @@ import { CampoInformacionModel } from './../../../model/campo-informacion.model'
 import { CampoModel } from './../../../model/campo-model';
 import { RegexUtil } from './../../../util/regex-util';
 import { MsjUtil } from './../../../util/messages.util';
+import { FechaUtil } from './../../../util/fecha-util';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -127,8 +128,8 @@ export class CamposInformacionComponent implements OnInit {
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
-            campoModel.valor = this.model.fechaActual;
             campoModel.isFechaActualNoEditable = true;
+            campoModel.valor = this.model.fechaActual;
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
@@ -136,20 +137,24 @@ export class CamposInformacionComponent implements OnInit {
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MAYOR_ACTUAL: {
+            campoModel.isFechaMayorActual = true;
             campoModel.minDate = new Date(this.model.fechaActual);
             campoModel.minDate.setDate(campoModel.minDate.getDate() + 1);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MAYOR_IGUAL_ACTUAL: {
+            campoModel.isFechaMayorIgualActual = true;
             campoModel.minDate = new Date(this.model.fechaActual);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MENOR_ACTUAL: {
+            campoModel.isFechaMenorActual = true;
             campoModel.maxDate = new Date(this.model.fechaActual);
             campoModel.maxDate.setDate(campoModel.maxDate.getDate() - 1);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MENOR_IGUAL_ACTUAL: {
+            campoModel.isFechaMenorIgualActual = true;
             campoModel.maxDate = new Date(this.model.fechaActual);
             break;
           }
@@ -181,7 +186,7 @@ export class CamposInformacionComponent implements OnInit {
             break;
           }
           case this.ID_CAMPO_FECHA: {
-            this.esRequeridoOK(campoModel);
+            this.esCampoFechaOK(campoModel);
             break;
           }
         }
@@ -199,6 +204,8 @@ export class CamposInformacionComponent implements OnInit {
 
   /**
    * Metodo que permite validar si el valor para el campo de texto es valido
+   *
+   * @param campoModel, campo de texto a validar si su valor es valido
    */
   private esCampoTextoOK(campoModel: CampoModel): void {
 
@@ -220,6 +227,8 @@ export class CamposInformacionComponent implements OnInit {
 
   /**
    * Metodo que permite validar si el campo es requerido y su valor
+   *
+   * @param campoModel, campo a validar si su valor es obligatorio
    */
   private esRequeridoOK(campoModel: CampoModel): void {
     campoModel.isValido = true;
@@ -235,6 +244,66 @@ export class CamposInformacionComponent implements OnInit {
       // se valida si el valor fue ingresado por el usuario
       if (!campoModel.valor) {
         campoModel.isValido = false;
+      }
+    }
+  }
+
+  /**
+   * Metodo que permite validar si el valor para la fecha es valido
+   *
+   * @param campoModel, fecha a validar si su valor es valido
+   */
+  private esCampoFechaOK(campoModel: CampoModel): void {
+
+    // se valida la obligatorieda del campo
+    this.esRequeridoOK(campoModel);
+
+    // para la demas validaciones debe existir el valor
+    if (campoModel.valor) {
+
+      // debe existir alguna validacion asignada
+      if (campoModel.isFechaMayorActual ||
+        campoModel.isFechaMenorActual ||
+        campoModel.isFechaMayorIgualActual ||
+        campoModel.isFechaMenorIgualActual) {
+
+        // se hace la comparacion de las fechas
+        const resultado = FechaUtil.compareDate(new Date(campoModel.valor), new Date(this.model.fechaActual));
+
+        // constantes que indica cual fue su resultado
+        const iguales = resultado === 0;
+        const esMayor = resultado === 1;
+        const esMenor = resultado === -1;
+
+        // validacion cuando la fecha debe ser mayor a la fecha actual
+        if (campoModel.isFechaMayorActual) {
+          if (iguales || esMenor) {
+            campoModel.isValido = false;
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + 'debe ser mayor a la fecha actual'));
+          }
+        } else if (campoModel.isFechaMenorActual) {
+          // validacion cuando la fecha debe ser menor a la fecha actual
+          if (iguales || esMayor) {
+            campoModel.isValido = false;
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + ' debe ser menor a la fecha actual'));
+          }
+
+        } else if (campoModel.isFechaMayorIgualActual) {
+          // validacion cuando la fecha debe ser mayor o igual que la fecha actual
+          if (esMenor) {
+            campoModel.isValido = false;
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre +
+              ' debe ser mayor o igual que la fecha actual'));
+          }
+
+        } else if (campoModel.isFechaMenorIgualActual) {
+          // validacion cuando la fecha debe ser menor o igual que la fecha actual
+          if (esMayor) {
+            campoModel.isValido = false;
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre +
+              ' debe ser menor o igual que la fecha actual'));
+          }
+        }
       }
     }
   }

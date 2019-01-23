@@ -259,6 +259,12 @@ body {
   background-color: #e9e9e9;
 }
 
+/* Toast mas grande por default */
+#toastLonger .ui-toast-message {
+  width: 500px !important;
+  left: -90px;
+}
+
 /* Para una visualizacion correcta en el Shell */
 .ui-table table {
   table-layout: auto !important;

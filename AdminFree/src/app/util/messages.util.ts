@@ -73,6 +73,13 @@ export class MsjUtil {
   }
 
   /**
+   * Metodo que permite construir el mensaje de ERROR para toast
+   */
+  public static getToastErrorLng(detail: string): Message {
+    return this.getToastLng(MsjFrontConstant.ERROR, detail, LabelsConstant.ERROR);
+  }
+
+  /**
    * Metodo que permite construir el mensaje informativo
    */
   public static getInfo(detail: string): Message {
@@ -102,6 +109,19 @@ export class MsjUtil {
   private static getToast(summary: string, detail: string, severity: string): Message {
     return {
       key: LabelsConstant.KEY_TOAST,
+      sticky: false,
+      severity: severity,
+      summary: summary,
+      detail: detail
+    };
+  }
+
+  /**
+   * Metodo que permite construir el mensaje tipo toast
+   */
+  private static getToastLng(summary: string, detail: string, severity: string): Message {
+    return {
+      key: LabelsConstant.KEY_TOAST_LONGER,
       sticky: false,
       severity: severity,
       summary: summary,
