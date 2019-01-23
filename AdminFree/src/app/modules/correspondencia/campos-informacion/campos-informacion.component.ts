@@ -4,7 +4,6 @@ import { CampoInformacionModel } from './../../../model/campo-informacion.model'
 import { CampoModel } from './../../../model/campo-model';
 import { RegexUtil } from './../../../util/regex-util';
 import { MsjUtil } from './../../../util/messages.util';
-import { FechaUtil } from '../../../util/fecha.util';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -96,6 +95,8 @@ export class CamposInformacionComponent implements OnInit {
 
   /**
    * Metodo que permite configurar las restricciones de un campo
+   *
+   * @param campoModel, modelo del campo a configurar
    */
   private setRestricciones(campoModel: CampoModel): void {
 
@@ -117,38 +118,39 @@ export class CamposInformacionComponent implements OnInit {
             campoModel.isSoloNumeros = true;
             break;
           }
-          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
-            campoModel.isFechaActualNoEditable = true;
-            campoModel.valor = this.model.fechaActual;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
-            campoModel.isFechaActualSiEditable = true;
-            campoModel.valor = this.model.fechaActual;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_ACTUAL: {
-            campoModel.isFechaMayorActual = true;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_IGUAL_ACTUAL: {
-            campoModel.isFechaMayorIgualActual = true;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MENOR_ACTUAL: {
-            campoModel.isFechaMenorActual = true;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MENOR_IGUAL_ACTUAL: {
-            campoModel.isFechaMenorIgualActual = true;
-            break;
-          }
           case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO + '': {
             campoModel.valor = false;
             break;
           }
           case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_SI: {
             campoModel.valor = true;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
+            campoModel.valor = this.model.fechaActual;
+            campoModel.isFechaActualNoEditable = true;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
+            campoModel.valor = new Date(this.model.fechaActual);
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_ACTUAL: {
+            campoModel.minDate = new Date(this.model.fechaActual);
+            campoModel.minDate.setDate(campoModel.minDate.getDate() + 1);
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_IGUAL_ACTUAL: {
+            campoModel.minDate = new Date(this.model.fechaActual);
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_MENOR_ACTUAL: {
+            campoModel.maxDate = new Date(this.model.fechaActual);
+            campoModel.maxDate.setDate(campoModel.maxDate.getDate() - 1);
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_MENOR_IGUAL_ACTUAL: {
+            campoModel.maxDate = new Date(this.model.fechaActual);
             break;
           }
         }
@@ -179,7 +181,7 @@ export class CamposInformacionComponent implements OnInit {
             break;
           }
           case this.ID_CAMPO_FECHA: {
-            this.esCampoFechaOK(campoModel);
+            this.esRequeridoOK(campoModel);
             break;
           }
         }
@@ -233,23 +235,6 @@ export class CamposInformacionComponent implements OnInit {
       // se valida si el valor fue ingresado por el usuario
       if (!campoModel.valor) {
         campoModel.isValido = false;
-      }
-    }
-  }
-
-  /**
-   * Metodo que permite validar si el valor para la fecha es valido
-   */
-  private esCampoFechaOK(campoModel: CampoModel): void {
-
-    // se valida la obligatorieda del campo
-    this.esRequeridoOK(campoModel);
-
-    // para la demas validaciones debe existir el valor
-    if (campoModel.valor) {
-
-      if (campoModel.isFechaMayorActual) {
-        // FechaUtil.compareDate();
       }
     }
   }

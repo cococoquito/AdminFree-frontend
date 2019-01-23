@@ -23,20 +23,11 @@ export class CampoModel {
   /** El valor por defecto de la fecha será la fecha actual y el usuario NO podrá modificar este valor */
   public isFechaActualNoEditable: boolean;
 
-  /** El valor por defecto de la fecha será la fecha actual y el usuario SI podrá modificar este valor */
-  public isFechaActualSiEditable: boolean;
+  /** Date minimo para el componente calendar */
+  public minDate: Date;
 
-  /** El valor de la fecha debe ser mayor a la fecha actual */
-  public isFechaMayorActual: boolean;
-
-  /** El valor de la fecha debe ser menor a la fecha actual */
-  public isFechaMenorActual: boolean;
-
-  /** El valor de la fecha debe ser mayor o igual que la fecha actual */
-  public isFechaMayorIgualActual: boolean;
-
-  /** El valor de la fecha debe ser menor o igual que la fecha actual */
-  public isFechaMenorIgualActual: boolean;
+  /** Date maximo para el componente calendar */
+  public maxDate: Date;
 
   /** Indica si el componente tiene un valor valido */
   public isValido: boolean;

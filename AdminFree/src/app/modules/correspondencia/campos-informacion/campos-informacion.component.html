@@ -83,8 +83,10 @@
               [(ngModel)]="campoModel.valor"
               [locale]="calendarEspanish"
               showButtonBar="true"
-              readonlyInput="true"
+              [readonlyInput]="true"
               [disabled]="campoModel.isFechaActualNoEditable"
+              [minDate]="campoModel.minDate"
+              [maxDate]="campoModel.maxDate"
               [inputStyleClass]="campoModel.isValido ? 'ad-calendar' : 'ad-calendar-required'"
               dateFormat="dd/MM/yy">
             </p-calendar>

@@ -11,6 +11,12 @@ export class RestriccionesKeyConstant {
   /** El valor del campo debe ser solo números */
   static readonly KEY_CAMPO_SOLO_NUMEROS: string = '2';
 
+  /** El valor inicial de la casilla será "NO" */
+  static readonly KEY_VALOR_INICIAL_CASILLA_NO: number = 9;
+
+  /** El valor inicial de la casilla será "SI" */
+  static readonly KEY_VALOR_INICIAL_CASILLA_SI: string = '10';
+
   /** El valor por defecto de la fecha será la fecha actual y el usuario NO podrá modificar este valor */
   static readonly KEY_FECHA_ACTUAL_NO_MODIFICABLE: string = '5';
 
@@ -22,12 +28,6 @@ export class RestriccionesKeyConstant {
 
   /** El valor de la fecha debe ser menor a la fecha actual */
   static readonly KEY_FECHA_MENOR_ACTUAL: string = '8';
-
-  /** El valor inicial de la casilla será "NO" */
-  static readonly KEY_VALOR_INICIAL_CASILLA_NO: number = 9;
-
-  /** El valor inicial de la casilla será "SI" */
-  static readonly KEY_VALOR_INICIAL_CASILLA_SI: string = '10';
 
   /** El valor de la fecha debe ser mayor o igual que la fecha actual */
   static readonly KEY_FECHA_MAYOR_IGUAL_ACTUAL: string = '11';
