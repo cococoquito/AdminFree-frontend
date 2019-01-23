@@ -8,6 +8,7 @@ import { FechaUtil } from './../../../util/fecha-util';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 import { LabelsConstant } from '../../../constants/labels.constant';
+import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 
 /**
  * Componente para la administracion de los campos de informacion
@@ -279,29 +280,27 @@ export class CamposInformacionComponent implements OnInit {
         if (campoModel.isFechaMayorActual) {
           if (iguales || esMenor) {
             campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + 'debe ser mayor a la fecha actual'));
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MAYOR_ACTUAL));
           }
         } else if (campoModel.isFechaMenorActual) {
           // validacion cuando la fecha debe ser menor a la fecha actual
           if (iguales || esMayor) {
             campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + ' debe ser menor a la fecha actual'));
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MENOR_ACTUAL));
           }
 
         } else if (campoModel.isFechaMayorIgualActual) {
           // validacion cuando la fecha debe ser mayor o igual que la fecha actual
           if (esMenor) {
             campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre +
-              ' debe ser mayor o igual que la fecha actual'));
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MAYOR_IGUAL_ACTUAL));
           }
 
         } else if (campoModel.isFechaMenorIgualActual) {
           // validacion cuando la fecha debe ser menor o igual que la fecha actual
           if (esMayor) {
             campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre +
-              ' debe ser menor o igual que la fecha actual'));
+            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MENOR_IGUAL_ACTUAL));
           }
         }
       }

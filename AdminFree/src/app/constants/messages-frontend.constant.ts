@@ -116,4 +116,16 @@ export class MsjFrontConstant {
 
   /** Mensaje la nomenclatura es requerido */
   static readonly NOMENCLATURA_REQUERIDO: string = 'Seleccione la Nomenclatura';
+
+  /** mayor que la fecha actual */
+  static readonly FECHA_MAYOR_ACTUAL: string = ' debe ser MAYOR que la fecha actual';
+
+  /** menor que la fecha actual */
+  static readonly FECHA_MENOR_ACTUAL: string = ' debe ser MENOR que la fecha actual';
+
+  /** mayor o igual que la fecha actual */
+  static readonly FECHA_MAYOR_IGUAL_ACTUAL: string = ' debe ser MAYOR o IGUAL que la fecha actual';
+
+  /** menor o igual que la fecha actual */
+  static readonly FECHA_MENOR_IGUAL_ACTUAL: string = ' debe ser MENOR o IGUAL que la fecha actual';
 }
