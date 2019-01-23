@@ -32,6 +32,12 @@ export class CampoModel {
   /** El valor de la fecha debe ser menor a la fecha actual */
   public isFechaMenorActual: boolean;
 
+  /** El valor de la fecha debe ser mayor o igual que la fecha actual */
+  public isFechaMayorIgualActual: boolean;
+
+  /** El valor de la fecha debe ser menor o igual que la fecha actual */
+  public isFechaMenorIgualActual: boolean;
+
   /** Indica si el componente tiene un valor valido */
   public isValido: boolean;
 }

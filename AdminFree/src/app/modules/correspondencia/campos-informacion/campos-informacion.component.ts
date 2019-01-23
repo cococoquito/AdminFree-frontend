@@ -131,8 +131,16 @@ export class CamposInformacionComponent implements OnInit {
             campoModel.isFechaMayorActual = true;
             break;
           }
+          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_IGUAL_ACTUAL: {
+            campoModel.isFechaMayorIgualActual = true;
+            break;
+          }
           case RestriccionesKeyConstant.KEY_FECHA_MENOR_ACTUAL: {
             campoModel.isFechaMenorActual = true;
+            break;
+          }
+          case RestriccionesKeyConstant.KEY_FECHA_MENOR_IGUAL_ACTUAL: {
+            campoModel.isFechaMenorIgualActual = true;
             break;
           }
           case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO + '': {

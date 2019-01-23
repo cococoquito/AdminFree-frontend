@@ -28,4 +28,10 @@ export class RestriccionesKeyConstant {
 
   /** El valor inicial de la casilla será "SI" */
   static readonly KEY_VALOR_INICIAL_CASILLA_SI: string = '10';
+
+  /** El valor de la fecha debe ser mayor o igual que la fecha actual */
+  static readonly KEY_FECHA_MAYOR_IGUAL_ACTUAL: string = '11';
+
+  /** El valor de la fecha debe ser menor o igual que la fecha actual */
+  static readonly KEY_FECHA_MENOR_IGUAL_ACTUAL: string = '12';
 }
