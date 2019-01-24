@@ -27,4 +27,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'initcorrespondencia?idCliente=';
+
+  /** URL del recurso para validar los campos de ingreso de informacion*/
+  static readonly VALIDAR_CAMPOS_INGRESO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'validcamposingreso';
 }

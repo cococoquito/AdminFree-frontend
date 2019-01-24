@@ -10,12 +10,16 @@ import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { ModalData } from '../../../model/modal-data';
 import { InitSolicitarConsecutivoDTO } from '../../../dtos/correspondencia/init-solicitar-consecutivo.dto';
+import { SolicitudConsecutivoDTO } from './../../../dtos/correspondencia/solicitud-consecutivo.dto';
+import { CampoEntradaValueDTO } from './../../../dtos/correspondencia/campo-entrada-value.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { MsjUtil } from '../../../util/messages.util';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
+import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 
 /**
  * Componente para la solicitud de consecutivos de correspondencia
@@ -228,9 +232,96 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    * Metodo que soporta el evento del boton siguiente del paso 2 "entrada informacion"
    */
   public siguienteEntradaInformacion(): void {
+
+    // se hace el llamado de las validaciones por parte de FRONT-END
     const resultado = this.camposInformacion.esInformacionValida();
+
+    // se verifica que todo este OK
     if (resultado) {
-      alert('exitoso');
+
+      // se hace el llamado de las validaciones por parte del BACK-END
+      const valores = this.getCamposValidar();
+      if (valores && valores.length > 0) {
+
+        // se construye la solicitud para hacer la invocacion
+        const solicitud = new SolicitudConsecutivoDTO();
+        solicitud.valores = valores;
+        solicitud.idCliente = this.clienteCurrent.id;
+        solicitud.idNomenclatura = this.nomenclaturaSel.id;
+
+        // se procede a realizar las validaciones para los valores ingresado
+        this.correspondenciaService.validarCamposIngresoInformacion(solicitud).subscribe(
+          data => {
+            // se valida si el resultado tiene mensajes de errores
+            if (data && data.length > 0) {
+
+              // se muestra cada error por pantalla
+              for (const error of data) {
+                this.messageService.add(MsjUtil.getMsjError(error.mensaje));
+              }
+            } else {
+              // si no tiene se procede a ir al tercer paso
+              this.stepsModel.irTercerStep();
+            }
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      } else {
+        this.stepsModel.irTercerStep(this.spinnerState);
+      }
     }
+  }
+
+  /**
+   * Metodo que permite configurar los campos para validar
+   * su valor ingresado de acuerdo a sus restricciones
+   */
+  private getCamposValidar(): Array<CampoEntradaValueDTO> {
+
+    // son los valores a retornar
+    let camposValue: Array<CampoEntradaValueDTO>;
+
+    // se obtiene los campos visualizado en pantalla
+    const campos = this.camposInformacion.getCamposVisualizar();
+
+    // solo se valida si hay valores a validar
+    if (campos && campos.length > 0) {
+
+      // variables que se utilizan para el proceso
+      let campoValue: CampoEntradaValueDTO;
+      let restricciones: Array<string>;
+
+      // se recorre cada valor ingresado
+      for (const campo of campos) {
+
+        // por el momento solo aplica para campo de texto
+        if (campo.campo.tipoCampo === TipoCamposConstant.ID_CAMPO_TEXTO) {
+
+          // solo aplica si el campo tiene restricciones y exista su valor
+          restricciones = campo.campo.restricciones;
+          if (restricciones && restricciones.length > 0 && campo.valor) {
+
+            // por el momento solo aplica esta dos restricciones
+            if (restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_UNICO_NOMENCLATURA) ||
+              restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_TODAS_NOMENCLATURA)) {
+
+              // se construye el value a validar
+              campoValue = new CampoEntradaValueDTO();
+              campoValue.value = campo.valor;
+              campoValue.restricciones = restricciones;
+
+              // se agrega en la lista de la solicitud
+              if (!camposValue) {
+                  camposValue = new Array<CampoEntradaValueDTO>();
+              }
+              camposValue.push(campoValue);
+            }
+          }
+        }
+      }
+    }
+    return camposValue;
   }
 }

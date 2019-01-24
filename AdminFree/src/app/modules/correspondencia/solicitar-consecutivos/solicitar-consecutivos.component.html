@@ -129,6 +129,20 @@
   </p-panel>
 </ng-container>
 
+<!-- Paso 3 cargue de archivos-->
+<ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_TRES">
+
+  <!-- botones regresar - next-->
+  <div class="text-center mt-2 mb-1">
+    <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
+      <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+    </button>
+    <button type="button" class="btn btn-sm btn-primary w-100-px">
+      <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+    </button>
+  </div>
+</ng-container>
+
 <!-- modal ver detalle nomenclatura -->
 <ng-container *ngIf="detalleNomenclatura && detalleNomenclatura.data">
   <p-dialog header="Detalle de la Nomenclatura"

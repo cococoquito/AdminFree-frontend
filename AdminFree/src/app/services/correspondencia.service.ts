@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { InitSolicitarConsecutivoDTO } from './../dtos/correspondencia/init-solicitar-consecutivo.dto';
 import { NomenclaturaDetalleDTO } from './../dtos/correspondencia/nomenclatura-detalle.dto';
 import { CampoEntradaDetalleDTO } from './../dtos/correspondencia/campo-entrada-detalle.dto';
+import { SolicitudConsecutivoDTO } from './../dtos/correspondencia/solicitud-consecutivo.dto';
+import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -53,6 +55,20 @@ export class CorrespondenciaService {
   public getInitSolicitarConsecutivo(idCliente: number): Observable<InitSolicitarConsecutivoDTO> {
     return this.http.get<InitSolicitarConsecutivoDTO>(
       CorrespondenciaAPIConstant.INIT_CORRESPONDENCIA + idCliente
+    );
+  }
+
+  /**
+	 * Servicio que permite validar los campos de ingreso de informacion para el proceso de
+	 * solicitar o editar un consecutivo de correspondencia
+	 *
+	 * @param solicitud, DTO con los datos de la solicitud
+	 * @return Lista de mensajes con los errores encontrados solo si lo hay
+	 */
+  public validarCamposIngresoInformacion(solicitud: SolicitudConsecutivoDTO): Observable<Array<MessageResponseDTO>> {
+    return this.http.post<Array<MessageResponseDTO>>(
+      CorrespondenciaAPIConstant.VALIDAR_CAMPOS_INGRESO,
+      solicitud
     );
   }
 }

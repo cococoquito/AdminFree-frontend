@@ -11,6 +11,12 @@ export class RestriccionesKeyConstant {
   /** El valor del campo debe ser solo números */
   static readonly KEY_CAMPO_SOLO_NUMEROS: string = '2';
 
+  /** El valor del campo debe ser único solamente para la nomenclatura asociada al campo */
+  static readonly KEY_CAMPO_UNICO_NOMENCLATURA: string = '3';
+
+  /** El valor del campo debe ser único para todas las nomenclaturas asociadas al campo */
+  static readonly KEY_CAMPO_TODAS_NOMENCLATURA: string = '4';
+
   /** El valor inicial de la casilla será "NO" */
   static readonly KEY_VALOR_INICIAL_CASILLA_NO: number = 9;
 
