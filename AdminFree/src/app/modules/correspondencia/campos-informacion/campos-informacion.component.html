@@ -7,7 +7,7 @@
     <!-- For para cada campo -->
     <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
 
-      <div class="ui-g-6 pt-0 pb-0">
+      <div [ngClass]="camposVisualizar.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
 
         <!-- label-->
         <div class="ui-g-12 pb-0">
