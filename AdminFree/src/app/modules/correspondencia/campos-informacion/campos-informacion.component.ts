@@ -71,27 +71,33 @@ export class CamposInformacionComponent implements OnInit {
    */
   private setCamposModel(): void {
 
-    // se valida si hay campos para esta nomenclatura
-    if (this.model && this.model.campos && this.model.campos.length > 0) {
+    // se valida si existe el backup de los campos a visualizar
+    if (!this.model.camposVisualizar) {
 
-      // se crea los campos a visualizar en pantalla
-      this.camposVisualizar = new Array<CampoModel>();
+      // se valida si para la nomenclatura seleccionada existen campos
+      if (this.model && this.model.campos && this.model.campos.length > 0) {
 
-      // se recorre todos los campos
-      let campoModel;
-      for (const campo of this.model.campos) {
+        // se crea los campos a visualizar en pantalla
+        this.camposVisualizar = new Array<CampoModel>();
 
-        // se crea el modelo del campo
-        campoModel = new CampoModel();
-        campoModel.isValido = true;
-        campoModel.campo = campo;
+        // se recorre todos los campos
+        let campoModel;
+        for (const campo of this.model.campos) {
 
-        // se configura las restricciones de este campo
-        this.setRestricciones(campoModel);
+          // se crea el modelo del campo
+          campoModel = new CampoModel();
+          campoModel.isValido = true;
+          campoModel.campo = campo;
 
-        // se agrega a la lista a visualizar
-        this.camposVisualizar.push(campoModel);
+          // se configura las restricciones de este campo
+          this.setRestricciones(campoModel);
+
+          // se agrega a la lista a visualizar
+          this.camposVisualizar.push(campoModel);
+        }
       }
+    } else {
+      this.camposVisualizar = this.model.camposVisualizar;
     }
   }
 
@@ -201,6 +207,13 @@ export class CamposInformacionComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  /**
+   * Metodo que permite retornar los campos configurados
+   */
+  public getCamposVisualizar(): Array<CampoModel> {
+    return this.camposVisualizar;
   }
 
   /**

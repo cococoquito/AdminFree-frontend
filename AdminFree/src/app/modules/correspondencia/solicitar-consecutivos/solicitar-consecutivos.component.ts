@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
-import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CorrespondenciaService } from './../../../services/correspondencia.service';
 import { CamposInformacionComponent } from '../campos-informacion/campos-informacion.component';
 import { CommonComponent } from './../../../util/common.component';
@@ -26,7 +25,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
 @Component({
   templateUrl: './solicitar-consecutivos.component.html',
   styleUrls: ['./solicitar-consecutivos.component.css'],
-  providers: [ ConfiguracionesService, CorrespondenciaService ]
+  providers: [ CorrespondenciaService ]
 })
 export class SolicitarConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -48,20 +47,17 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** Es la nomenclatura seleccionada para solicitar el consecutivo */
   public nomenclaturaSel: NomenclaturaDTO;
 
-  /** Se utiliza para identificar si es la misma nomenclatura del paso 1 */
-  private idNomeclaturaSel: number;
-
   /** Modelo del componente steps para la solicitud del consecutivo*/
   public stepsModel: StepsModel;
 
   /** Contiene el modelo del modal ver detalle de la nomenclatura*/
   public detalleNomenclatura: ModalData;
 
-  /** Es el modelo de la tabla de nomenclaturas*/
-  @ViewChild('tblNomen') tblNomen: Table;
-
   /** Es el componente de campos de informacion*/
   @ViewChild(CamposInformacionComponent) camposInformacion: CamposInformacionComponent;
+
+  /** Es el modelo de la tabla de nomenclaturas*/
+  @ViewChild('tblNomen') tblNomen: Table;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -190,8 +186,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     }
 
     // se verifica que no sea la misma nomenclatura seleccionada
-    if (this.idNomeclaturaSel &&
-        this.idNomeclaturaSel === this.nomenclaturaSel.id) {
+    if (this.campoInformacionModel &&
+        this.campoInformacionModel.idNomeclatura &&
+        this.campoInformacionModel.idNomeclatura === this.nomenclaturaSel.id) {
         this.stepsModel.irSegundoStep(this.spinnerState);
         return;
     }
@@ -204,9 +201,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
         this.campoInformacionModel = new CampoInformacionModel();
         this.campoInformacionModel.campos = data;
         this.campoInformacionModel.fechaActual = new Date(this.datosIniciales.fechaActual);
+        this.campoInformacionModel.idNomeclatura = this.nomenclaturaSel.id;
 
-        // se utiliza por si regresan a este punto
-        this.idNomeclaturaSel = this.nomenclaturaSel.id;
+        // se redirecciona al segundo punto
         this.stepsModel.irSegundoStep();
       },
       error => {
@@ -216,7 +213,19 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   }
 
   /**
-   * Metodo que soporta el evento del boton siguiente de entrada informacion
+   * Metodo que soporta el evento del boton regresar del paso 2 "entrada informacion"
+   */
+  public regresarEntradaInformacion(): void {
+
+    // se hace le backup de los campos visualizados en el componente
+    this.campoInformacionModel.camposVisualizar = this.camposInformacion.getCamposVisualizar();
+
+    // se regresa al punto anterior
+    this.stepsModel.regresar();
+  }
+
+  /**
+   * Metodo que soporta el evento del boton siguiente del paso 2 "entrada informacion"
    */
   public siguienteEntradaInformacion(): void {
     const resultado = this.camposInformacion.esInformacionValida();
