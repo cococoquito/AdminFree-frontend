@@ -23,7 +23,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
 })
 export class CamposInformacionComponent implements OnInit {
 
-  /** Contiene el detalle de los campos de entrada informacion*/
+  /** Contiene los datos que se necesitan para este componente*/
   @Input() public model: CampoInformacionModel;
 
   /** Esta es la lista de campos a visualizar en pantalla*/

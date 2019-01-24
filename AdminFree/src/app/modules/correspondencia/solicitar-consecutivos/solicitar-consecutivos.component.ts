@@ -6,9 +6,9 @@ import { CorrespondenciaService } from './../../../services/correspondencia.serv
 import { CamposInformacionComponent } from '../campos-informacion/campos-informacion.component';
 import { CommonComponent } from './../../../util/common.component';
 import { CampoInformacionModel } from './../../../model/campo-informacion.model';
+import { StepsModel } from './../../../model/steps-model';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
-import { StepsModel } from './../../../model/steps-model';
 import { ModalData } from '../../../model/modal-data';
 import { InitSolicitarConsecutivoDTO } from '../../../dtos/correspondencia/init-solicitar-consecutivo.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
