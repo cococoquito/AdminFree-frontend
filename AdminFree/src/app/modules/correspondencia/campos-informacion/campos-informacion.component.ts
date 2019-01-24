@@ -98,6 +98,11 @@ export class CamposInformacionComponent implements OnInit {
       }
     } else {
       this.camposVisualizar = this.model.camposVisualizar;
+      if (this.camposVisualizar && this.camposVisualizar.length > 0) {
+        for (const campo of this.camposVisualizar) {
+          campo.isValido = true;
+        }
+      }
     }
   }
 
