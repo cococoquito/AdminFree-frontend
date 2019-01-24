@@ -233,6 +233,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   public siguienteEntradaInformacion(): void {
 
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
     // se hace el llamado de las validaciones por parte de FRONT-END
     const resultado = this.camposInformacion.esInformacionValida();
 
