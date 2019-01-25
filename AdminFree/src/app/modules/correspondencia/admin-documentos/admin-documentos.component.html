@@ -1,0 +1,19 @@
+<p-panel styleClass="mb-2 steps-pnl steps-pnl-main">
+  <p-header>
+    <i class="fa fa-info-circle font-size-18"></i>
+    <span> Agregue los documentos relacionados al nuevo consecutivo</span>
+  </p-header>
+
+  <!-- titulo nomenclatura -->
+  <ng-container *ngTemplateOutlet="titleNomenclatura"></ng-container>
+
+  <!-- botones regresar - next-->
+  <div class="text-center mt-2 mb-1">
+    <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
+      <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+    </button>
+    <button type="button" class="btn btn-sm btn-primary w-100-px">
+      <label (click)="siguiente()" class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+    </button>
+  </div>
+</p-panel>

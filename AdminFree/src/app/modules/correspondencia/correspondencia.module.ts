@@ -4,6 +4,7 @@ import { SharedModule } from './../shared/shared.module';
 import { SolicitarConsecutivosComponent } from './solicitar-consecutivos/solicitar-consecutivos.component';
 import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
 import { CamposInformacionComponent } from './campos-informacion/campos-informacion.component';
+import { AdminDocumentosComponent } from './admin-documentos/admin-documentos.component';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -25,7 +26,8 @@ import { RouterConstant } from './../../constants/router.constant';
   declarations: [
     SolicitarConsecutivosComponent,
     DetalleNomenclaturaComponent,
-    CamposInformacionComponent
+    CamposInformacionComponent,
+    AdminDocumentosComponent
   ]
 })
 export class CorrespondenciaModule {}

@@ -100,16 +100,7 @@
 
 <!-- Paso 3 cargue de archivos-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_TRES">
-
-  <!-- botones regresar - next-->
-  <div class="text-center mt-2 mb-1">
-    <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
-      <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-    </button>
-    <button type="button" class="btn btn-sm btn-primary w-100-px">
-      <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-    </button>
-  </div>
+  <admin-admin-documentos [titleNomenclatura]="titleNomenclatura"></admin-admin-documentos>
 </ng-container>
 
 <!-- modal ver detalle nomenclatura -->
