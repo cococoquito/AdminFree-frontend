@@ -1,8 +1,8 @@
 <!-- pasos para la solicitud -->
-<p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+<p-steps [styleClass]="state.stepsModel.styleClass" [model]="state.stepsModel.steps" [(activeIndex)]="state.stepsModel.activeIndex"></p-steps>
 
 <!-- Paso 1 nomenclatura-->
-<ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
+<ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_UNO">
 
   <p-panel styleClass="mb-2 steps-pnl">
     <p-header>
@@ -11,7 +11,7 @@
           <i class="fa fa-info-circle font-size-18"></i>
           <span> Seleccione la Nomenclatura</span>
         </div>
-        <div *ngIf="datosIniciales?.nomenclaturas?.length > 5" class="ui-g-6 p-0">
+        <div *ngIf="state.datosIniciales?.nomenclaturas?.length > 5" class="ui-g-6 p-0">
           <div class="inner-addon left-addon">
             <i class="fa fa-search-plus font-size-18 aico"></i>
             <input type="text"
@@ -29,14 +29,14 @@
     </p-header>
 
     <!-- Hay nomenclaturas-->
-    <ng-container *ngIf="datosIniciales?.nomenclaturas?.length > 0">
+    <ng-container *ngIf="state.datosIniciales?.nomenclaturas?.length > 0">
 
       <!-- tabla - nomenclaturas -->
       <p-table
         id="tblNomen"
         #tblNomen
         [value]="nomenclaturas"
-        [(selection)]="nomenclaturaSel"
+        [(selection)]="state.nomenclaturaSeleccionada"
         [alwaysShowPaginator]="false"
         [responsive]="true"
         [paginator]="true"
@@ -77,14 +77,14 @@
 
       <!-- botones - next-->
       <div class="text-center mt-2 mb-1">
-        <button (click)="siguienteNomenclatura()" type="button" class="btn btn-sm btn-primary w-100-px" [disabled]="!nomenclaturaSel">
+        <button (click)="siguienteNomenclatura()" type="button" class="btn btn-sm btn-primary w-100-px" [disabled]="!state.nomenclaturaSeleccionada">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
         </button>
       </div>
     </ng-container>
 
     <!-- No Hay nomenclaturas-->
-    <div *ngIf="!(datosIniciales?.nomenclaturas?.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
+    <div *ngIf="!(state.datosIniciales?.nomenclaturas?.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
       <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
       <span class="ui-messages-detail">
         <strong>No hay nomenclaturas</strong> parametrizadas en el sistema
@@ -94,47 +94,30 @@
 </ng-container>
 
 <!-- Paso 2 entrada informacion-->
-<ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
+<ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_DOS">
 
-  <p-panel styleClass="mb-2 steps-pnl steps-pnl-main">
-    <p-header>
-      <i class="fa fa-info-circle font-size-18"></i>
-      <span> Ingrese la información solicitada</span>
-    </p-header>
+  <!-- title nomenclatura-->
+  <div class="text-center pt-1 st">
+    <p>
+      <span class="scc-color-txt">{{state.nomenclaturaSeleccionada.nomenclatura}} </span>
+      <span (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="edit-round-min btn-pup scc-size-dtl">
+        <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
+      </span>
+      <br/>
+      <span class="scc-txt font-size-16">{{state.nomenclaturaSeleccionada.descripcion}}</span>
+    </p>
+  </div>
 
-    <!-- title nomenclatura-->
-    <div class="text-center pt-1 st">
-      <p>
-        <span class="scc-color-txt">{{nomenclaturaSel.nomenclatura}} </span>
-        <span (click)="verDetalleNomenclatura($event, nomenclaturaSel)" class="edit-round-min btn-pup scc-size-dtl">
-          <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
-        </span>
-        <br/>
-        <span class="scc-txt font-size-16">{{nomenclaturaSel.descripcion}}</span>
-      </p>
-    </div>
-
-    <!-- campos de informacion-->
-    <admin-campos-informacion [model]="campoInformacionModel"></admin-campos-informacion>
-
-    <!-- botones regresar - next-->
-    <div class="text-center mt-2 mb-1">
-      <button (click)="regresarEntradaInformacion()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
-        <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-      </button>
-      <button (click)="siguienteEntradaInformacion()" type="button" class="btn btn-sm btn-primary w-100-px">
-        <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-      </button>
-    </div>
-  </p-panel>
+  <!-- campos de informacion-->
+  <admin-campos-informacion></admin-campos-informacion>
 </ng-container>
 
 <!-- Paso 3 cargue de archivos-->
-<ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_TRES">
+<ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_TRES">
 
   <!-- botones regresar - next-->
   <div class="text-center mt-2 mb-1">
-    <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
+    <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
       <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
     </button>
     <button type="button" class="btn btn-sm btn-primary w-100-px">

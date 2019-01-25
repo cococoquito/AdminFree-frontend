@@ -2,24 +2,17 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from './../../../services/correspondencia.service';
-import { CamposInformacionComponent } from '../campos-informacion/campos-informacion.component';
 import { CommonComponent } from './../../../util/common.component';
-import { CampoInformacionModel } from './../../../model/campo-informacion.model';
 import { StepsModel } from './../../../model/steps-model';
+import { CorrespondenciaState } from './../../../states/correspondencia/correspondencia.state';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { ModalData } from '../../../model/modal-data';
-import { InitSolicitarConsecutivoDTO } from '../../../dtos/correspondencia/init-solicitar-consecutivo.dto';
-import { SolicitudConsecutivoDTO } from './../../../dtos/correspondencia/solicitud-consecutivo.dto';
-import { CampoEntradaValueDTO } from './../../../dtos/correspondencia/campo-entrada-value.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
-import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { MsjUtil } from '../../../util/messages.util';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
-import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
-import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 
 /**
  * Componente para la solicitud de consecutivos de correspondencia
@@ -29,41 +22,29 @@ import { RestriccionesKeyConstant } from './../../../constants/restricciones-key
 @Component({
   templateUrl: './solicitar-consecutivos.component.html',
   styleUrls: ['./solicitar-consecutivos.component.css'],
-  providers: [ CorrespondenciaService ]
+  providers: [ CorrespondenciaService, CorrespondenciaState ]
 })
 export class SolicitarConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
-
-  /** cliente autenticado o es el cliente asociado al usuario */
-  private clienteCurrent: ClienteDTO;
-
-  /** son los datos iniciales para este modulo */
-  public datosIniciales: InitSolicitarConsecutivoDTO;
 
   /** Son las nomenclaturas a mostrar en pantalla */
   public nomenclaturas: Array<NomenclaturaDTO>;
 
-  /** Es el modelo para el componente campos de informacion */
-  public campoInformacionModel: CampoInformacionModel;
+  /** Contiene el modelo del modal ver detalle de la nomenclatura*/
+  public detalleNomenclatura: ModalData;
 
   /** Es el filter ingresado para la busqueda de nomenclatura */
   public filterValue: string;
 
-  /** Es la nomenclatura seleccionada para solicitar el consecutivo */
-  public nomenclaturaSel: NomenclaturaDTO;
-
-  /** Modelo del componente steps para la solicitud del consecutivo*/
-  public stepsModel: StepsModel;
-
-  /** Contiene el modelo del modal ver detalle de la nomenclatura*/
-  public detalleNomenclatura: ModalData;
-
-  /** Es el componente de campos de informacion*/
-  @ViewChild(CamposInformacionComponent) camposInformacion: CamposInformacionComponent;
+  /** Es el identificador de la nomenclatura seleccionada, por si regresan al 1 punto */
+  private idNomenclaturaBK;
 
   /** Es el modelo de la tabla de nomenclaturas*/
   @ViewChild('tblNomen') tblNomen: Table;
 
   /**
+   * @param state, estado para administrar los datos para las
+   * solicitudes de creacion de consecutivos de correspondencia
+   *
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    *
@@ -76,6 +57,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    * cambian entre los steps
    */
   constructor(
+    public state: CorrespondenciaState,
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
     private shellState: ShellState,
@@ -109,16 +91,16 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_SOLICITAR_CONSECUTIVOS;
 
     // se procede a obtener el cliente autenticado
-    this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
+    this.state.clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
     // se configura el componente steps
-    this.stepsModel = new StepsModel();
-    this.stepsModel.stepsParaSolicitarConsecutivo();
+    this.state.stepsModel = new StepsModel();
+    this.state.stepsModel.stepsParaSolicitarConsecutivo();
 
     // se consulta los datos iniciales para este modulo
-    this.correspondenciaService.getInitSolicitarConsecutivo(this.clienteCurrent.id).subscribe(
+    this.correspondenciaService.getInitSolicitarConsecutivo(this.state.clienteCurrent.id).subscribe(
       data => {
-        this.datosIniciales = data;
+        this.state.datosIniciales = data;
         this.nomenclaturas = data.nomenclaturas;
       },
       error => {
@@ -164,14 +146,14 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       this.nomenclaturas = new Array<NomenclaturaDTO>();
 
       // se busca la nomenclatura que coincide con el valor
-      for (const nomenclatura of this.datosIniciales.nomenclaturas) {
+      for (const nomenclatura of this.state.datosIniciales.nomenclaturas) {
         if (nomenclatura.nomenclatura &&
             nomenclatura.nomenclatura.toUpperCase().includes(this.filterValue.toUpperCase())) {
             this.nomenclaturas.push(nomenclatura);
         }
       }
     } else {
-      this.nomenclaturas = this.datosIniciales.nomenclaturas;
+      this.nomenclaturas = this.state.datosIniciales.nomenclaturas;
     }
 
     // se refresca la tabla de nomenclaturas
@@ -184,147 +166,26 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   public siguienteNomenclatura(): void {
 
     // la seleccion de la nomenclatura es obligatorio
-    if (!this.nomenclaturaSel) {
+    if (!this.state.nomenclaturaSeleccionada) {
       this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.NOMENCLATURA_REQUERIDO));
       return;
     }
 
-    // se verifica que no sea la misma nomenclatura seleccionada
-    if (this.campoInformacionModel &&
-        this.campoInformacionModel.idNomeclatura &&
-        this.campoInformacionModel.idNomeclatura === this.nomenclaturaSel.id) {
-        this.stepsModel.irSegundoStep(this.spinnerState);
-        return;
+    // se identifica que no sea la misma nomenclatura seleccionada
+    if (this.idNomenclaturaBK && this.state.nomenclaturaSeleccionada.id === this.idNomenclaturaBK) {
+
+      // se redirecciona segundo paso CON spinner dado que el 2 paso NO procede hacer llamado http
+      this.state.stepsModel.irSegundoStep(this.spinnerState);
+    } else {
+
+      // se configura el id de la nomenclatura por si regresan a este punto
+      this.idNomenclaturaBK = this.state.nomenclaturaSeleccionada.id;
+
+      // se reinicia la data del state para los demas pasos
+      this.state.init();
+
+      // se redirecciona segundo paso SIN spinner dado que el 2 paso SI procede hacer llamado http
+      this.state.stepsModel.irSegundoStep();
     }
-
-    // se procede a buscar los campos asociados a la nomenclatura seleccionada
-    this.correspondenciaService.getCamposNomenclatura(this.nomenclaturaSel.id).subscribe(
-      data => {
-
-        // se configura el modelo del componente
-        this.campoInformacionModel = new CampoInformacionModel();
-        this.campoInformacionModel.campos = data;
-        this.campoInformacionModel.fechaActual = new Date(this.datosIniciales.fechaActual);
-        this.campoInformacionModel.idNomeclatura = this.nomenclaturaSel.id;
-
-        // se redirecciona al segundo punto
-        this.stepsModel.irSegundoStep();
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
-  }
-
-  /**
-   * Metodo que soporta el evento del boton regresar del paso 2 "entrada informacion"
-   */
-  public regresarEntradaInformacion(): void {
-
-    // se hace le backup de los campos visualizados en el componente
-    this.campoInformacionModel.camposVisualizar = this.camposInformacion.getCamposVisualizar();
-
-    // se regresa al punto anterior
-    this.stepsModel.regresar();
-  }
-
-  /**
-   * Metodo que soporta el evento del boton siguiente del paso 2 "entrada informacion"
-   */
-  public siguienteEntradaInformacion(): void {
-
-    // se limpia mensajes de otros procesos
-    this.messageService.clear();
-
-    // se hace el llamado de las validaciones por parte de FRONT-END
-    const resultado = this.camposInformacion.esInformacionValida();
-
-    // se verifica que todo este OK
-    if (resultado) {
-
-      // se hace el llamado de las validaciones por parte del BACK-END
-      const valores = this.getCamposValidar();
-      if (valores && valores.length > 0) {
-
-        // se construye la solicitud para hacer la invocacion
-        const solicitud = new SolicitudConsecutivoDTO();
-        solicitud.valores = valores;
-        solicitud.idCliente = this.clienteCurrent.id;
-        solicitud.idNomenclatura = this.nomenclaturaSel.id;
-
-        // se procede a realizar las validaciones para los valores ingresado
-        this.correspondenciaService.validarCamposIngresoInformacion(solicitud).subscribe(
-          data => {
-            // se valida si el resultado tiene mensajes de errores
-            if (data && data.length > 0) {
-
-              // se muestra cada error por pantalla
-              for (const error of data) {
-                this.messageService.add(MsjUtil.getMsjError(error.mensaje));
-              }
-            } else {
-              // si no tiene se procede a ir al tercer paso
-              this.stepsModel.irTercerStep();
-            }
-          },
-          error => {
-            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-          }
-        );
-      } else {
-        this.stepsModel.irTercerStep(this.spinnerState);
-      }
-    }
-  }
-
-  /**
-   * Metodo que permite configurar los campos para validar
-   * su valor ingresado de acuerdo a sus restricciones
-   */
-  private getCamposValidar(): Array<CampoEntradaValueDTO> {
-
-    // son los valores a retornar
-    let camposValue: Array<CampoEntradaValueDTO>;
-
-    // se obtiene los campos visualizado en pantalla
-    const campos = this.camposInformacion.getCamposVisualizar();
-
-    // solo se valida si hay valores a validar
-    if (campos && campos.length > 0) {
-
-      // variables que se utilizan para el proceso
-      let campoValue: CampoEntradaValueDTO;
-      let restricciones: Array<string>;
-
-      // se recorre cada valor ingresado
-      for (const campo of campos) {
-
-        // por el momento solo aplica para campo de texto
-        if (campo.campo.tipoCampo === TipoCamposConstant.ID_CAMPO_TEXTO) {
-
-          // solo aplica si el campo tiene restricciones y exista su valor
-          restricciones = campo.campo.restricciones;
-          if (restricciones && restricciones.length > 0 && campo.valor) {
-
-            // por el momento solo aplica esta dos restricciones
-            if (restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_UNICO_NOMENCLATURA) ||
-              restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_TODAS_NOMENCLATURA)) {
-
-              // se construye el value a validar
-              campoValue = new CampoEntradaValueDTO();
-              campoValue.value = campo.valor;
-              campoValue.restricciones = restricciones;
-
-              // se agrega en la lista de la solicitud
-              if (!camposValue) {
-                  camposValue = new Array<CampoEntradaValueDTO>();
-              }
-              camposValue.push(campoValue);
-            }
-          }
-        }
-      }
-    }
-    return camposValue;
   }
 }

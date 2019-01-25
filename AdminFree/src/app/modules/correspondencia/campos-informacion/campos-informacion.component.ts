@@ -1,6 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { SpinnerState } from './../../../states/spinner.state';
+import { SolicitudConsecutivoDTO } from './../../../dtos/correspondencia/solicitud-consecutivo.dto';
+import { CampoEntradaValueDTO } from './../../../dtos/correspondencia/campo-entrada-value.dto';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { CampoInformacionModel } from './../../../model/campo-informacion.model';
+import { CorrespondenciaService } from './../../../services/correspondencia.service';
+import { CorrespondenciaState } from './../../../states/correspondencia/correspondencia.state';
+import { CommonComponent } from './../../../util/common.component';
 import { CampoModel } from './../../../model/campo-model';
 import { RegexUtil } from './../../../util/regex-util';
 import { MsjUtil } from './../../../util/messages.util';
@@ -21,13 +26,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
   templateUrl: './campos-informacion.component.html',
   styleUrls: ['./campos-informacion.component.css']
 })
-export class CamposInformacionComponent implements OnInit {
-
-  /** Contiene los datos que se necesitan para este componente*/
-  @Input() public model: CampoInformacionModel;
-
-  /** Esta es la lista de campos a visualizar en pantalla*/
-  public camposVisualizar: Array<CampoModel>;
+export class CamposInformacionComponent extends CommonComponent implements OnInit {
 
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
@@ -44,13 +43,68 @@ export class CamposInformacionComponent implements OnInit {
   /**
    * @param messageService, mensajes en pantalla
    */
-  constructor(private messageService: MessageService) {}
+  constructor(
+    public state: CorrespondenciaState,
+    protected messageService: MessageService,
+    private correspondenciaService: CorrespondenciaService,
+    private spinnerState: SpinnerState) {
+    super();
+  }
 
   /**
    * Metodo que define las variables globales
    */
   ngOnInit() {
     this.init();
+  }
+
+  /**
+   * Metodo que permite soportar el boton siguiente
+   */
+  public siguiente(): void {
+
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
+    // se hace el llamado de las validaciones por parte de FRONT-END
+    const resultado = this.esInformacionValida();
+
+    // se verifica que todo este OK
+    if (resultado) {
+
+      // se hace el llamado de las validaciones por parte del BACK-END
+      const valores = this.getCamposValidar();
+      if (valores && valores.length > 0) {
+
+        // se construye la solicitud para hacer la invocacion
+        const solicitud = new SolicitudConsecutivoDTO();
+        solicitud.valores = valores;
+        solicitud.idCliente = this.state.clienteCurrent.id;
+        solicitud.idNomenclatura = this.state.nomenclaturaSeleccionada.id;
+
+        // se procede a realizar las validaciones para los valores ingresado
+        this.correspondenciaService.validarCamposIngresoInformacion(solicitud).subscribe(
+          data => {
+            // se valida si el resultado tiene mensajes de errores
+            if (data && data.length > 0) {
+
+              // se muestra cada error por pantalla
+              for (const error of data) {
+                this.messageService.add(MsjUtil.getMsjError(error.mensaje));
+              }
+            } else {
+              // si no tiene se procede a ir al tercer paso
+              this.state.stepsModel.irTercerStep();
+            }
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      } else {
+        this.state.stepsModel.irTercerStep(this.spinnerState);
+      }
+    }
   }
 
   /**
@@ -71,38 +125,43 @@ export class CamposInformacionComponent implements OnInit {
    */
   private setCamposModel(): void {
 
-    // se valida si existe el backup de los campos a visualizar
-    if (!this.model.camposVisualizar) {
+    // se valida si se los campos ya fueron consultados
+    if (!this.state.isNoConsultarCamposIngreso) {
 
-      // se valida si para la nomenclatura seleccionada existen campos
-      if (this.model && this.model.campos && this.model.campos.length > 0) {
+      // se procede a buscar los campos asociados a la nomenclatura seleccionada
+      this.correspondenciaService.getCamposNomenclatura(this.state.nomenclaturaSeleccionada.id).subscribe(
+        data => {
 
-        // se crea los campos a visualizar en pantalla
-        this.camposVisualizar = new Array<CampoModel>();
+          // indica que los campos de informacion ya fueron consultados
+          this.state.isNoConsultarCamposIngreso = true;
 
-        // se recorre todos los campos
-        let campoModel;
-        for (const campo of this.model.campos) {
+          // se valida si para la nomenclatura seleccionada existen campos
+          if (data && data.length > 0) {
 
-          // se crea el modelo del campo
-          campoModel = new CampoModel();
-          campoModel.isValido = true;
-          campoModel.campo = campo;
+            // se crea los campos a visualizar en pantalla
+            this.state.camposInformacionValues = new Array<CampoModel>();
 
-          // se configura las restricciones de este campo
-          this.setRestricciones(campoModel);
+            // se recorre todos los campos
+            let campoModel;
+            for (const campo of data) {
 
-          // se agrega a la lista a visualizar
-          this.camposVisualizar.push(campoModel);
+              // se crea el modelo del campo
+              campoModel = new CampoModel();
+              campoModel.isValido = true;
+              campoModel.campo = campo;
+
+              // se configura las restricciones de este campo
+              this.setRestricciones(campoModel);
+
+              // se agrega a la lista a visualizar
+              this.state.camposInformacionValues.push(campoModel);
+            }
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
-      }
-    } else {
-      this.camposVisualizar = this.model.camposVisualizar;
-      if (this.camposVisualizar && this.camposVisualizar.length > 0) {
-        for (const campo of this.camposVisualizar) {
-          campo.isValido = true;
-        }
-      }
+      );
     }
   }
 
@@ -141,33 +200,33 @@ export class CamposInformacionComponent implements OnInit {
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
             campoModel.isFechaActualNoEditable = true;
-            campoModel.valor = this.model.fechaActual;
+            campoModel.valor = this.state.datosIniciales.fechaActual;
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
-            campoModel.valor = new Date(this.model.fechaActual);
+            campoModel.valor = new Date(this.state.datosIniciales.fechaActual);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MAYOR_ACTUAL: {
             campoModel.isFechaMayorActual = true;
-            campoModel.minDate = new Date(this.model.fechaActual);
+            campoModel.minDate = new Date(this.state.datosIniciales.fechaActual);
             campoModel.minDate.setDate(campoModel.minDate.getDate() + 1);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MAYOR_IGUAL_ACTUAL: {
             campoModel.isFechaMayorIgualActual = true;
-            campoModel.minDate = new Date(this.model.fechaActual);
+            campoModel.minDate = new Date(this.state.datosIniciales.fechaActual);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MENOR_ACTUAL: {
             campoModel.isFechaMenorActual = true;
-            campoModel.maxDate = new Date(this.model.fechaActual);
+            campoModel.maxDate = new Date(this.state.datosIniciales.fechaActual);
             campoModel.maxDate.setDate(campoModel.maxDate.getDate() - 1);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_MENOR_IGUAL_ACTUAL: {
             campoModel.isFechaMenorIgualActual = true;
-            campoModel.maxDate = new Date(this.model.fechaActual);
+            campoModel.maxDate = new Date(this.state.datosIniciales.fechaActual);
             break;
           }
         }
@@ -178,13 +237,13 @@ export class CamposInformacionComponent implements OnInit {
   /**
    * Metodo que comprueba si la informacion ingresada es valida
    */
-  public esInformacionValida(): boolean {
+  private esInformacionValida(): boolean {
 
     // se verifica si hay campos de informacion para esta nomenclatura
-    if (this.camposVisualizar && this.camposVisualizar.length > 0) {
+    if (this.state.camposInformacionValues && this.state.camposInformacionValues.length > 0) {
 
       // se recorre cada campo
-      for (const campoModel of this.camposVisualizar) {
+      for (const campoModel of this.state.camposInformacionValues) {
 
         // se valida dependiendo del tipo de campo
         switch (campoModel.campo.tipoCampo) {
@@ -205,20 +264,13 @@ export class CamposInformacionComponent implements OnInit {
       }
 
       // se verifica el resultado a retornar
-      for (const campoModel of this.camposVisualizar) {
-        if (!campoModel.isValido) {
+      for (const value of this.state.camposInformacionValues) {
+        if (!value.isValido) {
           return false;
         }
       }
     }
     return true;
-  }
-
-  /**
-   * Metodo que permite retornar los campos configurados
-   */
-  public getCamposVisualizar(): Array<CampoModel> {
-    return this.camposVisualizar;
   }
 
   /**
@@ -287,7 +339,7 @@ export class CamposInformacionComponent implements OnInit {
         campoModel.isFechaMenorIgualActual) {
 
         // se hace la comparacion de las fechas
-        const resultado = FechaUtil.compareDate(new Date(campoModel.valor), new Date(this.model.fechaActual));
+        const resultado = FechaUtil.compareDate(new Date(campoModel.valor), new Date(this.state.datosIniciales.fechaActual));
 
         // constantes que indica cual fue su resultado
         const iguales = resultado === 0;
@@ -323,5 +375,56 @@ export class CamposInformacionComponent implements OnInit {
         }
       }
     }
+  }
+
+  /**
+   * Metodo que permite configurar los campos para validar
+   * su valor ingresado de acuerdo a sus restricciones
+   */
+  private getCamposValidar(): Array<CampoEntradaValueDTO> {
+
+    // son los valores a retornar
+    let camposValue: Array<CampoEntradaValueDTO>;
+
+    // se obtiene los campos visualizado en pantalla
+    const campos = this.state.camposInformacionValues;
+
+    // solo se valida si hay valores a validar
+    if (campos && campos.length > 0) {
+
+      // variables que se utilizan para el proceso
+      let campoValue: CampoEntradaValueDTO;
+      let restricciones: Array<string>;
+
+      // se recorre cada valor ingresado
+      for (const campo of campos) {
+
+        // por el momento solo aplica para campo de texto
+        if (campo.campo.tipoCampo === TipoCamposConstant.ID_CAMPO_TEXTO) {
+
+          // solo aplica si el campo tiene restricciones y exista su valor
+          restricciones = campo.campo.restricciones;
+          if (restricciones && restricciones.length > 0 && campo.valor) {
+
+            // por el momento solo aplica esta dos restricciones
+            if (restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_UNICO_NOMENCLATURA) ||
+              restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_TODAS_NOMENCLATURA)) {
+
+              // se construye el value a validar
+              campoValue = new CampoEntradaValueDTO();
+              campoValue.value = campo.valor;
+              campoValue.restricciones = restricciones;
+
+              // se agrega en la lista de la solicitud
+              if (!camposValue) {
+                  camposValue = new Array<CampoEntradaValueDTO>();
+              }
+              camposValue.push(campoValue);
+            }
+          }
+        }
+      }
+    }
+    return camposValue;
   }
 }

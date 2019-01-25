@@ -1,106 +1,121 @@
-<!-- Hay campos-->
-<ng-container *ngIf="camposVisualizar?.length > 0">
+<p-panel styleClass="mb-2 steps-pnl steps-pnl-main">
+  <p-header>
+    <i class="fa fa-info-circle font-size-18"></i>
+    <span> Ingrese la información solicitada</span>
+  </p-header>
 
-  <!-- pnal main -->
-  <div class="ui-g mr-4 ml-4 scc-border rounded pb-3 pt-2">
+  <!-- Hay campos-->
+  <ng-container *ngIf="state.camposInformacionValues && state.camposInformacionValues.length > 0">
+    <div class="ui-g mr-4 ml-4 scc-border rounded pb-3 pt-2">
 
-    <!-- For para cada campo -->
-    <ng-container *ngFor="let campoModel of camposVisualizar; let i = index">
+      <!-- For para cada campo -->
+      <ng-container *ngFor="let campoModel of state.camposInformacionValues; let i = index">
 
-      <div [ngClass]="camposVisualizar.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
+        <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
 
-        <!-- label-->
-        <div class="ui-g-12 pb-0">
-          <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
-          <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
-        </div>
+          <!-- label-->
+          <div class="ui-g-12 pb-0">
+            <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
+            <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
+          </div>
 
-        <!-- input-->
-        <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g-12 pt-0">
-          <div class="inner-addon left-addon">
-            <i class="fa fa-question-circle font-size-20 aico"
+          <!-- input-->
+          <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO" class="ui-g-12 pt-0">
+            <div class="inner-addon left-addon">
+              <i class="fa fa-question-circle font-size-20 aico"
+                [pTooltip]="campoModel.campo.descripcion"
+                tooltipPosition="left">
+              </i>
+              <input
+                type="text"
+                id="ctx{{i}}"
+                name="ctx{{i}}"
+                [(ngModel)]="campoModel.valor"
+                [placeholder]="campoModel.isSoloNumeros ? 'Campo Numérico': ''"
+                [pKeyFilter]="campoModel.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
+                [ngClass]="{'ad-input-required' : !campoModel.isValido, 'font-new-roman' : campoModel.isSoloNumeros}"
+                maxlength="255"
+                class="ad-input ad-input-style w-100 pt-0" />
+              <div class="focus-border"></div>
+            </div>
+          </div>
+
+          <!-- select-->
+          <div *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE" class="ui-g-12 pt-0">
+            <div class="inner-addon left-addon">
+              <i class="fa fa-question-circle font-size-20 aico"
+                [pTooltip]="campoModel.campo.descripcion"
+                tooltipPosition="left">
+              </i>
+              <p-dropdown
+                name="ctx{{i}}"
+                selectId="ctx{{i}}"
+                optionLabel="valor"
+                placeholder="Seleccione una Opción"
+                showClear="true"
+                emptyFilterMessage="No hay resultados"
+                [(ngModel)]="campoModel.valor"
+                [filter]="campoModel.campo.items.length > 6"
+                [options]="campoModel.campo.items"
+                [styleClass]="campoModel.isValido ? 'ad-select' : 'ad-select-required'">
+              </p-dropdown>
+            </div>
+          </div>
+
+          <!-- casilla-->
+          <div *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
+            <admin-inputswitch
+              [isChecked]="campoModel.valor"
+              (switchChange)="campoModel.valor = $event;">
+            </admin-inputswitch>
+            <i class="fa fa-question-circle font-size-20 ml-2"
               [pTooltip]="campoModel.campo.descripcion"
-              tooltipPosition="left">
+              tooltipPosition="right">
             </i>
-            <input
-              type="text"
-              id="ctx{{i}}"
-              name="ctx{{i}}"
-              [(ngModel)]="campoModel.valor"
-              [placeholder]="campoModel.isSoloNumeros ? 'Campo Numérico': ''"
-              [pKeyFilter]="campoModel.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
-              [ngClass]="{'ad-input-required' : !campoModel.isValido, 'font-new-roman' : campoModel.isSoloNumeros}"
-              maxlength="255"
-              class="ad-input ad-input-style w-100 pt-0" />
-            <div class="focus-border"></div>
+          </div>
+
+          <!-- calendar-->
+          <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA" class="ui-g-12 pt-0">
+            <div class="inner-addon left-addon">
+              <i class="fa fa-question-circle font-size-20 aico"
+                [pTooltip]="campoModel.campo.descripcion"
+                tooltipPosition="left">
+              </i>
+              <p-calendar
+                name="ctx{{i}}"
+                inputId="ctx{{i}}"
+                [(ngModel)]="campoModel.valor"
+                [locale]="calendarEspanish"
+                showButtonBar="true"
+                [readonlyInput]="true"
+                [disabled]="campoModel.isFechaActualNoEditable"
+                [minDate]="campoModel.minDate"
+                [maxDate]="campoModel.maxDate"
+                [inputStyleClass]="campoModel.isValido ? 'ad-calendar' : 'ad-calendar-required'"
+                dateFormat="dd/MM/yy">
+              </p-calendar>
+            </div>
           </div>
         </div>
+      </ng-container>
+    </div>
+  </ng-container>
 
-        <!-- select-->
-        <div *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE" class="ui-g-12 pt-0">
-          <div class="inner-addon left-addon">
-            <i class="fa fa-question-circle font-size-20 aico"
-              [pTooltip]="campoModel.campo.descripcion"
-              tooltipPosition="left">
-            </i>
-            <p-dropdown
-              name="ctx{{i}}"
-              selectId="ctx{{i}}"
-              optionLabel="valor"
-              placeholder="Seleccione una Opción"
-              showClear="true"
-              emptyFilterMessage="No hay resultados"
-              [(ngModel)]="campoModel.valor"
-              [filter]="campoModel.campo.items.length > 6"
-              [options]="campoModel.campo.items"
-              [styleClass]="campoModel.isValido ? 'ad-select' : 'ad-select-required'">
-            </p-dropdown>
-          </div>
-        </div>
-
-        <!-- casilla-->
-        <div *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
-          <admin-inputswitch
-            [isChecked]="campoModel.valor"
-            (switchChange)="campoModel.valor = $event;">
-          </admin-inputswitch>
-          <i class="fa fa-question-circle font-size-20 ml-2"
-            [pTooltip]="campoModel.campo.descripcion"
-            tooltipPosition="right">
-          </i>
-        </div>
-
-        <!-- calendar-->
-        <div *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA" class="ui-g-12 pt-0">
-          <div class="inner-addon left-addon">
-            <i class="fa fa-question-circle font-size-20 aico"
-              [pTooltip]="campoModel.campo.descripcion"
-              tooltipPosition="left">
-            </i>
-            <p-calendar
-              name="ctx{{i}}"
-              inputId="ctx{{i}}"
-              [(ngModel)]="campoModel.valor"
-              [locale]="calendarEspanish"
-              showButtonBar="true"
-              [readonlyInput]="true"
-              [disabled]="campoModel.isFechaActualNoEditable"
-              [minDate]="campoModel.minDate"
-              [maxDate]="campoModel.maxDate"
-              [inputStyleClass]="campoModel.isValido ? 'ad-calendar' : 'ad-calendar-required'"
-              dateFormat="dd/MM/yy">
-            </p-calendar>
-          </div>
-        </div>
-      </div>
-    </ng-container>
+  <!-- botones regresar - next-->
+  <div class="text-center mt-2 mb-1">
+    <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
+      <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+    </button>
+    <button type="button" class="btn btn-sm btn-primary w-100-px">
+      <label (click)="siguiente()" class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+    </button>
   </div>
-</ng-container>
 
-<!-- No Hay campos-->
-<div *ngIf="!(camposVisualizar?.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
-  <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
-  <span class="ui-messages-detail">
-    <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
-  </span>
-</div>
+  <!-- No Hay campos-->
+  <div *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
+    <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+    <span class="ui-messages-detail">
+      <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
+    </span>
+  </div>
+</p-panel>
