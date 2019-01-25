@@ -213,7 +213,7 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
             campoModel.isFechaActualNoEditable = true;
-            campoModel.valor = this.state.datosIniciales.fechaActual;
+            campoModel.valor = new Date(this.state.datosIniciales.fechaActual);
             break;
           }
           case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
