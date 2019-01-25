@@ -95,21 +95,7 @@
 
 <!-- Paso 2 entrada informacion-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_DOS">
-
-  <!-- title nomenclatura-->
-  <div class="text-center pt-1 st">
-    <p>
-      <span class="scc-color-txt">{{state.nomenclaturaSeleccionada.nomenclatura}} </span>
-      <span (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="edit-round-min btn-pup scc-size-dtl">
-        <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
-      </span>
-      <br/>
-      <span class="scc-txt font-size-16">{{state.nomenclaturaSeleccionada.descripcion}}</span>
-    </p>
-  </div>
-
-  <!-- campos de informacion-->
-  <admin-campos-informacion></admin-campos-informacion>
+  <admin-campos-informacion [titleNomenclatura]="titleNomenclatura"></admin-campos-informacion>
 </ng-container>
 
 <!-- Paso 3 cargue de archivos-->
@@ -140,3 +126,17 @@
     </div>
   </p-dialog>
 </ng-container>
+
+<!-- template title -->
+<ng-template #titleNomenclatura>
+  <div class="text-center pt-1 st">
+    <p>
+      <span class="scc-color-txt">{{state.nomenclaturaSeleccionada.nomenclatura}} </span>
+      <span (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="edit-round-min btn-pup scc-size-dtl">
+        <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
+      </span>
+      <br/>
+      <span class="scc-txt font-size-16">{{state.nomenclaturaSeleccionada.descripcion}}</span>
+    </p>
+  </div>
+</ng-template>

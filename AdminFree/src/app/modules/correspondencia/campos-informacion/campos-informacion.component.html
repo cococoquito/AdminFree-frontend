@@ -4,6 +4,9 @@
     <span> Ingrese la información solicitada</span>
   </p-header>
 
+  <!-- titulo nomenclatura -->
+  <ng-container *ngTemplateOutlet="titleNomenclatura"></ng-container>
+
   <!-- Hay campos-->
   <ng-container *ngIf="state.camposInformacionValues && state.camposInformacionValues.length > 0">
     <div class="ui-g mr-4 ml-4 scc-border rounded pb-3 pt-2">
@@ -101,6 +104,14 @@
     </div>
   </ng-container>
 
+  <!-- No Hay campos-->
+  <div *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
+    <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+    <span class="ui-messages-detail">
+      <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
+    </span>
+  </div>
+
   <!-- botones regresar - next-->
   <div class="text-center mt-2 mb-1">
     <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
@@ -109,13 +120,5 @@
     <button type="button" class="btn btn-sm btn-primary w-100-px">
       <label (click)="siguiente()" class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
     </button>
-  </div>
-
-  <!-- No Hay campos-->
-  <div *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
-    <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
-    <span class="ui-messages-detail">
-      <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
-    </span>
   </div>
 </p-panel>
