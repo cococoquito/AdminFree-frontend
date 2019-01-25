@@ -161,9 +161,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   }
 
   /**
-   * Metodo que soporta el evento del boton siguiente de nomenclatura
+   * Metodo que soporta el evento click del boton siguiente
    */
-  public siguienteNomenclatura(): void {
+  public siguiente(): void {
 
     // la seleccion de la nomenclatura es obligatorio
     if (!this.state.nomenclaturaSeleccionada) {

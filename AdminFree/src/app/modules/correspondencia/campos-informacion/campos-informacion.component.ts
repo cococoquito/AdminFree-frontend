@@ -1,15 +1,15 @@
-import { SpinnerState } from './../../../states/spinner.state';
-import { SolicitudConsecutivoDTO } from './../../../dtos/correspondencia/solicitud-consecutivo.dto';
-import { CampoEntradaValueDTO } from './../../../dtos/correspondencia/campo-entrada-value.dto';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from './../../../services/correspondencia.service';
 import { CorrespondenciaState } from './../../../states/correspondencia/correspondencia.state';
+import { SpinnerState } from './../../../states/spinner.state';
 import { CommonComponent } from './../../../util/common.component';
 import { CampoModel } from './../../../model/campo-model';
 import { RegexUtil } from './../../../util/regex-util';
 import { MsjUtil } from './../../../util/messages.util';
 import { FechaUtil } from './../../../util/fecha-util';
+import { SolicitudConsecutivoDTO } from './../../../dtos/correspondencia/solicitud-consecutivo.dto';
+import { CampoEntradaValueDTO } from './../../../dtos/correspondencia/campo-entrada-value.dto';
 import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -41,7 +41,17 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
   public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
 
   /**
-   * @param messageService, mensajes en pantalla
+   * @param state, estado para administrar los datos para las
+   * solicitudes de creacion, edicion de consecutivos de correspondencia
+   *
+   * @param messageService, Se utiliza para la visualizacion
+   * de los mensajes en la pantalla
+   *
+   * @param correspondenciaService, contiene los servicios
+   * del modulo de correspondencia
+   *
+   * @param spinnerState, se utiliza para simular el spinner cuando
+   * cambian entre los steps
    */
   constructor(
     public state: CorrespondenciaState,
