@@ -38,7 +38,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   /** Es el identificador de la nomenclatura seleccionada, por si regresan al 1 punto */
   private idNomenclaturaBK;
 
-  /** Es el modelo de la tabla de nomenclaturas*/
+  /** Se utiliza para resetear la tabla nomenclatura cuando hacen alguna busqueda*/
   @ViewChild('tblNomen') tblNomen: Table;
 
   /**
@@ -73,7 +73,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   }
 
   /**
-   * Se utiliza para limpiar los mensajes visualizados pantalla
+   * Cuando se destruya el componente se debe limpiar los mensajes
    */
   ngOnDestroy(): void {
     this.messageService.clear();

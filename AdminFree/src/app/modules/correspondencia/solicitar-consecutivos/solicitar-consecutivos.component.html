@@ -75,7 +75,7 @@
         </ng-template>
       </p-table>
 
-      <!-- botones - next-->
+      <!-- boton - next-->
       <div class="text-center mt-2 mb-1">
         <button (click)="siguiente()" type="button" class="btn btn-sm btn-primary w-100-px" [disabled]="!state.nomenclaturaSeleccionada">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
@@ -103,6 +103,20 @@
   <admin-admin-documentos [titleNomenclatura]="titleNomenclatura"></admin-admin-documentos>
 </ng-container>
 
+<!-- template title -->
+<ng-template #titleNomenclatura>
+  <div class="text-center pt-1 st">
+    <p>
+      <span class="scc-color-txt">{{state.nomenclaturaSeleccionada.nomenclatura}} </span>
+      <span (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="edit-round-min btn-pup scc-size-dtl">
+        <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
+      </span>
+      <br/>
+      <span class="scc-txt font-size-16">{{state.nomenclaturaSeleccionada.descripcion}}</span>
+    </p>
+  </div>
+</ng-template>
+
 <!-- modal ver detalle nomenclatura -->
 <ng-container *ngIf="detalleNomenclatura && detalleNomenclatura.data">
   <p-dialog header="Detalle de la Nomenclatura"
@@ -117,17 +131,3 @@
     </div>
   </p-dialog>
 </ng-container>
-
-<!-- template title -->
-<ng-template #titleNomenclatura>
-  <div class="text-center pt-1 st">
-    <p>
-      <span class="scc-color-txt">{{state.nomenclaturaSeleccionada.nomenclatura}} </span>
-      <span (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="edit-round-min btn-pup scc-size-dtl">
-        <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
-      </span>
-      <br/>
-      <span class="scc-txt font-size-16">{{state.nomenclaturaSeleccionada.descripcion}}</span>
-    </p>
-  </div>
-</ng-template>

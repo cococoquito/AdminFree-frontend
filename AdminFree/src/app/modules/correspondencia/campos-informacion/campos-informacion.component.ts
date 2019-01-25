@@ -86,7 +86,7 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
     if (resultado) {
 
       // se hace el llamado de las validaciones por parte del BACK-END
-      const valores = this.getCamposValidar();
+      const valores = this.getCamposValidarBackEnd();
       if (valores && valores.length > 0) {
 
         // se construye la solicitud para hacer la invocacion
@@ -139,14 +139,14 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
   private setCamposModel(): void {
 
     // se valida si se los campos ya fueron consultados
-    if (!this.state.isNoConsultarCamposIngreso) {
+    if (!this.state.noConsultarCamposIngreso) {
 
       // se procede a buscar los campos asociados a la nomenclatura seleccionada
       this.correspondenciaService.getCamposNomenclatura(this.state.nomenclaturaSeleccionada.id).subscribe(
         data => {
 
           // indica que los campos de informacion ya fueron consultados
-          this.state.isNoConsultarCamposIngreso = true;
+          this.state.noConsultarCamposIngreso = true;
 
           // se valida si para la nomenclatura seleccionada existen campos
           if (data && data.length > 0) {
@@ -394,7 +394,7 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
    * Metodo que permite configurar los campos para validar
    * su valor ingresado de acuerdo a sus restricciones
    */
-  private getCamposValidar(): Array<CampoEntradaValueDTO> {
+  private getCamposValidarBackEnd(): Array<CampoEntradaValueDTO> {
 
     // son los valores a retornar
     let camposValue: Array<CampoEntradaValueDTO>;

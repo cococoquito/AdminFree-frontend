@@ -30,13 +30,13 @@ export class CorrespondenciaState {
   public camposInformacionValues: Array<CampoModel>;
 
   /** Indica si los campos de informacion ya fueron consultados, (paso 2)*/
-  public isNoConsultarCamposIngreso: boolean;
+  public noConsultarCamposIngreso: boolean;
 
   /**
    * Metodo que permite reiniciar la data para los pasos 2,3
    */
   public init(): void {
     this.camposInformacionValues = null;
-    this.isNoConsultarCamposIngreso = false;
+    this.noConsultarCamposIngreso = false;
   }
 }
