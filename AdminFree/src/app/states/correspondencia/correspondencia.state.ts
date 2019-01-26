@@ -32,6 +32,9 @@ export class CorrespondenciaState {
   /** Indica si los campos de informacion ya fueron consultados, (paso 2)*/
   public noConsultarCamposIngreso: boolean;
 
+  /** Lista de documentos cargados en el (paso 3)*/
+  public documentos: Array<File>;
+
   /**
    * Metodo que permite reiniciar la data para los pasos 2,3
    */

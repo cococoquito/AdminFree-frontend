@@ -7,6 +7,66 @@
   <!-- titulo nomenclatura -->
   <ng-container *ngTemplateOutlet="titleNomenclatura"></ng-container>
 
+  <!-- panel main -->
+  <div class="mr-4 ml-4 pb-2 pt-2">
+
+    <!-- file upload -->
+    <p-fileUpload
+      accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.oasis.opendocument.text"
+      [showUploadButton]="false"
+      [showCancelButton]="false"
+      auto="true"
+      (onSelect)="selectFilesToUpload($event)"
+      multiple="multiple"
+      maxFileSize="2000000"
+      chooseLabel="Escoger"
+      invalidFileTypeMessageSummary="Archivo invalido"
+      invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel)"
+      invalidFileSizeMessageSummary="Archivo invalido"
+      invalidFileSizeMessageDetail="El tamaño máximo de carga es 2000000 bytes">
+      <ng-template let-file pTemplate="file"></ng-template>
+
+      <ng-template pTemplate="content">
+        <p-table
+          [value]="state.documentos"
+          [responsive]="true"
+          rowHover="true"
+          styleClass="ml-2 mr-2 mb-2">
+
+          <ng-template pTemplate="header">
+            <tr class="text-center">
+              <th style="width: 4%">#</th>
+              <th>Archivo</th>
+              <th style="width: 20%">Tamaño</th>
+              <th style="width: 4%">Eliminar</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-file let-rowIndex="rowIndex">
+            <tr [pSelectableRow]="file">
+              <td>{{rowIndex + 1}}</td>
+              <td>{{file.name}}</td>
+              <td class="text-center">{{file.size}} bytes</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-sm btn-round-table btn-round-del">
+                  <i class="pi pi-times icon-round-del"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="4">
+                <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay documentos seleccionados</p>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-template>
+    </p-fileUpload>
+  </div>
+
   <!-- botones regresar - next-->
   <div class="text-center mt-2 mb-1">
     <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">

@@ -6,6 +6,12 @@ import { SpinnerState } from './../../../states/spinner.state';
  * Componente para la administracion de los documentos de correspondencia
  * para la solicitud o edicion de los consecutivos de correspondencia
  *
+ * application/pdf = pdf
+ * application/msword =  Microsoft Word
+ * application/vnd.ms-excel = Microsoft Excel
+ * application/vnd.oasis.opendocument.text = Documento de texto OpenDocument
+ * https://developer.mozilla.org/es/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Lista_completa_de_tipos_MIME
+ *
  * @author Carlos Andres Diaz
  */
 @Component({
@@ -36,6 +42,15 @@ export class AdminDocumentosComponent implements OnInit {
   ngOnInit() {
    // this.init();
   }
+
+  selectFilesToUpload(event) {
+    if (!this.state.documentos) {
+      this.state.documentos = new Array<File>();
+    }
+    for (const file of event.files) {
+      this.state.documentos.push(file);
+    }
+}
 
   /**
    * Metodo que permite soportar el boton siguiente

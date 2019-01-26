@@ -135,6 +135,21 @@ body {
   padding: .3em !important;
 }
 
+/* Estilos para los fileupload */
+.ui-fileupload-buttonbar .ui-button {
+  background-color: #7CB342 !important;
+  border-color: #7CB342 !important;
+}
+
+.ui-fileupload-buttonbar .ui-button:hover {
+  background-color: rgb(111, 158, 61) !important;
+  border-color: rgb(111, 158, 61) !important;
+}
+
+.ui-fileupload .ui-fileupload-buttonbar .ui-button {
+  font-family: Times, Times New Roman, serif !important;
+}
+
 /* Estilos para los inputs */
 .ad-input-label {
   margin-bottom: .2rem;
