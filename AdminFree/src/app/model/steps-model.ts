@@ -139,8 +139,8 @@ export class StepsModel {
     // se agregan los items para este submodulo
     this.agregarStep(LabelsConstant.NOMENCLATURA);
     this.agregarStep(LabelsConstant.ENTRADA_INFORMACION);
-    this.agregarStep(LabelsConstant.DOCUMENTOS);
     this.agregarStep(LabelsConstant.CONFIRMACION);
+    this.agregarStep(LabelsConstant.CONSECUTIVO);
 
     // se inicializa el model del componente
     this.init();

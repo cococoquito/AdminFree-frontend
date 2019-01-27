@@ -106,7 +106,7 @@ export class LabelsConstant {
   /** labels para solicitar consecutivos correspondencia */
   public static readonly NOMENCLATURA: string = 'Nomenclatura';
   public static readonly ENTRADA_INFORMACION: string = 'Entrada de Información';
-  public static readonly DOCUMENTOS: string = 'Documentos';
+  public static readonly CONSECUTIVO: string = 'Consecutivo';
 
   /** labels para el componente de los calendars */
   public static readonly calendarEspanish: any = {

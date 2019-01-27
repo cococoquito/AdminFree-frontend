@@ -5,6 +5,7 @@ import { SolicitarConsecutivosComponent } from './solicitar-consecutivos/solicit
 import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
 import { CamposInformacionComponent } from './campos-informacion/campos-informacion.component';
 import { AdminDocumentosComponent } from './admin-documentos/admin-documentos.component';
+import { SolicitarConfirmacionComponent } from './solicitar-confirmacion/solicitar-confirmacion.component';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -27,7 +28,8 @@ import { RouterConstant } from './../../constants/router.constant';
     SolicitarConsecutivosComponent,
     DetalleNomenclaturaComponent,
     CamposInformacionComponent,
-    AdminDocumentosComponent
+    AdminDocumentosComponent,
+    SolicitarConfirmacionComponent
   ]
 })
 export class CorrespondenciaModule {}

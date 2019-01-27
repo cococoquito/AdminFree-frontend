@@ -1,0 +1,70 @@
+<!-- pnl principal -->
+<p-panel styleClass="steps-pnl steps-pnl-main">
+  <p-header>
+    <i class="fa fa-info-circle font-size-18"></i>
+    <span> Confirmación</span>
+  </p-header>
+
+  <!-- nomenclatura -->
+  <p-panel styleClass="mr-4 ml-4 pt-2 pb-2 steps-pnl steps-pnl-main">
+    <p-header>
+      <span class="steps-circle">1</span> <span> Nomenclatura </span>
+    </p-header>
+    <table class="table steps-tbl mb-0 table-hover">
+      <tbody>
+        <tr>
+          <td style="width: 10%">
+            <p class="steps-st">Nomenclatura:</p>
+          </td>
+          <td>
+            <p class="st">{{ state.nomenclaturaSeleccionada.nomenclatura }}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="steps-st">Descripción:</p>
+          </td>
+          <td>
+            <p class="st">{{ state.nomenclaturaSeleccionada.descripcion }}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </p-panel>
+
+  <!-- entrada informacion -->
+  <p-panel styleClass="mr-4 ml-4 pb-2 steps-pnl steps-pnl-main">
+    <p-header>
+      <span class="steps-circle">2</span> <span> Entrada de Información </span>
+    </p-header>
+
+    <table class="table steps-tbl mb-0 table-hover">
+      <tbody>
+        <ng-container *ngFor="let campoModel of state.camposInformacionValues; let i = index">
+          <tr>
+            <td style="width: 17%">
+              <p class="steps-st">{{ campoModel.campo.nombre }}: </p>
+            </td>
+            <td>
+              <p class="st">{{ campoModel.valor }}</p>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+
+  </p-panel>
+
+
+  <!-- botones regresar - next-->
+  <div class="text-center mt-2 mb-1">
+    <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
+      <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+    </button>
+    <button type="button" class="btn btn-success btn-sm">
+      <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Solicitar Consecutivo</label>
+    </button>
+  </div>
+
+</p-panel>
