@@ -4,14 +4,11 @@
     <span> Ingrese la información solicitada</span>
   </p-header>
 
-  <!-- titulo nomenclatura -->
-  <ng-container *ngTemplateOutlet="titleNomenclatura"></ng-container>
-
   <!-- Hay campos-->
   <ng-container *ngIf="state.camposInformacionValues && state.camposInformacionValues.length > 0">
 
     <!-- panel principal-->
-    <div class="ui-g mr-4 ml-4 scc-border rounded pb-3 pt-2">
+    <div class="ui-g pb-2 pt-3">
 
       <!-- For para cada campo -->
       <ng-container *ngFor="let campoModel of state.camposInformacionValues; let i = index">

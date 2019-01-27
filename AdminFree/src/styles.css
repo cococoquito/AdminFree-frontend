@@ -132,7 +132,7 @@ body {
 }
 
 .ui-datepicker-buttonbar {
-  padding: .3em !important;
+  padding: .1em !important;
 }
 
 /* Estilos para los fileupload */
@@ -667,4 +667,15 @@ body {
 .round-up-down-i {
   margin-top: .19rem;
   font-size: 22px !important;
+}
+
+.ui-datepicker tbody td {
+  padding: 0.25em 0.325em !important;
+  box-sizing: border-box !important;
+
+}
+
+.ui-datepicker .ui-button-text {
+  padding: .25em 1em !important;
+  font-family: Times, Times New Roman, serif !important;
 }
