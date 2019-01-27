@@ -8,7 +8,14 @@
   <!-- nomenclatura -->
   <p-panel styleClass="mr-4 ml-4 pt-2 pb-2 steps-pnl steps-pnl-main">
     <p-header>
-      <span class="steps-circle">1</span> <span> Nomenclatura </span>
+      <div class="ui-g">
+        <div class="ui-g-6 p-0 pt-1">
+          <span class="steps-circle">1</span> <span> Nomenclatura </span>
+        </div >
+        <div class="ui-g-6 p-0 text-right">
+          <ng-container *ngTemplateOutlet="titleNomenclatura"></ng-container>
+        </div>
+      </div>
     </p-header>
     <table class="table steps-tbl mb-0 table-hover">
       <tbody>

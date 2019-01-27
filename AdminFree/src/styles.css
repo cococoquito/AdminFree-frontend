@@ -437,6 +437,14 @@ body {
 }
 
 /* circulo redondo btns table */
+.btn-round-table-m {
+  border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  -webkit-border-radius: 50% !important;
+  width: 1.9em !important;
+  height: 1.9em !important;
+}
+
 .btn-round-table {
   border-radius: 50% !important;
   -moz-border-radius: 50% !important;
@@ -448,6 +456,10 @@ body {
 .icon-round-table {
   margin-left: -.1em !important;
   line-height: 1.2 !important;
+}
+
+.icon-round-table-m {
+  margin-left: -.24em !important;
 }
 
 .icon-round-edit {

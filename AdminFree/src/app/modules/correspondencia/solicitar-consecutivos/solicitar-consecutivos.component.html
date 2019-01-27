@@ -105,16 +105,9 @@
 
 <!-- template title -->
 <ng-template #titleNomenclatura>
-  <div class="text-center pt-1 st">
-    <p>
-      <span class="scc-color-txt">{{state.nomenclaturaSeleccionada.nomenclatura}} </span>
-      <span (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="edit-round-min btn-pup scc-size-dtl">
-        <i class="pi pi-external-link del-round-min-pi font-size-14"></i>
-      </span>
-      <br/>
-      <span class="scc-txt font-size-16">{{state.nomenclaturaSeleccionada.descripcion}}</span>
-    </p>
-  </div>
+  <button type="button" (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="btn btn-sm btn-round-table-m btn-pup">
+    <i class="pi pi-external-link icon-round-table-m"></i>
+  </button>
 </ng-template>
 
 <!-- modal ver detalle nomenclatura -->
