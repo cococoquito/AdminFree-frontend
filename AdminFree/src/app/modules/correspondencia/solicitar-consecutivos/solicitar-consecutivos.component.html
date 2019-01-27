@@ -95,16 +95,16 @@
 
 <!-- Paso 2 entrada informacion-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_DOS">
-  <admin-campos-informacion [titleNomenclatura]="titleNomenclatura"></admin-campos-informacion>
+  <admin-campos-informacion></admin-campos-informacion>
 </ng-container>
 
 <!-- Paso 3 Confirmacion-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_TRES">
-  <admin-solicitar-confirmacion [titleNomenclatura]="titleNomenclatura"></admin-solicitar-confirmacion>
+  <admin-solicitar-confirmacion [dtlNomenclatura]="dtlNomenclatura"></admin-solicitar-confirmacion>
 </ng-container>
 
 <!-- template title -->
-<ng-template #titleNomenclatura>
+<ng-template #dtlNomenclatura>
   <button type="button" (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="btn btn-sm btn-round-table-m btn-pup">
     <i class="pi pi-external-link icon-round-table-m"></i>
   </button>

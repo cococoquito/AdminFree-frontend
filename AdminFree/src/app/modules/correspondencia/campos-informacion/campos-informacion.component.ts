@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from './../../../services/correspondencia.service';
 import { CorrespondenciaState } from './../../../states/correspondencia/correspondencia.state';
@@ -39,9 +39,6 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
   public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
   public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
   public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
-
-  /** Es el titulo de la nomenclatura seleccionada*/
-  @Input() titleNomenclatura: TemplateRef<any>;
 
   /**
    * @param state, estado para administrar los datos para las

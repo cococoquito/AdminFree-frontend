@@ -15,8 +15,8 @@ import { CorrespondenciaState } from './../../../states/correspondencia/correspo
 })
 export class SolicitarConfirmacionComponent implements OnInit {
 
-  /** Es el titulo de la nomenclatura seleccionada*/
-  @Input() titleNomenclatura: TemplateRef<any>;
+  /** Es el detalle de la nomenclatura seleccionada*/
+  @Input() dtlNomenclatura: TemplateRef<any>;
 
   /**
    * @param state, estado para administrar los datos para las

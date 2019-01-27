@@ -59,6 +59,10 @@ body {
   display: block !important;
 }
 
+.ui-dropdown .ui-inputtext {
+  background-color: #f8f9fa !important
+}
+
 /* Estilos para los calendar */
 .ui-calendar {
   display: block !important;
@@ -67,6 +71,20 @@ body {
 
 .ui-calendar .ui-widget:disabled {
   opacity: 1 !important;
+}
+
+.ui-datepicker tbody td {
+  padding: 0.25em 0.325em !important;
+  box-sizing: border-box !important;
+}
+
+.ui-datepicker .ui-button-text {
+  padding: .25em 1em !important;
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.ui-calendar .ui-inputtext {
+  background-color: #f8f9fa !important
 }
 
 .ui-datepicker {
@@ -679,15 +697,4 @@ body {
 .round-up-down-i {
   margin-top: .19rem;
   font-size: 22px !important;
-}
-
-.ui-datepicker tbody td {
-  padding: 0.25em 0.325em !important;
-  box-sizing: border-box !important;
-
-}
-
-.ui-datepicker .ui-button-text {
-  padding: .25em 1em !important;
-  font-family: Times, Times New Roman, serif !important;
 }
