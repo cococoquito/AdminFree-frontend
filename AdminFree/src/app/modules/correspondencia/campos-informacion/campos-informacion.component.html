@@ -60,7 +60,7 @@
                 [(ngModel)]="campoModel.valor"
                 [filter]="campoModel.campo.items.length > 6"
                 [options]="campoModel.campo.items"
-                [styleClass]="campoModel.isValido ? 'ad-select' : 'ad-select-required'">
+                [styleClass]="campoModel.isValido ? 'ad-select bg-clr' : 'ad-select-required bg-clr'">
               </p-dropdown>
             </div>
           </div>
@@ -94,7 +94,7 @@
                 [disabled]="campoModel.isFechaActualNoEditable"
                 [minDate]="campoModel.minDate"
                 [maxDate]="campoModel.maxDate"
-                [inputStyleClass]="campoModel.isValido ? 'ad-calendar' : 'ad-calendar-required'"
+                [inputStyleClass]="campoModel.isValido ? 'ad-calendar bg-clr' : 'ad-calendar-required bg-clr'"
                 dateFormat="dd/MM/yy">
               </p-calendar>
             </div>
