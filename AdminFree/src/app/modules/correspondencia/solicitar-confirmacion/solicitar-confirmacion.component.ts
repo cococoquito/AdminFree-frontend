@@ -10,8 +10,7 @@ import { CorrespondenciaState } from './../../../states/correspondencia/correspo
  */
 @Component({
   selector: 'admin-solicitar-confirmacion',
-  templateUrl: './solicitar-confirmacion.component.html',
-  styleUrls: ['./solicitar-confirmacion.component.css']
+  templateUrl: './solicitar-confirmacion.component.html'
 })
 export class SolicitarConfirmacionComponent implements OnInit {
 

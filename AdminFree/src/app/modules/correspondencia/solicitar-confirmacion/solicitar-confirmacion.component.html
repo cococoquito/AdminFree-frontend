@@ -11,32 +11,27 @@
       <div class="ui-g">
         <div class="ui-g-6 p-0 pt-1">
           <span class="steps-circle">1</span> <span> Nomenclatura </span>
-        </div >
+        </div>
         <div class="ui-g-6 p-0 text-right">
           <ng-container *ngTemplateOutlet="dtlNomenclatura"></ng-container>
         </div>
       </div>
     </p-header>
-    <table class="table steps-tbl mb-0 table-hover">
-      <tbody>
-        <tr>
-          <td style="width: 10%">
-            <p class="steps-st">Nomenclatura:</p>
-          </td>
-          <td>
-            <p class="st">{{ state.nomenclaturaSeleccionada.nomenclatura }}</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="steps-st">Descripción:</p>
-          </td>
-          <td>
-            <p class="st">{{ state.nomenclaturaSeleccionada.descripcion }}</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div class="ui-g pb-0">
+      <div class="ui-g-6 p-0">
+        <div class="ui-g-12 pb-0">
+          <label class="steps-st mb-0 mt-0"> Nomenclatura: </label>
+          <p class="st"><strong>{{ state.nomenclaturaSeleccionada.nomenclatura }}</strong></p>
+        </div>
+      </div>
+      <div class="ui-g-6 p-0">
+        <div class="ui-g-12 pb-0">
+          <label class="steps-st mb-0 mt-0"> Descripción: </label>
+          <p class="st">{{ state.nomenclaturaSeleccionada.descripcion }}</p>
+        </div>
+      </div>
+    </div>
   </p-panel>
 
   <!-- entrada informacion -->
@@ -45,27 +40,40 @@
       <span class="steps-circle">2</span> <span> Entrada de Información </span>
     </p-header>
 
-    <table class="table steps-tbl mb-0 table-hover">
-      <tbody>
+    <!-- Hay informacion -->
+    <ng-container *ngIf="state.camposInformacionValues && state.camposInformacionValues.length > 0">
+      <div class="ui-g pb-0">
+
+        <!-- cada valor ingresado -->
         <ng-container *ngFor="let campoModel of state.camposInformacionValues; let i = index">
-          <tr>
-            <td style="width: 17%">
-              <p class="steps-st">{{ campoModel.campo.nombre }}: </p>
-            </td>
-            <td>
+
+          <!-- pnl informacion -->
+          <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12'" class="p-0">
+
+            <!-- valor -->
+            <div class="ui-g-12 pb-0 border-bottom">
+              <label class="steps-st mb-0 mt-0"> {{campoModel.campo.nombre}}: </label>
               <p class="st">{{ campoModel.valor }}</p>
-            </td>
-          </tr>
+            </div>
+          </div>
         </ng-container>
-      </tbody>
-    </table>
+      </div>
+    </ng-container>
 
-
+    <!-- No Hay informacion -->
+    <ng-container *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)">
+      <br />
+      <div class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn">
+        <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+        <span class="ui-messages-detail">
+          <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
+        </span>
+      </div>
+    </ng-container>
   </p-panel>
 
-
   <!-- botones regresar - next-->
-  <div class="text-center mt-1 mb-1">
+  <div class="text-center mb-1">
     <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
       <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
     </button>
@@ -73,5 +81,4 @@
       <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Solicitar Consecutivo</label>
     </button>
   </div>
-
 </p-panel>

@@ -105,12 +105,15 @@
   </ng-container>
 
   <!-- No Hay campos-->
-  <div *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
-    <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
-    <span class="ui-messages-detail">
-      <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
-    </span>
-  </div>
+  <ng-container *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)">
+    <br />
+    <div class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn">
+      <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+      <span class="ui-messages-detail">
+        <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
+      </span>
+    </div>
+  </ng-container>
 
   <!-- botones regresar - next-->
   <div class="text-center mt-2 mb-1">
