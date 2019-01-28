@@ -53,7 +53,22 @@
             <!-- valor -->
             <div class="ui-g-12 pb-0 border-bottom">
               <label class="steps-st mb-0 mt-0"> {{campoModel.campo.nombre}}: </label>
-              <p class="st">{{ campoModel.valor }}</p>
+
+              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO">
+                <p class="st">{{ campoModel.valor }}</p>
+              </ng-container>
+
+              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE">
+                <p class="st">{{ campoModel.valor.valor }}</p>
+              </ng-container>
+
+              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA">
+                <p class="st">{{campoModel.valor | date:'dd/MMMM/yyyy'}}</p>
+              </ng-container>
+
+              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION">
+                <p class="st">{{campoModel.valor ? 'SI' : 'NO'}}</p>
+              </ng-container>
             </div>
           </div>
         </ng-container>

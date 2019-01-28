@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,6 +11,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './directives/spinner/spinner.component';
 import { ROUTES } from './app-routing';
+import { registerLocaleData } from '@angular/common';
+import localeEsCO from '@angular/common/locales/es-CO';
+registerLocaleData(localeEsCO, 'es-CO');
 
 /**
  * Modulo principal de la aplicacion AdminFree, contiene
@@ -37,7 +40,8 @@ import { ROUTES } from './app-routing';
     },
     SelectivePreload,
     AutenticacionGuard,
-    PrivilegiosGuard
+    PrivilegiosGuard,
+    { provide: LOCALE_ID, useValue: 'es-CO' }
   ],
   bootstrap: [ AppComponent ]
 })
