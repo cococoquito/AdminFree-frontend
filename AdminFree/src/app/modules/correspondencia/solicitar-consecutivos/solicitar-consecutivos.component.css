@@ -2,39 +2,17 @@
   position: relative;
 }
 
-/* style icon */
 .inner-addon .aico {
   position: absolute;
   pointer-events: none;
 }
 
-/* align icon */
 .left-addon .aico {
   left: 0px;
 }
 
-.right-addon .aico {
-  right: 0px;
-}
-
-/* add padding  */
 .left-addon input {
   padding-left: 30px;
-}
-
-.right-addon input {
-  padding-right: 30px;
-}
-
-.scc-txt {
-  color: #333333;
-  font-weight: 700;
-  font-size: 14px;
-  font-family: Times, Times New Roman, serif;
-}
-
-.scc-color-txt {
-  color: #F25423
 }
 
 .scc-mx-dtl-cmp {
