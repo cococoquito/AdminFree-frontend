@@ -579,6 +579,15 @@ body {
   padding: 5px !important;
 }
 
+.pnl-pt .ui-panel-content {
+  padding: 0px !important;
+  padding-top: 0.1px !important;
+}
+
+.pnl-pt .ui-panel-titlebar {
+  padding: 5px !important;
+}
+
 .steps-pnl .ui-panel-titlebar {
   background-color: #f9f9f9 !important;
   text-align: left !important;

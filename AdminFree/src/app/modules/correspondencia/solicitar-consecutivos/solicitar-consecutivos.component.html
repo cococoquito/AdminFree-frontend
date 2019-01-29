@@ -29,7 +29,7 @@
     </p-header>
 
     <!-- Hay nomenclaturas-->
-    <ng-container *ngIf="state.datosIniciales?.nomenclaturas?.length > 0">
+    <div *ngIf="state.datosIniciales?.nomenclaturas?.length > 0" class="mt-1">
 
       <!-- tabla - nomenclaturas -->
       <p-table
@@ -77,14 +77,14 @@
 
       <!-- boton - next-->
       <div class="text-center mt-2 mb-1">
-        <button (click)="siguiente()" type="button" class="btn btn-sm btn-primary w-100-px" [disabled]="!state.nomenclaturaSeleccionada">
+        <button (click)="siguiente()" [disabled]="!state.nomenclaturaSeleccionada" type="button" class="btn btn-sm btn-primary w-100-px">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
         </button>
       </div>
-    </ng-container>
+    </div>
 
     <!-- No Hay nomenclaturas-->
-    <div *ngIf="!(state.datosIniciales?.nomenclaturas?.length > 0)" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn mt-2">
+    <div *ngIf="!(state.datosIniciales?.nomenclaturas?.length > 0)" class="mr-4 ml-4 mt-3 mb-3 ui-messages ui-messages-warn">
       <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
       <span class="ui-messages-detail">
         <strong>No hay nomenclaturas</strong> parametrizadas en el sistema
@@ -103,7 +103,7 @@
   <admin-solicitar-confirmacion [dtlNomenclatura]="dtlNomenclatura"></admin-solicitar-confirmacion>
 </ng-container>
 
-<!-- template title -->
+<!-- template detalle nomenclatura -->
 <ng-template #dtlNomenclatura>
   <button type="button" (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="btn btn-sm btn-round-table-m btn-pup">
     <i class="pi pi-external-link icon-round-table-m"></i>

@@ -1,4 +1,4 @@
-<p-panel styleClass="mb-2 steps-pnl steps-pnl-main">
+<p-panel styleClass="mb-2 steps-pnl pnl-pt">
   <p-header>
     <i class="fa fa-info-circle font-size-18"></i>
     <span> Ingrese la información solicitada</span>
@@ -7,9 +7,8 @@
   <!-- Hay campos-->
   <ng-container *ngIf="state.camposInformacionValues && state.camposInformacionValues.length > 0">
 
-    <br>
     <!-- panel principal-->
-    <div class="ui-g pb-2 scc-border mr-3 ml-3 rounded bg-light">
+    <div class="ui-g pb-2 mr-3 ml-3 mt-3 scc-border rounded bg-light">
 
       <!-- For para cada campo -->
       <ng-container *ngFor="let campoModel of state.camposInformacionValues; let i = index">
@@ -105,15 +104,12 @@
   </ng-container>
 
   <!-- No Hay campos-->
-  <ng-container *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)">
-    <br />
-    <div class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-warn">
-      <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
-      <span class="ui-messages-detail">
-        <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
-      </span>
-    </div>
-  </ng-container>
+  <div *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)" class="mr-4 ml-4 mt-3 mb-3 ui-messages ui-messages-warn">
+    <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+    <span class="ui-messages-detail">
+      <strong>No hay campos de información</strong> asociados a la nomenclatura seleccionada
+    </span>
+  </div>
 
   <!-- botones regresar - next-->
   <div class="text-center mt-2 mb-1">

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { SolicitarConsecutivosComponent } from './solicitar-consecutivos/solicitar-consecutivos.component';
 import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
+import { SolicitarConsecutivosComponent } from './solicitar-consecutivos/solicitar-consecutivos.component';
 import { CamposInformacionComponent } from './campos-informacion/campos-informacion.component';
-import { AdminDocumentosComponent } from './admin-documentos/admin-documentos.component';
 import { SolicitarConfirmacionComponent } from './solicitar-confirmacion/solicitar-confirmacion.component';
+import { AdminDocumentosComponent } from './admin-documentos/admin-documentos.component';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -25,11 +25,11 @@ import { RouterConstant } from './../../constants/router.constant';
     SharedModule
   ],
   declarations: [
-    SolicitarConsecutivosComponent,
     DetalleNomenclaturaComponent,
+    SolicitarConsecutivosComponent,
     CamposInformacionComponent,
-    AdminDocumentosComponent,
-    SolicitarConfirmacionComponent
+    SolicitarConfirmacionComponent,
+    AdminDocumentosComponent
   ]
 })
 export class CorrespondenciaModule {}
