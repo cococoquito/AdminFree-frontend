@@ -2,7 +2,7 @@
 <p-panel styleClass="steps-pnl steps-pnl-main">
   <p-header>
     <i class="fa fa-info-circle font-size-18"></i>
-    <span> Confirmación</span>
+    <span> ¿Seguro de solicitar el consecutivo con la siguiente información?</span>
   </p-header>
 
   <!-- nomenclatura -->
@@ -18,19 +18,9 @@
       </div>
     </p-header>
 
-    <div class="ui-g pb-0">
-      <div class="ui-g-6 p-0">
-        <div class="ui-g-12 pb-0">
-          <label class="steps-st mb-0 mt-0"> Nomenclatura: </label>
-          <p class="st"><strong>{{ state.nomenclaturaSeleccionada.nomenclatura }}</strong></p>
-        </div>
-      </div>
-      <div class="ui-g-6 p-0">
-        <div class="ui-g-12 pb-0">
-          <label class="steps-st mb-0 mt-0"> Descripción: </label>
-          <p class="st">{{ state.nomenclaturaSeleccionada.descripcion }}</p>
-        </div>
-      </div>
+    <div class="text-center bg-light">
+      <p class="st clr-or"><strong> {{ state.nomenclaturaSeleccionada.nomenclatura }} </strong></p>
+      <p class="st"><strong> {{ state.nomenclaturaSeleccionada.descripcion }} </strong></p>
     </div>
   </p-panel>
 
@@ -42,7 +32,7 @@
 
     <!-- Hay informacion -->
     <ng-container *ngIf="state.camposInformacionValues && state.camposInformacionValues.length > 0">
-      <div class="ui-g pb-0">
+      <div class="ui-g pb-0 bg-light">
 
         <!-- cada valor ingresado -->
         <ng-container *ngFor="let campoModel of state.camposInformacionValues; let i = index">
@@ -53,22 +43,24 @@
             <!-- valor -->
             <div class="ui-g-12 pb-0 border-bottom">
               <label class="steps-st mb-0 mt-0"> {{campoModel.campo.nombre}}: </label>
+              <p class="invisible st" *ngIf="!(campoModel.valor) && campoModel.campo.tipoCampo !== ID_CASILLA_VERIFICACION; else showValue">.</p>
+              <ng-template #showValue>
+                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO">
+                  <p class="st">{{ campoModel.valor }}</p>
+                </ng-container>
 
-              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO">
-                <p class="st">{{ campoModel.valor }}</p>
-              </ng-container>
+                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE">
+                  <p class="st">{{ campoModel.valor.valor }}</p>
+                </ng-container>
 
-              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE">
-                <p class="st">{{ campoModel.valor.valor }}</p>
-              </ng-container>
+                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA">
+                  <p class="st">{{campoModel.valor | date:'dd/MMMM/yyyy'}}</p>
+                </ng-container>
 
-              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA">
-                <p class="st">{{campoModel.valor | date:'dd/MMMM/yyyy'}}</p>
-              </ng-container>
-
-              <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION">
-                <p class="st">{{campoModel.valor ? 'SI' : 'NO'}}</p>
-              </ng-container>
+                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION">
+                  <p class="st">{{campoModel.valor ? 'SI' : 'NO'}}</p>
+                </ng-container>
+              </ng-template>
             </div>
           </div>
         </ng-container>
