@@ -6,6 +6,7 @@ import { NomenclaturaDetalleDTO } from './../dtos/correspondencia/nomenclatura-d
 import { CampoEntradaDetalleDTO } from './../dtos/correspondencia/campo-entrada-detalle.dto';
 import { SolicitudConsecutivoDTO } from './../dtos/correspondencia/solicitud-consecutivo.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
+import { SolicitudConsecutivoResponseDTO } from '../dtos/correspondencia/solicitud-consecutivo-response.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -29,7 +30,7 @@ export class CorrespondenciaService {
    */
   public getDetalleNomenclatura(idNomenclatura: number): Observable<NomenclaturaDetalleDTO> {
     return this.http.get<NomenclaturaDetalleDTO>(
-      CorrespondenciaAPIConstant.GET_DTL_NOMENCLATURA + idNomenclatura
+      CorrespondenciaAPIConstant.URL_GET_DTL_NOMENCLATURA + idNomenclatura
     );
   }
 
@@ -41,7 +42,7 @@ export class CorrespondenciaService {
    */
   public getCamposNomenclatura(idNomenclatura: number): Observable<Array<CampoEntradaDetalleDTO>> {
     return this.http.get<Array<CampoEntradaDetalleDTO>>(
-      CorrespondenciaAPIConstant.GET_DTL_NOMENCLATURA_CAMPOS + idNomenclatura
+      CorrespondenciaAPIConstant.URL_GET_DTL_NOMENCLATURA_CAMPOS + idNomenclatura
     );
   }
 
@@ -54,7 +55,7 @@ export class CorrespondenciaService {
 	 */
   public getInitSolicitarConsecutivo(idCliente: number): Observable<InitSolicitarConsecutivoDTO> {
     return this.http.get<InitSolicitarConsecutivoDTO>(
-      CorrespondenciaAPIConstant.INIT_CORRESPONDENCIA + idCliente
+      CorrespondenciaAPIConstant.URL_INIT_CORRESPONDENCIA + idCliente
     );
   }
 
@@ -67,7 +68,21 @@ export class CorrespondenciaService {
 	 */
   public validarCamposIngresoInformacion(solicitud: SolicitudConsecutivoDTO): Observable<Array<MessageResponseDTO>> {
     return this.http.post<Array<MessageResponseDTO>>(
-      CorrespondenciaAPIConstant.VALIDAR_CAMPOS_INGRESO,
+      CorrespondenciaAPIConstant.URL_VALIDAR_CAMPOS_INGRESO,
+      solicitud
+    );
+  }
+
+  /**
+	 * Servicio que permite soportar el proceso de negocio de solicitar
+	 * un consecutivo de correspondencia para una nomenclatura
+	 *
+	 * @param solicitud, DTO que contiene los datos de la solicitud
+	 * @return DTO con los datos de la respuesta
+	 */
+  public solicitarConsecutivo(solicitud: SolicitudConsecutivoDTO): Observable<SolicitudConsecutivoResponseDTO> {
+    return this.http.post<SolicitudConsecutivoResponseDTO>(
+      CorrespondenciaAPIConstant.URL_SOLICITAR_CONSECUTIVO,
       solicitud
     );
   }

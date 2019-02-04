@@ -11,26 +11,32 @@ export class CorrespondenciaAPIConstant {
   static readonly CORRESPONDENCIA_API: string = 'corresapi/';
 
   /** URL del recurso para obtener el detalle de la nomenclatura*/
-  static readonly GET_DTL_NOMENCLATURA: string =
+  static readonly URL_GET_DTL_NOMENCLATURA: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'dtlnomenclatura?idNomenclatura=';
 
   /** URL del recurso para obtener los campos asociados a una nomenclatura*/
-  static readonly GET_DTL_NOMENCLATURA_CAMPOS: string =
+  static readonly URL_GET_DTL_NOMENCLATURA_CAMPOS: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'dtlnomenclaturacampos?idNomenclatura=';
 
   /** URL del recurso para obtener los datos iniciales para solicitar consecutivos*/
-  static readonly INIT_CORRESPONDENCIA: string =
+  static readonly URL_INIT_CORRESPONDENCIA: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'initcorrespondencia?idCliente=';
 
   /** URL del recurso para validar los campos de ingreso de informacion*/
-  static readonly VALIDAR_CAMPOS_INGRESO: string =
+  static readonly URL_VALIDAR_CAMPOS_INGRESO: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'validcamposingreso';
+
+  /** URL del recurso para solicitar un consecutivo de correspondencia*/
+  static readonly URL_SOLICITAR_CONSECUTIVO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'solicitarconsecutivo';
 }

@@ -1,5 +1,6 @@
 /**
- * Contiene el detalle de la nomenclatura para el modulo de correspondencia
+ * DTO que se utiliza para ver el detalle de la nomenclatura para los
+ * procesos de negocio de solicitar o editar consecutivos de correspondencia
  *
  * @author Carlos Andres Diaz
  *
