@@ -84,7 +84,7 @@
     </div>
 
     <!-- No Hay nomenclaturas-->
-    <div *ngIf="!(state.datosIniciales?.nomenclaturas?.length > 0)" class="mr-4 ml-4 mt-3 mb-3 ui-messages ui-messages-warn">
+    <div *ngIf="!(state.datosIniciales?.nomenclaturas?.length > 0)" class="mr-4 ml-4 mt-3 mb-3 ui-messages ui-messages-warn ui-corner-all">
       <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
       <span class="ui-messages-detail">
         <strong>No hay nomenclaturas</strong> parametrizadas en el sistema
@@ -100,20 +100,13 @@
 
 <!-- Paso 3 Confirmacion-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_TRES">
-  <admin-confirmacion [dtlNomenclatura]="dtlNomenclatura"></admin-confirmacion>
+  <admin-confirmacion></admin-confirmacion>
 </ng-container>
 
 <!-- Paso 4 consecutivo-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.ulitmoIndex">
   <admin-consecutivo-generado></admin-consecutivo-generado>
 </ng-container>
-
-<!-- template detalle nomenclatura -->
-<ng-template #dtlNomenclatura>
-  <button type="button" (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="btn btn-sm btn-round-table-m btn-pup">
-    <i class="pi pi-external-link icon-round-table-m"></i>
-  </button>
-</ng-template>
 
 <!-- modal ver detalle nomenclatura -->
 <ng-container *ngIf="detalleNomenclatura && detalleNomenclatura.data">

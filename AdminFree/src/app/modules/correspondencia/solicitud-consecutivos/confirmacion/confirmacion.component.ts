@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from './../../../../services/correspondencia.service';
 import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
@@ -20,9 +20,6 @@ import { TipoEventoConstant } from '../../../../constants/tipo-evento.constant';
   templateUrl: './confirmacion.component.html'
 })
 export class ConfirmacionComponent extends CommonComponent {
-
-  /** Es el detalle de la nomenclatura seleccionada*/
-  @Input() dtlNomenclatura: TemplateRef<any>;
 
   /**
    * @param state, estado para administrar los datos para las
