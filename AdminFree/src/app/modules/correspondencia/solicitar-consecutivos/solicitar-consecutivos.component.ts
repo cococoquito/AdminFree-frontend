@@ -181,8 +181,8 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       // se configura el id de la nomenclatura por si regresan a este punto
       this.idNomenclaturaBK = this.state.nomenclaturaSeleccionada.id;
 
-      // se reinicia la data del state para los demas pasos
-      this.state.init();
+      // se reinicia la data para el paso 2
+      this.state.reiniciarPaso2();
 
       // se redirecciona segundo paso SIN spinner dado que el 2 paso SI procede hacer llamado http
       this.state.stepsModel.irSegundoStep();

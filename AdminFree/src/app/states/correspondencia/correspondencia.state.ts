@@ -39,8 +39,20 @@ export class CorrespondenciaState {
   /**
    * Metodo que permite reiniciar la data para los pasos 2,3
    */
-  public init(): void {
+  public reiniciarPaso2(): void {
     this.camposInformacionValues = null;
     this.noConsultarCamposIngreso = false;
+  }
+
+  public reiniciar(): void {
+    // variable utilizada en el paso 1
+    this.nomenclaturaSeleccionada = null;
+
+    // variable utilizada en el paso 2
+    this.camposInformacionValues = null;
+    this.noConsultarCamposIngreso = false;
+
+    // variable utilizada en el paso 4
+    this.responseSolicitud = null;
   }
 }
