@@ -7,6 +7,10 @@
   <!-- titulo nomenclatura -->
   <ng-container *ngTemplateOutlet="titleNomenclatura"></ng-container>
 
+  {{state.responseSolicitud.consecutivo}}
+  Consecutivo generado
+
+
   <!-- panel main -->
   <div class="mr-4 ml-4 pb-2 pt-2">
 
@@ -28,7 +32,6 @@
 
       <ng-template pTemplate="content">
         <p-table
-          [value]="state.documentos"
           [responsive]="true"
           rowHover="true"
           styleClass="ml-2 mr-2 mb-2">

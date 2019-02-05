@@ -103,6 +103,11 @@
   <admin-solicitar-confirmacion [dtlNomenclatura]="dtlNomenclatura"></admin-solicitar-confirmacion>
 </ng-container>
 
+<!-- Paso 4 consecutivo-->
+<ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.ulitmoIndex">
+  <admin-admin-documentos></admin-admin-documentos>
+</ng-container>
+
 <!-- template detalle nomenclatura -->
 <ng-template #dtlNomenclatura>
   <button type="button" (click)="verDetalleNomenclatura($event, state.nomenclaturaSeleccionada)" class="btn btn-sm btn-round-table-m btn-pup">

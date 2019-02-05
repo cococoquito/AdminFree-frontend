@@ -44,12 +44,7 @@ export class AdminDocumentosComponent implements OnInit {
   }
 
   selectFilesToUpload(event) {
-    if (!this.state.documentos) {
-      this.state.documentos = new Array<File>();
-    }
-    for (const file of event.files) {
-      this.state.documentos.push(file);
-    }
+
 }
 
   /**

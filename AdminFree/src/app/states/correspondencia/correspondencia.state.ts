@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ClienteDTO } from './../../dtos/configuraciones/cliente.dto';
 import { NomenclaturaDTO } from './../../dtos/configuraciones/nomenclatura.dto';
 import { InitSolicitarConsecutivoDTO } from './../../dtos/correspondencia/init-solicitar-consecutivo.dto';
+import { SolicitudConsecutivoResponseDTO } from '../../dtos/correspondencia/solicitud-consecutivo-response.dto';
 import { CampoModel } from '../../model/campo-model';
 import { StepsModel } from './../../model/steps-model';
 
@@ -32,8 +33,8 @@ export class CorrespondenciaState {
   /** Indica si los campos de informacion ya fueron consultados, (paso 2)*/
   public noConsultarCamposIngreso: boolean;
 
-  /** Lista de documentos cargados en el (paso 3)*/
-  public documentos: Array<File>;
+  /** Es el response de la solicitud contiene el consecutivo generado, (paso 3)*/
+  public responseSolicitud: SolicitudConsecutivoResponseDTO;
 
   /**
    * Metodo que permite reiniciar la data para los pasos 2,3
