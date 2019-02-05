@@ -5,20 +5,21 @@ import { InitSolicitarConsecutivoDTO } from './../../dtos/correspondencia/init-s
 import { SolicitudConsecutivoResponseDTO } from '../../dtos/correspondencia/solicitud-consecutivo-response.dto';
 import { CampoModel } from '../../model/campo-model';
 import { StepsModel } from './../../model/steps-model';
+import { TipoCamposConstant } from '../../constants/tipo-campos.constant';
 
 /**
- * Estado para almacener la data de la solicitud de creacion
- * o edicion de los consecutivos de correspondencia
+ * Estado para almacener la data para el proceso de negocio
+ * de solicitar consecutivos de correspondencia
  *
  * @author Carlos Andres Diaz
  */
 @Injectable()
-export class CorrespondenciaState {
+export class SolicitarConsecutivoState {
 
-  /** cliente autenticado o es el cliente asociado al usuario (transversal) */
+  /** cliente autenticado o es el cliente asociado al usuario autenticado (transversal) */
   public clienteCurrent: ClienteDTO;
 
-  /** son los datos iniciales para los modulos de solicitar o editar consecutivos (transversal)*/
+  /** son los datos iniciales para el modulo de solicitar consecutivos (transversal)*/
   public datosIniciales: InitSolicitarConsecutivoDTO;
 
   /** Modelo del componente steps para la solicitud de consecutivos (transversal)*/
@@ -33,8 +34,14 @@ export class CorrespondenciaState {
   /** Indica si los campos de informacion ya fueron consultados, (paso 2)*/
   public noConsultarCamposIngreso: boolean;
 
-  /** Es el response de la solicitud contiene el consecutivo generado, (paso 3)*/
+  /** Es el response de la solicitud, contiene el consecutivo generado, (paso 3)*/
   public responseSolicitud: SolicitudConsecutivoResponseDTO;
+
+  /** identificadores de cada tipo de campo (transversal)*/
+  public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
+  public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
+  public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
+  public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
 
   /**
    * Metodo que permite reiniciar la data para los pasos 2,3
@@ -44,13 +51,16 @@ export class CorrespondenciaState {
     this.noConsultarCamposIngreso = false;
   }
 
+  /**
+   * Metodo que permite reiniciar la data para volver a generar otro consecutivo
+   */
   public reiniciar(): void {
+
     // variable utilizada en el paso 1
     this.nomenclaturaSeleccionada = null;
 
     // variable utilizada en el paso 2
-    this.camposInformacionValues = null;
-    this.noConsultarCamposIngreso = false;
+    this.reiniciarPaso2();
 
     // variable utilizada en el paso 4
     this.responseSolicitud = null;

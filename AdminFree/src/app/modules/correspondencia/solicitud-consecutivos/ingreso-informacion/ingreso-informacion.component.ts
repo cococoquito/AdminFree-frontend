@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../../services/correspondencia.service';
 import { CommonComponent } from '../../../../util/common.component';
-import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
 import { SpinnerState } from '../../../../states/spinner.state';
 import { CampoModel } from '../../../../model/campo-model';
 import { SolicitudConsecutivoDTO } from '../../../../dtos/correspondencia/solicitud-consecutivo.dto';
@@ -11,7 +11,6 @@ import { RegexUtil } from '../../../../util/regex-util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { FechaUtil } from '../../../../util/fecha-util';
 import { RestriccionesKeyConstant } from '../../../../constants/restricciones-key.constant';
-import { TipoCamposConstant } from '../../../../constants/tipo-campos.constant';
 import { LabelsConstant } from '../../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 
@@ -35,12 +34,6 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
   /** labels para el componente de los calendars */
   public calendarEspanish: any;
 
-  /** identificadores de cada tipo de campo*/
-  public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
-  public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
-  public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
-  public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
-
   /**
    * @param state, estado para administrar los datos para las
    * solicitudes de los consecutivos de correspondencia
@@ -55,7 +48,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
    * cambian entre los steps
    */
   constructor(
-    public state: CorrespondenciaState,
+    public state: SolicitarConsecutivoState,
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
     private spinnerState: SpinnerState) {
@@ -259,15 +252,15 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
         // se valida dependiendo del tipo de campo
         switch (campoModel.campo.tipoCampo) {
 
-          case this.ID_CAMPO_TEXTO: {
+          case this.state.ID_CAMPO_TEXTO: {
             this.esCampoTextoOK(campoModel);
             break;
           }
-          case this.ID_LISTA_DESPLEGABLE: {
+          case this.state.ID_LISTA_DESPLEGABLE: {
             this.esRequeridoOK(campoModel);
             break;
           }
-          case this.ID_CAMPO_FECHA: {
+          case this.state.ID_CAMPO_FECHA: {
             this.esCampoFechaOK(campoModel);
             break;
           }
@@ -316,7 +309,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
     campoModel.isValido = true;
 
     // se limpian los espacios solamente para campo de texto
-    if (this.ID_CAMPO_TEXTO === campoModel.campo.tipoCampo) {
+    if (this.state.ID_CAMPO_TEXTO === campoModel.campo.tipoCampo) {
       campoModel.valor = (campoModel.valor) ? campoModel.valor.trim() : null;
     }
 
@@ -411,7 +404,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
       for (const campo of campos) {
 
         // por el momento solo aplica para campo de texto
-        if (campo.campo.tipoCampo === TipoCamposConstant.ID_CAMPO_TEXTO) {
+        if (campo.campo.tipoCampo === this.state.ID_CAMPO_TEXTO) {
 
           // solo aplica si el campo tiene restricciones y exista su valor
           restricciones = campo.campo.restricciones;

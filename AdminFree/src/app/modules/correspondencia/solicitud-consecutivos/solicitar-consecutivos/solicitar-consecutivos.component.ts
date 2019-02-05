@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../../services/correspondencia.service';
-import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
 import { ShellState } from '../../../../states/shell/shell.state';
 import { SpinnerState } from '../../../../states/spinner.state';
 import { CommonComponent } from '../../../../util/common.component';
@@ -22,7 +22,7 @@ import { LabelsConstant } from '../../../../constants/labels.constant';
 @Component({
   templateUrl: './solicitar-consecutivos.component.html',
   styleUrls: ['./solicitar-consecutivos.component.css'],
-  providers: [ CorrespondenciaService, CorrespondenciaState ]
+  providers: [ CorrespondenciaService, SolicitarConsecutivoState ]
 })
 export class SolicitarConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -57,7 +57,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    * cambian entre los steps
    */
   constructor(
-    public state: CorrespondenciaState,
+    public state: SolicitarConsecutivoState,
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
     private shellState: ShellState,

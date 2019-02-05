@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../../services/correspondencia.service';
-import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
 import { SpinnerState } from '../../../../states/spinner.state';
 import { CommonComponent } from '../../../../util/common.component';
-import { TipoCamposConstant } from '../../../../constants/tipo-campos.constant';
 
 /**
  * Componente para el ultimo paso del proceso de negocio de solicitar
@@ -25,12 +24,6 @@ import { TipoCamposConstant } from '../../../../constants/tipo-campos.constant';
 })
 export class ConsecutivoGeneradoComponent extends CommonComponent {
 
-    /** identificadores de cada tipo de campo*/
-    public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
-    public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
-    public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
-    public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
-
   /**
    * @param state, estado para administrar los datos para las
    * solicitudes de consecutivos de correspondencia
@@ -45,7 +38,7 @@ export class ConsecutivoGeneradoComponent extends CommonComponent {
    * de los mensajes en la pantalla
    */
   constructor(
-    public state: CorrespondenciaState,
+    public state: SolicitarConsecutivoState,
     private correspondenciaService: CorrespondenciaService,
     private spinnerState: SpinnerState,
     protected messageService: MessageService) {

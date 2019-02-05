@@ -45,21 +45,21 @@
               <label class="steps-st mb-0 mt-0"> {{campoModel.campo.nombre}}: </label>
 
               <!-- valor -->
-              <p class="invisible st" *ngIf="!(campoModel.valor) && campoModel.campo.tipoCampo !== ID_CASILLA_VERIFICACION; else showValue">.</p>
+              <p class="invisible st" *ngIf="!(campoModel.valor) && campoModel.campo.tipoCampo !== state.ID_CASILLA_VERIFICACION; else showValue">.</p>
               <ng-template #showValue>
-                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_TEXTO">
+                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_TEXTO">
                   <p class="st">{{ campoModel.valor }}</p>
                 </ng-container>
 
-                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_LISTA_DESPLEGABLE">
+                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_LISTA_DESPLEGABLE">
                   <p class="st">{{ campoModel.valor.valor }}</p>
                 </ng-container>
 
-                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CAMPO_FECHA">
+                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_FECHA">
                   <p class="st">{{campoModel.valor | date:'dd/MMMM/yyyy'}}</p>
                 </ng-container>
 
-                <ng-container *ngIf="campoModel.campo.tipoCampo === ID_CASILLA_VERIFICACION">
+                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION">
                   <p class="st">{{campoModel.valor ? 'SI' : 'NO'}}</p>
                 </ng-container>
               </ng-template>

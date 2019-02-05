@@ -1,7 +1,7 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from './../../../../services/correspondencia.service';
-import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
 import { CommonComponent } from '../../../../util/common.component';
 import { SolicitudConsecutivoDTO } from '../../../../dtos/correspondencia/solicitud-consecutivo.dto';
 import { CampoEntradaValueDTO } from '../../../../dtos/correspondencia/campo-entrada-value.dto';
@@ -9,7 +9,6 @@ import { WelcomeDTO } from '../../../../dtos/seguridad/welcome.dto';
 import { LocalStoreUtil } from '../../../../util/local-store.util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { TipoEventoConstant } from '../../../../constants/tipo-evento.constant';
-import { TipoCamposConstant } from '../../../../constants/tipo-campos.constant';
 
 /**
  * Componente de confirmacion para la solicitud de los consecutivos de correspondencia
@@ -25,12 +24,6 @@ export class ConfirmacionComponent extends CommonComponent {
   /** Es el detalle de la nomenclatura seleccionada*/
   @Input() dtlNomenclatura: TemplateRef<any>;
 
-  /** identificadores de cada tipo de campo*/
-  public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
-  public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
-  public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
-  public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
-
   /**
    * @param state, estado para administrar los datos para las
    * solicitudes de los consecutivos de correspondencia
@@ -42,7 +35,7 @@ export class ConfirmacionComponent extends CommonComponent {
    * del modulo de correspondencia
    */
   constructor(
-    public state: CorrespondenciaState,
+    public state: SolicitarConsecutivoState,
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService) {
     super();
@@ -89,21 +82,21 @@ export class ConfirmacionComponent extends CommonComponent {
         solicitudValue.tipoCampo = campoIngreso.campo.tipoCampo;
 
         // el valor puede ser nulo
-        if (campoIngreso.valor || campoIngreso.campo.tipoCampo === this.ID_CASILLA_VERIFICACION) {
+        if (campoIngreso.valor || campoIngreso.campo.tipoCampo === this.state.ID_CASILLA_VERIFICACION) {
 
           // valor ingresado para este campo
           solicitudValue.value = campoIngreso.valor;
           switch (campoIngreso.campo.tipoCampo) {
 
-            case this.ID_LISTA_DESPLEGABLE: {
+            case this.state.ID_LISTA_DESPLEGABLE: {
               solicitudValue.value = campoIngreso.valor.id;
               break;
             }
-            case this.ID_CASILLA_VERIFICACION: {
+            case this.state.ID_CASILLA_VERIFICACION: {
               solicitudValue.value = (campoIngreso.valor) ? 1 : 0;
               break;
             }
-            case this.ID_CAMPO_FECHA: {
+            case this.state.ID_CAMPO_FECHA: {
               solicitudValue.value = new Date(campoIngreso.valor).toLocaleDateString();
               break;
             }
