@@ -10,7 +10,7 @@ import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatu
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { StepsModel } from '../../../model/steps-model';
-import { ModalData } from '../../../model/modal-data';
+import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { RegexUtil } from '../../../util/regex-util';
 import { MsjUtil } from '../../../util/messages.util';
@@ -41,10 +41,10 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   public isEdicion: boolean;
 
   /** se utiliza para visualizar el detalle de la nomenclatura*/
-  public verDetalleNomenclatura: ModalData;
+  public verDetalleNomenclatura: VentanaModalModel;
 
   /** se utiliza para visualizar el detalle del campo asociado a la nomenclatura*/
-  public verDetalleCampo: ModalData;
+  public verDetalleCampo: VentanaModalModel;
 
   /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
   public nomenclaturaCU: NomenclaturaDTO;
@@ -243,7 +243,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.configuracionesService.getDetalleNomenclatura(nomenclatura.id).subscribe(
       data => {
         if (!this.verDetalleNomenclatura) {
-          this.verDetalleNomenclatura = new ModalData();
+          this.verDetalleNomenclatura = new VentanaModalModel();
         }
         this.verDetalleNomenclatura.showModal(data);
       },
@@ -265,7 +265,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.configuracionesService.getDetalleCampoEntrada(campo.id).subscribe(
       data => {
         if (!this.verDetalleCampo) {
-          this.verDetalleCampo = new ModalData();
+          this.verDetalleCampo = new VentanaModalModel();
         }
         this.verDetalleCampo.showModal(data);
       },

@@ -3,7 +3,7 @@ import { ConfiguracionesService } from './../../../services/configuraciones.serv
 import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatura-campo.dto';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
-import { ModalData } from './../../../model/modal-data';
+import { VentanaModalModel } from './../../../model/ventana-modal.model';
 
 /**
  * Componente para visualizar el detalle de la NOMENCLATURA
@@ -26,7 +26,7 @@ export class DetalleNomenclaturaComponent {
   @Input() public isModal: boolean;
 
   /** se utiliza para visualizar el detalle del campo asociado a la nomenclatura*/
-  public verDetalleCampo: ModalData;
+  public verDetalleCampo: VentanaModalModel;
 
   /**
    * @param service , se utiliza para consultar el detalle
@@ -42,7 +42,7 @@ export class DetalleNomenclaturaComponent {
       this.service.getDetalleCampoEntrada(campo.idCampo).subscribe(
         data => {
           if (!this.verDetalleCampo) {
-            this.verDetalleCampo = new ModalData();
+            this.verDetalleCampo = new VentanaModalModel();
           }
           this.verDetalleCampo.showModal(data);
         },

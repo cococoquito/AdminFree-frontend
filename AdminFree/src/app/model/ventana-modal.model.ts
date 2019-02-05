@@ -1,9 +1,9 @@
 /**
- * Modelo para los modales del sistema
+ * Modelo para los datos de las ventanas modal del sistema
  *
  * @author Carlos Andres Diaz
  */
-export class ModalData {
+export class VentanaModalModel {
 
   /** permite visualizar el modal*/
   public isShowModal: boolean;

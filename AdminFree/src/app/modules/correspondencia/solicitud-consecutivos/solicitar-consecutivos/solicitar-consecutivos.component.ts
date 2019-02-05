@@ -10,7 +10,7 @@ import { NomenclaturaDTO } from '../../../../dtos/configuraciones/nomenclatura.d
 import { LocalStoreUtil } from '../../../../util/local-store.util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { StepsModel } from '../../../../model/steps-model';
-import { ModalData } from '../../../../model/modal-data';
+import { VentanaModalModel } from './../../../../model/ventana-modal.model';
 import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 import { LabelsConstant } from '../../../../constants/labels.constant';
 
@@ -30,7 +30,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
   public nomenclaturas: Array<NomenclaturaDTO>;
 
   /** Contiene el modelo del modal ver detalle de la nomenclatura*/
-  public detalleNomenclatura: ModalData;
+  public detalleNomenclatura: VentanaModalModel;
 
   /** Es el filter ingresado para la busqueda de nomenclatura */
   public filterValue: string;
@@ -121,7 +121,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     this.correspondenciaService.getDetalleNomenclatura(nomenclatura.id).subscribe(
       data => {
         if (!this.detalleNomenclatura) {
-          this.detalleNomenclatura = new ModalData();
+          this.detalleNomenclatura = new VentanaModalModel();
         }
         this.detalleNomenclatura.showModal(data);
       },
