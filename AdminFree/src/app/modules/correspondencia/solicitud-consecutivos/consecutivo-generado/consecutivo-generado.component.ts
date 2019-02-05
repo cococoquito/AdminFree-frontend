@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { CorrespondenciaService } from '../../../services/correspondencia.service';
-import { CorrespondenciaState } from '../../../states/correspondencia/correspondencia.state';
-import { SpinnerState } from '../../../states/spinner.state';
-import { CommonComponent } from '../../../util/common.component';
-import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
+import { CorrespondenciaService } from '../../../../services/correspondencia.service';
+import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { SpinnerState } from '../../../../states/spinner.state';
+import { CommonComponent } from '../../../../util/common.component';
+import { TipoCamposConstant } from '../../../../constants/tipo-campos.constant';
 
 /**
  * Componente para el ultimo paso del proceso de negocio de solicitar

@@ -1,18 +1,18 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
-import { CorrespondenciaService } from './../../../services/correspondencia.service';
-import { CommonComponent } from './../../../util/common.component';
-import { StepsModel } from './../../../model/steps-model';
-import { CorrespondenciaState } from './../../../states/correspondencia/correspondencia.state';
-import { ShellState } from '../../../states/shell/shell.state';
-import { SpinnerState } from '../../../states/spinner.state';
-import { ModalData } from '../../../model/modal-data';
-import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
-import { MsjUtil } from '../../../util/messages.util';
-import { LocalStoreUtil } from '../../../util/local-store.util';
-import { LabelsConstant } from '../../../constants/labels.constant';
-import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { CorrespondenciaService } from '../../../../services/correspondencia.service';
+import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { ShellState } from '../../../../states/shell/shell.state';
+import { SpinnerState } from '../../../../states/spinner.state';
+import { CommonComponent } from '../../../../util/common.component';
+import { NomenclaturaDTO } from '../../../../dtos/configuraciones/nomenclatura.dto';
+import { LocalStoreUtil } from '../../../../util/local-store.util';
+import { MsjUtil } from '../../../../util/messages.util';
+import { StepsModel } from '../../../../model/steps-model';
+import { ModalData } from '../../../../model/modal-data';
+import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
+import { LabelsConstant } from '../../../../constants/labels.constant';
 
 /**
  * Componente para la solicitud de consecutivos de correspondencia

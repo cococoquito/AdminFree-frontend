@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
-import { SolicitarConsecutivosComponent } from './solicitar-consecutivos/solicitar-consecutivos.component';
-import { CamposInformacionComponent } from './campos-informacion/campos-informacion.component';
-import { SolicitarConfirmacionComponent } from './solicitar-confirmacion/solicitar-confirmacion.component';
-import { ConsecutivoGeneradoComponent } from './consecutivo-generado/consecutivo-generado.component';
+import { SolicitarConsecutivosComponent } from './solicitud-consecutivos/solicitar-consecutivos/solicitar-consecutivos.component';
+import { IngresoInformacionComponent } from './solicitud-consecutivos/ingreso-informacion/ingreso-informacion.component';
+import { ConfirmacionComponent } from './solicitud-consecutivos/confirmacion/confirmacion.component';
+import { ConsecutivoGeneradoComponent } from './solicitud-consecutivos/consecutivo-generado/consecutivo-generado.component';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -27,8 +27,8 @@ import { RouterConstant } from './../../constants/router.constant';
   declarations: [
     DetalleNomenclaturaComponent,
     SolicitarConsecutivosComponent,
-    CamposInformacionComponent,
-    SolicitarConfirmacionComponent,
+    IngresoInformacionComponent,
+    ConfirmacionComponent,
     ConsecutivoGeneradoComponent
   ]
 })

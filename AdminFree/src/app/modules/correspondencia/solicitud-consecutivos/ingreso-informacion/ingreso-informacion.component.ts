@@ -1,32 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { CorrespondenciaService } from './../../../services/correspondencia.service';
-import { CorrespondenciaState } from './../../../states/correspondencia/correspondencia.state';
-import { SpinnerState } from './../../../states/spinner.state';
-import { CommonComponent } from './../../../util/common.component';
-import { CampoModel } from './../../../model/campo-model';
-import { RegexUtil } from './../../../util/regex-util';
-import { MsjUtil } from './../../../util/messages.util';
-import { FechaUtil } from './../../../util/fecha-util';
-import { SolicitudConsecutivoDTO } from './../../../dtos/correspondencia/solicitud-consecutivo.dto';
-import { CampoEntradaValueDTO } from './../../../dtos/correspondencia/campo-entrada-value.dto';
-import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
-import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
-import { LabelsConstant } from '../../../constants/labels.constant';
-import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { CorrespondenciaService } from '../../../../services/correspondencia.service';
+import { CommonComponent } from '../../../../util/common.component';
+import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { SpinnerState } from '../../../../states/spinner.state';
+import { CampoModel } from '../../../../model/campo-model';
+import { SolicitudConsecutivoDTO } from '../../../../dtos/correspondencia/solicitud-consecutivo.dto';
+import { CampoEntradaValueDTO } from '../../../../dtos/correspondencia/campo-entrada-value.dto';
+import { RegexUtil } from '../../../../util/regex-util';
+import { MsjUtil } from '../../../../util/messages.util';
+import { FechaUtil } from '../../../../util/fecha-util';
+import { RestriccionesKeyConstant } from '../../../../constants/restricciones-key.constant';
+import { TipoCamposConstant } from '../../../../constants/tipo-campos.constant';
+import { LabelsConstant } from '../../../../constants/labels.constant';
+import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 
 /**
- * Componente para la administracion de los campos de informacion
- * para las solicitudes de consecutivos de correspondencia
+ * Componente para el ingreso de informacion de acuerdo
+ * a la nomenclatura seleccionada en el paso 1 de solicitar
+ * consecutivos de correspondencia
  *
  * @author Carlos Andres Diaz
  */
 @Component({
-  selector: 'admin-campos-informacion',
-  templateUrl: './campos-informacion.component.html',
-  styleUrls: ['./campos-informacion.component.css']
+  selector: 'admin-ingreso-informacion',
+  templateUrl: './ingreso-informacion.component.html',
+  styleUrls: ['./ingreso-informacion.component.css']
 })
-export class CamposInformacionComponent extends CommonComponent implements OnInit {
+export class IngresoInformacionComponent extends CommonComponent implements OnInit {
 
   /** Se utiliza para validar los valores de los inputs*/
   public regex: RegexUtil;
@@ -42,7 +43,7 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
 
   /**
    * @param state, estado para administrar los datos para las
-   * solicitudes de creacion, edicion de consecutivos de correspondencia
+   * solicitudes de los consecutivos de correspondencia
    *
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -389,7 +390,7 @@ export class CamposInformacionComponent extends CommonComponent implements OnIni
 
   /**
    * Metodo que permite configurar los campos para validar
-   * su valor ingresado de acuerdo a sus restricciones
+   * en el backend de acuerdo al tipo de campo y sus restricciones
    */
   private getCamposValidarBackEnd(): Array<CampoEntradaValueDTO> {
 

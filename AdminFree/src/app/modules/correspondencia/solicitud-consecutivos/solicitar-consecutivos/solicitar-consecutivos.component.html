@@ -95,12 +95,12 @@
 
 <!-- Paso 2 entrada informacion-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_DOS">
-  <admin-campos-informacion></admin-campos-informacion>
+  <admin-ingreso-informacion></admin-ingreso-informacion>
 </ng-container>
 
 <!-- Paso 3 Confirmacion-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.STEP_TRES">
-  <admin-solicitar-confirmacion [dtlNomenclatura]="dtlNomenclatura"></admin-solicitar-confirmacion>
+  <admin-confirmacion [dtlNomenclatura]="dtlNomenclatura"></admin-confirmacion>
 </ng-container>
 
 <!-- Paso 4 consecutivo-->

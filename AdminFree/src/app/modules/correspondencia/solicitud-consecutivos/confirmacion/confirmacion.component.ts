@@ -1,15 +1,15 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { CorrespondenciaService } from './../../../services/correspondencia.service';
-import { CorrespondenciaState } from './../../../states/correspondencia/correspondencia.state';
-import { CommonComponent } from '../../../util/common.component';
-import { SolicitudConsecutivoDTO } from '../../../dtos/correspondencia/solicitud-consecutivo.dto';
-import { CampoEntradaValueDTO } from '../../../dtos/correspondencia/campo-entrada-value.dto';
-import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
-import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
-import { TipoEventoConstant } from '../../../constants/tipo-evento.constant';
-import { LocalStoreUtil } from '../../../util/local-store.util';
-import { MsjUtil } from '../../../util/messages.util';
+import { CorrespondenciaService } from './../../../../services/correspondencia.service';
+import { CorrespondenciaState } from '../../../../states/correspondencia/correspondencia.state';
+import { CommonComponent } from '../../../../util/common.component';
+import { SolicitudConsecutivoDTO } from '../../../../dtos/correspondencia/solicitud-consecutivo.dto';
+import { CampoEntradaValueDTO } from '../../../../dtos/correspondencia/campo-entrada-value.dto';
+import { WelcomeDTO } from '../../../../dtos/seguridad/welcome.dto';
+import { LocalStoreUtil } from '../../../../util/local-store.util';
+import { MsjUtil } from '../../../../util/messages.util';
+import { TipoEventoConstant } from '../../../../constants/tipo-evento.constant';
+import { TipoCamposConstant } from '../../../../constants/tipo-campos.constant';
 
 /**
  * Componente de confirmacion para la solicitud de los consecutivos de correspondencia
@@ -17,10 +17,10 @@ import { MsjUtil } from '../../../util/messages.util';
  * @author Carlos Andres Diaz
  */
 @Component({
-  selector: 'admin-solicitar-confirmacion',
-  templateUrl: './solicitar-confirmacion.component.html'
+  selector: 'admin-confirmacion',
+  templateUrl: './confirmacion.component.html'
 })
-export class SolicitarConfirmacionComponent extends CommonComponent {
+export class ConfirmacionComponent extends CommonComponent {
 
   /** Es el detalle de la nomenclatura seleccionada*/
   @Input() dtlNomenclatura: TemplateRef<any>;
@@ -33,7 +33,7 @@ export class SolicitarConfirmacionComponent extends CommonComponent {
 
   /**
    * @param state, estado para administrar los datos para las
-   * solicitudes de creacion de consecutivos de correspondencia
+   * solicitudes de los consecutivos de correspondencia
    *
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -50,7 +50,7 @@ export class SolicitarConfirmacionComponent extends CommonComponent {
 
   /**
    * Metodo que soporta el evento del boton de solicitar
-   * el consecutivo de correspondencia
+   * consecutivo de correspondencia
    */
   public solicitarConsecutivo(): void {
 
