@@ -442,6 +442,10 @@ body {
   font-size: 26px !important;
 }
 
+.font-size-35 {
+  font-size: 35px !important;
+}
+
 .btn-size-admin {
   font-family: Times, Times New Roman, serif !important;
   margin: 0px !important;
