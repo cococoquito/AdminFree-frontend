@@ -83,6 +83,12 @@ export class LabelsConstant {
   /** Es el KEY para identificar el componente tipo TOAST LONGER*/
   public static readonly KEY_TOAST_LONGER: string = 'toastLonger';
 
+  /** Es el rango minimo de los consecutivos*/
+  public static readonly RANGO: string = '0000';
+
+  /** label utilizado cuando no hay consecutivos*/
+  public static readonly NO_HAY_CONSECUTIVOS: string = 'No hay consecutivos';
+
   /** Son los tipos de severity */
   public static readonly SUCCESS: string = 'success';
   public static readonly INFO: string = 'info';

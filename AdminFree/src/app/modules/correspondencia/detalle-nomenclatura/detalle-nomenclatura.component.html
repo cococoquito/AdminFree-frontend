@@ -22,7 +22,7 @@
           <p class="steps-st">Consecutivo Inicial:</p>
         </td>
         <td>
-          <p class="st"><strong>{{ detalle.consecutivoInicial }}</strong></p>
+          <p class="st"><strong>{{ consecutivoInicial }}</strong></p>
         </td>
       </tr>
       <tr>
@@ -30,8 +30,7 @@
           <p class="steps-st">Ultimo Consecutivo Generado:</p>
         </td>
         <td>
-          <p class="st" *ngIf="detalle.ultimoConsecutivoSolicitado"><strong>{{ detalle.ultimoConsecutivoSolicitado }}</strong></p>
-          <p class="st" *ngIf="!detalle.ultimoConsecutivoSolicitado">No hay consecutivos</p>
+          <p class="st"><strong>{{ ultimoConsecutivoGenerado }}</strong></p>
         </td>
       </tr>
     </tbody>

@@ -464,6 +464,7 @@ body {
   -webkit-border-radius: 50% !important;
   width: 2.2em !important;
   height: 2.2em !important;
+  padding: .22rem .45rem !important;
 }
 
 .icon-round-table {
