@@ -19,6 +19,6 @@ export class NomenclaturaDetalleDTO {
   /** Consecutivo inicial asociada a la nomenclatura */
   public consecutivoInicial: number;
 
-  /** Cantidad de consecutivos solicitados para la nomenclatura */
-  public cantidadConsecutivos: number;
+  /** Es el ultimo consecutivo solicitado */
+  public ultimoConsecutivoSolicitado: number;
 }

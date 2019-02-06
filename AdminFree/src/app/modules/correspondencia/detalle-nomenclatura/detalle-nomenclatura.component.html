@@ -6,7 +6,7 @@
           <p class="steps-st">Nomenclatura:</p>
         </td>
         <td>
-          <p class="st">{{ detalle.nomenclatura }}</p>
+          <p class="st clr-or font-weight-bold">{{ detalle.nomenclatura }}</p>
         </td>
       </tr>
       <tr>
@@ -22,15 +22,16 @@
           <p class="steps-st">Consecutivo Inicial:</p>
         </td>
         <td>
-          <p class="st">{{ detalle.consecutivoInicial }}</p>
+          <p class="st"><strong>{{ detalle.consecutivoInicial }}</strong></p>
         </td>
       </tr>
       <tr>
         <td style="width: 30%">
-          <p class="steps-st">Cantidad Consecutivos Solicitados:</p>
+          <p class="steps-st">Ultimo Consecutivo Generado:</p>
         </td>
         <td>
-          <p class="st">{{ detalle.cantidadConsecutivos }}</p>
+          <p class="st" *ngIf="detalle.ultimoConsecutivoSolicitado"><strong>{{ detalle.ultimoConsecutivoSolicitado }}</strong></p>
+          <p class="st" *ngIf="!detalle.ultimoConsecutivoSolicitado">No hay consecutivos</p>
         </td>
       </tr>
     </tbody>
