@@ -11,6 +11,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { SharedCommonModule } from './shared-common.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
+import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -44,10 +45,12 @@ import { InputswitchComponent } from './../../directives/inputswitch/inputswitch
     CalendarModule,
     FileUploadModule,
     KeyFilterModule,
-    InputswitchComponent
+    InputswitchComponent,
+    ConsecutivoPipe
   ],
   declarations: [
-    InputswitchComponent
+    InputswitchComponent,
+    ConsecutivoPipe
   ]
 })
 export class SharedModule {}
