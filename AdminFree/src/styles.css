@@ -482,11 +482,12 @@ body {
 }
 
 .icon-round-table-2 {
-  margin-left: -.1em !important;
+  margin-left: -.13em !important;
+  line-height: 1.1 !important;
 }
 
 .icon-round-del {
-  margin-left: -.2em !important;
+  margin-left: -.13em !important;
   font-size: 20px !important;
 }
 
@@ -651,7 +652,7 @@ body {
 }
 
 .del-round-min-pi {
-  line-height: 1.4 !important;
+  line-height: 1.20 !important;
 }
 
 .edit-round-min {
@@ -706,4 +707,8 @@ body {
 
 .clr-or {
   color: #F25423
+}
+
+.mt-3px {
+  margin-top: 3px !important;
 }
