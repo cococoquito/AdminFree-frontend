@@ -11,7 +11,8 @@ import { MsjUtil } from '../../../../util/messages.util';
 import { TipoEventoConstant } from '../../../../constants/tipo-evento.constant';
 
 /**
- * Componente de confirmacion para la solicitud de los consecutivos de correspondencia
+ * Componente de confirmacion para las solicitudes de
+ * los consecutivos de correspondencia
  *
  * @author Carlos Andres Diaz
  */
@@ -44,6 +45,24 @@ export class ConfirmacionComponent extends CommonComponent {
    */
   public solicitarConsecutivo(): void {
 
+    // se realiza la invocacion para solicitar un consecutivo
+    this.correspondenciaService.solicitarConsecutivo(this.getSolicitudConsecutivo()).subscribe(
+      data => {
+        this.state.responseSolicitud = data;
+        this.state.stepsModel.irUltimoStep();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que permite construir la solicitud para ser enviado
+   * al servicio http de solicitar consecutivo correspondencia
+   */
+  private getSolicitudConsecutivo(): SolicitudConsecutivoDTO {
+
     // es la solicitud a enviar al server
     const solicitud = new SolicitudConsecutivoDTO();
 
@@ -72,18 +91,18 @@ export class ConfirmacionComponent extends CommonComponent {
       for (const campoIngreso of camposInformacionValues) {
         solicitudValue = new CampoEntradaValueDTO();
 
-        // id de del campo y nomenclatura
+        // identificador de la tabla NOMENCLATURAS_CAMPOS_ENTRADA.ID_NOME_CAMPO
         solicitudValue.idCampoNomenclatura = campoIngreso.campo.idCampoNomenclatura;
 
         // tipo de campo
         solicitudValue.tipoCampo = campoIngreso.campo.tipoCampo;
 
         // el valor puede ser nulo
-        if (campoIngreso.valor || campoIngreso.campo.tipoCampo === this.state.ID_CASILLA_VERIFICACION) {
+        if (campoIngreso.valor || solicitudValue.tipoCampo === this.state.ID_CASILLA_VERIFICACION) {
 
           // valor ingresado para este campo
           solicitudValue.value = campoIngreso.valor;
-          switch (campoIngreso.campo.tipoCampo) {
+          switch (solicitudValue.tipoCampo) {
 
             case this.state.ID_LISTA_DESPLEGABLE: {
               solicitudValue.value = campoIngreso.valor.id;
@@ -104,16 +123,6 @@ export class ConfirmacionComponent extends CommonComponent {
         solicitud.valores.push(solicitudValue);
       }
     }
-
-    // se realiza la invocacion para solicitar un consecutivo
-    this.correspondenciaService.solicitarConsecutivo(solicitud).subscribe(
-      data => {
-        this.state.responseSolicitud = data;
-        this.state.stepsModel.irUltimoStep();
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+    return solicitud;
   }
 }

@@ -46,7 +46,8 @@ export class ConsecutivoGeneradoComponent extends CommonComponent {
   }
 
   /**
-   * Metodo que permite soportar el evento del boton solicitar otro consecutivo
+   * Metodo que permite soportar el evento del boton
+   * 'Regresar al paso 1 para solicitar otro consecutivo'
    */
   public irPrimerPaso(): void {
 

@@ -177,7 +177,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
   private setRestricciones(campoModel: CampoModel): void {
 
     // se valida si este campo tiene restricciones
-    const restricciones: Array<string> = campoModel.campo.restricciones;
+    const restricciones = campoModel.campo.restricciones;
     if (restricciones && restricciones.length > 0) {
 
       // se recorre todas las restricciones
