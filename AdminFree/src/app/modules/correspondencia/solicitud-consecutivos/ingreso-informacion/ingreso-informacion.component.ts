@@ -416,8 +416,11 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
 
               // se construye el value a validar
               campoValue = new CampoEntradaValueDTO();
+              campoValue.idCampo = campo.campo.id;
+              campoValue.nombreCampo = campo.campo.nombre;
               campoValue.value = campo.valor;
               campoValue.restricciones = restricciones;
+              campoValue.idValue = null;
 
               // se agrega en la lista de la solicitud
               if (!camposValue) {

@@ -10,7 +10,7 @@ import { ItemDTO } from './../configuraciones/item.dto';
 export class CampoEntradaDetalleDTO {
 
   /** Identificador del campo */
-  public id: string;
+  public id: number;
 
   /** Identificador de la siguiente tabla NOMENCLATURAS_CAMPOS_ENTRADA.ID_NOME_CAMPO */
   public idCampoNomenclatura: number;
