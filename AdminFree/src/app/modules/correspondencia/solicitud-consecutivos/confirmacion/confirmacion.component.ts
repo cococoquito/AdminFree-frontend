@@ -94,15 +94,12 @@ export class ConfirmacionComponent extends CommonComponent {
         // identificador de la tabla NOMENCLATURAS_CAMPOS_ENTRADA.ID_NOME_CAMPO
         solicitudValue.idCampoNomenclatura = campoIngreso.campo.idCampoNomenclatura;
 
-        // tipo de campo
-        solicitudValue.tipoCampo = campoIngreso.campo.tipoCampo;
-
         // el valor puede ser nulo
-        if (campoIngreso.valor || solicitudValue.tipoCampo === this.state.ID_CASILLA_VERIFICACION) {
+        if (campoIngreso.valor || campoIngreso.campo.tipoCampo === this.state.ID_CASILLA_VERIFICACION) {
 
           // valor ingresado para este campo
           solicitudValue.value = campoIngreso.valor;
-          switch (solicitudValue.tipoCampo) {
+          switch (campoIngreso.campo.tipoCampo) {
 
             case this.state.ID_LISTA_DESPLEGABLE: {
               solicitudValue.value = campoIngreso.valor.id;
