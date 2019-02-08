@@ -165,6 +165,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    */
   public siguiente(): void {
 
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
     // la seleccion de la nomenclatura es obligatorio
     if (!this.state.nomenclaturaSeleccionada) {
       this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.NOMENCLATURA_REQUERIDO));
