@@ -245,6 +245,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         // datos basicos modificados
         if (this.usuarioEditarOrigen.datosBasicosEditar) {
           usuarioBK.nombre = this.usuarioCU.nombre;
+          usuarioBK.cargo = this.usuarioCU.cargo;
           usuarioBK.usuarioIngreso = this.usuarioCU.usuarioIngreso;
         }
 
@@ -421,6 +422,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     // se limpian los espacios
     this.usuarioCU.nombre = this.setTrim(this.usuarioCU.nombre);
     this.usuarioCU.usuarioIngreso = this.setTrim(this.usuarioCU.usuarioIngreso);
+    this.usuarioCU.cargo = this.setTrim(this.usuarioCU.cargo);
 
     // si valida si se modifico el usuario de ingreso
     if (this.usuarioCrearOrigen &&
@@ -459,9 +461,11 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     // se limpian los espacios
     this.usuarioCU.nombre = this.setTrim(this.usuarioCU.nombre);
     this.usuarioCU.usuarioIngreso = this.setTrim(this.usuarioCU.usuarioIngreso);
+    this.usuarioCU.cargo = this.setTrim(this.usuarioCU.cargo);
 
     // se valida si se modifico algun dato
     if (userOrigen.nombre !== this.usuarioCU.nombre ||
+        userOrigen.cargo !== this.usuarioCU.cargo ||
         userOrigen.usuarioIngreso !== this.usuarioCU.usuarioIngreso) {
 
       // se indica que los datos fueron modificados

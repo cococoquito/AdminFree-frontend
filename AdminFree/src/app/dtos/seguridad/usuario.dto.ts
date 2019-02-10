@@ -20,6 +20,9 @@ export class UsuarioDTO {
   /** Clave de ingreso para el USER */
   public claveIngreso: string;
 
+  /** Es el cargo del usuario */
+  public cargo: string;
+
   /** Estado que se encuentra el USUARIO */
   public estado: number;
 

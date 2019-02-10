@@ -21,8 +21,9 @@
 
     <ng-template pTemplate="header">
       <tr class="text-center">
-        <th>Nombre Completo</th>
-        <th>Usuario de Ingreso</th>
+        <th style="width: 34%">Nombre Completo</th>
+        <th style="width: 30%">Cargo</th>
+        <th style="width: 20%">Usuario de Ingreso</th>
         <th style="width: 4%">Estado</th>
         <th style="width: 4%">Detalle</th>
         <th style="width: 4%">Editar</th>
@@ -33,6 +34,7 @@
     <ng-template pTemplate="body" let-user>
       <tr [pSelectableRow]="user">
         <td>{{user.nombre}}</td>
+        <td>{{user.cargo}}</td>
         <td>{{user.usuarioIngreso}}</td>
         <td>
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 1" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
@@ -109,6 +111,26 @@
                     autocomplete="off"
                     class="ad-input ad-input-style w-100"
                     [ngClass]="{'ad-input-required' : (formUser.submitted && !username.valid)}"/>
+                  <div class="focus-border"></div>
+                </td>
+              </tr>
+
+              <!-- cargo -->
+              <tr>
+                <td>
+                  <label for="cargoin" class="steps-st mb-0">Cargo:</label>
+                </td>
+                <td>
+                  <input type="text"
+                    id="cargoin"
+                    name="cargoin"
+                    [(ngModel)]="usuarioCU.cargo"
+                    #cargoin="ngModel"
+                    maxlength="255"
+                    adminRequired
+                    autocomplete="off"
+                    class="ad-input ad-input-style w-100"
+                    [ngClass]="{'ad-input-required' : (formUser.submitted && !cargoin.valid)}"/>
                   <div class="focus-border"></div>
                 </td>
               </tr>
