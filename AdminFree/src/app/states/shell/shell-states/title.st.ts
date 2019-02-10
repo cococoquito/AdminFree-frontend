@@ -10,4 +10,7 @@ export class TitleST {
 
   /** Es el sub-titulo a mostrar en la pagina **/
   public subTitulo: string;
+
+  /** Es el class para el titulo **/
+  public tituloClass: string;
 }

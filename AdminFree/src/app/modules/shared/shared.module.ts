@@ -8,6 +8,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { SharedCommonModule } from './shared-common.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
@@ -31,6 +32,7 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
     DropdownModule,
     CalendarModule,
     FileUploadModule,
+    ProgressBarModule,
     KeyFilterModule
   ],
   exports: [
@@ -44,6 +46,7 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
     DropdownModule,
     CalendarModule,
     FileUploadModule,
+    ProgressBarModule,
     KeyFilterModule,
     InputswitchComponent,
     ConsecutivoPipe
