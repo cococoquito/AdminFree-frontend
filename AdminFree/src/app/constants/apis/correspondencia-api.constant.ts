@@ -39,4 +39,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'solicitarconsecutivo';
+
+  /** URL del recurso para obtener los datos para la pagina de bienvenida */
+  static readonly URL_GET_DATOS_WELCOME: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'datosbienvenida?idCliente=';
 }

@@ -7,6 +7,7 @@ import { CampoEntradaDetalleDTO } from './../dtos/correspondencia/campo-entrada-
 import { SolicitudConsecutivoDTO } from './../dtos/correspondencia/solicitud-consecutivo.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { SolicitudConsecutivoResponseDTO } from '../dtos/correspondencia/solicitud-consecutivo-response.dto';
+import { WelcomeInitDTO } from '../dtos/correspondencia/welcome-init.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -84,6 +85,18 @@ export class CorrespondenciaService {
     return this.http.post<SolicitudConsecutivoResponseDTO>(
       CorrespondenciaAPIConstant.URL_SOLICITAR_CONSECUTIVO,
       solicitud
+    );
+  }
+
+  /**
+	 * Servicio que permite obtener los datos para la pagina de bienvenida
+	 *
+	 * @param idCliente, identificador del cliente autenticado
+	 * @return DTO con los datos de bienvenida
+	 */
+  public getDatosBienvenida(idCliente: number): Observable<WelcomeInitDTO> {
+    return this.http.get<WelcomeInitDTO>(
+      CorrespondenciaAPIConstant.URL_GET_DATOS_WELCOME + idCliente
     );
   }
 }
