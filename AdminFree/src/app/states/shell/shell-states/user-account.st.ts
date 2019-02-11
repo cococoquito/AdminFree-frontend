@@ -3,6 +3,7 @@ import { CredencialesDTO } from './../../../dtos/seguridad/credenciales.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { WelcomeDTO } from './../../../dtos/seguridad/welcome.dto';
+import { WelcomeInitDTO } from '../../../dtos/correspondencia/welcome-init.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 
 /**
@@ -20,6 +21,9 @@ export class UserAccountST {
 
   /** Son las credenciales del USUARIO o ADMIN autenticado */
   public credenciales: CredencialesDTO;
+
+  /** Contiene los datos de la bienvenida de la aplicacion */
+  public datosWelcome: WelcomeInitDTO;
 
   /**
    * Cuando se carga la pagina se crea la instancia del
@@ -46,6 +50,12 @@ export class UserAccountST {
    * @param welcomeDTO, contiene los datos de la autenticacion
    */
   public changeStateAutenticado(welcomeDTO: WelcomeDTO): void {
+    // se configura los datos de bienvenida
+    this.datosWelcome = welcomeDTO.datosWelcome;
+
+    // los datos de bienvenida no se debe almacenar en el localstore
+    welcomeDTO.datosWelcome = null;
+
     // Se configura los datos de la autenticacion en el local-store
     LocalStoreUtil.welcome(TipoEventoConstant.SET, welcomeDTO);
 
