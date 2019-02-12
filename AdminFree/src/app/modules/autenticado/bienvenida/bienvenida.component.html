@@ -7,73 +7,17 @@
       <span> Nomenclaturas</span>
     </p-header>
 
-    <div class="ui-g mt-2 ml-2 mr-2 mb-2">
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-sales ui-corner-all">
-          <div class="overview-title">SALES</div>
+    <div class="ui-g mt-2 ml-2 mr-2 mb-2" *ngIf="datosWelcome">
+      <div class="ui-g-12 ui-md-12 ui-lg-4" *ngFor="let nomenclatura of datosWelcome.nomenclaturas">
+        <div class="overview-box ui-corner-all" [ngClass]="nomenclatura.bgColor">
+          <div class="overview-title">Cant. {{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</div>
           <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
+          <div class="overview-numbers"><strong>{{nomenclatura.nomenclatura}}</strong></div>
+          <div class="overview-ratios">{{nomenclatura.descripcion}}</div>
         </div>
       </div>
 
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-views ui-corner-all">
-          <div class="overview-title">SALES</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
-        </div>
-      </div>
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-users ui-corner-all">
-          <div class="overview-title">SALES</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
-        </div>
-      </div>
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-users2 ui-corner-all">
-          <div class="overview-title">SALES</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
-        </div>
-      </div>
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-users ui-corner-all">
-          <div class="overview-title">SALES</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
-        </div>
-      </div>
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-users2 ui-corner-all">
-          <div class="overview-title">SALES</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
-        </div>
-      </div>
 
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-users ui-corner-all">
-          <div class="overview-title">SALES</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
-        </div>
-      </div>
-      <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <div class="overview-box monthly-users2 ui-corner-all">
-          <div class="overview-title">SALES</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>$ 22,650</strong></div>
-          <div class="overview-ratios">16% more than previous month</div>
-        </div>
-      </div>
 
     </div>
 
@@ -87,89 +31,23 @@
       <span> Usuarios</span>
     </p-header>
 
-    <table class="table borderless mt-2">
+    <table class="table borderless mt-2" *ngIf="datosWelcome">
       <tbody>
-        <tr>
-          <td style="width: 40%" class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Carlos Andres Diaz Mendoza</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Desarrollador</p>
+        <tr *ngFor="let usuario of datosWelcome.usuarios">
+          <td style="width: 35%" class="pl-4">
+            <p class="font-weight-bold font-size-15 font-new-roman">{{usuario.nombreCompleto}}</p>
+            <p class="font-weight-bold font-size-14 font-new-roman text-secondary">{{usuario.cargo}}</p>
+            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #016b60" *ngIf="usuario.estado === 'Activo'">{{usuario.estado}}</p>
+            <p class="font-weight-bold font-size-14 font-new-roman text-danger" *ngIf="usuario.estado === 'Inactivo'">{{usuario.estado}}</p>
           </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
+          <td>
+            <p-progressBar [value]="usuario.porcentaje"></p-progressBar>
           </td>
-        </tr>
-        <tr>
-          <td class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Cristopher Diaz Rivera</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Bebe lloron</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
+          <td style="width: 4%">
+            <p class="font-size-14 font-new-roman">{{usuario.cantidadConsecutivos}}</p>
           </td>
         </tr>
-        <tr>
-          <td class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Pastora Mendoza</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Bebe lloron</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
-          </td>
-        </tr>
-        <tr>
-          <td style="width: 40%" class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Carlos Andres Diaz Mendoza</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Desarrollador</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
-          </td>
-        </tr>
-        <tr>
-          <td class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Cristopher Diaz Rivera</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Bebe lloron</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
-          </td>
-        </tr>
-        <tr>
-          <td class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Pastora Mendoza</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Bebe lloron</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
-          </td>
-        </tr>
-        <tr>
-          <td style="width: 40%" class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Carlos Andres Diaz Mendoza</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Desarrollador</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
-          </td>
-        </tr>
-        <tr>
-          <td class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Cristopher Diaz Rivera</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Bebe lloron</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
-          </td>
-        </tr>
-        <tr>
-          <td class="pl-4">
-            <p class="font-weight-bold font-size-16 font-new-roman">Pastora Mendoza</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #a6a6a6;">Bebe lloron</p>
-          </td>
-          <td class="pr-4">
-            <p-progressBar [value]="value"></p-progressBar>
-          </td>
-        </tr>
+
       </tbody>
     </table>
 

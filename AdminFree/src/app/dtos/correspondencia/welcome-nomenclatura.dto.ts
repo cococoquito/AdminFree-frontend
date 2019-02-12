@@ -16,4 +16,8 @@ export class WelcomeNomenclaturaDTO {
 
   /** Cantidad de consecutivos que han solicitado a esta nomenclatura */
   public cantidadConsecutivos: number;
+
+  /***************** Variables utilizadas en Angular *****************/
+  /** Es el color background de la nomenclatura a visualizar en pantalla */
+  public bgColor: string;
 }

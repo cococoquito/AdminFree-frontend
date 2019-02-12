@@ -39,11 +39,6 @@ body {
   padding-left: 42px !important;
 }
 
-/* Estilos para progressbar */
-.ui-progressbar .ui-progressbar-value {
-  background: #3F51B5 !important;
-}
-
 /* Estilos para dropdown */
 .ui-dropdown-trigger-icon {
   display: none !important
@@ -443,8 +438,8 @@ body {
   font-size: 22px !important;
 }
 
-.font-size-24 {
-  font-size: 24px !important;
+.font-size-23 {
+  font-size: 23px !important;
 }
 
 .font-size-26 {

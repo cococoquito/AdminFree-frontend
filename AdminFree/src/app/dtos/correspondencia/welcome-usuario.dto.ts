@@ -19,4 +19,8 @@ export class WelcomeUsuarioDTO {
 
   /** Cantidad de consecutivos que ha solicitado este usuario */
   public cantidadConsecutivos: number;
+
+  /***************** Variables utilizadas en Angular *****************/
+  /** Es el porcentaje de consecutivos solicitados por este usuario */
+  public porcentaje: number;
 }

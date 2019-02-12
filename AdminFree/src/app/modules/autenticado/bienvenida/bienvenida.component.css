@@ -78,11 +78,11 @@
   box-sizing: border-box;
   position: relative;
   padding: 10px 10px 10px 20px;
-  background: #4bcec1;
-  background: -moz-linear-gradient(240deg, #4bcec1 0%, #2aa094 100%);
-  background: -webkit-linear-gradient(240deg, #4bcec1 0%, #2aa094 100%);
-  background: linear-gradient(240deg, #4bcec1 0%, #2aa094 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#4bcec1", endColorstr="#2aa094",GradientType=1 );
+  background: #53d3c6;
+  background: -moz-linear-gradient(240deg, #53d3c6 0%, #269e92 100%);
+  background: -webkit-linear-gradient(240deg, #53d3c6 0%, #269e92 100%);
+  background: linear-gradient(240deg, #53d3c6 0%, #269e92 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#53d3c6", endColorstr="#269e92",GradientType=1 );
 }
 
 .dashboard ul li .team-member {
