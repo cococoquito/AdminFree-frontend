@@ -7,6 +7,7 @@ import { WelcomeInitDTO } from '../../../dtos/correspondencia/welcome-init.dto';
 import { WelcomeUsuarioDTO } from '../../../dtos/correspondencia/welcome-usuario.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
+import { LabelsConstant } from '../../../constants/labels.constant';
 
 /**
  * Componente que respalda la pagina de bienvenida
@@ -18,9 +19,9 @@ import { MsjUtil } from '../../../util/messages.util';
   styleUrls: ['./bienvenida.component.css'],
   providers: [CorrespondenciaService]
 })
-export class BienvenidaComponent extends CommonComponent
-  implements OnInit, OnDestroy {
-  /** Contiene los datos de la bienvenida de la aplicacion */
+export class BienvenidaComponent extends CommonComponent implements OnInit, OnDestroy {
+
+  /** Contiene los datos de bienvenida de la aplicacion */
   public datosWelcome: WelcomeInitDTO;
 
   /**
@@ -36,14 +37,13 @@ export class BienvenidaComponent extends CommonComponent
   constructor(
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
-    private shellState: ShellState
-  ) {
+    private shellState: ShellState) {
     super();
   }
 
   /**
    * Se debe consultar las nomenclaturas y los usuarios con
-   * sus cantidades de solicitudes de consecutivos
+   * sus cantidades de consecutivos solicitados
    */
   ngOnInit() {
     this.init();
@@ -64,117 +64,149 @@ export class BienvenidaComponent extends CommonComponent
    * las nomenclaturas y los usuarios del sistema
    */
   private init(): void {
+
     // se configura el titulo y subtitulo de la pagina
-    this.shellState.title.titulo = 'Bienvenido AdminFree';
+    this.shellState.title.titulo = LabelsConstant.TITLE_BIENVENIDA;
+    this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_BIENVENIDA;
     this.shellState.title.tituloClass = 'font-size-23';
-    this.shellState.title.subTitulo =
-      'Diseñado para ayudarte a manejar tu información rápida y segura';
 
     // se obtiene los datos de bienvenida del estado del user-account, esto
     // es debido que cuando se autentique el user, el componente login recibe
     // los datos de bienvenida y lo configura en el user-account state
     this.datosWelcome = this.shellState.userAccount.datosWelcome;
 
-    // se valida si hay algun dato
+    // si los datos no existen se procede a consultarlos
     if (!this.datosWelcome) {
-      // si no hay datos de bienvenida se procede a consultarlos
+
+      // se obtiene el cliente autenticado o el cliente del user autenticado
       const cliente = LocalStoreUtil.getCurrentCliente();
+
+      // se hace el llamado para obtener los datos de bievenida
       this.correspondenciaService.getDatosBienvenida(cliente.id).subscribe(
         data => {
           this.datosWelcome = data;
-          this.configurarPorcentajes();
-          this.configurarColorNomenclatura();
+          this.setNomenclaturasUsuarios();
         },
         error => {
-          this.messageService.add(
-            MsjUtil.getMsjError(this.showMensajeError(error))
-          );
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
     } else {
       // si existe los datos de bienvenida se debe limpiar para cuando
       // refresquen la pagina esta consulte directamente del servicio http
       this.shellState.userAccount.datosWelcome = null;
-      this.configurarPorcentajes();
-      this.configurarColorNomenclatura();
+      this.setNomenclaturasUsuarios();
     }
   }
 
-  private configurarPorcentajes(): void {
+  /**
+   * Metodo que permite configurar los datos a visualizar en pantalla
+   * de las nomenclaturas y los usuarios consultados en el sistema
+   */
+  private setNomenclaturasUsuarios(): void {
+
+    // se verifica si los datos de bienvenida existe
     if (this.datosWelcome) {
-      const nomenclaturas = this.datosWelcome.nomenclaturas;
+
+      // se configura el estilo para las nomenclaturas obteniendo la cant total
+      const cantConsecutivosNomen = this.setStyleNomenclaturas();
+
+      // se verifica si existen usuarios parametrizados
       const usuarios = this.datosWelcome.usuarios;
+      if (usuarios && usuarios.length > 0) {
 
-      if (
-        nomenclaturas != null &&
-        nomenclaturas.length > 0 &&
-        usuarios &&
-        usuarios.length > 0
-      ) {
-        let cantidadConseNomenclatura = 0;
-        let cantidadConseUsuarios = 0;
-        for (const nomenclatura of nomenclaturas) {
-          cantidadConseNomenclatura =
-            cantidadConseNomenclatura + nomenclatura.cantidadConsecutivos;
-        }
+        // estos son los usuarios a visualizar en pantalla
+        const usuariosView = new Array<WelcomeUsuarioDTO>();
 
-        for (const usuario of usuarios) {
-          if (usuario.cantidadConsecutivos > 0) {
-            const por = 100 * usuario.cantidadConsecutivos;
-            usuario.porcentaje = Math.round(por / cantidadConseNomenclatura);
-            cantidadConseUsuarios =
-              cantidadConseUsuarios + usuario.cantidadConsecutivos;
-          } else {
-            usuario.porcentaje = 0;
-          }
-        }
+        // el administrador se muestra de primero
         const admin = new WelcomeUsuarioDTO();
         admin.nombreCompleto = 'Administrador';
         admin.cargo = 'Administrador del Sistema';
-        admin.porcentaje = Math.round(
-          ((cantidadConseNomenclatura - cantidadConseUsuarios) * 100) /
-            cantidadConseNomenclatura
-        );
-        admin.cantidadConsecutivos =
-          cantidadConseNomenclatura - cantidadConseUsuarios;
+        usuariosView.push(admin);
 
-        const usuariosV = new Array<WelcomeUsuarioDTO>();
-        usuariosV.push(admin);
+        // es la cantidad total de solicitudes de todos los usuarios
+        let cantConsecutivosUser = 0;
+
+        // se recorre todos los usuarios
         for (const usuario of usuarios) {
-          usuariosV.push(usuario);
+
+          // se verifica si el usuario tiene solicitudes de consecutivos
+          usuario.porcentaje = 0;
+          if (usuario.cantidadConsecutivos > 0) {
+
+            // se incrementa la cantidad total de solicitudes de users
+            cantConsecutivosUser = cantConsecutivosUser + usuario.cantidadConsecutivos;
+
+            // se calcula el porcentaje de solicitudes de este usuario
+            usuario.porcentaje = Math.round((100 * usuario.cantidadConsecutivos) / cantConsecutivosNomen);
+          }
+          usuariosView.push(usuario);
         }
-        this.datosWelcome.usuarios = usuariosV;
+
+        // se configura el porcentaje y cantidad de solicitudes del admin
+        admin.cantidadConsecutivos = cantConsecutivosNomen - cantConsecutivosUser;
+        admin.porcentaje = Math.round((admin.cantidadConsecutivos * 100) / cantConsecutivosNomen);
+
+        // se configuran los usuarios a visualizar en pantalla
+        this.datosWelcome.usuarios = usuariosView;
       }
     }
   }
 
-  public configurarColorNomenclatura(): void {
-    const color1 = 'monthly-views';
-    const color2 = 'monthly-users';
-    const color3 = 'monthly-users2';
-    const color4 = 'monthly-sales';
+  /**
+   * Metodo que permite configurar el estilo para las nomenclaturas
+   * del sistema retornando la cantidad total de sus consecutivos
+   * solicitados
+   */
+  public setStyleNomenclaturas(): number {
+
+    // es la cantidad total de consecutivos solicitados retornar
+    let cantidadTotal = 0;
+
+    // se obtiene las nomenclaturas de los datos
     const nomenclaturas = this.datosWelcome.nomenclaturas;
-    let i = 1;
-    let colorBK;
-    for (const nomenclatura of nomenclaturas) {
-      if (i % 2 === 0) {
-        if (colorBK && colorBK === color1) {
-          nomenclatura.bgColor = color2;
-          colorBK = color2;
-        } else {
-          nomenclatura.bgColor = color4;
-          colorBK = color4;
+
+    // se valida que si existan nomenclaturas parametrizadas
+    if (nomenclaturas && nomenclaturas.length > 0) {
+
+      // son los estilos de cada color
+      const azul = 'azul';
+      const morado = 'morado';
+      const verde = 'verde';
+      const naranja = 'naranja';
+
+      // se recorre cada nomenclatura
+      let index = 1;
+      let colorBK;
+      for (const nomenclatura of nomenclaturas) {
+
+        // se suma la cantidad total de consecutivos
+        if (nomenclatura.cantidadConsecutivos) {
+            cantidadTotal = cantidadTotal + nomenclatura.cantidadConsecutivos;
         }
-      } else {
-        if (colorBK && colorBK === color2) {
-          nomenclatura.bgColor = color3;
-          colorBK = color3;
+
+        // colores pares
+        if (index % 2 === 0) {
+          if (colorBK && colorBK === azul) {
+              nomenclatura.bgColor = morado;
+              colorBK = morado;
+          } else {
+            nomenclatura.bgColor = naranja;
+            colorBK = naranja;
+          }
         } else {
-          nomenclatura.bgColor = color1;
-          colorBK = color1;
+          // colores impares
+          if (colorBK && colorBK === morado) {
+              nomenclatura.bgColor = verde;
+              colorBK = verde;
+          } else {
+            nomenclatura.bgColor = azul;
+            colorBK = azul;
+          }
         }
+        index = index + 1;
       }
-      i = i + 1;
     }
+    return cantidadTotal;
   }
 }

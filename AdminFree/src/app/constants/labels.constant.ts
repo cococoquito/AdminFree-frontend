@@ -6,6 +6,9 @@
  */
 export class LabelsConstant {
 
+  /** Titulo para el componente de bienvenida*/
+  public static readonly TITLE_BIENVENIDA: string = 'Bienvenido AdminFree';
+
   /** Titulo para el componente Solicitar consecutivos*/
   public static readonly TITLE_SOLICITAR_CONSECUTIVOS: string = 'Solicitar Consecutivos de Correspondencia';
 
@@ -17,6 +20,10 @@ export class LabelsConstant {
 
   /** Titulo para el componente Administracion de nomenclaturas*/
   public static readonly TITLE_ADMIN_NOMENCLATURAS: string = 'Administración de Nomenclaturas';
+
+  /** Sub-Titulo para el componente de bienvenida*/
+  public static readonly SUBTITLE_BIENVENIDA: string =
+    'Diseñado para administrar los <strong>consecutivos de correspondencia</strong> de una manera fácil, rápida y organizada';
 
   /** Sub - Titulo para la pagina de solicitar consecutivos*/
   public static readonly SUBTITLE_SOLICITAR_CONSECUTIVOS: string =

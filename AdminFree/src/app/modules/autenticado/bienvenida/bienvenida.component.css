@@ -1,4 +1,40 @@
-.dashboard .overview-box.monthly-sales {
+.dashboard .box-main {
+  color: #ffffff;
+  min-height: 110px;
+  position: relative;
+}
+
+.dashboard .box-main i {
+  float: right;
+  font-size: 21px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dashboard .box-main .cant {
+  line-height: 20px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.dashboard .box-main .nomen {
+  line-height: 31px;
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.dashboard .box-main .descrip {
+  line-height: 18px;
+  font-size: 14px;
+  text-align: left;
+  opacity: 0.95;
+}
+
+.dashboard .box-main.naranja {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -8,45 +44,10 @@
   background: -moz-linear-gradient(240deg, #f57696 0%, #f37e54 100%);
   background: -webkit-linear-gradient(240deg, #f57696 0%, #f37e54 100%);
   background: linear-gradient(240deg, #f57696 0%, #f37e54 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f57696", endColorstr="#f37e54",GradientType=1 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f57696", endColorstr="#f37e54", GradientType=1);
 }
 
-.dashboard .overview-box {
-  color: #ffffff;
-  min-height: 110px;
-  position: relative;
-}
-
-.dashboard .overview-box .overview-title {
-  line-height: 20px;
-  font-size: 16px;
-  letter-spacing: 0.8px;
-  text-align: left;
-  margin-bottom: 5px;
-}
-
-.dashboard .overview-box .overview-numbers {
-  line-height: 31px;
-  font-size: 24px;
-  text-align: left;
-  margin-bottom: 8px;
-}
-
-.dashboard .overview-box .overview-ratios {
-  line-height: 18px;
-  font-size: 14px;
-  text-align: left;
-  opacity: 0.95;
-}
-.dashboard .overview-box i {
-  float: right;
-  font-size: 21px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.dashboard .overview-box.monthly-views {
+.dashboard .box-main.azul {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -56,10 +57,10 @@
   background: -moz-linear-gradient(240deg, #07a6d6 0%, #036bb1 100%);
   background: -webkit-linear-gradient(240deg, #07a6d6 0%, #036bb1 100%);
   background: linear-gradient(240deg, #07a6d6 0%, #036bb1 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#07a6d6", endColorstr="#036bb1",GradientType=1 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#07a6d6", endColorstr="#036bb1", GradientType=1);
 }
 
-.dashboard .overview-box.monthly-users {
+.dashboard .box-main.morado {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -69,10 +70,10 @@
   background: -moz-linear-gradient(240deg, #5485d4 0%, #8469df 100%);
   background: -webkit-linear-gradient(240deg, #5485d4 0%, #8469df 100%);
   background: linear-gradient(240deg, #5485d4 0%, #8469df 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#5485d4", endColorstr="#8469df",GradientType=1 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5485d4", endColorstr="#8469df", GradientType=1);
 }
 
-.dashboard .overview-box.monthly-users2 {
+.dashboard .box-main.verde {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -82,32 +83,14 @@
   background: -moz-linear-gradient(240deg, #53d3c6 0%, #269e92 100%);
   background: -webkit-linear-gradient(240deg, #53d3c6 0%, #269e92 100%);
   background: linear-gradient(240deg, #53d3c6 0%, #269e92 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#53d3c6", endColorstr="#269e92",GradientType=1 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#53d3c6", endColorstr="#269e92", GradientType=1);
 }
 
-.dashboard ul li .team-member {
-  vertical-align: middle;
-  display: inline-block;
-}
-
-.dashboard ul li .team-member .member-name {
-  margin: 0;
-  font-size: 14px;
-  text-align: left;
-  color: #333333;
-  display: block;
-}
-
-.dashboard ul li .team-member .member-role {
-  margin: 0;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  text-align: left;
-  color: #a6a6a6;
-  display: block;
-}
-
-.borderless td, .borderless th {
+.borderless td,
+.borderless th {
   border: none;
+}
+
+.clr-activo {
+  color: #016b60;
 }

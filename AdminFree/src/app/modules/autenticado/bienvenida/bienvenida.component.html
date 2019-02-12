@@ -1,43 +1,46 @@
+<!-- panel principal -->
 <div class="dashboard">
 
-
+  <!-- panel nomenclaturas -->
   <p-panel styleClass="steps-pnl pnl-pt">
     <p-header>
       <i class="fa fa-ils font-size-16"></i>
       <span> Nomenclaturas</span>
     </p-header>
 
-    <div class="ui-g mt-2 ml-2 mr-2 mb-2" *ngIf="datosWelcome">
-      <div class="ui-g-12 ui-md-12 ui-lg-4" *ngFor="let nomenclatura of datosWelcome.nomenclaturas">
-        <div class="overview-box ui-corner-all" [ngClass]="nomenclatura.bgColor">
-          <div class="overview-title">Cant. {{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</div>
+    <!-- SI hay nomenclaturas -->
+    <div *ngIf="datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0" class="ui-g mt-2 ml-2 mr-2 mb-2">
+      <div *ngFor="let nomenclatura of datosWelcome.nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4">
+        <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
+          <div class="cant">Cant. {{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</div>
           <i class="fa fa-arrow-circle-up"></i>
-          <div class="overview-numbers"><strong>{{nomenclatura.nomenclatura}}</strong></div>
-          <div class="overview-ratios">{{nomenclatura.descripcion}}</div>
+          <div class="nomen"><strong>{{nomenclatura.nomenclatura}}</strong></div>
+          <div class="descrip">{{nomenclatura.descripcion}}</div>
         </div>
       </div>
-
-
-
     </div>
 
-
-
+    <!-- NO hay nomenclaturas -->
+    <div *ngIf="!(datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0)" class="ui-g mt-2 ml-2 mr-2 mb-2">
+      no hay nomenclaturas
+    </div>
   </p-panel>
 
+  <!-- panel usuarios -->
   <p-panel styleClass="steps-pnl pnl-pt mt-4">
     <p-header>
       <i class="fa fa-users font-size-16"></i>
       <span> Usuarios</span>
     </p-header>
 
-    <table class="table borderless mt-2" *ngIf="datosWelcome">
+    <!-- SI hay usuarios -->
+    <table *ngIf="datosWelcome && datosWelcome.usuarios && datosWelcome.usuarios.length > 0" class="table borderless mt-2">
       <tbody>
         <tr *ngFor="let usuario of datosWelcome.usuarios">
           <td style="width: 35%" class="pl-4">
             <p class="font-weight-bold font-size-15 font-new-roman">{{usuario.nombreCompleto}}</p>
             <p class="font-weight-bold font-size-14 font-new-roman text-secondary">{{usuario.cargo}}</p>
-            <p class="font-weight-bold font-size-14 font-new-roman" style="color: #016b60" *ngIf="usuario.estado === 'Activo'">{{usuario.estado}}</p>
+            <p class="font-weight-bold font-size-14 font-new-roman clr-activo" *ngIf="usuario.estado === 'Activo'">{{usuario.estado}}</p>
             <p class="font-weight-bold font-size-14 font-new-roman text-danger" *ngIf="usuario.estado === 'Inactivo'">{{usuario.estado}}</p>
           </td>
           <td>
@@ -47,13 +50,12 @@
             <p class="font-size-14 font-new-roman">{{usuario.cantidadConsecutivos}}</p>
           </td>
         </tr>
-
       </tbody>
     </table>
 
-
+    <!-- NO hay usuarios -->
+    <div *ngIf="!(datosWelcome && datosWelcome.usuarios && datosWelcome.usuarios.length > 0)" class="ui-g mt-2 ml-2 mr-2 mb-2">
+      no hay usuarios
+    </div>
   </p-panel>
-
-
-
 </div>
