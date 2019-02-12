@@ -111,18 +111,20 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
       // se configura el estilo para las nomenclaturas obteniendo la cant total
       const cantConsecutivosNomen = this.setStyleNomenclaturas();
 
+      // estos son los usuarios a visualizar en pantalla
+      const usuariosView = new Array<WelcomeUsuarioDTO>();
+
+      // el administrador se muestra de primero
+      const admin = new WelcomeUsuarioDTO();
+      admin.nombreCompleto = 'Administrador';
+      admin.cargo = 'Administrador del Sistema';
+      admin.porcentaje = 0;
+      admin.cantidadConsecutivos = 0;
+      usuariosView.push(admin);
+
       // se verifica si existen usuarios parametrizados
       const usuarios = this.datosWelcome.usuarios;
       if (usuarios && usuarios.length > 0) {
-
-        // estos son los usuarios a visualizar en pantalla
-        const usuariosView = new Array<WelcomeUsuarioDTO>();
-
-        // el administrador se muestra de primero
-        const admin = new WelcomeUsuarioDTO();
-        admin.nombreCompleto = 'Administrador';
-        admin.cargo = 'Administrador del Sistema';
-        usuariosView.push(admin);
 
         // es la cantidad total de solicitudes de todos los usuarios
         let cantConsecutivosUser = 0;
@@ -144,12 +146,14 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
         }
 
         // se configura el porcentaje y cantidad de solicitudes del admin
-        admin.cantidadConsecutivos = cantConsecutivosNomen - cantConsecutivosUser;
-        admin.porcentaje = Math.round((admin.cantidadConsecutivos * 100) / cantConsecutivosNomen);
-
-        // se configuran los usuarios a visualizar en pantalla
-        this.datosWelcome.usuarios = usuariosView;
+        if (cantConsecutivosNomen > 0) {
+            admin.cantidadConsecutivos = cantConsecutivosNomen - cantConsecutivosUser;
+            admin.porcentaje = Math.round((admin.cantidadConsecutivos * 100) / cantConsecutivosNomen);
+        }
       }
+
+      // se configuran los usuarios a visualizar en pantalla
+      this.datosWelcome.usuarios = usuariosView;
     }
   }
 

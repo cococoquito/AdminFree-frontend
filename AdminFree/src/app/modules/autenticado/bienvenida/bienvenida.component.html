@@ -10,7 +10,7 @@
 
     <!-- SI hay nomenclaturas -->
     <div *ngIf="datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0" class="ui-g mt-2 ml-2 mr-2 mb-2">
-      <div *ngFor="let nomenclatura of datosWelcome.nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4">
+      <div *ngFor="let nomenclatura of datosWelcome.nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto">
         <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
           <div class="cant">Cant. {{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</div>
           <i class="fa fa-arrow-circle-up"></i>
@@ -21,8 +21,11 @@
     </div>
 
     <!-- NO hay nomenclaturas -->
-    <div *ngIf="!(datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0)" class="ui-g mt-2 ml-2 mr-2 mb-2">
-      no hay nomenclaturas
+    <div *ngIf="!(datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0)" class="mr-3 ml-3 mt-3 mb-3 p-3 ui-messages ui-messages-info ui-corner-all text-center">
+      <span class="ui-messages-icon pi pi-info-circle"></span>
+      <span class="ui-messages-detail">
+        Por favor ingresa al módulo de <strong>Configuraciones</strong> para registrar las <strong>nomenclaturas</strong> o comuníquese con el administrador
+      </span>
     </div>
   </p-panel>
 
@@ -52,10 +55,5 @@
         </tr>
       </tbody>
     </table>
-
-    <!-- NO hay usuarios -->
-    <div *ngIf="!(datosWelcome && datosWelcome.usuarios && datosWelcome.usuarios.length > 0)" class="ui-g mt-2 ml-2 mr-2 mb-2">
-      no hay usuarios
-    </div>
   </p-panel>
 </div>
