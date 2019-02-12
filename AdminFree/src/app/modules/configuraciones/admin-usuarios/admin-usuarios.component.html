@@ -37,8 +37,8 @@
         <td>{{user.cargo}}</td>
         <td>{{user.usuarioIngreso}}</td>
         <td>
-          <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 1" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
-          <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === 2" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
+          <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === ID_ACTIVO" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
+          <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === ID_INACTIVO" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>
         </td>
         <td class="text-center">
           <button (click)="showModalVerDetalle(user)" type="button" class="btn btn-sm btn-round-table btn-round-teal">

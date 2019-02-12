@@ -17,6 +17,9 @@ export class WelcomeUsuarioDTO {
   /** Estado en la que se encuentra el usuario */
   public estado: string;
 
+  /** Es el identificador del estado del usuario */
+  public idEstado: number;
+
   /** Cantidad de consecutivos que ha solicitado este usuario */
   public cantidadConsecutivos: number;
 

@@ -59,6 +59,10 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
+  /** Constantes que representan los identificadores de ACTIVO e INACTIVO */
+  public ID_ACTIVO = EstadoConstant.ID_ACTIVO;
+  public ID_INACTIVO = EstadoConstant.ID_INACTIVO;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla

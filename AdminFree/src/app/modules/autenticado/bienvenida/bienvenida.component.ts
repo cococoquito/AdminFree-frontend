@@ -8,6 +8,7 @@ import { WelcomeUsuarioDTO } from '../../../dtos/correspondencia/welcome-usuario
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
+import { EstadoConstant } from '../../../constants/estado.constant';
 
 /**
  * Componente que respalda la pagina de bienvenida
@@ -23,6 +24,10 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
 
   /** Contiene los datos de bienvenida de la aplicacion */
   public datosWelcome: WelcomeInitDTO;
+
+  /** Constantes que representan los identificadores de ACTIVO e INACTIVO */
+  public ID_ACTIVO = EstadoConstant.ID_ACTIVO;
+  public ID_INACTIVO = EstadoConstant.ID_INACTIVO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
