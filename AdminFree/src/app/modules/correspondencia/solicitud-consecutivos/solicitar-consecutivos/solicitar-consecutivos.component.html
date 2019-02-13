@@ -53,9 +53,9 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-nomenclatura>
-          <tr [pSelectableRow]="nomenclatura">
-            <td class="text-center font-size-14">
-              <strong>{{ nomenclatura.nomenclatura }}</strong>
+          <tr [pSelectableRow]="nomenclatura" class="outl-no">
+            <td class="text-center font-size-16">
+              <p class="text-white azul p-2 ui-corner-all font-weight-bold">{{ nomenclatura.nomenclatura }}</p>
             </td>
             <td>{{ nomenclatura.descripcion }}</td>
             <td class="text-center">

@@ -20,7 +20,8 @@ import { CommonComponent } from '../../../../util/common.component';
  */
 @Component({
   selector: 'admin-consecutivo-generado',
-  templateUrl: './consecutivo-generado.component.html'
+  templateUrl: './consecutivo-generado.component.html',
+  styleUrls: ['./consecutivo-generado.component.css']
 })
 export class ConsecutivoGeneradoComponent extends CommonComponent {
 

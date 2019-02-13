@@ -19,3 +19,11 @@
   max-width: 700px;
   min-width: 700px;
 }
+
+.azul {
+  background: #5485d4;
+  background: -moz-linear-gradient(240deg, #5485d4 0%, #8469df 100%);
+  background: -webkit-linear-gradient(240deg, #5485d4 0%, #8469df 100%);
+  background: linear-gradient(240deg, #5485d4 0%, #8469df 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5485d4", endColorstr="#8469df", GradientType=1);
+}
