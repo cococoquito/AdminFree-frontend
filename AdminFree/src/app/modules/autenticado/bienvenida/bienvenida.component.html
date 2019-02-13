@@ -10,7 +10,7 @@
 
     <!-- SI hay nomenclaturas -->
     <div *ngIf="datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0" class="ui-g mt-2 ml-2 mr-2 mb-2">
-      <div *ngFor="let nomenclatura of datosWelcome.nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto">
+      <div *ngFor="let nomenclatura of datosWelcome.nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto p-3">
         <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
           <div class="cant">Cant. {{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</div>
           <i class="fa fa-arrow-circle-up"></i>

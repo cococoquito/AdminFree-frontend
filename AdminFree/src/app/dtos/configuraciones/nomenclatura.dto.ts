@@ -22,6 +22,9 @@ export class NomenclaturaDTO {
   /** Nro donde inicia el consecutivo a generar */
   public consecutivoInicial: number;
 
+  /** Es la cantidad de consecutivos solicitados para esta nomenclatura */
+  public cantConsecutivos: number;
+
   /** Indica si la nomenclatura esta asociada a un consecutivo */
   public tieneConsecutivos: boolean;
 
