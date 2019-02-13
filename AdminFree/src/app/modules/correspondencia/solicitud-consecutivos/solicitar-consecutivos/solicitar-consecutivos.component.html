@@ -29,57 +29,15 @@
     </p-header>
 
     <!-- Hay nomenclaturas-->
-    <div *ngIf="state.datosIniciales?.nomenclaturas?.length > 0" class="mt-1">
-
-      <!-- tabla - nomenclaturas -->
-      <p-table
-        id="tblNomen"
-        #tblNomen
-        [value]="nomenclaturas"
-        [(selection)]="state.nomenclaturaSeleccionada"
-        [alwaysShowPaginator]="false"
-        [responsive]="true"
-        [paginator]="true"
-        [rows]="5"
-        rowHover="true"
-        selectionMode="single">
-
-        <ng-template pTemplate="header">
-          <tr class="text-center">
-            <th style="width: 5%">Nomenclatura</th>
-            <th>Descripción</th>
-            <th style="width: 4%">Detalle</th>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-nomenclatura>
-          <tr [pSelectableRow]="nomenclatura" class="outl-no">
-            <td class="text-center font-size-16">
-              <p class="text-white azul p-2 ui-corner-all font-weight-bold">{{ nomenclatura.nomenclatura }}</p>
-            </td>
-            <td>{{ nomenclatura.descripcion }}</td>
-            <td class="text-center">
-              <button type="button" (click)="verDetalleNomenclatura($event, nomenclatura)" class="btn btn-sm btn-round-table btn-pup">
-                <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
-              </button>
-            </td>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td [attr.colspan]="6">
-              <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay nomenclaturas de acuerdo al filtro de búsqueda ingresado</p>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-
-      <!-- boton - next-->
-      <div class="text-center mt-2 mb-1">
-        <button (click)="siguiente()" [disabled]="!state.nomenclaturaSeleccionada" type="button" class="btn btn-sm btn-primary w-100-px">
-          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-        </button>
+    <div class="dashboard" *ngIf="state.datosIniciales?.nomenclaturas?.length > 0">
+      <div class="ui-g ml-1 mr-1">
+        <div (click)="siguiente(nomenclatura)" *ngFor="let nomenclatura of nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto p-3">
+          <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
+            <i class="fa fa-arrow-circle-up"></i>
+            <div class="nomen"><strong>{{nomenclatura.nomenclatura}}</strong></div>
+            <div class="descrip">{{nomenclatura.descripcion}}</div>
+          </div>
+        </div>
       </div>
     </div>
 

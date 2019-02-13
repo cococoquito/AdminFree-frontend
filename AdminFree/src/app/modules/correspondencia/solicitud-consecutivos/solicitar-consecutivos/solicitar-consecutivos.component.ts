@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Table } from 'primeng/table';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../../services/correspondencia.service';
 import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
@@ -37,9 +36,6 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Es el identificador de la nomenclatura seleccionada, por si regresan al 1 punto */
   private idNomenclaturaBK;
-
-  /** Se utiliza para resetear la tabla nomenclatura cuando hacen alguna busqueda*/
-  @ViewChild('tblNomen') tblNomen: Table;
 
   /**
    * @param state, estado para administrar los datos para las
@@ -102,6 +98,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       data => {
         this.state.datosIniciales = data;
         this.nomenclaturas = data.nomenclaturas;
+        this.setStyleNomenclaturas();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -155,20 +152,18 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     } else {
       this.nomenclaturas = this.state.datosIniciales.nomenclaturas;
     }
-
-    // se refresca la tabla de nomenclaturas
-    this.tblNomen.reset();
   }
 
   /**
    * Metodo que soporta el evento click del boton siguiente
    */
-  public siguiente(): void {
+  public siguiente(nomenclatura: NomenclaturaDTO): void {
 
     // se limpia mensajes de otros procesos
     this.messageService.clear();
 
     // la seleccion de la nomenclatura es obligatorio
+    this.state.nomenclaturaSeleccionada = nomenclatura;
     if (!this.state.nomenclaturaSeleccionada) {
       this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.NOMENCLATURA_REQUERIDO));
       return;
@@ -189,6 +184,49 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
       // se redirecciona segundo paso SIN spinner dado que el 2 paso SI procede hacer llamado http
       this.state.stepsModel.irSegundoStep();
+    }
+  }
+
+  /**
+   * Metodo que permite configurar el estilo para las nomenclaturas
+   */
+  private setStyleNomenclaturas(): void {
+
+    // se valida que si existan nomenclaturas parametrizadas
+    if (this.nomenclaturas && this.nomenclaturas.length > 0) {
+
+      // son los estilos de cada color
+      const azul = 'azul';
+      const morado = 'morado';
+      const verde = 'verde';
+      const naranja = 'naranja';
+
+      // se recorre cada nomenclatura
+      let index = 1;
+      let colorBK;
+      for (const nomenclatura of this.nomenclaturas) {
+
+        // colores pares
+        if (index % 2 === 0) {
+          if (colorBK && colorBK === azul) {
+              nomenclatura.bgColor = morado;
+              colorBK = morado;
+          } else {
+            nomenclatura.bgColor = naranja;
+            colorBK = naranja;
+          }
+        } else {
+          // colores impares
+          if (colorBK && colorBK === morado) {
+              nomenclatura.bgColor = verde;
+              colorBK = verde;
+          } else {
+            nomenclatura.bgColor = azul;
+            colorBK = azul;
+          }
+        }
+        index = index + 1;
+      }
     }
   }
 }

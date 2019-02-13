@@ -27,4 +27,8 @@ export class NomenclaturaDTO {
 
   /** Son los campos asociados de la nomenclatura */
   public campos: Array<NomenclaturaCampoDTO>;
+
+  /***************** Variables utilizadas en Angular *****************/
+  /** Es el color background de la nomenclatura a visualizar en pantalla */
+  public bgColor: string;
 }

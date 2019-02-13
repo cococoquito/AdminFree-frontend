@@ -167,7 +167,7 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
    * del sistema retornando la cantidad total de sus consecutivos
    * solicitados
    */
-  public setStyleNomenclaturas(): number {
+  private setStyleNomenclaturas(): number {
 
     // es la cantidad total de consecutivos solicitados retornar
     let cantidadTotal = 0;
