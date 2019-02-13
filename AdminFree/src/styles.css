@@ -476,8 +476,8 @@ body {
 }
 
 .icon-round-table {
-  margin-left: -.1em !important;
-  line-height: 1.2 !important;
+  margin-left: -.03em !important;
+  line-height: 1.23 !important;
 }
 
 .icon-round-edit {
@@ -644,10 +644,11 @@ body {
   display: inline-block;
   color: #ffffff !important;
   background-color: #009688;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   text-align: center;
   cursor: pointer;
+  line-height: 1.9;
 }
 
 .dtl-round-min:hover {
