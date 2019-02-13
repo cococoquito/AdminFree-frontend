@@ -551,6 +551,10 @@ body {
   width: 100px !important
 }
 
+.w-150-px {
+  width: 150px !important
+}
+
 .w-80-px {
   width: 80px !important
 }
@@ -710,13 +714,6 @@ body {
   font-size: 22px !important;
 }
 
-.clr-or {
-  color: #F25423
-}
-
-.mt-3px {
-  margin-top: 3px !important;
-}
 
 .outl-no {
   outline: medium none !important

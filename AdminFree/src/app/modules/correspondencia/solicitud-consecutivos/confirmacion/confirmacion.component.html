@@ -12,8 +12,10 @@
     </p-header>
 
     <div class="text-center bg-light">
-      <p class="st clr-or"><strong> {{ state.nomenclaturaSeleccionada.nomenclatura }} </strong></p>
-      <p class="st"><strong> {{ state.nomenclaturaSeleccionada.descripcion }} </strong></p>
+      <p class="font-size-22 font-new-roman"><strong> {{ state.nomenclaturaSeleccionada.nomenclatura }} </strong></p>
+      <p class="font-weight-bold font-size-14 font-new-roman text-secondary" style="line-height: 1">
+        {{ state.nomenclaturaSeleccionada.descripcion }}
+      </p>
     </div>
   </p-panel>
 
@@ -31,7 +33,7 @@
         <ng-container *ngFor="let campoModel of state.camposInformacionValues; let i = index">
 
           <!-- pnl informacion -->
-          <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12'" class="p-0">
+          <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="p-0">
             <div class="ui-g-12 pb-0 border-bottom">
 
               <!-- label -->
@@ -73,7 +75,7 @@
 
   <!-- botones regresar - next-->
   <div class="text-center mb-1">
-    <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-100-px mr-2">
+    <button (click)="state.stepsModel.regresar()" type="button" class="btn btn-sm btn-secondary w-150-px mr-2">
       <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
     </button>
     <button (click)="solicitarConsecutivo()" type="button" class="btn btn-success btn-sm">

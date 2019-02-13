@@ -16,87 +16,32 @@
   </div>
 
   <!-- nomenclatura -->
-  <p class="font-size-16 font-new-roman mt-4 text-center">
-    <strong> {{ state.nomenclaturaSeleccionada.nomenclatura }} </strong>
-    <span class="font-size-15"> ({{ state.nomenclaturaSeleccionada.descripcion }})</span>
+  <p class="font-size-22 font-new-roman mt-2 text-center"><strong> {{ state.nomenclaturaSeleccionada.nomenclatura }} </strong></p>
+  <p class="font-weight-bold font-size-14 font-new-roman text-secondary text-center" style="line-height: 1">
+    {{ state.nomenclaturaSeleccionada.descripcion }}
   </p>
 
-  <!-- Información del Consecutivo -->
+  <!-- Cargue documentos -->
   <p-panel styleClass="mr-2 ml-2 pb-2 steps-pnl pnl-pt">
     <p-header>
-      <span> Información del Consecutivo </span>
+      <i class="fa fa-info-circle font-size-18"></i>
+      <span> Cargue los documentos asociados al consecutivo </span>
     </p-header>
 
-    <!-- Hay informacion -->
-    <ng-container *ngIf="state.camposInformacionValues && state.camposInformacionValues.length > 0">
-      <div class="ui-g pb-0 bg-light">
-
-        <!-- cada valor ingresado -->
-        <ng-container *ngFor="let campoModel of state.camposInformacionValues">
-
-          <!-- pnl informacion -->
-          <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12'" class="p-0">
-            <div class="ui-g-12 pb-0 border-bottom">
-
-              <!-- label -->
-              <label class="steps-st mb-0 mt-0"> {{campoModel.campo.nombre}}: </label>
-
-              <!-- valor -->
-              <p class="invisible st" *ngIf="!(campoModel.valor) && campoModel.campo.tipoCampo !== state.ID_CASILLA_VERIFICACION; else showValue">.</p>
-              <ng-template #showValue>
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_TEXTO">
-                  <p class="st">{{ campoModel.valor }}</p>
-                </ng-container>
-
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_LISTA_DESPLEGABLE">
-                  <p class="st">{{ campoModel.valor.valor }}</p>
-                </ng-container>
-
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_FECHA">
-                  <p class="st">{{campoModel.valor | date:'dd/MMMM/yyyy'}}</p>
-                </ng-container>
-
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION">
-                  <p class="st">{{campoModel.valor ? 'SI' : 'NO'}}</p>
-                </ng-container>
-              </ng-template>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </ng-container>
-
-    <!-- No Hay informacion -->
-    <div *ngIf="!(state.camposInformacionValues && state.camposInformacionValues.length > 0)" class="mr-4 ml-4 mt-3 ui-messages ui-messages-warn ui-corner-all">
-      <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
-      <span class="ui-messages-detail">
-        <strong>No hay información</strong> asociado al consecutivo
-      </span>
-    </div>
-
-    <!-- Cargue documentos -->
-    <div class="border-top pb-2 pt-3">
-      <div class="mr-2 ml-2">
-
-        <!-- titulo -->
-        <label class="steps-st mb-0 mt-0">
-          <i class="fa fa-info-circle font-size-18"></i> Cargue los documentos asociados al consecutivo
-        </label>
-
-        <!-- file upload -->
-        <p-fileUpload
-          accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.oasis.opendocument.text"
-          [showUploadButton]="false"
-          [showCancelButton]="false"
-          multiple="multiple"
-          maxFileSize="2000000"
-          chooseLabel="Seleccionar"
-          invalidFileTypeMessageSummary="Archivo invalido"
-          invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel)"
-          invalidFileSizeMessageSummary="Archivo invalido"
-          invalidFileSizeMessageDetail="El tamaño máximo de carga es 2000000 bytes">
-        </p-fileUpload>
-      </div>
+    <!-- file upload -->
+    <div class="pb-2 pt-3 mr-2 ml-2">
+      <p-fileUpload
+        accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.oasis.opendocument.text"
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        multiple="multiple"
+        maxFileSize="2000000"
+        chooseLabel="Seleccionar"
+        invalidFileTypeMessageSummary="Archivo invalido"
+        invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel)"
+        invalidFileSizeMessageSummary="Archivo invalido"
+        invalidFileSizeMessageDetail="El tamaño máximo de carga es 2000000 bytes">
+      </p-fileUpload>
     </div>
   </p-panel>
 
