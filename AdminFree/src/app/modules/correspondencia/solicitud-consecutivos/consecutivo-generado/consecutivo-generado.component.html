@@ -75,26 +75,28 @@
     </div>
 
     <!-- Cargue documentos -->
-    <div class="mr-2 ml-2 pb-2 pt-3">
+    <div class="border-top pb-2 pt-3">
+      <div class="mr-2 ml-2">
 
-      <!-- titulo -->
-      <label class="steps-st mb-0 mt-0">
-        <i class="fa fa-info-circle font-size-18"></i> Cargue los documentos asociados al consecutivo
-      </label>
+        <!-- titulo -->
+        <label class="steps-st mb-0 mt-0">
+          <i class="fa fa-info-circle font-size-18"></i> Cargue los documentos asociados al consecutivo
+        </label>
 
-      <!-- file upload -->
-      <p-fileUpload
-        accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.oasis.opendocument.text"
-        [showUploadButton]="false"
-        [showCancelButton]="false"
-        multiple="multiple"
-        maxFileSize="2000000"
-        chooseLabel="Seleccionar"
-        invalidFileTypeMessageSummary="Archivo invalido"
-        invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel)"
-        invalidFileSizeMessageSummary="Archivo invalido"
-        invalidFileSizeMessageDetail="El tamaño máximo de carga es 2000000 bytes">
-      </p-fileUpload>
+        <!-- file upload -->
+        <p-fileUpload
+          accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.oasis.opendocument.text"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          multiple="multiple"
+          maxFileSize="2000000"
+          chooseLabel="Seleccionar"
+          invalidFileTypeMessageSummary="Archivo invalido"
+          invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel)"
+          invalidFileSizeMessageSummary="Archivo invalido"
+          invalidFileSizeMessageDetail="El tamaño máximo de carga es 2000000 bytes">
+        </p-fileUpload>
+      </div>
     </div>
   </p-panel>
 
@@ -102,7 +104,7 @@
   <div class="text-center mb-2">
     <button (click)="irPrimerPaso()" type="button" class="btn btn-sm btn-secondary">
       <label class="btn-size-admin">
-        <i class="fa fa-envelope"></i> Regresar al paso <strong>1</strong> para solicitar otro consecutivo
+        <i class="fa fa-hand-o-left"></i> Regresar para solicitar otro consecutivo
       </label>
     </button>
   </div>
