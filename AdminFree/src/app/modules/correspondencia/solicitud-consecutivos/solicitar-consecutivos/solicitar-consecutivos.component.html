@@ -34,7 +34,7 @@
         <div (click)="siguiente(nomenclatura)" *ngFor="let nomenclatura of nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto p-3">
           <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
             <div class="cant">Cant. {{nomenclatura.cantConsecutivos | consecutivo: '0000'}}</div>
-            <i class="fa fa-arrow-circle-up"></i>
+            <i (click)="showVerDetalleNomenclatura($event, nomenclatura)" class="fa fa-arrow-circle-up"></i>
             <div class="nomen"><strong>{{nomenclatura.nomenclatura}}</strong></div>
             <div class="descrip">{{nomenclatura.descripcion}}</div>
           </div>
@@ -65,4 +65,19 @@
 <!-- Paso 4 consecutivo-->
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.ulitmoIndex">
   <admin-consecutivo-generado></admin-consecutivo-generado>
+</ng-container>
+
+<!-- modal ver detalle nomenclatura -->
+<ng-container *ngIf="verDetalleNomenclatura && verDetalleNomenclatura.data">
+  <p-dialog header="Detalle de la Nomenclatura"
+  [(visible)]="verDetalleNomenclatura.isShowModal"
+  modal="true"
+  responsive="true"
+  dismissableMask="true"
+  styleClass="splr-dl"
+  (onHide)="verDetalleNomenclatura.closeModal()">
+    <div class="mx-dtl-mdl">
+      <admin-detalle-nomenclatura [detalle]="verDetalleNomenclatura.data" [isModal]="true"></admin-detalle-nomenclatura>
+    </div>
+  </p-dialog>
 </ng-container>

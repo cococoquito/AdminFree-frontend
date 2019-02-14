@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../../services/correspondencia.service';
+import { ConfiguracionesService } from '../../../../services/configuraciones.service';
 import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
 import { ShellState } from '../../../../states/shell/shell.state';
 import { SpinnerState } from '../../../../states/spinner.state';
@@ -8,6 +9,7 @@ import { CommonComponent } from '../../../../util/common.component';
 import { NomenclaturaDTO } from '../../../../dtos/configuraciones/nomenclatura.dto';
 import { LocalStoreUtil } from '../../../../util/local-store.util';
 import { MsjUtil } from '../../../../util/messages.util';
+import { VentanaModalModel } from '../../../../model/ventana-modal.model';
 import { StepsModel } from '../../../../model/steps-model';
 import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 import { LabelsConstant } from '../../../../constants/labels.constant';
@@ -20,12 +22,15 @@ import { LabelsConstant } from '../../../../constants/labels.constant';
 @Component({
   templateUrl: './solicitar-consecutivos.component.html',
   styleUrls: ['./solicitar-consecutivos.component.css'],
-  providers: [ CorrespondenciaService, SolicitarConsecutivoState ]
+  providers: [ CorrespondenciaService, ConfiguracionesService, SolicitarConsecutivoState ]
 })
 export class SolicitarConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
   /** Son las nomenclaturas a mostrar en pantalla */
   public nomenclaturas: Array<NomenclaturaDTO>;
+
+  /** se utiliza para visualizar el detalle de la nomenclatura*/
+  public verDetalleNomenclatura: VentanaModalModel;
 
   /** Es el filter ingresado para la busqueda de nomenclatura */
   public filterValue: string;
@@ -43,6 +48,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
    * @param correspondenciaService, contiene los servicios
    * del modulo de correspondencia
    *
+   * @param configuracionesService, se utiliza para ver el
+   * detalle de la nomenclatura seleccionada
+   *
    * @param shellState, se utiliza para el titulo del componente
    *
    * @param spinnerState, se utiliza para simular el spinner cuando
@@ -52,6 +60,7 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     public state: SolicitarConsecutivoState,
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
+    private configuracionesService: ConfiguracionesService,
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
@@ -156,6 +165,29 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
       // se redirecciona segundo paso SIN spinner dado que el 2 paso SI procede hacer llamado http
       this.state.stepsModel.irSegundoStep();
     }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton ver detalle
+   *
+   * @param event , se utiliza para no propagar el evento y asi evitar
+   * que no seleccionen la nomenclatura para ir al siguiente paso
+   *
+   * @param nomenclatura , nomenclatura seleccionada para ver el detalle
+   */
+  public showVerDetalleNomenclatura(event, nomenclatura: NomenclaturaDTO): void {
+    this.configuracionesService.getDetalleNomenclatura(nomenclatura.id).subscribe(
+      data => {
+        if (!this.verDetalleNomenclatura) {
+          this.verDetalleNomenclatura = new VentanaModalModel();
+        }
+        this.verDetalleNomenclatura.showModal(data);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+    event.stopPropagation();
   }
 
   /**
