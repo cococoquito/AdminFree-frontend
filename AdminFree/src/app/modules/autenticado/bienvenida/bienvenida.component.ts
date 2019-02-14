@@ -116,6 +116,9 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
       // se configura el estilo para las nomenclaturas obteniendo la cant total
       const cantConsecutivosNomen = this.setStyleNomenclaturas();
 
+      // es la cantidad total de solicitudes de todos los usuarios
+      let cantConsecutivosUser = 0;
+
       // estos son los usuarios a visualizar en pantalla
       const usuariosView = new Array<WelcomeUsuarioDTO>();
 
@@ -130,9 +133,6 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
       // se verifica si existen usuarios parametrizados
       const usuarios = this.datosWelcome.usuarios;
       if (usuarios && usuarios.length > 0) {
-
-        // es la cantidad total de solicitudes de todos los usuarios
-        let cantConsecutivosUser = 0;
 
         // se recorre todos los usuarios
         for (const usuario of usuarios) {
@@ -149,12 +149,12 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
           }
           usuariosView.push(usuario);
         }
+      }
 
-        // se configura el porcentaje y cantidad de solicitudes del admin
-        if (cantConsecutivosNomen > 0) {
-            admin.cantidadConsecutivos = cantConsecutivosNomen - cantConsecutivosUser;
-            admin.porcentaje = Math.round((admin.cantidadConsecutivos * 100) / cantConsecutivosNomen);
-        }
+      // se configura el porcentaje y cantidad de solicitudes del admin
+      if (cantConsecutivosNomen > 0) {
+        admin.cantidadConsecutivos = cantConsecutivosNomen - cantConsecutivosUser;
+        admin.porcentaje = Math.round((admin.cantidadConsecutivos * 100) / cantConsecutivosNomen);
       }
 
       // se configuran los usuarios a visualizar en pantalla

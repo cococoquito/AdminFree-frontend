@@ -30,7 +30,7 @@
 
     <!-- Hay nomenclaturas-->
     <div class="dashboard" *ngIf="state.datosIniciales?.nomenclaturas?.length > 0">
-      <div class="ui-g ml-1 mr-1">
+      <div class="ui-g">
         <div (click)="siguiente(nomenclatura)" *ngFor="let nomenclatura of nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto p-3">
           <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
             <div class="cant">Cant. {{nomenclatura.cantConsecutivos | consecutivo: '0000'}}</div>
