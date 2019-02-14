@@ -114,7 +114,7 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
     if (this.datosWelcome) {
 
       // se configura el estilo para las nomenclaturas obteniendo la cant total
-      const cantConsecutivosNomen = this.setStyleNomenclaturas();
+      const cantConsecutivosNomen = this.setStylePorcentajeNomenclaturas();
 
       // es la cantidad total de solicitudes de todos los usuarios
       let cantConsecutivosUser = 0;
@@ -163,11 +163,11 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
   }
 
   /**
-   * Metodo que permite configurar el estilo para las nomenclaturas
-   * del sistema retornando la cantidad total de sus consecutivos
-   * solicitados
+   * Metodo que permite configurar el estilo y el porcentaje para
+   * las nomenclaturas del sistema retornando la cantidad total de
+   * sus consecutivos solicitados
    */
-  private setStyleNomenclaturas(): number {
+  private setStylePorcentajeNomenclaturas(): number {
 
     // es la cantidad total de consecutivos solicitados retornar
     let cantidadTotal = 0;
@@ -184,14 +184,17 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
       const verde = 'verde';
       const naranja = 'naranja';
 
-      // se recorre cada nomenclatura
+      // se configura el estilo de cada nomenclatura
       let index = 1;
       let colorBK;
       for (const nomenclatura of nomenclaturas) {
 
+        // se configura su porcentaje por default
+        nomenclatura.porcentaje = 0;
+
         // se suma la cantidad total de consecutivos
         if (nomenclatura.cantidadConsecutivos) {
-            cantidadTotal = cantidadTotal + nomenclatura.cantidadConsecutivos;
+          cantidadTotal = cantidadTotal + nomenclatura.cantidadConsecutivos;
         }
 
         // colores pares
@@ -214,6 +217,15 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
           }
         }
         index = index + 1;
+      }
+
+      // se configura la cantidad de cada nomenclatura
+      if (cantidadTotal > 0) {
+        for (const nomenclatura of nomenclaturas) {
+          if (nomenclatura.cantidadConsecutivos) {
+            nomenclatura.porcentaje = Math.round((nomenclatura.cantidadConsecutivos * 100) / cantidadTotal);
+          }
+        }
       }
     }
     return cantidadTotal;

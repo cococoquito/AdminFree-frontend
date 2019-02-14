@@ -9,16 +9,24 @@
     </p-header>
 
     <!-- SI hay nomenclaturas -->
-    <div *ngIf="datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0" class="ui-g mt-2 ml-2 mr-2 mb-2">
-      <div *ngFor="let nomenclatura of datosWelcome.nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto p-3">
-        <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
-          <div class="cant">Cant. {{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</div>
-          <i class="fa fa-arrow-circle-up"></i>
-          <div class="nomen"><strong>{{nomenclatura.nomenclatura}}</strong></div>
-          <div class="descrip">{{nomenclatura.descripcion}}</div>
-        </div>
-      </div>
-    </div>
+    <table *ngIf="datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0" class="table borderless mt-2">
+      <tbody>
+        <tr *ngFor="let nomenclatura of datosWelcome.nomenclaturas">
+          <td style="width: 30%" class="pl-4">
+            <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
+              <div class="nomen"><strong>{{nomenclatura.nomenclatura}}</strong></div>
+            </div>
+            <p class="font-weight-bold font-size-14 font-new-roman text-secondary">{{nomenclatura.descripcion}}</p>
+          </td>
+          <td>
+            <p-progressBar [value]="nomenclatura.porcentaje"></p-progressBar>
+          </td>
+          <td style="width: 4%">
+            <p class="font-size-14 font-new-roman">{{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- NO hay nomenclaturas -->
     <div *ngIf="!(datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0)" class="mr-3 ml-3 mt-3 mb-3 p-3 ui-messages ui-messages-info ui-corner-all text-center">
@@ -36,7 +44,7 @@
       <span> Usuarios</span>
     </p-header>
 
-    <!-- SI hay usuarios -->
+    <!-- usuarios -->
     <table *ngIf="datosWelcome && datosWelcome.usuarios && datosWelcome.usuarios.length > 0" class="table borderless mt-2">
       <tbody>
         <tr *ngFor="let usuario of datosWelcome.usuarios">
@@ -50,7 +58,7 @@
             <p-progressBar [value]="usuario.porcentaje"></p-progressBar>
           </td>
           <td style="width: 4%">
-            <p class="font-size-14 font-new-roman">{{usuario.cantidadConsecutivos}}</p>
+            <p class="font-size-14 font-new-roman">{{usuario.cantidadConsecutivos | consecutivo: '0000'}}</p>
           </td>
         </tr>
       </tbody>

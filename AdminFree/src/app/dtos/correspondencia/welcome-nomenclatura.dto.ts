@@ -20,4 +20,7 @@ export class WelcomeNomenclaturaDTO {
   /***************** Variables utilizadas en Angular *****************/
   /** Es el color background de la nomenclatura a visualizar en pantalla */
   public bgColor: string;
+
+  /** Es el porcentaje de consecutivos solicitados para esta nomenclatura */
+  public porcentaje: number;
 }

@@ -1,35 +1,13 @@
 .dashboard .box-main {
   color: #ffffff;
-  min-height: 90px;
+  min-height: 57px;
   position: relative;
-}
-
-.dashboard .box-main i {
-  float: right;
-  font-size: 21px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.dashboard .box-main .cant {
-  font-size: 13px;
-  letter-spacing: 0.8px;
-  text-align: left;
 }
 
 .dashboard .box-main .nomen {
   line-height: 31px;
   font-size: 24px;
   text-align: left;
-  margin-bottom: 8px;
-}
-
-.dashboard .box-main .descrip {
-  line-height: 18px;
-  font-size: 14px;
-  text-align: left;
-  opacity: 0.95;
 }
 
 .dashboard .box-main.naranja {
