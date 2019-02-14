@@ -1,11 +1,3 @@
-<!-- mensaje consecutivo asociado -->
-<div *ngIf="isModal && detalle.cantConsecutivos && detalle.cantConsecutivos > 0" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-info">
-  <span class="ui-messages-icon pi pi-info-circle"></span>
-  <span class="ui-messages-detail">
-    Existen <strong>consecutivos de correspondencia</strong> asociados a esta nomenclatura
-  </span>
-</div>
-
 <!-- pnl datos nomenclatura -->
 <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
   <p-header>
@@ -31,11 +23,27 @@
         </td>
       </tr>
       <tr>
-        <td style="width: 25%">
+        <td>
           <p class="steps-st">Consecutivo Inicial:</p>
         </td>
         <td>
-          <p class="st">{{ detalle.consecutivoInicial }}</p>
+          <p class="st">{{ detalle.consecutivoInicial | consecutivo: '' }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">
+          <p class="steps-st">Último Consecutivo Generado:</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.secuencia | consecutivo: 'No hay consecutivos' }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="steps-st">Cantidad de Consecutivos</p>
+        </td>
+        <td>
+          <p class="st">{{ detalle.cantConsecutivos | consecutivo: 'No hay consecutivos' }}</p>
         </td>
       </tr>
     </tbody>

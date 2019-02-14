@@ -10,8 +10,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SharedCommonModule } from './shared-common.module';
+import { TransversalModule } from '../transversal/transversal.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
-import { InputswitchComponent } from './../../directives/inputswitch/inputswitch.component';
 import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
 
 /**
@@ -23,6 +23,7 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
 @NgModule({
   imports: [
     SharedCommonModule,
+    TransversalModule,
     TableModule,
     PanelModule,
     DialogModule,
@@ -37,6 +38,7 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
   ],
   exports: [
     SharedCommonModule,
+    TransversalModule,
     TableModule,
     PanelModule,
     DialogModule,
@@ -48,11 +50,9 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
     FileUploadModule,
     ProgressBarModule,
     KeyFilterModule,
-    InputswitchComponent,
     ConsecutivoPipe
   ],
   declarations: [
-    InputswitchComponent,
     ConsecutivoPipe
   ]
 })
