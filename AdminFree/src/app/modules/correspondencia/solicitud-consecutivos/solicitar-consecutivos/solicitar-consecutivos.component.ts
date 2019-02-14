@@ -13,6 +13,7 @@ import { VentanaModalModel } from '../../../../model/ventana-modal.model';
 import { StepsModel } from '../../../../model/steps-model';
 import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 import { LabelsConstant } from '../../../../constants/labels.constant';
+import { ModulesTokenConstant } from '../../../../constants/modules-token.constant';
 
 /**
  * Componente para la solicitud de consecutivos de correspondencia
@@ -34,6 +35,9 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Es el filter ingresado para la busqueda de nomenclatura */
   public filterValue: string;
+
+  /** Token del modulo de correspondencia */
+  public TK_CORRESPONDENCIA = ModulesTokenConstant.TK_CORRESPONDENCIA;
 
   /** Es el identificador de la nomenclatura seleccionada, por si regresan al 1 punto */
   private idNomenclaturaBK;

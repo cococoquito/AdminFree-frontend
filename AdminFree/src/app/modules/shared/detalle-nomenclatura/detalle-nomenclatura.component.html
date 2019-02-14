@@ -1,7 +1,7 @@
 <!-- pnl datos nomenclatura -->
 <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
   <p-header>
-    <span class="steps-circle">1</span> <span> Datos de la Nomenclatura </span>
+    <span *ngIf="modulo === TK_CONFIGURACIONES" class="steps-circle">1</span> <span> Datos de la Nomenclatura </span>
     <i *ngIf="modificaciones && modificaciones.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <table class="table steps-tbl mb-0">
@@ -22,15 +22,15 @@
           <p class="st">{{ detalle.descripcion }}</p>
         </td>
       </tr>
-      <tr>
-        <td>
+      <tr *ngIf="modulo === TK_CONFIGURACIONES">
+        <td style="width: 20%">
           <p class="steps-st">Consecutivo Inicial:</p>
         </td>
         <td>
           <p class="st">{{ detalle.consecutivoInicial | consecutivo: '' }}</p>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf="modulo === TK_CORRESPONDENCIA">
         <td style="width: 30%">
           <p class="steps-st">Último Consecutivo Generado:</p>
         </td>
@@ -38,7 +38,7 @@
           <p class="st">{{ detalle.secuencia | consecutivo: 'No hay consecutivos' }}</p>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf="modulo === TK_CORRESPONDENCIA">
         <td>
           <p class="steps-st">Cantidad de Consecutivos</p>
         </td>
@@ -53,7 +53,7 @@
 <!-- pnl Campos -->
 <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl steps-pnl-main">
   <p-header>
-    <span class="steps-circle">2</span> <span> Campos Asociados </span>
+    <span *ngIf="modulo === TK_CONFIGURACIONES" class="steps-circle">2</span> <span> Campos Asociados </span>
     <i *ngIf="modificaciones && modificaciones.camposEntradaEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <ng-container *ngIf="detalle.campos">

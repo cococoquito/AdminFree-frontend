@@ -77,7 +77,11 @@
   styleClass="splr-dl"
   (onHide)="verDetalleNomenclatura.closeModal()">
     <div class="mx-dtl-mdl">
-      <admin-detalle-nomenclatura [detalle]="verDetalleNomenclatura.data" [isModal]="true"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura
+        [detalle]="verDetalleNomenclatura.data"
+        [isModal]="true"
+        [modulo]="TK_CORRESPONDENCIA">
+      </admin-detalle-nomenclatura>
     </div>
   </p-dialog>
 </ng-container>

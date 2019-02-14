@@ -256,7 +256,11 @@
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
       <!-- detalle - nomenclatura -->
-      <admin-detalle-nomenclatura [detalle]="nomenclaturaCU" [modificaciones]="datosEdicion"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura
+        [detalle]="nomenclaturaCU"
+        [modificaciones]="datosEdicion"
+        [modulo]="TK_CONFIGURACIONES">
+      </admin-detalle-nomenclatura>
 
       <!-- botones salir - next-->
       <div class="text-center mt-2 mb-1">
@@ -287,7 +291,11 @@
   styleClass="splr-dl"
   (onHide)="verDetalleNomenclatura.closeModal()">
     <div class="mx-dtl-mdl">
-      <admin-detalle-nomenclatura [detalle]="verDetalleNomenclatura.data" [isModal]="true"></admin-detalle-nomenclatura>
+      <admin-detalle-nomenclatura
+        [detalle]="verDetalleNomenclatura.data"
+        [isModal]="true"
+        [modulo]="TK_CONFIGURACIONES">
+      </admin-detalle-nomenclatura>
     </div>
   </p-dialog>
 </ng-container>

@@ -16,6 +16,7 @@ import { RegexUtil } from '../../../util/regex-util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 
 /**
  * Componente para la administracion de las Nomenclaturas
@@ -69,6 +70,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** Es el campo seleccionado para ordenar*/
   public campoOrden: CampoEntradaDTO;
+
+  /** Token del modulo de configuraciones*/
+  public TK_CONFIGURACIONES = ModulesTokenConstant.TK_CONFIGURACIONES;
 
   /**
    * @param messageService, Se utiliza para la visualizacion

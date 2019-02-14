@@ -4,6 +4,7 @@ import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatu
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { VentanaModalModel } from './../../../model/ventana-modal.model';
+import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 
 /**
  * Componente para visualizar el detalle de la NOMENCLATURA
@@ -25,8 +26,15 @@ export class DetalleNomenclaturaComponent {
   /** bandera que identifica si este ver detalle se va mostrar como modal*/
   @Input() public isModal: boolean;
 
+  /** Es el token del modulo quien invoca este detalle*/
+  @Input() public modulo: string;
+
   /** se utiliza para visualizar el detalle del campo asociado a la nomenclatura*/
   public verDetalleCampo: VentanaModalModel;
+
+  /** Constante que representa los token de los modulos*/
+  public TK_CORRESPONDENCIA = ModulesTokenConstant.TK_CORRESPONDENCIA;
+  public TK_CONFIGURACIONES = ModulesTokenConstant.TK_CONFIGURACIONES;
 
   /**
    * @param service , se utiliza para consultar el detalle
