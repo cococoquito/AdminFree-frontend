@@ -10,9 +10,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SharedCommonModule } from './shared-common.module';
-import { TransversalModule } from '../transversal/transversal.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
+import { InputswitchComponent } from './inputswitch/inputswitch.component';
+import { DetalleCampoComponent } from './detalle-campo/detalle-campo.component';
+import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -23,7 +25,6 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
 @NgModule({
   imports: [
     SharedCommonModule,
-    TransversalModule,
     TableModule,
     PanelModule,
     DialogModule,
@@ -36,9 +37,14 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
     ProgressBarModule,
     KeyFilterModule
   ],
+  declarations: [
+    ConsecutivoPipe,
+    InputswitchComponent,
+    DetalleCampoComponent,
+    DetalleNomenclaturaComponent
+  ],
   exports: [
     SharedCommonModule,
-    TransversalModule,
     TableModule,
     PanelModule,
     DialogModule,
@@ -50,10 +56,10 @@ import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
     FileUploadModule,
     ProgressBarModule,
     KeyFilterModule,
-    ConsecutivoPipe
-  ],
-  declarations: [
-    ConsecutivoPipe
+    ConsecutivoPipe,
+    InputswitchComponent,
+    DetalleCampoComponent,
+    DetalleNomenclaturaComponent
   ]
 })
 export class SharedModule {}
