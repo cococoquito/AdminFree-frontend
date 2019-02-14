@@ -49,6 +49,7 @@ export class ConfirmacionComponent extends CommonComponent {
     this.correspondenciaService.solicitarConsecutivo(this.getSolicitudConsecutivo()).subscribe(
       data => {
         this.state.responseSolicitud = data;
+        this.state.nomenclaturaSeleccionada.cantConsecutivos = this.state.nomenclaturaSeleccionada.cantConsecutivos + 1;
         this.state.stepsModel.irUltimoStep();
       },
       error => {

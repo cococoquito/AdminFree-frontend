@@ -9,7 +9,6 @@ import { NomenclaturaDTO } from '../../../../dtos/configuraciones/nomenclatura.d
 import { LocalStoreUtil } from '../../../../util/local-store.util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { StepsModel } from '../../../../model/steps-model';
-import { VentanaModalModel } from './../../../../model/ventana-modal.model';
 import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 import { LabelsConstant } from '../../../../constants/labels.constant';
 
@@ -27,9 +26,6 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
 
   /** Son las nomenclaturas a mostrar en pantalla */
   public nomenclaturas: Array<NomenclaturaDTO>;
-
-  /** Contiene el modelo del modal ver detalle de la nomenclatura*/
-  public detalleNomenclatura: VentanaModalModel;
 
   /** Es el filter ingresado para la busqueda de nomenclatura */
   public filterValue: string;
@@ -104,31 +100,6 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
-  }
-
-  /**
-   * Metodo que soporta el evento click del boton ver detalle nomenclatura
-   *
-   * @param event , se utiliza para no propagar el evento y asi evitar
-   * que seleccione o deseleccione la fila de la tabla de nomenclatura
-   *
-   * @param nomenclatura , nomenclatura seleccionada para ver el detalle
-   */
-  public verDetalleNomenclatura(event, nomenclatura: NomenclaturaDTO): void {
-    this.correspondenciaService.getDetalleNomenclatura(nomenclatura.id).subscribe(
-      data => {
-        if (!this.detalleNomenclatura) {
-          this.detalleNomenclatura = new VentanaModalModel();
-        }
-        this.detalleNomenclatura.showModal(data);
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
-
-    // se para la propagacion del evento
-    event.stopPropagation();
   }
 
   /**

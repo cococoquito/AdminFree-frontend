@@ -66,18 +66,3 @@
 <ng-container *ngIf="state.stepsModel.activeIndex === state.stepsModel.ulitmoIndex">
   <admin-consecutivo-generado></admin-consecutivo-generado>
 </ng-container>
-
-<!-- modal ver detalle nomenclatura -->
-<ng-container *ngIf="detalleNomenclatura && detalleNomenclatura.data">
-  <p-dialog header="Detalle de la Nomenclatura"
-  [(visible)]="detalleNomenclatura.isShowModal"
-  modal="true"
-  responsive="true"
-  dismissableMask="true"
-  styleClass="splr-dl"
-  (onHide)="detalleNomenclatura.closeModal()">
-    <div class="scc-mx-dtl-cmp">
-      <admin-detalle-nomenclatura [detalle]="detalleNomenclatura.data"></admin-detalle-nomenclatura>
-    </div>
-  </p-dialog>
-</ng-container>

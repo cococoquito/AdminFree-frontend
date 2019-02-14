@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { InitSolicitarConsecutivoDTO } from './../dtos/correspondencia/init-solicitar-consecutivo.dto';
-import { NomenclaturaDetalleDTO } from './../dtos/correspondencia/nomenclatura-detalle.dto';
 import { CampoEntradaDetalleDTO } from './../dtos/correspondencia/campo-entrada-detalle.dto';
 import { SolicitudConsecutivoDTO } from './../dtos/correspondencia/solicitud-consecutivo.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
@@ -22,18 +21,6 @@ export class CorrespondenciaService {
    * @param HTTP para hacer las peticiones a los servicios REST
    */
   constructor(private http: HttpClient) {}
-
-  /**
-   * Servicio que permite obtener el detalle de una nomenclatura
-   *
-   * @param idNomenclatura, identificador de la nomenclatura
-   * @return DTO con los datos de la nomenclatura
-   */
-  public getDetalleNomenclatura(idNomenclatura: number): Observable<NomenclaturaDetalleDTO> {
-    return this.http.get<NomenclaturaDetalleDTO>(
-      CorrespondenciaAPIConstant.URL_GET_DTL_NOMENCLATURA + idNomenclatura
-    );
-  }
 
   /**
    * Servicio que permite obtener los campos de la nomenclatura
