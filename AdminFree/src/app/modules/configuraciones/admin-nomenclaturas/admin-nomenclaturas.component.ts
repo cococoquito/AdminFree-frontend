@@ -322,7 +322,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         this.nomenclaturaCU = JSON.parse(JSON.stringify(this.datosEdicion.nomenclatura));
 
         // mensaje cuando la nomenclatura tiene consecutivos
-        if (this.nomenclaturaCU.tieneConsecutivos) {
+        if (this.nomenclaturaCU.cantConsecutivos && this.nomenclaturaCU.cantConsecutivos > 0) {
           this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.NOMENCLATURA_CON_CONSECUTIVO));
         }
 

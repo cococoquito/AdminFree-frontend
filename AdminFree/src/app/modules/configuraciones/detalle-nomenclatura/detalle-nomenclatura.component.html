@@ -1,5 +1,5 @@
 <!-- mensaje consecutivo asociado -->
-<div *ngIf="isModal && detalle.tieneConsecutivos" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-info">
+<div *ngIf="isModal && detalle.cantConsecutivos && detalle.cantConsecutivos > 0" class="mr-4 ml-4 ui-messages ui-widget ui-corner-all ui-messages-info">
   <span class="ui-messages-icon pi pi-info-circle"></span>
   <span class="ui-messages-detail">
     Existen <strong>consecutivos de correspondencia</strong> asociados a esta nomenclatura

@@ -22,11 +22,11 @@ export class NomenclaturaDTO {
   /** Nro donde inicia el consecutivo a generar */
   public consecutivoInicial: number;
 
+  /** Es la secuencia de consecutivos solicitados */
+  public secuencia: number;
+
   /** Es la cantidad de consecutivos solicitados para esta nomenclatura */
   public cantConsecutivos: number;
-
-  /** Indica si la nomenclatura esta asociada a un consecutivo */
-  public tieneConsecutivos: boolean;
 
   /** Son los campos asociados de la nomenclatura */
   public campos: Array<NomenclaturaCampoDTO>;
