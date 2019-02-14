@@ -39,6 +39,10 @@ body {
   padding-left: 42px !important;
 }
 
+.pro-azul .ui-progressbar .ui-progressbar-value {
+  background: #599ccb !important;
+}
+
 /* Estilos para dropdown */
 .ui-dropdown-trigger-icon {
   display: none !important
