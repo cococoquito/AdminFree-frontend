@@ -9,7 +9,7 @@
     </p-header>
 
     <!-- SI hay nomenclaturas -->
-    <table *ngIf="datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0" class="table borderless mt-2">
+    <table *ngIf="datosWelcome && datosWelcome.nomenclaturas && datosWelcome.nomenclaturas.length > 0" class="table borderless mt-2 mb-0">
       <tbody>
         <tr *ngFor="let nomenclatura of datosWelcome.nomenclaturas">
           <td style="width: 30%" class="pl-4">
@@ -22,7 +22,7 @@
             <p-progressBar class="pro-azul" [value]="nomenclatura.porcentaje"></p-progressBar>
           </td>
           <td style="width: 4%">
-            <p class="font-size-14 font-new-roman">{{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</p>
+            <p class="font-size-14 font-new-roman"><strong>{{nomenclatura.cantidadConsecutivos | consecutivo: '0000'}}</strong></p>
           </td>
         </tr>
       </tbody>
@@ -45,7 +45,7 @@
     </p-header>
 
     <!-- usuarios -->
-    <table *ngIf="datosWelcome && datosWelcome.usuarios && datosWelcome.usuarios.length > 0" class="table borderless mt-2">
+    <table *ngIf="datosWelcome && datosWelcome.usuarios && datosWelcome.usuarios.length > 0" class="table borderless mt-2 mb-0">
       <tbody>
         <tr *ngFor="let usuario of datosWelcome.usuarios">
           <td style="width: 35%" class="pl-4">
@@ -58,7 +58,7 @@
             <p-progressBar [value]="usuario.porcentaje"></p-progressBar>
           </td>
           <td style="width: 4%">
-            <p class="font-size-14 font-new-roman">{{usuario.cantidadConsecutivos | consecutivo: '0000'}}</p>
+            <p class="font-size-14 font-new-roman"><strong>{{usuario.cantidadConsecutivos | consecutivo: '0000'}}</strong></p>
           </td>
         </tr>
       </tbody>
