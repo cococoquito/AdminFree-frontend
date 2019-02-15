@@ -11,7 +11,6 @@ import { LocalStoreUtil } from '../../../../util/local-store.util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { VentanaModalModel } from '../../../../model/ventana-modal.model';
 import { StepsModel } from '../../../../model/steps-model';
-import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 import { LabelsConstant } from '../../../../constants/labels.constant';
 import { ModulesTokenConstant } from '../../../../constants/modules-token.constant';
 
@@ -146,12 +145,8 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     // se limpia mensajes de otros procesos
     this.messageService.clear();
 
-    // la seleccion de la nomenclatura es obligatorio
+    // se configura la nomenclatura seleccionada
     this.state.nomenclaturaSeleccionada = nomenclatura;
-    if (!this.state.nomenclaturaSeleccionada) {
-      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.NOMENCLATURA_REQUERIDO));
-      return;
-    }
 
     // se identifica que no sea la misma nomenclatura seleccionada
     if (this.idNomenclaturaBK && this.state.nomenclaturaSeleccionada.id === this.idNomenclaturaBK) {

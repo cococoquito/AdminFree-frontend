@@ -114,9 +114,6 @@ export class MsjFrontConstant {
   /** Mensaje cuando se modifica una nomenclatura */
   static readonly NOMENCLATURA_ACTUALIZADO_EXITOSO: string = 'Nomenclatura Modificado';
 
-  /** Mensaje la nomenclatura es requerido */
-  static readonly NOMENCLATURA_REQUERIDO: string = 'Seleccione la Nomenclatura';
-
   /** mayor que la fecha actual */
   static readonly FECHA_MAYOR_ACTUAL: string = ' debe ser MAYOR que la fecha actual';
 

@@ -113,7 +113,7 @@ export class BienvenidaComponent extends CommonComponent implements OnInit, OnDe
     // se verifica si los datos de bienvenida existe
     if (this.datosWelcome) {
 
-      // se configura el estilo para las nomenclaturas obteniendo la cant total
+      // se configura estilo y porcentajes para las nomenclaturas obteniendo la cant total
       const cantConsecutivosNomen = this.setStylePorcentajeNomenclaturas();
 
       // es la cantidad total de solicitudes de todos los usuarios
