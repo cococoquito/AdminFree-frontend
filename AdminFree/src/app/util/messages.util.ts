@@ -73,10 +73,17 @@ export class MsjUtil {
   }
 
   /**
-   * Metodo que permite construir el mensaje de ERROR para toast
+   * Metodo que permite construir el mensaje de ERROR para toast largo
    */
   public static getToastErrorLng(detail: string): Message {
     return this.getToastLng(MsjFrontConstant.ERROR, detail, LabelsConstant.ERROR);
+  }
+
+  /**
+   * Metodo que permite construir el mensaje de Exitoso para toast largo
+   */
+  public static getToastSuccessLng(detail: string): Message {
+    return this.getToastLng(MsjFrontConstant.EXITOSO, detail, LabelsConstant.SUCCESS);
   }
 
   /**

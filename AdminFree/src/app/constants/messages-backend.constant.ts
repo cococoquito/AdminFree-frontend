@@ -68,4 +68,11 @@ export class MessagesBackendConstant {
   /** La nomenclatura que intenta eliminar tiene un consecutivo asociado*/
   static readonly DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA: string =
     'La nomenclatura que intenta eliminar tiene un <strong>consecutivo de correspondencia asociado</strong>';
+
+  /** El consecutivo ? ya tiene asociado un documento con el nombre ?*/
+  static readonly CONSECUTIVO_DOCUMENTO_MISMO_NOMBRE: string =
+    'El consecutivo <strong>?1</strong> ya tiene asociado un documento con el nombre <strong>?2</strong>';
+
+  /** El documento que intenta cargar se encuentra vacio*/
+  static readonly DOCUMENTO_VACIO: string = 'El documento que intenta cargar se encuentra vacío';
 }

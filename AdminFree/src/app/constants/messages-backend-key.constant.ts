@@ -47,4 +47,10 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - La nomenclatura que intenta eliminar tiene un consecutivo asociado*/
   static readonly KEY_DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA: string = '14';
+
+  /** 400 - El consecutivo ? ya tiene asociado un documento con el nombre ?*/
+  static readonly KEY_CONSECUTIVO_DOCUMENTO_MISMO_NOMBRE: string = '15';
+
+  /** 400 - El documento que intenta cargar se encuentra vacio*/
+  static readonly KEY_DOCUMENTO_VACIO: string = '16';
 }

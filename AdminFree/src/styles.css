@@ -43,6 +43,10 @@ body {
   background: #599ccb !important;
 }
 
+.ui-fileupload-content .ui-progressbar {
+  background-color: #90A4AE !important;
+}
+
 /* Estilos para dropdown */
 .ui-dropdown-trigger-icon {
   display: none !important

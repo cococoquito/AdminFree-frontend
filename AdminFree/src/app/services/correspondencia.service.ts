@@ -94,8 +94,8 @@ export class CorrespondenciaService {
    * @param datosCargue, contiene los valores de los parametros del cargue
    * @return lista de documentos asociados al consecutivo
 	 */
-  public cargarDocumento(datosCargue: FormData): Observable<DocumentoDTO> {
-    return this.http.post<DocumentoDTO>(
+  public cargarDocumento(datosCargue: FormData): Observable<Array<DocumentoDTO>> {
+    return this.http.post<Array<DocumentoDTO>>(
       CorrespondenciaAPIConstant.URL_CARGAR_DOCUMENTO,
       datosCargue
     );
@@ -107,8 +107,8 @@ export class CorrespondenciaService {
    * @param datos, Contiene los datos del documento eliminar
    * @return lista de documentos asociados al consecutivo
 	 */
-  public eliminarDocumento(datos: DocumentoDTO): Observable<DocumentoDTO> {
-    return this.http.post<DocumentoDTO>(
+  public eliminarDocumento(datos: DocumentoDTO): Observable<Array<DocumentoDTO>> {
+    return this.http.post<Array<DocumentoDTO>>(
       CorrespondenciaAPIConstant.URL_ELIMINAR_DOCUMENTO,
       datos
     );

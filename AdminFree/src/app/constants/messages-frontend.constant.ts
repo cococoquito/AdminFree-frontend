@@ -125,4 +125,7 @@ export class MsjFrontConstant {
 
   /** menor o igual que la fecha actual */
   static readonly FECHA_MENOR_IGUAL_ACTUAL: string = ' debe ser MENOR o IGUAL que la fecha actual';
+
+  /** Mensaje cuando se registra un documento */
+  static readonly DOCUMENTO_CARGADO: string = 'El documento fue registrado exitosamente en el sistema';
 }

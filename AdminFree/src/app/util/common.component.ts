@@ -178,6 +178,16 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_CONSECUTIVO_DOCUMENTO_MISMO_NOMBRE: {
+        businessMsj = MessagesBackendConstant.CONSECUTIVO_DOCUMENTO_MISMO_NOMBRE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_DOCUMENTO_VACIO: {
+        businessMsj = MessagesBackendConstant.DOCUMENTO_VACIO;
+        break;
+      }
     }
     return businessMsj;
   }
