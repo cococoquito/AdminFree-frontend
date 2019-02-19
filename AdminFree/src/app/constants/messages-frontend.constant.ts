@@ -128,4 +128,11 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando se registra un documento */
   static readonly DOCUMENTO_CARGADO: string = 'El documento fue registrado exitosamente en el sistema';
+
+  /** Mensaje cuando se elimina un documento */
+  static readonly DOCUMENTO_ELIMINADO: string = 'El documento fue eliminado';
+
+  /** Mensaje de confirmacion para la eliminacion de un documento */
+  static readonly DOCUMENTO_ELIMINAR_CONFIRMACION: string =
+  '¿Está seguro de eliminar el siguiente documento? <div class="text-center mt-2"><strong>?1</strong></div>';
 }
