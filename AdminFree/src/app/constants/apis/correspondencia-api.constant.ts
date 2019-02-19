@@ -39,4 +39,16 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'datosbienvenida?idCliente=';
+
+  /** URL del recurso para el cargue de documento asociado a un consecutivo */
+  static readonly URL_CARGAR_DOCUMENTO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'cargardocumento';
+
+  /** URL del recurso para eliminar un documento asociado a un consecutivo */
+  static readonly URL_ELIMINAR_DOCUMENTO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'eliminardocumento';
 }

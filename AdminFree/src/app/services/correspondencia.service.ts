@@ -7,6 +7,7 @@ import { SolicitudConsecutivoDTO } from './../dtos/correspondencia/solicitud-con
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { SolicitudConsecutivoResponseDTO } from '../dtos/correspondencia/solicitud-consecutivo-response.dto';
 import { WelcomeInitDTO } from '../dtos/correspondencia/welcome-init.dto';
+import { DocumentoDTO } from '../dtos/correspondencia/documento.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -84,6 +85,32 @@ export class CorrespondenciaService {
   public getDatosBienvenida(idCliente: number): Observable<WelcomeInitDTO> {
     return this.http.get<WelcomeInitDTO>(
       CorrespondenciaAPIConstant.URL_GET_DATOS_WELCOME + idCliente
+    );
+  }
+
+  /**
+	 * Servicio para el cargue de documento asociado a un consecutivo
+   *
+   * @param datosCargue, contiene los valores de los parametros del cargue
+   * @return lista de documentos asociados al consecutivo
+	 */
+  public cargarDocumento(datosCargue: FormData): Observable<DocumentoDTO> {
+    return this.http.post<DocumentoDTO>(
+      CorrespondenciaAPIConstant.URL_CARGAR_DOCUMENTO,
+      datosCargue
+    );
+  }
+
+  /**
+	 * Servicio para eliminar un documento asociado al consecutivo
+   *
+   * @param datos, Contiene los datos del documento eliminar
+   * @return lista de documentos asociados al consecutivo
+	 */
+  public eliminarDocumento(datos: DocumentoDTO): Observable<DocumentoDTO> {
+    return this.http.post<DocumentoDTO>(
+      CorrespondenciaAPIConstant.URL_ELIMINAR_DOCUMENTO,
+      datos
     );
   }
 }

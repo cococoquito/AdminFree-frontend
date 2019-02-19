@@ -5,6 +5,7 @@ import { SpinnerState } from './../states/spinner.state';
 import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { SeguridadAPIConstant } from '../constants/apis/seguridad-api.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
+import { CorrespondenciaAPIConstant } from '../constants/apis/correspondencia-api.constant';
 import { LocalStoreUtil } from '../util/local-store.util';
 import {
   HttpInterceptor,
@@ -48,16 +49,20 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           securityHeader = this.getSecurityHeader(
             AppSecurityConstant.AUTH_USER,
             AppSecurityConstant.AUTH_PASS,
-            AppSecurityConstant.AUTH_TOKEN + AppSecurityConstant.POST_ANGULAR_AUTH
+            AppSecurityConstant.AUTH_TOKEN + AppSecurityConstant.POST_ANGULAR_AUTH,
+            false
           );
     } else {
       // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
       const credenciales: CredencialesDTO = LocalStoreUtil.getCurrentCredenciales();
       if (credenciales) {
+
+        // invocaciones del cargue documento no puede tener Content-Type
         securityHeader = this.getSecurityHeader(
           credenciales.usuario,
           credenciales.clave,
-          credenciales.token + AppSecurityConstant.POST_ANGULAR
+          credenciales.token + AppSecurityConstant.POST_ANGULAR,
+          CorrespondenciaAPIConstant.URL_CARGAR_DOCUMENTO === req.url
         );
       }
     }
@@ -83,13 +88,22 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    * @param user , usuario a configurar en el header
    * @param pass , clave a configurar en el header
    * @param token , token a configurar en el header
+   * @param noHeader, indica si el request se debe configurar 'Content-Type'
    */
-  private getSecurityHeader(user: string, pass: string, token: string): any {
-    return {
-      'Content-Type': AppSecurityConstant.CONTENT,
-      'huser': user,
-      'hpass': pass,
-      'htoken': token
-    };
+  private getSecurityHeader(user: string, pass: string, token: string, noHeader: boolean): any {
+    if (noHeader) {
+      return {
+        'huser': user,
+        'hpass': pass,
+        'htoken': token
+      };
+    } else {
+      return {
+        'Content-Type': AppSecurityConstant.CONTENT,
+        'huser': user,
+        'hpass': pass,
+        'htoken': token
+      };
+    }
   }
 }
