@@ -83,7 +83,11 @@ export class CommonComponent {
         }
       }
     } else {
-      mensaje = MessagesBackendConstant.INTERNAL_SERVER_ERROR;
+      if (error.error && error.error.message) {
+        mensaje = error.error.message;
+      } else {
+        mensaje = MessagesBackendConstant.INTERNAL_SERVER_ERROR;
+      }
     }
 
     // se construye el errorResponse a retornar
