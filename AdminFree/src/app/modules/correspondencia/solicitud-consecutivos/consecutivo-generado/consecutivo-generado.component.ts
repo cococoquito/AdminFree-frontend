@@ -143,7 +143,7 @@ export class ConsecutivoGeneradoComponent extends CommonComponent {
         this.correspondenciaService.eliminarDocumento(documento).subscribe(
           data => {
             this.documentos = data;
-            this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.DOCUMENTO_ELIMINADO));
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.DOCUMENTO_ELIMINADO));
           },
           error => {
             this.messageService.add(this.showErrorCargue(this.showMensajeError(error)));
