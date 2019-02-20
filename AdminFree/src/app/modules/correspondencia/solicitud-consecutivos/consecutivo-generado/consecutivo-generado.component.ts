@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Message } from 'primeng/components/common/api';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { CommonComponent } from '../../../../util/common.component';
 import { CorrespondenciaService } from '../../../../services/correspondencia.service';
+import { CommonComponent } from '../../../../util/common.component';
 import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
 import { SpinnerState } from '../../../../states/spinner.state';
 import { DocumentoDTO } from '../../../../dtos/correspondencia/documento.dto';
@@ -18,8 +18,10 @@ import { LabelsConstant } from '../../../../constants/labels.constant';
  * application/pdf = pdf
  * application/msword =  Microsoft Word
  * application/vnd.ms-excel = Microsoft Excel
+ * application/vnd.openxmlformats-officedocument.spreadsheetml.sheet = Microsoft Excel
  * application/vnd.oasis.opendocument.text = Documento de texto OpenDocument
  * https://developer.mozilla.org/es/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Lista_completa_de_tipos_MIME
+ * https://docs.microsoft.com/en-us/previous-versions/office/office-2007-resource-kit/ee309278(v=office.12)
  *
  * @author Carlos Andres Diaz
  */

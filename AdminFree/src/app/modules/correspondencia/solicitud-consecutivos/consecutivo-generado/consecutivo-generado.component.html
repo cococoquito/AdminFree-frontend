@@ -31,13 +31,13 @@
       auto="true"
       [showUploadButton]="false"
       [showCancelButton]="false"
-      maxFileSize="2000000"
+      maxFileSize="9000000"
       chooseLabel="Cargar Documento"
       invalidFileTypeMessageSummary="Archivo invalido"
-      invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel)"
+      invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel, powerpoint)"
       invalidFileSizeMessageSummary="Archivo invalido"
-      invalidFileSizeMessageDetail="El tamaño máximo de carga es 2000000 bytes"
-      accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.oasis.opendocument.text">
+      invalidFileSizeMessageDetail="El tamaño máximo de carga es 9000000 bytes"
+      [accept]="state.tiposDocumentos">
       <ng-template let-file pTemplate="file">
       </ng-template>
 

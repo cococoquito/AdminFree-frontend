@@ -6,6 +6,7 @@ import { SolicitudConsecutivoResponseDTO } from '../../dtos/correspondencia/soli
 import { CampoModel } from '../../model/campo-model';
 import { StepsModel } from './../../model/steps-model';
 import { TipoCamposConstant } from '../../constants/tipo-campos.constant';
+import { TiposDocumentosConstant } from '../../constants/tipos-documentos.constant';
 
 /**
  * Estado para almacener la data para el proceso de negocio
@@ -42,6 +43,9 @@ export class SolicitarConsecutivoState {
   public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
   public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
   public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
+
+  /** Son los tipos de documentos permitidos para el cargue de archivo*/
+  public tiposDocumentos = TiposDocumentosConstant.getAll();
 
   /**
    * Metodo que permite reiniciar la data para los pasos 2,3
