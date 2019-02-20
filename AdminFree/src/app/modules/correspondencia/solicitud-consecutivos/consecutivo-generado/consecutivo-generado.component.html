@@ -46,7 +46,8 @@
         <p-table
           *ngIf="documentos && documentos.length > 0"
           [value]="documentos"
-          [responsive]="true">
+          [responsive]="true"
+          rowHover="true">
 
           <ng-template pTemplate="header">
             <tr class="text-center">
@@ -58,7 +59,7 @@
           </ng-template>
 
           <ng-template pTemplate="body" let-documento>
-            <tr>
+            <tr [pSelectableRow]="documento">
               <td>{{ documento.nombreDocumento }}</td>
               <td class="text-center">{{ documento.tipoDocumento }}</td>
               <td>
