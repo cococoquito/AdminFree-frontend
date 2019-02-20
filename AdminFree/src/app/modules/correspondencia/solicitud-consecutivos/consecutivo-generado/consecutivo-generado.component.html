@@ -44,7 +44,6 @@
       <ng-template pTemplate="content">
         <p-messages key="docs" [hideTransitionOptions]="'0ms'"> </p-messages>
         <p-table
-          *ngIf="documentos && documentos.length > 0"
           [value]="documentos"
           [responsive]="true"
           rowHover="true">
@@ -72,14 +71,20 @@
               </td>
             </tr>
           </ng-template>
-        </p-table>
 
-        <div *ngIf="!(documentos && documentos.length > 0)" class="mt-1 mb-1 ui-messages ui-messages-warn ui-corner-all">
-          <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
-          <span class="ui-messages-detail">
-            <strong>Cargue los documentos asociados al consecutivo</strong>
-          </span>
-        </div>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="4">
+                <div class="mt-1 mb-1 ui-messages ui-messages-warn ui-corner-all text-center">
+                  <span class="ui-messages-icon pi pi-info-circle font-size-26"></span>
+                  <span class="ui-messages-detail font-weight-bold font-size-14 mb-0">
+                    <strong>Por favor cargue los documentos asociados al consecutivo</strong>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </ng-template>
     </p-fileUpload>
   </div>
