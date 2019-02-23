@@ -6,6 +6,9 @@
  */
 export class LabelsConstant {
 
+  /** Titulo para el submodulo de consecutivos solicitados*/
+  public static readonly TITLE_CONSECUTIVOS_SOLICITADOS: string = 'Consecutivos de Correspondencia Solicitados';
+
   /** Titulo para el componente de bienvenida*/
   public static readonly TITLE_BIENVENIDA: string = 'Bienvenido AdminFree';
 
@@ -20,6 +23,10 @@ export class LabelsConstant {
 
   /** Titulo para el componente Administracion de nomenclaturas*/
   public static readonly TITLE_ADMIN_NOMENCLATURAS: string = 'Administración de Nomenclaturas';
+
+  /** Sub-Titulo para el submodulo de consecutivos solicitados*/
+  public static readonly SUBTITLE_CONSECUTIVOS_SOLICITADOS: string =
+    'Submódulo de correspondencia que permite visualizar los <strong>consecutivos solicitados del año actual</strong>';
 
   /** Sub-Titulo para el componente de bienvenida*/
   public static readonly SUBTITLE_BIENVENIDA: string =
@@ -74,6 +81,9 @@ export class LabelsConstant {
 
   /** Titulo solicitar consecutivos*/
   public static readonly MENU_SOLICITAR_CONSECUTIVOS: string = 'Solicitar Consecutivos';
+
+  /** Titulo consecutivos solicitados*/
+  public static readonly MENU_CONSECUTIVOS_SOLICITADOS: string = 'Consecutivos Solicitados';
 
   /** Label cerrar sesion*/
   public static readonly CERRAR_SESION: string = 'Cerrar Sesión';

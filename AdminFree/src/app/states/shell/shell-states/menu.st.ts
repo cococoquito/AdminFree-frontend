@@ -254,6 +254,12 @@ export class MenuST {
           routerLink: [RouterConstant.NAVIGATE_SOLICITAR_CONSECUTIVOS],
           icon: 'fa fa-fw fa-envelope-open',
           id: 'fa-envelope-open'
+        },
+        {
+          label: LabelsConstant.MENU_CONSECUTIVOS_SOLICITADOS,
+          routerLink: [RouterConstant.NAVIGATE_CONSECUTIVOS_SOLICITADOS],
+          icon: 'fa fa-fw fa-list-ul',
+          id: 'fa-list-ul'
         }
       ]
     };

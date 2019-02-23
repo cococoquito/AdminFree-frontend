@@ -5,6 +5,7 @@ import { SolicitarConsecutivosComponent } from './solicitud-consecutivos/solicit
 import { IngresoInformacionComponent } from './solicitud-consecutivos/ingreso-informacion/ingreso-informacion.component';
 import { ConfirmacionComponent } from './solicitud-consecutivos/confirmacion/confirmacion.component';
 import { ConsecutivoGeneradoComponent } from './solicitud-consecutivos/consecutivo-generado/consecutivo-generado.component';
+import { ConsecutivosSolicitadosComponent } from './consecutivos-solicitados/consecutivos-solicitados.component';
 import { RouterConstant } from './../../constants/router.constant';
 
 /**
@@ -19,6 +20,10 @@ import { RouterConstant } from './../../constants/router.constant';
       {
         path: RouterConstant.ROUTER_SOLICITAR_CONSECUTIVOS,
         component: SolicitarConsecutivosComponent
+      },
+      {
+        path: RouterConstant.ROUTER_CONSECUTIVOS_SOLICITADOS,
+        component: ConsecutivosSolicitadosComponent
       }
     ]),
     SharedModule
@@ -27,7 +32,8 @@ import { RouterConstant } from './../../constants/router.constant';
     SolicitarConsecutivosComponent,
     IngresoInformacionComponent,
     ConfirmacionComponent,
-    ConsecutivoGeneradoComponent
+    ConsecutivoGeneradoComponent,
+    ConsecutivosSolicitadosComponent
   ]
 })
 export class CorrespondenciaModule {}

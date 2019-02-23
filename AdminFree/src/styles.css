@@ -302,7 +302,7 @@ body {
 /* Estilos para el menu para dispositivos con pequenia resolucion */
 #smallMenu .ui-sidebar-left {
   top: 64px !important;
-  width: 237px !important;
+  width: 242px !important;
 }
 
 #smallMenu .ui-sidebar {

@@ -50,6 +50,9 @@ export class RouterConstant {
   /** Nombre del Router del ITEM Solicitar consecutivos*/
   public static readonly ROUTER_SOLICITAR_CONSECUTIVOS: string = 'solicitarconse';
 
+  /** Nombre del Router del ITEM Consecutivos Solicitados*/
+  public static readonly ROUTER_CONSECUTIVOS_SOLICITADOS: string = 'consesolicitados';
+
   /** Constante para navegar al modulo de CLIENTES */
   public static readonly NAVIGATE_CLIENTES: string = `/${RouterConstant.ROUTER_CLIENTES}`;
 
@@ -80,4 +83,8 @@ export class RouterConstant {
   /** Constante para navegar a la pagina de SOLICITAR CONSECUTIVOS */
   public static readonly NAVIGATE_SOLICITAR_CONSECUTIVOS: string =
     `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CORRESPONDENCIA}/${RouterConstant.ROUTER_SOLICITAR_CONSECUTIVOS}`;
+
+  /** Constante para navegar a la pagina de CONSECUTIVOS SOLICITADOS */
+  public static readonly NAVIGATE_CONSECUTIVOS_SOLICITADOS: string =
+    `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CORRESPONDENCIA}/${RouterConstant.ROUTER_CONSECUTIVOS_SOLICITADOS}`;
 }
