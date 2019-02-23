@@ -9,6 +9,9 @@ import { SolicitudConsecutivoResponseDTO } from '../dtos/correspondencia/solicit
 import { WelcomeInitDTO } from '../dtos/correspondencia/welcome-init.dto';
 import { DocumentoDTO } from '../dtos/correspondencia/documento.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
+import { FiltroConsecutivosAnioActualDTO } from '../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
+import { InitConsecutivosAnioActualDTO } from './../dtos/correspondencia/init-consecutivos-anio-actual.dto';
+import { ConsecutivoDTO } from '../dtos/correspondencia/consecutivo.dto';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia
@@ -111,6 +114,34 @@ export class CorrespondenciaService {
     return this.http.post<Array<DocumentoDTO>>(
       CorrespondenciaAPIConstant.URL_ELIMINAR_DOCUMENTO,
       datos
+    );
+  }
+
+  /**
+	 * Servicio que permite obtener los consecutivos del anio actual de acuerdo al
+	 * filtro de busqueda
+	 *
+	 * @param filtro, DTO que contiene los valores del filtro de busqueda
+	 * @return lista de consecutivos de acuerdo al filtro de busqueda
+	 */
+  public getConsecutivosAnioActual(filtro: FiltroConsecutivosAnioActualDTO): Observable<Array<ConsecutivoDTO>> {
+    return this.http.post<Array<ConsecutivoDTO>>(
+      CorrespondenciaAPIConstant.GET_CONSECUTIVOS_ACTUAL,
+      filtro
+    );
+  }
+
+  /**
+	 * Servicio que permite obtener los datos iniciales para el
+	 * submodulo de Consecutivos de correspondencia solicitados
+	 * para el anio actual
+	 *
+	 * @param idCliente, identificador del cliente autenticado
+	 * @return DTO con los datos iniciales
+	 */
+  public getInitConsecutivosAnioActual(idCliente: number): Observable<InitConsecutivosAnioActualDTO> {
+    return this.http.get<InitConsecutivosAnioActualDTO>(
+      CorrespondenciaAPIConstant.GET_INIT_CONSECUTIVOS_ACTUAL + idCliente
     );
   }
 }

@@ -51,4 +51,17 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'eliminardocumento';
+
+  /** URL del recurso para obtener los consecutivos anio actual */
+  static readonly GET_CONSECUTIVOS_ACTUAL: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getconsecutivosactual';
+
+  /** URL del recurso para obtener los datos iniciales para el
+	 * submodulo de Consecutivos de correspondencia solicitados */
+  static readonly GET_INIT_CONSECUTIVOS_ACTUAL: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getinitconsecutivosactual?idCliente=';
 }
