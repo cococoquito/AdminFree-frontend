@@ -162,13 +162,13 @@ body {
 
 /* Estilos para los fileupload */
 .ui-fileupload-buttonbar .ui-button {
-  background-color: #7CB342 !important;
-  border-color: #7CB342 !important;
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
 }
 
 .ui-fileupload-buttonbar .ui-button:hover {
-  background-color: rgb(111, 158, 61) !important;
-  border-color: rgb(111, 158, 61) !important;
+  background-color: #218839 !important;
+  border-color: #218839 !important;
 }
 
 .ui-fileupload .ui-fileupload-buttonbar .ui-button {
@@ -325,6 +325,11 @@ body {
 .ui-table-caption {
   background-color: #607a8c !important;
   color: white !important;
+}
+
+#tbl-conse .ui-table .ui-table-thead > tr > th {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
 }
 
 /* circulo redondo paginador */
@@ -495,7 +500,7 @@ body {
 }
 
 .icon-round-table {
-  margin-left: -.03em !important;
+  margin-left: -.02em !important;
   line-height: 1.23 !important;
 }
 
@@ -735,4 +740,12 @@ body {
 
 .outl-no {
   outline: medium none !important
+}
+
+.clr-activo {
+  background-color: #b7d8b7 !important;
+}
+
+.clr-inactivo {
+  background-color: #ffe399 !important;
 }

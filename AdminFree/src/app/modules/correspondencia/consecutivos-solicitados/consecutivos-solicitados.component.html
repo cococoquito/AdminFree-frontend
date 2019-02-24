@@ -1,1 +1,60 @@
+<div class="ui-g mt-4">
+  <div class="ui-g-12 ui-md-3 p-0">
+    <div class="card timeline ui-fluid">
 
+      <p-panel styleClass="steps-pnl-main">
+        <p-header>
+          <i class="fa fa-ils font-size-14"><span class="font-admin"> Filtro de Busqueda</span></i>
+        </p-header>
+
+        </p-panel>
+
+
+
+    </div>
+  </div>
+  <div class="ui-g-12 ui-md-9 p-0">
+    <p-table [value]="consecutivos" [responsive]="true" [paginator]="true" [rows]="10" rowHover="true" id="tbl-conse">
+
+
+      <ng-template pTemplate="header">
+        <tr class="text-center" >
+          <th style="width: 10%">Consecutivo</th>
+          <th style="width: 20%">Nomenclatura</th>
+          <th>Usuario quién solicitó el consecutivo</th>
+          <th style="width: 18%">Fecha Solicitud</th>
+          <th style="width: 4%">Detalle</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-consecutivo>
+        <tr [pSelectableRow]="consecutivo">
+          <td class="text-center">
+            <p class="mb-0 font-weight-bold"
+              [ngClass]="{'clr-activo' : consecutivo.idEstado === 1, 'clr-inactivo' : consecutivo.idEstado === 2}">
+              {{ consecutivo.consecutivo }}
+            </p>
+          </td>
+          <td class="text-center font-weight-bold">{{ consecutivo.nomenclatura }}</td>
+          <td>{{ consecutivo.usuario }}</td>
+          <td class="text-center">{{ consecutivo.fechaSolicitud }}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-sm btn-round-table btn-pup">
+              <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="5">
+            <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay campos parametrizados en el sistema</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+</div>
