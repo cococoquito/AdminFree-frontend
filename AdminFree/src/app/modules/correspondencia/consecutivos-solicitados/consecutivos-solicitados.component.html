@@ -31,7 +31,7 @@
         <tr [pSelectableRow]="consecutivo">
           <td class="text-center">
             <p class="mb-0 font-weight-bold"
-              [ngClass]="{'clr-activo' : consecutivo.idEstado === 1, 'clr-inactivo' : consecutivo.idEstado === 2}">
+              [ngClass]="{'clr-activo' : consecutivo.idEstado === ID_ACTIVO, 'clr-anulado' : consecutivo.idEstado === ID_ANULADO}">
               {{ consecutivo.consecutivo }}
             </p>
           </td>

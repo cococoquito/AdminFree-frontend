@@ -9,6 +9,7 @@ import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
+import { EstadoConstant } from '../../../constants/estado.constant';
 
 /**
  * Componente para la visualizacion de los consecutivos de
@@ -31,6 +32,10 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /** Lista de items para mostrarlo en el componente de filtros por usuarios */
   public usuarios: Array<SelectItemDTO>;
+
+  /** Constantes que representan los identificadores de ACTIVO - ANULADO */
+  public ID_ACTIVO = EstadoConstant.ID_ACTIVO;
+  public ID_ANULADO = EstadoConstant.ID_ANULADO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
