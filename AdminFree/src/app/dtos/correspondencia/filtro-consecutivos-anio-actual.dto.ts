@@ -1,3 +1,5 @@
+import { SelectItemDTO } from './../transversal/select-item.dto';
+
 /**
  * DTO que contiene los atributos para el filtro de busqueda de los consecutivos
  * solicitados para el anio actual
@@ -16,7 +18,7 @@ export class FiltroConsecutivosAnioActualDTO {
   public consecutivos: string;
 
   /** Busqueda por usuarios, pueden llegar varios */
-  public idsUsuarios: Array<number>;
+  public idsUsuario: number;
 
   /** Busqueda por fecha de solicitud inicial */
   public fechaSolicitudInicial: Date;
@@ -26,4 +28,8 @@ export class FiltroConsecutivosAnioActualDTO {
 
   /** Busqueda por estado del consecutivo, puede llegar varios */
   public estados: Array<number>;
+
+  /** ***********VARIABLES UTILIZADAS EN ANGULAR ************************* */
+  /** Es el usuario seleccionado para el filtro de busqueda */
+  public usuarioFiltro: Array<SelectItemDTO>;
 }

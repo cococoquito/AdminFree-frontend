@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
-import { ShellState } from '../../../states/shell/shell.state';
 import { CommonComponent } from '../../../util/common.component';
+import { ShellState } from '../../../states/shell/shell.state';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
+import { FiltroConsecutivosAnioActualDTO } from './../../../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -32,6 +33,12 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /** Lista de items para mostrarlo en el componente de filtros por usuarios */
   public usuarios: Array<SelectItemDTO>;
+
+  /** Se utiliza para encapsular los filtros busqueda ingresados */
+  public filtros: FiltroConsecutivosAnioActualDTO;
+
+  /** labels para el componente de los calendars */
+  public calendarEspanish: any;
 
   /** Constantes que representan los identificadores de ACTIVO - ANULADO */
   public ID_ACTIVO = EstadoConstant.ID_ACTIVO;
@@ -80,6 +87,12 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
+
+    // DTO para encapsular los datos de los filtros de busqueda
+    this.filtros = new FiltroConsecutivosAnioActualDTO();
+
+    // se utiliza para los componentes calendar
+    this.calendarEspanish = LabelsConstant.calendarEspanish;
 
     // se consulta los datos iniciales para este modulo
     this.correspondenciaService.getInitConsecutivosAnioActual(this.clienteCurrent.id).subscribe(

@@ -744,8 +744,10 @@ body {
 
 .clr-activo {
   background-color: #b7d8b7 !important;
+  color: #2b542c;
 }
 
 .clr-anulado {
   background-color: #ffe399 !important;
+  color: #66512c;
 }

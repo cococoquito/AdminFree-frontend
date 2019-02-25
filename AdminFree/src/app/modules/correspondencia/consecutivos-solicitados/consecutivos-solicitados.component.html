@@ -1,41 +1,215 @@
-<div class="ui-g mt-4">
-  <div class="ui-g-12 ui-md-3 p-0">
-    <div class="card timeline ui-fluid">
-
-      <p-panel styleClass="steps-pnl-main">
-        <p-header>
-          <i class="fa fa-ils font-size-14"><span class="font-admin"> Filtro de Busqueda</span></i>
-        </p-header>
-
-        </p-panel>
-
-
-
-    </div>
+<!-- NO hay consecutivos -->
+<p-panel *ngIf="!(consecutivos && consecutivos.length > 0)" styleClass="steps-pnl pnl-pt">
+  <p-header>
+    <i class="fa fa-list-ul font-size-16"></i>
+    <span> Consecutivos</span>
+  </p-header>
+  <div class="mr-3 ml-3 mt-3 mb-3 p-2 ui-messages ui-messages-info ui-corner-all text-center">
+    <span class="ui-messages-icon pi pi-info-circle"></span>
+    <span class="ui-messages-detail">
+      <strong>No se encontraron consecutivos de correspondencia solicitados</strong>
+    </span>
   </div>
-  <div class="ui-g-12 ui-md-9 p-0">
-    <p-table [value]="consecutivos" [responsive]="true" [paginator]="true" [rows]="10" rowHover="true" id="tbl-conse">
+</p-panel>
 
+<!-- HAY consecutivos -->
+<div *ngIf="consecutivos && consecutivos.length > 0" class="ui-g mt-1">
+
+  <!-- filtro busqueda -->
+  <div class="ui-g-12 ui-md-3 p-0 pr-2">
+
+    <!-- panel filtro busqueda -->
+    <p-panel styleClass="steps-pnl steps-pnl-main">
+
+      <!-- header -->
+      <p-header>
+        <div class="ui-g p-0">
+
+          <!-- btn - filtrar -->
+          <div class="ui-g-4 p-0 ">
+            <button type="button" class="btn btn-sm btn-primary">
+              <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
+            </button>
+          </div>
+
+          <!-- btns - refresh- cant -->
+          <div class="ui-g-7 p-0">
+            <p class="font-size-14 font-new-roman mt-2">
+              Cant: <strong>{{ 1000000 | number }}</strong>
+            </p>
+          </div>
+          <div class="ui-g-1 p-0 mt-2 text-left">
+            <i class="fa fa-refresh font-size-20 refresh"></i>
+          </div>
+        </div>
+      </p-header>
+
+      <!-- filtros -->
+      <div class="ui-g pb-1">
+
+        <!-- filtro - nomenclatura -->
+        <div class="ui-g-12 pb-0">
+          <label for="fnomenclatura" class="steps-st mb-0 mt-1"> Nomenclaturas: </label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i class="fa fa-times font-size-16 aico"> </i>
+            <input
+              type="text"
+              id="fnomenclatura"
+              name="fnomenclatura"
+              [(ngModel)]="filtros.nomenclaturas"
+              maxlength="100"
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+            <div class="focus-border"></div>
+          </div>
+        </div>
+
+        <!-- filtro - consecutivos -->
+        <div class="ui-g-12 pb-0">
+          <label for="fconsecutivos" class="steps-st mb-0 mt-1"> Consecutivos: </label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i class="fa fa-times font-size-16 aico"> </i>
+            <input
+              type="text"
+              id="fconsecutivos"
+              name="fconsecutivos"
+              [(ngModel)]="filtros.consecutivos"
+              maxlength="100"
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+            <div class="focus-border"></div>
+          </div>
+        </div>
+
+        <!-- filtro - usuario -->
+        <div class="ui-g-12 pb-0">
+          <label for="fuser" class="steps-st mb-0 mt-1"> Usuario: </label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i class="fa fa-times font-size-16 aico"></i>
+            <p-dropdown
+              name="fuser"
+              selectId="fuser"
+              optionLabel="label"
+              emptyFilterMessage="No hay resultados"
+              [(ngModel)]="filtros.usuarioFiltro"
+              [filter]="usuarios && usuarios.length > 6"
+              [options]="usuarios"
+              [autoDisplayFirst]="false"
+              styleClass="ad-select">
+            </p-dropdown>
+          </div>
+        </div>
+
+        <!-- filtro - fecha soliciud inicial -->
+        <div class="ui-g-12 pb-0">
+          <label for="fechaInit" class="steps-st mb-0 mt-1"> Fecha de solicitud inicial:</label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i class="fa fa-times font-size-16 aico"></i>
+            <p-calendar
+              name="fechaInit"
+              inputId="fechaInit"
+              [(ngModel)]="filtros.fechaSolicitudInicial"
+              [locale]="calendarEspanish"
+              showButtonBar="true"
+              [readonlyInput]="true"
+              inputStyleClass="ad-calendar"
+              dateFormat="dd/MM/yy">
+            </p-calendar>
+          </div>
+        </div>
+
+        <!-- filtro - fecha soliciud final -->
+        <div class="ui-g-12 pb-0">
+          <label for="fechaFin" class="steps-st mb-0 mt-1"> Fecha de solicitud final:</label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i class="fa fa-times font-size-16 aico"></i>
+            <p-calendar
+              name="fechaFin"
+              inputId="fechaFin"
+              [(ngModel)]="filtros.fechaSolicitudFinal"
+              [locale]="calendarEspanish"
+              showButtonBar="true"
+              [readonlyInput]="true"
+              inputStyleClass="ad-calendar"
+              dateFormat="dd/MM/yy">
+            </p-calendar>
+          </div>
+        </div>
+
+        <!-- estado activo -->
+        <div class="ui-g-6 pb-0 border-bottom">
+          <div class="custom-control custom-checkbox">
+            <input
+              id="factivo"
+              type="checkbox"
+              class="custom-control-input" />
+            <label for="factivo" class="custom-control-label font-new-roman font-size-15 clr-activo pl-1 pr-1 font-weight-bold">
+              Activo
+            </label>
+          </div>
+        </div>
+
+        <!-- estado anulado -->
+        <div class="ui-g-6 pb-0 border-bottom">
+          <div class="custom-control custom-checkbox">
+            <input
+              id="fanulado"
+              type="checkbox"
+              class="custom-control-input" />
+            <label for="fanulado" class="custom-control-label font-new-roman font-size-15 clr-anulado pl-1 pr-1 font-weight-bold">
+              Anulado
+            </label>
+          </div>
+        </div>
+
+        <!-- btn agregar filtro -->
+        <div class="ui-g-12 pb-1 text-center">
+          <button type="button" class="btn btn-sm btn-primary w-100">
+            <label class="btn-size-admin"><i class="fa fa-plus"></i> Agregar Filtro</label>
+          </button>
+        </div>
+      </div>
+    </p-panel>
+  </div>
+
+  <!-- tabla consecutivos -->
+  <div class="ui-g-12 ui-md-9 p-0">
+    <p-table
+      id="tbl-conse"
+      [value]="consecutivos"
+      [responsive]="true"
+      [paginator]="true"
+      [rows]="10"
+      rowHover="true">
 
       <ng-template pTemplate="header">
-        <tr class="text-center" >
+        <tr class="text-center">
           <th style="width: 10%">Consecutivo</th>
           <th style="width: 20%">Nomenclatura</th>
           <th>Usuario quién solicitó el consecutivo</th>
-          <th style="width: 18%">Fecha Solicitud</th>
-          <th style="width: 4%">Detalle</th>
+          <th style="width: 20%">Fecha de Solicitud</th>
+          <th style="width: 2%">Detalle</th>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-consecutivo>
         <tr [pSelectableRow]="consecutivo">
           <td class="text-center">
-            <p class="mb-0 font-weight-bold"
-              [ngClass]="{'clr-activo' : consecutivo.idEstado === ID_ACTIVO, 'clr-anulado' : consecutivo.idEstado === ID_ANULADO}">
+            <p class="mb-0 font-weight-bold" [ngClass]="{'clr-activo': consecutivo.idEstado === ID_ACTIVO, 'clr-anulado': consecutivo.idEstado === ID_ANULADO}">
               {{ consecutivo.consecutivo }}
             </p>
           </td>
-          <td class="text-center font-weight-bold">{{ consecutivo.nomenclatura }}</td>
+          <td class="text-center font-weight-bold">
+            {{ consecutivo.nomenclatura }}
+          </td>
           <td>{{ consecutivo.usuario }}</td>
           <td class="text-center">{{ consecutivo.fechaSolicitud }}</td>
           <td class="text-center">
@@ -45,16 +219,6 @@
           </td>
         </tr>
       </ng-template>
-
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td [attr.colspan]="5">
-            <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay campos parametrizados en el sistema</p>
-          </td>
-        </tr>
-      </ng-template>
     </p-table>
   </div>
-
-
 </div>

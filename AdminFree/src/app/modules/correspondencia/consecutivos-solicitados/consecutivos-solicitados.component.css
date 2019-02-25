@@ -1,0 +1,28 @@
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .aico {
+  position: absolute;
+}
+
+.left-addon .aico {
+  left: 93%;
+}
+
+.left-addon input {
+  padding-right: 25px;
+}
+
+.aico {
+  z-index: 1;
+}
+
+.refresh {
+  color: #007ad9;
+  cursor: pointer;
+}
+
+.refresh:hover {
+  color: #0e6ab1;
+}
