@@ -17,8 +17,8 @@ export class FiltroConsecutivosAnioActualDTO {
   /** Busqueda por consecutivos, separadas por comas */
   public consecutivos: string;
 
-  /** Busqueda por usuarios, pueden llegar varios */
-  public idsUsuario: number;
+  /** Busqueda por el identificador del usuario */
+  public idUsuario: number;
 
   /** Busqueda por fecha de solicitud inicial */
   public fechaSolicitudInicial: Date;
@@ -31,5 +31,5 @@ export class FiltroConsecutivosAnioActualDTO {
 
   /** ***********VARIABLES UTILIZADAS EN ANGULAR ************************* */
   /** Es el usuario seleccionado para el filtro de busqueda */
-  public usuarioFiltro: Array<SelectItemDTO>;
+  public usuarioFiltro: SelectItemDTO;
 }

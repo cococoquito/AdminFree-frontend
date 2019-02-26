@@ -1,5 +1,5 @@
 <!-- NO hay consecutivos -->
-<p-panel *ngIf="!(consecutivos && consecutivos.length > 0)" styleClass="steps-pnl pnl-pt">
+<p-panel *ngIf="!(initDTO && initDTO.consecutivos && initDTO.consecutivos.length > 0)" styleClass="steps-pnl pnl-pt">
   <p-header>
     <i class="fa fa-list-ul font-size-16"></i>
     <span> Consecutivos</span>
@@ -13,7 +13,7 @@
 </p-panel>
 
 <!-- HAY consecutivos -->
-<div *ngIf="consecutivos && consecutivos.length > 0" class="ui-g mt-1">
+<div *ngIf="initDTO && initDTO.consecutivos && initDTO.consecutivos.length > 0" class="ui-g mt-1">
 
   <!-- filtro busqueda -->
   <div class="ui-g-12 ui-md-3 p-0 pr-2">
@@ -27,7 +27,7 @@
 
           <!-- btn - filtrar -->
           <div class="ui-g-4 p-0 ">
-            <button type="button" class="btn btn-sm btn-primary">
+            <button (click)="filtrar()" type="button" class="btn btn-sm btn-primary">
               <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
             </button>
           </div>
@@ -96,8 +96,8 @@
               optionLabel="label"
               emptyFilterMessage="No hay resultados"
               [(ngModel)]="filtros.usuarioFiltro"
-              [filter]="usuarios && usuarios.length > 6"
-              [options]="usuarios"
+              [filter]="initDTO && initDTO.usuarios && initDTO.usuarios.length > 6"
+              [options]="initDTO.usuarios"
               [autoDisplayFirst]="false"
               styleClass="ad-select">
             </p-dropdown>
@@ -171,7 +171,7 @@
 
         <!-- btn agregar filtro -->
         <div class="ui-g-12 pb-0 mt-1 text-center">
-          <button type="button" class="btn btn-sm btn-success w-100">
+          <button type="button" class="btn btn-sm btn-primary w-100">
             <label class="btn-size-admin"><i class="fa fa-plus"></i> Agregar Filtro</label>
           </button>
         </div>
@@ -215,6 +215,19 @@
             <button type="button" class="btn btn-sm btn-round-table btn-pup">
               <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
             </button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="5">
+            <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-1">
+              <span class="ui-messages-icon pi pi-info-circle"></span>
+              <span class="ui-messages-detail font-size-14">
+                <strong>No se encontraron consecutivos</strong> que coincidan con los criterios de filtro de búsqueda ingresado
+              </span>
+            </div>
           </td>
         </tr>
       </ng-template>

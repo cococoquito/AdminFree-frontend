@@ -28,21 +28,30 @@
       </div>
     </p-header>
 
-    <!-- Hay nomenclaturas-->
+    <!-- Hay nomenclaturas parametrizadas-->
     <div class="dashboard" *ngIf="state.datosIniciales?.nomenclaturas?.length > 0">
       <div class="ui-g">
-        <div (click)="siguiente(nomenclatura)" *ngFor="let nomenclatura of nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto p-3">
-          <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
-            <div class="cant">Cant. {{nomenclatura.cantConsecutivos | consecutivo: '0000'}}</div>
-            <i (click)="showVerDetalleNomenclatura($event, nomenclatura)" class="fa fa-arrow-circle-up"></i>
-            <div class="nomen"><strong>{{nomenclatura.nomenclatura}}</strong></div>
-            <div class="descrip">{{nomenclatura.descripcion}}</div>
+        <ng-container *ngIf="nomenclaturas && nomenclaturas.length > 0">
+          <div (click)="siguiente(nomenclatura)" *ngFor="let nomenclatura of nomenclaturas" class="ui-g-12 ui-md-12 ui-lg-4 m-auto p-3">
+            <div class="box-main ui-corner-all" [ngClass]="nomenclatura.bgColor">
+              <div class="cant">Cant. {{nomenclatura.cantConsecutivos | consecutivo: '0000'}}</div>
+              <i (click)="showVerDetalleNomenclatura($event, nomenclatura)" class="fa fa-arrow-circle-up"></i>
+              <div class="nomen"><strong>{{nomenclatura.nomenclatura}}</strong></div>
+              <div class="descrip">{{nomenclatura.descripcion}}</div>
+            </div>
           </div>
+        </ng-container>
+
+        <div *ngIf="!(nomenclaturas && nomenclaturas.length > 0)" class="ui-g-12 mr-4 ml-4 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all">
+          <span class="ui-messages-icon pi pi-info-circle"></span>
+          <span class="ui-messages-detail">
+            <strong>No se encontraron nomenclaturas</strong> que coincidan con los criterios de filtro de búsqueda ingresado
+          </span>
         </div>
       </div>
     </div>
 
-    <!-- No Hay nomenclaturas-->
+    <!-- NO Hay nomenclaturas parametrizadas-->
     <div *ngIf="!(state.datosIniciales?.nomenclaturas?.length > 0)" class="mr-4 ml-4 mt-3 mb-3 ui-messages ui-messages-warn ui-corner-all">
       <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
       <span class="ui-messages-detail">
