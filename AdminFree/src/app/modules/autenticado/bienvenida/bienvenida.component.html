@@ -51,7 +51,7 @@
           <td style="width: 35%" class="pl-4">
             <p class="font-weight-bold font-size-15 font-new-roman">{{usuario.nombreCompleto}}</p>
             <p class="font-weight-bold font-size-14 font-new-roman text-secondary">{{usuario.cargo}}</p>
-            <p *ngIf="usuario.idEstado === ID_ACTIVO" class="font-weight-bold font-size-14 font-new-roman clr-user-act">{{usuario.estado}}</p>
+            <p *ngIf="usuario.idEstado === ID_ACTIVO" class="font-weight-bold font-size-14 font-new-roman clr-activo">{{usuario.estado}}</p>
             <p *ngIf="usuario.idEstado === ID_INACTIVO" class="font-weight-bold font-size-14 font-new-roman text-danger">{{usuario.estado}}</p>
           </td>
           <td>
