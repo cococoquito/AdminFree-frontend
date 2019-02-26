@@ -26,8 +26,8 @@ export class FiltroConsecutivosAnioActualDTO {
   /** Busqueda por fecha de solicitud final */
   public fechaSolicitudFinal: Date;
 
-  /** Busqueda por estado del consecutivo, puede llegar varios */
-  public estados: Array<number>;
+  /** Busqueda por estado del consecutivo */
+  public estado: number;
 
   /** ***********VARIABLES UTILIZADAS EN ANGULAR ************************* */
   /** Es el usuario seleccionado para el filtro de busqueda */

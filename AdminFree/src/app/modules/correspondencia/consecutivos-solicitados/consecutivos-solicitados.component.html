@@ -47,6 +47,24 @@
       <!-- filtros -->
       <div class="ui-g pb-1">
 
+        <!-- filtro - consecutivos -->
+        <div class="ui-g-12 pb-0 pt-0">
+          <label for="fconsecutivos" class="steps-st mb-0 mt-1"> Consecutivos: </label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i (click)="filtros.consecutivos=null" class="fa fa-times font-size-16 aico"> </i>
+            <input
+              type="text"
+              id="fconsecutivos"
+              name="fconsecutivos"
+              [(ngModel)]="filtros.consecutivos"
+              maxlength="100"
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+            <div class="focus-border"></div>
+          </div>
+        </div>
+
         <!-- filtro - nomenclatura -->
         <div class="ui-g-12 pb-0">
           <label for="fnomenclatura" class="steps-st mb-0 mt-1"> Nomenclaturas: </label>
@@ -59,24 +77,6 @@
               id="fnomenclatura"
               name="fnomenclatura"
               [(ngModel)]="filtros.nomenclaturas"
-              maxlength="100"
-              class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
-            <div class="focus-border"></div>
-          </div>
-        </div>
-
-        <!-- filtro - consecutivos -->
-        <div class="ui-g-12 pb-0">
-          <label for="fconsecutivos" class="steps-st mb-0 mt-1"> Consecutivos: </label>
-        </div>
-        <div class="ui-g-12 pt-0 pb-0">
-          <div class="inner-addon left-addon">
-            <i (click)="filtros.consecutivos=null" class="fa fa-times font-size-16 aico"> </i>
-            <input
-              type="text"
-              id="fconsecutivos"
-              name="fconsecutivos"
-              [(ngModel)]="filtros.consecutivos"
               maxlength="100"
               class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
             <div class="focus-border"></div>
@@ -144,35 +144,34 @@
           </div>
         </div>
 
-        <!-- estado activo -->
-        <div class="ui-g-6 pb-0 border-bottom">
-          <div class="custom-control custom-checkbox">
-            <input
-              id="factivo"
-              type="checkbox"
-              class="custom-control-input" />
-            <label for="factivo" class="custom-control-label font-new-roman font-size-15 clr-activo pl-1 pr-1 font-weight-bold">
-              Activo
-            </label>
-          </div>
-        </div>
-
-        <!-- estado anulado -->
-        <div class="ui-g-6 pb-0 border-bottom">
-          <div class="custom-control custom-checkbox">
-            <input
-              id="fanulado"
-              type="checkbox"
-              class="custom-control-input" />
-            <label for="fanulado" class="custom-control-label font-new-roman font-size-15 clr-anulado pl-1 pr-1 font-weight-bold">
-              Anulado
-            </label>
+        <!-- estados consecutivo -->
+        <div class="ui-g-12 pb-0 mt-2 border-bottom">
+          <div class="inner-addon left-addon">
+            <i (click)="filtros.estado=null" class="fa fa-times font-size-16 aico mt-1"></i>
+            <div class="ui-g-6 p-0">
+              <p-radioButton
+                label="Activo"
+                name="estado"
+                [(ngModel)]="filtros.estado"
+                [value]="ID_ACTIVO"
+                labelStyleClass="clr-activo font-weight-bold">
+              </p-radioButton>
+            </div>
+            <div class="ui-g-6 p-0">
+              <p-radioButton
+                label="Anulado"
+                name="estado"
+                [(ngModel)]="filtros.estado"
+                [value]="ID_ANULADO"
+                labelStyleClass="clr-anulado font-weight-bold">
+              </p-radioButton>
+            </div>
           </div>
         </div>
 
         <!-- btn agregar filtro -->
-        <div class="ui-g-12 pb-1 text-center">
-          <button type="button" class="btn btn-sm btn-primary w-100">
+        <div class="ui-g-12 pb-0 mt-1 text-center">
+          <button type="button" class="btn btn-sm btn-success w-100">
             <label class="btn-size-admin"><i class="fa fa-plus"></i> Agregar Filtro</label>
           </button>
         </div>

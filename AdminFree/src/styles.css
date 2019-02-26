@@ -743,9 +743,9 @@ body {
 }
 
 .clr-activo {
-  color: #2E7D32;
+  color: #2E7D32 !important;
 }
 
 .clr-anulado {
-  color: #f0a525;
+  color: #e68d49 !important;
 }
