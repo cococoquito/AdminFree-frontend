@@ -28,8 +28,4 @@ export class FiltroConsecutivosAnioActualDTO {
 
   /** Busqueda por estado del consecutivo */
   public estado: number;
-
-  /** ***********VARIABLES UTILIZADAS EN ANGULAR ************************* */
-  /** Es el usuario seleccionado para el filtro de busqueda */
-  public usuarioFiltro: SelectItemDTO;
 }

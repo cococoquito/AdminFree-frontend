@@ -6,11 +6,12 @@ import { ShellState } from '../../../states/shell/shell.state';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { FiltroConsecutivosAnioActualDTO } from './../../../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
+import { InitConsecutivosAnioActualDTO } from '../../../dtos/correspondencia/init-consecutivos-anio-actual.dto';
+import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
-import { InitConsecutivosAnioActualDTO } from '../../../dtos/correspondencia/init-consecutivos-anio-actual.dto';
 
 /**
  * Componente para la visualizacion de los consecutivos de
@@ -36,6 +37,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /** Se utiliza para encapsular los filtros busqueda ingresados */
   public filtros: FiltroConsecutivosAnioActualDTO;
+
+  /** Es el usuario seleccionado para el filtro de busqueda */
+  public usuarioFiltro: SelectItemDTO;
 
   /** labels para el componente de los calendars */
   public calendarEspanish: any;
@@ -112,11 +116,13 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    */
   public filtrar(): void {
 
-    if (this.filtros.usuarioFiltro && this.filtros.usuarioFiltro.id) {
-      this.filtros.idUsuario = this.filtros.usuarioFiltro.id;
+    // se configura el usuario seleccionado para el filtro busqueda
+    this.filtros.idUsuario = null;
+    if (this.usuarioFiltro && this.usuarioFiltro.id) {
+      this.filtros.idUsuario = this.usuarioFiltro.id;
     }
 
-
+    // se procede a consultar los consecutivos de acuerdo al filtro
     this.correspondenciaService.getConsecutivosAnioActual(this.filtros).subscribe(
       data => {
         this.consecutivos = data;

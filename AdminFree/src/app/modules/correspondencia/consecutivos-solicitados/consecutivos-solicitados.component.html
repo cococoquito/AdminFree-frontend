@@ -89,13 +89,13 @@
         </div>
         <div class="ui-g-12 pt-0 pb-0">
           <div class="inner-addon left-addon">
-            <i (click)="filtros.usuarioFiltro=null" class="fa fa-times font-size-16 aico"></i>
+            <i (click)="usuarioFiltro=null" class="fa fa-times font-size-16 aico"></i>
             <p-dropdown
               name="fuser"
               selectId="fuser"
               optionLabel="label"
               emptyFilterMessage="No hay resultados"
-              [(ngModel)]="filtros.usuarioFiltro"
+              [(ngModel)]="usuarioFiltro"
               [filter]="initDTO && initDTO.usuarios && initDTO.usuarios.length > 6"
               [options]="initDTO.usuarios"
               [autoDisplayFirst]="false"
