@@ -43,6 +43,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   /** Se utiliza para identificar si hay algun campo ingresado */
   public filtrosClone: FiltroConsecutivosAnioActualDTO;
 
+  /** Identifica si hay filtro aplicado por el usuario */
+  public hayFiltroAplicado: boolean;
+
   /** Es el usuario seleccionado para el filtro de busqueda */
   public usuarioFiltro: SelectItemDTO;
 
@@ -137,6 +140,17 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
           // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
           this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
+
+          // se configura la bandera que indica que hay filtro aplicado
+          this.hayFiltroAplicado = false;
+          if (this.filtrosClone.consecutivos ||
+              this.filtrosClone.nomenclaturas ||
+              this.filtrosClone.idUsuario ||
+              this.filtrosClone.fechaSolicitudInicial ||
+              this.filtrosClone.fechaSolicitudFinal ||
+              this.filtrosClone.estado) {
+              this.hayFiltroAplicado = true;
+          }
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
