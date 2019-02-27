@@ -105,6 +105,18 @@ export class CommonComponent {
   }
 
   /**
+   * Metodo remueve los espacios en blanco del comienzo y final
+   * para los componentes de filtro de busqueda
+   */
+  protected setTrimFilter(valor: string): string {
+    if (valor) {
+      valor = valor.trim();
+      valor = (valor.length === 0) ? null : valor;
+    }
+    return valor;
+  }
+
+  /**
    * Metodo que permite obtener el business mensaje que corresponsa al codigo
    */
   private getBusinessMessage(codBusinessMsj: string): string {

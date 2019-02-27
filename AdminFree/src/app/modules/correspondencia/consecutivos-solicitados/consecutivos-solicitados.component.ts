@@ -38,6 +38,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   /** Se utiliza para encapsular los filtros busqueda ingresados */
   public filtros: FiltroConsecutivosAnioActualDTO;
 
+  /** Se utiliza para identificar si hay algun campo ingresado */
+  public filtrosClone: FiltroConsecutivosAnioActualDTO;
+
   /** Es el usuario seleccionado para el filtro de busqueda */
   public usuarioFiltro: SelectItemDTO;
 
@@ -96,6 +99,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     this.filtros = new FiltroConsecutivosAnioActualDTO();
     this.filtros.idCliente = this.clienteCurrent.id;
 
+    // se debe inicializar el clone con los mismos datos del filtro
+    this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
+
     // se utiliza para los componentes calendar
     this.calendarEspanish = LabelsConstant.calendarEspanish;
 
@@ -116,20 +122,55 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    */
   public filtrar(): void {
 
-    // se configura el usuario seleccionado para el filtro busqueda
-    this.filtros.idUsuario = null;
-    if (this.usuarioFiltro && this.usuarioFiltro.id) {
-      this.filtros.idUsuario = this.usuarioFiltro.id;
-    }
+    // se procede a organizar los criterios de busqueda ingresado
+    this.orgarnizarFiltro();
 
-    // se procede a consultar los consecutivos de acuerdo al filtro
-    this.correspondenciaService.getConsecutivosAnioActual(this.filtros).subscribe(
-      data => {
-        this.consecutivos = data;
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+    // solo se invoca si hay algun criterio de busqueda ingresado
+    if (this.isNuevoFilter()) {
+      this.correspondenciaService.getConsecutivosAnioActual(this.filtros).subscribe(
+        data => {
+
+          // se configura los nuevos consecutivos
+          this.consecutivos = data;
+
+          // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
+          this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+  }
+
+  /**
+   * Metodo que permite organizar los criterios de busqueda
+   */
+  private orgarnizarFiltro(): void {
+
+    // se configura el usuario seleccionado para el filtro busqueda
+    this.filtros.idUsuario = this.usuarioFiltro ? this.usuarioFiltro.id : null;
+
+    // se eliminan los espacios para los campos tipo input
+    this.filtros.consecutivos = this.setTrimFilter(this.filtros.consecutivos);
+    this.filtros.nomenclaturas = this.setTrimFilter(this.filtros.nomenclaturas);
+  }
+
+  /**
+   * Metodo que valida si ingresaron un nuevo filtro busqueda
+   */
+  private isNuevoFilter(): boolean {
+
+    // bandera que identifica si hay un nuevo criterio de busqueda
+    let nuevoFilter = false;
+
+    // se valida cada criterio con el clone del filtro
+    if (this.filtrosClone.consecutivos !== this.filtros.consecutivos ||
+        this.filtrosClone.nomenclaturas !== this.filtros.nomenclaturas ||
+        this.filtrosClone.idUsuario !== this.filtros.idUsuario ||
+        this.filtrosClone.estado !== this.filtros.estado) {
+        nuevoFilter = true;
+    }
+    return nuevoFilter;
   }
 }

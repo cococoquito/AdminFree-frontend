@@ -28,4 +28,16 @@ export class FiltroConsecutivosAnioActualDTO {
 
   /** Busqueda por estado del consecutivo */
   public estado: number;
+
+  /**
+   * se debe inicializar con null para eliminar la opcion undefined
+   */
+  constructor() {
+    this.nomenclaturas = null;
+    this.consecutivos = null;
+    this.idUsuario = null;
+    this.fechaSolicitudInicial = null;
+    this.fechaSolicitudFinal = null;
+    this.estado = null;
+  }
 }
