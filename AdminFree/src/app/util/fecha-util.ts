@@ -37,4 +37,30 @@ export class FechaUtil {
       return -1;
     }
   }
+
+  /**
+   * Valida si la fecha clone con la fecha ingresada son iguales
+   * permitiendo saber si hay una fecha nueva para los criterios busqueda
+   *
+   * true = si ambos criterios son iguales
+   * false = si ambos criterios son diferentes
+   */
+  public static iqualsDateFilter(clone: Date, filter: Date): boolean {
+
+    // se inicializa la bandera como si no fueran iguales
+    let fechasIgual = false;
+
+    // si ambos no son nulo o indefinido se procede a validar su valor
+    if (clone && filter) {
+
+      // se procede a validar el valor del clone con el filtro ingresado
+      if (this.compareDate(new Date(clone), new Date(filter)) === 0) {
+        fechasIgual = true;
+      }
+    } else if (!clone && !filter) {
+      // los dos valores son iguales si ambos son nulos o indefinido
+      fechasIgual = true;
+    }
+    return fechasIgual;
+  }
 }

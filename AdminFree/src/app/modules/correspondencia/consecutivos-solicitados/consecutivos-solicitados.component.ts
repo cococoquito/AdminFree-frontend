@@ -10,8 +10,10 @@ import { InitConsecutivosAnioActualDTO } from '../../../dtos/correspondencia/ini
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
+import { FechaUtil } from '../../../util/fecha-util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
+import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 
 /**
  * Componente para la visualizacion de los consecutivos de
@@ -161,16 +163,25 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    */
   private isNuevoFilter(): boolean {
 
-    // bandera que identifica si hay un nuevo criterio de busqueda
-    let nuevoFilter = false;
+    // La fecha inicial debe ser mayor que la fecha final solicitud
+    const fechaSolicitudInicial = this.filtros.fechaSolicitudInicial;
+    const fechaSolicitudFinal = this.filtros.fechaSolicitudFinal;
+    if (fechaSolicitudInicial && fechaSolicitudFinal) {
+        if (FechaUtil.compareDate(fechaSolicitudInicial, fechaSolicitudFinal) === 1) {
+          this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.FECHA_INICIAL_MAYOR));
+          return false;
+        }
+    }
 
     // se valida cada criterio con el clone del filtro
     if (this.filtrosClone.consecutivos !== this.filtros.consecutivos ||
         this.filtrosClone.nomenclaturas !== this.filtros.nomenclaturas ||
         this.filtrosClone.idUsuario !== this.filtros.idUsuario ||
-        this.filtrosClone.estado !== this.filtros.estado) {
-        nuevoFilter = true;
+        this.filtrosClone.estado !== this.filtros.estado ||
+        !FechaUtil.iqualsDateFilter(this.filtrosClone.fechaSolicitudInicial, fechaSolicitudInicial) ||
+        !FechaUtil.iqualsDateFilter(this.filtrosClone.fechaSolicitudFinal, fechaSolicitudFinal)) {
+        return true;
     }
-    return nuevoFilter;
+    return false;
   }
 }

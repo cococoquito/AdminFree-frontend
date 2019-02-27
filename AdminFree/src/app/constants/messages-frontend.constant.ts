@@ -135,4 +135,7 @@ export class MsjFrontConstant {
   /** Mensaje de confirmacion para la eliminacion de un documento */
   static readonly DOCUMENTO_ELIMINAR_CONFIRMACION: string =
   '¿Está seguro de eliminar el siguiente documento? <div class="text-center mt-2"><strong>?1</strong></div>';
+
+  /** Mensaje cuando la fecha inicial solictud es mayor que la fecha final */
+  static readonly FECHA_INICIAL_MAYOR: string = 'La fecha inicial debe ser menor que la fecha final de solicitud';
 }
