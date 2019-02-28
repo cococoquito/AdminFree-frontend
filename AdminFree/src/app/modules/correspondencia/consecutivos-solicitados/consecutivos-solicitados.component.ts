@@ -56,6 +56,10 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   public ID_ACTIVO = EstadoConstant.ID_ACTIVO;
   public ID_ANULADO = EstadoConstant.ID_ANULADO;
 
+  /** Se utiliza para habilitar el anio actual de los filtros tipo calendar */
+  public minDate: Date;
+  public maxDate: Date;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -113,8 +117,18 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     // se consulta los datos iniciales para este modulo
     this.correspondenciaService.getInitConsecutivosAnioActual(this.clienteCurrent.id).subscribe(
       data => {
+        // se configura como dato global
         this.initDTO = data;
+
+        // se configura los consecutivos iniciales
         this.consecutivos = this.initDTO.consecutivos;
+
+        // se configura la fechas minima y maxima para los filtro busqueda
+        if (this.consecutivos && this.consecutivos.length > 0 && this.initDTO.fechaActual) {
+          this.initDTO.fechaActual = new Date(this.initDTO.fechaActual);
+          this.minDate = new Date(this.initDTO.fechaActual.getFullYear(), 0, 1);
+          this.maxDate = new Date(this.initDTO.fechaActual.getFullYear(), 11, 31);
+        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));

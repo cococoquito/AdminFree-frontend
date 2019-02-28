@@ -14,4 +14,10 @@ export class InitConsecutivosAnioActualDTO {
 
   /** Lista de items para mostrarlo en el componente de filtros por usuarios */
   public usuarios: Array<SelectItemDTO>;
+
+  /**
+   * Es la fecha actual del sistema, no se puede tomar directamente desde angular
+   * ya que se tomaria la fecha de la maquina del cliente
+   */
+  public fechaActual: Date;
 }
