@@ -56,9 +56,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   public ID_ACTIVO = EstadoConstant.ID_ACTIVO;
   public ID_ANULADO = EstadoConstant.ID_ANULADO;
 
-  /** Se utiliza para habilitar el anio actual de los filtros tipo calendar */
-  public minDate: Date;
-  public maxDate: Date;
+  /** Los filtros fecha de solicitud se debe mostrar solamente los meses anio actual */
+  public minDateSolicitudFilter: Date;
+  public maxDateSolicitudFilter: Date;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -123,11 +123,11 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
         // se configura los consecutivos iniciales
         this.consecutivos = this.initDTO.consecutivos;
 
-        // se configura la fechas minima y maxima para los filtro busqueda
+        // se configura la fechas de solicitud minima y maxima
         if (this.consecutivos && this.consecutivos.length > 0 && this.initDTO.fechaActual) {
           this.initDTO.fechaActual = new Date(this.initDTO.fechaActual);
-          this.minDate = new Date(this.initDTO.fechaActual.getFullYear(), 0, 1);
-          this.maxDate = new Date(this.initDTO.fechaActual.getFullYear(), 11, 31);
+          this.minDateSolicitudFilter = new Date(this.initDTO.fechaActual.getFullYear(), 0, 1);
+          this.maxDateSolicitudFilter = new Date(this.initDTO.fechaActual.getFullYear(), 11, 31);
         }
       },
       error => {
