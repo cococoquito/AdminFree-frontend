@@ -109,10 +109,8 @@ export class CommonComponent {
    * para los componentes de filtro de busqueda
    */
   protected setTrimFilter(valor: string): string {
-    if (valor) {
-      valor = valor.trim();
-      valor = (valor.length === 0) ? null : valor;
-    }
+    valor = (valor) ? valor.trim() : null;
+    valor = (valor !== null && valor.length === 0) ? null : valor;
     return valor;
   }
 
