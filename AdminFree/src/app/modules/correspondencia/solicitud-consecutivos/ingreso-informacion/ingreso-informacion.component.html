@@ -93,6 +93,9 @@
                 [disabled]="campoModel.isFechaActualNoEditable"
                 [minDate]="campoModel.minDate"
                 [maxDate]="campoModel.maxDate"
+                [monthNavigator]="true"
+                [yearNavigator]="true"
+                yearRange="2010:2025"
                 [inputStyleClass]="campoModel.isValido ? 'ad-calendar bg-clr' : 'ad-calendar-required bg-clr'"
                 dateFormat="dd/MM/yy">
               </p-calendar>

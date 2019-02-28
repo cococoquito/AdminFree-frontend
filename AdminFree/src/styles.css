@@ -160,6 +160,34 @@ body {
   padding: .1em !important;
 }
 
+.ui-datepicker select.ui-datepicker-month {
+  border-width: 0 !important;
+  padding-bottom: 0px !important;
+  padding-top: .25em !important;
+  font-size: 1em !important;
+  outline: medium none !important;
+  appearance: none !important;
+  background-color: #455A64 !important;
+  color: #fff !important;
+  padding-right: 15px !important;
+  padding-left: 8px !important;
+  cursor: pointer !important;
+}
+
+.ui-datepicker select.ui-datepicker-year {
+  border-width: 0 !important;
+  padding-bottom: 0px !important;
+  padding-top: .25em !important;
+  font-size: 1em !important;
+  outline: medium none !important;
+  appearance: none !important;
+  background-color: #455A64 !important;
+  color: #fff !important;
+  padding-right: 15px !important;
+  padding-left: 8px !important;
+  cursor: pointer !important;
+}
+
 /* Estilos para los fileupload */
 .ui-fileupload-buttonbar .ui-button {
   background-color: #28a745 !important;
