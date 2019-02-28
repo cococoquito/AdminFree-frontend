@@ -783,9 +783,9 @@ body {
 }
 
 .btn-add {
-  background-color: #607D8B !important;
+  background-color: #455A64 !important;
 }
 
 .btn-add:hover {
-  background-color: #455A64 !important;
+  background-color: rgb(50, 64, 71) !important;
 }
