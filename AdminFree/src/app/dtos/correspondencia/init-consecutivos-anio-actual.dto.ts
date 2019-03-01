@@ -1,5 +1,5 @@
-import { ConsecutivoDTO } from './consecutivo.dto';
 import { SelectItemDTO } from '../transversal/select-item.dto';
+import { PaginadorResponseDTO } from '../transversal/paginador-response.dto';
 
 /**
  * Clase que contiene los datos iniciales al momento de entrar al submodulo de
@@ -9,8 +9,8 @@ import { SelectItemDTO } from '../transversal/select-item.dto';
  */
 export class InitConsecutivosAnioActualDTO {
 
-  /** Lista de consecutivos que se muestra al momento de entrar al submodulo */
-  public consecutivos: Array<ConsecutivoDTO>;
+  /** Es el reponse inicial de los consecutivos paginados **/
+  public consecutivos: PaginadorResponseDTO;
 
   /** Lista de items para mostrarlo en el componente de filtros por usuarios */
   public usuarios: Array<SelectItemDTO>;

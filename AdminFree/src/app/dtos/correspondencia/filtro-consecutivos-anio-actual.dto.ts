@@ -1,4 +1,4 @@
-import { SelectItemDTO } from './../transversal/select-item.dto';
+import { PaginadorDTO } from '../transversal/paginador-dto';
 
 /**
  * DTO que contiene los atributos para el filtro de busqueda de los consecutivos
@@ -7,6 +7,9 @@ import { SelectItemDTO } from './../transversal/select-item.dto';
  * @author Carlos Andres Diaz
  */
 export class FiltroConsecutivosAnioActualDTO {
+
+  /** paginador para la consulta los consecutivos **/
+  public paginador: PaginadorDTO;
 
   /** Es el cliente autenticado o el cliente asociado al user autenticado */
   public idCliente: number;
