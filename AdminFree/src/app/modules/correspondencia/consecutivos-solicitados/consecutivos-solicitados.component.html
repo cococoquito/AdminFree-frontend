@@ -1,5 +1,5 @@
 <!-- NO hay consecutivos -->
-<p-panel *ngIf="!(initDTO && initDTO.hayConsecutivosInicial)" styleClass="steps-pnl pnl-pt">
+<p-panel *ngIf="!consecutivosPaginados" styleClass="steps-pnl pnl-pt">
   <p-header>
     <i class="fa fa-list-ul font-size-16"></i>
     <span> Consecutivos</span>
@@ -13,7 +13,7 @@
 </p-panel>
 
 <!-- HAY consecutivos -->
-<div *ngIf="initDTO && initDTO.hayConsecutivosInicial" class="ui-g mt-1">
+<div *ngIf="consecutivosPaginados" class="ui-g mt-1">
 
   <!-- filtro busqueda -->
   <div class="ui-g-12 ui-md-3 p-0 pr-2">

@@ -20,7 +20,4 @@ export class InitConsecutivosAnioActualDTO {
    * ya que se tomaria la fecha de la maquina del cliente
    */
   public fechaActual: Date;
-
-  /** Solamente se utiliza desde angular, identifica si hay consecutivos inciales */
-  public hayConsecutivosInicial: boolean;
 }

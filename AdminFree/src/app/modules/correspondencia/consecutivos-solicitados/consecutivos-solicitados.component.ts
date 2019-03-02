@@ -115,9 +115,6 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
           this.initDTO.consecutivos.cantidadTotal &&
           this.initDTO.consecutivos.cantidadTotal > 0) {
 
-          // se indica que si hay consecutivos inicial
-          this.initDTO.hayConsecutivosInicial = true;
-
           // se configura el paginador
           this.consecutivosPaginados = new PaginadorModel(this);
           this.consecutivosPaginados.configurarRegistros(this.initDTO.consecutivos);
