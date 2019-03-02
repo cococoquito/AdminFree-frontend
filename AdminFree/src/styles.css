@@ -44,11 +44,11 @@ body {
 }
 
 /* Estilos para dropdown */
-.ui-dropdown-trigger-icon {
+.down-ad .ui-dropdown-trigger-icon {
   display: none !important
 }
 
-.ui-dropdown label.ui-dropdown-label {
+.down-ad .ui-dropdown-label {
   padding: 0px !important;
   font-family: Times, Times New Roman, serif !important;
   font-size: 14px !important
@@ -59,8 +59,14 @@ body {
   font-size: 16px !important
 }
 
-.ui-dropdown {
-  display: block !important;
+.ui-paginator .ui-dropdown .ui-dropdown-label {
+  color: #333333 !important;
+  background-color: #f5a96d !important;
+}
+
+.ui-paginator .ui-dropdown-trigger {
+  color: #333333 !important;
+  background-color: #f5a96d !important;
 }
 
 .bg-clr .ui-inputtext {
@@ -271,6 +277,7 @@ body {
   -moz-border-radius: 0px !important;
   -webkit-border-radius: 0px !important;
   width: 100% !important;
+  vertical-align: bottom !important;
 }
 
 .ad-select-required {
@@ -281,6 +288,7 @@ body {
   -webkit-border-radius: 0px !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
   width: 100% !important;
+  vertical-align: bottom !important;
 }
 
 .ad-calendar {

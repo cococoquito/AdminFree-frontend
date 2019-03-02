@@ -107,7 +107,7 @@
               [filter]="initDTO && initDTO.usuarios && initDTO.usuarios.length > 6"
               [options]="initDTO.usuarios"
               [autoDisplayFirst]="false"
-              styleClass="ad-select">
+              styleClass="ad-select down-ad">
             </p-dropdown>
           </div>
         </div>
@@ -204,13 +204,13 @@
     <p-table
       id="tblcc"
       #tblcc
-      [responsive]="true"
       [value]="consecutivosPaginados.registros"
-      [totalRecords]="consecutivosPaginados.datos.cantidadTotal"
       (onPage)="consecutivosPaginados.scrollerListener($event)"
+      [totalRecords]="consecutivosPaginados.datos.cantidadTotal"
       [alwaysShowPaginator]="consecutivosPaginados.datos.cantidadTotal > consecutivosPaginados.rowsDefault"
       [rowsPerPageOptions]="consecutivosPaginados.rowsPerPageOptions"
       [rows]="consecutivosPaginados.rowsDefault"
+      [responsive]="true"
       [paginator]="true"
       [lazy]="true"
       rowHover="true">
