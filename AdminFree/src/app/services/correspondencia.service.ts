@@ -11,7 +11,7 @@ import { DocumentoDTO } from '../dtos/correspondencia/documento.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 import { FiltroConsecutivosAnioActualDTO } from '../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
 import { InitConsecutivosAnioActualDTO } from './../dtos/correspondencia/init-consecutivos-anio-actual.dto';
-import { ConsecutivoDTO } from '../dtos/correspondencia/consecutivo.dto';
+import { PaginadorResponseDTO } from '../dtos/transversal/paginador-response.dto';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia
@@ -122,10 +122,10 @@ export class CorrespondenciaService {
 	 * filtro de busqueda
 	 *
 	 * @param filtro, DTO que contiene los valores del filtro de busqueda
-	 * @return lista de consecutivos de acuerdo al filtro de busqueda
+	 * @return DTO con la lista de consecutivos paginados y su cantidad total
 	 */
-  public getConsecutivosAnioActual(filtro: FiltroConsecutivosAnioActualDTO): Observable<Array<ConsecutivoDTO>> {
-    return this.http.post<Array<ConsecutivoDTO>>(
+  public getConsecutivosAnioActual(filtro: FiltroConsecutivosAnioActualDTO): Observable<PaginadorResponseDTO> {
+    return this.http.post<PaginadorResponseDTO>(
       CorrespondenciaAPIConstant.GET_CONSECUTIVOS_ACTUAL,
       filtro
     );

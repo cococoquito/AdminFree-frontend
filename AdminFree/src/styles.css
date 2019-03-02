@@ -355,7 +355,7 @@ body {
   color: white !important;
 }
 
-#tbl-conse .ui-table .ui-table-thead > tr > th {
+#tblcc .ui-table .ui-table-thead > tr > th {
   font-family: Times, Times New Roman, serif !important;
   font-size: 15px !important;
 }

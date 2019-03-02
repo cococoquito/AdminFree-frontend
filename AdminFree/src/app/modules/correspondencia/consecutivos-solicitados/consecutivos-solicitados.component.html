@@ -1,5 +1,5 @@
 <!-- NO hay consecutivos -->
-<p-panel *ngIf="!(initDTO && initDTO.consecutivos && initDTO.consecutivos.length > 0)" styleClass="steps-pnl pnl-pt">
+<p-panel *ngIf="!(initDTO && initDTO.hayConsecutivosInicial)" styleClass="steps-pnl pnl-pt">
   <p-header>
     <i class="fa fa-list-ul font-size-16"></i>
     <span> Consecutivos</span>
@@ -13,7 +13,7 @@
 </p-panel>
 
 <!-- HAY consecutivos -->
-<div *ngIf="initDTO && initDTO.consecutivos && initDTO.consecutivos.length > 0" class="ui-g mt-1">
+<div *ngIf="initDTO && initDTO.hayConsecutivosInicial" class="ui-g mt-1">
 
   <!-- filtro busqueda -->
   <div class="ui-g-12 ui-md-3 p-0 pr-2">
@@ -27,7 +27,7 @@
 
           <!-- btn - filtrar -->
           <div class="ui-g-5 p-0">
-            <button (click)="filtrar()" type="button" class="btn btn-sm btn-primary">
+            <button (click)="consecutivosPaginados.filtrar(tblcc)" type="button" class="btn btn-sm btn-primary">
               <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
               <i *ngIf="hayFiltroAplicado" class="fa fa-asterisk font-size-9 pl-1"></i>
             </button>
@@ -36,7 +36,7 @@
           <!-- btns - refresh- cant -->
           <div class="ui-g-6 p-0">
             <p class="font-size-14 font-new-roman mt-2">
-              Cant: <strong>{{ 1000000 | number }}</strong>
+              Cant: <strong>{{ consecutivosPaginados.datos?.cantidadTotal | number }}</strong>
             </p>
           </div>
           <div class="ui-g-1 p-0 mt-2 text-left">
@@ -202,11 +202,17 @@
   <!-- tabla consecutivos -->
   <div class="ui-g-12 ui-md-9 p-0">
     <p-table
-      id="tbl-conse"
-      [value]="consecutivos"
+      id="tblcc"
+      #tblcc
       [responsive]="true"
+      [value]="consecutivosPaginados.registros"
+      [totalRecords]="consecutivosPaginados.datos.cantidadTotal"
+      (onPage)="consecutivosPaginados.scrollerListener($event)"
+      [alwaysShowPaginator]="consecutivosPaginados.datos.cantidadTotal > consecutivosPaginados.rowsDefault"
+      [rowsPerPageOptions]="consecutivosPaginados.rowsPerPageOptions"
+      [rows]="consecutivosPaginados.rowsDefault"
       [paginator]="true"
-      [rows]="10"
+      [lazy]="true"
       rowHover="true">
 
       <ng-template pTemplate="header">

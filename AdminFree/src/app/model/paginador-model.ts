@@ -21,7 +21,7 @@ export class PaginadorModel {
   public listener: any;
 
   /** Es el nro de filas por paginas por default*/
-  public rowsDefault: string;
+  public rowsDefault: number;
 
   /** son las opciones para el tamanio de cada pagina (10,20,30,40,50)*/
   public rowsPerPageOptions: Array<number>;
@@ -39,7 +39,7 @@ export class PaginadorModel {
     this.initPaginadorDTO();
 
     // se configura la cantidad de filas por default
-    this.rowsDefault = this.datos.rowsPage;
+    this.rowsDefault = +PaginadorConstant.ROWS_PAGE_DEFAULT;
 
     // se configura las opciones que tiene el paginador
     this.rowsPerPageOptions = PaginadorConstant.ROWS_PER_PAGE_OPTIONS;
@@ -76,7 +76,7 @@ export class PaginadorModel {
       this.datos.skip = first;
 
       // se invoca el metodo paginar del listener
-      this.listener.paginar(this);
+      this.listener.paginar();
     }
   }
 
@@ -102,7 +102,7 @@ export class PaginadorModel {
   public filtrar(table: any): void {
 
     // dependiendo de lo que retorne el listener se reinicia el paginador
-    if (this.listener.filtrar(this)) {
+    if (this.listener.filtrar()) {
 
       // se reinicia p-table
       table.reset();
