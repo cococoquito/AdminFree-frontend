@@ -61,12 +61,16 @@ body {
 
 .ui-paginator .ui-dropdown .ui-dropdown-label {
   color: #333333 !important;
-  background-color: #f5a96d !important;
+  background-color: #f4f4f4 !important;
 }
 
 .ui-paginator .ui-dropdown-trigger {
   color: #333333 !important;
-  background-color: #f5a96d !important;
+  background-color: #f4f4f4 !important;
+}
+
+.ui-paginator .ui-dropdown {
+  height: 2.5em !important;
 }
 
 .bg-clr .ui-inputtext {
