@@ -5,7 +5,6 @@ import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { FiltroConsecutivosAnioActualDTO } from './../../../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
-import { InitConsecutivosAnioActualDTO } from '../../../dtos/correspondencia/init-consecutivos-anio-actual.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
@@ -28,20 +27,20 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
 })
 export class ConsecutivosSolicitadosComponent extends CommonComponent implements OnInit, OnDestroy {
 
-  /** contiene los datos iniciales para este modulo */
-  public initDTO: InitConsecutivosAnioActualDTO;
-
   /** cliente autenticado o es el cliente asociado al usuario autenticado */
   private clienteCurrent: ClienteDTO;
 
   /** Se utiliza para encapsular los filtros busqueda ingresados */
   public filtros: FiltroConsecutivosAnioActualDTO;
 
-  /** Se utiliza para identificar si hay algun campo ingresado */
+  /** Son los filtros validos enviados al servicio http */
   public filtrosClone: FiltroConsecutivosAnioActualDTO;
 
   /** Identifica si hay filtro aplicado por el usuario */
   public hayFiltroAplicado: boolean;
+
+  /** Lista de items para mostrarlo en el componente de filtros por usuarios */
+  public usuarios: Array<SelectItemDTO>;
 
   /** Es el usuario seleccionado para el filtro de busqueda */
   public usuarioFiltro: SelectItemDTO;
@@ -107,23 +106,20 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     // se consulta los datos iniciales para este modulo
     this.correspondenciaService.getInitConsecutivosAnioActual(this.clienteCurrent.id).subscribe(
       data => {
-        // se configura como dato global
-        this.initDTO = data;
-
         // se verifica si hay consecutivos inicial
-        if (this.initDTO.consecutivos &&
-          this.initDTO.consecutivos.cantidadTotal &&
-          this.initDTO.consecutivos.cantidadTotal > 0) {
+        if (data.consecutivos && data.consecutivos.cantidadTotal && data.consecutivos.cantidadTotal > 0) {
 
           // se configura el paginador
           this.consecutivosPaginados = new PaginadorModel(this);
-          this.consecutivosPaginados.configurarRegistros(this.initDTO.consecutivos);
-          this.initDTO.consecutivos = null;
+          this.consecutivosPaginados.configurarRegistros(data.consecutivos);
 
           // se configura la fechas min-max para los filtros
-          this.initDTO.fechaActual = new Date(this.initDTO.fechaActual);
-          this.minDateSolicitudFilter = new Date(this.initDTO.fechaActual.getFullYear(), 0, 1);
-          this.maxDateSolicitudFilter = new Date(this.initDTO.fechaActual.getFullYear(), 11, 31);
+          data.fechaActual = new Date(data.fechaActual);
+          this.minDateSolicitudFilter = new Date(data.fechaActual.getFullYear(), 0, 1);
+          this.maxDateSolicitudFilter = new Date(data.fechaActual.getFullYear(), 11, 31);
+
+          // se configura los usuarios para la lista desplegable
+          this.usuarios = data.usuarios;
 
           // se utiliza para el idioma de los calendar
           this.calendarEspanish = LabelsConstant.calendarEspanish;
@@ -134,6 +130,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
           // se debe inicializar el clone con los mismos datos del filtro
           this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
+
+          // limpieza de memoria
+          data = null;
         }
       },
       error => {
@@ -151,10 +150,10 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     this.messageService.clear();
 
     // se configura el paginador dado que puede cambiar el skip o rowsperpage
-    this.filtros.paginador = this.consecutivosPaginados.datos;
+    this.filtrosClone.paginador = this.consecutivosPaginados.datos;
 
     // se procede a consultar los consecutivos
-    this.correspondenciaService.getConsecutivosAnioActual(this.filtros).subscribe(
+    this.correspondenciaService.getConsecutivosAnioActual(this.filtrosClone).subscribe(
       data => {
         this.consecutivosPaginados.configurarRegistros(data);
       },

@@ -104,8 +104,8 @@
               optionLabel="label"
               emptyFilterMessage="No hay resultados"
               [(ngModel)]="usuarioFiltro"
-              [filter]="initDTO && initDTO.usuarios && initDTO.usuarios.length > 6"
-              [options]="initDTO.usuarios"
+              [filter]="usuarios && usuarios.length > 6"
+              [options]="usuarios"
               [autoDisplayFirst]="false"
               styleClass="ad-select down-ad">
             </p-dropdown>
