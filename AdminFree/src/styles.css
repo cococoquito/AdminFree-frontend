@@ -368,7 +368,7 @@ body {
   color: white !important;
 }
 
-#tblcc .ui-table .ui-table-thead > tr > th {
+#tblcc .ui-table .ui-table-thead>tr>th {
   font-family: Times, Times New Roman, serif !important;
   font-size: 15px !important;
 }
@@ -801,4 +801,8 @@ body {
 
 .btn-add:hover {
   background-color: rgb(50, 64, 71) !important;
+}
+
+.i-slight {
+  color: #808991 !important;
 }

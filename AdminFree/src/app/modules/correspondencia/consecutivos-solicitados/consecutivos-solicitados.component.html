@@ -56,7 +56,7 @@
           <div class="inner-addon left-addon">
             <i (click)="filtros.consecutivos=null"
               class="fa fa-times font-size-16 aico"
-              [ngClass]="filtrosClone.consecutivos ? 'text-dark' : 'text-secondary'">
+              [ngClass]="filtrosClone.consecutivos ? 'text-dark' : 'i-slight'">
             </i>
             <input
               type="text"
@@ -77,7 +77,7 @@
           <div class="inner-addon left-addon">
             <i (click)="filtros.nomenclaturas=null"
               class="fa fa-times font-size-16 aico"
-              [ngClass]="filtrosClone.nomenclaturas ? 'text-dark' : 'text-secondary'"> </i>
+              [ngClass]="filtrosClone.nomenclaturas ? 'text-dark' : 'i-slight'"> </i>
             <input
               type="text"
               id="fnomenclatura"
@@ -97,7 +97,7 @@
           <div class="inner-addon left-addon">
             <i (click)="usuarioFiltro=null"
               class="fa fa-times font-size-16 aico"
-              [ngClass]="filtrosClone.idUsuario ? 'text-dark' : 'text-secondary'"></i>
+              [ngClass]="filtrosClone.idUsuario ? 'text-dark' : 'i-slight'"></i>
             <p-dropdown
               name="fuser"
               selectId="fuser"
@@ -120,7 +120,7 @@
           <div class="inner-addon left-addon">
             <i (click)="filtros.fechaSolicitudInicial=null"
               class="fa fa-times font-size-16 aico"
-              [ngClass]="filtrosClone.fechaSolicitudInicial ? 'text-dark' : 'text-secondary'"></i>
+              [ngClass]="filtrosClone.fechaSolicitudInicial ? 'text-dark' : 'i-slight'"></i>
             <p-calendar
               name="fechaInit"
               inputId="fechaInit"
@@ -145,7 +145,7 @@
           <div class="inner-addon left-addon">
             <i (click)="filtros.fechaSolicitudFinal=null"
               class="fa fa-times font-size-16 aico"
-              [ngClass]="filtrosClone.fechaSolicitudFinal ? 'text-dark' : 'text-secondary'"></i>
+              [ngClass]="filtrosClone.fechaSolicitudFinal ? 'text-dark' : 'i-slight'"></i>
             <p-calendar
               name="fechaFin"
               inputId="fechaFin"
@@ -167,7 +167,7 @@
           <div class="inner-addon left-addon">
             <i (click)="filtros.estado=null"
               class="fa fa-times font-size-16 aico mt-1"
-              [ngClass]="filtrosClone.estado ? 'text-dark' : 'text-secondary'"></i>
+              [ngClass]="filtrosClone.estado ? 'text-dark' : 'i-slight'"></i>
             <div class="ui-g-6 p-0">
               <p-radioButton
                 label="Activo"
