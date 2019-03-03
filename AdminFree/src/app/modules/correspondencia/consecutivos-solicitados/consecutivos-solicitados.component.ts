@@ -147,28 +147,16 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    */
   public paginar(): void {
 
-    // se configura el paginador para el filtro de busqueda
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se configura el paginador dado que puede cambiar el skip o rowsperpage
     this.filtros.paginador = this.consecutivosPaginados.datos;
 
     // se procede a consultar los consecutivos
     this.correspondenciaService.getConsecutivosAnioActual(this.filtros).subscribe(
       data => {
-        // se configura los nuevos consecutivos
         this.consecutivosPaginados.configurarRegistros(data);
-
-        // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
-        this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
-
-        // se configura la bandera que indica que hay filtro aplicado
-        this.hayFiltroAplicado = false;
-        if (this.filtrosClone.consecutivos ||
-            this.filtrosClone.nomenclaturas ||
-            this.filtrosClone.idUsuario ||
-            this.filtrosClone.fechaSolicitudInicial ||
-            this.filtrosClone.fechaSolicitudFinal ||
-            this.filtrosClone.estado) {
-            this.hayFiltroAplicado = true;
-        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -177,10 +165,56 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   }
 
   /**
-   * Metodo que soporta el evento click del boton Filtrar, donde
-   * es invocado desde el modelo del paginador
+   * Metodo que soporta el evento click del boton filtrar
+   *
+   * @param table, Se utiliza para reset el paginador debido
+   * que hay nuevo filtro de busqueda y nuevos registros
    */
-  public filtrar(): boolean {
+  public filtrar(table: any): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se procede a organizar los criterios de busqueda ingresado
+    this.orgarnizarFiltro();
+
+    // solo se invoca si hay algun criterio de busqueda ingresado
+    if (this.isNuevoFilter()) {
+
+      // se hace el backup de los datos del paginador esto por si hay errores
+      this.filtros.paginador = this.consecutivosPaginados.filtroBefore();
+
+      // se procede a consultar los consecutivos
+      this.correspondenciaService.getConsecutivosAnioActual(this.filtros).subscribe(
+        data => {
+          // se configura los nuevos consecutivos
+          this.consecutivosPaginados.filtroExitoso(table, data);
+
+          // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
+          this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
+
+          // se configura la bandera que indica que hay filtro aplicado
+          this.hayFiltroAplicado = false;
+          if (this.filtrosClone.consecutivos ||
+            this.filtrosClone.nomenclaturas ||
+            this.filtrosClone.idUsuario ||
+            this.filtrosClone.fechaSolicitudInicial ||
+            this.filtrosClone.fechaSolicitudFinal ||
+            this.filtrosClone.estado) {
+            this.hayFiltroAplicado = true;
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+  }
+
+  /**
+   * Metodo que permite organizar los criterios de busqueda
+   */
+  private orgarnizarFiltro(): void {
 
     // se configura el usuario seleccionado para el filtro busqueda
     this.filtros.idUsuario = this.usuarioFiltro ? this.usuarioFiltro.id : null;
@@ -188,9 +222,6 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     // se eliminan los espacios para los campos tipo input
     this.filtros.consecutivos = this.setTrimFilter(this.filtros.consecutivos);
     this.filtros.nomenclaturas = this.setTrimFilter(this.filtros.nomenclaturas);
-
-    // solo se invoca si hay algun criterio de busqueda ingresado
-    return this.isNuevoFilter();
   }
 
   /**

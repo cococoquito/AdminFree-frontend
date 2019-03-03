@@ -17,7 +17,7 @@ export class PaginadorModel {
   /** son los datos del paginador*/
   public datos: PaginadorDTO;
 
-  /** Es la instancia del componente que tiene el metodo filtrar para ser invocado */
+  /** Es la instancia del componente que tiene el metodo paginar para ser invocado */
   public listener: any;
 
   /** Es el nro de filas por paginas por default*/
@@ -36,7 +36,7 @@ export class PaginadorModel {
     this.listener = listener;
 
     // se crea el DTO donde contiene los atributos del paginador
-    this.initPaginadorDTO();
+    this.datos = this.initPaginadorDTO();
 
     // se configura la cantidad de filas por default
     this.rowsDefault = +PaginadorConstant.ROWS_PAGE_DEFAULT;
@@ -46,28 +46,19 @@ export class PaginadorModel {
   }
 
   /**
-   * Escuchador del scroller de la tabla asociada al paginador
+   * Este metodo es invocado cuando cambian la pagina o el select que
+   * contiene la lista de opciones de cantidad de filas por pagina
    */
   public scrollerListener(event): void {
 
-    // si el scrollerListener es invocado del this el event llega nulo
-    let first;
-    let rows;
-    if (event) {
-      first = event.first + '';
-      rows = event.rows + '';
-    } else {
-      first = this.datos.skip;
-      rows = this.datos.rowsPage;
-    }
+    // se obtiene skip y filas por paginas del paginador
+    const first = event.first + '';
+    const rows = event.rows + '';
 
-    // se hace llamado filtro de busqueda cuando pase alguno de los siguientes criterios
+    // se hace el llamado al paginar cuando pase alguno de los siguientes criterios
     // 1- cuando el usuario no seleccione la misma pagina
     // 2- cuando el usuario cambio el valor filas por paginas
-    // 3- cuando la cantidadTotal es null por algun reinicio del filtro de busqueda
-    if (this.datos.skip !== first ||
-        this.datos.rowsPage !== rows ||
-        this.datos.cantidadTotal === null) {
+    if (this.datos.skip !== first || this.datos.rowsPage !== rows) {
 
       // se configura el numero por paginas dado que puede llegar valores diferentes
       this.datos.rowsPage = rows;
@@ -85,56 +76,52 @@ export class PaginadorModel {
    */
   public configurarRegistros(response: PaginadorResponseDTO): void {
 
-    // se configura el total de registros solamente para la 1 invocacion
+    // si la cantidad de registro es nulo es porque se reinicio el paginador
+    // se procede a configurar la cantidad total registros y sus registros
+    this.registros = response.registros;
     if (!this.datos.cantidadTotal) {
         this.datos.cantidadTotal = response.cantidadTotal;
     }
-
-    // se configura los registros consultados
-    this.registros = response.registros;
   }
 
   /**
-   * Metodo que soporta el evento click del boton filtrar
-   *
-   * @param table, tabla asociada al paginador
+   * Metodo que se debe invocar antes de filtrar,
+   * permite crear el backup de los datos del paginador
    */
-  public filtrar(table: any): void {
-
-    // dependiendo de lo que retorne el listener se reinicia el paginador
-    if (this.listener.filtrar()) {
-
-      // se reinicia p-table
-      table.reset();
-
-      // se reinicia los datos del paginador
-      this.reiniciarDatos();
-    }
+  public filtroBefore(): PaginadorDTO {
+    const datosPaginador = this.initPaginadorDTO();
+    datosPaginador.rowsPage = this.datos.rowsPage;
+    return datosPaginador;
   }
 
   /**
-   * Metodo que permite reiniciar los datos del paginador
+   * Metodo que se debe invocar cuando el filtro de busqueda
+   * no presento ningun error, configurando los datos del
+   * response y reiniciando la tabla
    */
-  private reiniciarDatos(): void {
+  public filtroExitoso(table: any, response: PaginadorResponseDTO): void {
 
-    // se reinicia los datos del paginador, esto con el fin para que sea de nuevo calculado
+    // se reinicia p-table
+    table.reset();
+
+    // se reinicia los datos del paginador, esto con el fin que se vea reflejado
+    // en la vista los nuevos registros de acuerdo al nuevo filtro busqueda
     this.datos.skip = PaginadorConstant.SKIP_DEFAULT;
     this.datos.cantidadTotal = null;
-
-    // se limpia los registros consultado con anterioridad
     this.registros = null;
 
-    // se ejecuta el paginador
-    this.scrollerListener(null);
+    // se configura la cantidad total con sus registros
+    this.configurarRegistros(response);
   }
 
   /**
-   * Metodo que permite crear el DTO que contiene los datos del paginador
+   * Metodo que permite crear una instancia de los datos del paginador
    */
-  private initPaginadorDTO(): void {
-    this.datos = new PaginadorDTO();
-    this.datos.rowsPage = PaginadorConstant.ROWS_PAGE_DEFAULT;
-    this.datos.skip = PaginadorConstant.SKIP_DEFAULT;
-    this.datos.cantidadTotal = null;
+  private initPaginadorDTO(): PaginadorDTO {
+    const datosPaginador = new PaginadorDTO();
+    datosPaginador.rowsPage = PaginadorConstant.ROWS_PAGE_DEFAULT;
+    datosPaginador.skip = PaginadorConstant.SKIP_DEFAULT;
+    datosPaginador.cantidadTotal = null;
+    return datosPaginador;
   }
 }
