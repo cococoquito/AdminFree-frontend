@@ -142,6 +142,31 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   }
 
   /**
+   * Metodo que soporta el evento click del boton refrescar
+   *
+   * @param table, Se utiliza para reset el paginador debido
+   * que puede salir nuevos consecutivos
+   */
+  public refresh(table: any): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se hace el backup de los datos del paginador esto por si hay errores
+    this.filtrosClone.paginador = this.consecutivosPaginados.filtroBefore();
+
+    // se procede a consultar los consecutivos
+    this.correspondenciaService.getConsecutivosAnioActual(this.filtrosClone).subscribe(
+      data => {
+        this.consecutivosPaginados.filtroExitoso(table, data);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
    * Metodo que es invocado por el paginador de la tabla
    */
   public paginar(): void {
