@@ -14,6 +14,9 @@ export class ConsecutivoDTO {
   /** Nombre de la nomenclatura */
   public nomenclatura: string;
 
+  /** Es la descripcion de la nomenclatura */
+  public nomenclaturaDesc: string;
+
   /** nombre del usuario quien solicito el consecutivo */
   public usuario: string;
 

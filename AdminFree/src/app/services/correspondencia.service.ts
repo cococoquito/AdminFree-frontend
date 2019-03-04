@@ -12,6 +12,7 @@ import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-
 import { FiltroConsecutivosAnioActualDTO } from '../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
 import { InitConsecutivosAnioActualDTO } from './../dtos/correspondencia/init-consecutivos-anio-actual.dto';
 import { PaginadorResponseDTO } from '../dtos/transversal/paginador-response.dto';
+import { ConsecutivoDetalleDTO } from '../dtos/correspondencia/consecutivo-detalle.dto';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia
@@ -142,6 +143,19 @@ export class CorrespondenciaService {
   public getInitConsecutivosAnioActual(idCliente: number): Observable<InitConsecutivosAnioActualDTO> {
     return this.http.get<InitConsecutivosAnioActualDTO>(
       CorrespondenciaAPIConstant.GET_INIT_CONSECUTIVOS_ACTUAL + idCliente
+    );
+  }
+
+  /**
+	 * Servicio que permite consultar el detalle de un consecutivo
+	 *
+	 * @param filtro, DTO que contiene los identificadores del cliente y del consecutivo
+	 * @return DTO con los datos del consecutivo
+	 */
+  public getDetalleConsecutivo(filtro: ConsecutivoDetalleDTO): Observable<ConsecutivoDetalleDTO> {
+    return this.http.post<ConsecutivoDetalleDTO>(
+      CorrespondenciaAPIConstant.GET_DETALLE_CONSECUTIVO,
+      filtro
     );
   }
 }

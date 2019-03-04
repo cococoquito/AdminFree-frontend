@@ -18,6 +18,9 @@ export class CampoEntradaValueDTO  {
   /** Es el nombre del campo, se utiliza para las validaciones */
   public nombreCampo: string;
 
+  /** Es la descripcion del campo */
+  public descripcionCampo: string;
+
   /** Identificador de la siguiente tabla NOMENCLATURAS_CAMPOS_ENTRADA.ID_NOME_CAMPO */
   public idCampoNomenclatura: number;
 

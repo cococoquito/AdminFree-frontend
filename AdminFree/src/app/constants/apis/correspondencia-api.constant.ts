@@ -64,4 +64,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getinitconsecutivosactual?idCliente=';
+
+  /** URL del recurso que permite consultar el detalle de un consecutivo */
+  static readonly GET_DETALLE_CONSECUTIVO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getdetalleconsecutivo';
 }
