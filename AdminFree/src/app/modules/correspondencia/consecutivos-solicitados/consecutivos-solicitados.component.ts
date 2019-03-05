@@ -271,7 +271,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   }
 
   /**
-   * Metodo que permite soportar el evento click del boton regresar
+   * Metodo que permite soportar el evento click del boton regresar del panel detalle
    */
   public regresar(): void {
     this.consecutivoDetalle = null;

@@ -17,6 +17,7 @@
 
   <!-- Panel filtro - lista consecutivos -->
   <div *ngIf="!consecutivoDetalle" class="ui-g mt-1">
+
     <!-- filtro busqueda -->
     <div class="ui-g-12 ui-md-3 p-0 pr-2">
 
@@ -272,10 +273,10 @@
         <span> Detalle del Consecutivo</span>
       </p-header>
 
-      <!-- Consecutivo -->
+      <!-- Informacion general consecutivo -->
       <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
         <p-header>
-          <span class="steps-circle">1</span> <span> Consecutivo </span>
+          <span class="steps-circle">1</span> <span> Información General del Consecutivo </span>
         </p-header>
 
         <div class="ui-g">
@@ -327,11 +328,34 @@
         </div>
       </p-panel>
 
-      <!-- Informacion del consecutivo -->
+      <!-- Informacion consecutivo -->
       <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
         <p-header>
           <span class="steps-circle">2</span> <span> Información del Consecutivo </span>
         </p-header>
+
+        <!-- hay informacion -->
+        <ng-container *ngIf="consecutivoDetalle.valores && consecutivoDetalle.valores.length > 0">
+          <div class="ui-g pb-0">
+            <div *ngFor="let valor of consecutivoDetalle.valores"
+              [ngClass]="consecutivoDetalle.valores.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="p-0 ">
+              <div class="ui-g-12 pb-0 pt-0 border-bottom">
+                <p class="steps-st">{{ valor.nombreCampo }}:</p>
+                <p class="invisible st" *ngIf="!(valor.value)">.</p>
+                <p class="st" *ngIf="valor.value">{{ valor.value }}</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- No hay informacion -->
+        <div *ngIf="!(consecutivoDetalle.valores && consecutivoDetalle.valores.length > 0)"
+          class="mt-2 mb-2 ml-2 mr-2 ui-messages ui-messages-info ui-corner-all text-center">
+          <span class="ui-messages-icon pi pi-info-circle font-size-26"></span>
+          <span class="ui-messages-detail font-weight-bold font-size-14 mb-0">
+            <strong>No hay información asociado al consecutivo</strong>
+          </span>
+        </div>
       </p-panel>
 
       <!-- Documentos del consecutivo -->
@@ -344,7 +368,8 @@
           id="tblcc"
           [value]="consecutivoDetalle.documentos"
           [responsive]="true"
-          rowHover="true">
+          rowHover="true"
+          *ngIf="consecutivoDetalle.documentos && consecutivoDetalle.documentos.length > 0">
 
           <ng-template pTemplate="header">
             <tr class="text-center">
@@ -369,20 +394,15 @@
               </td>
             </tr>
           </ng-template>
-
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td [attr.colspan]="4">
-                <div class="mt-1 mb-1 ui-messages ui-messages-info ui-corner-all text-center">
-                  <span class="ui-messages-icon pi pi-info-circle font-size-26"></span>
-                  <span class="ui-messages-detail font-weight-bold font-size-14 mb-0">
-                    <strong>No hay documentos asociados al consecutivo</strong>
-                  </span>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
         </p-table>
+
+        <div *ngIf="!(consecutivoDetalle.documentos && consecutivoDetalle.documentos.length > 0)"
+          class="mt-2 mb-2 ml-2 mr-2 ui-messages ui-messages-info ui-corner-all text-center">
+          <span class="ui-messages-icon pi pi-info-circle font-size-26"></span>
+          <span class="ui-messages-detail font-weight-bold font-size-14 mb-0">
+            <strong>No hay documentos asociados al consecutivo</strong>
+          </span>
+        </div>
       </p-panel>
     </p-panel>
 
