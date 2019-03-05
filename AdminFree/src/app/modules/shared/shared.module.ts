@@ -12,6 +12,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { SharedCommonModule } from './shared-common.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
+import { DatePipe } from '@angular/common';
 import { InputswitchComponent } from './inputswitch/inputswitch.component';
 import { DetalleCampoComponent } from './detalle-campo/detalle-campo.component';
 import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
@@ -60,6 +61,9 @@ import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nom
     InputswitchComponent,
     DetalleCampoComponent,
     DetalleNomenclaturaComponent
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class SharedModule {}

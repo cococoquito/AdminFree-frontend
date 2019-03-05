@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from './../../../../services/correspondencia.service';
 import { SolicitarConsecutivoState } from '../../../../states/correspondencia/solicitar-consecutivo.state';
@@ -9,6 +10,7 @@ import { WelcomeDTO } from '../../../../dtos/seguridad/welcome.dto';
 import { LocalStoreUtil } from '../../../../util/local-store.util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { TipoEventoConstant } from '../../../../constants/tipo-evento.constant';
+import { LabelsConstant } from '../../../../constants/labels.constant';
 
 /**
  * Componente de confirmacion para las solicitudes de
@@ -31,11 +33,14 @@ export class ConfirmacionComponent extends CommonComponent {
    *
    * @param correspondenciaService, contiene los servicios
    * del modulo de correspondencia
+   *
+   * @param datePipe, Se utiliza para dar formato a los campos tipo fecha
    */
   constructor(
     public state: SolicitarConsecutivoState,
     protected messageService: MessageService,
-    private correspondenciaService: CorrespondenciaService) {
+    private correspondenciaService: CorrespondenciaService,
+    private datePipe: DatePipe) {
     super();
   }
 
@@ -111,7 +116,7 @@ export class ConfirmacionComponent extends CommonComponent {
               break;
             }
             case this.state.ID_CAMPO_FECHA: {
-              solicitudValue.value = new Date(campoIngreso.valor).toLocaleDateString();
+              solicitudValue.value = this.datePipe.transform(new Date(campoIngreso.valor), LabelsConstant.FECHA_FORMATO);
               break;
             }
           }
