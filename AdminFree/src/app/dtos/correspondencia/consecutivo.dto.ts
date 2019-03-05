@@ -25,4 +25,7 @@ export class ConsecutivoDTO {
 
   /** Estado en la que se encuentra el consecutivo */
   public idEstado: number;
+
+  /** Nombre del Estado en la que se encuentra el consecutivo */
+  public estado: string;
 }

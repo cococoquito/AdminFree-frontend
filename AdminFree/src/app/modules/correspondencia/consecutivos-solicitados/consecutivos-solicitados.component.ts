@@ -6,6 +6,9 @@ import { ShellState } from '../../../states/shell/shell.state';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { FiltroConsecutivosAnioActualDTO } from './../../../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
+import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
+import { ConsecutivoDetalleDTO } from '../../../dtos/correspondencia/consecutivo-detalle.dto';
+import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
@@ -58,6 +61,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /** Paginador model para la tabla de consecutivos solicitados */
   public consecutivosPaginados: PaginadorModel;
+
+  /** Es el detalle del consecutivo a visualizar */
+  public consecutivoDetalle: ConsecutivoDetalleDTO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -233,6 +239,42 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
         }
       );
     }
+  }
+
+  /**
+   * Metodo que permite soportar el evento de ver detalle del consecutivo
+   */
+  public verDetalleConsecutivo(consecutivo: ConsecutivoDTO): void {
+
+    // se construye el filtro de busqueda
+    const filtroDetalle = new ConsecutivoDetalleDTO();
+    filtroDetalle.idCliente = this.clienteCurrent.id;
+    filtroDetalle.idConsecutivo = consecutivo.idConsecutivo;
+
+    // se procede a consultar el detalle del consecutivo
+    this.correspondenciaService.getDetalleConsecutivo(filtroDetalle).subscribe(
+      data => {
+        this.consecutivoDetalle = data;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que permite descargar el documento seleccionado del detalle consecutivo
+   * @param datosDocumento, son los datos del documento seleccionado a descargar
+   */
+  public descargarDocumento(datosDocumento: DocumentoDTO): void {
+    console.log(datosDocumento.nombreDocumento);
+  }
+
+  /**
+   * Metodo que permite soportar el evento click del boton regresar
+   */
+  public regresar(): void {
+    this.consecutivoDetalle = null;
   }
 
   /**
