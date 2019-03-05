@@ -640,6 +640,10 @@ body {
   width: 25% !important;
 }
 
+.w-35-px {
+  width: 35px !important
+}
+
 .sub-title-page {
   font-family: Times, Times New Roman, serif !important;
   font-size: 1rem;
