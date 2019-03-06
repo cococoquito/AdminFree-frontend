@@ -33,32 +33,30 @@
         <ng-container *ngFor="let campoModel of state.camposInformacionValues">
 
           <!-- pnl informacion -->
-          <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="p-0">
-            <div class="ui-g-12 pb-0 border-bottom">
+          <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="pb-0 border-bottom">
 
-              <!-- label -->
-              <label class="steps-st mb-0 mt-0"> {{campoModel.campo.nombre}}: </label>
+            <!-- label -->
+            <label class="steps-st mb-0 mt-0"> {{campoModel.campo.nombre}}: </label>
 
-              <!-- valor -->
-              <p class="invisible st" *ngIf="!(campoModel.valor) && campoModel.campo.tipoCampo !== state.ID_CASILLA_VERIFICACION; else showValue">.</p>
-              <ng-template #showValue>
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_TEXTO">
-                  <p class="st">{{ campoModel.valor }}</p>
-                </ng-container>
+            <!-- valor -->
+            <p class="invisible st" *ngIf="!(campoModel.valor) && campoModel.campo.tipoCampo !== state.ID_CASILLA_VERIFICACION; else showValue">.</p>
+            <ng-template #showValue>
+              <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_TEXTO">
+                <p class="st">{{ campoModel.valor }}</p>
+              </ng-container>
 
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_LISTA_DESPLEGABLE">
-                  <p class="st">{{ campoModel.valor.valor }}</p>
-                </ng-container>
+              <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_LISTA_DESPLEGABLE">
+                <p class="st">{{ campoModel.valor.valor }}</p>
+              </ng-container>
 
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_FECHA">
-                  <p class="st">{{campoModel.valor | date:'dd/MMMM/yyyy'}}</p>
-                </ng-container>
+              <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CAMPO_FECHA">
+                <p class="st">{{campoModel.valor | date:'dd/MMMM/yyyy'}}</p>
+              </ng-container>
 
-                <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION">
-                  <p class="st">{{campoModel.valor ? 'SI' : 'NO'}}</p>
-                </ng-container>
-              </ng-template>
-            </div>
+              <ng-container *ngIf="campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION">
+                <p class="st">{{campoModel.valor ? 'SI' : 'NO'}}</p>
+              </ng-container>
+            </ng-template>
           </div>
         </ng-container>
       </div>

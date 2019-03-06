@@ -286,7 +286,7 @@
           <!-- Consecutivo -->
           <div class="ui-g-6 border-bottom pb-0 pt-0">
             <p class="steps-st">Consecutivo:</p>
-            <p class="font-weight-bold" [ngClass]="{'clr-activo': consecutivoDetalle.consecutivo.idEstado === ID_ACTIVO, 'clr-anulado': consecutivoDetalle.consecutivo.idEstado === ID_ANULADO}">
+            <p class="font-weight-bold font-size-18" [ngClass]="{'clr-activo': consecutivoDetalle.consecutivo.idEstado === ID_ACTIVO, 'clr-anulado': consecutivoDetalle.consecutivo.idEstado === ID_ANULADO}">
               {{ consecutivoDetalle.consecutivo.consecutivo }}
             </p>
           </div>
@@ -317,7 +317,7 @@
           <!-- estado -->
           <div class="ui-g-6 pb-0 pt-0">
             <p class="steps-st">Estado:</p>
-            <p class="font-weight-bold font-new-roman" [ngClass]="{'clr-activo': consecutivoDetalle.consecutivo.idEstado === ID_ACTIVO, 'clr-anulado': consecutivoDetalle.consecutivo.idEstado === ID_ANULADO}">
+            <p class="font-weight-bold font-new-roman font-size-16" [ngClass]="{'clr-activo': consecutivoDetalle.consecutivo.idEstado === ID_ACTIVO, 'clr-anulado': consecutivoDetalle.consecutivo.idEstado === ID_ANULADO}">
               {{consecutivoDetalle.consecutivo.estado}}
             </p>
           </div>
@@ -339,13 +339,13 @@
         <!-- hay informacion -->
         <ng-container *ngIf="consecutivoDetalle.valores && consecutivoDetalle.valores.length > 0">
           <div class="ui-g pb-0">
-            <div *ngFor="let valor of consecutivoDetalle.valores"
-              [ngClass]="consecutivoDetalle.valores.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="p-0 ">
-              <div class="ui-g-12 pb-0 pt-0 border-bottom">
-                <p class="steps-st">{{ valor.nombreCampo }}:</p>
-                <p class="invisible st" *ngIf="!(valor.value)">.</p>
-                <p class="st" *ngIf="valor.value">{{ valor.value }}</p>
-              </div>
+            <div *ngFor="let valor of consecutivoDetalle.valores" [ngClass]="consecutivoDetalle.valores.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="pb-0 pt-0 border-bottom">
+              <p class="steps-st">
+                <i class="fa fa-question-circle font-size-15" [pTooltip]="valor.descripcionCampo" tooltipPosition="left"></i>
+                {{ valor.nombreCampo }}:
+              </p>
+              <p class="invisible st" *ngIf="!(valor.value)">.</p>
+              <p class="st ml-3" *ngIf="valor.value">{{ valor.value }}</p>
             </div>
           </div>
         </ng-container>
