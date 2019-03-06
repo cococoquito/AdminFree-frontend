@@ -46,6 +46,12 @@ export class CorrespondenciaAPIConstant {
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'cargardocumento';
 
+  /** URL del recurso para el descargue de documento de correspondencia */
+  static readonly URL_DESCARGAR_DOCUMENTO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'descargardocumento';
+
   /** URL del recurso para eliminar un documento asociado a un consecutivo */
   static readonly URL_ELIMINAR_DOCUMENTO: string =
     AppDomainConstant.ADMINFREE +

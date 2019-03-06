@@ -106,6 +106,19 @@ export class CorrespondenciaService {
   }
 
   /**
+	 * Servicio que permite descargar un documento de correspondencia
+	 *
+	 * @param datos, Contiene los datos del documento a descargar
+	 * @return Documento digital almacenado en AWS-S3
+	 */
+  public descargarDocumento(datosDocumento: DocumentoDTO): Observable<any> {
+    return this.http.post<any>(
+      CorrespondenciaAPIConstant.URL_DESCARGAR_DOCUMENTO,
+      datosDocumento
+    );
+  }
+
+  /**
 	 * Servicio para eliminar un documento asociado al consecutivo
    *
    * @param datos, Contiene los datos del documento eliminar
