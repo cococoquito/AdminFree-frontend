@@ -373,6 +373,15 @@ body {
   font-size: 15px !important;
 }
 
+#tbldoc .ui-table-tbody>tr>td {
+  padding: 0.371em 0.857em !important;
+}
+
+#tbldoc .ui-table .ui-table-thead>tr>th {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+}
+
 /* circulo redondo paginador */
 .ui-paginator-page.ui-state-active {
   background-color: #f5a96d !important;

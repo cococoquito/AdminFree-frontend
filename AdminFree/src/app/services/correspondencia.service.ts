@@ -106,16 +106,16 @@ export class CorrespondenciaService {
   }
 
   /**
-	 * Servicio que permite descargar un documento de correspondencia
+	 * Servicio que soporta el proceso de negocio para la descarga
+	 * de un documento de correspondencia en AWS-S3
 	 *
-	 * @param datos, Contiene los datos del documento a descargar
-	 * @return Documento digital almacenado en AWS-S3
+	 * @param idCliente, se utiliza para identificar el cliente que tiene el documento
+	 * @param idDocumento, se utiliza para consultar los datos del documento
+	 * @return Documento descargado con todos sus atributos
 	 */
-  public descargarDocumento(datosDocumento: DocumentoDTO): Observable<any> {
-    return this.http.post<any>(
-      CorrespondenciaAPIConstant.URL_DESCARGAR_DOCUMENTO,
-      datosDocumento
-    );
+  public descargarDocumento(idCliente: string, idDocumento: string): Observable<any> {
+    const url = `${CorrespondenciaAPIConstant.URL_DESCARGAR_DOCUMENTO}?idCliente=${idCliente}&idDocumento=${idDocumento}`;
+    return this.http.get(url, { responseType: 'blob' });
   }
 
   /**

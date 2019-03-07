@@ -16,6 +16,7 @@ import { FechaUtil } from '../../../util/fecha-util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { saveAs as importedSaveAs } from 'file-saver';
 
 /**
  * Componente para la visualizacion de los consecutivos de
@@ -264,10 +265,24 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /**
    * Metodo que permite descargar el documento seleccionado del detalle consecutivo
+   *
    * @param datosDocumento, son los datos del documento seleccionado a descargar
    */
   public descargarDocumento(datosDocumento: DocumentoDTO): void {
-    console.log(datosDocumento.nombreDocumento);
+
+    // son los identificadores necesarios para la descarga
+    const idCliente = this.clienteCurrent.id + '';
+    const idDocumento = datosDocumento.id + '';
+
+    // se procede a descargar el documento
+    this.correspondenciaService.descargarDocumento(idCliente, idDocumento).subscribe(
+      data => {
+        importedSaveAs(data, datosDocumento.nombreDocumento);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**
