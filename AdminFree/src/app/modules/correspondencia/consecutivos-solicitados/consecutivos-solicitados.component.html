@@ -377,7 +377,8 @@
             <tr class="text-center">
               <th>Nombre del Documento</th>
               <th style="width: 10%">Tipo</th>
-              <th style="width: 25%">Tamaño</th>
+              <th style="width: 20%">Tamaño</th>
+              <th style="width: 15%">Fecha Cargue</th>
               <th style="width: 4%">Descargar</th>
             </tr>
           </ng-template>
@@ -389,6 +390,7 @@
               <td>
                 {{ documento.sizeDocumento | number }} <strong>bytes</strong>
               </td>
+              <td class="text-center">{{ documento.fechaCargue }}</td>
               <td class="text-center">
                 <span (click)="descargarDocumento(documento)" class="circle-download">
                   <i class="pi pi-cloud-download font-size-28"></i>

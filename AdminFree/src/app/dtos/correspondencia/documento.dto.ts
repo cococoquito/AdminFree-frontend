@@ -22,5 +22,5 @@ export class DocumentoDTO {
   public sizeDocumento: string;
 
   /** Fecha en la que se realizo el cargue del documento */
-  public fechaCargue: Date;
+  public fechaCargue: string;
 }
