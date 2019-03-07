@@ -116,7 +116,7 @@ export class ConfirmacionComponent extends CommonComponent {
               break;
             }
             case this.state.ID_CAMPO_FECHA: {
-              solicitudValue.value = this.datePipe.transform(new Date(campoIngreso.valor), LabelsConstant.FECHA_FORMATO);
+              solicitudValue.value = this.datePipe.transform(new Date(campoIngreso.valor), LabelsConstant.FECHA_FORMATO_MYSQL);
               break;
             }
           }

@@ -128,8 +128,8 @@ export class LabelsConstant {
   public static readonly ENTRADA_INFORMACION: string = 'Entrada de Información';
   public static readonly CONSECUTIVO: string = 'Consecutivo';
 
-  /** Formato de fecha a presentar en los label de las paginas */
-  public static readonly FECHA_FORMATO: string = 'dd/MMMM/yyyy';
+  /** Formato de fecha como lo trabaja MYSQL */
+  public static readonly FECHA_FORMATO_MYSQL: string = 'yyyy-MM-dd';
 
   /** labels para el componente de los calendars */
   public static readonly calendarEspanish: any = {
