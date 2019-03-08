@@ -13,6 +13,7 @@ import { FiltroConsecutivosAnioActualDTO } from '../dtos/correspondencia/filtro-
 import { InitConsecutivosAnioActualDTO } from './../dtos/correspondencia/init-consecutivos-anio-actual.dto';
 import { PaginadorResponseDTO } from '../dtos/transversal/paginador-response.dto';
 import { ConsecutivoDetalleDTO } from '../dtos/correspondencia/consecutivo-detalle.dto';
+import { CampoFiltroDTO } from '../dtos/correspondencia/campo-filtro.dto';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia
@@ -169,6 +170,18 @@ export class CorrespondenciaService {
     return this.http.post<ConsecutivoDetalleDTO>(
       CorrespondenciaAPIConstant.GET_DETALLE_CONSECUTIVO,
       filtro
+    );
+  }
+
+  /**
+	 * Servicio que permite obtener los campos para los filtros de busqueda
+	 *
+	 * @param idCliente, identificador del cliente que tiene los campos
+	 * @return Lista de campos con sus atributos configurados
+	 */
+  public getCamposFiltro(idCliente: string): Observable<Array<CampoFiltroDTO>> {
+    return this.http.get<Array<CampoFiltroDTO>>(
+      CorrespondenciaAPIConstant.GET_CAMPOS_FILTRO + idCliente
     );
   }
 }

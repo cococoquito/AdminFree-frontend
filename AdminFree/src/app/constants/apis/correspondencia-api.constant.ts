@@ -76,4 +76,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getdetalleconsecutivo';
+
+  /** URL del recurso que permite obtener los campos para los filtros de busqueda */
+  static readonly GET_CAMPOS_FILTRO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getcamposfiltro?idCliente=';
 }
