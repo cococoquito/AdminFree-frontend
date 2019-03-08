@@ -9,6 +9,7 @@ import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { ConsecutivoDetalleDTO } from '../../../dtos/correspondencia/consecutivo-detalle.dto';
 import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
+import { CampoFiltroDTO } from '../../../dtos/correspondencia/campo-filtro.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
@@ -65,6 +66,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /** Es el detalle del consecutivo a visualizar */
   public consecutivoDetalle: ConsecutivoDetalleDTO;
+
+  /** Son los campos filtro para las busquedas avanzada */
+  public camposFiltro: Array<CampoFiltroDTO>;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -247,6 +251,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    */
   public verDetalleConsecutivo(consecutivo: ConsecutivoDTO): void {
 
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
     // se construye el filtro de busqueda
     const filtroDetalle = new ConsecutivoDetalleDTO();
     filtroDetalle.idCliente = this.clienteCurrent.id;
@@ -264,11 +271,21 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   }
 
   /**
+   * Metodo que permite soportar el evento click del boton regresar del panel detalle
+   */
+  public cerrarDetalleConsecutivo(): void {
+    this.consecutivoDetalle = null;
+  }
+
+  /**
    * Metodo que permite descargar el documento seleccionado del detalle consecutivo
    *
    * @param datosDocumento, son los datos del documento seleccionado a descargar
    */
   public descargarDocumento(datosDocumento: DocumentoDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
 
     // son los identificadores necesarios para la descarga
     const idCliente = this.clienteCurrent.id + '';
@@ -286,10 +303,26 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   }
 
   /**
-   * Metodo que permite soportar el evento click del boton regresar del panel detalle
+   * Metodo que permite obtener los campos para los filtros de busqueda
    */
-  public regresar(): void {
-    this.consecutivoDetalle = null;
+  public showModalAgregarFiltro(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // solamente se consultan los campos si no fueron consultados con anterioridad
+    if (!this.camposFiltro) {
+
+      // se invoca el servicio para consultar los campos filtro
+      this.correspondenciaService.getCamposFiltro(this.clienteCurrent.id).subscribe(
+        data => {
+          this.camposFiltro = data;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
   }
 
   /**

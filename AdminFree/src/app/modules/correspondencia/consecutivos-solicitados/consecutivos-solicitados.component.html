@@ -194,7 +194,7 @@
 
           <!-- btn agregar filtro -->
           <div class="ui-g-12 pb-0 mt-1 text-center">
-            <button type="button" class="btn btn-sm btn-secondary btn-add w-100">
+            <button (click)="showModalAgregarFiltro()" type="button" class="btn btn-sm btn-secondary btn-add w-100">
               <label class="btn-size-admin"><i class="fa fa-plus"></i> Agregar Filtro</label>
             </button>
           </div>
@@ -269,7 +269,7 @@
 
     <p-panel styleClass="mb-1 steps-pnl pnl-pt">
       <p-header>
-        <button (click)="regresar()" type="button" class="btn btn-sm btn-primary mr-1 p-0 w-35-px">
+        <button (click)="cerrarDetalleConsecutivo()" type="button" class="btn btn-sm btn-primary mr-1 p-0 w-35-px">
           <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> </label>
         </button>
         <span class="align-middle">Detalle del Consecutivo</span>
@@ -411,7 +411,7 @@
 
       <!-- btn regresar -->
       <div class="mb-1 text-center">
-        <button (click)="regresar()" type="button" class="btn btn-sm btn-primary w-100-px mr-2">
+        <button (click)="cerrarDetalleConsecutivo()" type="button" class="btn btn-sm btn-primary w-100-px mr-2">
           <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
         </button>
       </div>

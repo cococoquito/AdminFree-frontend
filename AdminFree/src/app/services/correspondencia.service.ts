@@ -179,7 +179,7 @@ export class CorrespondenciaService {
 	 * @param idCliente, identificador del cliente que tiene los campos
 	 * @return Lista de campos con sus atributos configurados
 	 */
-  public getCamposFiltro(idCliente: string): Observable<Array<CampoFiltroDTO>> {
+  public getCamposFiltro(idCliente: number): Observable<Array<CampoFiltroDTO>> {
     return this.http.get<Array<CampoFiltroDTO>>(
       CorrespondenciaAPIConstant.GET_CAMPOS_FILTRO + idCliente
     );
