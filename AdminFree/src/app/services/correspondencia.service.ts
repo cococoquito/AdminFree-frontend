@@ -192,8 +192,8 @@ export class CorrespondenciaService {
 	 * @param idsCampos, lista de identificadores de los campos a consultar sus items
 	 * @return lista de items con sus atributos construido
 	 */
-  public getItemsSelectFiltro(idsCampos: Array<number>): Observable<ItemDTO> {
-    return this.http.post<ItemDTO>(
+  public getItemsSelectFiltro(idsCampos: Array<number>): Observable<Array<ItemDTO>> {
+    return this.http.post<Array<ItemDTO>>(
       CorrespondenciaAPIConstant.GET_ITEMS_SELECT_FILTRO,
       idsCampos
     );

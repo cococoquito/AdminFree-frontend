@@ -1,3 +1,5 @@
+import { ItemDTO } from '../configuraciones/item.dto';
+
 /**
  * Contiene los valores de un campo que se utiliza en los
  * componentes que tiene filtro de busqueda
@@ -26,8 +28,14 @@ export class CampoFiltroDTO {
 
   /************** Variables utilizados solamente en angular ****************/
   /** Indica si el campo fue seleccionado para ser agregado al filtro */
-  public agregado: boolean;
+  public isAgregado: boolean;
 
   /** Indica si este campo fue aplicado para un filtro busqueda */
   public isFiltroAplicado: boolean;
+
+  /** Son los items para los campos tipo lista desplegable */
+  public items: Array<ItemDTO>;
+
+  /** Es el item seleccionado para los filtros de busqueda */
+  public itemSeleccionado: ItemDTO;
 }

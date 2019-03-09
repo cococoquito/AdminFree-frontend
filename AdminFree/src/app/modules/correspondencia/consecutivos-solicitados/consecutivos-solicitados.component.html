@@ -219,6 +219,27 @@
 
             <!-- SELECT -->
             <ng-container *ngIf="ID_LISTA_DESPLEGABLE === campo.tipoCampo">
+              <div class="ui-g-12 pb-0">
+                <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campo.nombreCampo}}: </label>
+              </div>
+              <div class="ui-g-12 pt-0 pb-0">
+                <div class="inner-addon left-addon">
+                  <i (click)="campo.itemSeleccionado=null"
+                    class="fa fa-times font-size-16 aico"
+                    [ngClass]="campo.isFiltroAplicado ? 'text-dark' : 'i-slight'"></i>
+                  <p-dropdown
+                    name="ctx{{i}}"
+                    selectId="ctx{{i}}"
+                    optionLabel="valor"
+                    emptyFilterMessage="No hay resultados"
+                    [(ngModel)]="campo.itemSeleccionado"
+                    [filter]="campo.items && campo.items.length > 6"
+                    [options]="campo.items"
+                    [autoDisplayFirst]="false"
+                    styleClass="ad-select down-ad">
+                  </p-dropdown>
+                </div>
+              </div>
             </ng-container>
 
             <!-- DATE -->
@@ -554,8 +575,8 @@
           <tr [pSelectableRow]="campo">
             <td style="width: 15%" class="text-center">
               <admin-inputswitch
-                [isChecked]="campo.agregado"
-                (switchChange)="campo.agregado = $event">
+                [isChecked]="campo.isAgregado"
+                (switchChange)="campo.isAgregado = $event">
               </admin-inputswitch>
             </td>
             <td>{{ campo.nombreCampo }}</td>

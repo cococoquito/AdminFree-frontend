@@ -12,6 +12,7 @@ import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { ConsecutivoDetalleDTO } from '../../../dtos/correspondencia/consecutivo-detalle.dto';
 import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
 import { CampoFiltroDTO } from '../../../dtos/correspondencia/campo-filtro.dto';
+import { ItemDTO } from '../../../dtos/configuraciones/item.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
@@ -391,19 +392,67 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     // se valida que si existan campos parametrizados
     if (this.camposFiltroOrigen && this.camposFiltroOrigen.length > 0) {
 
-      // se limpia los campos agregado
+      // se limpia los campos agregados
       this.camposFiltroAgregados = null;
 
-      // se recorre cada campo en busqueda de los agregado
+      // lista de identificadores de selecitems sin sus items
+      let idsCampos: Array<number>;
+
+      // se recorre cada campo en busqueda de los seleccionados
       for (const campo of this.camposFiltroOrigen) {
 
-        // si este campo es seleccionado se procede agregarlo
-        if (campo.agregado) {
+        // bandera que indica si este campo es seleccionado
+        if (campo.isAgregado) {
+
+          // se procede agregar este campo como seleccionado
           if (!this.camposFiltroAgregados) {
             this.camposFiltroAgregados = new Array<CampoFiltroDTO>();
           }
           this.camposFiltroAgregados.push(campo);
+
+          // se verifica si este campo es un selectitems sin sus items
+          if (this.ID_LISTA_DESPLEGABLE === campo.tipoCampo && (!campo.items || campo.items.length === 0)) {
+
+            // se agrega este selectitem para consultar sus items
+            if (!idsCampos) {
+              idsCampos = new Array<number>();
+            }
+            idsCampos.push(campo.idCampo);
+          }
         }
+      }
+
+      // si hay identificadores de selecitems sin items se procede a consultarlos
+      if (idsCampos && idsCampos.length > 0) {
+
+        // se invoca el servicio para obtener sus items
+        this.correspondenciaService.getItemsSelectFiltro(idsCampos).subscribe(
+          items => {
+            // aplica si hay items consultados
+            if (items && items.length > 0) {
+
+              // se recorre cada item para buscar su duenio
+              for (const item of items) {
+
+                // se busca el selectitem que le pertenece a este item
+                for (const campo of this.camposFiltroAgregados) {
+
+                  // si es el mismo id campo se procede agregarlo
+                  if (item.idCampo === campo.idCampo) {
+                    if (!campo.items) {
+                      campo.items = new Array<ItemDTO>();
+                    }
+                    campo.items.push(item);
+                    break;
+                  }
+                }
+              }
+            }
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
       }
     }
   }
