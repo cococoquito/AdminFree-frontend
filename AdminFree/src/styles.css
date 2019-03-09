@@ -382,6 +382,10 @@ body {
   font-size: 15px !important;
 }
 
+.tblshort .ui-table-tbody>tr>td {
+  padding: 0.480em 0.857em !important;
+}
+
 /* circulo redondo paginador */
 .ui-paginator-page.ui-state-active {
   background-color: #f5a96d !important;
@@ -824,11 +828,12 @@ body {
 }
 
 .btn-add {
-  background-color: #455A64 !important;
+  background-color: #138496 !important;
+  border-color: #117a8b !important;
 }
 
 .btn-add:hover {
-  background-color: rgb(50, 64, 71) !important;
+  background-color: #0d96ac !important;
 }
 
 .i-slight {

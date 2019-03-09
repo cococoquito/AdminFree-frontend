@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { OverlayPanel } from 'primeng/overlaypanel';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
 import { CommonComponent } from '../../../util/common.component';
@@ -67,7 +68,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   /** Es el detalle del consecutivo a visualizar */
   public consecutivoDetalle: ConsecutivoDetalleDTO;
 
-  /** Son los campos filtro para las busquedas avanzada */
+  /** Son los campos para ser agregado en los filtros de busqueda */
   public camposFiltro: Array<CampoFiltroDTO>;
 
   /**
@@ -303,25 +304,31 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   }
 
   /**
-   * Metodo que permite obtener los campos para los filtros de busqueda
+   * Metodo que permite soportar el evento click del boton agregar filtro
    */
-  public showModalAgregarFiltro(): void {
+  public showModalAgregarFiltro(event, overlaypanel: OverlayPanel): void {
 
-    // se limpia los mensajes anteriores
-    this.messageService.clear();
+    // se valida si se debe consultar los campos filtros
+    if (!this.camposFiltro || this.camposFiltro.length === 0) {
 
-    // solamente se consultan los campos si no fueron consultados con anterioridad
-    if (!this.camposFiltro) {
+      // se limpia los mensajes anteriores
+      this.messageService.clear();
 
       // se invoca el servicio para consultar los campos filtro
       this.correspondenciaService.getCamposFiltro(this.clienteCurrent.id).subscribe(
         data => {
+          // se configura los campos
           this.camposFiltro = data;
+
+          // se procede abrir o cerrar el modal
+          overlaypanel.toggle(event);
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
+    } else {
+      overlaypanel.toggle(event);
     }
   }
 

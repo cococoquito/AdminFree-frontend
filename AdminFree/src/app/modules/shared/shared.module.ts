@@ -9,6 +9,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SharedCommonModule } from './shared-common.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
@@ -36,6 +37,7 @@ import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nom
     CalendarModule,
     FileUploadModule,
     ProgressBarModule,
+    OverlayPanelModule,
     KeyFilterModule
   ],
   declarations: [
@@ -56,6 +58,7 @@ import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nom
     CalendarModule,
     FileUploadModule,
     ProgressBarModule,
+    OverlayPanelModule,
     KeyFilterModule,
     ConsecutivoPipe,
     InputswitchComponent,

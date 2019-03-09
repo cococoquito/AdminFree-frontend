@@ -14,6 +14,14 @@
   padding-right: 25px;
 }
 
+.left-addon-f .aico {
+  left: 0px;
+}
+
+.left-addon-f input {
+  padding-left: 30px;
+}
+
 .aico {
   z-index: 1;
   cursor: pointer;
@@ -62,4 +70,11 @@ th::before {
 th:after {
   bottom: -1px;
   border-bottom: 1px solid #c8c8c8;
+}
+
+.w-modal {
+  max-width: 600px;
+  min-width: 600px;
+  max-height: 325px;
+  min-height: 325px;
 }
