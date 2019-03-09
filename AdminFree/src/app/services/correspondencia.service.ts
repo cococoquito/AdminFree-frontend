@@ -14,6 +14,7 @@ import { InitConsecutivosAnioActualDTO } from './../dtos/correspondencia/init-co
 import { PaginadorResponseDTO } from '../dtos/transversal/paginador-response.dto';
 import { ConsecutivoDetalleDTO } from '../dtos/correspondencia/consecutivo-detalle.dto';
 import { CampoFiltroDTO } from '../dtos/correspondencia/campo-filtro.dto';
+import { ItemDTO } from '../dtos/configuraciones/item.dto';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia
@@ -182,6 +183,19 @@ export class CorrespondenciaService {
   public getCamposFiltro(idCliente: number): Observable<Array<CampoFiltroDTO>> {
     return this.http.get<Array<CampoFiltroDTO>>(
       CorrespondenciaAPIConstant.GET_CAMPOS_FILTRO + idCliente
+    );
+  }
+
+  /**
+	 * Servicio que permite obtener los items para los filtros tipo LISTA DESPLEGABLE
+	 *
+	 * @param idsCampos, lista de identificadores de los campos a consultar sus items
+	 * @return lista de items con sus atributos construido
+	 */
+  public getItemsSelectFiltro(idsCampos: Array<number>): Observable<ItemDTO> {
+    return this.http.post<ItemDTO>(
+      CorrespondenciaAPIConstant.GET_ITEMS_SELECT_FILTRO,
+      idsCampos
     );
   }
 }

@@ -53,4 +53,7 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - El documento que intenta cargar se encuentra vacio*/
   static readonly KEY_DOCUMENTO_VACIO: string = '16';
+
+  /** 400 - El documento que intenta descargar no existe en el sistema*/
+  static readonly KEY_DOCUMENTO_NO_EXISTE: string = '17';
 }

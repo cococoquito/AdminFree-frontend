@@ -82,4 +82,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getcamposfiltro?idCliente=';
+
+  /** URL del recurso que permite obtener los items para los filtros tipo LISTA DESPLEGABLE */
+  static readonly GET_ITEMS_SELECT_FILTRO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getitemsfiltro';
 }

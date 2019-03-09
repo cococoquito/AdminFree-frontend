@@ -202,6 +202,11 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.DOCUMENTO_VACIO;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_DOCUMENTO_NO_EXISTE: {
+        businessMsj = MessagesBackendConstant.DOCUMENTO_NO_EXISTE;
+        break;
+      }
     }
     return businessMsj;
   }

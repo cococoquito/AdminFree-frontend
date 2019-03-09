@@ -75,4 +75,7 @@ export class MessagesBackendConstant {
 
   /** El documento que intenta cargar se encuentra vacio*/
   static readonly DOCUMENTO_VACIO: string = 'El documento que intenta cargar se encuentra vacío';
+
+  /** El documento que intenta descargar no existe en el sistema*/
+  static readonly DOCUMENTO_NO_EXISTE: string = 'El documento que intenta descargar no existe en el sistema';
 }
