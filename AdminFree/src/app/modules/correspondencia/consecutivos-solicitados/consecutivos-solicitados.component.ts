@@ -71,7 +71,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   /** Son los campos filtros origen */
   public camposFiltroOrigen: Array<CampoFiltroDTO>;
 
-  /** Son los campos filtros a visualizar en pantallapara ser agregados */
+  /** Son los campos filtros a visualizar en pantalla para ser agregados */
   public camposFiltro: Array<CampoFiltroDTO>;
 
   /** Es el filter ingresado para la busqueda por nombre del campo */
