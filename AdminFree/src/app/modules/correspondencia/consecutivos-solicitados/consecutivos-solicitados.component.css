@@ -36,14 +36,14 @@
   color: #1365a3;
 }
 
-:host ::ng-deep .ui-table .ui-table-thead>tr>th {
+:host ::ng-deep #tblcc .ui-table .ui-table-thead>tr>th {
   position: -webkit-sticky;
   position: sticky;
   top: -1px;
 }
 
 @media screen and (max-width: 64em) {
-  :host ::ng-deep .ui-table .ui-table-thead>tr>th {
+  :host ::ng-deep #tblcc .ui-table .ui-table-thead>tr>th {
     top: 100px;
   }
 }

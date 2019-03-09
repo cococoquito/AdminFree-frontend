@@ -19,6 +19,7 @@ import { FechaUtil } from '../../../util/fecha-util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
 import { saveAs as importedSaveAs } from 'file-saver';
 
 /**
@@ -75,8 +76,16 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   /** Son los campos filtros a visualizar en pantalla para ser agregados */
   public camposFiltro: Array<CampoFiltroDTO>;
 
+  /** Son los campos filtros agregados */
+  public camposFiltroAgregados: Array<CampoFiltroDTO>;
+
   /** Es el filter ingresado para la busqueda por nombre del campo */
   public filterValue: string;
+
+  /** identificadores de cada tipo de campo (transversal)*/
+  public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
+  public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
+  public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
 
   /** Se utiliza para resetear la tabla campos filtros cuando hacen alguna busqueda*/
   @ViewChild('tblCamposFiltro') tblCampos: Table;
@@ -372,6 +381,31 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
     // se refresca la tabla de campos
     this.tblCampos.reset();
+  }
+
+  /**
+   * Metodo que es invocado cuando cierran el modal de agregar filtro
+   */
+  public hideModalAgregarFiltro(): void {
+
+    // se valida que si existan campos parametrizados
+    if (this.camposFiltroOrigen && this.camposFiltroOrigen.length > 0) {
+
+      // se limpia los campos agregado
+      this.camposFiltroAgregados = null;
+
+      // se recorre cada campo en busqueda de los agregado
+      for (const campo of this.camposFiltroOrigen) {
+
+        // si este campo es seleccionado se procede agregarlo
+        if (campo.agregado) {
+          if (!this.camposFiltroAgregados) {
+            this.camposFiltroAgregados = new Array<CampoFiltroDTO>();
+          }
+          this.camposFiltroAgregados.push(campo);
+        }
+      }
+    }
   }
 
   /**
