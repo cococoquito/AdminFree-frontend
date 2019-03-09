@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
 import { CommonComponent } from '../../../util/common.component';
@@ -76,6 +77,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /** Es el filter ingresado para la busqueda por nombre del campo */
   public filterValue: string;
+
+  /** Se utiliza para resetear la tabla campos filtros cuando hacen alguna busqueda*/
+  @ViewChild('tblCamposFiltro') tblCampos: Table;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -365,6 +369,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     } else {
       this.camposFiltro = this.camposFiltroOrigen;
     }
+
+    // se refresca la tabla de campos
+    this.tblCampos.reset();
   }
 
   /**

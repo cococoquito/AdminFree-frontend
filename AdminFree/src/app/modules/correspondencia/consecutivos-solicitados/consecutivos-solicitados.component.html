@@ -448,6 +448,7 @@
     <!-- SI HAY de campos -->
     <div *ngIf="camposFiltroOrigen && camposFiltroOrigen.length > 0" class="w-modal">
       <p-table
+        #tblCamposFiltro
         [value]="camposFiltro"
         [responsive]="true"
         [paginator]="true"
