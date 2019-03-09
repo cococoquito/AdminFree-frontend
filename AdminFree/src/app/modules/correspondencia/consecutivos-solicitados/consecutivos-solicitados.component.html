@@ -193,8 +193,8 @@
           </div>
 
           <!-- btn agregar filtro -->
-          <div class="ui-g-12 pb-0 mt-1 text-center">
-            <button (click)="showModalAgregarFiltro($event,addfilters)" type="button" class="btn btn-sm btn-secondary btn-add w-100">
+          <div #addFiltersTarget class="ui-g-12 pb-0 mt-1 text-center">
+            <button (click)="showModalAgregarFiltro($event,addFiltersTarget,addfilters)" type="button" class="btn btn-sm btn-secondary btn-add w-100">
               <label class="btn-size-admin"><i class="fa fa-plus"></i> Agregar Filtro</label>
             </button>
           </div>
@@ -420,25 +420,33 @@
 </ng-container>
 
 <!-- modal campos filtro -->
-<p-overlayPanel #addfilters [showCloseIcon]="true" [dismissable]="false">
+<p-overlayPanel
+  #addfilters
+  [showCloseIcon]="true"
+  [dismissable]="false">
 
   <!-- panel principal -->
   <p-panel styleClass="m-0 steps-pnl steps-pnl-main">
 
     <p-header>
-      <div class="inner-addon left-addon-f">
+      <div *ngIf="camposFiltroOrigen && camposFiltroOrigen.length > 0" class="inner-addon left-addon-f">
         <i class="fa fa-search-plus font-size-18 aico"></i>
         <input type="text"
+          (keyup)="busquedaNombreCampo()"
+          [(ngModel)]="filterValue"
           maxlength="100"
           autocomplete="off"
           placeholder="Búsqueda por nombre del campo"
           class="ad-input ad-input-style w-100 pt-0 font-size-15" />
         <div class="focus-border"></div>
       </div>
+      <div *ngIf="!(camposFiltroOrigen && camposFiltroOrigen.length > 0)">
+        <p>Agregar Filtro</p>
+      </div>
     </p-header>
 
-    <!-- lista de campos -->
-    <div *ngIf="camposFiltro" class="w-modal">
+    <!-- SI HAY de campos -->
+    <div *ngIf="camposFiltroOrigen && camposFiltroOrigen.length > 0" class="w-modal">
       <p-table
         [value]="camposFiltro"
         [responsive]="true"
@@ -464,7 +472,30 @@
             <td>{{ campo.nombreCampo }}</td>
           </tr>
         </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="2">
+              <div class="mt-2 mb-2 p-1 ui-messages ui-messages-info ui-corner-all text-center">
+                <span class="ui-messages-icon pi pi-info-circle"></span>
+                <span class="ui-messages-detail font-size-14 ml-0">
+                  <strong>No se encontraron campos</strong> que coincidan con los criterios
+                </span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
       </p-table>
+    </div>
+
+    <!-- NO HAY de campos -->
+    <div *ngIf="!(camposFiltroOrigen && camposFiltroOrigen.length > 0)" class="w-modal">
+      <div class="mt-2 mb-2 p-1 ui-messages ui-messages-warn ui-corner-all text-center">
+        <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+        <span class="ui-messages-detail font-size-15 ml-0">
+          No se encontraron <strong>CAMPOS</strong> parametrizados en el sistema
+        </span>
+      </div>
     </div>
   </p-panel>
 </p-overlayPanel>

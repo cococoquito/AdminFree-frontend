@@ -68,8 +68,14 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   /** Es el detalle del consecutivo a visualizar */
   public consecutivoDetalle: ConsecutivoDetalleDTO;
 
-  /** Son los campos para ser agregado en los filtros de busqueda */
+  /** Son los campos filtros origen */
+  public camposFiltroOrigen: Array<CampoFiltroDTO>;
+
+  /** Son los campos filtros a visualizar en pantallapara ser agregados */
   public camposFiltro: Array<CampoFiltroDTO>;
+
+  /** Es el filter ingresado para la busqueda por nombre del campo */
+  public filterValue: string;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -305,11 +311,15 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /**
    * Metodo que permite soportar el evento click del boton agregar filtro
+   *
+   * @param event, evento ejecutado desde el navegador, se utiliza para abrir o cerrar el modal
+   * @param actualTarget, es el div donde apuntara el modal para se posicionado
+   * @param overlaypanel, es la referencia del modal para abrir o cerrarlo
    */
-  public showModalAgregarFiltro(event, overlaypanel: OverlayPanel): void {
+  public showModalAgregarFiltro(event, actualTarget, overlaypanel: OverlayPanel, ): void {
 
     // se valida si se debe consultar los campos filtros
-    if (!this.camposFiltro || this.camposFiltro.length === 0) {
+    if (!this.camposFiltroOrigen || this.camposFiltroOrigen.length === 0) {
 
       // se limpia los mensajes anteriores
       this.messageService.clear();
@@ -319,16 +329,41 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
         data => {
           // se configura los campos
           this.camposFiltro = data;
+          this.camposFiltroOrigen = data;
 
-          // se procede abrir o cerrar el modal
-          overlaypanel.toggle(event);
+          // se procede abrir el modal
+          overlaypanel.toggle(event, actualTarget);
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
     } else {
-      overlaypanel.toggle(event);
+      // se procede abrir o cerrar el modal
+      overlaypanel.toggle(event, actualTarget);
+    }
+  }
+
+  /**
+   * Metodo que permite soportar el evento filter por nombre del campo
+   */
+  public busquedaNombreCampo(): void {
+
+    // el valor del filtro no puede ser indefinido
+    if (this.filterValue && this.filterValue.length > 0) {
+
+      // se crea la instancia de la lista de campos filtro
+      this.camposFiltro = new Array<CampoFiltroDTO>();
+
+      // se busca el campo que coincide con el valor
+      for (const campo of this.camposFiltroOrigen) {
+        if (campo.nombreCampo &&
+            campo.nombreCampo.toUpperCase().includes(this.filterValue.toUpperCase())) {
+            this.camposFiltro.push(campo);
+        }
+      }
+    } else {
+      this.camposFiltro = this.camposFiltroOrigen;
     }
   }
 
