@@ -516,7 +516,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
             // para la lista desplegable debe existir el item seleccionado
             case this.ID_LISTA_DESPLEGABLE: {
               campo.inputValue = null;
-              if (campo.itemSeleccionado && campo.itemSeleccionado.id) {
+              if (campo.itemSeleccionado) {
                 campo.inputValue = campo.itemSeleccionado.id;
                 this.filtros.filtrosAgregados.push(campo);
               }
@@ -560,6 +560,67 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
         !FechaUtil.iqualsDateFilter(this.filtrosClone.fechaSolicitudFinal, fechaSolicitudFinal)) {
         return true;
     }
-    return false;
+
+    // se procede a validar si hay filtros agregados
+    let isNuevoFiltroAgregado = true;
+
+    // es la cantidad de filtros clone agregados
+    let cantidadFiltrosClone = 0;
+    if (this.filtrosClone.filtrosAgregados) {
+      cantidadFiltrosClone = this.filtrosClone.filtrosAgregados.length;
+    }
+
+    // es la cantidad de filtros agregados
+    let cantidadFiltros = 0;
+    if (this.filtros.filtrosAgregados) {
+      cantidadFiltros = this.filtros.filtrosAgregados.length;
+    }
+
+    // si son diferentes es porque hay modificaciones
+    if (cantidadFiltrosClone === cantidadFiltros) {
+      isNuevoFiltroAgregado = false;
+
+      // solo aplica si ingresaron algun filtro
+      if (cantidadFiltrosClone > 0) {
+
+        // se recorre los filtros ingresados
+        forMain:
+        for (const campo of this.filtros.filtrosAgregados) {
+          let campoExiste = false;
+
+          // se recorre los filtros que tiene el clone
+          for (const campoClone of this.filtrosClone.filtrosAgregados) {
+
+            // se valida si los campos son iguales
+            if (campo.idCampo === campoClone.idCampo) {
+              campoExiste = true;
+
+              // se valida el valor de los campos si hay alguna modificacion
+              if (this.ID_CAMPO_TEXTO === campo.tipoCampo || this.ID_LISTA_DESPLEGABLE === campo.tipoCampo) {
+                if (campo.inputValue !== campoClone.inputValue) {
+                    isNuevoFiltroAgregado = true;
+                    break forMain;
+                }
+              } else if (this.ID_CAMPO_FECHA === campo.tipoCampo) {
+                if (!FechaUtil.iqualsDateFilter(campoClone.dateInicial, campo.dateInicial) ||
+                    !FechaUtil.iqualsDateFilter(campoClone.dateFinal, campo.dateFinal)) {
+                    isNuevoFiltroAgregado = true;
+                    break forMain;
+                }
+              }
+            }
+          }
+
+          // si el campo no existe y porque hay un nuevo filtro
+          if (!campoExiste) {
+            isNuevoFiltroAgregado = true;
+            break;
+          }
+        }
+      }
+    }
+
+    // se retorna la bandera que indica que si hay nuevo filtro agregado
+    return isNuevoFiltroAgregado;
   }
 }
