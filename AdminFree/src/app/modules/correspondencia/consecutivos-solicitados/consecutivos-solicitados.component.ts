@@ -649,6 +649,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
         for (const campo of this.filtros.filtrosAgregados) {
           const campoClone = new CampoFiltroDTO();
           campoClone.idCampo = campo.idCampo;
+          campoClone.tipoCampo = campo.tipoCampo;
           campoClone.inputValue = campo.inputValue;
           campoClone.dateInicial = campo.dateInicial;
           campoClone.dateFinal = campo.dateFinal;
