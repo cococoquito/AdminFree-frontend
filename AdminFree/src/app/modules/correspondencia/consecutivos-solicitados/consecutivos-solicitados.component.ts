@@ -6,7 +6,7 @@ import { CorrespondenciaService } from '../../../services/correspondencia.servic
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
-import { FiltroConsecutivosAnioActualDTO } from './../../../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
+import { FiltroConsecutivosDTO } from './../../../dtos/correspondencia/filtro-consecutivos.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { ConsecutivoDetalleDTO } from '../../../dtos/correspondencia/consecutivo-detalle.dto';
@@ -40,10 +40,10 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   private clienteCurrent: ClienteDTO;
 
   /** Se utiliza para encapsular los filtros busqueda ingresados */
-  public filtros: FiltroConsecutivosAnioActualDTO;
+  public filtros: FiltroConsecutivosDTO;
 
   /** Son los filtros validos enviados al servicio http */
-  public filtrosClone: FiltroConsecutivosAnioActualDTO;
+  public filtrosClone: FiltroConsecutivosDTO;
 
   /** Identifica si hay filtro aplicado por el usuario */
   public hayFiltroAplicado: boolean;
@@ -157,7 +157,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
           this.calendarEspanish = LabelsConstant.calendarEspanish;
 
           // se configura los filtros de busqueda
-          this.filtros = new FiltroConsecutivosAnioActualDTO();
+          this.filtros = new FiltroConsecutivosDTO();
           this.filtros.idCliente = this.clienteCurrent.id;
 
           // se debe inicializar el clone con los mismos datos del filtro
@@ -632,7 +632,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     // solo aplica si hay instancia del filtro principal
     this.filtrosClone = null;
     if (this.filtros) {
-      this.filtrosClone = new FiltroConsecutivosAnioActualDTO();
+      this.filtrosClone = new FiltroConsecutivosDTO();
 
       // filtros generales
       this.filtrosClone.idCliente = this.filtros.idCliente;

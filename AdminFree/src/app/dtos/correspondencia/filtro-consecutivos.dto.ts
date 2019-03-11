@@ -2,12 +2,12 @@ import { PaginadorDTO } from '../transversal/paginador-dto';
 import { CampoFiltroDTO } from './campo-filtro.dto';
 
 /**
- * DTO que contiene los atributos para el filtro de busqueda de los consecutivos
- * solicitados para el anio actual
+ * DTO que contiene los atributos para los filtros de busqueda
+ * de los consecutivos de correspondencia en el sistema
  *
  * @author Carlos Andres Diaz
  */
-export class FiltroConsecutivosAnioActualDTO {
+export class FiltroConsecutivosDTO {
 
   /** paginador para la consulta los consecutivos **/
   public paginador: PaginadorDTO;

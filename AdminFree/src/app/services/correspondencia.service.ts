@@ -8,13 +8,13 @@ import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { SolicitudConsecutivoResponseDTO } from '../dtos/correspondencia/solicitud-consecutivo-response.dto';
 import { WelcomeInitDTO } from '../dtos/correspondencia/welcome-init.dto';
 import { DocumentoDTO } from '../dtos/correspondencia/documento.dto';
-import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
-import { FiltroConsecutivosAnioActualDTO } from '../dtos/correspondencia/filtro-consecutivos-anio-actual.dto';
+import { FiltroConsecutivosDTO } from '../dtos/correspondencia/filtro-consecutivos.dto';
 import { InitConsecutivosAnioActualDTO } from './../dtos/correspondencia/init-consecutivos-anio-actual.dto';
 import { PaginadorResponseDTO } from '../dtos/transversal/paginador-response.dto';
 import { ConsecutivoDetalleDTO } from '../dtos/correspondencia/consecutivo-detalle.dto';
 import { CampoFiltroDTO } from '../dtos/correspondencia/campo-filtro.dto';
 import { ItemDTO } from '../dtos/configuraciones/item.dto';
+import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia
@@ -140,7 +140,7 @@ export class CorrespondenciaService {
 	 * @param filtro, DTO que contiene los valores del filtro de busqueda
 	 * @return DTO con la lista de consecutivos paginados y su cantidad total
 	 */
-  public getConsecutivosAnioActual(filtro: FiltroConsecutivosAnioActualDTO): Observable<PaginadorResponseDTO> {
+  public getConsecutivosAnioActual(filtro: FiltroConsecutivosDTO): Observable<PaginadorResponseDTO> {
     return this.http.post<PaginadorResponseDTO>(
       CorrespondenciaAPIConstant.GET_CONSECUTIVOS_ACTUAL,
       filtro
