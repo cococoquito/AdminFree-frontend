@@ -131,8 +131,8 @@ export class LabelsConstant {
   /** Formato de fecha como lo trabaja MYSQL */
   public static readonly FECHA_FORMATO_MYSQL: string = 'yyyy-MM-dd';
 
-  /** labels para el componente de los calendars */
-  public static readonly calendarEspanish: any = {
+  /** constante para el idioma espaniol para los calendar */
+  public static readonly CALENDAR_SPANISH: any = {
     firstDayOfWeek: 1,
     dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
     dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],

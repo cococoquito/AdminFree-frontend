@@ -1,0 +1,44 @@
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .aico {
+  position: absolute;
+}
+
+.left-addon .aico {
+  left: 93%;
+}
+
+.left-addon input {
+  padding-right: 25px;
+}
+
+.left-addon-f .aico {
+  left: 0px;
+}
+
+.left-addon-f input {
+  padding-left: 30px;
+}
+
+.aico {
+  z-index: 1;
+  cursor: pointer;
+}
+
+.refresh {
+  color: #007ad9;
+  cursor: pointer;
+}
+
+.refresh:hover {
+  color: #1365a3;
+}
+
+.w-modal {
+  max-width: 600px;
+  min-width: 600px;
+  max-height: 325px;
+  min-height: 325px;
+}

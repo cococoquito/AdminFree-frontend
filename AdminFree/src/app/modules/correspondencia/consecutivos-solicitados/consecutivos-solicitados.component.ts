@@ -154,7 +154,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
           this.usuarios = data.usuarios;
 
           // se utiliza para el idioma de los calendar
-          this.calendarEspanish = LabelsConstant.calendarEspanish;
+          this.calendarEspanish = LabelsConstant.CALENDAR_SPANISH;
 
           // se configura los filtros de busqueda
           this.filtros = new FiltroConsecutivosDTO();

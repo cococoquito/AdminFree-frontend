@@ -1,0 +1,372 @@
+<p-panel styleClass="steps-pnl steps-pnl-main">
+
+  <!-- header -->
+  <p-header>
+    <div class="ui-g p-0">
+
+      <!-- btn - filtrar -->
+      <div class="ui-g-5 p-0">
+        <button (click)="state.listener.filtrar()" type="button" class="btn btn-sm btn-primary">
+          <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
+          <i *ngIf="state.hayFiltroAplicado" class="fa fa-asterisk font-size-9 pl-1"></i>
+        </button>
+      </div>
+
+      <!-- btns - refresh- cant -->
+      <div class="ui-g-6 p-0">
+        <p class="font-size-14 font-new-roman mt-2">
+          Cant: <strong>{{ state.cantidadTotal | number }}</strong>
+        </p>
+      </div>
+      <div class="ui-g-1 p-0 mt-2 text-left">
+        <i (click)="state.listener.refresh()" class="fa fa-refresh font-size-20 refresh"></i>
+      </div>
+    </div>
+  </p-header>
+
+  <!-- filtros -->
+  <div class="ui-g pb-1">
+
+    <!-- filtro - consecutivos -->
+    <div class="ui-g-12 pb-0 pt-0">
+      <label for="fconsecutivos" class="steps-st mb-0 mt-1"> Consecutivos: </label>
+    </div>
+    <div class="ui-g-12 pt-0 pb-0">
+      <div class="inner-addon left-addon">
+        <i (click)="state.filtros.consecutivos=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="state.filtrosClone.consecutivos ? 'text-dark' : 'i-slight'">
+        </i>
+        <input
+          type="text"
+          id="fconsecutivos"
+          name="fconsecutivos"
+          [(ngModel)]="state.filtros.consecutivos"
+          maxlength="100"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+        <div class="focus-border"></div>
+      </div>
+    </div>
+
+    <!-- filtro - nomenclatura -->
+    <div class="ui-g-12 pb-0">
+      <label for="fnomenclatura" class="steps-st mb-0 mt-1"> Nomenclaturas: </label>
+    </div>
+    <div class="ui-g-12 pt-0 pb-0">
+      <div class="inner-addon left-addon">
+        <i (click)="state.filtros.nomenclaturas=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="state.filtrosClone.nomenclaturas ? 'text-dark' : 'i-slight'"> </i>
+        <input
+          type="text"
+          id="fnomenclatura"
+          name="fnomenclatura"
+          [(ngModel)]="state.filtros.nomenclaturas"
+          maxlength="100"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+        <div class="focus-border"></div>
+      </div>
+    </div>
+
+    <!-- filtro - usuario -->
+    <ng-container *ngIf="state.usuarios">
+      <div class="ui-g-12 pb-0">
+        <label for="fuser" class="steps-st mb-0 mt-1"> Usuario: </label>
+      </div>
+      <div class="ui-g-12 pt-0 pb-0">
+        <div class="inner-addon left-addon">
+          <i (click)="usuarioFiltro=null"
+            class="fa fa-times font-size-16 aico"
+            [ngClass]="state.filtrosClone.idUsuario ? 'text-dark' : 'i-slight'"></i>
+          <p-dropdown
+            name="fuser"
+            selectId="fuser"
+            optionLabel="label"
+            emptyFilterMessage="No hay resultados"
+            [(ngModel)]="usuarioFiltro"
+            [filter]="state.usuarios.length > 6"
+            [options]="state.usuarios"
+            [autoDisplayFirst]="false"
+            styleClass="ad-select down-ad">
+          </p-dropdown>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- filtro - fecha soliciud inicial -->
+    <div class="ui-g-12 pb-0">
+      <label for="fechaInit" class="steps-st mb-0 mt-1"> Fecha de solicitud inicial:</label>
+    </div>
+    <div class="ui-g-12 pt-0 pb-0">
+      <div class="inner-addon left-addon">
+        <i (click)="state.filtros.fechaSolicitudInicial=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="state.filtrosClone.fechaSolicitudInicial ? 'text-dark' : 'i-slight'"></i>
+        <p-calendar
+          name="fechaInit"
+          inputId="fechaInit"
+          [(ngModel)]="state.filtros.fechaSolicitudInicial"
+          [locale]="state.CALENDAR_SPANISH"
+          showButtonBar="true"
+          [readonlyInput]="true"
+          [minDate]="state.minDateSolicitudFilter"
+          [maxDate]="state.maxDateSolicitudFilter"
+          inputStyleClass="ad-calendar"
+          [monthNavigator]="true"
+          dateFormat="dd/MM/yy">
+        </p-calendar>
+      </div>
+    </div>
+
+    <!-- filtro - fecha soliciud final -->
+    <div class="ui-g-12 pb-0">
+      <label for="fechaFin" class="steps-st mb-0 mt-1"> Fecha de solicitud final:</label>
+    </div>
+    <div class="ui-g-12 pt-0 pb-0">
+      <div class="inner-addon left-addon">
+        <i (click)="state.filtros.fechaSolicitudFinal=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="state.filtrosClone.fechaSolicitudFinal ? 'text-dark' : 'i-slight'"></i>
+        <p-calendar
+          name="fechaFin"
+          inputId="fechaFin"
+          [(ngModel)]="state.filtros.fechaSolicitudFinal"
+          [locale]="state.CALENDAR_SPANISH"
+          showButtonBar="true"
+          [readonlyInput]="true"
+          [minDate]="state.minDateSolicitudFilter"
+          [maxDate]="state.maxDateSolicitudFilter"
+          inputStyleClass="ad-calendar"
+          [monthNavigator]="true"
+          dateFormat="dd/MM/yy">
+        </p-calendar>
+      </div>
+    </div>
+
+    <!-- estados consecutivo -->
+    <div class="ui-g-12 pb-0 mt-2 border-bottom">
+      <div class="inner-addon left-addon">
+        <i (click)="state.filtros.estado=null"
+          class="fa fa-times font-size-16 aico mt-1"
+          [ngClass]="state.filtrosClone.estado ? 'text-dark' : 'i-slight'"></i>
+        <div class="ui-g-6 p-0">
+          <p-radioButton
+            label="Activo"
+            name="estado"
+            [(ngModel)]="state.filtros.estado"
+            [value]="state.ID_ACTIVO"
+            labelStyleClass="clr-activo font-weight-bold">
+          </p-radioButton>
+        </div>
+        <div class="ui-g-6 p-0">
+          <p-radioButton
+            label="Anulado"
+            name="estado"
+            [(ngModel)]="state.filtros.estado"
+            [value]="state.ID_ANULADO"
+            labelStyleClass="clr-anulado font-weight-bold">
+          </p-radioButton>
+        </div>
+      </div>
+    </div>
+
+    <!-- lista campos agregados -->
+    <ng-container *ngFor="let campo of state.camposFiltroAgregados; let i = index">
+
+      <!-- INPUT -->
+      <ng-container *ngIf="state.ID_CAMPO_TEXTO === campo.tipoCampo">
+        <div class="ui-g-12 pb-0">
+          <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campo.nombreCampo}}: </label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i (click)="campo.inputValue=null"
+              class="fa fa-times font-size-16 aico"
+              [ngClass]="campo.isFiltroAplicado ? 'text-dark' : 'i-slight'"> </i>
+            <input
+              type="text"
+              id="ctx{{i}}"
+              name="ctx{{i}}"
+              [(ngModel)]="campo.inputValue"
+              maxlength="100"
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+            <div class="focus-border"></div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- SELECT -->
+      <ng-container *ngIf="state.ID_LISTA_DESPLEGABLE === campo.tipoCampo">
+        <div class="ui-g-12 pb-0">
+          <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campo.nombreCampo}}: </label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i (click)="campo.itemSeleccionado=null"
+              class="fa fa-times font-size-16 aico"
+              [ngClass]="campo.isFiltroAplicado ? 'text-dark' : 'i-slight'"></i>
+            <p-dropdown
+              name="ctx{{i}}"
+              selectId="ctx{{i}}"
+              optionLabel="valor"
+              emptyFilterMessage="No hay resultados"
+              [(ngModel)]="campo.itemSeleccionado"
+              [filter]="campo.items && campo.items.length > 6"
+              [options]="campo.items"
+              [autoDisplayFirst]="false"
+              styleClass="ad-select down-ad">
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- DATE -->
+      <ng-container *ngIf="state.ID_CAMPO_FECHA === campo.tipoCampo">
+
+        <!-- fecha - inicial -->
+        <div class="ui-g-12 pb-0">
+          <label for="ctxi{{i}}" class="steps-st mb-0 mt-1"> {{campo.nombreCampo}} inicial:</label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i (click)="campo.dateInicial=null"
+              class="fa fa-times font-size-16 aico"
+              [ngClass]="campo.isFiltroAplicado ? 'text-dark' : 'i-slight'"> </i>
+            <p-calendar
+              name="ctxi{{i}}"
+              inputId="ctxi{{i}}"
+              [(ngModel)]="campo.dateInicial"
+              [locale]="state.CALENDAR_SPANISH"
+              showButtonBar="true"
+              [readonlyInput]="true"
+              inputStyleClass="ad-calendar"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="2010:2025"
+              dateFormat="dd/MM/yy">
+            </p-calendar>
+          </div>
+        </div>
+
+        <!-- fecha - final -->
+        <div class="ui-g-12 pb-0">
+          <label for="ctxf{{i}}" class="steps-st mb-0 mt-1"> {{campo.nombreCampo}} final:</label>
+        </div>
+        <div class="ui-g-12 pt-0 pb-0">
+          <div class="inner-addon left-addon">
+            <i (click)="campo.dateFinal=null"
+              class="fa fa-times font-size-16 aico"
+              [ngClass]="campo.isFiltroAplicado ? 'text-dark' : 'i-slight'"> </i>
+            <p-calendar
+              name="ctxf{{i}}"
+              inputId="ctxf{{i}}"
+              [(ngModel)]="campo.dateFinal"
+              [locale]="state.CALENDAR_SPANISH"
+              showButtonBar="true"
+              [readonlyInput]="true"
+              inputStyleClass="ad-calendar"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="2010:2025"
+              dateFormat="dd/MM/yy">
+            </p-calendar>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- btn agregar filtro -->
+    <div #addFiltersTarget class="ui-g-12 pb-0 mt-1 text-center">
+      <button (click)="showModalAgregarFiltro($event,addFiltersTarget,addfilters)" type="button" class="btn btn-sm btn-secondary btn-add w-100">
+        <label class="btn-size-admin"><i class="fa fa-plus"></i> Agregar Filtro</label>
+      </button>
+    </div>
+  </div>
+</p-panel>
+
+<!-- modal campos filtro -->
+<p-overlayPanel
+  #addfilters
+  (onHide)="hideModalAgregarFiltro()"
+  [showCloseIcon]="true"
+  [dismissable]="false">
+
+  <!-- panel principal -->
+  <p-panel styleClass="m-0 steps-pnl steps-pnl-main">
+
+    <p-header>
+      <div *ngIf="camposFiltroOrigen && camposFiltroOrigen.length > 0" class="inner-addon left-addon-f">
+        <i class="fa fa-search-plus font-size-18 aico"></i>
+        <input type="text"
+          (keyup)="busquedaNombreCampo()"
+          [(ngModel)]="filterNombreCampo"
+          maxlength="100"
+          autocomplete="off"
+          placeholder="Búsqueda por nombre del campo"
+          class="ad-input ad-input-style w-100 pt-0 font-size-15" />
+        <div class="focus-border"></div>
+      </div>
+      <div *ngIf="!(camposFiltroOrigen && camposFiltroOrigen.length > 0)">
+        <p>Agregar Filtro</p>
+      </div>
+    </p-header>
+
+    <!-- SI HAY de campos -->
+    <div *ngIf="camposFiltroOrigen && camposFiltroOrigen.length > 0" class="w-modal">
+      <p-table
+        id="tblCamposFiltro"
+        #tblCamposFiltro
+        [value]="camposFiltro"
+        [responsive]="true"
+        [paginator]="true"
+        [alwaysShowPaginator]="false"
+        [rows]="6"
+        rowHover="true"
+        styleClass="tblshort">
+
+        <ng-template pTemplate="header">
+          <tr class="text-center">
+            <th class="font-new-roman font-size-14">¿Agregado?</th>
+            <th class="font-new-roman font-size-14">Nombre del Campo</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-campo>
+          <tr [pSelectableRow]="campo">
+            <td style="width: 15%" class="text-center">
+              <admin-inputswitch *ngIf="!campo.isFiltroAplicado"
+                [isChecked]="campo.isAgregado"
+                (switchChange)="campo.isAgregado = $event">
+              </admin-inputswitch>
+              <i *ngIf="campo.isFiltroAplicado" class="pi pi-check icon-sel font-size-26"></i>
+            </td>
+            <td>{{ campo.nombreCampo }}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="2">
+              <div class="mt-2 mb-2 p-1 ui-messages ui-messages-info ui-corner-all text-center">
+                <span class="ui-messages-icon pi pi-info-circle"></span>
+                <span class="ui-messages-detail font-size-14 ml-0">
+                  <strong>No se encontraron campos</strong> que coincidan con los criterios
+                </span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- NO HAY de campos -->
+    <div *ngIf="!(camposFiltroOrigen && camposFiltroOrigen.length > 0)" class="w-modal pt-1 pr-3 pl-3">
+      <div class="mt-2 mb-2 p-1 ui-messages ui-messages-warn ui-corner-all text-center">
+        <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+        <span class="ui-messages-detail font-size-15 ml-0">
+          No se encontraron <strong>CAMPOS</strong> parametrizados en el sistema
+        </span>
+      </div>
+    </div>
+  </p-panel>
+</p-overlayPanel>

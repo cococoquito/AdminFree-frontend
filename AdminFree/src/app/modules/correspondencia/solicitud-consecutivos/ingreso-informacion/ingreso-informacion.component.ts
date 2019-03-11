@@ -32,7 +32,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
   public regex: RegexUtil;
 
   /** labels para el componente de los calendars */
-  public calendarEspanish: any;
+  public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
   /**
    * @param state, estado para administrar los datos para las
@@ -118,7 +118,6 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
 
     // se define las variables globales
     this.regex = new RegexUtil();
-    this.calendarEspanish = LabelsConstant.calendarEspanish;
 
     // se configura el modelo de los campos
     this.setCamposModel();

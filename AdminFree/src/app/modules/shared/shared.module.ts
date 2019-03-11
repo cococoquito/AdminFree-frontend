@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 import { InputswitchComponent } from './inputswitch/inputswitch.component';
 import { DetalleCampoComponent } from './detalle-campo/detalle-campo.component';
 import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
+import { FiltroConsecutivosComponent } from './filtro-consecutivos/filtro-consecutivos.component';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -44,7 +45,8 @@ import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nom
     ConsecutivoPipe,
     InputswitchComponent,
     DetalleCampoComponent,
-    DetalleNomenclaturaComponent
+    DetalleNomenclaturaComponent,
+    FiltroConsecutivosComponent
   ],
   exports: [
     SharedCommonModule,
@@ -63,7 +65,8 @@ import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nom
     ConsecutivoPipe,
     InputswitchComponent,
     DetalleCampoComponent,
-    DetalleNomenclaturaComponent
+    DetalleNomenclaturaComponent,
+    FiltroConsecutivosComponent
   ],
   providers: [
     DatePipe
