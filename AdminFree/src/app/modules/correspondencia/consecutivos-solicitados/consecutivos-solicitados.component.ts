@@ -265,7 +265,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
           }
 
           // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
-          this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
+          this.clonarFiltro();
 
           // se verifica si hay cambios en los filtros generales
           if (!this.hayFiltroAplicado) {
@@ -622,5 +622,39 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
     // se retorna la bandera que indica que si hay nuevo filtro agregado
     return isNuevoFiltroAgregado;
+  }
+
+  /**
+   * Metodo que permite clonar los datos del filtro de busqueda
+   */
+  private clonarFiltro(): void {
+
+    // solo aplica si hay instancia del filtro principal
+    this.filtrosClone = null;
+    if (this.filtros) {
+      this.filtrosClone = new FiltroConsecutivosAnioActualDTO();
+
+      // filtros generales
+      this.filtrosClone.idCliente = this.filtros.idCliente;
+      this.filtrosClone.nomenclaturas = this.filtros.nomenclaturas;
+      this.filtrosClone.consecutivos = this.filtros.consecutivos;
+      this.filtrosClone.idUsuario = this.filtros.idUsuario;
+      this.filtrosClone.fechaSolicitudInicial = this.filtros.fechaSolicitudInicial;
+      this.filtrosClone.fechaSolicitudFinal = this.filtros.fechaSolicitudFinal;
+      this.filtrosClone.estado = this.filtros.estado;
+
+      // filtros agregados
+      if (this.filtros.filtrosAgregados) {
+        this.filtrosClone.filtrosAgregados = new Array<CampoFiltroDTO>();
+        for (const campo of this.filtros.filtrosAgregados) {
+          const campoClone = new CampoFiltroDTO();
+          campoClone.idCampo = campo.idCampo;
+          campoClone.inputValue = campo.inputValue;
+          campoClone.dateInicial = campo.dateInicial;
+          campoClone.dateFinal = campo.dateFinal;
+          this.filtrosClone.filtrosAgregados.push(campoClone);
+        }
+      }
+    }
   }
 }
