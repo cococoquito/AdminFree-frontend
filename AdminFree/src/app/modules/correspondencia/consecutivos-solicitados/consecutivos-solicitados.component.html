@@ -574,10 +574,11 @@
         <ng-template pTemplate="body" let-campo>
           <tr [pSelectableRow]="campo">
             <td style="width: 15%" class="text-center">
-              <admin-inputswitch
+              <admin-inputswitch *ngIf="!campo.isFiltroAplicado"
                 [isChecked]="campo.isAgregado"
                 (switchChange)="campo.isAgregado = $event">
               </admin-inputswitch>
+              <i *ngIf="campo.isFiltroAplicado" class="pi pi-check icon-sel font-size-26"></i>
             </td>
             <td>{{ campo.nombreCampo }}</td>
           </tr>

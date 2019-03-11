@@ -1,4 +1,5 @@
 import { PaginadorDTO } from '../transversal/paginador-dto';
+import { CampoFiltroDTO } from './campo-filtro.dto';
 
 /**
  * DTO que contiene los atributos para el filtro de busqueda de los consecutivos
@@ -31,6 +32,9 @@ export class FiltroConsecutivosAnioActualDTO {
 
   /** Busqueda por estado del consecutivo */
   public estado: number;
+
+  /** lista de otros filtros agregados */
+  public filtrosAgregados: Array<CampoFiltroDTO>;
 
   /**
    * se debe inicializar con null para eliminar la opcion undefined

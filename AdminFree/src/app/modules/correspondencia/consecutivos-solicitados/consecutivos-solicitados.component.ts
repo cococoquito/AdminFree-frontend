@@ -246,18 +246,37 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
           // se configura los nuevos consecutivos
           this.consecutivosPaginados.filtroExitoso(table, data);
 
+          // se limpia la bandera que indica que si hay filtro aplicado
+          this.hayFiltroAplicado = false;
+
+          // se configura la bandera 'isFiltroAplicado=false' para los filtros AGREGADOS
+          if (this.camposFiltroAgregados && this.camposFiltroAgregados.length > 0) {
+            for (const campo of this.camposFiltroAgregados) {
+              campo.isFiltroAplicado = false;
+            }
+          }
+
+          // se configura la bandera 'isFiltroAplicado=true' para los filtros ENVIADOS
+          if (this.filtros.filtrosAgregados && this.filtros.filtrosAgregados.length > 0) {
+            for (const agregado of this.filtros.filtrosAgregados) {
+              agregado.isFiltroAplicado = true;
+              this.hayFiltroAplicado = true;
+            }
+          }
+
           // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
           this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
 
-          // se configura la bandera que indica que hay filtro aplicado
-          this.hayFiltroAplicado = false;
-          if (this.filtrosClone.consecutivos ||
-            this.filtrosClone.nomenclaturas ||
-            this.filtrosClone.idUsuario ||
-            this.filtrosClone.fechaSolicitudInicial ||
-            this.filtrosClone.fechaSolicitudFinal ||
-            this.filtrosClone.estado) {
-            this.hayFiltroAplicado = true;
+          // se verifica si hay cambios en los filtros generales
+          if (!this.hayFiltroAplicado) {
+            if (this.filtrosClone.consecutivos ||
+              this.filtrosClone.nomenclaturas ||
+              this.filtrosClone.idUsuario ||
+              this.filtrosClone.fechaSolicitudInicial ||
+              this.filtrosClone.fechaSolicitudFinal ||
+              this.filtrosClone.estado) {
+              this.hayFiltroAplicado = true;
+            }
           }
         },
         error => {
@@ -431,7 +450,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
             // aplica si hay items consultados
             if (items && items.length > 0) {
 
-              // se recorre cada item para buscar su duenio
+              // se recorre cada item para buscar su dueño
               for (const item of items) {
 
                 // se busca el selectitem que le pertenece a este item
@@ -468,6 +487,53 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     // se eliminan los espacios para los campos tipo input
     this.filtros.consecutivos = this.setTrimFilter(this.filtros.consecutivos);
     this.filtros.nomenclaturas = this.setTrimFilter(this.filtros.nomenclaturas);
+
+    // se procede a organizar los campos filtros agregados
+    this.filtros.filtrosAgregados = null;
+    if (this.camposFiltroAgregados && this.camposFiltroAgregados.length > 0) {
+
+      // se crea la instancia para limpiar el filtro anterior enviado
+      this.filtros.filtrosAgregados = new Array<CampoFiltroDTO>();
+
+      // se recorre cada filtro agregado
+      for (const campo of this.camposFiltroAgregados) {
+
+        // si este campo fue seleccionado
+        if (campo.isAgregado) {
+
+          // se valida el tipo de campo
+          switch (campo.tipoCampo) {
+
+            // para campo de texto el valor no puede ser vacio ni nulo
+            case this.ID_CAMPO_TEXTO: {
+              campo.inputValue = this.setTrimFilter(campo.inputValue);
+              if (campo.inputValue) {
+                this.filtros.filtrosAgregados.push(campo);
+              }
+              break;
+            }
+
+            // para la lista desplegable debe existir el item seleccionado
+            case this.ID_LISTA_DESPLEGABLE: {
+              campo.inputValue = null;
+              if (campo.itemSeleccionado && campo.itemSeleccionado.id) {
+                campo.inputValue = campo.itemSeleccionado.id;
+                this.filtros.filtrosAgregados.push(campo);
+              }
+              break;
+            }
+
+            // para la fecha debe existir alguno de las dos fechas (inicio-final)
+            case this.ID_CAMPO_FECHA: {
+              if (campo.dateInicial || campo.dateFinal) {
+                this.filtros.filtrosAgregados.push(campo);
+              }
+              break;
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
