@@ -10,7 +10,7 @@
   }
 }
 
-th:after,
+#tblcc th:after,
 th:before {
   content: '';
   position: absolute;
@@ -18,7 +18,7 @@ th:before {
   width: 100%;
 }
 
-th::before {
+#tblcc th::before {
   content: '';
   position: absolute;
   left: 1px;
@@ -29,7 +29,7 @@ th::before {
   top: 0px;
 }
 
-th:after {
+#tblcc th:after {
   bottom: -1px;
   border-bottom: 1px solid #c8c8c8;
 }
