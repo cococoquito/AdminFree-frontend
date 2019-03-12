@@ -45,8 +45,8 @@ export class FiltroConsecutivosComponent extends CommonComponent {
    *
    * @param correspondenciaService, se utiliza para consultar los campos filtros
    *
-   * @param state, se utiliza para tomar y enviar los datos o
-   * eventos de este componente a los componentes padre
+   * @param state, se utiliza como mediador para administrar los datos
+   * o llamados de metodos entre este filtro y el componente padre
    */
   constructor(
     protected messageService: MessageService,

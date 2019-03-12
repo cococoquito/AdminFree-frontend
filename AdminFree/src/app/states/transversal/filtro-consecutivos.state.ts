@@ -3,6 +3,7 @@ import { FiltroConsecutivosDTO } from '../../dtos/correspondencia/filtro-consecu
 import { SelectItemDTO } from '../../dtos/transversal/select-item.dto';
 import { CampoFiltroDTO } from '../../dtos/correspondencia/campo-filtro.dto';
 import { ClienteDTO } from '../../dtos/configuraciones/cliente.dto';
+import { PaginadorModel } from '../../model/paginador-model';
 import { TipoCamposConstant } from '../../constants/tipo-campos.constant';
 import { EstadoConstant } from '../../constants/estado.constant';
 import { LabelsConstant } from '../../constants/labels.constant';
@@ -21,6 +22,9 @@ export class FiltroConsecutivosState {
 
   /** Es la instancia del componente que tiene los metodos de filtrar y refrescar */
   public listener: any;
+
+  /** Paginador model de los consecutivos solicitados */
+  public consecutivosPaginados: PaginadorModel;
 
   /** Se utiliza para encapsular los filtros de busqueda ingresados */
   public filtros: FiltroConsecutivosDTO;
@@ -41,9 +45,6 @@ export class FiltroConsecutivosState {
   /** Son los campos filtros agregados */
   public camposFiltroAgregados: Array<CampoFiltroDTO>;
 
-  /** cantidad total de los consecutivos consultados */
-  public cantidadTotal: number;
-
   /** constante para el idioma espaniol para los calendar */
   public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
@@ -57,13 +58,25 @@ export class FiltroConsecutivosState {
   public ID_ANULADO = EstadoConstant.ID_ANULADO;
 
   /**
-   * Metodo que permite iniciar el state, creando los filtros
-   * de busqueda dado que este DTO es requerido para el componente
+   * Metodo que permite configurar las variables globales necesarias
+   * para iniciar el componente filtro de busqueda
+   *
+   * @param listener, es la instancia del componente padre para invocar sus metodos
+   * @param usuarios, lista usuarios para ser visualizado en el SELECT
+   * @param minDateSolicitudFilter, se utiliza para restringir los meses o anios en la fecha solicitud
+   * @param maxDateSolicitudFilter, se utiliza para restringir los meses o anios en la fecha solicitud
    */
-  public init(clienteCurrent: ClienteDTO): void {
+  public init(
+    listener: any,
+    usuarios: Array<SelectItemDTO>,
+    minDateSolicitudFilter: Date,
+    maxDateSolicitudFilter: Date): void {
 
-    // se configura el cliente autenticado
-    this.clienteCurrent = clienteCurrent;
+    // se configura los parametros
+    this.listener = listener;
+    this.usuarios = usuarios;
+    this.minDateSolicitudFilter = minDateSolicitudFilter;
+    this.maxDateSolicitudFilter = maxDateSolicitudFilter;
 
     // se configura los filtros de busqueda
     this.filtros = new FiltroConsecutivosDTO();
