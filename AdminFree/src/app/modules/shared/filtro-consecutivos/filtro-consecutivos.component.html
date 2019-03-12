@@ -8,18 +8,18 @@
       <div class="ui-g-5 p-0">
         <button (click)="filtrar()" type="button" class="btn btn-sm btn-primary">
           <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
-          <i *ngIf="state.hayFiltroAplicado" class="fa fa-asterisk font-size-9 pl-1"></i>
+          <i *ngIf="hayFiltroAplicado" class="fa fa-asterisk font-size-9 pl-1"></i>
         </button>
       </div>
 
       <!-- btns - refresh- cant -->
       <div class="ui-g-6 p-0">
         <p class="font-size-14 font-new-roman mt-2">
-          Cant: <strong>{{ state.consecutivosPaginados.datos.cantidadTotal | number }}</strong>
+          Cant: <strong>{{ state.consecutivosPaginados.datos?.cantidadTotal | number }}</strong>
         </p>
       </div>
       <div class="ui-g-1 p-0 mt-2 text-left">
-        <i (click)="state.listener.refresh()" class="fa fa-refresh font-size-20 refresh"></i>
+        <i (click)="state.componentePadre.refresh()" class="fa fa-refresh font-size-20 refresh"></i>
       </div>
     </div>
   </p-header>
@@ -171,7 +171,7 @@
     </div>
 
     <!-- lista campos agregados -->
-    <ng-container *ngFor="let campo of state.camposFiltroAgregados; let i = index">
+    <ng-container *ngFor="let campo of camposFiltroAgregados; let i = index">
 
       <!-- INPUT -->
       <ng-container *ngIf="state.ID_CAMPO_TEXTO === campo.tipoCampo">
@@ -311,7 +311,7 @@
       </div>
     </p-header>
 
-    <!-- SI HAY de campos -->
+    <!-- SI HAY campos -->
     <div *ngIf="camposFiltroOrigen && camposFiltroOrigen.length > 0" class="w-modal">
       <p-table
         id="tblCamposFiltro"
@@ -359,7 +359,7 @@
       </p-table>
     </div>
 
-    <!-- NO HAY de campos -->
+    <!-- NO HAY campos -->
     <div *ngIf="!(camposFiltroOrigen && camposFiltroOrigen.length > 0)" class="w-modal pt-1 pr-3 pl-3">
       <div class="mt-2 mb-2 p-1 ui-messages ui-messages-warn ui-corner-all text-center">
         <span class="ui-messages-icon pi pi-exclamation-triangle"></span>

@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
 import { CommonComponent } from '../../../util/common.component';
+import { FiltroConsecutivosDTO } from './../../../dtos/correspondencia/filtro-consecutivos.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { CampoFiltroDTO } from '../../../dtos/correspondencia/campo-filtro.dto';
 import { ItemDTO } from '../../../dtos/configuraciones/item.dto';
@@ -13,7 +14,8 @@ import { FechaUtil } from '../../../util/fecha-util';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 
 /**
- * Componente para la visualizacion del panel de filtro de busqueda de consecutivos
+ * Componente para la visualizacion del panel que contiene
+ * los filtros de busqueda de consecutivos de correspondencia
  *
  * @author Carlos Andres Diaz
  */
@@ -22,7 +24,7 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
   templateUrl: './filtro-consecutivos.component.html',
   styleUrls: ['./filtro-consecutivos.component.css']
 })
-export class FiltroConsecutivosComponent extends CommonComponent {
+export class FiltroConsecutivosComponent extends CommonComponent implements OnInit {
 
   /** Es el usuario seleccionado para el filtro de busqueda */
   public usuarioFiltro: SelectItemDTO;
@@ -33,8 +35,14 @@ export class FiltroConsecutivosComponent extends CommonComponent {
   /** Son los campos filtros a visualizar en pantalla para ser agregados */
   public camposFiltro: Array<CampoFiltroDTO>;
 
+  /** Son los campos filtros agregados */
+  public camposFiltroAgregados: Array<CampoFiltroDTO>;
+
   /** Es el filter ingresado para la busqueda por nombre del campo */
   public filterNombreCampo: string;
+
+  /** Se utiliza para pintar el asterisco en el boton filtrar */
+  public hayFiltroAplicado: boolean;
 
   /** Se utiliza para resetear la tabla campos filtros cuando hacen alguna busqueda*/
   @ViewChild('tblCamposFiltro') tblCamposFiltro: Table;
@@ -56,6 +64,22 @@ export class FiltroConsecutivosComponent extends CommonComponent {
   }
 
   /**
+   * Se inicializa los atributos del state para el filtro busqueda
+   */
+  ngOnInit() {
+
+    // debe existir la instancia del filtro para el funcionamiento correcto
+    const filtros = new FiltroConsecutivosDTO();
+    filtros.idCliente = this.state.clienteCurrent.id;
+
+    // se debe inicializar el clone con los mismos datos del filtro
+    const filtrosClone = JSON.parse(JSON.stringify(filtros));
+
+    // se inicializa el state para el filtro de consecutivos
+    this.state.initComponenteFiltro(this, filtros, filtrosClone);
+  }
+
+  /**
    * Metodo que soporta el evento click del boton filtrar
    */
   public filtrar(): void {
@@ -68,9 +92,49 @@ export class FiltroConsecutivosComponent extends CommonComponent {
 
     // solo se invoca si hay algun criterio de busqueda ingresado
     if (this.isNuevoFilter()) {
+      this.state.componentePadre.filtrar();
+    }
+  }
 
-      // se invoca el metodo filtrar del componente padre
-      this.state.listener.filtrar();
+  /**
+   * Metodo que es invocado despues de que el filtro de busqueda
+   * se ejecute exitosamente por el componente PADRE
+   */
+  public filtroExitoso(): void {
+
+    // se limpia la bandera que indica que si hay filtro aplicado
+    this.hayFiltroAplicado = false;
+
+    // se configura la bandera 'isFiltroAplicado=false' para los filtros AGREGADOS
+    if (this.camposFiltroAgregados && this.camposFiltroAgregados.length > 0) {
+      for (const campo of this.camposFiltroAgregados) {
+        campo.isFiltroAplicado = false;
+      }
+    }
+
+    // se configura la bandera 'isFiltroAplicado=true' para los filtros ENVIADOS
+    if (this.state.filtros.filtrosAgregados && this.state.filtros.filtrosAgregados.length > 0) {
+      for (const agregado of this.state.filtros.filtrosAgregados) {
+        agregado.isFiltroAplicado = true;
+        this.hayFiltroAplicado = true;
+      }
+    }
+
+    // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
+    this.clonarFiltro();
+
+    // si no hay filtro aplicado se verifica en los filtros generales
+    if (!this.hayFiltroAplicado) {
+
+      // se verifica en los filros generales
+      if (this.state.filtrosClone.consecutivos ||
+          this.state.filtrosClone.nomenclaturas ||
+          this.state.filtrosClone.idUsuario ||
+          this.state.filtrosClone.fechaSolicitudInicial ||
+          this.state.filtrosClone.fechaSolicitudFinal ||
+          this.state.filtrosClone.estado) {
+          this.hayFiltroAplicado = true;
+      }
     }
   }
 
@@ -118,7 +182,7 @@ export class FiltroConsecutivosComponent extends CommonComponent {
     if (this.camposFiltroOrigen && this.camposFiltroOrigen.length > 0) {
 
       // se limpia los campos agregados
-      this.state.camposFiltroAgregados = null;
+      this.camposFiltroAgregados = null;
 
       // lista de identificadores de selecitems sin sus items
       let idsCampos: Array<number>;
@@ -130,10 +194,10 @@ export class FiltroConsecutivosComponent extends CommonComponent {
         if (campo.isAgregado) {
 
           // se procede agregar este campo como seleccionado
-          if (!this.state.camposFiltroAgregados) {
-            this.state.camposFiltroAgregados = new Array<CampoFiltroDTO>();
+          if (!this.camposFiltroAgregados) {
+            this.camposFiltroAgregados = new Array<CampoFiltroDTO>();
           }
-          this.state.camposFiltroAgregados.push(campo);
+          this.camposFiltroAgregados.push(campo);
 
           // se verifica si este campo es un selectitems sin sus items
           if (this.state.ID_LISTA_DESPLEGABLE === campo.tipoCampo && (!campo.items || campo.items.length === 0)) {
@@ -160,7 +224,7 @@ export class FiltroConsecutivosComponent extends CommonComponent {
               for (const item of items) {
 
                 // se busca el selectitem que le pertenece a este item
-                for (const campo of this.state.camposFiltroAgregados) {
+                for (const campo of this.camposFiltroAgregados) {
 
                   // si es el mismo id campo se procede agregarlo
                   if (item.idCampo === campo.idCampo) {
@@ -209,6 +273,41 @@ export class FiltroConsecutivosComponent extends CommonComponent {
   }
 
   /**
+   * Metodo que permite clonar los datos del filtro de busqueda
+   */
+  private clonarFiltro(): void {
+
+    // solo aplica si hay instancia del filtro principal
+    this.state.filtrosClone = null;
+    if (this.state.filtros) {
+      this.state.filtrosClone = new FiltroConsecutivosDTO();
+
+      // filtros generales
+      this.state.filtrosClone.idCliente = this.state.filtros.idCliente;
+      this.state.filtrosClone.nomenclaturas = this.state.filtros.nomenclaturas;
+      this.state.filtrosClone.consecutivos = this.state.filtros.consecutivos;
+      this.state.filtrosClone.idUsuario = this.state.filtros.idUsuario;
+      this.state.filtrosClone.fechaSolicitudInicial = this.state.filtros.fechaSolicitudInicial;
+      this.state.filtrosClone.fechaSolicitudFinal = this.state.filtros.fechaSolicitudFinal;
+      this.state.filtrosClone.estado = this.state.filtros.estado;
+
+      // filtros agregados
+      if (this.state.filtros.filtrosAgregados) {
+        this.state.filtrosClone.filtrosAgregados = new Array<CampoFiltroDTO>();
+        for (const campo of this.state.filtros.filtrosAgregados) {
+          const campoClone = new CampoFiltroDTO();
+          campoClone.idCampo = campo.idCampo;
+          campoClone.tipoCampo = campo.tipoCampo;
+          campoClone.inputValue = campo.inputValue;
+          campoClone.dateInicial = campo.dateInicial;
+          campoClone.dateFinal = campo.dateFinal;
+          this.state.filtrosClone.filtrosAgregados.push(campoClone);
+        }
+      }
+    }
+  }
+
+  /**
    * Metodo que permite organizar los criterios de busqueda
    */
   private orgarnizarFiltro(): void {
@@ -222,13 +321,13 @@ export class FiltroConsecutivosComponent extends CommonComponent {
 
     // se procede a organizar los campos filtros agregados
     this.state.filtros.filtrosAgregados = null;
-    if (this.state.camposFiltroAgregados && this.state.camposFiltroAgregados.length > 0) {
+    if (this.camposFiltroAgregados && this.camposFiltroAgregados.length > 0) {
 
       // se crea la instancia para limpiar el filtro anterior enviado
       this.state.filtros.filtrosAgregados = new Array<CampoFiltroDTO>();
 
       // se recorre cada filtro agregado
-      for (const campo of this.state.camposFiltroAgregados) {
+      for (const campo of this.camposFiltroAgregados) {
 
         // si este campo fue seleccionado
         if (campo.isAgregado) {

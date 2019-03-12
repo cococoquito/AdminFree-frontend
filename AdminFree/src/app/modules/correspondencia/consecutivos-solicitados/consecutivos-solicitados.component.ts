@@ -79,21 +79,26 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_CONSECUTIVOS_SOLICITADOS;
 
     // se procede a obtener el cliente autenticado
-    this.stateFiltro.clienteCurrent = LocalStoreUtil.getCurrentCliente();
+    const clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
     // se consulta los datos iniciales para este modulo
-    this.correspondenciaService.getInitConsecutivosAnioActual(this.stateFiltro.clienteCurrent.id).subscribe(
+    this.correspondenciaService.getInitConsecutivosAnioActual(clienteCurrent.id).subscribe(
       data => {
         // se verifica si hay consecutivos inicial
         if (data.consecutivos && data.consecutivos.cantidadTotal && data.consecutivos.cantidadTotal > 0) {
 
           // se configura el paginador
-          this.stateFiltro.consecutivosPaginados = new PaginadorModel(this);
-          this.stateFiltro.consecutivosPaginados.configurarRegistros(data.consecutivos);
+          const consecutivosPaginados = new PaginadorModel(this);
+          consecutivosPaginados.configurarRegistros(data.consecutivos);
 
-          // se inicializa los datos requeridos para iniciar el state del filtro
+          // la fecha llega como string se debe hacer la conversion
           data.fechaActual = new Date(data.fechaActual);
-          this.stateFiltro.init(this, data.usuarios,
+
+          // se inicializa el state para el filtro de consecutivos
+          this.stateFiltro.initComponentePadre(this,
+            clienteCurrent,
+            consecutivosPaginados,
+            data.usuarios,
             new Date(data.fechaActual.getFullYear(), 0, 1),
             new Date(data.fechaActual.getFullYear(), 11, 31));
 
@@ -165,40 +170,8 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
         // se configura los nuevos consecutivos
         this.stateFiltro.consecutivosPaginados.filtroExitoso(this.tblConsecutivos, data);
 
-        // se limpia la bandera que indica que si hay filtro aplicado
-        this.stateFiltro.hayFiltroAplicado = false;
-
-        // se configura la bandera 'isFiltroAplicado=false' para los filtros AGREGADOS
-        if (this.stateFiltro.camposFiltroAgregados && this.stateFiltro.camposFiltroAgregados.length > 0) {
-          for (const campo of this.stateFiltro.camposFiltroAgregados) {
-            campo.isFiltroAplicado = false;
-          }
-        }
-
-        // se configura la bandera 'isFiltroAplicado=true' para los filtros ENVIADOS
-        if (this.stateFiltro.filtros.filtrosAgregados && this.stateFiltro.filtros.filtrosAgregados.length > 0) {
-          for (const agregado of this.stateFiltro.filtros.filtrosAgregados) {
-            agregado.isFiltroAplicado = true;
-            this.stateFiltro.hayFiltroAplicado = true;
-          }
-        }
-
-        // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
-        this.stateFiltro.clonarFiltro();
-
-        // si no hay filtro aplicado se verifica en los filtros generales
-        if (!this.stateFiltro.hayFiltroAplicado) {
-
-          // se verifica en los filros generales
-          if (this.stateFiltro.filtrosClone.consecutivos ||
-              this.stateFiltro.filtrosClone.nomenclaturas ||
-              this.stateFiltro.filtrosClone.idUsuario ||
-              this.stateFiltro.filtrosClone.fechaSolicitudInicial ||
-              this.stateFiltro.filtrosClone.fechaSolicitudFinal ||
-              this.stateFiltro.filtrosClone.estado) {
-              this.stateFiltro.hayFiltroAplicado = true;
-          }
-        }
+        // se notifica al componente filtro que la solicitud fue procesada exitosamente
+        this.stateFiltro.componenteFiltro.filtroExitoso();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));

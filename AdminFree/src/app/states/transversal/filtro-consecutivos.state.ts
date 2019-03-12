@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { FiltroConsecutivosComponent } from '../../modules/shared/filtro-consecutivos/filtro-consecutivos.component';
 import { FiltroConsecutivosDTO } from '../../dtos/correspondencia/filtro-consecutivos.dto';
 import { SelectItemDTO } from '../../dtos/transversal/select-item.dto';
-import { CampoFiltroDTO } from '../../dtos/correspondencia/campo-filtro.dto';
 import { ClienteDTO } from '../../dtos/configuraciones/cliente.dto';
 import { PaginadorModel } from '../../model/paginador-model';
 import { TipoCamposConstant } from '../../constants/tipo-campos.constant';
@@ -20,8 +20,11 @@ export class FiltroConsecutivosState {
   /** cliente autenticado o es el cliente asociado al usuario autenticado */
   public clienteCurrent: ClienteDTO;
 
-  /** Es la instancia del componente que tiene los metodos de filtrar y refrescar */
-  public listener: any;
+  /** Es la instancia del componente padre que tiene los metodos de filtrar y refrescar */
+  public componentePadre: any;
+
+  /** Es la instancia del componente filtro que tiene los metodos para que el padre lo invoque */
+  public componenteFiltro: FiltroConsecutivosComponent;
 
   /** Paginador model de los consecutivos solicitados */
   public consecutivosPaginados: PaginadorModel;
@@ -32,18 +35,12 @@ export class FiltroConsecutivosState {
   /** Se utiliza para validar si hay nuevos filtros cuando se consultan los consecutivos */
   public filtrosClone: FiltroConsecutivosDTO;
 
-  /** Se utiliza para pintar el asterisco en el boton filtrar */
-  public hayFiltroAplicado: boolean;
-
   /** si esta lista es nula no se mostrara el filtro de busqueda por usuarios */
   public usuarios: Array<SelectItemDTO>;
 
   /** Los meses de la fecha de solicitud se debe mostrar solamente de acuerdo el submodulo ingresado */
   public minDateSolicitudFilter: Date;
   public maxDateSolicitudFilter: Date;
-
-  /** Son los campos filtros agregados */
-  public camposFiltroAgregados: Array<CampoFiltroDTO>;
 
   /** constante para el idioma espaniol para los calendar */
   public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
@@ -58,66 +55,49 @@ export class FiltroConsecutivosState {
   public ID_ANULADO = EstadoConstant.ID_ANULADO;
 
   /**
-   * Metodo que permite configurar las variables globales necesarias
-   * para iniciar el componente filtro de busqueda
+   * Este metodo se debe invocar por los componentes PADRES para enviar los valores
+   * iniciales que son necesarios para que el filtro de busqueda funcione correctamente
    *
-   * @param listener, es la instancia del componente padre para invocar sus metodos
-   * @param usuarios, lista usuarios para ser visualizado en el SELECT
+   * @param componentePadre, es la instancia del componente padre para invocar sus metodos
+   * @param clienteCurrent, es el usuario o admin autenticado
+   * @param consecutivosPaginados, paginador de los consecutivos consultados
+   * @param usuarios, lista de usuarios para ser visualizado en el SELECT
    * @param minDateSolicitudFilter, se utiliza para restringir los meses o anios en la fecha solicitud
    * @param maxDateSolicitudFilter, se utiliza para restringir los meses o anios en la fecha solicitud
    */
-  public init(
-    listener: any,
+  public initComponentePadre(
+    componentePadre: any,
+    clienteCurrent: ClienteDTO,
+    consecutivosPaginados: PaginadorModel,
     usuarios: Array<SelectItemDTO>,
     minDateSolicitudFilter: Date,
     maxDateSolicitudFilter: Date): void {
 
     // se configura los parametros
-    this.listener = listener;
+    this.componentePadre = componentePadre;
+    this.clienteCurrent = clienteCurrent;
+    this.consecutivosPaginados = consecutivosPaginados;
     this.usuarios = usuarios;
     this.minDateSolicitudFilter = minDateSolicitudFilter;
     this.maxDateSolicitudFilter = maxDateSolicitudFilter;
-
-    // se configura los filtros de busqueda
-    this.filtros = new FiltroConsecutivosDTO();
-    this.filtros.idCliente = this.clienteCurrent.id;
-
-    // se debe inicializar el clone con los mismos datos del filtro
-    this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
   }
 
   /**
-   * Metodo que permite clonar los datos del filtro de busqueda
+   * Este metodo se debe invocar por el componente FILTRO para enviar los valores
+   * iniciales que son necesarios para los componentes PADRES
+   *
+   * @param componenteFiltro, es la instancia del componente filtro para invocar sus metodos
+   * @param filtros, contiene los datos de los filtros ingresados
+   * @param filtrosClone, es el clone de los datos filtros ingresados
    */
-  public clonarFiltro(): void {
+  public initComponenteFiltro(
+    componenteFiltro: FiltroConsecutivosComponent,
+    filtros: FiltroConsecutivosDTO,
+    filtrosClone: FiltroConsecutivosDTO) {
 
-    // solo aplica si hay instancia del filtro principal
-    this.filtrosClone = null;
-    if (this.filtros) {
-      this.filtrosClone = new FiltroConsecutivosDTO();
-
-      // filtros generales
-      this.filtrosClone.idCliente = this.filtros.idCliente;
-      this.filtrosClone.nomenclaturas = this.filtros.nomenclaturas;
-      this.filtrosClone.consecutivos = this.filtros.consecutivos;
-      this.filtrosClone.idUsuario = this.filtros.idUsuario;
-      this.filtrosClone.fechaSolicitudInicial = this.filtros.fechaSolicitudInicial;
-      this.filtrosClone.fechaSolicitudFinal = this.filtros.fechaSolicitudFinal;
-      this.filtrosClone.estado = this.filtros.estado;
-
-      // filtros agregados
-      if (this.filtros.filtrosAgregados) {
-        this.filtrosClone.filtrosAgregados = new Array<CampoFiltroDTO>();
-        for (const campo of this.filtros.filtrosAgregados) {
-          const campoClone = new CampoFiltroDTO();
-          campoClone.idCampo = campo.idCampo;
-          campoClone.tipoCampo = campo.tipoCampo;
-          campoClone.inputValue = campo.inputValue;
-          campoClone.dateInicial = campo.dateInicial;
-          campoClone.dateFinal = campo.dateFinal;
-          this.filtrosClone.filtrosAgregados.push(campoClone);
-        }
-      }
-    }
+    // se configura los parametros
+    this.componenteFiltro = componenteFiltro;
+    this.filtros = filtros;
+    this.filtrosClone = filtrosClone;
   }
 }
