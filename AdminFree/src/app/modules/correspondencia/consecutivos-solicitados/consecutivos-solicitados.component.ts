@@ -43,7 +43,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    * @param shellState, se utiliza para el titulo del componente
    *
    * @param stateFiltro, se utiliza como mediador para administrar los datos
-   * o llamados de metodos entre este componente y el filtro busqueda
+   * o llamados de metodos entre este componente y el componente filtro busqueda
    */
   constructor(
     protected messageService: MessageService,
@@ -94,7 +94,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
           // la fecha llega como string se debe hacer la conversion
           data.fechaActual = new Date(data.fechaActual);
 
-          // se inicializa el state para el filtro de consecutivos
+          // se inicializa el state para el componente filtro de consecutivos
           this.stateFiltro.initComponentePadre(this,
             clienteCurrent,
             consecutivosPaginados,

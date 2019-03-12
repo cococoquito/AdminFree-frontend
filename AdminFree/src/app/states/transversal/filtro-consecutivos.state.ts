@@ -23,19 +23,19 @@ export class FiltroConsecutivosState {
   /** Es la instancia del componente padre que tiene los metodos de filtrar y refrescar */
   public componentePadre: any;
 
-  /** Es la instancia del componente filtro que tiene los metodos para que el padre lo invoque */
+  /** Es la instancia del componente filtro que tiene los metodos para que el padre los invoque */
   public componenteFiltro: FiltroConsecutivosComponent;
 
   /** Paginador model de los consecutivos solicitados */
   public consecutivosPaginados: PaginadorModel;
 
-  /** Se utiliza para encapsular los filtros de busqueda ingresados */
+  /** Se utiliza para encapsular los filtros de busqueda ingresados, lo utiliza el componente padre */
   public filtros: FiltroConsecutivosDTO;
 
-  /** Se utiliza para validar si hay nuevos filtros cuando se consultan los consecutivos */
+  /** Se utiliza para validar si hay nuevos filtros, lo utiliza el componente padre al refrescar */
   public filtrosClone: FiltroConsecutivosDTO;
 
-  /** si esta lista es nula no se mostrara el filtro de busqueda por usuarios */
+  /** si esta lista es nula no se mostrara el filtro de busqueda por usuarios en el componente filtro */
   public usuarios: Array<SelectItemDTO>;
 
   /** Los meses de la fecha de solicitud se debe mostrar solamente de acuerdo el submodulo ingresado */

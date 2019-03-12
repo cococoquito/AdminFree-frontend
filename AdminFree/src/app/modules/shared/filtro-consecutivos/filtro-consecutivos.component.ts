@@ -26,9 +26,6 @@ import { MsjFrontConstant } from '../../../constants/messages-frontend.constant'
 })
 export class FiltroConsecutivosComponent extends CommonComponent implements OnInit {
 
-  /** Es el usuario seleccionado para el filtro de busqueda */
-  public usuarioFiltro: SelectItemDTO;
-
   /** Son todos los campos filtros consultados */
   public camposFiltroOrigen: Array<CampoFiltroDTO>;
 
@@ -37,6 +34,9 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
 
   /** Son los campos filtros agregados */
   public camposFiltroAgregados: Array<CampoFiltroDTO>;
+
+  /** Es el usuario seleccionado para el filtro de busqueda */
+  public usuarioFiltro: SelectItemDTO;
 
   /** Es el filter ingresado para la busqueda por nombre del campo */
   public filterNombreCampo: string;
@@ -75,7 +75,7 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
     // se debe inicializar el clone con los mismos datos del filtro
     const filtrosClone = JSON.parse(JSON.stringify(filtros));
 
-    // se inicializa el state para el filtro de consecutivos
+    // se inicializa el state del componente filtro busqueda
     this.state.initComponenteFiltro(this, filtros, filtrosClone);
   }
 
