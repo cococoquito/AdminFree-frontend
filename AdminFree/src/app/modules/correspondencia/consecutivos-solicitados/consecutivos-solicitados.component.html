@@ -16,7 +16,7 @@
 <ng-container *ngIf="stateFiltro.consecutivosPaginados">
 
   <!-- Panel filtro - lista consecutivos -->
-  <div *ngIf="!consecutivoDetalle" class="ui-g mt-1">
+  <div [style.display]="!consecutivoDetalle?'inherit':'none'" class="ui-g mt-1">
 
     <!-- filtro busqueda -->
     <div class="ui-g-12 ui-md-3 p-0 pr-2">
