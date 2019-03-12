@@ -4,11 +4,13 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
+import { CommonComponent } from '../../../util/common.component';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { CampoFiltroDTO } from '../../../dtos/correspondencia/campo-filtro.dto';
 import { ItemDTO } from '../../../dtos/configuraciones/item.dto';
-import { MessagesBackendConstant } from '../../../constants/messages-backend.constant';
 import { MsjUtil } from '../../../util/messages.util';
+import { FechaUtil } from '../../../util/fecha-util';
+import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 
 /**
  * Componente para la visualizacion del panel de filtro de busqueda de consecutivos
@@ -20,7 +22,7 @@ import { MsjUtil } from '../../../util/messages.util';
   templateUrl: './filtro-consecutivos.component.html',
   styleUrls: ['./filtro-consecutivos.component.css']
 })
-export class FiltroConsecutivosComponent {
+export class FiltroConsecutivosComponent extends CommonComponent {
 
   /** Es el usuario seleccionado para el filtro de busqueda */
   public usuarioFiltro: SelectItemDTO;
@@ -47,9 +49,30 @@ export class FiltroConsecutivosComponent {
    * eventos de este componente a los componentes padre
    */
   constructor(
-    private messageService: MessageService,
+    protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
-    public state: FiltroConsecutivosState) {}
+    public state: FiltroConsecutivosState) {
+    super();
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton filtrar
+   */
+  public filtrar(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se procede a organizar los criterios de busqueda ingresado
+    this.orgarnizarFiltro();
+
+    // solo se invoca si hay algun criterio de busqueda ingresado
+    if (this.isNuevoFilter()) {
+
+      // se invoca el metodo filtrar del componente padre
+      this.state.listener.filtrar();
+    }
+  }
 
   /**
    * Metodo que permite soportar el evento click del boton agregar filtro
@@ -77,7 +100,7 @@ export class FiltroConsecutivosComponent {
           overlaypanel.toggle(event, actualTarget);
         },
         error => {
-          this.messageService.add(MsjUtil.getMsjError(MessagesBackendConstant.INTERNAL_SERVER_ERROR));
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
     } else {
@@ -152,7 +175,7 @@ export class FiltroConsecutivosComponent {
             }
           },
           error => {
-            this.messageService.add(MsjUtil.getMsjError(MessagesBackendConstant.INTERNAL_SERVER_ERROR));
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
           }
         );
       }
@@ -183,5 +206,153 @@ export class FiltroConsecutivosComponent {
 
     // se refresca la tabla de campos para ser agregados
     this.tblCamposFiltro.reset();
+  }
+
+  /**
+   * Metodo que permite organizar los criterios de busqueda
+   */
+  private orgarnizarFiltro(): void {
+
+    // se configura el usuario seleccionado para el filtro busqueda
+    this.state.filtros.idUsuario = this.usuarioFiltro ? this.usuarioFiltro.id : null;
+
+    // se eliminan los espacios para los campos tipo input
+    this.state.filtros.consecutivos = this.setTrimFilter(this.state.filtros.consecutivos);
+    this.state.filtros.nomenclaturas = this.setTrimFilter(this.state.filtros.nomenclaturas);
+
+    // se procede a organizar los campos filtros agregados
+    this.state.filtros.filtrosAgregados = null;
+    if (this.state.camposFiltroAgregados && this.state.camposFiltroAgregados.length > 0) {
+
+      // se crea la instancia para limpiar el filtro anterior enviado
+      this.state.filtros.filtrosAgregados = new Array<CampoFiltroDTO>();
+
+      // se recorre cada filtro agregado
+      for (const campo of this.state.camposFiltroAgregados) {
+
+        // si este campo fue seleccionado
+        if (campo.isAgregado) {
+
+          // se valida el tipo de campo
+          switch (campo.tipoCampo) {
+
+            // para campo de texto el valor no puede ser vacio ni nulo
+            case this.state.ID_CAMPO_TEXTO: {
+              campo.inputValue = this.setTrimFilter(campo.inputValue);
+              if (campo.inputValue) {
+                this.state.filtros.filtrosAgregados.push(campo);
+              }
+              break;
+            }
+
+            // para la lista desplegable debe existir el item seleccionado
+            case this.state.ID_LISTA_DESPLEGABLE: {
+              campo.inputValue = null;
+              if (campo.itemSeleccionado) {
+                campo.inputValue = campo.itemSeleccionado.id;
+                this.state.filtros.filtrosAgregados.push(campo);
+              }
+              break;
+            }
+
+            // para la fecha debe existir alguno de las dos fechas (inicio-final)
+            case this.state.ID_CAMPO_FECHA: {
+              if (campo.dateInicial || campo.dateFinal) {
+                this.state.filtros.filtrosAgregados.push(campo);
+              }
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Metodo que valida si ingresaron un nuevo filtro busqueda
+   */
+  private isNuevoFilter(): boolean {
+
+    // La fecha inicial debe ser mayor que la fecha final solicitud
+    const fechaSolicitudInicial = this.state.filtros.fechaSolicitudInicial;
+    const fechaSolicitudFinal = this.state.filtros.fechaSolicitudFinal;
+    if (fechaSolicitudInicial && fechaSolicitudFinal) {
+      if (FechaUtil.compareDate(fechaSolicitudInicial, fechaSolicitudFinal) === 1) {
+        this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.FECHA_INICIAL_MAYOR));
+        return false;
+      }
+    }
+
+    // se valida cada criterio con el clone del filtro
+    if (this.state.filtrosClone.consecutivos !== this.state.filtros.consecutivos ||
+        this.state.filtrosClone.nomenclaturas !== this.state.filtros.nomenclaturas ||
+        this.state.filtrosClone.idUsuario !== this.state.filtros.idUsuario ||
+        this.state.filtrosClone.estado !== this.state.filtros.estado ||
+        !FechaUtil.iqualsDateFilter(this.state.filtrosClone.fechaSolicitudInicial, fechaSolicitudInicial) ||
+        !FechaUtil.iqualsDateFilter(this.state.filtrosClone.fechaSolicitudFinal, fechaSolicitudFinal)) {
+        return true;
+    }
+
+    // se procede a validar si hay filtros agregados
+    let isNuevoFiltroAgregado = true;
+
+    // es la cantidad de filtros clone agregados
+    let cantidadFiltrosClone = 0;
+    if (this.state.filtrosClone.filtrosAgregados) {
+      cantidadFiltrosClone = this.state.filtrosClone.filtrosAgregados.length;
+    }
+
+    // es la cantidad de filtros agregados
+    let cantidadFiltros = 0;
+    if (this.state.filtros.filtrosAgregados) {
+      cantidadFiltros = this.state.filtros.filtrosAgregados.length;
+    }
+
+    // si son diferentes es porque hay modificaciones
+    if (cantidadFiltrosClone === cantidadFiltros) {
+      isNuevoFiltroAgregado = false;
+
+      // solo aplica si ingresaron algun filtro
+      if (cantidadFiltrosClone > 0) {
+
+        // se recorre los filtros ingresados
+        forMain:
+        for (const campo of this.state.filtros.filtrosAgregados) {
+          let campoExiste = false;
+
+          // se recorre los filtros que tiene el clone
+          for (const campoClone of this.state.filtrosClone.filtrosAgregados) {
+
+            // se valida si los campos son iguales
+            if (campo.idCampo === campoClone.idCampo) {
+              campoExiste = true;
+
+              // se valida el valor de los campos si hay alguna modificacion
+              if (this.state.ID_CAMPO_TEXTO === campo.tipoCampo || this.state.ID_LISTA_DESPLEGABLE === campo.tipoCampo) {
+                if (campo.inputValue !== campoClone.inputValue) {
+                    isNuevoFiltroAgregado = true;
+                    break forMain;
+                }
+              } else if (this.state.ID_CAMPO_FECHA === campo.tipoCampo) {
+                if (!FechaUtil.iqualsDateFilter(campoClone.dateInicial, campo.dateInicial) ||
+                    !FechaUtil.iqualsDateFilter(campoClone.dateFinal, campo.dateFinal)) {
+                    isNuevoFiltroAgregado = true;
+                    break forMain;
+                }
+              }
+            }
+          }
+
+          // si el campo no existe y porque hay un nuevo filtro
+          if (!campoExiste) {
+            isNuevoFiltroAgregado = true;
+            break;
+          }
+        }
+      }
+    }
+
+    // se retorna la bandera que indica que si hay nuevo filtro agregado
+    return isNuevoFiltroAgregado;
   }
 }

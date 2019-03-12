@@ -72,4 +72,39 @@ export class FiltroConsecutivosState {
     // se debe inicializar el clone con los mismos datos del filtro
     this.filtrosClone = JSON.parse(JSON.stringify(this.filtros));
   }
+
+  /**
+   * Metodo que permite clonar los datos del filtro de busqueda
+   */
+  public clonarFiltro(): void {
+
+    // solo aplica si hay instancia del filtro principal
+    this.filtrosClone = null;
+    if (this.filtros) {
+      this.filtrosClone = new FiltroConsecutivosDTO();
+
+      // filtros generales
+      this.filtrosClone.idCliente = this.filtros.idCliente;
+      this.filtrosClone.nomenclaturas = this.filtros.nomenclaturas;
+      this.filtrosClone.consecutivos = this.filtros.consecutivos;
+      this.filtrosClone.idUsuario = this.filtros.idUsuario;
+      this.filtrosClone.fechaSolicitudInicial = this.filtros.fechaSolicitudInicial;
+      this.filtrosClone.fechaSolicitudFinal = this.filtros.fechaSolicitudFinal;
+      this.filtrosClone.estado = this.filtros.estado;
+
+      // filtros agregados
+      if (this.filtros.filtrosAgregados) {
+        this.filtrosClone.filtrosAgregados = new Array<CampoFiltroDTO>();
+        for (const campo of this.filtros.filtrosAgregados) {
+          const campoClone = new CampoFiltroDTO();
+          campoClone.idCampo = campo.idCampo;
+          campoClone.tipoCampo = campo.tipoCampo;
+          campoClone.inputValue = campo.inputValue;
+          campoClone.dateInicial = campo.dateInicial;
+          campoClone.dateFinal = campo.dateFinal;
+          this.filtrosClone.filtrosAgregados.push(campoClone);
+        }
+      }
+    }
+  }
 }
