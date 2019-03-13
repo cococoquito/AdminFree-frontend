@@ -329,38 +329,34 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
       // se recorre cada filtro agregado
       for (const campo of this.camposFiltroAgregados) {
 
-        // si este campo fue seleccionado
-        if (campo.isAgregado) {
+        // se valida el tipo de campo
+        switch (campo.tipoCampo) {
 
-          // se valida el tipo de campo
-          switch (campo.tipoCampo) {
-
-            // para campo de texto el valor no puede ser vacio ni nulo
-            case this.state.ID_CAMPO_TEXTO: {
-              campo.inputValue = this.setTrimFilter(campo.inputValue);
-              if (campo.inputValue) {
-                this.state.filtros.filtrosAgregados.push(campo);
-              }
-              break;
+          // para campo de texto el valor no puede ser vacio ni nulo
+          case this.state.ID_CAMPO_TEXTO: {
+            campo.inputValue = this.setTrimFilter(campo.inputValue);
+            if (campo.inputValue) {
+              this.state.filtros.filtrosAgregados.push(campo);
             }
+            break;
+          }
 
-            // para la lista desplegable debe existir el item seleccionado
-            case this.state.ID_LISTA_DESPLEGABLE: {
-              campo.inputValue = null;
-              if (campo.itemSeleccionado) {
-                campo.inputValue = campo.itemSeleccionado.id + '';
-                this.state.filtros.filtrosAgregados.push(campo);
-              }
-              break;
+          // para la lista desplegable debe existir el item seleccionado
+          case this.state.ID_LISTA_DESPLEGABLE: {
+            campo.inputValue = null;
+            if (campo.itemSeleccionado) {
+              campo.inputValue = campo.itemSeleccionado.id + '';
+              this.state.filtros.filtrosAgregados.push(campo);
             }
+            break;
+          }
 
-            // para la fecha debe existir alguno de las dos fechas (inicio-final)
-            case this.state.ID_CAMPO_FECHA: {
-              if (campo.dateInicial || campo.dateFinal) {
-                this.state.filtros.filtrosAgregados.push(campo);
-              }
-              break;
+          // para la fecha debe existir alguno de las dos fechas (inicio-final)
+          case this.state.ID_CAMPO_FECHA: {
+            if (campo.dateInicial || campo.dateFinal) {
+              this.state.filtros.filtrosAgregados.push(campo);
             }
+            break;
           }
         }
       }
