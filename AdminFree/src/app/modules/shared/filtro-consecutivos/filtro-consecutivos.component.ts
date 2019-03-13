@@ -348,7 +348,7 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
             case this.state.ID_LISTA_DESPLEGABLE: {
               campo.inputValue = null;
               if (campo.itemSeleccionado) {
-                campo.inputValue = campo.itemSeleccionado.id;
+                campo.inputValue = campo.itemSeleccionado.id + '';
                 this.state.filtros.filtrosAgregados.push(campo);
               }
               break;

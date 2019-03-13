@@ -18,7 +18,7 @@ export class CampoFiltroDTO {
   public tipoCampo: number;
 
   /** es el valor ingresado para los componentes input o select item */
-  public inputValue: any;
+  public inputValue: string;
 
   /** es la fecha inicial para el componente fecha */
   public dateInicial: Date;
