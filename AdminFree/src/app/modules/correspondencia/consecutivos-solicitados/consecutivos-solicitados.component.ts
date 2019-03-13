@@ -5,6 +5,7 @@ import { CorrespondenciaService } from '../../../services/correspondencia.servic
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
+import { SpinnerState } from '../../../states/spinner.state';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { ConsecutivoDetalleDTO } from '../../../dtos/correspondencia/consecutivo-detalle.dto';
 import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
@@ -44,12 +45,16 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    *
    * @param stateFiltro, se utiliza como mediador para administrar los datos
    * o llamados de metodos entre este componente y el componente filtro busqueda
+   *
+   * @param spinnerState, se utiliza para simular el spinner cuando
+   * pasa del ver detalle a la lista de consecutivos
    */
   constructor(
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
     private shellState: ShellState,
-    public stateFiltro: FiltroConsecutivosState) {
+    public stateFiltro: FiltroConsecutivosState,
+    private spinnerState: SpinnerState) {
     super();
   }
 
@@ -207,7 +212,11 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
    * Metodo que permite soportar el evento click del boton regresar del panel detalle
    */
   public cerrarDetalleConsecutivo(): void {
-    this.consecutivoDetalle = null;
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.spinnerState.hideSpinner();
+      this.consecutivoDetalle = null;
+    }, 100);
   }
 
   /**
