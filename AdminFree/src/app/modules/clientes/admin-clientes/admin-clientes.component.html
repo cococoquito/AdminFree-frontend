@@ -29,21 +29,20 @@
   <!-- panel general lista de clientes -->
   <div *ngIf="!clienteCrear">
 
-    <div *ngIf="clienteToken">
-      <p style="text-align: center; color: blue; text-decoration: underline; cursor: pointer;" (click)="limpiarToken()">Nombre: {{clienteToken.nombre}}</p>
-      <p style="color: red; text-align: center">Usuario:{{clienteToken.credenciales.usuario}}</p>
-      <p style="color: red; text-align: center">{{clienteToken.credenciales.token}}</p>
+    <div *ngIf="clienteCreado" class="text-center">
+      <p>{{clienteCreado.credenciales.usuario}}:<br/><strong>{{clienteCreado.credenciales.token}}</strong></p>
     </div>
 
-    <button type="button" class="btn btn-success" style="margin-right: 2%;margin-left: 2% " (click)="cerrarSesion()">Cerrar Sesión</button>
+    <button type="button" class="btn btn-success mr-2 ml-2" (click)="cerrarSesion()">Cerrar Sesión</button>
     <button type="button" class="btn btn-primary" (click)="showPanelCrearCliente()">Agregar Cliente</button>
+    <button type="button" class="btn btn-secondary ml-2" (click)="limpiarToken()">Limpiar Token</button>
     <br />
     <br />
     <table class="table table-hover">
       <thead>
         <tr>
+          <th>Usuario</th>
           <th>Nombre</th>
-          <th>Token</th>
           <th>Telefonos</th>
           <th>Emails</th>
           <th>Activación</th>
@@ -55,11 +54,11 @@
       <tbody>
         <tr *ngFor="let cliente of autenticacion.clientes">
           <td>
-            <input *ngIf="clienteModificar && clienteModificar.id === cliente.id" type="text" [(ngModel)]="cliente.nombre" />
-            <p *ngIf="!(clienteModificar && clienteModificar.id === cliente.id)">{{cliente.nombre}}</p>
+            <p>{{cliente.credenciales.usuario}}</p>
           </td>
           <td>
-            <button type="button" class="btn btn-warning btn-sm" (click)="verToken(cliente)">Ver</button>
+            <input *ngIf="clienteModificar && clienteModificar.id === cliente.id" type="text" [(ngModel)]="cliente.nombre" />
+            <p *ngIf="!(clienteModificar && clienteModificar.id === cliente.id)">{{cliente.nombre}}</p>
           </td>
           <td>
             <input *ngIf="clienteModificar && clienteModificar.id === cliente.id" type="text" [(ngModel)]="cliente.telefonos" />

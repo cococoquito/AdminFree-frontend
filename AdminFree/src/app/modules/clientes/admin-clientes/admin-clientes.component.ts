@@ -31,11 +31,11 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   /** Se utiliza para crear el cliente */
   public clienteCrear: ClienteDTO;
 
-  /** Se utiliza para mostrar el token del cliente seleccionado */
-  public clienteToken: ClienteDTO;
-
   /** Se utiliza para modificar el cliente */
   public clienteModificar: ClienteDTO;
+
+  /** Se utiliza para mostrar el TOKEN y NOMBRE del usuario creado */
+  public clienteCreado: ClienteDTO;
 
   /** Se utiliza como backup cuando el user cancela la modificacion */
   private clienteModificarOrigen: ClienteDTO;
@@ -110,6 +110,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
         // se procede agregar el cliente en la lista visualizada en la pagina
         this.autenticacion.clientes.push(data);
         this.clienteCrear = null;
+        this.clienteCreado = data;
 
         // se configura los datos del localstore
         this.setStateLocalStore();
@@ -260,22 +261,6 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que permite visualizar el TOKEN en la pantalla
-   *
-   * @param cliente, es el cliente con el TOKEN a mostrar
-   */
-  public verToken(cliente: ClienteDTO): void {
-    this.clienteToken = cliente;
-  }
-
-  /**
-   * Metodo que permite limpiar el TOKEN visualizado en la pantalla
-   */
-  public limpiarToken(): void {
-    this.clienteToken = null;
-  }
-
-  /**
    * Metodo que soporta el evento click del boton agregar cliente
    */
   public showPanelCrearCliente(): void {
@@ -332,11 +317,18 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
     // se limpia todos las variable globales
     this.autenticacion = null;
-    this.clienteToken = null;
+    this.clienteCreado = null;
     this.clienteModificar = null;
     this.clienteModificarOrigen = null;
     this.msjError = null;
     this.clienteCrear = null;
+  }
+
+  /**
+   * Metodo que permite limpiar el token generado
+   */
+  public limpiarToken(): void {
+    this.clienteCreado = null;
   }
 
   /**
