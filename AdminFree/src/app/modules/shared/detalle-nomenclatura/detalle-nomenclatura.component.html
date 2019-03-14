@@ -63,7 +63,8 @@
     [paginator]="true"
     [alwaysShowPaginator]="false"
     [rows]="5"
-    rowHover="true">
+    rowHover="true"
+    styleClass="tblshort">
 
       <ng-template pTemplate="header">
         <tr class="text-center">
@@ -101,20 +102,21 @@
 
 <!-- modal ver detalle -->
 <ng-container *ngIf="verDetalleCampo && verDetalleCampo.data">
-  <p-dialog header="Detalle del Campo"
+  <p-dialog
   [(visible)]="verDetalleCampo.isShowModal"
   [modal]="!isModal"
   [autoZIndex]="!isModal"
+  [showHeader]="false"
   responsive="true"
   dismissableMask="true"
   styleClass="child-dl"
   (onHide)="verDetalleCampo.closeModal()">
-    <div class="mx-dtl-mdl">
+    <div class="mx-sub-mdl">
       <admin-detalle-campo [campo]="verDetalleCampo.data" [ocultarItems]="true"></admin-detalle-campo>
     </div>
     <div *ngIf="isModal" class="text-center mt-2 mb-1">
-      <button (click)="verDetalleCampo.closeModal()" type="button" class="btn btn-secondary btn-sm">
-        <label class="btn-size-admin w-80-px"><i class="fa fa-times"></i> Salir</label>
+      <button (click)="verDetalleCampo.closeModal()" type="button" class="btn btn-sm btn-secondary p-0 w-100-px">
+        <label class="btn-size-admin"><i class="fa fa-times-circle pr-1"></i> Salir</label>
       </button>
     </div>
   </p-dialog>

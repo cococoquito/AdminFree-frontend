@@ -794,6 +794,11 @@ body {
   min-width: 800px;
 }
 
+.mx-sub-mdl {
+  max-width: 850px;
+  min-width: 850px;
+}
+
 .round-up-down {
   border-radius: 50%;
   -moz-border-radius: 50%;
