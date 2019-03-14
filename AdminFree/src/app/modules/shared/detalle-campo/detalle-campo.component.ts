@@ -23,6 +23,9 @@ export class DetalleCampoComponent implements OnInit {
   /** Se utiliza para ocultar los items del detalle */
   @Input() public ocultarItems: boolean;
 
+  /** modal que identifica que este detalle se va mostrar como un submodal */
+  @Input() public isSubModal: boolean;
+
   /** Identifica si el campo tiene restricciones*/
   public tieneRestriccion: boolean;
 
