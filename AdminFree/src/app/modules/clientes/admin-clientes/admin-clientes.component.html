@@ -47,6 +47,7 @@
           <th>Emails</th>
           <th>Activación</th>
           <th>Inactivación</th>
+          <th>Generar</th>
           <th>Estado</th>
           <th>Acción</th>
         </tr>
@@ -73,6 +74,9 @@
           </td>
           <td>
             <p>{{cliente?.fechaInactivacion | date: 'dd/MM/yyyy'}}</p>
+          </td>
+          <td>
+            <button (click)="generarTokenIngreso(cliente)" type="button" class="btn btn-warning btn-sm" style="margin-right: 3%">TOKEN</button>
           </td>
           <td>
             <button *ngIf="cliente.estado === 1" type="button" class="btn btn-success btn-sm" (click)="inactivarCliente(cliente)">Activo</button>

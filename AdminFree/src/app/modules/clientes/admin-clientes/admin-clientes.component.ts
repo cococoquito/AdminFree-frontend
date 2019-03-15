@@ -4,6 +4,7 @@ import { SeguridadService } from './../../../services/seguridad.service';
 import { ConfiguracionesService } from './../../../services/configuraciones.service';
 import { CredencialesDTO } from '../../../dtos/seguridad/credenciales.dto';
 import { AdminClientesDTO } from './../../../dtos/configuraciones/admin-clientes.dto';
+import { GenerarTokenIngresoDTO } from '../../../dtos/configuraciones/generar-token-ingreso.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { TipoEventoConstant } from './../../../constants/tipo-evento.constant';
 import { LocalStoreUtil } from '../../../util/local-store.util';
@@ -147,6 +148,41 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
 
           // se muestra el mensaje en la pantalla
           alert('El cliente fue ELIMINADO exitosamente.');
+        },
+        error => {
+          this.msjError = this.showMensajeError(error);
+        }
+      );
+    }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton TOKEN
+   * para generar un nuevo TOKEN para el cliente seleccionado
+   *
+   * @param cliente, es el cliente seleccionado para generar
+   * su nuevo TOKEN de ingreso
+   */
+  public generarTokenIngreso(cliente: ClienteDTO): void {
+
+    // se limpia errores anteriores
+    this.msjError = null;
+    if (confirm('¿Seguro de generar un nuevo TOKEN para? ' + cliente.nombre)) {
+
+      // si el usuario acepta la ventana de confirmacion
+      const parametro = new GenerarTokenIngresoDTO();
+      parametro.idCliente = cliente.id;
+
+      // se procede a generar un nuevo TOKEN de ingreso
+      this.configuracionesService.generarClaveIngreso(parametro).subscribe(
+        data => {
+          this.clienteCreado = new ClienteDTO();
+          this.clienteCreado.credenciales = new CredencialesDTO();
+          this.clienteCreado.credenciales.token = data.token;
+          this.clienteCreado.credenciales.usuario = cliente.credenciales.usuario;
+
+          // se muestra el mensaje en la pantalla
+          alert('El TOKEN fue generado exitosamente.');
         },
         error => {
           this.msjError = this.showMensajeError(error);
