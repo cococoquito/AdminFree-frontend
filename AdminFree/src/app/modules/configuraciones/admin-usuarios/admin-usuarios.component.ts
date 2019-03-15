@@ -9,6 +9,7 @@ import { MsjUtil } from './../../../util/messages.util';
 import { UsuarioEdicionDTO } from './../../../dtos/configuraciones/usuario-edicion.dto';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
+import { GenerarTokenIngresoDTO } from '../../../dtos/configuraciones/generar-token-ingreso.dto';
 import { StepsModel } from './../../../model/steps-model';
 import { ModulosCheck } from '../../../model/modulos-check';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
@@ -186,14 +187,14 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
       accept: () => {
 
         // si el usuario acepta la ventana de confirmacion
-        const usuarioClave: UsuarioDTO = new UsuarioDTO();
-        usuarioClave.id = usuario.id;
+        const parametro = new GenerarTokenIngresoDTO();
+        parametro.idUsuario = usuario.id;
 
         // se procede a generar una nueva clave de ingreso
-        this.configuracionesService.generarClaveIngreso(usuarioClave).subscribe(
+        this.configuracionesService.generarClaveIngreso(parametro).subscribe(
           data => {
             this.messageService.add(MsjUtil.getMsjInfo(
-              MsjFrontConstant.GENERAR_CLAVE_EXITOSO.replace('?1', usuario.nombre).replace('?2', data.clave)
+              MsjFrontConstant.GENERAR_CLAVE_EXITOSO.replace('?1', usuario.nombre).replace('?2', data.token)
             ));
           },
           error => {

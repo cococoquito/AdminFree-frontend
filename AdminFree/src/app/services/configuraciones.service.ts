@@ -5,13 +5,13 @@ import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { CambioClaveDTO } from './../dtos/configuraciones/cambio-clave.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
-import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { UsuarioEdicionDTO } from '../dtos/configuraciones/usuario-edicion.dto';
 import { NomenclaturaDTO } from './../dtos/configuraciones/nomenclatura.dto';
 import { NomenclaturaEdicionDTO } from '../dtos/configuraciones/nomenclatura-edicion.dto';
 import { RestriccionDTO } from './../dtos/configuraciones/restriccion.dto';
 import { CampoEntradaDTO } from './../dtos/configuraciones/campo-entrada.dto';
 import { CampoEntradaEdicionDTO } from '../dtos/configuraciones/campo-entrada-edicion.dto';
+import { GenerarTokenIngresoDTO } from '../dtos/configuraciones/generar-token-ingreso.dto';
 import { ConfiguracionesAPIConstant } from './../constants/apis/configuraciones-api.constant';
 
 /**
@@ -167,16 +167,16 @@ export class ConfiguracionesService {
   }
 
   /**
-   * Servicio que permite generar una nueva clave
-	 * de ingreso para el usuario que llega por parametro
-   *
-   * @param usuario, DTO con el identificador del usuario
-   * @returns DTO con la clave de ingreso generada
-   */
-  public generarClaveIngreso(usuario: UsuarioDTO): Observable<CredencialesDTO> {
-    return this.http.post<CredencialesDTO>(
-      ConfiguracionesAPIConstant.URL_GENERAR_CLAVE_USUARIO,
-      usuario
+	 * Servicio que permite generar un nuevo TOKEN de ingreso
+	 * para el usuario o cliente que llega por parametro
+	 *
+	 * @param parametro, DTO que contiene el id del cliente o usuario
+	 * @return DTO con el TOKEN de ingreso generada
+	 */
+  public generarClaveIngreso(parametro: GenerarTokenIngresoDTO): Observable<GenerarTokenIngresoDTO> {
+    return this.http.post<GenerarTokenIngresoDTO>(
+      ConfiguracionesAPIConstant.URL_GENERAR_CLAVE_INGRESO,
+      parametro
     );
   }
 

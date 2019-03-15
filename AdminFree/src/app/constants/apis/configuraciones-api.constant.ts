@@ -58,11 +58,11 @@ export class ConfiguracionesAPIConstant {
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
     'updatestateuser';
 
-  /** URL del recurso para la generacion de la clave de ingreso del usuario*/
-  static readonly URL_GENERAR_CLAVE_USUARIO: string =
+  /** URL del recurso para generar nuevos TOKENs de ingreso para el usuario o cliente*/
+  static readonly URL_GENERAR_CLAVE_INGRESO: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
-    'generarclaveuser';
+    'generarclavein';
 
   /** URL del recurso para la modificacion de los datos de la cuenta de usuario*/
   static readonly URL_MODIFICAR_DATOS_CUENTA: string =
