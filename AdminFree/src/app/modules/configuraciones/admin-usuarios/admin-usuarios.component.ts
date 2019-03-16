@@ -181,9 +181,6 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    */
   public generarNuevaClave(usuario: UsuarioDTO): void {
 
-    // se limpia los mensajes de otros procesos
-    this.messageService.clear();
-
     // se limpia la clave generada anterior
     this.limpiarCLaveGenerada();
 
@@ -216,6 +213,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    * cerrando la ventana de informacion visualizada en pantalla
    */
   public limpiarCLaveGenerada(): void {
+    this.messageService.clear();
     this.txtClaveGenerada = null;
     this.claveGenerada = null;
   }
@@ -234,9 +232,9 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         // se agrega el nuevo usuario en la lista visualizada en pantalla
         this.usuarios.push(data);
 
-        // se muestra el mensaje exitoso mostrando la contraseña del user
-        this.messageService.add(MsjUtil.getMsjSuccess(
-          MsjFrontConstant.USER_CREADO + '<strong>' + data.claveIngreso + '</strong>'));
+        // se muestra el mensaje exitoso mostrando la clave del usuario
+        this.txtClaveGenerada = MsjFrontConstant.USER_CREADO.replace('?1', this.usuarioCU.nombre);
+        this.claveGenerada = data.claveIngreso;
 
         // se limpian los datos del usuario ingresado
         this.limpiarCamposCU();
@@ -312,7 +310,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   public showPanelCreacion(): void {
 
     // se limpia los mensajes anteriores
-    this.messageService.clear();
+    this.limpiarCLaveGenerada();
 
     // se define el usuario que permite visualizar el panel
     this.usuarioCU = new UsuarioDTO();
@@ -337,7 +335,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   public showPanelEdicion(user: UsuarioDTO): void {
 
     // se limpia los mensajes anteriores
-    this.messageService.clear();
+    this.limpiarCLaveGenerada();
 
     // se hace el backup de los atributos
     this.usuarioEditarOrigen = new UsuarioEdicionDTO();

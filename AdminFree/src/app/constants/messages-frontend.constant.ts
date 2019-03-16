@@ -29,7 +29,7 @@ export class MsjFrontConstant {
   static readonly MODULOS_USER: string = 'Por favor seleccione los módulos que podrá acceder el nuevo usuario';
 
   /** Mensaje exitoso para la creacion del usuario */
-  static readonly USER_CREADO: string = 'El usuario fue registrado exitosamente en el sistema y su contraseña es:';
+  static readonly USER_CREADO: string = 'El usuario <strong>?1</strong> fue registrado exitosamente en el sistema y su clave es:';
 
   /** Mensaje para el cambio de estado del usuario */
   static readonly CAMBIAR_ESTADO_USER: string =
