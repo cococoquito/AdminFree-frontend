@@ -100,6 +100,9 @@ export class LabelsConstant {
   /** Es el KEY para identificar el componente tipo TOAST LONGER*/
   public static readonly KEY_TOAST_LONGER: string = 'toastLonger';
 
+  /** Es el KEY para identificar el componente tipo TOAST MEDIUM*/
+  public static readonly KEY_TOAST_MEDIUM: string = 'toastMedium';
+
   /** Es el rango minimo de los consecutivos*/
   public static readonly RANGO: string = '0000';
 

@@ -14,3 +14,11 @@
 .lh-1 {
   line-height: 1 !important
 }
+
+.copy-conse {
+  cursor: pointer;
+}
+
+.copy-conse:hover {
+  text-decoration: underline;
+}

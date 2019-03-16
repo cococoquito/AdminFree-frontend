@@ -230,6 +230,6 @@ export class CommonComponent {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    this.messageService.add(MsjUtil.getToastSuccess(nameValue + ' copiado al portapapeles'));
+    this.messageService.add(MsjUtil.getToastSuccessMedium(nameValue + ' copiado al portapapeles'));
   }
 }

@@ -7,7 +7,7 @@
   <!-- consecutivo -->
   <div class="mr-2 ml-2 mt-1 p-0 mb-0 ui-messages azul ui-corner-all border-0">
     <span class="ui-messages-icon pi pi-check text-left position-absolute font-size-35 pl-2 pt-1 text-white"></span>
-    <p class="text-center text-white font-size-26 font-weight-bold font-new-roman lh-12">
+    <p (click)="copyToClipBoard(state.responseSolicitud.consecutivo,'Consecutivo')" class="text-center text-white font-size-26 font-weight-bold font-new-roman lh-12 copy-conse">
       {{state.responseSolicitud.consecutivo}}
     </p>
     <p class="text-center font-size-15 font-new-roman text-white lh-12">

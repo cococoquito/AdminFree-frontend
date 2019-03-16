@@ -357,6 +357,11 @@ body {
   left: -90px;
 }
 
+#toastMedium .ui-toast-message {
+  width: 350px !important;
+  left: 0px;
+}
+
 /* Para una visualizacion correcta en el Shell */
 .ui-table table {
   table-layout: auto !important;
