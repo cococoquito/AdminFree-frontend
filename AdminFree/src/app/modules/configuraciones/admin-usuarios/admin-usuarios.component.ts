@@ -60,6 +60,10 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
 
+  /** Se utilizan para mostrar la clave generada para el usuario seleccionado*/
+  public claveGenerada: string;
+  public txtClaveGenerada: string;
+
   /** Constantes que representan los identificadores de ACTIVO e INACTIVO */
   public ID_ACTIVO = EstadoConstant.ID_ACTIVO;
   public ID_INACTIVO = EstadoConstant.ID_INACTIVO;
@@ -180,6 +184,9 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     // se limpia los mensajes de otros procesos
     this.messageService.clear();
 
+    // se limpia la clave generada anterior
+    this.limpiarCLaveGenerada();
+
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
       message: MsjFrontConstant.GENERAR_CLAVE_CONFI.replace('?1', usuario.nombre),
@@ -193,9 +200,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         // se procede a generar una nueva clave de ingreso
         this.configuracionesService.generarClaveIngreso(parametro).subscribe(
           data => {
-            this.messageService.add(MsjUtil.getMsjInfo(
-              MsjFrontConstant.GENERAR_CLAVE_EXITOSO.replace('?1', usuario.nombre).replace('?2', data.token)
-            ));
+            this.txtClaveGenerada = MsjFrontConstant.GENERAR_CLAVE_EXITOSO.replace('?1', usuario.nombre);
+            this.claveGenerada = data.token;
           },
           error => {
             this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -203,6 +209,15 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
         );
       }
     });
+  }
+
+  /**
+   * Metodo que permite limpiar los datos de la clave generada
+   * cerrando la ventana de informacion visualizada en pantalla
+   */
+  public limpiarCLaveGenerada(): void {
+    this.txtClaveGenerada = null;
+    this.claveGenerada = null;
   }
 
   /**

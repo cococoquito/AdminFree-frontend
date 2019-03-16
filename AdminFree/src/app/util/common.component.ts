@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from './../model/error-response';
 import { MessageService } from 'primeng/api';
+import { MsjUtil } from './messages.util';
 import { HttpStatusConstant } from './../constants/http-status.constant';
 import { MessagesBackendConstant } from './../constants/messages-backend.constant';
 import { MessagesBackendKeyConstant } from './../constants/messages-backend-key.constant';
@@ -209,5 +210,26 @@ export class CommonComponent {
       }
     }
     return businessMsj;
+  }
+
+  /**
+   * Metodo utilitario que permite copiar un texto al portapapeles
+   *
+   * @param value, es el valor del texto a copiar
+   * @param nameValue, nombre del valor ejemplo (Clave, Nombre, Telefono)
+   */
+  public copyToClipBoard(value: string, nameValue: string): void {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = value;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.messageService.add(MsjUtil.getToastSuccess(nameValue + ' copiado al portapapeles'));
   }
 }

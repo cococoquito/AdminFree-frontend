@@ -40,7 +40,7 @@ export class MsjFrontConstant {
     '¿Seguro de <strong>generar una nueva contraseña</strong> para? <div class="text-center mt-2"><strong>?1</strong></div>';
 
   /** Mensaje exitoso generacion clave para el usuario */
-  static readonly GENERAR_CLAVE_EXITOSO: string = 'La nueva contraseña para el usuario <strong>?1</strong> es:<strong>?2</strong>';
+  static readonly GENERAR_CLAVE_EXITOSO: string = 'La nueva contraseña para el usuario <strong>?1</strong> es:';
 
   /** Mensaje cuando para alguna actualizacion del usuario */
   static readonly USUARIO_ACTUALIZADO = 'Usuario Actualizado';

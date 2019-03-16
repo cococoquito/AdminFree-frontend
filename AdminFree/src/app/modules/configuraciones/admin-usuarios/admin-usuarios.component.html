@@ -1,6 +1,18 @@
 <!-- container lista de usuarios -->
 <ng-container *ngIf="!isCreacion && !isEdicion">
 
+  <!-- mensaje clave generada -->
+  <div *ngIf="claveGenerada" class="p-1 mb-1 ui-messages ui-messages-info ui-corner-all">
+    <a (click)="limpiarCLaveGenerada()" class="ui-messages-close ng-tns-c14-6 ng-star-inserted">
+      <i class="pi pi-times"></i>
+    </a>
+    <span class="pl-2 ui-messages-icon pi pi-info-circle"></span>
+    <span class="ui-messages-detail font-size-15 ml-0">
+      <span [innerHTML]="txtClaveGenerada"></span>
+      <strong class="copy" (click)="copyToClipBoard(claveGenerada,'Clave')">{{claveGenerada}}</strong>
+    </span>
+  </div>
+
   <!-- boton crear usuario -->
   <div class="text-right mb-1">
     <button (click)="showPanelCreacion()" type="button" class="btn btn-success btn-sm">

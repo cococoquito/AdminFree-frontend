@@ -840,3 +840,12 @@ body {
 .i-slight {
   color: #808991 !important;
 }
+
+.copy {
+  cursor: pointer;
+}
+
+.copy:hover {
+  text-decoration: underline;
+  color: #3b3b36;
+}
