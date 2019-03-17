@@ -258,7 +258,7 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     this.configuracionesService.editarUsuario(this.usuarioEditarOrigen).subscribe(
       data => {
         // Mensaje exitoso campo modificado
-        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USER_ACTUALIZADO_EXITOSO));
+        this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.USER_ACTUALIZADO_EXITOSO));
 
         // datos basicos modificados
         if (this.usuarioEditarOrigen.datosBasicosEditar) {
