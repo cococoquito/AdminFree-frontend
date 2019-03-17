@@ -16,7 +16,8 @@ import { LabelsConstant } from '../../../constants/labels.constant';
 @Component({
   selector: 'admin-mis-consecutivos',
   templateUrl: './mis-consecutivos.component.html',
-  styleUrls: ['./mis-consecutivos.component.css']
+  styleUrls: ['./mis-consecutivos.component.css'],
+  providers: [ CorrespondenciaService, FiltroConsecutivosState ]
 })
 export class MisConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
