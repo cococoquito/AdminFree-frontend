@@ -260,6 +260,12 @@ export class MenuST {
           routerLink: [RouterConstant.NAVIGATE_CONSECUTIVOS_SOLICITADOS],
           icon: 'fa fa-fw fa-list-ul',
           id: 'fa-list-ul'
+        },
+        {
+          label: LabelsConstant.MENU_MIS_CONSECUTIVOS_SOLICITADOS,
+          routerLink: [RouterConstant.NAVIGATE_MIS_CONSECUTIVOS_SOLICITADOS],
+          icon: 'fa fa-fw fa-file-text',
+          id: 'fa-file-text'
         }
       ]
     };
