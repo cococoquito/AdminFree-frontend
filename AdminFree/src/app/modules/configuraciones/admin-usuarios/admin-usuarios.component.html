@@ -49,7 +49,7 @@
         <td>{{user.nombre}}</td>
         <td>{{user.cargo}}</td>
         <td>
-          <span class="copy" (click)="copyToClipBoard(user.usuarioIngreso,'Usuario de Ingreso')">{{user.usuarioIngreso}}</span>
+          <span class="copy" (click)="copyToClipBoard(user.usuarioIngreso,'Usuario Ingreso')">{{user.usuarioIngreso}}</span>
         </td>
         <td>
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === ID_ACTIVO" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
