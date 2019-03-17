@@ -48,7 +48,9 @@
       <tr [pSelectableRow]="user">
         <td>{{user.nombre}}</td>
         <td>{{user.cargo}}</td>
-        <td>{{user.usuarioIngreso}}</td>
+        <td>
+          <span class="copy" (click)="copyToClipBoard(user.usuarioIngreso,'Usuario de Ingreso')">{{user.usuarioIngreso}}</span>
+        </td>
         <td>
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === ID_ACTIVO" type="button" class="btn btn-outline-success btn-sm btn-block">Activo</button>
           <button (click)="cambiarEstadoUsuario(user)" *ngIf="user.estado === ID_INACTIVO" type="button" class="btn btn-outline-danger btn-sm btn-block">Inactivo</button>

@@ -229,8 +229,8 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
     // se hace el llamado HTTP para la creacion del usuario
     this.configuracionesService.crearUsuario(this.usuarioCU).subscribe(
       data => {
-        // se agrega el nuevo usuario en la lista visualizada en pantalla
-        this.usuarios.push(data);
+        // se agrega el nuevo usuario en la lista como primer item
+        this.usuarios.unshift(data);
 
         // se muestra el mensaje exitoso mostrando la clave del usuario
         this.txtClaveGenerada = MsjFrontConstant.USER_CREADO.replace('?1', this.usuarioCU.nombre);
