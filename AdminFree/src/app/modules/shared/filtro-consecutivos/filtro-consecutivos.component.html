@@ -18,7 +18,7 @@
           Cant: <strong>{{ state.consecutivosPaginados.datos?.cantidadTotal | number }}</strong>
         </p>
       </div>
-      <div *ngIf="!state.desactivarRefresh" class="ui-g-1 p-0 mt-2 text-left">
+      <div *ngIf="!isSubModuloMisConsecutivos" class="ui-g-1 p-0 mt-2 text-left">
         <i (click)="state.componentePadre.refresh()" class="fa fa-refresh font-size-20 refresh"></i>
       </div>
     </div>

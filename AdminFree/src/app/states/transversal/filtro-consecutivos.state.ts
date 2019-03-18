@@ -42,9 +42,6 @@ export class FiltroConsecutivosState {
   public minDateSolicitudFilter: Date;
   public maxDateSolicitudFilter: Date;
 
-  /** Indica si el boton refresh debe estar desabilitado */
-  public desactivarRefresh: boolean;
-
   /** constante para el idioma espaniol para los calendar */
   public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
@@ -68,7 +65,6 @@ export class FiltroConsecutivosState {
    * @param minDateSolicitudFilter, se utiliza para restringir los meses o anios en la fecha solicitud
    * @param maxDateSolicitudFilter, se utiliza para restringir los meses o anios en la fecha solicitud
    * @param maxDateSolicitudFilter, se utiliza para restringir los meses o anios en la fecha solicitud
-   * @param desactivarRefresh, Indica si el boton refresh debe estar desabilitado
    */
   public initComponentePadre(
     componentePadre: any,
@@ -76,8 +72,7 @@ export class FiltroConsecutivosState {
     consecutivosPaginados: PaginadorModel,
     usuarios: Array<SelectItemDTO>,
     minDateSolicitudFilter: Date,
-    maxDateSolicitudFilter: Date,
-    desactivarRefresh: boolean): void {
+    maxDateSolicitudFilter: Date): void {
 
     // se configura los parametros
     this.componentePadre = componentePadre;
@@ -86,7 +81,6 @@ export class FiltroConsecutivosState {
     this.usuarios = usuarios;
     this.minDateSolicitudFilter = minDateSolicitudFilter;
     this.maxDateSolicitudFilter = maxDateSolicitudFilter;
-    this.desactivarRefresh = desactivarRefresh;
   }
 
   /**

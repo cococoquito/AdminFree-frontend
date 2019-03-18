@@ -100,14 +100,12 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
           data.fechaActual = new Date(data.fechaActual);
 
           // se inicializa el state para el componente filtro de consecutivos
-          const desactivarRefresh = false;
           this.stateFiltro.initComponentePadre(this,
             clienteCurrent,
             consecutivosPaginados,
             data.usuarios,
             new Date(data.fechaActual.getFullYear(), 0, 1),
-            new Date(data.fechaActual.getFullYear(), 11, 31),
-            desactivarRefresh);
+            new Date(data.fechaActual.getFullYear(), 11, 31));
 
           // limpieza de memoria
           data = null;

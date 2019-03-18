@@ -24,6 +24,9 @@ import { LabelsConstant } from '../../../constants/labels.constant';
 })
 export class MisConsecutivosComponent extends CommonComponent implements OnInit, OnDestroy {
 
+  /** se utiliza para consultar solamente los consecutivos del usuario autenticado */
+  public idUsuarioAutenticado: number;
+
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
 
@@ -75,11 +78,11 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     // se procede a obtener el cliente o el cliente asociado al usuario autenticado
     const clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
-    // se procede a obtener el usuario autenticado
-    const idUsuario = LocalStoreUtil.getIdCurrentUsuario();
+    // se procede a obtener el identificador del usuario autenticado
+    this.idUsuarioAutenticado = LocalStoreUtil.getIdCurrentUsuario();
 
     // se consulta los datos iniciales para este modulo
-    this.correspondenciaService.getInitMisConsecutivos(clienteCurrent.id, idUsuario).subscribe(
+    this.correspondenciaService.getInitMisConsecutivos(clienteCurrent.id, this.idUsuarioAutenticado).subscribe(
       data => {
         // se verifica si el usuario autenticado ha solicitado consecutivos
         if (data.consecutivos && data.consecutivos.cantidadTotal && data.consecutivos.cantidadTotal > 0) {
@@ -92,15 +95,13 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
           data.fechaActual = new Date(data.fechaActual);
 
           // se inicializa el state para el componente filtro de consecutivos
-          const desactivarRefresh = true;
           const usuarios = null;
           this.stateFiltro.initComponentePadre(this,
             clienteCurrent,
             consecutivosPaginados,
             usuarios,
             new Date(data.fechaActual.getFullYear(), 0, 1),
-            new Date(data.fechaActual.getFullYear(), 11, 31),
-            desactivarRefresh);
+            new Date(data.fechaActual.getFullYear(), 11, 31));
 
           // limpieza de memoria
           data = null;

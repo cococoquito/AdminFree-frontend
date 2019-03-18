@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MisConsecutivosComponent } from '../../correspondencia/mis-consecutivos/mis-consecutivos.component';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
@@ -44,6 +45,9 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
   /** Se utiliza para pintar el asterisco en el boton filtrar */
   public hayFiltroAplicado: boolean;
 
+  /** Indica si el submodulo que invoca este filtro es mis consecutivos */
+  public isSubModuloMisConsecutivos: boolean;
+
   /** Se utiliza para resetear la tabla campos filtros cuando hacen alguna busqueda*/
   @ViewChild('tblCamposFiltro') tblCamposFiltro: Table;
 
@@ -71,6 +75,18 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
     // debe existir la instancia del filtro para el funcionamiento correcto
     const filtros = new FiltroConsecutivosDTO();
     filtros.idCliente = this.state.clienteCurrent.id;
+
+    // para el submodulo de mis consecutivos se debe inicializar las siguientes valores
+    if (this.state.componentePadre instanceof MisConsecutivosComponent) {
+
+      // se configura el identificador del cliente autenticado como filtro
+      filtros.idUsuario = this.state.componentePadre.idUsuarioAutenticado;
+      this.usuarioFiltro = new SelectItemDTO();
+      this.usuarioFiltro.id = filtros.idUsuario;
+
+      // indica que el submodulo quien invoca el filtro es mis consecutivos
+      this.isSubModuloMisConsecutivos = true;
+    }
 
     // se debe inicializar el clone con los mismos datos del filtro
     const filtrosClone = JSON.parse(JSON.stringify(filtros));
