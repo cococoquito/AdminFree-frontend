@@ -1,0 +1,17 @@
+.btn-activo {
+  background-color: #2E7D32 !important;
+  border-color: #2E7D32 !important;
+}
+
+.btn-activo:hover {
+  background-color: rgb(45, 141, 50) !important;
+}
+
+.btn-anulado {
+  background-color: #D84315 !important;
+  border-color: #D84315 !important;
+}
+
+.btn-anulado:hover {
+  background-color: rgb(197, 63, 22) !important;
+}

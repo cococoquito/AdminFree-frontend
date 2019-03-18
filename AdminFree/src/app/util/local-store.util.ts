@@ -103,7 +103,7 @@ export class LocalStoreUtil {
     // la autenticacion en el sistema es requerido
     if (welcome && welcome.credenciales) {
 
-      // se verifica si es el ADMIN o USER autenticado en el sistema
+      // se verifica si es USER o ADMIN el que esta autenticado
       if (welcome.usuario && welcome.usuario.id) {
         idUsuario = welcome.usuario.id;
       } else {

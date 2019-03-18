@@ -646,6 +646,10 @@ body {
   width: 80px !important
 }
 
+.w-70-px {
+  width: 70px !important
+}
+
 .steps-3 .ui-steps-item {
   width: 33% !important;
 }
