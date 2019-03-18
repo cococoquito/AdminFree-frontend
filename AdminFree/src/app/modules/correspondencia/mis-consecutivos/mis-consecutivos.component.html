@@ -42,10 +42,11 @@
         <ng-template pTemplate="header">
           <tr class="text-center">
             <th style="width: 10%">Consecutivo</th>
-            <th style="width: 20%">Nomenclatura</th>
-            <th style="width: 20%">Fecha de Solicitud</th>
+            <th style="width: 30%">Nomenclatura</th>
+            <th style="width: 25%">Fecha de Solicitud</th>
             <th style="width: 20%">Estado</th>
-            <th style="width: 2%">Editar</th>
+            <th style="width: 10%">Transferir</th>
+            <th style="width: 5%">Editar</th>
           </tr>
         </ng-template>
 
@@ -60,9 +61,14 @@
               {{ consecutivo.nomenclatura }}
             </td>
             <td class="text-center">{{ consecutivo.fechaSolicitud }}</td>
-            <td>
+            <td class="text-center">
               <button *ngIf="consecutivo.idEstado === stateFiltro.ID_ACTIVO" type="button" class="btn btn-success btn-sm btn-activo w-70-px">Activo</button>
               <button *ngIf="consecutivo.idEstado === stateFiltro.ID_ANULADO" type="button" class="btn btn-danger btn-sm btn-anulado w-70-px">Inactivo</button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-sm btn-round-table btn-pup">
+                <i class="fa fa-users icon-round-table font-size-14"></i>
+              </button>
             </td>
             <td class="text-center">
               <button type="button" class="btn btn-sm btn-round-table btn-round-edit">
@@ -74,7 +80,7 @@
 
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td [attr.colspan]="4">
+            <td [attr.colspan]="6">
               <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-1">
                 <span class="ui-messages-icon pi pi-info-circle"></span>
                 <span class="ui-messages-detail font-size-15">
