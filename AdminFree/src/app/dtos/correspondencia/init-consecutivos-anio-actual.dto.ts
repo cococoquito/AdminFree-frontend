@@ -9,7 +9,7 @@ import { PaginadorResponseDTO } from '../transversal/paginador-response.dto';
  */
 export class InitConsecutivosAnioActualDTO {
 
-  /** Es el reponse inicial de los consecutivos paginados **/
+  /** Es el response inicial de los consecutivos paginados **/
   public consecutivos: PaginadorResponseDTO;
 
   /** Lista de items para mostrarlo en el componente de filtros por usuarios */

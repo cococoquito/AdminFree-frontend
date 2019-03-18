@@ -4,6 +4,7 @@ import { CorrespondenciaService } from '../../../services/correspondencia.servic
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
+import { LocalStoreUtil } from '../../../util/local-store.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 
 /**
@@ -65,5 +66,12 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     // se configura el titulo y subtitulo de la pagina
     this.shellState.title.titulo = LabelsConstant.TITLE_MIS_CONSECUTIVOS_SOLICITADOS;
     this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_MIS_CONSECUTIVOS_SOLICITADOS;
+
+    // se procede a obtener el cliente o el cliente asociado al usuario autenticado
+    const clienteCurrent = LocalStoreUtil.getCurrentCliente();
+
+    // se procede a obtener el usuario autenticado
+    const idUsuario = LocalStoreUtil.getIdCurrentUsuario();
+
   }
 }

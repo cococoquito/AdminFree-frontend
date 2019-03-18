@@ -14,6 +14,7 @@ import { PaginadorResponseDTO } from '../dtos/transversal/paginador-response.dto
 import { ConsecutivoDetalleDTO } from '../dtos/correspondencia/consecutivo-detalle.dto';
 import { CampoFiltroDTO } from '../dtos/correspondencia/campo-filtro.dto';
 import { ItemDTO } from '../dtos/configuraciones/item.dto';
+import { InitMisConsecutivosDTO } from '../dtos/correspondencia/init-mis-consecutivos.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -108,13 +109,13 @@ export class CorrespondenciaService {
   }
 
   /**
-	 * Servicio que soporta el proceso de negocio para la descarga
-	 * de un documento de correspondencia en AWS-S3
-	 *
-	 * @param idCliente, se utiliza para identificar el cliente que tiene el documento
-	 * @param idDocumento, se utiliza para consultar los datos del documento
-	 * @return Documento descargado con todos sus atributos
-	 */
+   * Servicio que soporta el proceso de negocio para la descarga
+   * de un documento de correspondencia en AWS-S3
+   *
+   * @param idCliente, se utiliza para identificar el cliente que tiene el documento
+   * @param idDocumento, se utiliza para consultar los datos del documento
+   * @return Documento descargado con todos sus atributos
+   */
   public descargarDocumento(idCliente: string, idDocumento: string): Observable<any> {
     const url = `${CorrespondenciaAPIConstant.URL_DESCARGAR_DOCUMENTO}?idCliente=${idCliente}&idDocumento=${idDocumento}`;
     return this.http.get(url, { responseType: 'blob' });
@@ -148,13 +149,13 @@ export class CorrespondenciaService {
   }
 
   /**
-	 * Servicio que permite obtener los datos iniciales para el
-	 * submodulo de Consecutivos de correspondencia solicitados
-	 * para el anio actual
-	 *
-	 * @param idCliente, identificador del cliente autenticado
-	 * @return DTO con los datos iniciales
-	 */
+   * Servicio que permite obtener los datos iniciales para el
+   * submodulo de Consecutivos de correspondencia solicitados
+   * para el anio actual
+   *
+   * @param idCliente, identificador del cliente autenticado
+   * @return DTO con los datos iniciales
+   */
   public getInitConsecutivosAnioActual(idCliente: number): Observable<InitConsecutivosAnioActualDTO> {
     return this.http.get<InitConsecutivosAnioActualDTO>(
       CorrespondenciaAPIConstant.GET_INIT_CONSECUTIVOS_ACTUAL + idCliente
@@ -162,11 +163,25 @@ export class CorrespondenciaService {
   }
 
   /**
-	 * Servicio que permite consultar el detalle de un consecutivo
-	 *
-	 * @param filtro, DTO que contiene los identificadores del cliente y del consecutivo
-	 * @return DTO con los datos del consecutivo
-	 */
+   * Servicio que permite obtener los datos iniciales para el
+   * submodulo de Mis Consecutivos de correspondencia solicitados
+   * para el anio actual
+   *
+   * @param idCliente, identificador del cliente asociado al usuario
+   * @param idUsuario, identificador del usuario autenticado en el sistema
+   * @return DTO con los datos iniciales
+   */
+  public getInitMisConsecutivos(idCliente: number, idUsuario: number): Observable<InitMisConsecutivosDTO> {
+    const url = `${CorrespondenciaAPIConstant.GET_INIT_MIS_CONSECUTIVOS}?idCliente=${idCliente}&idUsuario=${idUsuario}`;
+    return this.http.get<InitMisConsecutivosDTO>(url);
+  }
+
+  /**
+   * Servicio que permite consultar el detalle de un consecutivo
+   *
+   * @param filtro, DTO que contiene los identificadores del cliente y del consecutivo
+   * @return DTO con los datos del consecutivo
+   */
   public getDetalleConsecutivo(filtro: ConsecutivoDetalleDTO): Observable<ConsecutivoDetalleDTO> {
     return this.http.post<ConsecutivoDetalleDTO>(
       CorrespondenciaAPIConstant.GET_DETALLE_CONSECUTIVO,

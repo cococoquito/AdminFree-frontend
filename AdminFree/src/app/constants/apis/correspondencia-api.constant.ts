@@ -65,11 +65,18 @@ export class CorrespondenciaAPIConstant {
     'getconsecutivosactual';
 
   /** URL del recurso para obtener los datos iniciales para el
-	 * submodulo de Consecutivos de correspondencia solicitados */
+  * submodulo de Consecutivos de correspondencia solicitados */
   static readonly GET_INIT_CONSECUTIVOS_ACTUAL: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getinitconsecutivosactual?idCliente=';
+
+  /** URL del recurso para obtener los datos iniciales para el
+  * submodulo de Mis Consecutivos de correspondencia solicitados */
+  static readonly GET_INIT_MIS_CONSECUTIVOS: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getinitmisconsecutivos';
 
   /** URL del recurso que permite consultar el detalle de un consecutivo */
   static readonly GET_DETALLE_CONSECUTIVO: string =

@@ -83,7 +83,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     this.shellState.title.titulo = LabelsConstant.TITLE_CONSECUTIVOS_SOLICITADOS;
     this.shellState.title.subTitulo = LabelsConstant.SUBTITLE_CONSECUTIVOS_SOLICITADOS;
 
-    // se procede a obtener el cliente autenticado
+    // se procede a obtener el cliente o el cliente asociado al usuario autenticado
     const clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
     // se consulta los datos iniciales para este modulo

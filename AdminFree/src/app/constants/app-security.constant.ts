@@ -11,4 +11,6 @@ export class AppSecurityConstant {
   static readonly CONTENT: string = 'application/json;charset=UTF-8';
   static readonly POST_ANGULAR_AUTH: string = 'jtizq';
   static readonly POST_ANGULAR: string = 'apwni';
+  static readonly ID_ADMINISTRADOR: number = -1;
+  static readonly ID_USUARIO_NO_EXISTE: number = 0;
 }

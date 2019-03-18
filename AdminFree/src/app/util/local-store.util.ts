@@ -3,6 +3,7 @@ import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { TipoEventoConstant } from './../constants/tipo-evento.constant';
+import { AppSecurityConstant } from '../constants/app-security.constant';
 
 /**
  * Clase utilitaria para la administracion del localstore
@@ -72,7 +73,7 @@ export class LocalStoreUtil {
     let clienteAutenticado: ClienteDTO;
 
     // se obtiene los datos de la autenticacion del localstore
-    const welcome: WelcomeDTO = this.welcome(TipoEventoConstant.GET);
+    const welcome = this.welcome(TipoEventoConstant.GET);
 
     // se valida que si exista alguna autenticacion
     if (welcome && welcome.credenciales) {
@@ -86,6 +87,30 @@ export class LocalStoreUtil {
       }
     }
     return clienteAutenticado;
+  }
+
+  /**
+   * Metodo que permite obtener el identificador del usuario autenticado
+   */
+  public static getIdCurrentUsuario(): number {
+
+    // se inicializa como usuario no autenticado o no existente
+    let idUsuario = AppSecurityConstant.ID_USUARIO_NO_EXISTE;
+
+    // se obtiene los datos de la autenticacion
+    const welcome = this.welcome(TipoEventoConstant.GET);
+
+    // la autenticacion en el sistema es requerido
+    if (welcome && welcome.credenciales) {
+
+      // se verifica si es el ADMIN o USER autenticado en el sistema
+      if (welcome.usuario && welcome.usuario.id) {
+        idUsuario = welcome.usuario.id;
+      } else {
+        idUsuario = AppSecurityConstant.ID_ADMINISTRADOR;
+      }
+    }
+    return idUsuario;
   }
 
   /**
