@@ -92,12 +92,15 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
           data.fechaActual = new Date(data.fechaActual);
 
           // se inicializa el state para el componente filtro de consecutivos
+          const desactivarRefresh = true;
+          const usuarios = null;
           this.stateFiltro.initComponentePadre(this,
             clienteCurrent,
             consecutivosPaginados,
-            null,
+            usuarios,
             new Date(data.fechaActual.getFullYear(), 0, 1),
-            new Date(data.fechaActual.getFullYear(), 11, 31));
+            new Date(data.fechaActual.getFullYear(), 11, 31),
+            desactivarRefresh);
 
           // limpieza de memoria
           data = null;
