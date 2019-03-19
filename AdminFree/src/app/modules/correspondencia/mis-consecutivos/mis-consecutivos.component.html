@@ -62,8 +62,8 @@
             </td>
             <td class="text-center">{{ consecutivo.fechaSolicitud }}</td>
             <td class="text-center">
-              <button *ngIf="consecutivo.idEstado === stateFiltro.ID_ACTIVO" type="button" class="btn btn-success btn-sm btn-activo w-70-px">Activo</button>
-              <button *ngIf="consecutivo.idEstado === stateFiltro.ID_ANULADO" type="button" class="btn btn-danger btn-sm btn-anulado w-70-px">Inactivo</button>
+              <button (click)="activarAnularConsecutivo(consecutivo)" *ngIf="consecutivo.idEstado === stateFiltro.ID_ACTIVO" type="button" class="btn btn-success btn-sm btn-activo w-70-px">Activo</button>
+              <button (click)="activarAnularConsecutivo(consecutivo)" *ngIf="consecutivo.idEstado === stateFiltro.ID_ANULADO" type="button" class="btn btn-danger btn-sm btn-anulado w-70-px">Inactivo</button>
             </td>
             <td class="text-center">
               <button type="button" class="btn btn-sm btn-round-table btn-pup">

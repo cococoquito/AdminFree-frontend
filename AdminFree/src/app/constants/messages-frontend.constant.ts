@@ -138,4 +138,11 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando la fecha inicial solictud es mayor que la fecha final */
   static readonly FECHA_INICIAL_MAYOR: string = 'La fecha inicial debe ser menor que la fecha final';
+
+  /** Mensaje de confirmacion para anular o activar un consecutivo*/
+  static readonly CONFIRMAR_ACTIVAR_ANULAR_CONSECUTIVO: string =
+  '¿Está seguro de <strong>?1</strong> el siguiente consecutivo? <div class="text-center mt-2"><strong>?2</strong><span ?3>?4</span></div>';
+
+  /** Mensaje cuando el estado se cambio exitosamente */
+  static readonly CAMBIO_ESTADO_EXITOSO: string = 'El estado se actualizó exitosamente';
 }

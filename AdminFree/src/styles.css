@@ -464,6 +464,12 @@ body {
   font-size: 16px !important;
 }
 
+.ui-confirmdialog.ui-dialog .ui-dialog-content {
+  padding-top: 15px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
 .ui-radiobutton-label {
   margin: 0 0 0 .3em !important;
   font-family: Times, Times New Roman, serif !important;

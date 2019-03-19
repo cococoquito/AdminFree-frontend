@@ -1,14 +1,18 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
+import { ActivarAnularConsecutivoDTO } from '../../../dtos/correspondencia/activar-anular-consecutivo.dto';
+import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
+import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { EstadoConstant } from '../../../constants/estado.constant';
 
 /**
  * Componente para la administracion de los consecutivos de
@@ -37,6 +41,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    * @param correspondenciaService, contiene los servicios
    * del modulo de correspondencia
    *
+   * @param confirmationService, se utiliza para mostrar el
+   * modal de confirmacion para diferente procesos
+   *
    * @param shellState, se utiliza para el titulo del componente
    *
    * @param stateFiltro, se utiliza como mediador para administrar los datos
@@ -45,6 +52,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   constructor(
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
+    private confirmationService: ConfirmationService,
     private shellState: ShellState,
     public stateFiltro: FiltroConsecutivosState) {
     super();
@@ -156,5 +164,60 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que permite ACTIVAR o ANULAR un consecutivo
+   *
+   * @param consecutivo seleccionado para ACTIVAR o ANULAR
+   */
+  public activarAnularConsecutivo(consecutivo: ConsecutivoDTO): void {
+
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // variables que se utilizan para la ventana de confirmacion
+    let txtEstado = 'ACTIVAR';
+    let idEstado = EstadoConstant.ID_ACTIVO;
+    let classEstado = 'class="clr-anulado font-weight-bold pl-2 font-size-18"';
+
+    // dependiendo del estado del consecutivo se configura su valor
+    if (consecutivo.idEstado === EstadoConstant.ID_ACTIVO) {
+      txtEstado = 'ANULAR';
+      idEstado = EstadoConstant.ID_ANULADO;
+      classEstado = 'class="clr-activo font-weight-bold pl-2 font-size-18"';
+    }
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CONFIRMAR_ACTIVAR_ANULAR_CONSECUTIVO
+        .replace('?1', txtEstado)
+        .replace('?2', consecutivo.nomenclatura)
+        .replace('?3', classEstado)
+        .replace('?4', consecutivo.consecutivo),
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se configura los parametros para ACTIVAR o ANULAR el consecutivo
+        const parametro = new ActivarAnularConsecutivoDTO();
+        parametro.idCliente = this.stateFiltro.clienteCurrent.id;
+        parametro.idConsecutivo = consecutivo.idConsecutivo;
+        parametro.idEstado = idEstado;
+
+        // se procede ANULAR o ACTIVAR el consecutivo
+        this.correspondenciaService.activarAnularConsecutivo(parametro).subscribe(
+          data => {
+            // se cambia el estado del consecutivo para que se refleje en pantalla
+            consecutivo.idEstado = idEstado;
+
+            // Mensaje exitoso, el cambio fue exitoso
+            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.CAMBIO_ESTADO_EXITOSO));
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 }
