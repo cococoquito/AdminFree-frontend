@@ -58,7 +58,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     super();
   }
 
-   /**
+  /**
    * Se debe obtener los datos iniciales del sub-modulo
    */
   ngOnInit() {

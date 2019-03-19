@@ -80,7 +80,8 @@ export class MessagesBackendConstant {
   static readonly DOCUMENTO_NO_EXISTE: string = 'El documento que intenta descargar no existe en el sistema';
 
   /** El nuevo estado no es permitido para el consecutivo, debe ser ACTIVO o ANULADO*/
-  static readonly ESTADO_NO_PERMITIDO: string = 'El nuevo estado no es permitido para el consecutivo, debe ser ACTIVO o ANULADO';
+  static readonly ESTADO_NO_PERMITIDO: string =
+  'El nuevo estado no es permitido para el consecutivo, debe ser <strong>ACTIVO o ANULADO</strong>';
 
   /** EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo*/
   static readonly PROCESO_NO_EJECUTADO: string = 'EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo';
