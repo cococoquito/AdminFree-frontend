@@ -56,4 +56,10 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - El documento que intenta descargar no existe en el sistema*/
   static readonly KEY_DOCUMENTO_NO_EXISTE: string = '17';
+
+  /** 400 - El nuevo estado no es permitido para el consecutivo, debe ser ACTIVO o ANULADO*/
+  static readonly KEY_ESTADO_NO_PERMITIDO: string = '18';
+
+  /** 400 - EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo*/
+  static readonly KEY_PROCESO_NO_EJECUTADO: string = '19';
 }

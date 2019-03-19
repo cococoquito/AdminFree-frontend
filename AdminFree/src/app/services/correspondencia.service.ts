@@ -15,6 +15,7 @@ import { ConsecutivoDetalleDTO } from '../dtos/correspondencia/consecutivo-detal
 import { CampoFiltroDTO } from '../dtos/correspondencia/campo-filtro.dto';
 import { ItemDTO } from '../dtos/configuraciones/item.dto';
 import { InitMisConsecutivosDTO } from '../dtos/correspondencia/init-mis-consecutivos.dto';
+import { ActivarAnularConsecutivoDTO } from '../dtos/correspondencia/activar-anular-consecutivo.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -211,6 +212,18 @@ export class CorrespondenciaService {
     return this.http.post<Array<ItemDTO>>(
       CorrespondenciaAPIConstant.GET_ITEMS_SELECT_FILTRO,
       idsCampos
+    );
+  }
+
+  /**
+	 * Servicio que permite ACTIVAR o ANULAR un consecutivo de correspondencia
+	 *
+	 * @param parametro, DTO que contiene los datos necesarios para el proceso
+	 */
+  public activarAnularConsecutivo(parametro: ActivarAnularConsecutivoDTO): Observable<MessageResponseDTO> {
+    return this.http.post<MessageResponseDTO>(
+      CorrespondenciaAPIConstant.ACTIVAR_ANULAR_CONSECUTIVO,
+      parametro
     );
   }
 }

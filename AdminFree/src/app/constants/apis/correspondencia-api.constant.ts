@@ -95,4 +95,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getitemsfiltro';
+
+  /** URL del recurso que permite cambiar el estado del consecutivo */
+  static readonly ACTIVAR_ANULAR_CONSECUTIVO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'activaranularconse';
 }

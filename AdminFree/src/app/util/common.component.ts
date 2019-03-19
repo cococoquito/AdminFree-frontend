@@ -208,6 +208,16 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.DOCUMENTO_NO_EXISTE;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_ESTADO_NO_PERMITIDO: {
+        businessMsj = MessagesBackendConstant.ESTADO_NO_PERMITIDO;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_PROCESO_NO_EJECUTADO: {
+        businessMsj = MessagesBackendConstant.PROCESO_NO_EJECUTADO;
+        break;
+      }
     }
     return businessMsj;
   }
