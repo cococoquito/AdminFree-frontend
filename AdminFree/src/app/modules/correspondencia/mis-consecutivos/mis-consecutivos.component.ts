@@ -211,7 +211,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
             consecutivo.idEstado = idEstado;
 
             // Mensaje exitoso, el cambio fue exitoso
-            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.CAMBIO_ESTADO_EXITOSO));
+            this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.ESTADO_CONSECUTIVO_ACTUALIZADO));
           },
           error => {
             this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));

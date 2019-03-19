@@ -143,6 +143,6 @@ export class MsjFrontConstant {
   static readonly CONFIRMAR_ACTIVAR_ANULAR_CONSECUTIVO: string =
   '¿Está seguro de <strong>?1</strong> el siguiente consecutivo? <div class="text-center mt-2"><strong>?2</strong><span ?3>?4</span></div>';
 
-  /** Mensaje cuando el estado se cambio exitosamente */
-  static readonly CAMBIO_ESTADO_EXITOSO: string = 'El estado se actualizó exitosamente';
+  /** Mensaje cuando el estado del consecutivo fue actualizado exitosamente */
+  static readonly ESTADO_CONSECUTIVO_ACTUALIZADO: string = 'El estado del consecutivo fue actualizado exitosamente';
 }
