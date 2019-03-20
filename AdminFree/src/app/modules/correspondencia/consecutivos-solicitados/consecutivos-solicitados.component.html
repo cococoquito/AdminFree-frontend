@@ -137,10 +137,19 @@
 
           <!-- estado -->
           <div class="ui-g-6 pb-0 pt-0">
-            <p class="steps-st">Estado:</p>
-            <p class="font-weight-bold font-new-roman font-size-16" [ngClass]="{'clr-activo': consecutivoDetalle.consecutivo.idEstado === stateFiltro.ID_ACTIVO, 'clr-anulado': consecutivoDetalle.consecutivo.idEstado === stateFiltro.ID_ANULADO}">
-              {{consecutivoDetalle.consecutivo.estado}}
-            </p>
+            <ng-container *ngIf="consecutivoDetalle.consecutivo.idEstado === stateFiltro.ID_ACTIVO">
+              <p class="steps-st">Estado:</p>
+              <p class="font-weight-bold font-new-roman font-size-16 clr-activo">
+                {{consecutivoDetalle.consecutivo.estado}}
+              </p>
+            </ng-container>
+            <ng-container *ngIf="consecutivoDetalle.consecutivo.idEstado === stateFiltro.ID_ANULADO">
+              <p class="steps-st">Estado y Fecha anulación:</p>
+              <p class="font-new-roman font-size-16">
+                <span class="font-weight-bold clr-anulado">{{consecutivoDetalle.consecutivo.estado}}</span>
+                <span class="st"> - {{consecutivoDetalle.consecutivo.fechaAnulacion}}</span>
+              </p>
+            </ng-container>
           </div>
 
           <!-- archivado en -->

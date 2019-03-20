@@ -23,6 +23,9 @@ export class ConsecutivoDTO {
   /** Fecha en la que solicitaron el consecutivo */
   public fechaSolicitud: string;
 
+  /** Fecha en la que anularon el consecutivo (si aplica) */
+  public fechaAnulacion: string;
+
   /** Estado en la que se encuentra el consecutivo */
   public idEstado: number;
 
