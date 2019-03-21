@@ -16,6 +16,8 @@ import { CampoFiltroDTO } from '../dtos/correspondencia/campo-filtro.dto';
 import { ItemDTO } from '../dtos/configuraciones/item.dto';
 import { InitMisConsecutivosDTO } from '../dtos/correspondencia/init-mis-consecutivos.dto';
 import { ActivarAnularConsecutivoDTO } from '../dtos/correspondencia/activar-anular-consecutivo.dto';
+import { TransferirConsecutivoDTO } from '../dtos/correspondencia/transferir-consecutivo.dto';
+import { SelectItemDTO } from '../dtos/transversal/select-item.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -225,5 +227,30 @@ export class CorrespondenciaService {
       CorrespondenciaAPIConstant.ACTIVAR_ANULAR_CONSECUTIVO,
       parametro
     );
+  }
+
+  /**
+	 * Servicio que permite transferir un consecutivo hacia otro usuario
+	 *
+	 * @param parametro, DTO con los datos necesarios para el proceso
+	 * @return DTO con los consecutivos paginado de acuerdo al filtro
+	 */
+  public transferirConsecutivo(parametro: TransferirConsecutivoDTO): Observable<TransferirConsecutivoDTO> {
+    return this.http.post<TransferirConsecutivoDTO>(
+      CorrespondenciaAPIConstant.TRANSFERIR_CONSECUTIVO,
+      parametro
+    );
+  }
+
+  /**
+	 * Servicio que permite obtener los usuarios para el proceso de transferir consecutivo
+	 *
+	 * @param idCliente, identificador del cliente asociado a los usuarios
+	 * @param idUsuario, se deben consultar todos los usuarios activos excepto este usuario
+	 * @return Lista de usuarios activos en el sistema
+	 */
+  public getUsuariosTransferir(idCliente: number, idUsuario: number): Observable<Array<SelectItemDTO>> {
+    const url = `${CorrespondenciaAPIConstant.GET_USERS_TRANSFERIR}?idCliente=${idCliente}&idUsuario=${idUsuario}`;
+    return this.http.get<Array<SelectItemDTO>>(url);
   }
 }

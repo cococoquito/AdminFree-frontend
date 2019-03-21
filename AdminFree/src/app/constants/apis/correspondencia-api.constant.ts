@@ -101,4 +101,16 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'activaranularconse';
+
+  /** URL del recurso que permite transferir un consecutivo hacia otro usuario */
+  static readonly TRANSFERIR_CONSECUTIVO: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'transferirconse';
+
+  /** URL del recurso que permite obtener los usuarios para el proceso de transferir consecutivo */
+  static readonly GET_USERS_TRANSFERIR: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getusertransferir';
 }
