@@ -196,9 +196,43 @@
       <p-panel *ngIf="stepsTransferencia.activeIndex === stepsTransferencia.STEP_DOS" styleClass="m-0 steps-pnl pnl-pt">
         <p-header>
           <i class="fa fa-info-circle font-size-18"></i>
-          <span> ¿Está seguro de ceder el consecutivo para el siguiente usuario?</span>
+          <span> ¿Está seguro de ceder el siguiente consecutivo para el siguiente usuario?</span>
         </p-header>
 
+        <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
+          <p-header>
+            <span class="steps-circle">1</span> <span> Consecutivo a Ceder </span>
+          </p-header>
+          <div class="ui-g">
+
+            <!-- Consecutivo -->
+            <div class="ui-g-6 pb-0 pt-0">
+              <p class="steps-st">Consecutivo:</p>
+              <p class="font-weight-bold font-size-18" [ngClass]="{'clr-activo': modalTransferir.data.idEstado === stateFiltro.ID_ACTIVO, 'clr-anulado': modalTransferir.data.idEstado === stateFiltro.ID_ANULADO}">
+                {{ modalTransferir.data.consecutivo }}
+              </p>
+            </div>
+
+            <!-- Nomenclatura -->
+            <div class="ui-g-6 pb-0 pt-0">
+              <p class="steps-st">Nomenclatura: </p>
+              <p class="st">
+                <strong>{{modalTransferir.data.nomenclatura}}</strong>
+              </p>
+            </div>
+          </div>
+        </p-panel>
+
+        <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
+          <p-header>
+            <span class="steps-circle">2</span> <span> Usuario Seleccionado </span>
+          </p-header>
+          <div>
+            <p class="st text-center">
+              <strong>{{usuarioElegidoTransferir.label}}</strong>
+            </p>
+          </div>
+        </p-panel>
       </p-panel>
 
       <!-- btns steps UNO-->
@@ -212,7 +246,7 @@
       </div>
 
       <!-- btns steps DOS-->
-      <div *ngIf="stepsTransferencia.activeIndex === stepsTransferencia.STEP_DOS" class="text-center mb-0 mt-2">
+      <div *ngIf="stepsTransferencia.activeIndex === stepsTransferencia.STEP_DOS" class="text-center mb-0 mt-3">
         <button (click)="stepsTransferencia.irPrimerStep()" type="button" class="btn btn-sm btn-primary w-100-px mdl-btn-h mr-2">
           <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
         </button>
