@@ -6,12 +6,6 @@
  */
 export class TransferenciaDTO {
 
-  /** Es el consecutivo en la cual se hizo la transferencia */
-  public consecutivo: string;
-
-  /** Nomenclatura asociada al consecutivo */
-  public nomenclatura: string;
-
   /** Es el nombre del usuario quien era o es duenio del consecutivo */
   public usuario: string;
 

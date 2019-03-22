@@ -7,7 +7,9 @@ import { ShellState } from '../../../states/shell/shell.state';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
 import { ActivarAnularConsecutivoDTO } from '../../../dtos/correspondencia/activar-anular-consecutivo.dto';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
+import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
+import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -30,6 +32,12 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
 
   /** se utiliza para consultar solamente los consecutivos del usuario autenticado */
   public idUsuarioAutenticado: number;
+
+  /** Se utiliza para hacer la transferencia de un consecutivo a otro usuario */
+  public usuariosTransferencia: Array<SelectItemDTO>;
+
+  /** Modelo del modal para transferir un consecutivo a otro usuario */
+  public modalTransferir: VentanaModalModel;
 
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
@@ -219,5 +227,43 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         );
       }
     });
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton transferir
+   *
+   * @param consecutivo , Consecutivo seleccionado para transferir
+   * a otro usuario seleccionado en el modal
+   */
+  public abrirModalTransferir(consecutivo: ConsecutivoDTO): void {
+
+    // se verifica si se debe consultar los usuarios activos
+    if (!this.usuariosTransferencia || this.usuariosTransferencia.length === 0) {
+
+      // se procede a consultar los usuario activo en el sistema
+      this.correspondenciaService.getUsuariosTransferir(
+        this.stateFiltro.clienteCurrent.id,
+        this.idUsuarioAutenticado).subscribe(
+        data => {
+          // se configura los usuarios consultados
+          this.usuariosTransferencia = data;
+
+          // se muesta el modal para permitir transferir el consecutivo
+          if (!this.modalTransferir) {
+            this.modalTransferir = new VentanaModalModel();
+          }
+          this.modalTransferir.showModal(consecutivo);
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    } else {
+      // si los usuarios ya fueron consultados solamente se abre el modal
+      if (!this.modalTransferir) {
+        this.modalTransferir = new VentanaModalModel();
+      }
+      this.modalTransferir.showModal(consecutivo);
+    }
   }
 }

@@ -15,3 +15,20 @@
 .btn-anulado:hover {
   background-color: rgb(197, 63, 22) !important;
 }
+
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .aico {
+  position: absolute;
+  pointer-events: none;
+}
+
+.left-addon .aico {
+  left: 0px;
+}
+
+.left-addon input {
+  padding-left: 30px;
+}
