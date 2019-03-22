@@ -22,6 +22,7 @@ export class StepsModel {
   public styleClass: string;
 
   /** constante con las clases de estilos para el componente */
+  public STEPS_2 = 'steps-2';
   public STEPS_3 = 'steps-3';
   public STEPS_4 = 'steps-4';
 
@@ -60,7 +61,9 @@ export class StepsModel {
 
     // se calcula el stilo para cada step dependiendo de
     // la cantidad de steps que contiene el componente
-    if (this.steps.length === 3) {
+    if (this.steps.length === 2) {
+      this.styleClass = this.STEPS_2;
+    } else if (this.steps.length === 3) {
       this.styleClass = this.STEPS_3;
     } else if (this.steps.length === 4) {
       this.styleClass = this.STEPS_4;
@@ -141,6 +144,23 @@ export class StepsModel {
     this.agregarStep(LabelsConstant.ENTRADA_INFORMACION);
     this.agregarStep(LabelsConstant.CONFIRMACION);
     this.agregarStep(LabelsConstant.CONSECUTIVO);
+
+    // se inicializa el model del componente
+    this.init();
+  }
+
+  /**
+   * Metodo que agrega los items para la transferencia
+   * de consecutivo a otro usuario seleccionado
+   */
+  public stepsParaTransferirConsecutivo(): void {
+
+    // se limpia el modelo por si hay registros anteriores
+    this.cleanSteps();
+
+    // se agregan los items para este submodulo
+    this.agregarStep(LabelsConstant.SELECCION_USERS);
+    this.agregarStep(LabelsConstant.CONFIRMACION);
 
     // se inicializa el model del componente
     this.init();

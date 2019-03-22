@@ -486,6 +486,10 @@ body {
   padding-right: 0px !important;
 }
 
+.mdlsintop .ui-dialog-content {
+  padding-top: 0px !important
+}
+
 /* font-size */
 .font-size-9 {
   font-size: 9px !important;
@@ -656,12 +660,20 @@ body {
   width: 70px !important
 }
 
+.steps-2 .ui-steps-item {
+  width: 50% !important;
+}
+
 .steps-3 .ui-steps-item {
   width: 33% !important;
 }
 
 .steps-4 .ui-steps-item {
   width: 25% !important;
+}
+
+#stepSinPad .ui-steps .ui-steps-item .ui-menuitem-link {
+  padding: 0em !important;
 }
 
 .w-35-px {
@@ -863,4 +875,8 @@ body {
 .copy:hover {
   text-decoration: underline;
   color: #3b3b36;
+}
+
+.mdl-btn-h {
+  padding: 2px !important;
 }

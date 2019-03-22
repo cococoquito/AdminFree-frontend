@@ -32,3 +32,10 @@
 .left-addon input {
   padding-left: 30px;
 }
+
+.mdl-wh-tran {
+  max-width: 850px;
+  min-width: 850px;
+  max-height: 430px;
+  min-height: 430px;
+}

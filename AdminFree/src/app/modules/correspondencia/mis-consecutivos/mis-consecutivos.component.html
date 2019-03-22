@@ -97,28 +97,46 @@
 
 <!-- modal transferir consecutivo -->
 <ng-container *ngIf="modalTransferir && modalTransferir.data">
-  <p-dialog header="Transferir Consecutivo"
+  <p-dialog
+    header="Transferir Consecutivo"
     [(visible)]="modalTransferir.isShowModal"
+    [dismissableMask]="false"
+    [closeOnEscape]="false"
+    [closable]="false"
+    (onHide)="modalTransferir.closeModal()"
     modal="true"
     responsive="true"
-    dismissableMask="true"
-    (onHide)="modalTransferir.closeModal()">
-    <div class="mx-sub-mdl">
+    styleClass="mdlsintop">
+
+    <!-- div main -->
+    <div class="mdl-wh-tran">
+
+      <!-- steps tranferir -->
+      <p-steps
+        id="stepSinPad"
+        [styleClass]="stepsTransferencia.styleClass"
+        [(activeIndex)]="stepsTransferencia.activeIndex"
+        [model]="stepsTransferencia.steps">
+      </p-steps>
+
+      <!-- panel seleccion usuario -->
       <p-panel styleClass="m-0 steps-pnl steps-pnl-main">
         <p-header>
           <div class="ui-g">
-            <div class="ui-g-6 p-0">
+            <div class="ui-g-7 p-0">
               <i class="fa fa-info-circle font-size-18"></i>
-              <span> Seleccione el usuario a transferir el consecutivo</span>
+              <span> Seleccione el usuario a la cual se le va ceder el consecutivo</span>
             </div>
-            <div class="ui-g-6 p-0">
+            <div *ngIf="usuariosTransferirOrigen && usuariosTransferirOrigen.length > 6" class="ui-g-5 p-0">
               <div class="inner-addon left-addon">
                 <i class="fa fa-search-plus font-size-18 aico"></i>
-                <input type="text"
-                  maxlength="15"
-                  adminAutofocus
+                <input
+                  type="text"
+                  (keyup)="busquedaNombreUsuario()"
+                  [(ngModel)]="filterNombreUsuario"
+                  maxlength="100"
                   autocomplete="off"
-                  placeholder="Búsqueda por Nombre del Usuario"
+                  placeholder="Búsqueda por Nombre"
                   class="ad-input ad-input-style w-100 pt-0 font-size-15" />
                 <div class="focus-border"></div>
               </div>
@@ -127,11 +145,11 @@
         </p-header>
 
         <!-- Hay Usuarios-->
-        <div *ngIf="usuariosTransferencia && usuariosTransferencia.length > 0">
+        <div *ngIf="usuariosTransferirOrigen && usuariosTransferirOrigen.length > 0">
           <p-table
             id="tblusers"
             #tblusers
-            [value]="usuariosTransferencia"
+            [value]="usuariosTransferir"
             [responsive]="true"
             [paginator]="true"
             [alwaysShowPaginator]="false"
@@ -139,23 +157,20 @@
             rowHover="true"
             styleClass="tblshort">
 
-            <ng-template pTemplate="header">
-              <tr class="text-center">
-                <th class="font-new-roman font-size-14">Nombre del Usuario</th>
-              </tr>
-            </ng-template>
-
             <ng-template pTemplate="body" let-usuario>
               <tr [pSelectableRow]="usuario">
+                <td style="width: 5%">
+                  <p-radioButton name="user"></p-radioButton>
+                </td>
                 <td>{{ usuario.label }}</td>
               </tr>
             </ng-template>
 
             <ng-template pTemplate="emptymessage">
               <tr>
-                <td [attr.colspan]="1">
+                <td [attr.colspan]="2">
                   <div class="mt-2 mb-2 p-1 ui-messages ui-messages-info ui-corner-all text-center">
-                    <span class="ui-messages-icon pi pi-info-circle"></span>
+                    <span class="ui-messages-icon pi pi-info-circle font-size-24"></span>
                     <span class="ui-messages-detail font-size-14 ml-0">
                       <strong>No se encontraron usuarios</strong> que coincidan con los criterios
                     </span>
@@ -167,13 +182,24 @@
         </div>
 
         <!-- No Hay Usuarios-->
-        <div *ngIf="!(usuariosTransferencia && usuariosTransferencia.length > 0)" class="mr-1 ml-1 mt-2 mb-2 ui-messages ui-messages-warn ui-corner-all text-center">
+        <div *ngIf="!(usuariosTransferirOrigen && usuariosTransferirOrigen.length > 0)"
+          class="mr-1 ml-1 mt-2 mb-2 ui-messages ui-messages-warn ui-corner-all text-center">
           <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
           <span class="ui-messages-detail font-size-15">
             <strong>No hay usuarios</strong> parametrizadas en el sistema
           </span>
         </div>
       </p-panel>
+
+      <!-- btns -->
+      <div class="text-center mb-0 mt-2">
+        <button (click)="modalTransferir.closeModal()" type="button" class="btn btn-sm btn-secondary mr-3 w-100-px mdl-btn-h">
+          <label class="btn-size-admin"><i class="fa fa-times-circle pr-1"></i> Salir</label>
+        </button>
+        <button type="button" class="btn btn-sm btn-primary w-100-px mdl-btn-h">
+          <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+        </button>
+      </div>
     </div>
   </p-dialog>
 </ng-container>

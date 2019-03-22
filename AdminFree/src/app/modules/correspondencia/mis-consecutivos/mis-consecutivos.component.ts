@@ -10,6 +10,7 @@ import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { VentanaModalModel } from '../../../model/ventana-modal.model';
+import { StepsModel } from '../../../model/steps-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -34,13 +35,25 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   public idUsuarioAutenticado: number;
 
   /** Se utiliza para hacer la transferencia de un consecutivo a otro usuario */
-  public usuariosTransferencia: Array<SelectItemDTO>;
+  public usuariosTransferir: Array<SelectItemDTO>;
+
+  /** Es el origen de los usuarios sin modificaciones */
+  public usuariosTransferirOrigen: Array<SelectItemDTO>;
 
   /** Modelo del modal para transferir un consecutivo a otro usuario */
   public modalTransferir: VentanaModalModel;
 
+  /** Modelo del componente steps, se utiliza para la transferencia de usuario*/
+  public stepsTransferencia: StepsModel;
+
+  /** Es el filter ingresado para la busqueda por nombre de usuario */
+  public filterNombreUsuario: string;
+
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
+
+  /** Se utiliza para resetear la tabla usuarios filtros cuando hacen alguna busqueda*/
+  @ViewChild('tblusers') tblusers: Table;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -237,22 +250,24 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    */
   public abrirModalTransferir(consecutivo: ConsecutivoDTO): void {
 
+    // se define el componente steps para la transferencia
+    this.setStepsTransferir();
+
     // se verifica si se debe consultar los usuarios activos
-    if (!this.usuariosTransferencia || this.usuariosTransferencia.length === 0) {
+    if (!this.usuariosTransferirOrigen || this.usuariosTransferirOrigen.length === 0) {
 
       // se procede a consultar los usuario activo en el sistema
       this.correspondenciaService.getUsuariosTransferir(
         this.stateFiltro.clienteCurrent.id,
         this.idUsuarioAutenticado).subscribe(
         data => {
-          // se configura los usuarios consultados
-          this.usuariosTransferencia = data;
 
-          // se muesta el modal para permitir transferir el consecutivo
-          if (!this.modalTransferir) {
-            this.modalTransferir = new VentanaModalModel();
-          }
-          this.modalTransferir.showModal(consecutivo);
+          // se configura los usuarios consultados
+          this.usuariosTransferirOrigen = data;
+          this.usuariosTransferir = data;
+
+          // se muestra el modal para permitir transferir el consecutivo
+          this.setModalTransferir(consecutivo);
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -260,10 +275,52 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       );
     } else {
       // si los usuarios ya fueron consultados solamente se abre el modal
-      if (!this.modalTransferir) {
-        this.modalTransferir = new VentanaModalModel();
-      }
-      this.modalTransferir.showModal(consecutivo);
+      this.setModalTransferir(consecutivo);
     }
+  }
+
+  /**
+   * Metodo que permite soportar el evento filter por nombre del usuario
+   */
+  public busquedaNombreUsuario(): void {
+
+    // el valor del filtro no puede ser indefinido
+    if (this.filterNombreUsuario && this.filterNombreUsuario.length > 0) {
+
+      // se crea la instancia de la lista de usuarios filtro
+      this.usuariosTransferir = new Array<SelectItemDTO>();
+
+      // se busca el usuario que coincide con el valor
+      for (const user of this.usuariosTransferirOrigen) {
+        if (user.label && user.label.toUpperCase().includes(this.filterNombreUsuario.toUpperCase())) {
+            this.usuariosTransferir.push(user);
+        }
+      }
+    } else {
+      this.usuariosTransferir = this.usuariosTransferirOrigen;
+    }
+
+    // se refresca la tabla de usuarios transferir
+    this.tblusers.reset();
+  }
+
+  /**
+   * Metodo que permite configurar el steps para transferir consecutivo
+   */
+  private setStepsTransferir(): void {
+    if (!this.stepsTransferencia) {
+      this.stepsTransferencia = new StepsModel();
+      this.stepsTransferencia.stepsParaTransferirConsecutivo();
+    }
+  }
+
+  /**
+   * Metodo que permite configurar el model del modal de transferir
+   */
+  private setModalTransferir(consecutivo: ConsecutivoDTO): void {
+    if (!this.modalTransferir) {
+      this.modalTransferir = new VentanaModalModel();
+    }
+    this.modalTransferir.showModal(consecutivo);
   }
 }
