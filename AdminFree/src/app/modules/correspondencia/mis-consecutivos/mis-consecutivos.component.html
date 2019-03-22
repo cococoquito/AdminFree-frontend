@@ -103,7 +103,6 @@
     [dismissableMask]="false"
     [closeOnEscape]="false"
     [closable]="false"
-    (onHide)="modalTransferir.closeModal()"
     modal="true"
     responsive="true"
     styleClass="mdlsintop">
@@ -150,17 +149,19 @@
             id="tblusers"
             #tblusers
             [value]="usuariosTransferir"
+            [(selection)]="usuarioElegidoTransferir"
             [responsive]="true"
             [paginator]="true"
             [alwaysShowPaginator]="false"
             [rows]="6"
+            selectionMode="single"
             rowHover="true"
             styleClass="tblshort">
 
             <ng-template pTemplate="body" let-usuario>
               <tr [pSelectableRow]="usuario">
                 <td style="width: 5%">
-                  <p-radioButton name="user"></p-radioButton>
+                  <p-tableRadioButton [value]="usuario"></p-tableRadioButton>
                 </td>
                 <td>{{ usuario.label }}</td>
               </tr>
@@ -193,10 +194,10 @@
 
       <!-- btns -->
       <div class="text-center mb-0 mt-2">
-        <button (click)="modalTransferir.closeModal()" type="button" class="btn btn-sm btn-secondary mr-3 w-100-px mdl-btn-h">
+        <button (click)="cerrarModalTransferir()" type="button" class="btn btn-sm btn-secondary mr-3 w-100-px mdl-btn-h">
           <label class="btn-size-admin"><i class="fa fa-times-circle pr-1"></i> Salir</label>
         </button>
-        <button type="button" class="btn btn-sm btn-primary w-100-px mdl-btn-h">
+        <button [disabled]="!usuarioElegidoTransferir" type="button" class="btn btn-sm btn-primary w-100-px mdl-btn-h">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
         </button>
       </div>

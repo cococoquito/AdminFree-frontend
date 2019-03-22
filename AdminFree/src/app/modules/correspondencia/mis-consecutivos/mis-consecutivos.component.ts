@@ -40,6 +40,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   /** Es el origen de los usuarios sin modificaciones */
   public usuariosTransferirOrigen: Array<SelectItemDTO>;
 
+  /** Es el usuario seleccionado para transferir el consecutivo */
+  public usuarioElegidoTransferir: SelectItemDTO;
+
   /** Modelo del modal para transferir un consecutivo a otro usuario */
   public modalTransferir: VentanaModalModel;
 
@@ -277,6 +280,14 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       // si los usuarios ya fueron consultados solamente se abre el modal
       this.setModalTransferir(consecutivo);
     }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton Salir del modal transferir
+   */
+  public cerrarModalTransferir(): void {
+    this.modalTransferir.closeModal();
+    this.usuarioElegidoTransferir = null;
   }
 
   /**
