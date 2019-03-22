@@ -163,7 +163,14 @@
                 <td style="width: 5%">
                   <p-tableRadioButton [value]="usuario"></p-tableRadioButton>
                 </td>
-                <td>{{ usuario.label }}</td>
+                <td>
+                  <span>
+                    {{ usuario.label }}
+                  </span>
+                  <span class="pl-1 font-weight-bold font-size-14 font-new-roman">
+                    ({{ usuario.descripcion }})
+                  </span>
+                </td>
               </tr>
             </ng-template>
 
@@ -217,7 +224,7 @@
             <div class="ui-g-6 pb-0 pt-0">
               <p class="steps-st">Nomenclatura: </p>
               <p class="st">
-                <strong>{{modalTransferir.data.nomenclatura}}</strong>
+                {{modalTransferir.data.nomenclatura}}
               </p>
             </div>
           </div>
@@ -227,10 +234,23 @@
           <p-header>
             <span class="steps-circle">2</span> <span> Usuario Seleccionado </span>
           </p-header>
-          <div>
-            <p class="st text-center">
-              <strong>{{usuarioElegidoTransferir.label}}</strong>
-            </p>
+          <div class="ui-g">
+
+            <!-- Nombre -->
+            <div class="ui-g-6 pb-0 pt-0">
+              <p class="steps-st">Nombre: </p>
+              <p class="st">
+                {{usuarioElegidoTransferir.label}}
+              </p>
+            </div>
+
+            <!-- Cargo -->
+            <div class="ui-g-6 pb-0 pt-0">
+              <p class="steps-st">Cargo: </p>
+              <p class="st">
+                {{usuarioElegidoTransferir.descripcion}}
+              </p>
+            </div>
           </div>
         </p-panel>
       </p-panel>

@@ -8,6 +8,9 @@ export class SelectItemDTO {
   /** Identificador del item */
   public id: number;
 
-  /** Nombre o descripcion del item a mostrar en el componente */
+  /** Nombre del item a mostrar en el componente */
   public label: string;
+
+  /** descripcion del item, valor opcional */
+  public descripcion: string;
 }
