@@ -288,6 +288,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   public cerrarModalTransferir(): void {
     this.modalTransferir.closeModal();
     this.usuarioElegidoTransferir = null;
+    this.filterNombreUsuario = null;
+    this.usuariosTransferir = this.usuariosTransferirOrigen;
   }
 
   /**
@@ -322,6 +324,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     if (!this.stepsTransferencia) {
       this.stepsTransferencia = new StepsModel();
       this.stepsTransferencia.stepsParaTransferirConsecutivo();
+    } else {
+      this.stepsTransferencia.irPrimerStep();
     }
   }
 

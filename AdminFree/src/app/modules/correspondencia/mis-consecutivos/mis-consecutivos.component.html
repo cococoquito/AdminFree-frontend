@@ -42,10 +42,10 @@
         <ng-template pTemplate="header">
           <tr class="text-center">
             <th style="width: 10%">Consecutivo</th>
-            <th style="width: 30%">Nomenclatura</th>
+            <th style="width: 35%">Nomenclatura</th>
             <th style="width: 25%">Fecha de Solicitud</th>
-            <th style="width: 20%">Estado</th>
-            <th style="width: 10%">Transferir</th>
+            <th style="width: 15%">Estado</th>
+            <th style="width: 10%">Ceder</th>
             <th style="width: 5%">Editar</th>
           </tr>
         </ng-template>
@@ -98,7 +98,7 @@
 <!-- modal transferir consecutivo -->
 <ng-container *ngIf="modalTransferir && modalTransferir.data">
   <p-dialog
-    header="Transferir Consecutivo"
+    header="Ceder Consecutivo"
     [(visible)]="modalTransferir.isShowModal"
     [dismissableMask]="false"
     [closeOnEscape]="false"
@@ -118,8 +118,8 @@
         [model]="stepsTransferencia.steps">
       </p-steps>
 
-      <!-- panel seleccion usuario -->
-      <p-panel styleClass="m-0 steps-pnl steps-pnl-main">
+      <!-- Paso 1 seleccion user -->
+      <p-panel *ngIf="stepsTransferencia.activeIndex === stepsTransferencia.STEP_UNO" styleClass="m-0 steps-pnl pnl-pt">
         <p-header>
           <div class="ui-g">
             <div class="ui-g-7 p-0">
@@ -192,13 +192,35 @@
         </div>
       </p-panel>
 
-      <!-- btns -->
-      <div class="text-center mb-0 mt-2">
+      <!-- Paso 2 confirmacion -->
+      <p-panel *ngIf="stepsTransferencia.activeIndex === stepsTransferencia.STEP_DOS" styleClass="m-0 steps-pnl pnl-pt">
+        <p-header>
+          <i class="fa fa-info-circle font-size-18"></i>
+          <span> ¿Está seguro de ceder el consecutivo para el siguiente usuario?</span>
+        </p-header>
+
+      </p-panel>
+
+      <!-- btns steps UNO-->
+      <div *ngIf="stepsTransferencia.activeIndex === stepsTransferencia.STEP_UNO" class="text-center mb-0 mt-2">
         <button (click)="cerrarModalTransferir()" type="button" class="btn btn-sm btn-secondary mr-3 w-100-px mdl-btn-h">
           <label class="btn-size-admin"><i class="fa fa-times-circle pr-1"></i> Salir</label>
         </button>
-        <button [disabled]="!usuarioElegidoTransferir" type="button" class="btn btn-sm btn-primary w-100-px mdl-btn-h">
+        <button (click)="stepsTransferencia.irSegundoStep()" [disabled]="!usuarioElegidoTransferir" type="button" class="btn btn-sm btn-primary w-100-px mdl-btn-h">
           <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+        </button>
+      </div>
+
+      <!-- btns steps DOS-->
+      <div *ngIf="stepsTransferencia.activeIndex === stepsTransferencia.STEP_DOS" class="text-center mb-0 mt-2">
+        <button (click)="stepsTransferencia.irPrimerStep()" type="button" class="btn btn-sm btn-primary w-100-px mdl-btn-h mr-2">
+          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+        </button>
+        <button (click)="cerrarModalTransferir()" type="button" class="btn btn-sm btn-secondary w-100-px mdl-btn-h mr-2">
+          <label class="btn-size-admin"><i class="fa fa-times-circle pr-1"></i> Salir</label>
+        </button>
+        <button type="button" class="btn btn-sm btn-success w-100-px mdl-btn-h">
+          <label class="btn-size-admin"><i class="fa fa-users"></i> Ceder</label>
         </button>
       </div>
     </div>
