@@ -140,7 +140,7 @@ export class LabelsConstant {
   public static readonly NOMENCLATURA: string = 'Nomenclatura';
   public static readonly ENTRADA_INFORMACION: string = 'Entrada de Información';
   public static readonly CONSECUTIVO: string = 'Consecutivo';
-  public static readonly SELECCION_USERS: string = 'Selección de Usuario';
+  public static readonly SELECCION_USERS: string = 'Seleccionar Usuario';
 
   /** Formato de fecha como lo trabaja MYSQL */
   public static readonly FECHA_FORMATO_MYSQL: string = 'yyyy-MM-dd';
