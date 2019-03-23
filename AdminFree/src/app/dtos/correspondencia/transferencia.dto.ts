@@ -9,6 +9,9 @@ export class TransferenciaDTO {
   /** Es el nombre del usuario quien era o es duenio del consecutivo */
   public usuario: string;
 
+  /** Es el cargo que tiene el usuario */
+  public usuarioCargo: string;
+
   /** Es la fecha que se hizo la transferencia */
   public fechaTransferido: string;
 }

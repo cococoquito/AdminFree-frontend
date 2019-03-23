@@ -117,8 +117,8 @@
             <p class="steps-st">Nomenclatura: </p>
             <p class="st">
               <strong>{{consecutivoDetalle.consecutivo.nomenclatura}}</strong>
-              <span class="font-weight-bold font-size-14 font-new-roman text-secondary pl-2">
-                {{consecutivoDetalle.consecutivo.nomenclaturaDesc}}
+              <span *ngIf="consecutivoDetalle.consecutivo.nomenclaturaDesc" class="font-weight-bold font-size-14 font-new-roman text-secondary pl-1">
+                ({{consecutivoDetalle.consecutivo.nomenclaturaDesc}})
               </span>
             </p>
           </div>
@@ -126,7 +126,11 @@
           <!-- user -->
           <div class="ui-g-6 border-bottom pb-0 pt-0">
             <p class="steps-st">Usuario quién solicitó el consecutivo: </p>
-            <p class="st">{{consecutivoDetalle.consecutivo.usuario}}</p>
+            <p class="st">{{consecutivoDetalle.consecutivo.usuario}}
+              <span *ngIf="consecutivoDetalle.consecutivo.usuarioCargo" class="font-weight-bold font-size-14 font-new-roman text-secondary pl-1">
+                ({{consecutivoDetalle.consecutivo.usuarioCargo}})
+              </span>
+            </p>
           </div>
 
           <!-- fecha solicitud -->

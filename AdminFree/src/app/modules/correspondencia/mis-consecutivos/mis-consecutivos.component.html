@@ -167,7 +167,7 @@
                   <span>
                     {{ usuario.label }}
                   </span>
-                  <span class="pl-1 font-weight-bold font-size-14 font-new-roman">
+                  <span *ngIf="usuario.descripcion" class="pl-1 font-weight-bold font-size-14 font-new-roman">
                     ({{ usuario.descripcion }})
                   </span>
                 </td>

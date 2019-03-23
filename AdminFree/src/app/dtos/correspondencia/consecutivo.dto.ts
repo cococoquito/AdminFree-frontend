@@ -20,6 +20,9 @@ export class ConsecutivoDTO {
   /** nombre del usuario quien solicito el consecutivo */
   public usuario: string;
 
+  /** Es el cargo del usuario */
+  public usuarioCargo: string;
+
   /** Fecha en la que solicitaron el consecutivo */
   public fechaSolicitud: string;
 
