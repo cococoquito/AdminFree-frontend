@@ -125,7 +125,14 @@
 
           <!-- user -->
           <div class="ui-g-6 border-bottom pb-0 pt-0">
-            <p class="steps-st">Usuario quién solicitó el consecutivo: </p>
+            <p class="steps-st">Usuario quién solicitó el consecutivo:
+              <span
+                *ngIf="consecutivoDetalle.transferencias && consecutivoDetalle.transferencias.length > 0"
+                (click)="verHistorialTransferencia()"
+                class="l-ver-h">
+                Ver historial
+              </span>
+            </p>
             <p class="st">{{consecutivoDetalle.consecutivo.usuario}}
               <span *ngIf="consecutivoDetalle.consecutivo.usuarioCargo" class="font-weight-bold font-size-14 font-new-roman text-secondary pl-1">
                 ({{consecutivoDetalle.consecutivo.usuarioCargo}})

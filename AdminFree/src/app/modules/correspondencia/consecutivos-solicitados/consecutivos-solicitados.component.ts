@@ -10,6 +10,7 @@ import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { ConsecutivoDetalleDTO } from '../../../dtos/correspondencia/consecutivo-detalle.dto';
 import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
+import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -30,6 +31,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
 
   /** Es el detalle del consecutivo a visualizar */
   public consecutivoDetalle: ConsecutivoDetalleDTO;
+
+  /** Modelo modal para ver historial de transferencias del detalle consecutivo */
+  public modalTransferencias: VentanaModalModel;
 
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
@@ -242,5 +246,15 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton ver historial transferencia
+   */
+  public verHistorialTransferencia(): void {
+    if (!this.modalTransferencias) {
+      this.modalTransferencias = new VentanaModalModel();
+    }
+    this.modalTransferencias.showModal(this.consecutivoDetalle.transferencias);
   }
 }
