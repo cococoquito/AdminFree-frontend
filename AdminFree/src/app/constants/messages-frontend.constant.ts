@@ -147,5 +147,5 @@ export class MsjFrontConstant {
   static readonly ESTADO_CONSECUTIVO_ACTUALIZADO: string = 'El estado del consecutivo fue actualizado exitosamente';
 
   /** Mensaje cuando el consecutivo es cedido exitosamente */
-  static readonly CONSECUTIVO_CEDIDO: string = 'El Consecutivo fue cedido exitosamente';
+  static readonly CONSECUTIVO_CEDIDO: string = 'El consecutivo fue cedido exitosamente';
 }
