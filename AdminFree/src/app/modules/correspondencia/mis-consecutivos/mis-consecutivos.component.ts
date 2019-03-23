@@ -35,10 +35,10 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   /** se utiliza para consultar solamente los consecutivos del usuario autenticado */
   public idUsuarioAutenticado: number;
 
-  /** Se utiliza para hacer la transferencia de un consecutivo a otro usuario */
+  /** Lista de usuarios que son visualizados en la tabla de transferir consecutivo */
   public usuariosTransferir: Array<SelectItemDTO>;
 
-  /** Es el origen de los usuarios sin modificaciones */
+  /** Lista de usuarios consultados en el sistema, esta lista no se modifica */
   public usuariosTransferirOrigen: Array<SelectItemDTO>;
 
   /** Es el usuario seleccionado para transferir el consecutivo */
@@ -47,16 +47,16 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   /** Modelo del modal para transferir un consecutivo a otro usuario */
   public modalTransferir: VentanaModalModel;
 
-  /** Modelo del componente steps, se utiliza para la transferencia de usuario*/
+  /** Modelo del componente steps que se utiliza para tranferir consecutivos*/
   public stepsTransferencia: StepsModel;
 
-  /** Es el filter ingresado para la busqueda por nombre de usuario */
+  /** Es el filter ingresado para la busqueda por nombre de usuario a transferir*/
   public filterNombreUsuario: string;
 
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
 
-  /** Se utiliza para resetear la tabla usuarios filtros cuando hacen alguna busqueda*/
+  /** Se utiliza para resetear la tabla de usuarios de transferencia de consecutivo*/
   @ViewChild('tblusers') tblusers: Table;
 
   /**
@@ -268,7 +268,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     // se invoca el servicio para transferir el consecutivo
     this.correspondenciaService.transferirConsecutivo(parametros).subscribe(
       data => {
-        // se configura los consecutivos retornados por el usuario
+        // se configura los consecutivos retornados por el servicio
         this.stateFiltro.consecutivosPaginados.filtroExitoso(this.tblConsecutivos, data.responseConsecutivos);
 
         // Mensaje exitoso, el cambio fue exitoso
@@ -284,7 +284,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que soporta el evento click del boton transferir
+   * Metodo que soporta el evento click del boton
+   * transferir de la tabla de consecutivos
    *
    * @param consecutivo , Consecutivo seleccionado para transferir
    * a otro usuario seleccionado en el modal
@@ -302,7 +303,6 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         this.stateFiltro.clienteCurrent.id,
         this.idUsuarioAutenticado).subscribe(
         data => {
-
           // se configura los usuarios consultados
           this.usuariosTransferirOrigen = data;
           this.usuariosTransferir = data;
@@ -331,7 +331,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que permite soportar el evento filter por nombre del usuario
+   * Metodo que permite soportar el evento filter por nombre usuario
    */
   public busquedaNombreUsuario(): void {
 
@@ -368,7 +368,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que permite configurar el model del modal de transferir
+   * Metodo que permite configurar el model para el
+   * modal de transferir consecutivo
    */
   private setModalTransferir(consecutivo: ConsecutivoDTO): void {
     if (!this.modalTransferir) {

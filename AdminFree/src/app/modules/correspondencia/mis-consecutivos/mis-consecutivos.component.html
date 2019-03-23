@@ -206,13 +206,13 @@
           <span> ¿Está seguro de ceder el siguiente consecutivo para el siguiente usuario?</span>
         </p-header>
 
+        <!-- datos del consecutivo -->
         <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
           <p-header>
             <span class="steps-circle">1</span> <span> Consecutivo a Ceder </span>
           </p-header>
           <div class="ui-g">
 
-            <!-- Consecutivo -->
             <div class="ui-g-6 pb-0 pt-0">
               <p class="steps-st">Consecutivo:</p>
               <p class="font-weight-bold font-size-18" [ngClass]="{'clr-activo': modalTransferir.data.idEstado === stateFiltro.ID_ACTIVO, 'clr-anulado': modalTransferir.data.idEstado === stateFiltro.ID_ANULADO}">
@@ -220,7 +220,6 @@
               </p>
             </div>
 
-            <!-- Nomenclatura -->
             <div class="ui-g-6 pb-0 pt-0">
               <p class="steps-st">Nomenclatura: </p>
               <p class="st">
@@ -230,26 +229,21 @@
           </div>
         </p-panel>
 
+        <!-- datos del usuario -->
         <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
           <p-header>
             <span class="steps-circle">2</span> <span> Usuario Seleccionado </span>
           </p-header>
           <div class="ui-g">
 
-            <!-- Nombre -->
             <div class="ui-g-6 pb-0 pt-0">
               <p class="steps-st">Nombre: </p>
-              <p class="st">
-                {{usuarioElegidoTransferir.label}}
-              </p>
+              <p class="st"> {{usuarioElegidoTransferir.label}} </p>
             </div>
 
-            <!-- Cargo -->
             <div class="ui-g-6 pb-0 pt-0">
               <p class="steps-st">Cargo: </p>
-              <p class="st">
-                {{usuarioElegidoTransferir.descripcion}}
-              </p>
+              <p class="st"> {{usuarioElegidoTransferir.descripcion}} </p>
             </div>
           </div>
         </p-panel>
