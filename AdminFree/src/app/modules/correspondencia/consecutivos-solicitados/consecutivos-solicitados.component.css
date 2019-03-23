@@ -42,3 +42,8 @@ th:before {
 .l-ver-h:hover {
   text-decoration: underline;
 }
+
+.mdl-tran {
+  max-width: 720px;
+  min-width: 720px;
+}

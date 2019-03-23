@@ -259,3 +259,45 @@
     </p-panel>
   </ng-container>
 </ng-container>
+
+<!-- modal historial transferencias -->
+<ng-container *ngIf="modalTransferencias && modalTransferencias.data">
+  <p-dialog
+    header="Historial de usuarios que han sido dueño de este consecutivo"
+    [(visible)]="modalTransferencias.isShowModal"
+    (onHide)="modalTransferencias.closeModal()"
+    [dismissableMask]="true"
+    modal="true"
+    responsive="true">
+    <div class="mdl-tran">
+      <p-table
+        id="tblcc"
+        [value]="modalTransferencias.data"
+        [responsive]="true"
+        [paginator]="true"
+        [alwaysShowPaginator]="false"
+        [rows]="6"
+        rowHover="true"
+        styleClass="tblshort">
+
+        <ng-template pTemplate="header">
+          <tr class="text-center">
+          <th style="width: 5%">#</th>
+          <th style="width: 45%">Usuario</th>
+          <th style="width: 35%">Cargo</th>
+          <th style="width: 15%">Fecha Cedido</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-usuario let-i="rowIndex">
+          <tr [pSelectableRow]="usuario">
+            <td class="text-center"><strong>{{i + 1}}</strong></td>
+            <td>{{usuario.usuario}}</td>
+            <td>{{usuario.usuarioCargo}}</td>
+            <td class="text-center">{{usuario.fechaTransferido}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-dialog>
+</ng-container>
