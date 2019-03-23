@@ -6,6 +6,7 @@ import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
 import { ActivarAnularConsecutivoDTO } from '../../../dtos/correspondencia/activar-anular-consecutivo.dto';
+import { TransferirConsecutivoDTO } from '../../../dtos/correspondencia/transferir-consecutivo.dto';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
@@ -243,6 +244,43 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         );
       }
     });
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton Ceder Consecutivo
+   */
+  public transferirConsecutivo(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se construye los parametros necesarios para el proceso
+    const parametros = new TransferirConsecutivoDTO();
+    parametros.idCliente = this.stateFiltro.clienteCurrent.id;
+    parametros.idConsecutivo = this.modalTransferir.data.idConsecutivo;
+    parametros.idUsuario = this.idUsuarioAutenticado;
+    parametros.idUsuarioTransferir = this.usuarioElegidoTransferir.id;
+
+    // se debe configurar el filtro de busqueda con los datos paginados clonados
+    this.stateFiltro.filtrosClone.paginador = this.stateFiltro.consecutivosPaginados.filtroBefore();
+    parametros.filtro = this.stateFiltro.filtrosClone;
+
+    // se invoca el servicio para transferir el consecutivo
+    this.correspondenciaService.transferirConsecutivo(parametros).subscribe(
+      data => {
+        // se configura los consecutivos retornados por el usuario
+        this.stateFiltro.consecutivosPaginados.filtroExitoso(this.tblConsecutivos, data.responseConsecutivos);
+
+        // Mensaje exitoso, el cambio fue exitoso
+        this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.CONSECUTIVO_CEDIDO));
+
+        // se cierra el modal de tranferir
+        this.cerrarModalTransferir();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**
