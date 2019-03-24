@@ -45,9 +45,6 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
   /** Se utiliza para pintar el asterisco en el boton filtrar */
   public hayFiltroAplicado: boolean;
 
-  /** Indica si el submodulo que invoca este filtro es mis consecutivos */
-  public isSubModuloMisConsecutivos: boolean;
-
   /** Se utiliza para resetear la tabla campos filtros cuando hacen alguna busqueda*/
   @ViewChild('tblCamposFiltro') tblCamposFiltro: Table;
 
