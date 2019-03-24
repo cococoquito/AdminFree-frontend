@@ -105,7 +105,7 @@
         <div class="ui-g">
 
           <!-- Consecutivo -->
-          <div class="ui-g-6 border-bottom pb-0 pt-0">
+          <div class="ui-g-6 border-bottom pb-1 pt-1">
             <p class="steps-st">Consecutivo:</p>
             <p class="font-weight-bold font-size-18" [ngClass]="{'clr-activo': consecutivoDetalle.consecutivo.idEstado === stateFiltro.ID_ACTIVO, 'clr-anulado': consecutivoDetalle.consecutivo.idEstado === stateFiltro.ID_ANULADO}">
               {{ consecutivoDetalle.consecutivo.consecutivo }}
@@ -113,7 +113,7 @@
           </div>
 
           <!-- Nomenclatura -->
-          <div class="ui-g-6 border-bottom pb-0 pt-0">
+          <div class="ui-g-6 border-bottom pb-1 pt-1">
             <p class="steps-st">Nomenclatura: </p>
             <p class="st">
               <strong>{{consecutivoDetalle.consecutivo.nomenclatura}}</strong>
@@ -124,7 +124,7 @@
           </div>
 
           <!-- user -->
-          <div class="ui-g-6 border-bottom pb-0 pt-0">
+          <div class="ui-g-6 border-bottom pb-1 pt-1">
             <p class="steps-st">Usuario quién solicitó el consecutivo:
               <span
                 *ngIf="consecutivoDetalle.transferencias && consecutivoDetalle.transferencias.length > 0"
@@ -141,13 +141,13 @@
           </div>
 
           <!-- fecha solicitud -->
-          <div class="ui-g-6 border-bottom pb-0 pt-0">
+          <div class="ui-g-6 border-bottom pb-1 pt-1">
             <p class="steps-st">Fecha de Solicitud: </p>
             <p class="st">{{consecutivoDetalle.consecutivo.fechaSolicitud}}</p>
           </div>
 
           <!-- estado -->
-          <div class="ui-g-6 pb-0 pt-0">
+          <div class="ui-g-6 pb-1 pt-1">
             <ng-container *ngIf="consecutivoDetalle.consecutivo.idEstado === stateFiltro.ID_ACTIVO">
               <p class="steps-st">Estado:</p>
               <p class="font-weight-bold font-new-roman font-size-16 clr-activo">
@@ -164,7 +164,7 @@
           </div>
 
           <!-- archivado en -->
-          <div class="ui-g-6 pb-0 pt-0">
+          <div class="ui-g-6 pb-1 pt-1">
             <p class="steps-st">Archivado En:</p>
             <p class="st">Serie documental</p>
           </div>
@@ -180,7 +180,7 @@
         <!-- hay informacion -->
         <ng-container *ngIf="consecutivoDetalle.valores && consecutivoDetalle.valores.length > 0">
           <div class="ui-g pb-0">
-            <div *ngFor="let valor of consecutivoDetalle.valores" [ngClass]="consecutivoDetalle.valores.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="pb-0 pt-0 border-bottom">
+            <div *ngFor="let valor of consecutivoDetalle.valores" [ngClass]="consecutivoDetalle.valores.length > 1 ? 'ui-g-6':'ui-g-12 text-center'" class="pb-1 pt-1 border-bottom">
               <p class="steps-st">
                 <i class="fa fa-question-circle font-size-15" [pTooltip]="valor.descripcionCampo" tooltipPosition="left"></i>
                 {{ valor.nombreCampo }}:
