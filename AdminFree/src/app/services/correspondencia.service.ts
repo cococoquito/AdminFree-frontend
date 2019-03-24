@@ -18,6 +18,7 @@ import { InitMisConsecutivosDTO } from '../dtos/correspondencia/init-mis-consecu
 import { ActivarAnularConsecutivoDTO } from '../dtos/correspondencia/activar-anular-consecutivo.dto';
 import { TransferirConsecutivoDTO } from '../dtos/correspondencia/transferir-consecutivo.dto';
 import { SelectItemDTO } from '../dtos/transversal/select-item.dto';
+import { ConsecutivoEdicionDTO } from '../dtos/correspondencia/consecutivo-edicion.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -252,5 +253,18 @@ export class CorrespondenciaService {
   public getUsuariosTransferir(idCliente: number, idUsuario: number): Observable<Array<SelectItemDTO>> {
     const url = `${CorrespondenciaAPIConstant.GET_USERS_TRANSFERIR}?idCliente=${idCliente}&idUsuario=${idUsuario}`;
     return this.http.get<Array<SelectItemDTO>>(url);
+  }
+
+  /**
+	 * Servicio que permite consultar y retornar los datos del consecutivo para su edicion
+	 *
+	 * @param filtro, DTO que contiene los valores para el filtro de busqueda
+	 * @return DTO Con los atributos del consecutivo configurados
+	 */
+  public getConsecutivoEdicion(filtro: ConsecutivoEdicionDTO): Observable<ConsecutivoEdicionDTO> {
+    return this.http.post<ConsecutivoEdicionDTO>(
+      CorrespondenciaAPIConstant.GET_CONSECUTIVO_EDICION,
+      filtro
+    );
   }
 }

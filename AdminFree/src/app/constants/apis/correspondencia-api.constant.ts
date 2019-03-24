@@ -113,4 +113,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getusertransferir';
+
+  /** URL del recurso que permite obtener los datos de un consecutivo para su edicion */
+  static readonly GET_CONSECUTIVO_EDICION: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'getconsedicion';
 }
