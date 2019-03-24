@@ -147,6 +147,28 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
+   * Metodo que soporta el evento click del boton refrescar
+   */
+  public refresh(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se hace el backup de los datos del paginador esto por si hay errores
+    this.stateFiltro.filtrosClone.paginador = this.stateFiltro.consecutivosPaginados.filtroBefore();
+
+    // se procede a consultar los consecutivos
+    this.correspondenciaService.getConsecutivosAnioActual(this.stateFiltro.filtrosClone).subscribe(
+      data => {
+        this.stateFiltro.consecutivosPaginados.filtroExitoso(this.tblConsecutivos, data);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
    * Metodo que es invocado por el paginador de la tabla
    */
   public paginar(): void {
@@ -284,8 +306,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que soporta el evento click del boton
-   * transferir de la tabla de consecutivos
+   * Metodo que soporta el evento click del boton transferir de la tabla de consecutivos
    *
    * @param consecutivo , Consecutivo seleccionado para transferir
    * a otro usuario seleccionado en el modal
@@ -317,6 +338,16 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     } else {
       // si los usuarios ya fueron consultados solamente se abre el modal
       this.setModalTransferir(consecutivo);
+    }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton Siguiente del modal
+   * transferir consecutivo a un usuario seleccionado
+   */
+  public irSegundoStepTranferir(): void {
+    if (this.usuarioElegidoTransferir) {
+      this.stepsTransferencia.irSegundoStep();
     }
   }
 
@@ -368,8 +399,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que permite configurar el model para el
-   * modal de transferir consecutivo
+   * Metodo que permite configurar el model para el modal de transferir consecutivo
+   * @param consecutivo seleccionado para ceder a otro usuario
    */
   private setModalTransferir(consecutivo: ConsecutivoDTO): void {
     if (!this.modalTransferir) {

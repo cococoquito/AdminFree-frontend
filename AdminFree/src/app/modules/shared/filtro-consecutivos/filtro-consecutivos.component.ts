@@ -76,16 +76,11 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
     const filtros = new FiltroConsecutivosDTO();
     filtros.idCliente = this.state.clienteCurrent.id;
 
-    // para el submodulo de mis consecutivos se debe inicializar las siguientes valores
+    // para submodulo mis consecutivos se debe configurar id user autenticado como filtro
     if (this.state.componentePadre instanceof MisConsecutivosComponent) {
-
-      // se configura el identificador del cliente autenticado como filtro
       filtros.idUsuario = this.state.componentePadre.idUsuarioAutenticado;
       this.usuarioFiltro = new SelectItemDTO();
       this.usuarioFiltro.id = filtros.idUsuario;
-
-      // indica que el submodulo quien invoca el filtro es mis consecutivos
-      this.isSubModuloMisConsecutivos = true;
     }
 
     // se debe inicializar el clone con los mismos datos del filtro
