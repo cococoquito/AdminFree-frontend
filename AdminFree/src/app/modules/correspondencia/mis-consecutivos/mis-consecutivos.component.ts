@@ -4,11 +4,13 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
+import { SpinnerState } from '../../../states/spinner.state';
 import { FiltroConsecutivosState } from '../../../states/transversal/filtro-consecutivos.state';
 import { ActivarAnularConsecutivoDTO } from '../../../dtos/correspondencia/activar-anular-consecutivo.dto';
 import { TransferirConsecutivoDTO } from '../../../dtos/correspondencia/transferir-consecutivo.dto';
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
+import { ConsecutivoEdicionDTO } from '../../../dtos/correspondencia/consecutivo-edicion.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { StepsModel } from '../../../model/steps-model';
@@ -53,6 +55,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   /** Es el filter ingresado para la busqueda por nombre de usuario a transferir*/
   public filterNombreUsuario: string;
 
+  /** Es el consecutivo seleccionado para su edicion*/
+  public consecutivoEdicion: ConsecutivoEdicionDTO;
+
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
 
@@ -73,13 +78,17 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    *
    * @param stateFiltro, se utiliza como mediador para administrar los datos
    * o llamados de metodos entre este componente y el componente filtro busqueda
+   *
+   * @param spinnerState, se utiliza para simular el spinner cuando
+   * pasa del panel edicion a la lista de consecutivos
    */
   constructor(
     protected messageService: MessageService,
     private correspondenciaService: CorrespondenciaService,
     private confirmationService: ConfirmationService,
     private shellState: ShellState,
-    public stateFiltro: FiltroConsecutivosState) {
+    public stateFiltro: FiltroConsecutivosState,
+    private spinnerState: SpinnerState) {
     super();
   }
 
@@ -211,6 +220,44 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton Editar
+   * permitiendo abrir el panel de edicion
+   *
+   * @param consecutivo seleccionado para su edicion
+   */
+  public abrirPanelEdicion(consecutivo: ConsecutivoDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se construye el filtro de busqueda
+    const filtro = new ConsecutivoEdicionDTO();
+    filtro.idCliente = this.stateFiltro.clienteCurrent.id;
+    filtro.idConsecutivo = consecutivo.idConsecutivo;
+
+    // se procede a consultar los datos del consecutivo para su edicion
+    this.correspondenciaService.getConsecutivoEdicion(filtro).subscribe(
+      data => {
+        this.consecutivoEdicion = data;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que permite soportar el evento click del boton regresar del panel edicion
+   */
+  public cerrarPanelEdicion(): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.spinnerState.hideSpinner();
+      this.consecutivoEdicion = null;
+    }, 100);
   }
 
   /**
