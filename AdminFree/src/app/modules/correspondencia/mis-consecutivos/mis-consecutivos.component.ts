@@ -267,6 +267,44 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
+   * Metodo que soporta el evento del boton 'Cargar Documento'
+   *
+   * @param event, contiene el documento seleccionado para el cargue
+   */
+  public cargarDocumento(event): void {
+
+    // se limpia mensajes de errores
+    this.messageService.clear();
+
+    // se obtiene los archivo que contiene el evento
+    const files = event.files;
+
+    // el archivo es requerido para el cargue
+    if (files) {
+
+      // se configura los parametros para el cargue
+      const parametros = new FormData();
+      parametros.append('documento', files[0]);
+      parametros.append('idCliente', this.stateFiltro.clienteCurrent.id + '');
+      parametros.append('idConsecutivo', this.consecutivoEdicion.consecutivo.idConsecutivo + '');
+
+      // se procede hacer la invocacion del cargue de documento
+      this.correspondenciaService.cargarDocumento(parametros).subscribe(
+        data => {
+          this.consecutivoEdicion.documentos = data;
+          this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.DOCUMENTO_CARGADO));
+        },
+        error => {
+          let msj = this.showMensajeError(error);
+          msj = msj.replace('?1', this.consecutivoEdicion.consecutivo.consecutivo);
+          msj = msj.replace('?2', files[0].name);
+          this.messageService.add(MsjUtil.getMsjError(msj));
+        }
+      );
+    }
+  }
+
+  /**
    * Metodo que permite descargar el documento seleccionado del panel editar consecutivo
    *
    * @param datosDocumento, son los datos del documento a descargar

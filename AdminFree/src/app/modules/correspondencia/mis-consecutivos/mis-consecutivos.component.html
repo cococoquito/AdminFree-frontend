@@ -208,7 +208,7 @@
         </p-header>
 
         <p-fileUpload
-          styleClass="filedit"
+          (uploadHandler)="cargarDocumento($event)"
           customUpload="true"
           auto="true"
           [showUploadButton]="false"
@@ -219,7 +219,8 @@
           invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel, powerpoint)"
           invalidFileSizeMessageSummary="Archivo invalido"
           invalidFileSizeMessageDetail="El tamaño máximo de carga es 9000000 bytes"
-          [accept]="tiposDocumentos">
+          [accept]="tiposDocumentos"
+          styleClass="filedit">
           <ng-template let-file pTemplate="file"></ng-template>
         </p-fileUpload>
 
