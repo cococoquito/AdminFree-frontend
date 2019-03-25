@@ -10,7 +10,7 @@ export class DocumentoDTO {
   public id: number;
 
   /** Identificador del cliente */
-  public idCliente: string;
+  public idCliente: number;
 
   /** Nombre del documento */
   public nombreDocumento: string;

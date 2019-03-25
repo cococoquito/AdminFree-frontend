@@ -308,7 +308,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       accept: () => {
 
         // se procede hacer la invocacion para eliminar el documento
-        documento.idCliente = this.stateFiltro.clienteCurrent.id + '';
+        documento.idCliente = this.stateFiltro.clienteCurrent.id;
         this.correspondenciaService.eliminarDocumento(documento).subscribe(
           data => {
             this.consecutivoEdicion.documentos = data;
