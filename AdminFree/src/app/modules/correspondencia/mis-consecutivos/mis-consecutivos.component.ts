@@ -292,6 +292,37 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
+   * Metodo que soporta el evento de eliminar un documento
+   *
+   * @param documento, documento seleccionado para eliminarlo
+   */
+  public eliminarDocumento(documento: DocumentoDTO): void {
+
+    // se limpia mensajes de errores
+    this.messageService.clear();
+
+    // se visualiza la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.DOCUMENTO_ELIMINAR_CONFIRMACION.replace('?1', documento.nombreDocumento),
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se procede hacer la invocacion para eliminar el documento
+        documento.idCliente = this.stateFiltro.clienteCurrent.id + '';
+        this.correspondenciaService.eliminarDocumento(documento).subscribe(
+          data => {
+            this.consecutivoEdicion.documentos = data;
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.DOCUMENTO_ELIMINADO));
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
+  }
+
+  /**
    * Metodo que permite ACTIVAR o ANULAR un consecutivo
    *
    * @param consecutivo seleccionado para ACTIVAR o ANULAR
