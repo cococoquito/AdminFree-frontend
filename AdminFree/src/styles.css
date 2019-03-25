@@ -383,16 +383,11 @@ body {
   color: white !important;
 }
 
-#tblcc .ui-table .ui-table-thead>tr>th {
-  font-family: Times, Times New Roman, serif !important;
-  font-size: 15px !important;
-}
-
 #tbldoc .ui-table-tbody>tr>td {
   padding: 0.371em 0.857em !important;
 }
 
-#tbldoc .ui-table .ui-table-thead>tr>th {
+.tbltitle .ui-table-thead>tr>th {
   font-family: Times, Times New Roman, serif !important;
   font-size: 15px !important;
 }

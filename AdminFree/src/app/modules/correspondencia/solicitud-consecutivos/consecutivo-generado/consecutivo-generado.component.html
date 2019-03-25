@@ -44,10 +44,10 @@
       <ng-template pTemplate="content">
         <p-messages key="docs" [hideTransitionOptions]="'0ms'"> </p-messages>
         <p-table
-          id="tblcc"
           [value]="documentos"
           [responsive]="true"
-          rowHover="true">
+          rowHover="true"
+          styleClass="tbltitle">
 
           <ng-template pTemplate="header">
             <tr class="text-center">

@@ -1,3 +1,5 @@
+import { TransferenciaDTO } from './transferencia.dto';
+
 /**
  * DTO que contiene los atributos de un consecutivo
  *
@@ -34,4 +36,7 @@ export class ConsecutivoDTO {
 
   /** Nombre del Estado en la que se encuentra el consecutivo */
   public estado: string;
+
+  /** Lista de transferencias que se han realizado para este consecutivo */
+  public transferencias: Array<TransferenciaDTO>;
 }

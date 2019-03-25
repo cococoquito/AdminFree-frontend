@@ -1,0 +1,13 @@
+.l-ver-h {
+  color: #1a0dab;
+  cursor: pointer;
+}
+
+.l-ver-h:hover {
+  text-decoration: underline;
+}
+
+.mdl-tran {
+  max-width: 720px;
+  min-width: 720px;
+}

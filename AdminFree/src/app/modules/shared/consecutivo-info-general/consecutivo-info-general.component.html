@@ -1,0 +1,114 @@
+<p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
+  <p-header>
+    <span class="steps-circle">1</span> <span> Información General del Consecutivo </span>
+  </p-header>
+
+  <div class="ui-g">
+
+    <!-- Consecutivo -->
+    <div class="ui-g-6 border-bottom pb-1 pt-1">
+      <p class="steps-st">Consecutivo:</p>
+      <p class="font-weight-bold font-size-18" [ngClass]="{'clr-activo': consecutivo.idEstado === ID_ACTIVO, 'clr-anulado': consecutivo.idEstado === ID_ANULADO}">
+        {{ consecutivo.consecutivo }}
+      </p>
+    </div>
+
+    <!-- Nomenclatura -->
+    <div class="ui-g-6 border-bottom pb-1 pt-1">
+      <p class="steps-st">Nomenclatura: </p>
+      <p class="st">
+        <strong>{{consecutivo.nomenclatura}}</strong>
+        <span *ngIf="consecutivo.nomenclaturaDesc" class="font-weight-bold font-size-14 font-new-roman text-secondary pl-1">
+          ({{consecutivo.nomenclaturaDesc}})
+        </span>
+      </p>
+    </div>
+
+    <!-- user -->
+    <div class="ui-g-6 border-bottom pb-1 pt-1">
+      <p class="steps-st">Usuario quién solicitó el consecutivo:
+        <span
+          *ngIf="consecutivo.transferencias && consecutivo.transferencias.length > 0"
+          (click)="verHistorialTransferencia()"
+          class="l-ver-h">
+          Ver historial
+        </span>
+      </p>
+      <p class="st">{{consecutivo.usuario}}
+        <span *ngIf="consecutivo.usuarioCargo" class="font-weight-bold font-size-14 font-new-roman text-secondary pl-1">
+          ({{consecutivo.usuarioCargo}})
+        </span>
+      </p>
+    </div>
+
+    <!-- fecha solicitud -->
+    <div class="ui-g-6 border-bottom pb-1 pt-1">
+      <p class="steps-st">Fecha de Solicitud: </p>
+      <p class="st">{{consecutivo.fechaSolicitud}}</p>
+    </div>
+
+    <!-- estado -->
+    <div class="ui-g-6 pb-1 pt-1">
+      <ng-container *ngIf="consecutivo.idEstado === ID_ACTIVO">
+        <p class="steps-st">Estado:</p>
+        <p class="font-weight-bold font-new-roman font-size-16 clr-activo">
+          {{consecutivo.estado}}
+        </p>
+      </ng-container>
+      <ng-container *ngIf="consecutivo.idEstado === ID_ANULADO">
+        <p class="steps-st">Estado y Fecha anulación:</p>
+        <p class="font-new-roman font-size-16">
+          <span class="font-weight-bold clr-anulado">{{consecutivo.estado}}</span>
+          <span class="st"> - {{consecutivo.fechaAnulacion}}</span>
+        </p>
+      </ng-container>
+    </div>
+
+    <!-- archivado en -->
+    <div class="ui-g-6 pb-1 pt-1">
+      <p class="steps-st">Archivado En:</p>
+      <p class="st">Serie documental</p>
+    </div>
+  </div>
+</p-panel>
+
+<!-- modal historial transferencias -->
+<ng-container *ngIf="modalTransferencias && modalTransferencias.data">
+  <p-dialog
+    header="Historial de usuarios que han sido cedidos para este consecutivo"
+    [(visible)]="modalTransferencias.isShowModal"
+    (onHide)="modalTransferencias.closeModal()"
+    [dismissableMask]="true"
+    modal="true"
+    responsive="true">
+    <div class="mdl-tran">
+      <p-table
+        [value]="modalTransferencias.data"
+        [responsive]="true"
+        [paginator]="true"
+        [alwaysShowPaginator]="false"
+        [rows]="6"
+        rowHover="true"
+        styleClass="tblshort tbltitle">
+
+        <ng-template pTemplate="header">
+          <tr class="text-center">
+            <th style="width: 5%">#</th>
+            <th style="width: 45%">Usuario</th>
+            <th style="width: 35%">Cargo</th>
+            <th style="width: 15%">Fecha Cedido</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-usuario let-i="rowIndex">
+          <tr [pSelectableRow]="usuario">
+            <td class="text-center"><strong>{{i + 1}}</strong></td>
+            <td>{{usuario.usuario}}</td>
+            <td>{{usuario.usuarioCargo}}</td>
+            <td class="text-center">{{usuario.fechaTransferido}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-dialog>
+</ng-container>

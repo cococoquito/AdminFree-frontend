@@ -37,7 +37,8 @@
         [responsive]="true"
         [paginator]="true"
         [lazy]="true"
-        rowHover="true">
+        rowHover="true"
+        styleClass="tbltitle">
 
         <ng-template pTemplate="header">
           <tr class="text-center">
@@ -106,78 +107,7 @@
       </p-header>
 
       <!-- Informacion general consecutivo -->
-      <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
-        <p-header>
-          <span class="steps-circle">1</span> <span> Información General del Consecutivo </span>
-        </p-header>
-
-        <div class="ui-g">
-
-          <!-- Consecutivo -->
-          <div class="ui-g-6 border-bottom pb-1 pt-1">
-            <p class="steps-st">Consecutivo:</p>
-            <p class="font-weight-bold font-size-18" [ngClass]="{'clr-activo': consecutivoEdicion.consecutivo.idEstado === stateFiltro.ID_ACTIVO, 'clr-anulado': consecutivoEdicion.consecutivo.idEstado === stateFiltro.ID_ANULADO}">
-              {{ consecutivoEdicion.consecutivo.consecutivo }}
-            </p>
-          </div>
-
-          <!-- Nomenclatura -->
-          <div class="ui-g-6 border-bottom pb-1 pt-1">
-            <p class="steps-st">Nomenclatura: </p>
-            <p class="st">
-              <strong>{{consecutivoEdicion.consecutivo.nomenclatura}}</strong>
-              <span *ngIf="consecutivoEdicion.consecutivo.nomenclaturaDesc" class="font-weight-bold font-size-14 font-new-roman text-secondary pl-1">
-                ({{consecutivoEdicion.consecutivo.nomenclaturaDesc}})
-              </span>
-            </p>
-          </div>
-
-          <!-- user -->
-          <div class="ui-g-6 border-bottom pb-1 pt-1">
-            <p class="steps-st">Usuario quién solicitó el consecutivo:
-              <span
-                *ngIf="consecutivoEdicion.transferencias && consecutivoEdicion.transferencias.length > 0"
-                class="l-ver-h">
-                Ver historial
-              </span>
-            </p>
-            <p class="st">{{consecutivoEdicion.consecutivo.usuario}}
-              <span *ngIf="consecutivoEdicion.consecutivo.usuarioCargo" class="font-weight-bold font-size-14 font-new-roman text-secondary pl-1">
-                ({{consecutivoEdicion.consecutivo.usuarioCargo}})
-              </span>
-            </p>
-          </div>
-
-          <!-- fecha solicitud -->
-          <div class="ui-g-6 border-bottom pb-1 pt-1">
-            <p class="steps-st">Fecha de Solicitud: </p>
-            <p class="st">{{consecutivoEdicion.consecutivo.fechaSolicitud}}</p>
-          </div>
-
-          <!-- estado -->
-          <div class="ui-g-6 pb-1 pt-1">
-            <ng-container *ngIf="consecutivoEdicion.consecutivo.idEstado === stateFiltro.ID_ACTIVO">
-              <p class="steps-st">Estado:</p>
-              <p class="font-weight-bold font-new-roman font-size-16 clr-activo">
-                {{consecutivoEdicion.consecutivo.estado}}
-              </p>
-            </ng-container>
-            <ng-container *ngIf="consecutivoEdicion.consecutivo.idEstado === stateFiltro.ID_ANULADO">
-              <p class="steps-st">Estado y Fecha anulación:</p>
-              <p class="font-new-roman font-size-16">
-                <span class="font-weight-bold clr-anulado">{{consecutivoEdicion.consecutivo.estado}}</span>
-                <span class="st"> - {{consecutivoEdicion.consecutivo.fechaAnulacion}}</span>
-              </p>
-            </ng-container>
-          </div>
-
-          <!-- archivado en -->
-          <div class="ui-g-6 pb-1 pt-1">
-            <p class="steps-st">Archivado En:</p>
-            <p class="st">Serie documental</p>
-          </div>
-        </div>
-      </p-panel>
+      <admin-consecutivo-info-general [consecutivo]="consecutivoEdicion.consecutivo"></admin-consecutivo-info-general>
 
       <!-- Informacion consecutivo -->
       <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
@@ -229,6 +159,7 @@
           [value]="consecutivoEdicion.documentos"
           [responsive]="true"
           rowHover="true"
+          styleClass="tbltitle"
           *ngIf="consecutivoEdicion.documentos && consecutivoEdicion.documentos.length > 0">
 
           <ng-template pTemplate="header">

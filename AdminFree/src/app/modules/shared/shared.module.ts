@@ -18,6 +18,7 @@ import { InputswitchComponent } from './inputswitch/inputswitch.component';
 import { DetalleCampoComponent } from './detalle-campo/detalle-campo.component';
 import { DetalleNomenclaturaComponent } from './detalle-nomenclatura/detalle-nomenclatura.component';
 import { FiltroConsecutivosComponent } from './filtro-consecutivos/filtro-consecutivos.component';
+import { ConsecutivoInfoGeneralComponent } from './consecutivo-info-general/consecutivo-info-general.component';
 
 /**
  * Modulo que contiene los artefactos para ser compartidos
@@ -46,7 +47,8 @@ import { FiltroConsecutivosComponent } from './filtro-consecutivos/filtro-consec
     InputswitchComponent,
     DetalleCampoComponent,
     DetalleNomenclaturaComponent,
-    FiltroConsecutivosComponent
+    FiltroConsecutivosComponent,
+    ConsecutivoInfoGeneralComponent
   ],
   exports: [
     SharedCommonModule,
@@ -66,7 +68,8 @@ import { FiltroConsecutivosComponent } from './filtro-consecutivos/filtro-consec
     InputswitchComponent,
     DetalleCampoComponent,
     DetalleNomenclaturaComponent,
-    FiltroConsecutivosComponent
+    FiltroConsecutivosComponent,
+    ConsecutivoInfoGeneralComponent
   ],
   providers: [
     DatePipe

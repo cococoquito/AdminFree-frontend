@@ -1,7 +1,7 @@
 import { DocumentoDTO } from './documento.dto';
 import { CampoEntradaValueDTO } from './campo-entrada-value.dto';
 import { ConsecutivoDTO } from './consecutivo.dto';
-import { TransferenciaDTO } from './transferencia.dto';
+
 /**
  * Contiene el detalle de un consecutivo, consecutivo, valores, documentos
  *
@@ -23,7 +23,4 @@ export class ConsecutivoDetalleDTO {
 
   /** Documentos asociados al consecutivos */
   public documentos: Array<DocumentoDTO>;
-
-  /** Lista de transferencias que se han realizado para este consecutivo */
-  public transferencias: Array<TransferenciaDTO>;
 }

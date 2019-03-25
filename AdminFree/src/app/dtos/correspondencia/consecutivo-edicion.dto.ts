@@ -1,6 +1,5 @@
 import { ConsecutivoDTO } from './consecutivo.dto';
 import { DocumentoDTO } from './documento.dto';
-import { TransferenciaDTO } from './transferencia.dto';
 
 /**
  * Este DTO se utiliza para encapsular los datos de un consecutivo
@@ -22,7 +21,4 @@ export class ConsecutivoEdicionDTO {
 
   /** Documentos asociados al consecutivos */
   public documentos: Array<DocumentoDTO>;
-
-  /** Lista de transferencias que se han realizado para este consecutivo */
-  public transferencias: Array<TransferenciaDTO>;
 }
