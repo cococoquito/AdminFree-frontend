@@ -207,6 +207,22 @@
           <span class="steps-circle">3</span> <span> Documentos Asociados al Consecutivo </span>
         </p-header>
 
+        <p-fileUpload
+          styleClass="filedit"
+          customUpload="true"
+          auto="true"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          maxFileSize="9000000"
+          chooseLabel="Cargar Documento"
+          invalidFileTypeMessageSummary="Archivo invalido"
+          invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel, powerpoint)"
+          invalidFileSizeMessageSummary="Archivo invalido"
+          invalidFileSizeMessageDetail="El tamaño máximo de carga es 9000000 bytes"
+          [accept]="tiposDocumentos">
+          <ng-template let-file pTemplate="file"></ng-template>
+        </p-fileUpload>
+
         <p-table
           id="tbldoc"
           [value]="consecutivoEdicion.documentos"
@@ -221,6 +237,7 @@
               <th style="width: 20%">Tamaño</th>
               <th style="width: 15%">Fecha Cargue</th>
               <th style="width: 4%">Descargar</th>
+              <th style="width: 4%">Eliminar</th>
             </tr>
           </ng-template>
 
@@ -236,6 +253,11 @@
                 <span class="circle-download">
                   <i class="pi pi-cloud-download font-size-28"></i>
                 </span>
+              </td>
+              <td class="text-center">
+                <button type="button" class="btn btn-sm btn-round-table btn-round-del">
+                  <i class="pi pi-times icon-round-del"></i>
+                </button>
               </td>
             </tr>
           </ng-template>

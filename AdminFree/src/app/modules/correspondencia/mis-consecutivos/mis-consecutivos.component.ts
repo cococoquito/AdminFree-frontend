@@ -19,6 +19,7 @@ import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
+import { TiposDocumentosConstant } from '../../../constants/tipos-documentos.constant';
 
 /**
  * Componente para la administracion de los consecutivos de
@@ -57,6 +58,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
 
   /** Es el consecutivo seleccionado para su edicion*/
   public consecutivoEdicion: ConsecutivoEdicionDTO;
+
+  /** Son los tipos de documentos permitidos para el cargue de archivo*/
+  public tiposDocumentos = TiposDocumentosConstant.getAll();
 
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;

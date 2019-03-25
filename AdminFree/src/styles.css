@@ -225,6 +225,16 @@ body {
   line-height: 0% !important;
 }
 
+.filedit .ui-fileupload-content {
+  padding: 0px !important;
+  border: 0px !important;
+}
+
+.filedit .ui-fileupload-buttonbar {
+  border: 0px !important;
+  border-bottom: 1px solid #c8c8c8;
+}
+
 /* Estilos para los inputs */
 .ad-input-label {
   margin-bottom: .2rem;

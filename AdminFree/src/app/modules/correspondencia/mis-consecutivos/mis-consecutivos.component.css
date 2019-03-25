@@ -1,3 +1,39 @@
+:host ::ng-deep #tblcc .ui-table .ui-table-thead>tr>th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+}
+
+@media screen and (max-width: 64em) {
+  :host ::ng-deep #tblcc .ui-table .ui-table-thead>tr>th {
+    top: 100px;
+  }
+}
+
+#tblcc th:after,
+th:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+#tblcc th::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  width: 100%;
+  height: 100%;
+  border-right: 1px solid #c8c8c8;
+  display: block;
+  top: 0px;
+}
+
+#tblcc th:after {
+  bottom: -1px;
+  border-bottom: 1px solid #c8c8c8;
+}
+
 .btn-activo {
   background-color: #2E7D32 !important;
   border-color: #2E7D32 !important;
