@@ -45,6 +45,9 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
   /** Se utiliza para pintar el asterisco en el boton filtrar */
   public hayFiltroAplicado: boolean;
 
+  /** Indica si el submodulo que invoca este filtro es mis consecutivos */
+  public isSubModuloMisConsecutivos: boolean;
+
   /** Se utiliza para resetear la tabla campos filtros cuando hacen alguna busqueda*/
   @ViewChild('tblCamposFiltro') tblCamposFiltro: Table;
 
@@ -73,11 +76,16 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
     const filtros = new FiltroConsecutivosDTO();
     filtros.idCliente = this.state.clienteCurrent.id;
 
-    // para submodulo mis consecutivos se debe configurar id user autenticado como filtro
+    // para el submodulo de mis consecutivos se debe inicializar las siguientes valores
     if (this.state.componentePadre instanceof MisConsecutivosComponent) {
+
+      // para submodulo mis consecutivos se debe configurar id user autenticado como filtro
       filtros.idUsuario = this.state.componentePadre.idUsuarioAutenticado;
       this.usuarioFiltro = new SelectItemDTO();
       this.usuarioFiltro.id = filtros.idUsuario;
+
+      // indica que el submodulo quien invoca el filtro es mis consecutivos
+      this.isSubModuloMisConsecutivos = true;
     }
 
     // se debe inicializar el clone con los mismos datos del filtro
@@ -137,11 +145,12 @@ export class FiltroConsecutivosComponent extends CommonComponent implements OnIn
       // se verifica en los filros generales
       if (this.state.filtrosClone.consecutivos ||
           this.state.filtrosClone.nomenclaturas ||
-          this.state.filtrosClone.idUsuario ||
           this.state.filtrosClone.fechaSolicitudInicial ||
           this.state.filtrosClone.fechaSolicitudFinal ||
           this.state.filtrosClone.estado) {
           this.hayFiltroAplicado = true;
+      } else if (!this.isSubModuloMisConsecutivos && this.state.filtrosClone.idUsuario) {
+        this.hayFiltroAplicado = true;
       }
     }
   }
