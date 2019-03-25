@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
+import { Message } from 'primeng/components/common/api';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CorrespondenciaService } from '../../../services/correspondencia.service';
 import { CommonComponent } from '../../../util/common.component';
@@ -298,7 +299,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
           let msj = this.showMensajeError(error);
           msj = msj.replace('?1', this.consecutivoEdicion.consecutivo.consecutivo);
           msj = msj.replace('?2', files[0].name);
-          this.messageService.add(MsjUtil.getMsjError(msj));
+          this.messageService.add(this.showErrorCargue(msj));
         }
       );
     }
@@ -324,7 +325,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         importedSaveAs(data, datosDocumento.nombreDocumento);
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        this.messageService.add(this.showErrorCargue(this.showMensajeError(error)));
       }
     );
   }
@@ -353,7 +354,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
             this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.DOCUMENTO_ELIMINADO));
           },
           error => {
-            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            this.messageService.add(this.showErrorCargue(this.showMensajeError(error)));
           }
         );
       }
@@ -554,5 +555,17 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       this.modalTransferir = new VentanaModalModel();
     }
     this.modalTransferir.showModal(consecutivo);
+  }
+
+  /**
+   * Metodo que permite construir el mensaje
+   */
+  private showErrorCargue(detail: string): Message {
+    return {
+      key: 'docs',
+      severity: LabelsConstant.ERROR,
+      summary: MsjFrontConstant.ERROR,
+      detail: detail
+    };
   }
 }

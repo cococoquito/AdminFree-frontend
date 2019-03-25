@@ -223,7 +223,7 @@
           styleClass="filedit">
           <ng-template let-file pTemplate="file"></ng-template>
         </p-fileUpload>
-
+        <p-messages key="docs" [hideTransitionOptions]="'0ms'"> </p-messages>
         <p-table
           id="tbldoc"
           [value]="consecutivoEdicion.documentos"
