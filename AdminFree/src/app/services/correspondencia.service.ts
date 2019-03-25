@@ -120,7 +120,7 @@ export class CorrespondenciaService {
    * @param idDocumento, se utiliza para consultar los datos del documento
    * @return Documento descargado con todos sus atributos
    */
-  public descargarDocumento(idCliente: string, idDocumento: string): Observable<any> {
+  public descargarDocumento(idCliente: number, idDocumento: number): Observable<any> {
     const url = `${CorrespondenciaAPIConstant.URL_DESCARGAR_DOCUMENTO}?idCliente=${idCliente}&idDocumento=${idDocumento}`;
     return this.http.get(url, { responseType: 'blob' });
   }

@@ -11,6 +11,7 @@ import { TransferirConsecutivoDTO } from '../../../dtos/correspondencia/transfer
 import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { ConsecutivoEdicionDTO } from '../../../dtos/correspondencia/consecutivo-edicion.dto';
+import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { StepsModel } from '../../../model/steps-model';
@@ -20,6 +21,7 @@ import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
 import { TiposDocumentosConstant } from '../../../constants/tipos-documentos.constant';
+import { saveAs as importedSaveAs } from 'file-saver';
 
 /**
  * Componente para la administracion de los consecutivos de
@@ -262,6 +264,31 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       this.spinnerState.hideSpinner();
       this.consecutivoEdicion = null;
     }, 100);
+  }
+
+  /**
+   * Metodo que permite descargar el documento seleccionado del panel editar consecutivo
+   *
+   * @param datosDocumento, son los datos del documento a descargar
+   */
+  public descargarDocumento(datosDocumento: DocumentoDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // son los identificadores necesarios para la descarga
+    const idCliente = this.stateFiltro.clienteCurrent.id;
+    const idDocumento = datosDocumento.id;
+
+    // se procede a descargar el documento
+    this.correspondenciaService.descargarDocumento(idCliente, idDocumento).subscribe(
+      data => {
+        importedSaveAs(data, datosDocumento.nombreDocumento);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
   /**

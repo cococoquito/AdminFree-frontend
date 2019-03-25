@@ -250,7 +250,7 @@
               </td>
               <td class="text-center">{{ documento.fechaCargue }}</td>
               <td class="text-center">
-                <span class="circle-download">
+                <span (click)="descargarDocumento(documento)" class="circle-download">
                   <i class="pi pi-cloud-download font-size-28"></i>
                 </span>
               </td>

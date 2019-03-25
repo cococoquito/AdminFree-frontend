@@ -234,8 +234,8 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     this.messageService.clear();
 
     // son los identificadores necesarios para la descarga
-    const idCliente = this.stateFiltro.clienteCurrent.id + '';
-    const idDocumento = datosDocumento.id + '';
+    const idCliente = this.stateFiltro.clienteCurrent.id;
+    const idDocumento = datosDocumento.id;
 
     // se procede a descargar el documento
     this.correspondenciaService.descargarDocumento(idCliente, idDocumento).subscribe(
