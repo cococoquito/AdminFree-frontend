@@ -38,16 +38,16 @@
       invalidFileSizeMessageSummary="Archivo invalido"
       invalidFileSizeMessageDetail="El tamaño máximo de carga es 9000000 bytes"
       [accept]="state.tiposDocumentos">
-      <ng-template let-file pTemplate="file">
-      </ng-template>
+      <ng-template let-file pTemplate="file"></ng-template>
 
       <ng-template pTemplate="content">
         <p-messages key="docs" [hideTransitionOptions]="'0ms'"> </p-messages>
         <p-table
+          id="tbldoc"
           [value]="documentos"
           [responsive]="true"
           rowHover="true"
-          styleClass="tbltitle">
+          styleClass="tbltitle mb-1 mt-1 mr-0 ml-0">
 
           <ng-template pTemplate="header">
             <tr class="text-center">

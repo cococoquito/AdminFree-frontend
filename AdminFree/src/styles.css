@@ -232,7 +232,7 @@ body {
 
 .filedit .ui-fileupload-buttonbar {
   border: 0px !important;
-  border-bottom: 1px solid #c8c8c8;
+  border-bottom: 1px solid #c8c8c8 !important;
 }
 
 /* Estilos para los inputs */

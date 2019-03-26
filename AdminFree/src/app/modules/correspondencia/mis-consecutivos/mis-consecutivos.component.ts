@@ -345,9 +345,10 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       message: MsjFrontConstant.DOCUMENTO_ELIMINAR_CONFIRMACION.replace('?1', documento.nombreDocumento),
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
+        // se debe configurar el identifador del cliente
+        documento.idCliente = this.stateFiltro.clienteCurrent.id;
 
         // se procede hacer la invocacion para eliminar el documento
-        documento.idCliente = this.stateFiltro.clienteCurrent.id;
         this.correspondenciaService.eliminarDocumento(documento).subscribe(
           data => {
             this.consecutivoEdicion.documentos = data;
@@ -454,7 +455,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que soporta el evento click del boton transferir de la tabla de consecutivos
+   * Metodo que permite abrir el modal para transferir un consecutivo a otro usuario
    *
    * @param consecutivo , Consecutivo seleccionado para transferir
    * a otro usuario seleccionado en el modal
@@ -490,16 +491,6 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que soporta el evento click del boton Siguiente del modal
-   * transferir consecutivo a un usuario seleccionado
-   */
-  public irSegundoStepTranferir(): void {
-    if (this.usuarioElegidoTransferir) {
-      this.stepsTransferencia.irSegundoStep();
-    }
-  }
-
-  /**
    * Metodo que soporta el evento click del boton Salir del modal transferir
    */
   public cerrarModalTransferir(): void {
@@ -507,6 +498,16 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     this.usuarioElegidoTransferir = null;
     this.filterNombreUsuario = null;
     this.usuariosTransferir = this.usuariosTransferirOrigen;
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton Siguiente del modal
+   * transferir consecutivo a un usuario seleccionado
+   */
+  public irSegundoStepTranferir(): void {
+    if (this.usuarioElegidoTransferir) {
+      this.stepsTransferencia.irSegundoStep();
+    }
   }
 
   /**
@@ -558,7 +559,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que permite construir el mensaje
+   * Metodo que permite visualizar los mensajes de error del cargue documentos
    */
   private showErrorCargue(detail: string): Message {
     return {

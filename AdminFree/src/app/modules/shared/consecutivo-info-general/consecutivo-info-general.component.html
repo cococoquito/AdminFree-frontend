@@ -27,10 +27,7 @@
     <!-- user -->
     <div class="ui-g-6 border-bottom pb-1 pt-1">
       <p class="steps-st">Usuario quién solicitó el consecutivo:
-        <span
-          *ngIf="consecutivo.transferencias && consecutivo.transferencias.length > 0"
-          (click)="verHistorialTransferencia()"
-          class="l-ver-h">
+        <span *ngIf="consecutivo.transferencias && consecutivo.transferencias.length > 0" (click)="verHistorialTransferencia()" class="l-ver-h">
           Ver historial
         </span>
       </p>

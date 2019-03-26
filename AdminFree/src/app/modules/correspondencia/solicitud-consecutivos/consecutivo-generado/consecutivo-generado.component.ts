@@ -156,7 +156,7 @@ export class ConsecutivoGeneradoComponent extends CommonComponent {
   }
 
   /**
-   * Metodo que permite construir el mensaje
+   * Metodo que permite visualizar los mensajes de error del cargue documentos
    */
   private showErrorCargue(detail: string): Message {
     return {

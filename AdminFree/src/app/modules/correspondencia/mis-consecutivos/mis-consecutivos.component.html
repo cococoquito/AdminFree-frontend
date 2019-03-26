@@ -137,29 +137,32 @@
           <span class="steps-circle">3</span> <span> Documentos Asociados al Consecutivo </span>
         </p-header>
 
+        <!-- cargue documento -->
         <p-fileUpload
           (uploadHandler)="cargarDocumento($event)"
           customUpload="true"
           auto="true"
-          [showUploadButton]="false"
-          [showCancelButton]="false"
           maxFileSize="9000000"
           chooseLabel="Cargar Documento"
           invalidFileTypeMessageSummary="Archivo invalido"
           invalidFileTypeMessageDetail="Solo se permiten los siguientes tipos de archivos (pdf, word, excel, powerpoint)"
           invalidFileSizeMessageSummary="Archivo invalido"
           invalidFileSizeMessageDetail="El tamaño máximo de carga es 9000000 bytes"
+          styleClass="filedit"
           [accept]="tiposDocumentos"
-          styleClass="filedit">
+          [showUploadButton]="false"
+          [showCancelButton]="false">
           <ng-template let-file pTemplate="file"></ng-template>
         </p-fileUpload>
-        <p-messages key="docs" [hideTransitionOptions]="'0ms'"> </p-messages>
+        <p-messages key="docs" [hideTransitionOptions]="'0ms'" styleClass="mt-2 mb-2 ml-2 mr-2"></p-messages>
+
+        <!-- HAY documento -->
         <p-table
           id="tbldoc"
           [value]="consecutivoEdicion.documentos"
           [responsive]="true"
           rowHover="true"
-          styleClass="tbltitle"
+          styleClass="tbltitle mb-2 mt-2 mr-2 ml-2"
           *ngIf="consecutivoEdicion.documentos && consecutivoEdicion.documentos.length > 0">
 
           <ng-template pTemplate="header">
@@ -195,6 +198,7 @@
           </ng-template>
         </p-table>
 
+        <!-- NO hay documento -->
         <div *ngIf="!(consecutivoEdicion.documentos && consecutivoEdicion.documentos.length > 0)"
           class="mt-2 mb-2 ml-2 mr-2 ui-messages ui-messages-info ui-corner-all text-center">
           <span class="ui-messages-icon pi pi-info-circle font-size-26"></span>
