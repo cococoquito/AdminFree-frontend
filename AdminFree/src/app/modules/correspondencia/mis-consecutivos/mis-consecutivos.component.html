@@ -116,13 +116,14 @@
         </p-header>
 
         <!-- hay informacion -->
-        <ng-container *ngIf="false">
+        <ng-container *ngIf="consecutivoEdicion.values && consecutivoEdicion.values.length > 0">
           <div class="ui-g pb-0">
+            hola hay campos
           </div>
         </ng-container>
 
         <!-- No hay informacion -->
-        <div *ngIf="true"
+        <div *ngIf="!(consecutivoEdicion.values && consecutivoEdicion.values.length > 0)"
           class="mt-2 mb-2 ml-2 mr-2 ui-messages ui-messages-info ui-corner-all text-center">
           <span class="ui-messages-icon pi pi-info-circle font-size-26"></span>
           <span class="ui-messages-detail font-weight-bold font-size-14 mb-0">

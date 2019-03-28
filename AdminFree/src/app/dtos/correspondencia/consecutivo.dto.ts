@@ -13,6 +13,9 @@ export class ConsecutivoDTO {
   /** Nro del consecutivo */
   public consecutivo: string;
 
+  /** Identificador de la nomenclatura */
+  public idNomenclatura: number;
+
   /** Nombre de la nomenclatura */
   public nomenclatura: string;
 
