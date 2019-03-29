@@ -66,10 +66,7 @@
 
           <!-- casilla-->
           <div *ngIf="campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
-            <admin-inputswitch
-              [isChecked]="campoModel.valor"
-              (switchChange)="campoModel.valor = $event;">
-            </admin-inputswitch>
+            <admin-inputswitch [isChecked]="campoModel.valor" (switchChange)="campoModel.valor=$event;"></admin-inputswitch>
             <i class="fa fa-question-circle font-size-20 ml-2"
               [pTooltip]="campoModel.campo.descripcion"
               tooltipPosition="right">

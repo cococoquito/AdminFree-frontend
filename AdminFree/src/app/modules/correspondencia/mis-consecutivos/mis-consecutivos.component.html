@@ -150,6 +150,53 @@
                   </div>
                 </div>
 
+                <!-- select-->
+                <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_LISTA_DESPLEGABLE" class="ui-g-12 pt-0">
+                  <div class="inner-addon left-addon">
+                    <i class="fa fa-question-circle font-size-20 aico" [pTooltip]="value.campo.descripcion" tooltipPosition="left"></i>
+                    <p-dropdown
+                      name="ctx{{i}}"
+                      selectId="ctx{{i}}"
+                      optionLabel="valor"
+                      placeholder="Seleccione una Opción"
+                      showClear="true"
+                      emptyFilterMessage="No hay resultados"
+                      [(ngModel)]="value.valor"
+                      [filter]="value.campo.items.length > 6"
+                      [options]="value.campo.items"
+                      [styleClass]="value.isValido ? 'ad-select down-ad' : 'ad-select-required down-ad'">
+                    </p-dropdown>
+                  </div>
+                </div>
+
+                <!-- casilla-->
+                <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
+                  <admin-inputswitch [isChecked]="value.valor" (switchChange)="value.valor=$event;"></admin-inputswitch>
+                  <i class="fa fa-question-circle font-size-20 ml-2" [pTooltip]="value.campo.descripcion" tooltipPosition="right"></i>
+                </div>
+
+                <!-- calendar-->
+                <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_CAMPO_FECHA" class="ui-g-12 pt-0">
+                  <div class="inner-addon left-addon">
+                    <i class="fa fa-question-circle font-size-20 aico" [pTooltip]="value.campo.descripcion" tooltipPosition="left"></i>
+                    <p-calendar
+                      name="ctx{{i}}"
+                      inputId="ctx{{i}}"
+                      [(ngModel)]="value.valor"
+                      [locale]="CALENDAR_SPANISH"
+                      showButtonBar="true"
+                      [readonlyInput]="true"
+                      [disabled]="value.isFechaActualNoEditable"
+                      [minDate]="value.minDate"
+                      [maxDate]="value.maxDate"
+                      [monthNavigator]="true"
+                      [yearNavigator]="true"
+                      yearRange="2010:2025"
+                      [inputStyleClass]="value.isValido ? 'ad-calendar' : 'ad-calendar-required'"
+                      dateFormat="dd/MM/yy">
+                    </p-calendar>
+                  </div>
+                </div>
               </div>
             </ng-container>
           </div>

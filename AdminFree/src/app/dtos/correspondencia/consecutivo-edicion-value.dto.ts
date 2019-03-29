@@ -14,9 +14,6 @@ export class ConsecutivoEdicionValueDTO {
     /** Es el valor ingresado a editar, este valor puede ser nulo */
     public value: any;
 
-    /** Identificador de la relacion entre la nomenclatura y el campo */
-    public idCampoNomenclatura: number;
-
     /** Es el detalle del campo, tipo, nombre, ayuda restricciones */
     public campo: CampoEntradaDetalleDTO;
 }

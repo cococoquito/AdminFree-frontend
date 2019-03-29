@@ -20,6 +20,7 @@ import { CampoModel } from '../../../model/campo-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { RegexUtil } from '../../../util/regex-util';
+import { FechaUtil } from '../../../util/fecha-util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
@@ -75,6 +76,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
 
   /** Se utiliza para validar los valores de los inputs para la edicion*/
   public regex: RegexUtil;
+
+  /** labels para el componente de los calendars */
+  public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
@@ -275,6 +279,11 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
           // se recorre todos los valores del consecutivo a editar
           let campoModel;
           for (const value of data.values) {
+
+              // los valores tipo fecha llega como string se debe hacer la conversion
+              if (this.stateFiltro.ID_CAMPO_FECHA === value.campo.tipoCampo) {
+                value.value = FechaUtil.stringToDate(value.value);
+              }
 
               // se crea el modelo del campo
               campoModel = new CampoModel();

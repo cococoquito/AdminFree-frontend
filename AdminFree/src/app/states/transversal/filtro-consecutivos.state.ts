@@ -49,6 +49,7 @@ export class FiltroConsecutivosState {
   public ID_CAMPO_TEXTO = TipoCamposConstant.ID_CAMPO_TEXTO;
   public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
   public ID_CAMPO_FECHA = TipoCamposConstant.ID_CAMPO_FECHA;
+  public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
 
   /** Constantes que representan los identificadores de ACTIVO - ANULADO */
   public ID_ACTIVO = EstadoConstant.ID_ACTIVO;

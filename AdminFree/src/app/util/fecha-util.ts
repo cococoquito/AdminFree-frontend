@@ -63,4 +63,17 @@ export class FechaUtil {
     }
     return fechasIgual;
   }
+
+  /**
+   * Metodo que permite convertir un string a DATE
+   * sincronizada a la zona horaria de colombia
+   *
+   * @param value , cadena de la fecha retornada desde el server
+   */
+  public static stringToDate(value: string): Date {
+    if (value) {
+      return new Date(value.replace(/-/g, '\/').replace(/T.+/, ''));
+    }
+    return null;
+  }
 }
