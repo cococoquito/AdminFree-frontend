@@ -73,6 +73,13 @@ export class MsjUtil {
   }
 
   /**
+   * Metodo que permite construir el mensaje de Error para toast Mediano
+   */
+  public static getToastErrorMedium(detail: string): Message {
+    return this.getToastMedium(MsjFrontConstant.ERROR, detail, LabelsConstant.ERROR);
+  }
+
+  /**
    * Metodo que permite construir el mensaje de ERROR para toast largo
    */
   public static getToastErrorLng(detail: string): Message {

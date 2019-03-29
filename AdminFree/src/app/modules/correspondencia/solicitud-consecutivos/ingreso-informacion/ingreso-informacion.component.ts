@@ -150,11 +150,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
 
               // se crea el modelo del campo
               campoModel = new CampoModel();
-              campoModel.isValido = true;
-              campoModel.campo = campo;
-
-              // se configura las restricciones de este campo
-              this.setRestricciones(campoModel);
+              campoModel.initSolicitar(campo, this.state.datosIniciales.fechaActual);
 
               // se agrega a la lista a visualizar
               this.state.camposInformacionValues.push(campoModel);
@@ -165,75 +161,6 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
-    }
-  }
-
-  /**
-   * Metodo que permite configurar las restricciones de un campo
-   *
-   * @param campoModel, modelo del campo a configurar
-   */
-  private setRestricciones(campoModel: CampoModel): void {
-
-    // se valida si este campo tiene restricciones
-    const restricciones = campoModel.campo.restricciones;
-    if (restricciones && restricciones.length > 0) {
-
-      // se recorre todas las restricciones
-      for (const restriccion of restricciones) {
-
-        // se valida cada restriccion
-        switch (restriccion) {
-
-          case RestriccionesKeyConstant.KEY_CAMPO_OBLIGATORIO: {
-            campoModel.isRequerido = true;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_CAMPO_SOLO_NUMEROS: {
-            campoModel.isSoloNumeros = true;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO + '': {
-            campoModel.valor = false;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_SI: {
-            campoModel.valor = true;
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_NO_MODIFICABLE: {
-            campoModel.isFechaActualNoEditable = true;
-            campoModel.valor = new Date(this.state.datosIniciales.fechaActual);
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_ACTUAL_SI_MODIFICABLE: {
-            campoModel.valor = new Date(this.state.datosIniciales.fechaActual);
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_ACTUAL: {
-            campoModel.isFechaMayorActual = true;
-            campoModel.minDate = new Date(this.state.datosIniciales.fechaActual);
-            campoModel.minDate.setDate(campoModel.minDate.getDate() + 1);
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MAYOR_IGUAL_ACTUAL: {
-            campoModel.isFechaMayorIgualActual = true;
-            campoModel.minDate = new Date(this.state.datosIniciales.fechaActual);
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MENOR_ACTUAL: {
-            campoModel.isFechaMenorActual = true;
-            campoModel.maxDate = new Date(this.state.datosIniciales.fechaActual);
-            campoModel.maxDate.setDate(campoModel.maxDate.getDate() - 1);
-            break;
-          }
-          case RestriccionesKeyConstant.KEY_FECHA_MENOR_IGUAL_ACTUAL: {
-            campoModel.isFechaMenorIgualActual = true;
-            campoModel.maxDate = new Date(this.state.datosIniciales.fechaActual);
-            break;
-          }
-        }
-      }
     }
   }
 
@@ -294,7 +221,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
 
       // se muestra el mensaje en pantalla
       if (!campoModel.isValido) {
-        this.messageService.add(MsjUtil.getToastError(this.regex.getMsjSoloNumeros(campoModel.campo.nombre)));
+        this.messageService.add(MsjUtil.getToastErrorMedium(this.regex.getMsjSoloNumeros(campoModel.campo.nombre)));
       }
     }
   }

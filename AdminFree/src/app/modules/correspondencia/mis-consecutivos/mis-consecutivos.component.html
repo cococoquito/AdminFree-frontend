@@ -117,8 +117,23 @@
 
         <!-- hay informacion -->
         <ng-container *ngIf="consecutivoEdicion.values && consecutivoEdicion.values.length > 0">
-          <div class="ui-g pb-0">
-            hola hay campos
+
+          <!-- panel principal-->
+          <div class="ui-g pb-2 mr-3 ml-3 mt-3 scc-border rounded bg-light">
+
+            <!-- For para cada value -->
+            <ng-container *ngFor="let value of consecutivoEdicion.values; let i = index">
+
+              <div [ngClass]="consecutivoEdicion.values.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
+
+                <!-- label-->
+                <div class="ui-g-12 pb-0">
+                  <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{value.campo.nombre}}: </label>
+                </div>
+
+
+              </div>
+            </ng-container>
           </div>
         </ng-container>
 
