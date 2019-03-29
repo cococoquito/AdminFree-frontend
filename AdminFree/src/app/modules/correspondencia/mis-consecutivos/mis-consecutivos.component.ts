@@ -16,8 +16,10 @@ import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { StepsModel } from '../../../model/steps-model';
+import { CampoModel } from '../../../model/campo-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
+import { RegexUtil } from '../../../util/regex-util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
@@ -64,6 +66,15 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
 
   /** Son los tipos de documentos permitidos para el cargue de archivo*/
   public tiposDocumentos = TiposDocumentosConstant.getAll();
+
+  /** Son los valores consultados para la edicion del consecutivo*/
+  public valuesEditar: Array<CampoModel>;
+
+  /** Es la fecha actual traida desde el servidor*/
+  private fechaActual: Date;
+
+  /** Se utiliza para validar los valores de los inputs para la edicion*/
+  public regex: RegexUtil;
 
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
@@ -141,7 +152,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
           consecutivosPaginados.configurarRegistros(data.consecutivos);
 
           // la fecha llega como string se debe hacer la conversion
-          data.fechaActual = new Date(data.fechaActual);
+          this.fechaActual = new Date(data.fechaActual);
 
           // se inicializa el state para el componente filtro de consecutivos
           const usuarios = null;
@@ -149,8 +160,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
             clienteCurrent,
             consecutivosPaginados,
             usuarios,
-            new Date(data.fechaActual.getFullYear(), 0, 1),
-            new Date(data.fechaActual.getFullYear(), 11, 31));
+            new Date(this.fechaActual.getFullYear(), 0, 1),
+            new Date(this.fechaActual.getFullYear(), 11, 31));
 
           // limpieza de memoria
           data = null;
@@ -248,7 +259,31 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     // se procede a consultar los datos del consecutivo para su edicion
     this.correspondenciaService.getConsecutivoEdicion(filtro).subscribe(
       data => {
+
+        // se configura el detalle del consecutivo
         this.consecutivoEdicion = data;
+
+        // se verifica si este consecutivo tiene values para editar
+        if (data.values && data.values.length > 0) {
+
+          // se utiliza para validar los input de los valores a editar
+          this.setRegex();
+
+          // se crea la lista del modelo de los valores a editar
+          this.valuesEditar = new Array<CampoModel>();
+
+          // se recorre todos los valores del consecutivo a editar
+          let campoModel;
+          for (const value of data.values) {
+
+              // se crea el modelo del campo
+              campoModel = new CampoModel();
+              campoModel.initEdicion(value, this.fechaActual);
+
+              // se agrega a la lista a visualizar
+              this.valuesEditar.push(campoModel);
+          }
+        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -264,6 +299,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     setTimeout(() => {
       this.spinnerState.hideSpinner();
       this.consecutivoEdicion = null;
+      this.valuesEditar = null;
     }, 100);
   }
 
@@ -568,5 +604,14 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       summary: MsjFrontConstant.ERROR,
       detail: detail
     };
+  }
+
+  /**
+   * Metodo para configurar el REGEX para la edicion del consecutivo
+   */
+  private setRegex(): void {
+    if (!this.regex) {
+      this.regex = new RegexUtil();
+    }
   }
 }

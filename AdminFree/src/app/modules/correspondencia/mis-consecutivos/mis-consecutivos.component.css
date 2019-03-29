@@ -58,15 +58,22 @@ th:before {
 
 .inner-addon .aico {
   position: absolute;
-  pointer-events: none;
 }
 
-.left-addon .aico {
+.left-addon-f .aico {
   left: 0px;
 }
 
-.left-addon input {
+.left-addon-f input {
   padding-left: 30px;
+}
+
+.left-addon .aico {
+  left: 96%;
+}
+
+.left-addon input {
+  padding-right: 30px;
 }
 
 .mdl-wh-tran {
@@ -74,4 +81,8 @@ th:before {
   min-width: 850px;
   max-height: 430px;
   min-height: 430px;
+}
+
+.aico {
+  z-index: 1;
 }

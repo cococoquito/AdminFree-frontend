@@ -116,21 +116,39 @@
         </p-header>
 
         <!-- hay informacion -->
-        <ng-container *ngIf="consecutivoEdicion.values && consecutivoEdicion.values.length > 0">
+        <ng-container *ngIf="valuesEditar && valuesEditar.length > 0">
 
           <!-- panel principal-->
-          <div class="ui-g pb-2 mr-3 ml-3 mt-3 scc-border rounded bg-light">
+          <div class="ui-g">
 
             <!-- For para cada value -->
-            <ng-container *ngFor="let value of consecutivoEdicion.values; let i = index">
+            <ng-container *ngFor="let value of valuesEditar; let i = index">
 
-              <div [ngClass]="consecutivoEdicion.values.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
+              <div [ngClass]="valuesEditar.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
 
                 <!-- label-->
                 <div class="ui-g-12 pb-0">
                   <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{value.campo.nombre}}: </label>
+                  <i *ngIf="value.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
                 </div>
 
+                <!-- input-->
+                <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_CAMPO_TEXTO" class="ui-g-12 pt-0">
+                  <div class="inner-addon left-addon">
+                    <i class="fa fa-question-circle font-size-20 aico" [pTooltip]="value.campo.descripcion" tooltipPosition="left"></i>
+                    <input
+                      type="text"
+                      id="ctx{{i}}"
+                      name="ctx{{i}}"
+                      [(ngModel)]="value.valor"
+                      [placeholder]="value.isSoloNumeros ? 'Campo Numérico': ''"
+                      [pKeyFilter]="value.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
+                      [ngClass]="{'ad-input-required' : !value.isValido, 'font-new-roman' : value.isSoloNumeros}"
+                      maxlength="255"
+                      class="ad-input ad-input-style w-100 pt-0" />
+                    <div class="focus-border"></div>
+                  </div>
+                </div>
 
               </div>
             </ng-container>
@@ -138,7 +156,7 @@
         </ng-container>
 
         <!-- No hay informacion -->
-        <div *ngIf="!(consecutivoEdicion.values && consecutivoEdicion.values.length > 0)"
+        <div *ngIf="!(valuesEditar && valuesEditar.length > 0)"
           class="mt-2 mb-2 ml-2 mr-2 ui-messages ui-messages-info ui-corner-all text-center">
           <span class="ui-messages-icon pi pi-info-circle font-size-26"></span>
           <span class="ui-messages-detail font-weight-bold font-size-14 mb-0">
@@ -266,7 +284,7 @@
               <span> Seleccione el usuario a la cual se le va ceder el consecutivo</span>
             </div>
             <div *ngIf="usuariosTransferirOrigen && usuariosTransferirOrigen.length > 6" class="ui-g-5 p-0">
-              <div class="inner-addon left-addon">
+              <div class="inner-addon left-addon-f">
                 <i class="fa fa-search-plus font-size-18 aico"></i>
                 <input
                   type="text"

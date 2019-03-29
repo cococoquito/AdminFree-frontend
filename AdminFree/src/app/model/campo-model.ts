@@ -1,5 +1,6 @@
 import { CampoEntradaDetalleDTO } from './../dtos/correspondencia/campo-entrada-detalle.dto';
 import { RestriccionesKeyConstant } from '../constants/restricciones-key.constant';
+import { ConsecutivoEdicionValueDTO } from '../dtos/correspondencia/consecutivo-edicion-value.dto';
 
 /**
  * Contiene el model de un campo de entrada informacion a visualizar en pantalla
@@ -60,6 +61,26 @@ export class CampoModel {
 
     // se confiogura las restricciones para este campo
     this.setRestricciones(fechaActual);
+  }
+
+  /**
+   * Metodo que permite incializar los atributos de este campo model
+   * para la funcionalidad de editar consecutivo correspondencia
+   *
+   * @param value , Contiene los datos del valor a editar
+   * @param fechaActual, fecha actual recibida desde el servidor
+   */
+  public initEdicion(value: ConsecutivoEdicionValueDTO, fechaActual: Date): void {
+
+    // se configura los valores requeridos para la edicion
+    this.campo = value.campo;
+    this.isValido = true;
+
+    // se confiogura las restricciones para este campo
+    this.setRestricciones(fechaActual);
+
+    // se configura el valor editar
+    this.valor = value.value;
   }
 
   /**
