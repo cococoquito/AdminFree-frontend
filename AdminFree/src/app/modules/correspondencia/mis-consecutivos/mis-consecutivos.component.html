@@ -200,6 +200,13 @@
               </div>
             </ng-container>
           </div>
+
+          <!-- aplicar cambios -->
+          <div class="pb-2 pt-2 pnl-edit text-center">
+            <button type="button" [disabled]="true" class="btn btn-sm btn-success w-150-px">
+              <label class="btn-size-admin"><i class="fa fa-pencil mr-1"></i> Aplicar Cambios</label>
+            </button>
+          </div>
         </ng-container>
 
         <!-- No hay informacion -->
@@ -291,8 +298,8 @@
 
       <!-- btn regresar -->
       <div class="mb-1 text-center">
-        <button (click)="cerrarPanelEdicion()" type="button" class="btn btn-sm btn-primary w-100-px mr-2">
-          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+        <button (click)="cerrarPanelEdicion()" type="button" class="btn btn-sm btn-primary w-150-px mr-2">
+          <label class="btn-size-admin"><i class="fa fa-hand-o-left mr-1"></i> Regresar</label>
         </button>
       </div>
     </p-panel>

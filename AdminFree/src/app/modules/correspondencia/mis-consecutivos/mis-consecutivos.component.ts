@@ -68,7 +68,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   /** Son los tipos de documentos permitidos para el cargue de archivo*/
   public tiposDocumentos = TiposDocumentosConstant.getAll();
 
-  /** Son los valores consultados para la edicion del consecutivo*/
+  /** Modelo de los campos para editar los valores del consecutivo seleccionado*/
   public valuesEditar: Array<CampoModel>;
 
   /** Es la fecha actual traida desde el servidor*/
@@ -264,7 +264,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     this.correspondenciaService.getConsecutivoEdicion(filtro).subscribe(
       data => {
 
-        // se configura el detalle del consecutivo
+        // se configura los datos del consecutivo a editar
         this.consecutivoEdicion = data;
 
         // se verifica si este consecutivo tiene values para editar

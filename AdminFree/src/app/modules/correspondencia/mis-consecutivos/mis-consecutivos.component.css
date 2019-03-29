@@ -86,3 +86,8 @@ th:before {
 .aico {
   z-index: 1;
 }
+
+.pnl-edit {
+  background-color: #f4f4f4;
+  border-top: 1px solid #c8c8c8;
+}
