@@ -19,6 +19,9 @@ export class InputswitchComponent {
   /** Se utiliza para notificar el cambio del input */
   @Output() public switchChange = new EventEmitter<boolean>();
 
+  /** bandera que indica si el componente inicia como NO APLICA */
+  @Input() public isNA: boolean;
+
   /**
    * Metodo que soporta el evento click del input-switch
    *
@@ -26,8 +29,12 @@ export class InputswitchComponent {
    * que seleccione o deseleccione la fila de la tabla
    */
   public change(event) {
+
     // se cambia la bandera
     this.isChecked = !this.isChecked;
+
+    // El componente si APLICA
+    this.isNA = false;
 
     // se notifica el cambio
     this.switchChange.emit(this.isChecked);

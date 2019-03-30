@@ -1,7 +1,7 @@
-<div class="toggle btn" (click)="change($event)" [ngClass]="isChecked?'color-on':'color-off off'">
+<div (click)="change($event)" class="toggle btn" [ngClass]="{'color-on' : isChecked, 'color-off off' : !isChecked, 'n-a' : isNA}">
   <div class="toggle-group">
     <label class="btn-toggle color-on toggle-on font-new-roman">Si</label>
-    <label class="btn-toggle color-off active toggle-off font-new-roman">No</label>
+    <label class="btn-toggle color-off active toggle-off font-new-roman">{{isNA ? 'n/a' : 'No'}}</label>
     <span class="toggle-handle btn btn-handle"></span>
   </div>
 </div>

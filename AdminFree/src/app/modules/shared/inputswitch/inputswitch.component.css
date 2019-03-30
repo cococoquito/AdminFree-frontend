@@ -111,3 +111,8 @@
 .color-off:hover {
   background-color: #696d75;
 }
+
+.n-a {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}

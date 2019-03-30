@@ -173,7 +173,11 @@
 
                 <!-- casilla-->
                 <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
-                  <admin-inputswitch (switchChange)="value.valor=$event;casillaChangedEdicion(value);" [isChecked]="value.valor"></admin-inputswitch>
+                  <admin-inputswitch
+                    (switchChange)="value.valor=$event;casillaChangedEdicion(value);"
+                    [isChecked]="value.valor"
+                    [isNA]="!value.valorOrigen.idValue">
+                  </admin-inputswitch>
                   <i class="fa fa-question-circle font-size-20 ml-2" [pTooltip]="value.campo.descripcion" tooltipPosition="right"></i>
                 </div>
 
