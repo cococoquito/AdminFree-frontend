@@ -590,6 +590,17 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    */
   public inputChangedEdicion(valueInput: CampoModel): void {
 
+    // se inicializa como no mofificado
+    valueInput.isValorModificado = false;
+
+    // se toma el valor y se limpia los espacios en blanco
+    const valorInput = this.setTrimFilter(valueInput.valor);
+
+    // verifica si el valor fue modificado cambiando la bandera
+    if (valorInput !== valueInput.valorOrigen.value) {
+      valueInput.isValorModificado = true;
+    }
+
     // se verifica si hay algun campo modificado
     this.setIsAplicarEdicion();
   }
@@ -599,6 +610,28 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    * @param valueSelect, contiene la informacion del SELECT a validar
    */
   public selectChangedEdicion(valueSelect: CampoModel): void {
+
+    // se inicializa como no mofificado
+    valueSelect.isValorModificado = false;
+
+    // si NO tiene ID-VALUE es porque es un campo nuevo
+    if (valueSelect.valorOrigen.idValue) {
+
+      // se verifica si ambos tienen Item seleccionado
+      if (valueSelect.valor && valueSelect.valorOrigen.value) {
+
+        // si ambos tiene su item, se procede a verificar su ID
+        if (valueSelect.valor.id !== valueSelect.valorOrigen.value.id) {
+          valueSelect.isValorModificado = true;
+        }
+      } else if (valueSelect.valor || valueSelect.valorOrigen.value) {
+        // si alguno de los dos valores tiene su ITEM es porque fue modificado
+        valueSelect.isValorModificado = true;
+      }
+    } else if (valueSelect.valor) {
+      // para un campo nuevo solamente se verifica si hay valor seleccionado
+      valueSelect.isValorModificado = true;
+    }
 
     // se verifica si hay algun campo modificado
     this.setIsAplicarEdicion();
@@ -610,6 +643,18 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    */
   public casillaChangedEdicion(valueCasilla: CampoModel): void {
 
+    // se inicializa como no mofificado
+    valueCasilla.isValorModificado = false;
+
+    // si NO tiene ID-VALUE es porque es un campo nuevo
+    if (valueCasilla.valorOrigen.idValue) {
+      if (valueCasilla.valor !== valueCasilla.valorOrigen.value) {
+        valueCasilla.isValorModificado = true;
+      }
+    } else {
+      valueCasilla.isValorModificado = true;
+    }
+
     // se verifica si hay algun campo modificado
     this.setIsAplicarEdicion();
   }
@@ -619,6 +664,15 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    * @param valueFecha, contiene la informacion de la FECHA a validar
    */
   public fechaChangedEdicion(valueFecha: CampoModel): void {
+
+    // se inicializa como no mofificado
+    valueFecha.isValorModificado = false;
+
+    // verifica si el valor fue modificado cambiando la bandera
+    const sonIguales = FechaUtil.iqualsDateFilter(valueFecha.valorOrigen.value, valueFecha.valor);
+    if (!sonIguales) {
+      valueFecha.isValorModificado = true;
+    }
 
     // se verifica si hay algun campo modificado
     this.setIsAplicarEdicion();
