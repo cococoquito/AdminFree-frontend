@@ -1,6 +1,6 @@
 import { CampoEntradaDetalleDTO } from './../dtos/correspondencia/campo-entrada-detalle.dto';
-import { RestriccionesKeyConstant } from '../constants/restricciones-key.constant';
 import { ConsecutivoEdicionValueDTO } from '../dtos/correspondencia/consecutivo-edicion-value.dto';
+import { RestriccionesKeyConstant } from '../constants/restricciones-key.constant';
 
 /**
  * Contiene el model de un campo de entrada informacion a visualizar en pantalla
@@ -12,6 +12,9 @@ export class CampoModel {
 
   /** Contiene los datos del campo */
   public campo: CampoEntradaDetalleDTO;
+
+  /** Valor de origen a editar, se utiliza para comparar con el valor ingresado */
+  public valorOrigen: ConsecutivoEdicionValueDTO;
 
   /** Es el valor ingresado o seleccionado */
   public valor: any;
@@ -46,6 +49,9 @@ export class CampoModel {
   /** Indica si el componente tiene un valor valido */
   public isValido: boolean;
 
+  /** Se utiliza para edicion, indica si el valor fue modificado */
+  public isValorModificado: boolean;
+
   /**
    * Metodo que permite incializar los atributos de este campo model
    * para la funcionalidad de solicitar consecutivo correspondencia
@@ -74,6 +80,8 @@ export class CampoModel {
 
     // se configura los valores requeridos para la edicion
     this.campo = value.campo;
+    value.campo = null;
+    this.valorOrigen = value;
     this.isValido = true;
 
     // se confiogura las restricciones para este campo

@@ -141,6 +141,7 @@
                       id="ctx{{i}}"
                       name="ctx{{i}}"
                       [(ngModel)]="value.valor"
+                      (ngModelChange)="inputChangedEdicion(value)"
                       [placeholder]="value.isSoloNumeros ? 'Campo Numérico': ''"
                       [pKeyFilter]="value.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
                       [ngClass]="{'ad-input-required' : !value.isValido, 'font-new-roman' : value.isSoloNumeros}"
@@ -161,6 +162,7 @@
                       placeholder="Seleccione una Opción"
                       showClear="true"
                       emptyFilterMessage="No hay resultados"
+                      (onChange)="selectChangedEdicion(value)"
                       [(ngModel)]="value.valor"
                       [filter]="value.campo.items.length > 6"
                       [options]="value.campo.items"
@@ -171,7 +173,7 @@
 
                 <!-- casilla-->
                 <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
-                  <admin-inputswitch [isChecked]="value.valor" (switchChange)="value.valor=$event;"></admin-inputswitch>
+                  <admin-inputswitch (switchChange)="value.valor=$event;casillaChangedEdicion(value);" [isChecked]="value.valor"></admin-inputswitch>
                   <i class="fa fa-question-circle font-size-20 ml-2" [pTooltip]="value.campo.descripcion" tooltipPosition="right"></i>
                 </div>
 
@@ -183,6 +185,7 @@
                       name="ctx{{i}}"
                       inputId="ctx{{i}}"
                       [(ngModel)]="value.valor"
+                      (ngModelChange)="fechaChangedEdicion(value)"
                       [locale]="CALENDAR_SPANISH"
                       showButtonBar="true"
                       [readonlyInput]="true"
@@ -203,7 +206,7 @@
 
           <!-- aplicar cambios -->
           <div class="pb-2 pt-2 pnl-edit text-center">
-            <button type="button" [disabled]="true" class="btn btn-sm btn-success w-150-px">
+            <button type="button" [disabled]="!isAplicarEdicion" class="btn btn-sm btn-success w-150-px">
               <label class="btn-size-admin"><i class="fa fa-pencil mr-1"></i> Aplicar Cambios</label>
             </button>
           </div>

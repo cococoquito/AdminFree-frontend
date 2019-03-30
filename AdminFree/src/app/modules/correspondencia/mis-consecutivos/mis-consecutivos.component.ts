@@ -71,6 +71,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   /** Modelo de los campos para editar los valores del consecutivo seleccionado*/
   public valuesEditar: Array<CampoModel>;
 
+  /** Indica si hay algun campo modificado para edicion, habilitando boton aplicar cambios*/
+  public isAplicarEdicion: boolean;
+
   /** Es la fecha actual traida desde el servidor*/
   private fechaActual: Date;
 
@@ -309,6 +312,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       this.spinnerState.hideSpinner();
       this.consecutivoEdicion = null;
       this.valuesEditar = null;
+      this.isAplicarEdicion = false;
     }, 100);
   }
 
@@ -578,6 +582,61 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
 
     // se refresca la tabla de usuarios transferir
     this.tblusers.reset();
+  }
+
+  /**
+   * Metodo que soporta el valueChanged para los campos tipo INPUT para edicion
+   * @param valueInput, contiene la informacion del INPUT a validar
+   */
+  public inputChangedEdicion(valueInput: CampoModel): void {
+
+    // se verifica si hay algun campo modificado
+    this.setIsAplicarEdicion();
+  }
+
+  /**
+   * Metodo que soporta el valueChanged para los campos tipo SELECT para edicion
+   * @param valueSelect, contiene la informacion del SELECT a validar
+   */
+  public selectChangedEdicion(valueSelect: CampoModel): void {
+
+    // se verifica si hay algun campo modificado
+    this.setIsAplicarEdicion();
+  }
+
+  /**
+   * Metodo que soporta el valueChanged para los campos tipo CASILLA para edicion
+   * @param valueCasilla, contiene la informacion de la CASILLA a validar
+   */
+  public casillaChangedEdicion(valueCasilla: CampoModel): void {
+
+    // se verifica si hay algun campo modificado
+    this.setIsAplicarEdicion();
+  }
+
+  /**
+   * Metodo que soporta el valueChanged para los campos tipo FECHA para edicion
+   * @param valueFecha, contiene la informacion de la FECHA a validar
+   */
+  public fechaChangedEdicion(valueFecha: CampoModel): void {
+
+    // se verifica si hay algun campo modificado
+    this.setIsAplicarEdicion();
+  }
+
+  /**
+   * Metodo que permite verificar si algun campo fue modificado para su edicion
+   */
+  private setIsAplicarEdicion(): void {
+    this.isAplicarEdicion = false;
+    if (this.valuesEditar && this.valuesEditar.length > 0) {
+      for (const value of this.valuesEditar) {
+        if (value.isValorModificado) {
+          this.isAplicarEdicion = true;
+          break;
+        }
+      }
+    }
   }
 
   /**
