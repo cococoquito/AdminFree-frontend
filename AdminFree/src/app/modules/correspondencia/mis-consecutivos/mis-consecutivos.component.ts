@@ -387,13 +387,19 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    * Metodo que permite soportar el evento click del boton regresar del panel edicion
    */
   public cerrarPanelEdicion(): void {
-    this.spinnerState.displaySpinner();
-    setTimeout(() => {
-      this.spinnerState.hideSpinner();
-      this.consecutivoEdicion = null;
-      this.valuesEditar = null;
-      this.isAplicarEdicion = false;
-    }, 100);
+    if (this.isAplicarEdicion) {
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.SEGURO_SALIR_EDICION,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.spinnerState.displaySpinner();
+          setTimeout(() => { this.limpiarDatosEdicion(); }, 100);
+        }
+      });
+    } else {
+      this.spinnerState.displaySpinner();
+      setTimeout(() => { this.limpiarDatosEdicion(); }, 100);
+    }
   }
 
   /**
@@ -863,5 +869,15 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     if (!this.regex) {
       this.regex = new RegexUtil();
     }
+  }
+
+  /**
+   * Metodo que permite limpiar los datos de edicion
+   */
+  private limpiarDatosEdicion(): void {
+    this.spinnerState.hideSpinner();
+    this.consecutivoEdicion = null;
+    this.valuesEditar = null;
+    this.isAplicarEdicion = false;
   }
 }
