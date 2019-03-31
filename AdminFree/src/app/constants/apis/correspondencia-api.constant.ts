@@ -119,4 +119,10 @@ export class CorrespondenciaAPIConstant {
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getconsedicion';
+
+  /** URL del recurso que permite editar los valores de un consecutivo */
+  static readonly EDITAR_CONSECUTIVO_VALUES: string =
+    AppDomainConstant.ADMINFREE +
+    CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
+    'editconsevalues';
 }

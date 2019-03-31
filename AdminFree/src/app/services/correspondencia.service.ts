@@ -19,6 +19,7 @@ import { ActivarAnularConsecutivoDTO } from '../dtos/correspondencia/activar-anu
 import { TransferirConsecutivoDTO } from '../dtos/correspondencia/transferir-consecutivo.dto';
 import { SelectItemDTO } from '../dtos/transversal/select-item.dto';
 import { ConsecutivoEdicionDTO } from '../dtos/correspondencia/consecutivo-edicion.dto';
+import { ConsecutivoEdicionValueDTO } from '../dtos/correspondencia/consecutivo-edicion-value.dto';
 import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
@@ -265,6 +266,20 @@ export class CorrespondenciaService {
     return this.http.post<ConsecutivoEdicionDTO>(
       CorrespondenciaAPIConstant.GET_CONSECUTIVO_EDICION,
       filtro
+    );
+  }
+
+  /**
+	 * Servicio que permite editar los valores de un consecutivo
+	 *
+	 * @param datos, contiene todos los valores a editar
+	 * @return valores asociados al consecutivo con las modificaciones realizadas
+	 * @throws Exception, Errores encontrados para cada validacion de los campos
+	 */
+  public editarConsecutivoValores(datos: ConsecutivoEdicionDTO): Observable<Array<ConsecutivoEdicionValueDTO>> {
+    return this.http.post<Array<ConsecutivoEdicionValueDTO>>(
+      CorrespondenciaAPIConstant.EDITAR_CONSECUTIVO_VALUES,
+      datos
     );
   }
 }
