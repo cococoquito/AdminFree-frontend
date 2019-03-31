@@ -8,12 +8,12 @@ import { PaginadorResponseDTO } from '../transversal/paginador-response.dto';
  */
 export class InitMisConsecutivosDTO {
 
-    /** Es el response inicial de los consecutivos paginados **/
-    public consecutivos: PaginadorResponseDTO;
+  /** Es el response inicial de los consecutivos paginados **/
+  public consecutivos: PaginadorResponseDTO;
 
-    /**
-     * Es la fecha actual del sistema, no se puede tomar directamente desde angular
-     * ya que se tomaria la fecha de la maquina del cliente
-     */
-    public fechaActual: Date;
+  /**
+   * Es la fecha actual del sistema, no se puede tomar directamente desde angular
+   * ya que se tomaria la fecha de la maquina del cliente
+   */
+  public fechaActual: Date;
 }

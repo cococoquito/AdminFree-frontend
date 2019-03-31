@@ -210,7 +210,7 @@
 
           <!-- aplicar cambios -->
           <div class="pb-2 pt-2 pnl-edit text-center">
-            <button type="button" [disabled]="!isAplicarEdicion" class="btn btn-sm btn-success w-150-px">
+            <button (click)="editarConsecutivoValores()" [disabled]="!isAplicarEdicion" type="button" class="btn btn-sm btn-success w-150-px">
               <label class="btn-size-admin"><i class="fa fa-pencil mr-1"></i> Aplicar Cambios</label>
             </button>
           </div>

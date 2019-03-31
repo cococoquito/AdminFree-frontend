@@ -21,6 +21,7 @@ import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { RegexUtil } from '../../../util/regex-util';
 import { FechaUtil } from '../../../util/fecha-util';
+import { BusinessUtil } from '../../../util/business-util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 import { EstadoConstant } from '../../../constants/estado.constant';
@@ -178,6 +179,38 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que permite editar los valores de un consecutivo
+   */
+  public editarConsecutivoValores(): void {
+
+    // solo aplica si hay alguna modificacion
+    if (this.isAplicarEdicion) {
+
+      // si hay valores para este consecutivo
+      if (this.valuesEditar && this.valuesEditar.length > 0) {
+
+        // se procede a configurar los valores modificados
+        const valoresEditar = Array<CampoModel>();
+        for (const value of this.valuesEditar) {
+          if (value.isValorModificado) {
+            valoresEditar.push(value);
+          }
+        }
+
+        // se procede con la edicion solo si hay valores modificados
+        if (valoresEditar.length > 0) {
+
+          // son los valores a validar sus restricciones en el back-end
+          const valores = BusinessUtil.getCamposValidarBackEnd(valoresEditar);
+
+
+
+        }
+      }
+    }
   }
 
   /**

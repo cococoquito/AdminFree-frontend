@@ -8,12 +8,12 @@ import { CampoEntradaDetalleDTO } from './campo-entrada-detalle.dto';
  */
 export class ConsecutivoEdicionValueDTO {
 
-    /** Identificador del value del consecutivo */
-    public idValue: number;
+  /** Identificador del value del consecutivo */
+  public idValue: number;
 
-    /** Es el valor ingresado a editar, este valor puede ser nulo */
-    public value: any;
+  /** Es el valor ingresado a editar, este valor puede ser nulo */
+  public value: any;
 
-    /** Es el detalle del campo, tipo, nombre, ayuda restricciones */
-    public campo: CampoEntradaDetalleDTO;
+  /** Es el detalle del campo, tipo, nombre, ayuda restricciones */
+  public campo: CampoEntradaDetalleDTO;
 }

@@ -6,11 +6,10 @@ import { SolicitarConsecutivoState } from '../../../../states/correspondencia/so
 import { SpinnerState } from '../../../../states/spinner.state';
 import { CampoModel } from '../../../../model/campo-model';
 import { SolicitudConsecutivoDTO } from '../../../../dtos/correspondencia/solicitud-consecutivo.dto';
-import { CampoEntradaValueDTO } from '../../../../dtos/correspondencia/campo-entrada-value.dto';
 import { RegexUtil } from '../../../../util/regex-util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { FechaUtil } from '../../../../util/fecha-util';
-import { RestriccionesKeyConstant } from '../../../../constants/restricciones-key.constant';
+import { BusinessUtil } from '../../../../util/business-util';
 import { LabelsConstant } from '../../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 
@@ -77,7 +76,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
     if (resultado) {
 
       // se hace el llamado de las validaciones por parte del BACK-END
-      const valores = this.getCamposValidarBackEnd();
+      const valores = BusinessUtil.getCamposValidarBackEnd(this.state.camposInformacionValues);
       if (valores && valores.length > 0) {
 
         // se construye la solicitud para hacer la invocacion
@@ -305,59 +304,5 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
         }
       }
     }
-  }
-
-  /**
-   * Metodo que permite configurar los campos para validar
-   * en el backend de acuerdo al tipo de campo y sus restricciones
-   */
-  private getCamposValidarBackEnd(): Array<CampoEntradaValueDTO> {
-
-    // son los valores a retornar
-    let camposValue: Array<CampoEntradaValueDTO>;
-
-    // se obtiene los campos visualizado en pantalla
-    const campos = this.state.camposInformacionValues;
-
-    // solo se valida si hay valores a validar
-    if (campos && campos.length > 0) {
-
-      // variables que se utilizan para el proceso
-      let campoValue: CampoEntradaValueDTO;
-      let restricciones: Array<string>;
-
-      // se recorre cada valor ingresado
-      for (const campo of campos) {
-
-        // por el momento solo aplica para campo de texto
-        if (campo.campo.tipoCampo === this.state.ID_CAMPO_TEXTO) {
-
-          // solo aplica si el campo tiene restricciones y exista su valor
-          restricciones = campo.campo.restricciones;
-          if (restricciones && restricciones.length > 0 && campo.valor) {
-
-            // por el momento solo aplica esta dos restricciones
-            if (restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_UNICO_NOMENCLATURA) ||
-              restricciones.includes(RestriccionesKeyConstant.KEY_CAMPO_TODAS_NOMENCLATURA)) {
-
-              // se construye el value a validar
-              campoValue = new CampoEntradaValueDTO();
-              campoValue.idCampo = campo.campo.id;
-              campoValue.nombreCampo = campo.campo.nombre;
-              campoValue.value = campo.valor;
-              campoValue.restricciones = restricciones;
-              campoValue.idValue = null;
-
-              // se agrega en la lista de la solicitud
-              if (!camposValue) {
-                  camposValue = new Array<CampoEntradaValueDTO>();
-              }
-              camposValue.push(campoValue);
-            }
-          }
-        }
-      }
-    }
-    return camposValue;
   }
 }
