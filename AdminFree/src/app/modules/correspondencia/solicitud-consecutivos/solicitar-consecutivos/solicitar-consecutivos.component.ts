@@ -104,6 +104,10 @@ export class SolicitarConsecutivosComponent extends CommonComponent implements O
     // se consulta los datos iniciales para este modulo
     this.correspondenciaService.getInitSolicitarConsecutivo(this.state.clienteCurrent.id).subscribe(
       data => {
+        // la fecha llega como string se debe hacer la conversion
+        if (data.fechaActual) {
+          data.fechaActual = new Date(data.fechaActual);
+        }
         this.state.datosIniciales = data;
         this.nomenclaturas = data.nomenclaturas;
         this.setStyleNomenclaturas();

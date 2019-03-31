@@ -80,7 +80,6 @@ export class CampoModel {
 
     // se configura los valores requeridos para la edicion
     this.campo = value.campo;
-    value.campo = null;
     this.valorOrigen = value;
     this.isValido = true;
 

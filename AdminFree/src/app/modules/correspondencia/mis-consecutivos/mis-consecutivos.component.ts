@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Table } from 'primeng/table';
 import { Message } from 'primeng/components/common/api';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -13,6 +14,7 @@ import { ConsecutivoDTO } from '../../../dtos/correspondencia/consecutivo.dto';
 import { SelectItemDTO } from '../../../dtos/transversal/select-item.dto';
 import { ConsecutivoEdicionDTO } from '../../../dtos/correspondencia/consecutivo-edicion.dto';
 import { DocumentoDTO } from '../../../dtos/correspondencia/documento.dto';
+import { ConsecutivoEdicionValueDTO } from '../../../dtos/correspondencia/consecutivo-edicion-value.dto';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { StepsModel } from '../../../model/steps-model';
@@ -114,7 +116,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     private confirmationService: ConfirmationService,
     private shellState: ShellState,
     public stateFiltro: FiltroConsecutivosState,
-    private spinnerState: SpinnerState) {
+    private spinnerState: SpinnerState,
+    private datePipe: DatePipe) {
     super();
   }
 
@@ -186,6 +189,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    */
   public editarConsecutivoValores(): void {
 
+    // se limpia mensajes de otros procesos
+    this.messageService.clear();
+
     // solo aplica si hay alguna modificacion
     if (this.isAplicarEdicion) {
 
@@ -193,21 +199,113 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       if (this.valuesEditar && this.valuesEditar.length > 0) {
 
         // se procede a configurar los valores modificados
-        const valoresEditar = Array<CampoModel>();
+        const valoresModificados = Array<CampoModel>();
         for (const value of this.valuesEditar) {
           if (value.isValorModificado) {
-            valoresEditar.push(value);
+            valoresModificados.push(value);
           }
         }
 
         // se procede con la edicion solo si hay valores modificados
-        if (valoresEditar.length > 0) {
+        if (valoresModificados.length > 0) {
 
-          // son los valores a validar sus restricciones en el back-end
-          const valores = BusinessUtil.getCamposValidarBackEnd(valoresEditar);
+          // se hace el llamado de las validaciones por parte de FRONT-END
+          const resultado = BusinessUtil.esInformacionValidaFrontEnd(
+            valoresModificados,
+            this.regex,
+            this.messageService,
+            this.fechaActual);
 
+          // se verifica que todo este OK
+          if (resultado) {
 
+            // DTO tipo solicitud para enviar en el request de editar valores
+            const solicitud = new ConsecutivoEdicionDTO();
 
+            // identificador del cliente requerido
+            solicitud.idCliente = this.stateFiltro.clienteCurrent.id;
+
+            // identificador del consecutivo requerido
+            solicitud.idConsecutivo = this.consecutivoEdicion.consecutivo.idConsecutivo;
+
+            // identificador de la nomenclatura requerido
+            solicitud.idNomenclatura = this.consecutivoEdicion.consecutivo.idNomenclatura;
+
+            // valores a validar a nivel de negocio dependiendo sus restricciones opcional
+            solicitud.valoresValidar = BusinessUtil.getCamposValidarBackEnd(valoresModificados);
+
+            // lista de valores modificados para editar
+            solicitud.values = new Array<ConsecutivoEdicionValueDTO>();
+
+            // se configura el valor para actualizar
+            for (const valorModificado of valoresModificados) {
+
+              // si ingresaron algun valor o el tipo de campo es casilla de verificacion
+              if (valorModificado.valor ||
+                  valorModificado.campo.tipoCampo === this.stateFiltro.ID_CASILLA_VERIFICACION) {
+
+                // se procede a configurar el valor a enviar para actualizar de acuerdo al tipo campo
+                valorModificado.valorOrigen.valueUpdate = valorModificado.valor;
+                switch (valorModificado.campo.tipoCampo) {
+
+                  case this.stateFiltro.ID_LISTA_DESPLEGABLE: {
+                    valorModificado.valorOrigen.valueUpdate = valorModificado.valor.id;
+                    break;
+                  }
+                  case this.stateFiltro.ID_CASILLA_VERIFICACION: {
+                    valorModificado.valorOrigen.valueUpdate = (valorModificado.valor) ? 1 : 0;
+                    break;
+                  }
+                  case this.stateFiltro.ID_CAMPO_FECHA: {
+                    valorModificado.valorOrigen.valueUpdate =
+                      this.datePipe.transform(new Date(valorModificado.valor), LabelsConstant.FECHA_FORMATO_MYSQL);
+                    break;
+                  }
+                }
+              }
+
+              // para el campo lista desplegable NO SE puede enviar los items
+              if (valorModificado.campo.tipoCampo === this.stateFiltro.ID_LISTA_DESPLEGABLE) {
+                const items = valorModificado.campo.items;
+                valorModificado.campo.items = null;
+                valorModificado.valorOrigen.campo = JSON.parse(JSON.stringify(valorModificado.campo));
+                valorModificado.campo.items = items;
+              }
+              solicitud.values.push(valorModificado.valorOrigen);
+            }
+
+            // se procede a editar los valores del consecutivo
+            this.correspondenciaService.editarConsecutivoValores(solicitud).subscribe(
+              data => {
+                this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.VALORES_CONSECUTIVO_ACTUALIZADO));
+
+                this.isAplicarEdicion = false;
+
+                // se crea la lista del modelo de los valores a editar
+                this.valuesEditar = new Array<CampoModel>();
+
+                // se recorre todos los valores del consecutivo a editar
+                let campoModel;
+                for (const value of data) {
+
+                    // los valores tipo fecha llega como string se debe hacer la conversion
+                    if (this.stateFiltro.ID_CAMPO_FECHA === value.campo.tipoCampo) {
+                      value.value = FechaUtil.stringToDate(value.value);
+                    }
+
+                    // se crea el modelo del campo
+                    campoModel = new CampoModel();
+                    campoModel.initEdicion(value, this.fechaActual);
+
+                    // se agrega a la lista a visualizar
+                    this.valuesEditar.push(campoModel);
+                }
+              },
+              error => {
+                this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+              }
+            );
+          }
         }
       }
     }
@@ -632,6 +730,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     // verifica si el valor fue modificado cambiando la bandera
     if (valorInput !== valueInput.valorOrigen.value) {
       valueInput.isValorModificado = true;
+    } else {
+      valueInput.isValido = true;
     }
 
     // se verifica si hay algun campo modificado
@@ -664,6 +764,11 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     } else if (valueSelect.valor) {
       // para un campo nuevo solamente se verifica si hay valor seleccionado
       valueSelect.isValorModificado = true;
+    }
+
+    // se limpia la bandera de NO VALIDO solo si no fue modificado
+    if (!valueSelect.isValorModificado) {
+      valueSelect.isValido = true;
     }
 
     // se verifica si hay algun campo modificado
@@ -705,6 +810,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     const sonIguales = FechaUtil.iqualsDateFilter(valueFecha.valorOrigen.value, valueFecha.valor);
     if (!sonIguales) {
       valueFecha.isValorModificado = true;
+    } else {
+      valueFecha.isValido = true;
     }
 
     // se verifica si hay algun campo modificado
