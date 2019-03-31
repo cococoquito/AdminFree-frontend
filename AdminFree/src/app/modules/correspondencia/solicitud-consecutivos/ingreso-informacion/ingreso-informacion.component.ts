@@ -8,10 +8,8 @@ import { CampoModel } from '../../../../model/campo-model';
 import { SolicitudConsecutivoDTO } from '../../../../dtos/correspondencia/solicitud-consecutivo.dto';
 import { RegexUtil } from '../../../../util/regex-util';
 import { MsjUtil } from '../../../../util/messages.util';
-import { FechaUtil } from '../../../../util/fecha-util';
 import { BusinessUtil } from '../../../../util/business-util';
 import { LabelsConstant } from '../../../../constants/labels.constant';
-import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 
 /**
  * Componente para el ingreso de informacion de acuerdo
@@ -70,7 +68,11 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
     this.messageService.clear();
 
     // se hace el llamado de las validaciones por parte de FRONT-END
-    const resultado = this.esInformacionValida();
+    const resultado = BusinessUtil.esInformacionValidaFrontEnd(
+      this.state.camposInformacionValues,
+      this.regex,
+      this.messageService,
+      this.state.datosIniciales.fechaActual);
 
     // se verifica que todo este OK
     if (resultado) {
@@ -160,149 +162,6 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
-    }
-  }
-
-  /**
-   * Metodo que comprueba si la informacion ingresada es valida
-   */
-  private esInformacionValida(): boolean {
-
-    // se verifica si hay campos de informacion para esta nomenclatura
-    if (this.state.camposInformacionValues && this.state.camposInformacionValues.length > 0) {
-
-      // se recorre cada campo
-      for (const campoModel of this.state.camposInformacionValues) {
-
-        // se valida dependiendo del tipo de campo
-        switch (campoModel.campo.tipoCampo) {
-
-          case this.state.ID_CAMPO_TEXTO: {
-            this.esCampoTextoOK(campoModel);
-            break;
-          }
-          case this.state.ID_LISTA_DESPLEGABLE: {
-            this.esRequeridoOK(campoModel);
-            break;
-          }
-          case this.state.ID_CAMPO_FECHA: {
-            this.esCampoFechaOK(campoModel);
-            break;
-          }
-        }
-      }
-
-      // se verifica el resultado a retornar
-      for (const value of this.state.camposInformacionValues) {
-        if (!value.isValido) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Metodo que permite validar si el valor para el campo de texto es valido
-   *
-   * @param campoModel, campo de texto a validar si su valor es valido
-   */
-  private esCampoTextoOK(campoModel: CampoModel): void {
-
-    // se valida la obligatorieda del campo
-    this.esRequeridoOK(campoModel);
-
-    // se valida si el campo es solo numeros
-    if (campoModel.isSoloNumeros && campoModel.valor) {
-
-      // se verifica el valor ingresado para este campo
-      campoModel.isValido = this.regex.isValorNumerico(campoModel.valor);
-
-      // se muestra el mensaje en pantalla
-      if (!campoModel.isValido) {
-        this.messageService.add(MsjUtil.getToastErrorMedium(this.regex.getMsjSoloNumeros(campoModel.campo.nombre)));
-      }
-    }
-  }
-
-  /**
-   * Metodo que permite validar si el campo es requerido y su valor
-   *
-   * @param campoModel, campo a validar si su valor es obligatorio
-   */
-  private esRequeridoOK(campoModel: CampoModel): void {
-    campoModel.isValido = true;
-
-    // se limpian los espacios solamente para campo de texto
-    if (this.state.ID_CAMPO_TEXTO === campoModel.campo.tipoCampo) {
-      campoModel.valor = (campoModel.valor) ? campoModel.valor.trim() : null;
-    }
-
-    // se valida si este campo es requerido
-    if (campoModel.isRequerido) {
-
-      // se valida si el valor fue ingresado por el usuario
-      if (!campoModel.valor) {
-        campoModel.isValido = false;
-      }
-    }
-  }
-
-  /**
-   * Metodo que permite validar si el valor para la fecha es valido
-   *
-   * @param campoModel, fecha a validar si su valor es valido
-   */
-  private esCampoFechaOK(campoModel: CampoModel): void {
-
-    // se valida la obligatorieda del campo
-    this.esRequeridoOK(campoModel);
-
-    // para la demas validaciones debe existir el valor
-    if (campoModel.valor) {
-
-      // debe existir alguna validacion asignada
-      if (campoModel.isFechaMayorActual ||
-        campoModel.isFechaMenorActual ||
-        campoModel.isFechaMayorIgualActual ||
-        campoModel.isFechaMenorIgualActual) {
-
-        // se hace la comparacion de las fechas
-        const resultado = FechaUtil.compareDate(new Date(campoModel.valor), new Date(this.state.datosIniciales.fechaActual));
-
-        // constantes que indica cual fue su resultado
-        const iguales = resultado === 0;
-        const esMayor = resultado === 1;
-        const esMenor = resultado === -1;
-
-        // validacion cuando la fecha debe ser mayor a la fecha actual
-        if (campoModel.isFechaMayorActual) {
-          if (iguales || esMenor) {
-            campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MAYOR_ACTUAL));
-          }
-        } else if (campoModel.isFechaMenorActual) {
-          // validacion cuando la fecha debe ser menor a la fecha actual
-          if (iguales || esMayor) {
-            campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MENOR_ACTUAL));
-          }
-
-        } else if (campoModel.isFechaMayorIgualActual) {
-          // validacion cuando la fecha debe ser mayor o igual que la fecha actual
-          if (esMenor) {
-            campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MAYOR_IGUAL_ACTUAL));
-          }
-
-        } else if (campoModel.isFechaMenorIgualActual) {
-          // validacion cuando la fecha debe ser menor o igual que la fecha actual
-          if (esMayor) {
-            campoModel.isValido = false;
-            this.messageService.add(MsjUtil.getToastErrorLng(campoModel.campo.nombre + MsjFrontConstant.FECHA_MENOR_IGUAL_ACTUAL));
-          }
-        }
-      }
     }
   }
 }
