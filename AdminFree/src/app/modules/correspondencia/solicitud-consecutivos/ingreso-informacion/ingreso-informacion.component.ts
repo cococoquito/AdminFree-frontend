@@ -68,7 +68,7 @@ export class IngresoInformacionComponent extends CommonComponent implements OnIn
     this.messageService.clear();
 
     // se hace el llamado de las validaciones por parte de FRONT-END
-    const resultado = BusinessUtil.esInformacionValidaFrontEnd(
+    const resultado = BusinessUtil.isValoresConsecutivoValido(
       this.state.camposInformacionValues,
       this.regex,
       this.messageService,

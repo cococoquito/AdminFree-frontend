@@ -78,7 +78,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   public isAplicarEdicion: boolean;
 
   /** Es la fecha actual traida desde el servidor*/
-  private fechaActual: Date;
+  private fechaActualSever: Date;
 
   /** Se utiliza para validar los valores de los inputs para la edicion*/
   public regex: RegexUtil;
@@ -109,6 +109,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
    *
    * @param spinnerState, se utiliza para simular el spinner cuando
    * pasa del panel edicion a la lista de consecutivos
+   *
+   * @param datePipe, Se utiliza para dar formato a los valores tipo fecha
    */
   constructor(
     protected messageService: MessageService,
@@ -163,7 +165,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
           consecutivosPaginados.configurarRegistros(data.consecutivos);
 
           // la fecha llega como string se debe hacer la conversion
-          this.fechaActual = new Date(data.fechaActual);
+          this.fechaActualSever = new Date(data.fechaActual);
 
           // se inicializa el state para el componente filtro de consecutivos
           const usuarios = null;
@@ -171,8 +173,8 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
             clienteCurrent,
             consecutivosPaginados,
             usuarios,
-            new Date(this.fechaActual.getFullYear(), 0, 1),
-            new Date(this.fechaActual.getFullYear(), 11, 31));
+            new Date(this.fechaActualSever.getFullYear(), 0, 1),
+            new Date(this.fechaActualSever.getFullYear(), 11, 31));
 
           // limpieza de memoria
           data = null;
@@ -185,7 +187,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   }
 
   /**
-   * Metodo que permite editar los valores de un consecutivo
+   * Metodo que permite editar la informacion modificada del consecutivo seleccionado
    */
   public editarConsecutivoValores(): void {
 
@@ -199,107 +201,81 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       if (this.valuesEditar && this.valuesEditar.length > 0) {
 
         // se procede a configurar los valores modificados
-        const valoresModificados = Array<CampoModel>();
+        const modificados = Array<CampoModel>();
         for (const value of this.valuesEditar) {
           if (value.isValorModificado) {
-            valoresModificados.push(value);
+            modificados.push(value);
           }
         }
 
         // se procede con la edicion solo si hay valores modificados
-        if (valoresModificados.length > 0) {
+        if (modificados.length > 0) {
 
           // se hace el llamado de las validaciones por parte de FRONT-END
-          const resultado = BusinessUtil.esInformacionValidaFrontEnd(
-            valoresModificados,
-            this.regex,
-            this.messageService,
-            this.fechaActual);
+          const isValido = BusinessUtil.isValoresConsecutivoValido(
+            modificados, this.regex, this.messageService, this.fechaActualSever);
 
           // se verifica que todo este OK
-          if (resultado) {
+          if (isValido) {
 
-            // DTO tipo solicitud para enviar en el request de editar valores
+            // Se configura el DTO para enviar al servicio de editar consecutivo valores
             const solicitud = new ConsecutivoEdicionDTO();
-
-            // identificador del cliente requerido
             solicitud.idCliente = this.stateFiltro.clienteCurrent.id;
-
-            // identificador del consecutivo requerido
             solicitud.idConsecutivo = this.consecutivoEdicion.consecutivo.idConsecutivo;
-
-            // identificador de la nomenclatura requerido
             solicitud.idNomenclatura = this.consecutivoEdicion.consecutivo.idNomenclatura;
-
-            // valores a validar a nivel de negocio dependiendo sus restricciones opcional
-            solicitud.valoresValidar = BusinessUtil.getCamposValidarBackEnd(valoresModificados);
-
-            // lista de valores modificados para editar
+            solicitud.valoresValidar = BusinessUtil.getCamposValidarBackEnd(modificados);
             solicitud.values = new Array<ConsecutivoEdicionValueDTO>();
 
-            // se configura el valor para actualizar
-            for (const valorModificado of valoresModificados) {
+            // se configuran el valor modificado de cada informacion del consecutivo
+            for (const modificado of modificados) {
 
-              // si ingresaron algun valor o el tipo de campo es casilla de verificacion
-              if (valorModificado.valor ||
-                  valorModificado.campo.tipoCampo === this.stateFiltro.ID_CASILLA_VERIFICACION) {
+              // si ingresaron algun valor o el tipo de campo es CASILLA-VERIFICACION
+              if (modificado.valor || modificado.campo.tipoCampo === this.stateFiltro.ID_CASILLA_VERIFICACION) {
 
-                // se procede a configurar el valor a enviar para actualizar de acuerdo al tipo campo
-                valorModificado.valorOrigen.valueUpdate = valorModificado.valor;
-                switch (valorModificado.campo.tipoCampo) {
+                // se configura el valor a enviar para actualizar de acuerdo al tipo campo
+                modificado.valorOrigen.valueUpdate = modificado.valor;
+                switch (modificado.campo.tipoCampo) {
 
                   case this.stateFiltro.ID_LISTA_DESPLEGABLE: {
-                    valorModificado.valorOrigen.valueUpdate = valorModificado.valor.id;
+                    modificado.valorOrigen.valueUpdate = modificado.valor.id;
                     break;
                   }
                   case this.stateFiltro.ID_CASILLA_VERIFICACION: {
-                    valorModificado.valorOrigen.valueUpdate = (valorModificado.valor) ? 1 : 0;
+                    modificado.valorOrigen.valueUpdate = (modificado.valor) ? 1 : 0;
                     break;
                   }
                   case this.stateFiltro.ID_CAMPO_FECHA: {
-                    valorModificado.valorOrigen.valueUpdate =
-                      this.datePipe.transform(new Date(valorModificado.valor), LabelsConstant.FECHA_FORMATO_MYSQL);
+                    modificado.valorOrigen.valueUpdate =
+                      this.datePipe.transform(new Date(modificado.valor), LabelsConstant.FECHA_FORMATO_MYSQL);
                     break;
                   }
                 }
               }
 
               // para el campo lista desplegable NO SE puede enviar los items
-              if (valorModificado.campo.tipoCampo === this.stateFiltro.ID_LISTA_DESPLEGABLE) {
-                const items = valorModificado.campo.items;
-                valorModificado.campo.items = null;
-                valorModificado.valorOrigen.campo = JSON.parse(JSON.stringify(valorModificado.campo));
-                valorModificado.campo.items = items;
+              if (modificado.campo.tipoCampo === this.stateFiltro.ID_LISTA_DESPLEGABLE) {
+                const items = modificado.campo.items;
+                modificado.campo.items = null;
+                modificado.valorOrigen.campo = JSON.parse(JSON.stringify(modificado.campo));
+                modificado.campo.items = items;
               }
-              solicitud.values.push(valorModificado.valorOrigen);
+              solicitud.values.push(modificado.valorOrigen);
             }
 
             // se procede a editar los valores del consecutivo
             this.correspondenciaService.editarConsecutivoValores(solicitud).subscribe(
               data => {
+                // se muestra el mensaje exitoso
                 this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.VALORES_CONSECUTIVO_ACTUALIZADO));
 
+                // se configura los valores retornados por el server
+                this.consecutivoEdicion.values = data;
+
+                // se desabilita el boton "Aplicar cambios"
                 this.isAplicarEdicion = false;
 
-                // se crea la lista del modelo de los valores a editar
-                this.valuesEditar = new Array<CampoModel>();
-
-                // se recorre todos los valores del consecutivo a editar
-                let campoModel;
-                for (const value of data) {
-
-                    // los valores tipo fecha llega como string se debe hacer la conversion
-                    if (this.stateFiltro.ID_CAMPO_FECHA === value.campo.tipoCampo) {
-                      value.value = FechaUtil.stringToDate(value.value);
-                    }
-
-                    // se crea el modelo del campo
-                    campoModel = new CampoModel();
-                    campoModel.initEdicion(value, this.fechaActual);
-
-                    // se agrega a la lista a visualizar
-                    this.valuesEditar.push(campoModel);
-                }
+                // se configura el modelo de los valores a editar
+                this.setModelValuesEditar();
               },
               error => {
                 this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -397,36 +373,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     // se procede a consultar los datos del consecutivo para su edicion
     this.correspondenciaService.getConsecutivoEdicion(filtro).subscribe(
       data => {
-
         // se configura los datos del consecutivo a editar
         this.consecutivoEdicion = data;
-
-        // se verifica si este consecutivo tiene values para editar
-        if (data.values && data.values.length > 0) {
-
-          // se utiliza para validar los input de los valores a editar
-          this.setRegex();
-
-          // se crea la lista del modelo de los valores a editar
-          this.valuesEditar = new Array<CampoModel>();
-
-          // se recorre todos los valores del consecutivo a editar
-          let campoModel;
-          for (const value of data.values) {
-
-              // los valores tipo fecha llega como string se debe hacer la conversion
-              if (this.stateFiltro.ID_CAMPO_FECHA === value.campo.tipoCampo) {
-                value.value = FechaUtil.stringToDate(value.value);
-              }
-
-              // se crea el modelo del campo
-              campoModel = new CampoModel();
-              campoModel.initEdicion(value, this.fechaActual);
-
-              // se agrega a la lista a visualizar
-              this.valuesEditar.push(campoModel);
-          }
-        }
+        this.setModelValuesEditar();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -766,7 +715,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       valueSelect.isValorModificado = true;
     }
 
-    // se limpia la bandera de NO VALIDO solo si no fue modificado
+    // se limpia la bandera de IS VALIDO solo si no fue modificado
     if (!valueSelect.isValorModificado) {
       valueSelect.isValido = true;
     }
@@ -816,6 +765,45 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
 
     // se verifica si hay algun campo modificado
     this.setIsAplicarEdicion();
+  }
+
+  /**
+   * Metodo que permite configurar el modelo de los valores a editar
+   */
+  private setModelValuesEditar(): void {
+
+    // se limpia por si hay datos anteriores
+    this.valuesEditar = null;
+
+    // se obtiene los values del consecutivo a editar
+    const values = this.consecutivoEdicion.values;
+
+    // solo aplica si hay values para editar
+    if (values && values.length > 0) {
+
+      // se utiliza para validar los input de los valores a editar
+      this.setRegex();
+
+      // se crea la lista del modelo de los valores a editar
+      this.valuesEditar = new Array<CampoModel>();
+
+      // se recorre todos los valores del consecutivo a editar
+      let campoModel;
+      for (const value of values) {
+
+        // los valores tipo fecha llega como string se debe hacer la conversion
+        if (this.stateFiltro.ID_CAMPO_FECHA === value.campo.tipoCampo) {
+          value.value = FechaUtil.stringToDate(value.value);
+        }
+
+        // se crea el modelo del campo
+        campoModel = new CampoModel();
+        campoModel.initEdicion(value, this.fechaActualSever);
+
+        // se agrega a la lista a visualizar
+        this.valuesEditar.push(campoModel);
+      }
+    }
   }
 
   /**

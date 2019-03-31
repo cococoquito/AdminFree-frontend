@@ -79,7 +79,7 @@ export class BusinessUtil {
    * @param messageService, se utiliza para mostrar los mensajes de errores encontrados
    * @param fechaActual, fecha actual traida desde el servidor
    */
-  public static esInformacionValidaFrontEnd(
+  public static isValoresConsecutivoValido(
     campos: Array<CampoModel>,
     regex: RegexUtil,
     messageService: MessageService,
