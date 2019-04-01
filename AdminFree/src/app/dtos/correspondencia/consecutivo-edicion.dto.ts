@@ -2,6 +2,7 @@ import { ConsecutivoDTO } from './consecutivo.dto';
 import { DocumentoDTO } from './documento.dto';
 import { ConsecutivoEdicionValueDTO } from './consecutivo-edicion-value.dto';
 import { CampoEntradaValueDTO } from './campo-entrada-value.dto';
+import { MessageResponseDTO } from '../transversal/message-response.dto';
 
 /**
  * Este DTO se utiliza para encapsular los datos de un consecutivo
@@ -32,4 +33,7 @@ export class ConsecutivoEdicionDTO {
 
   /** Documentos asociados al consecutivos */
   public documentos: Array<DocumentoDTO>;
+
+  /** Lista de errores encontrados en el proceso de edicion */
+  public errores: Array<MessageResponseDTO>;
 }

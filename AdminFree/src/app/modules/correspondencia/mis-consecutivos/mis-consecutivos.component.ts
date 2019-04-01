@@ -203,7 +203,7 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
         // se procede a configurar los valores modificados
         const modificados = Array<CampoModel>();
         for (const value of this.valuesEditar) {
-          if (value.isValorModificado) {
+          if (value.isValorModificado || !value.valorOrigen.idValue) {
             modificados.push(value);
           }
         }
@@ -265,17 +265,24 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
             // se procede a editar los valores del consecutivo
             this.correspondenciaService.editarConsecutivoValores(solicitud).subscribe(
               data => {
-                // se muestra el mensaje exitoso
-                this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.VALORES_CONSECUTIVO_ACTUALIZADO));
+                // se muestra cada error por pantalla si lo hay
+                if (data.errores && data.errores.length > 0) {
+                  for (const error of data.errores) {
+                    this.messageService.add(MsjUtil.getMsjError(error.mensaje));
+                  }
+                } else {
+                  // se muestra el mensaje exitoso
+                  this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.VALORES_CONSECUTIVO_ACTUALIZADO));
 
-                // se configura los valores retornados por el server
-                this.consecutivoEdicion.values = data;
+                  // se configura los valores retornados por el server
+                  this.consecutivoEdicion.values = data.values;
 
-                // se desabilita el boton "Aplicar cambios"
-                this.isAplicarEdicion = false;
+                  // se desabilita el boton "Aplicar cambios"
+                  this.isAplicarEdicion = false;
 
-                // se configura el modelo de los valores a editar
-                this.setModelValuesEditar();
+                  // se configura el modelo de los valores a editar
+                  this.setModelValuesEditar();
+                }
               },
               error => {
                 this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
