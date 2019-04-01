@@ -127,7 +127,7 @@
               <div [ngClass]="valuesEditar.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
 
                 <!-- label-->
-                <div class="ui-g-12 pb-0">
+                <div class="ui-g-12 pb-0" [ngClass]="{'text-center': valuesEditar.length === 1 && value.campo.tipoCampo === stateFiltro.ID_CASILLA_VERIFICACION}">
                   <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{value.campo.nombre}}: </label>
                   <i *ngIf="value.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
                 </div>
@@ -172,7 +172,7 @@
                 </div>
 
                 <!-- casilla-->
-                <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
+                <div *ngIf="value.campo.tipoCampo === stateFiltro.ID_CASILLA_VERIFICACION" [ngClass]="{'text-center': valuesEditar.length === 1}" class="ui-g-12 pt-0">
                   <admin-inputswitch
                     (switchChange)="value.valor=$event;casillaChangedEdicion(value);"
                     [isChecked]="value.valor"

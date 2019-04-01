@@ -16,7 +16,7 @@
         <div [ngClass]="state.camposInformacionValues.length > 1 ? 'ui-g-6':'ui-g-12 w-50 m-auto'" class="pt-0 pb-0">
 
           <!-- label-->
-          <div class="ui-g-12 pb-0">
+          <div class="ui-g-12 pb-0" [ngClass]="{'text-center': state.camposInformacionValues.length === 1 && campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION}">
             <label for="ctx{{i}}" class="steps-st mb-0 mt-1"> {{campoModel.campo.nombre}}: </label>
             <i *ngIf="campoModel.isRequerido" class="fa fa-asterisk text-danger font-size-10"></i>
           </div>
@@ -65,7 +65,7 @@
           </div>
 
           <!-- casilla-->
-          <div *ngIf="campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION" class="ui-g-12 pt-0">
+          <div *ngIf="campoModel.campo.tipoCampo === state.ID_CASILLA_VERIFICACION" [ngClass]="{'text-center': state.camposInformacionValues.length === 1}" class="ui-g-12 pt-0">
             <admin-inputswitch [isChecked]="campoModel.valor" (switchChange)="campoModel.valor=$event;"></admin-inputswitch>
             <i class="fa fa-question-circle font-size-20 ml-2"
               [pTooltip]="campoModel.campo.descripcion"

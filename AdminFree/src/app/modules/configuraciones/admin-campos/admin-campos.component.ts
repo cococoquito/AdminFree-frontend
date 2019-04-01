@@ -195,7 +195,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.configuracionesService.editarCampoEntradaInformacion(this.campoEditarOrigen).subscribe(
       data => {
         // Mensaje exitoso campo modificado
-        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ACTUALIZADO_EXITOSO));
+        this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.CAMPO_ACTUALIZADO_EXITOSO));
 
         // se configuran los datos del campo en edicion
         this.campoEdicion.nombre = data.nombre;
