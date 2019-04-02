@@ -7,7 +7,7 @@
 export class LabelsConstant {
 
   /** Titulo para el submodulo de Mis consecutivos solicitados*/
-  public static readonly TITLE_MIS_CONSECUTIVOS_SOLICITADOS: string = 'Mis Consecutivos de Correspondencia Solicitados';
+  public static readonly TITLE_MIS_CONSECUTIVOS_SOLICITADOS: string = 'Mis Consecutivos de Correspondencia';
 
   /** Titulo para el submodulo de consecutivos solicitados*/
   public static readonly TITLE_CONSECUTIVOS_SOLICITADOS: string = 'Consecutivos de Correspondencia Solicitados';
@@ -41,7 +41,7 @@ export class LabelsConstant {
 
   /** Sub - Titulo para la pagina de solicitar consecutivos*/
   public static readonly SUBTITLE_SOLICITAR_CONSECUTIVOS: string =
-    'Submódulo de correspondencia para solicitudes de <strong>consecutivos asociados a una nomenclatura</strong>';
+    'Submódulo de correspondencia que permite <strong>generar consecutivos del año actual</strong>';
 
   /** Sub - Titulo para la pagina de administracion de usuario*/
   public static readonly SUBTITLE_ADMIN_USER: string =
