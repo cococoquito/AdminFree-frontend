@@ -41,7 +41,7 @@ export class LabelsConstant {
 
   /** Sub - Titulo para la pagina de solicitar consecutivos*/
   public static readonly SUBTITLE_SOLICITAR_CONSECUTIVOS: string =
-    'Submódulo de correspondencia que permite <strong>generar consecutivos del año actual</strong>';
+    'Submódulo de correspondencia que permite <strong>generar consecutivos para el año actual</strong>';
 
   /** Sub - Titulo para la pagina de administracion de usuario*/
   public static readonly SUBTITLE_ADMIN_USER: string =
