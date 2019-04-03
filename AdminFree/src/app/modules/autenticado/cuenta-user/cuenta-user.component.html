@@ -16,14 +16,14 @@
       </div>
       <div>
         <input
-          [(ngModel)]="datosUserModificar.nombre"
           id="inNombre"
+          [(ngModel)]="datosPersonales.nombre"
+          (ngModelChange)="changedDatosPersonales()"
           type="text"
           autocomplete="off"
           maxlength="100"
-          adminRequired
           class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
-          [ngClass]="{'ad-input-required' : inNombreInvalido}" />
+          [ngClass]="{'ad-input-required' : !datosPersonales.nombre || datosPersonales.nombre.trim().length === 0}" />
         <div class="focus-border"></div>
       </div>
 
@@ -34,20 +34,20 @@
       </div>
       <div>
         <input
-          [(ngModel)]="datosUserModificar.cargo"
           id="inCargo"
+          [(ngModel)]="datosPersonales.cargo"
+          (ngModelChange)="changedDatosPersonales()"
           type="text"
           autocomplete="off"
           maxlength="255"
-          adminRequired
           class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
-          [ngClass]="{'ad-input-required' : inNombreInvalido}" />
+          [ngClass]="{'ad-input-required' : !datosPersonales.cargo || datosPersonales.cargo.trim().length === 0}" />
         <div class="focus-border"></div>
       </div>
 
       <!-- aplicar cambios -->
       <div class="pt-3 pb-3 text-center">
-        <button [disabled]="!isBtnCambiarDatosPersonales" type="button" class="btn btn-sm btn-success w-180-px">
+        <button (click)="modificarDatosPersonales()" [disabled]="!isDatosPersonalesModificado" type="button" class="btn btn-sm btn-success w-180-px">
           <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
         </button>
       </div>
@@ -60,8 +60,8 @@
       <div class="ui-g-6 text-center">
         <div class="mt-2">
           <label class="steps-st mb-0 mt-1"> Usuario Ingreso: </label>
-          <label (click)="copyToClipBoard(datosUserModificar.usuarioIngreso,'Usuario Ingreso')" class="font-new-roman font-size-15 copy">
-            {{datosUserModificar.usuarioIngreso}}
+          <label (click)="copyToClipBoard(datosPersonales.usuarioIngreso,'Usuario Ingreso')" class="font-new-roman font-size-15 copy">
+            {{datosPersonales.usuarioIngreso}}
           </label>
         </div>
         <button type="button" class="btn btn-sm btn-success btn-add w-180-px">

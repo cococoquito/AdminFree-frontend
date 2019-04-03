@@ -11,8 +11,7 @@ import { LabelsConstant } from './../../../constants/labels.constant';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 
 /**
- * Componente para la administracion de la cuenta
- * del usuario autenticado en el sistema
+ * Componente para la administracion de la cuenta de usuario autenticado en el sistema
  *
  * @author Carlos Andres Diaz
  */
@@ -26,33 +25,21 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   /** Estado de la cuenta del usuario */
   public userAccount: UserAccountST;
 
-  /** DTO que se utiliza para la modificacion de la cuenta del user */
-  public datosUserModificar: UsuarioDTO;
+  /** DTO que se utiliza para la modificacion de los datos personales */
+  public datosPersonales: UsuarioDTO;
 
   /** DTO que se utiliza para la modificacion del password */
   public cambioClave: CambioClaveDTO;
 
-  /** Bandera que indica si el panel datos cuenta esta en modo solo lectura */
-  public soloLecturaCuenta: boolean;
-
-  /** Bandera que indica si el panel modificar constrasenia esta en modo solo lectura */
-  public soloLecturaClave: boolean;
-
-  /** Se utiliza para el toogle de los paneles */
-  public isPanelClaveClose: boolean;
-
-  public isBtnCambiarClaveActivo;
-  public isBtnCambiarDatosPersonales;
-  public isBtnCambiarUsuarioIngreso;
-
-  public inNombreInvalido: boolean;
+  /** Se utiliza para habilitar el boton de 'Aplicar Cambios' de los datos personales */
+  public isDatosPersonalesModificado;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
    *
    * @param confirmationService, se utiliza para la confirmacion
-   * de algun cambio de la cuenta del usuario
+   * de algun cambio de la cuenta de usuario
    *
    * @param cuentaUserService, se utiliza para consumir
    * los servicios relacionados a este proceso de negocio
@@ -102,167 +89,63 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
       return;
     }
 
-    // Se crear el DTO para la modificacion de la cuenta del usuario
-    this.setDatosUserModificar();
+    // DTO para la modificacion de los datos personales
+    this.setDatosPersonalesModificar();
 
     // DTO para la modificacion de la contrasenia
     this.cambioClave = new CambioClaveDTO();
-
-    // se inicializa los paneles como solo lectura
-    this.soloLecturaCuenta = true;
-    this.soloLecturaClave = true;
-
-    // el panel de clave se inicializa cerrado
-    this.isPanelClaveClose = true;
   }
 
   /**
-   * Metodo que permite modificar los datos de la Cuenta
-   * soporta el evento click del boton aplicar cambios
+   * Metodo que soporta el evento click del boton 'Aplicar Cambios'
+   * de los datos personales, invocando el servicio para su modificacion
    */
-  public modificarDatosCuenta(): void {
+  public modificarDatosPersonales(): void {
 
-    // se eliminan los espacios en blanco inicio - final
-    this.datosUserModificar.nombre = this.setTrim(this.datosUserModificar.nombre);
-    this.datosUserModificar.usuarioIngreso = this.setTrim(this.datosUserModificar.usuarioIngreso);
+    // solo aplica si hay modificaciones
+    if (this.isDatosPersonalesModificado) {
 
-    // se valida si hay alguna modificacion en los datos de la cuenta
-    if (this.datosUserModificar.nombre === this.userAccount.usuario.nombre &&
-        this.datosUserModificar.usuarioIngreso === this.userAccount.usuario.usuarioIngreso) {
-        this.soloLecturaCuenta = true;
-        return;
-    }
+      // se limpian los espacios en blanco
+      this.datosPersonales.nombre = this.setTrimFilter(this.datosPersonales.nombre);
+      this.datosPersonales.cargo = this.setTrimFilter(this.datosPersonales.cargo);
 
-    // se valida si el usuario de ingreso fue modificado
-    this.datosUserModificar.userIngresoModificado =
-    this.datosUserModificar.usuarioIngreso !== this.userAccount.usuario.usuarioIngreso;
-
-    // se muestra la ventana de confirmacion
-    this.confirmationService.confirm({
-      message: MsjFrontConstant.CAMBIAR_DATOS_CUENTA_USER,
-      header: MsjFrontConstant.CONFIRMACION,
-      accept: () => {
-
-        // se procede a modificar los datos de la cuenta
-        this.configuracionesService.modificarDatosCuenta(this.datosUserModificar).subscribe(
-          data => {
-            // se notifica los cambios en el shell de la aplicacion
-            this.userAccount.changeStateCuentaUser(this.datosUserModificar);
-
-            // Se crea el DTO para la modificacion de la cuenta del usuario
-            this.setDatosUserModificar();
-
-            // se desactiva los input del panel cuenta
-            this.soloLecturaCuenta = true;
-
-            // se muestra el mensaje exitoso en pantalla
-            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.DATOS_CUENTA_ACTUALIZADO));
-          },
-          error => {
-            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-          }
-        );
+      // ambos datos son requeridos
+      if (this.datosPersonales.nombre && this.datosPersonales.cargo) {
+        
       }
-    });
+    }
   }
 
   /**
-   * Metodo que permite soportar el evento click
-   * del boton Cambiar Contrasenia
+   * Metodo que es invocando cuando algun cambio de los datos personales ocurre
    */
-  public modificarClaveIngreso(formCuenta): void {
+  public changedDatosPersonales(): void {
 
-    // se configura el id del usuario autenticado
-    this.cambioClave.idUsuario = this.userAccount.usuario.id;
+    // se inicializa como no mofificado
+    this.isDatosPersonalesModificado = false;
 
-    // se muestra la ventana de confirmacion
-    this.confirmationService.confirm({
-      message: MsjFrontConstant.CAMBIAR_CLAVE_INGRESO,
-      header: MsjFrontConstant.CONFIRMACION,
-      accept: () => {
+    // se toman los valores y se limpia los espacios en blanco
+    const nombre = this.setTrimFilter(this.datosPersonales.nombre);
+    const cargo = this.setTrimFilter(this.datosPersonales.cargo);
 
-        // se procede a modificar la clave de ingreso
-        this.configuracionesService.modificarClaveIngreso(this.cambioClave).subscribe(
-          data => {
-            // Se reinicia los datos
-            this.cambioClave = new CambioClaveDTO();
-
-            // se desactiva los input del panel clave
-            this.soloLecturaClave = true;
-
-            // se reinicia el submitted del formulario de la cuenta
-            formCuenta.submitted = false;
-
-            // se muestra el mensaje exitoso en pantalla
-            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CLAVE_INGRESO_ACTUALIZADO));
-          },
-          error => {
-            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-          }
-        );
+    // se verifica si el Nombre o el Cargo fueron modificado
+    if (nombre && cargo) {
+      if (nombre !== this.userAccount.usuario.nombre) {
+        this.isDatosPersonalesModificado = true;
+      } else if (cargo !== this.userAccount.usuario.cargo) {
+        this.isDatosPersonalesModificado = true;
       }
-    });
-  }
-
-  /**
-   * Metodo que soporta el evento click del boton
-   * para habilitar le edicion del panel cuenta user
-   */
-  public habilitarEdicionPanelCuenta(formCuenta): void {
-
-    // se cambia la bandera solo lectura del panel
-    this.soloLecturaCuenta = !this.soloLecturaCuenta;
-
-    // se limpia los mensajes anteriores
-    this.messageService.clear();
-
-    // se reinicia el submitted del formulario de la cuenta
-    formCuenta.submitted = false;
-
-    // si se desactiva el panel se deja los datos originales
-    if (this.soloLecturaCuenta) {
-      this.setDatosUserModificar();
     }
   }
 
   /**
-   * Metodo que soporta el evento click del boton
-   * para habilitar le edicion del panel contrasenia
+   * Metodo que permite crear el DTO para la modificacion de los datos personales
    */
-  public habilitarEdicionPanelClave(formClave): void {
-
-    // se cambia la bandera solo lectura del panel
-    this.soloLecturaClave = !this.soloLecturaClave;
-
-    // se limpia los mensajes anteriores
-    this.messageService.clear();
-
-    // se reinicia el submitted del formulario clave
-    formClave.submitted = false;
-
-    // si se desactiva el panel se limpia los datos
-    if (this.soloLecturaClave) {
-      this.cambioClave = new CambioClaveDTO();
-    }
-  }
-
-  /**
-   * Se utiliza para abrir y cerrar los paneles de
-   * modificar cuenta user y contrasenia
-   */
-  public togglePaneles() {
-    this.isPanelClaveClose = !this.isPanelClaveClose;
-  }
-
-  /**
-   * Metodo que permite crear el DTO para configurar
-   * los datos de la cuenta del usuario
-   */
-  private setDatosUserModificar(): void {
-    this.datosUserModificar = new UsuarioDTO();
-    this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
-    this.datosUserModificar.cargo = this.userAccount.usuario.cargo;
-    this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
-    this.datosUserModificar.id = this.userAccount.usuario.id;
+  private setDatosPersonalesModificar(): void {
+    this.datosPersonales = new UsuarioDTO();
+    this.datosPersonales.nombre = this.userAccount.usuario.nombre;
+    this.datosPersonales.cargo = this.userAccount.usuario.cargo;
+    this.datosPersonales.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
+    this.datosPersonales.id = this.userAccount.usuario.id;
   }
 }
