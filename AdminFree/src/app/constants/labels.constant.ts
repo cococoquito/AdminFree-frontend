@@ -49,7 +49,7 @@ export class LabelsConstant {
 
   /** Sub - Titulo para la pagina de administracion la cuenta user*/
   public static readonly SUBTITLE_ADMIN_CUENTA_USER: string =
-    'Submódulo de seguridad para modificar la <strong>cuenta de usuario</strong>';
+    'Submódulo de seguridad que permite modificar los datos de la <strong>cuenta de usuario</strong>';
 
   /** Sub - Titulo para la pagina de administracion de campos*/
   public static readonly SUBTITLE_ADMIN_CAMPOS: string =

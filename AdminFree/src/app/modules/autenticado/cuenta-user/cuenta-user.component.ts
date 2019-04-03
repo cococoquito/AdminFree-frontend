@@ -41,6 +41,12 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   /** Se utiliza para el toogle de los paneles */
   public isPanelClaveClose: boolean;
 
+  public isBtnCambiarClaveActivo;
+  public isBtnCambiarDatosPersonales;
+  public isBtnCambiarUsuarioIngreso;
+
+  public inNombreInvalido: boolean;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -255,6 +261,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   private setDatosUserModificar(): void {
     this.datosUserModificar = new UsuarioDTO();
     this.datosUserModificar.nombre = this.userAccount.usuario.nombre;
+    this.datosUserModificar.cargo = this.userAccount.usuario.cargo;
     this.datosUserModificar.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
     this.datosUserModificar.id = this.userAccount.usuario.id;
   }

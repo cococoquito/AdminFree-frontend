@@ -1,195 +1,84 @@
-<ng-container *ngIf="!userAccount.credenciales.administrador">
-  <!-- panel modificacion de la cuenta -->
-  <p-panel [toggleable]="true" (onBeforeToggle)="togglePaneles()" [collapsed]="!isPanelClaveClose">
+<!-- div main -->
+<div *ngIf="!userAccount.credenciales.administrador" class="w-65 m-auto">
+
+  <!-- datos personales -->
+  <p-panel styleClass="pnl-basic pnl-pt">
     <p-header>
-      <i class="fa fa-pencil-square-o font-size-18"></i>
-      <span class="font-admin font-size-14 mx-1"> Modificar Datos de la Cuenta</span>
+      <i class="fa fa-address-book-o align-middle mr-2 ml-2"></i>
+      <span class="align-middle">Mis Datos Personales</span>
     </p-header>
+    <div class="w-80 m-auto">
 
-    <div class="w-80 mx-auto">
-      <p class="info-text font-new-roman text-center mb-4">
-        <i class="fa fa-info-circle font-size-16 color-info"></i>
-        <strong> El Usuario de Ingreso debe tener al menos 10 caracteres y no puede contener espacios en blanco</strong>
-      </p>
+      <!-- nombre -->
+      <div class="mt-3">
+        <label for="inNombre" class="steps-st mt-1"> Nombre Completo: </label>
+        <i class="fa fa-asterisk text-danger font-size-10"></i>
+      </div>
+      <div>
+        <input
+          [(ngModel)]="datosUserModificar.nombre"
+          id="inNombre"
+          type="text"
+          autocomplete="off"
+          maxlength="100"
+          adminRequired
+          class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
+          [ngClass]="{'ad-input-required' : inNombreInvalido}" />
+        <div class="focus-border"></div>
+      </div>
 
-      <form
-        #formCuenta="ngForm" name="formCuenta"
-        novalidate (keydown.enter)="$event.preventDefault()"
-        (ngSubmit)="limpiarMensajes() && formCuenta.form.valid && modificarDatosCuenta()">
+      <!-- cargo -->
+      <div class="mt-3">
+        <label for="inCargo" class="steps-st mt-1"> Cargo: </label>
+        <i class="fa fa-asterisk text-danger font-size-10"></i>
+      </div>
+      <div>
+        <input
+          [(ngModel)]="datosUserModificar.cargo"
+          id="inCargo"
+          type="text"
+          autocomplete="off"
+          maxlength="255"
+          adminRequired
+          class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
+          [ngClass]="{'ad-input-required' : inNombreInvalido}" />
+        <div class="focus-border"></div>
+      </div>
 
-        <!-- Nombre - user -->
-        <div class="form-row justify-content-center mb-3">
-          <div class="form-group col-md-6">
-            <label for="inNombre" class="ad-input-label font-weight-bold">Nombre Completo:</label>
-            <input
-              id="inNombre"
-              type="text"
-              autocomplete="off"
-              name="inNombre"
-              #inNombre="ngModel"
-              [(ngModel)]="datosUserModificar.nombre"
-              maxlength="100"
-              adminRequired
-              [readonly]="soloLecturaCuenta"
-              class="ad-input ad-input-style w-100"
-              [ngClass]="{'ad-input-required' : (formCuenta.submitted && !inNombre.valid)}" />
-            <div class="focus-border"></div>
-          </div>
+      <!-- aplicar cambios -->
+      <div class="pt-3 pb-3 text-center">
+        <button [disabled]="!isBtnCambiarDatosPersonales" type="button" class="btn btn-sm btn-success w-180-px">
+          <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
+        </button>
+      </div>
+    </div>
+
+    <!-- usuario - clave -->
+    <div class="ui-g pb-3 bg-cg">
+
+      <!-- usuario only read -->
+      <div class="ui-g-6 text-center">
+        <div class="mt-2">
+          <label class="steps-st mb-0 mt-1"> Usuario Ingreso: </label>
+          <label (click)="copyToClipBoard(datosUserModificar.usuarioIngreso,'Usuario Ingreso')" class="font-new-roman font-size-15 copy">
+            {{datosUserModificar.usuarioIngreso}}
+          </label>
         </div>
+        <button type="button" class="btn btn-sm btn-success btn-add w-180-px">
+          <label class="btn-size-admin"><i class="fa fa-user"></i> Cambiar Usuario Ingreso</label>
+        </button>
+      </div>
 
-        <!-- usuario - ingreso -->
-        <div class="form-row justify-content-center">
-          <div class="form-group col-md-6">
-            <label for="inUserIngreso" class="ad-input-label font-weight-bold">Usuario de Ingreso:</label>
-            <input
-              id="inUserIngreso"
-              type="text"
-              autocomplete="off"
-              name="inUserIngreso"
-              #inUserIngreso="ngModel"
-              [(ngModel)]="datosUserModificar.usuarioIngreso"
-              maxlength="50"
-              adminRequired
-              [readonly]="soloLecturaCuenta"
-              class="ad-input ad-input-style w-100"
-              [ngClass]="{'ad-input-required' : (formCuenta.submitted && !inUserIngreso.valid)}"/>
-            <div class="focus-border"></div>
-          </div>
+      <!-- clave only read -->
+      <div class="ui-g-6 text-center">
+        <div class="mt-2">
+          <label class="steps-st mb-0 mt-1"> Contraseña: </label>
+          <label class="font-new-roman font-size-15"> **************** </label>
         </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-12 text-center margin-name">
-
-            <!-- toggle - activar-desactivar -->
-            <div class="toggle btn"
-              (click)="habilitarEdicionPanelCuenta(formCuenta)"
-              [ngClass]="soloLecturaCuenta?'btn-round-teal':'btn-secondary off'">
-              <div class="toggle-group">
-                <label class="btn-toggle btn-round-teal toggle-on font-new-roman">
-                  <i class="fa fa-pencil"></i> Activar Edición
-                </label>
-                <label class="btn-toggle btn-secondary active toggle-off font-new-roman">
-                  <i class="fa fa-pencil"></i> Desactivar Edición
-                </label>
-                <span class="toggle-handle btn btn-handle"></span>
-              </div>
-            </div>
-
-            <!-- aplicar - cambios -->
-            <button type="button" (click)="formCuenta.onSubmit()" [disabled]="soloLecturaCuenta" class="btn btn-primary btn-sm mx-3">
-              <i class="fa fa-user-circle-o"></i>
-              <span class="btn-size-admin"> Aplicar Cambios</span>
-            </button>
-          </div>
-        </div>
-      </form>
+        <button type="button" class="btn btn-sm btn-success btn-add w-180-px">
+          <label class="btn-size-admin"><i class="fa fa-unlock-alt"></i> Cambiar Contraseña</label>
+        </button>
+      </div>
     </div>
   </p-panel>
-
-  <!-- panel modificacion de la contrasenia -->
-  <p-panel [toggleable]="true" (onBeforeToggle)="togglePaneles()" [collapsed]="isPanelClaveClose">
-    <p-header>
-      <i class="fa fa-unlock-alt font-size-18"></i>
-      <span class="font-admin font-size-14 mx-1"> Modificar Contraseña</span>
-    </p-header>
-
-    <div class="w-80 mx-auto">
-      <p class="info-text font-new-roman text-center mb-4">
-        <i class="fa fa-info-circle font-size-16 color-info"></i>
-        <strong> La nueva contraseña debe tener al menos 12 caracteres y no puede contener espacios en blanco</strong>
-      </p>
-
-      <form
-        #formClave="ngForm" name="formClave"
-        novalidate (keydown.enter)="$event.preventDefault()"
-        (ngSubmit)="limpiarMensajes() && formClave.form.valid && modificarClaveIngreso(formClave)">
-
-        <!-- clave - actual -->
-        <div class="form-row justify-content-center">
-          <div class="form-group col-md-6">
-            <label for="inClaveActual" class="ad-input-label font-weight-bold">Contraseña Actual:</label>
-            <input
-              id="inClaveActual"
-              type="password"
-              autocomplete="off"
-              name="inClaveActual"
-              #inClaveActual="ngModel"
-              [(ngModel)]="cambioClave.claveActual"
-              maxlength="50"
-              adminRequired
-              [readonly]="soloLecturaClave"
-              class="ad-input ad-input-style w-100"
-              [ngClass]="{'ad-input-required' : (formClave.submitted && !inClaveActual.valid)}"/>
-            <div class="focus-border"></div>
-          </div>
-        </div>
-
-        <!-- nueva - clave -->
-        <div class="form-row justify-content-center">
-          <div class="form-group col-md-6">
-            <label for="inClaveNueva" class="ad-input-label font-weight-bold">Nueva Contraseña:</label>
-            <input
-              id="inClaveNueva"
-              type="password"
-              autocomplete="off"
-              name="inClaveNueva"
-              #inClaveNueva="ngModel"
-              [(ngModel)]="cambioClave.claveNueva"
-              maxlength="50"
-              adminRequired
-              [readonly]="soloLecturaClave"
-              class="ad-input ad-input-style w-100"
-              [ngClass]="{'ad-input-required' : (formClave.submitted && !inClaveNueva.valid)}"/>
-            <div class="focus-border"></div>
-          </div>
-        </div>
-
-        <!-- confirmar - clave -->
-        <div class="form-row justify-content-center">
-          <div class="form-group col-md-6">
-            <label for="inConfClave" class="ad-input-label font-weight-bold">Confirmar Contraseña:</label>
-            <input
-              id="inConfClave"
-              type="password"
-              autocomplete="off"
-              name="inConfClave"
-              #inConfClave="ngModel"
-              [(ngModel)]="cambioClave.claveVerificacion"
-              maxlength="50"
-              adminRequired
-              [readonly]="soloLecturaClave"
-              class="ad-input ad-input-style w-100"
-              [ngClass]="{'ad-input-required' : (formClave.submitted && !inConfClave.valid)}"/>
-            <div class="focus-border"></div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-12 text-center margin-name">
-
-            <!-- toggle - activar-desactivar -->
-            <div class="toggle btn"
-              [ngClass]="soloLecturaClave?'btn-round-teal':'btn-secondary off'"
-              (click)="habilitarEdicionPanelClave(formClave)">
-              <div class="toggle-group">
-                <label class="btn-toggle btn-round-teal toggle-on font-new-roman">
-                  <i class="fa fa-pencil"></i> Activar Edición
-                </label>
-                <label class="btn-toggle btn-secondary active toggle-off font-new-roman">
-                  <i class="fa fa-pencil"></i> Desactivar Edición
-                </label>
-                <span class="toggle-handle btn btn-handle"></span>
-              </div>
-            </div>
-
-            <!-- cambiar - contrasenia -->
-            <button (click)="formClave.onSubmit()" type="button" class="btn btn-primary btn-sm mx-3" [disabled]="soloLecturaClave">
-              <i class="fa fa-unlock-alt"></i>
-              <span class="btn-size-admin"> Cambiar Contraseña</span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </p-panel>
-</ng-container>
+</div>

@@ -641,6 +641,10 @@ body {
   color: #555a63 !important;
 }
 
+.w-65 {
+  width: 65% !important
+}
+
 .w-80 {
   width: 80% !important
 }
@@ -655,6 +659,10 @@ body {
 
 .w-150-px {
   width: 150px !important
+}
+
+.w-180-px {
+  width: 180px !important
 }
 
 .w-80-px {
@@ -713,6 +721,12 @@ body {
   text-align: left !important;
   color: #333333 !important;
   font-weight: 700 !important;
+  font-size: 15px !important;
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.pnl-basic .ui-panel-titlebar {
+  text-align: left !important;
   font-size: 15px !important;
   font-family: Times, Times New Roman, serif !important;
 }
