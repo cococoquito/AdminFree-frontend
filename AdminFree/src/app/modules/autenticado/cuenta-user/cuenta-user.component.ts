@@ -19,7 +19,6 @@ import { MsjFrontConstant } from './../../../constants/messages-frontend.constan
  */
 @Component({
   templateUrl: './cuenta-user.component.html',
-  styleUrls: ['./cuenta-user.component.css'],
   providers: [ ConfiguracionesService ]
 })
 export class CuentaUserComponent extends CommonComponent implements OnInit, OnDestroy {
@@ -49,7 +48,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
    * @param confirmationService, se utiliza para la confirmacion
    * de algun cambio de la cuenta de usuario
    *
-   * @param cuentaUserService, se utiliza para consumir
+   * @param configuracionesService, se utiliza para consumir
    * los servicios relacionados a este proceso de negocio
    *
    * @param shellState, se utiliza para el titulo del componente
@@ -206,18 +205,6 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   }
 
   /**
-   * Metodo que permite cerrar el panel para cambiar la contrasenia
-   */
-  public cerrarPanelCambioClave(): void {
-    this.spinnerState.displaySpinner();
-    setTimeout(() => {
-      this.cambioClave = null;
-      this.isSubmitDone = false;
-      this.spinnerState.hideSpinner();
-    }, 100);
-  }
-
-  /**
    * Metodo que permite abrir el panel para cambiar el usuario de ingreso
    */
   public abrirPanelCambioUsuario(): void {
@@ -229,11 +216,12 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   }
 
   /**
-   * Metodo que permite cerrar el panel para cambiar el usuario de ingreso
+   * Metodo que permite cerrar el panel de cambio contrasenia o usuario
    */
-  public cerrarPanelCambioUsuario(): void {
+  public cerrarPanelCambioClaveUsuario(): void {
     this.spinnerState.displaySpinner();
     setTimeout(() => {
+      this.cambioClave = null;
       this.cambioUsuario = null;
       this.isSubmitDone = false;
       this.spinnerState.hideSpinner();

@@ -58,10 +58,10 @@ export class MsjFrontConstant {
   static readonly CLAVE_INGRESO_ACTUALIZADO = 'Contraseña Modificada';
 
   /** Mensaje para el cambio de la contrasenia */
-  static readonly CAMBIAR_CLAVE_INGRESO: string = '¿Está seguro de cambiar la <strong>Contraseña</strong>?';
+  static readonly CAMBIAR_CLAVE_INGRESO: string = '¿Está seguro de cambiar tu <strong>contraseña</strong>?';
 
   /** Mensaje para el cambio del usuario de ingreso */
-  static readonly CAMBIAR_USER_INGRESO: string = '¿Está seguro de cambiar el <strong>Usuario de Ingreso</strong>?';
+  static readonly CAMBIAR_USER_INGRESO: string = '¿Está seguro de cambiar tu <strong>usuario de ingreso</strong>?';
 
   /** Mensaje para la eliminacion de un campo de entrada */
   static readonly ELIMINAR_CAMPO_ENTRADA: string =

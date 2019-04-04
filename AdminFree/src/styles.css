@@ -903,3 +903,8 @@ body {
 .mdl-btn-h {
   padding: 2px !important;
 }
+
+.bg-cg {
+  background-color: #f4f4f4;
+  border-top: 1px solid #c8c8c8;
+}
