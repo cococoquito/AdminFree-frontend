@@ -12,9 +12,6 @@ export class CambioUsuarioIngresoDTO {
     /** Es el nuevo usuario a modificar */
     public usuario: string;
 
-    /** Es la confirmacion del nuevo usuario a modificar */
-    public usuarioVerificacion: string;
-
     /** Es la clave actual que tiene el usuario */
     public claveActual: string;
 }

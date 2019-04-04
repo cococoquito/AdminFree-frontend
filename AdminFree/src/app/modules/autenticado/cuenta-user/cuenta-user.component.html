@@ -92,7 +92,7 @@
     <!-- info -->
     <div class="mt-2 text-center">
       <i class="fa fa-info-circle font-size-18 color-info mr-1"></i>
-      <label class="font-new-roman font-size-16"> La nueva contraseña debe tener mínimo <strong>12</strong> carácteres sin espacios en blanco </label>
+      <label class="font-new-roman font-size-15"> La nueva contraseña debe tener mínimo <strong>12</strong> carácteres sin espacios en blanco </label>
     </div>
     <div class="w-70 m-auto">
 
@@ -161,7 +161,88 @@
         [disabled]="!cambioClave.claveActual || !cambioClave.claveNueva || !cambioClave.claveVerificacion"
         type="button"
         class="btn btn-sm btn-success w-180-px ml-4">
-        <label class="btn-size-admin"><i class="fa fa-unlock-alt"></i> Cambiar Contraseña</label>
+          <label class="btn-size-admin"><i class="fa fa-unlock-alt"></i> Cambiar Contraseña</label>
+      </button>
+    </div>
+  </p-panel>
+
+  <!-- usuario ingreso -->
+  <p-panel *ngIf="cambioUsuario" styleClass="pnl-basic pnl-pt">
+    <p-header>
+      <i class="fa fa-user align-middle mr-2 ml-2"></i>
+      <span class="align-middle">Cambiar Usuario de Ingreso</span>
+    </p-header>
+
+    <!-- info -->
+    <div class="mt-2 text-center">
+      <i class="fa fa-info-circle font-size-18 color-info mr-1"></i>
+      <label class="font-new-roman font-size-15"> El usuario de ingreso debe tener mínimo <strong>10</strong> carácteres sin espacios en blanco </label>
+    </div>
+    <div class="w-70 m-auto">
+
+      <!-- usuario actual -->
+      <div class="mt-3">
+        <label for="userread" class="steps-st mb-0 mt-1"> Usuario actual: </label>
+      </div>
+      <div>
+        <input
+          id="userread"
+          [(ngModel)]="datosPersonales.usuarioIngreso"
+          type="text"
+          autocomplete="off"
+          maxlength="50"
+          [readonly]="true"
+          class="ad-select w-100 font-new-roman font-size-15 pt-0"/>
+      </div>
+
+      <!-- nuevo usuario -->
+      <div class="mt-4">
+        <label for="inUserNuevo" class="steps-st mb-0 mt-1"> Nuevo usuario: </label>
+        <i class="fa fa-asterisk text-danger font-size-10"></i>
+      </div>
+      <div>
+        <input
+          id="inUserNuevo"
+          [(ngModel)]="cambioUsuario.usuario"
+          type="text"
+          autocomplete="off"
+          maxlength="50"
+          class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
+          [ngClass]="{'ad-input-required' : !cambioUsuario.usuario && isSubmitDone}"
+          placeholder="Escriba tu nuevo usuario de ingreso"/>
+        <div class="focus-border"></div>
+      </div>
+
+      <!-- clave actual -->
+      <div class="mt-4">
+        <label for="inClaveActual" class="steps-st mb-0 mt-1"> Contraseña actual: </label>
+        <i class="fa fa-asterisk text-danger font-size-10"></i>
+      </div>
+      <div>
+        <input
+          id="inClaveActual"
+          [(ngModel)]="cambioUsuario.claveActual"
+          type="password"
+          autocomplete="new-password"
+          maxlength="50"
+          class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
+          [ngClass]="{'ad-input-required' : !cambioUsuario.claveActual && isSubmitDone}"
+          placeholder="Escribe tu contraseña actual"/>
+        <div class="focus-border"></div>
+      </div>
+    </div>
+
+    <!-- btns regresar - cambiar usuario -->
+    <div class="pt-3 pb-3 mt-4 text-center bg-cg">
+      <button (click)="cerrarPanelCambioUsuario()" type="button" class="btn btn-sm btn-primary w-180-px mr-4">
+        <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+      </button>
+      <button
+        (click)="modificarUsuarioIngreso()"
+        [disabled]="!cambioUsuario.claveActual || !cambioUsuario.usuario || cambioUsuario.usuario === datosPersonales.usuarioIngreso"
+        type="button"
+        class="btn btn-sm btn-success w-180-px ml-4">
+          <label class="btn-size-admin"><i class="fa fa-user"></i> Cambiar Usuario Ingreso</label>
       </button>
     </div>
   </p-panel>

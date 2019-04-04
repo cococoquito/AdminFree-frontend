@@ -149,6 +149,30 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   }
 
   /**
+   * Metodo que soporta el evento click del boton 'Modificar Usuario Ingreso'
+   * invocando el servicio para su modificacion
+   */
+  public modificarUsuarioIngreso(): void {
+
+    // se indica que ya se dio submit
+    this.isSubmitDone = true;
+
+    // todos los campos son requeridos y el nuevo usuario debe ser modificado
+    if (this.cambioUsuario.claveActual && this.cambioUsuario.usuario &&
+        this.cambioUsuario.usuario !== this.datosPersonales.usuarioIngreso) {
+
+      // se muestra la ventana de confirmacion
+      this.confirmationService.confirm({
+      message: MsjFrontConstant.CAMBIAR_USER_INGRESO,
+      header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+
+        }
+      });
+    }
+  }
+
+  /**
    * Metodo que es invocando cuando algun cambio de los datos personales ocurre
    */
   public changedDatosPersonales(): void {
