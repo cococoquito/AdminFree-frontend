@@ -2,7 +2,7 @@
 <div *ngIf="!userAccount.credenciales.administrador" class="w-65 m-auto">
 
   <!-- datos personales -->
-  <p-panel styleClass="pnl-basic pnl-pt">
+  <p-panel *ngIf="!cambioClave && !cambioUsuario" styleClass="pnl-basic pnl-pt">
     <p-header>
       <i class="fa fa-address-book-o align-middle mr-2 ml-2"></i>
       <span class="align-middle">Mis Datos Personales</span>
@@ -64,7 +64,7 @@
             {{datosPersonales.usuarioIngreso}}
           </label>
         </div>
-        <button type="button" class="btn btn-sm btn-success btn-add w-180-px">
+        <button (click)="abrirPanelCambioUsuario()" type="button" class="btn btn-sm btn-success btn-add w-180-px">
           <label class="btn-size-admin"><i class="fa fa-user"></i> Cambiar Usuario Ingreso</label>
         </button>
       </div>
@@ -75,10 +75,94 @@
           <label class="steps-st mb-0 mt-1"> Contraseña: </label>
           <label class="font-new-roman font-size-15"> **************** </label>
         </div>
-        <button type="button" class="btn btn-sm btn-success btn-add w-180-px">
+        <button (click)="abrirPanelCambioClave()" type="button" class="btn btn-sm btn-success btn-add w-180-px">
           <label class="btn-size-admin"><i class="fa fa-unlock-alt"></i> Cambiar Contraseña</label>
         </button>
       </div>
+    </div>
+  </p-panel>
+
+  <!-- Contrasenia -->
+  <p-panel *ngIf="cambioClave" styleClass="pnl-basic pnl-pt">
+    <p-header>
+      <i class="fa fa-unlock-alt align-middle mr-2 ml-2"></i>
+      <span class="align-middle">Cambiar Contraseña</span>
+    </p-header>
+
+    <!-- info -->
+    <div class="mt-2 text-center">
+      <i class="fa fa-info-circle font-size-18 color-info mr-1"></i>
+      <label class="font-new-roman font-size-16"> La nueva contraseña debe tener mínimo <strong>12</strong> carácteres sin espacios en blanco </label>
+    </div>
+    <div class="w-70 m-auto">
+
+      <!-- clave actual -->
+      <div class="mt-3">
+        <label for="inClaveActual" class="steps-st mb-0 mt-1"> Contraseña actual: </label>
+        <i class="fa fa-asterisk text-danger font-size-10"></i>
+      </div>
+      <div>
+        <input
+          id="inClaveActual"
+          [(ngModel)]="cambioClave.claveActual"
+          type="password"
+          autocomplete="off"
+          maxlength="50"
+          class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
+          [ngClass]="{'ad-input-required' : !cambioClave.claveActual && isSubmitDone}"
+          placeholder="Escribe tu contraseña actual"/>
+        <div class="focus-border"></div>
+      </div>
+
+      <!-- clave nueva -->
+      <div class="mt-4">
+        <label for="inClaveNueva" class="steps-st mb-0 mt-1"> Contraseña nueva: </label>
+        <i class="fa fa-asterisk text-danger font-size-10"></i>
+      </div>
+      <div>
+        <input
+          id="inClaveNueva"
+          [(ngModel)]="cambioClave.claveNueva"
+          type="password"
+          autocomplete="off"
+          maxlength="50"
+          class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
+          [ngClass]="{'ad-input-required' : !cambioClave.claveNueva && isSubmitDone}"
+          placeholder="Escribe tu contraseña nueva"/>
+        <div class="focus-border"></div>
+      </div>
+
+      <!-- confirmar clave -->
+      <div class="mt-4">
+        <label for="inClaveConf" class="steps-st mb-0 mt-1"> Confirma tu nueva contraseña: </label>
+        <i class="fa fa-asterisk text-danger font-size-10"></i>
+      </div>
+      <div>
+        <input
+          id="inClaveConf"
+          [(ngModel)]="cambioClave.claveVerificacion"
+          type="password"
+          autocomplete="off"
+          maxlength="50"
+          class="ad-input ad-input-style w-100 font-new-roman font-size-15 pt-0"
+          [ngClass]="{'ad-input-required' : !cambioClave.claveVerificacion && isSubmitDone}"
+          placeholder="Repite tu contraseña nueva"/>
+        <div class="focus-border"></div>
+      </div>
+    </div>
+
+    <!-- btns regresar - cambiar clave -->
+    <div class="pt-3 pb-3 mt-4 text-center bg-cg">
+      <button (click)="cerrarPanelCambioClave()" type="button" class="btn btn-sm btn-primary w-180-px mr-4">
+        <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+      </button>
+      <button
+        (click)="modificarClave()"
+        [disabled]="!cambioClave.claveActual || !cambioClave.claveNueva || !cambioClave.claveVerificacion"
+        type="button"
+        class="btn btn-sm btn-success w-180-px ml-4">
+        <label class="btn-size-admin"><i class="fa fa-unlock-alt"></i> Cambiar Contraseña</label>
+      </button>
     </div>
   </p-panel>
 </div>

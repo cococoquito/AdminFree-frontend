@@ -4,6 +4,8 @@ import { ConfiguracionesService } from './../../../services/configuraciones.serv
 import { CommonComponent } from './../../../util/common.component';
 import { UserAccountST } from './../../../states/shell/shell-states/user-account.st';
 import { ShellState } from './../../../states/shell/shell.state';
+import { SpinnerState } from '../../../states/spinner.state';
+import { CambioUsuarioIngresoDTO } from '../../../dtos/configuraciones/cambio-usuario-ingreso.dto';
 import { CambioClaveDTO } from './../../../dtos/configuraciones/cambio-clave.dto';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
 import { MsjUtil } from './../../../util/messages.util';
@@ -31,8 +33,14 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
   /** DTO que se utiliza para la modificacion del password */
   public cambioClave: CambioClaveDTO;
 
+  /** DTO que se utiliza para la modificacion del usuario de ingreso */
+  public cambioUsuario: CambioUsuarioIngresoDTO;
+
   /** Se utiliza para habilitar el boton de 'Aplicar Cambios' de los datos personales */
-  public isDatosPersonalesModificado;
+  public isDatosPersonalesModificado: boolean;
+
+  /** Indica si el usuario dio submit al boton cambiar clave o usuario ingreso */
+  public isSubmitDone: boolean;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -46,12 +54,16 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
    *
    * @param shellState, se utiliza para el titulo del componente
    * y para obtener los datos del usuario autenticado
+   *
+   * @param spinnerState, se utiliza para simular el spinner cuando
+   * pasa del panel de datos personales a modificar clave o usuario
    */
   constructor(
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
     private configuracionesService: ConfiguracionesService,
-    private shellState: ShellState) {
+    private shellState: ShellState,
+    private spinnerState: SpinnerState) {
     super();
   }
 
@@ -91,9 +103,6 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
 
     // DTO para la modificacion de los datos personales
     this.setDatosPersonalesModificar();
-
-    // DTO para la modificacion de la contrasenia
-    this.cambioClave = new CambioClaveDTO();
   }
 
   /**
@@ -111,8 +120,31 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
 
       // ambos datos son requeridos
       if (this.datosPersonales.nombre && this.datosPersonales.cargo) {
-        
+        // TO-DO
       }
+    }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton 'Modificar Contrasenia'
+   * invocando el servicio para su modificacion
+   */
+  public modificarClave(): void {
+
+    // se indica que ya se dio submit
+    this.isSubmitDone = true;
+
+    // todos los campos son requeridos
+    if (this.cambioClave.claveActual && this.cambioClave.claveNueva && this.cambioClave.claveVerificacion) {
+
+      // se muestra la ventana de confirmacion
+      this.confirmationService.confirm({
+      message: MsjFrontConstant.CAMBIAR_CLAVE_INGRESO,
+      header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+
+        }
+      });
     }
   }
 
@@ -136,6 +168,52 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
         this.isDatosPersonalesModificado = true;
       }
     }
+  }
+
+  /**
+   * Metodo que permite abrir el panel para cambiar la contrasenia
+   */
+  public abrirPanelCambioClave(): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.cambioClave = new CambioClaveDTO();
+      this.spinnerState.hideSpinner();
+    }, 100);
+  }
+
+  /**
+   * Metodo que permite cerrar el panel para cambiar la contrasenia
+   */
+  public cerrarPanelCambioClave(): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.cambioClave = null;
+      this.isSubmitDone = false;
+      this.spinnerState.hideSpinner();
+    }, 100);
+  }
+
+  /**
+   * Metodo que permite abrir el panel para cambiar el usuario de ingreso
+   */
+  public abrirPanelCambioUsuario(): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.cambioUsuario = new CambioUsuarioIngresoDTO();
+      this.spinnerState.hideSpinner();
+    }, 100);
+  }
+
+  /**
+   * Metodo que permite cerrar el panel para cambiar el usuario de ingreso
+   */
+  public cerrarPanelCambioUsuario(): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.cambioUsuario = null;
+      this.isSubmitDone = false;
+      this.spinnerState.hideSpinner();
+    }, 100);
   }
 
   /**
