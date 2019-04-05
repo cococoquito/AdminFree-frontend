@@ -207,6 +207,9 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     if (this.cambioUsuario.claveActual && this.cambioUsuario.usuario &&
         this.cambioUsuario.usuario !== this.userAccount.usuario.usuarioIngreso) {
 
+      // se limpia mensajes de otros procesos
+      this.messageService.clear();
+
       // se muestra la ventana de confirmacion
       this.confirmationService.confirm({
       message: MsjFrontConstant.CAMBIAR_USER_INGRESO,

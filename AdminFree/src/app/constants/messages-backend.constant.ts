@@ -32,7 +32,7 @@ export class MessagesBackendConstant {
 
   /** La nueva contrasenia debe tener al menos 12 caracteres */
   static readonly CLAVE_LONGITUD_NO_PERMITIDA: string =
-    'La <strong>nueva contraseña</strong> debe tener al menos 12 caracteres';
+    'La <strong>nueva contraseña</strong> debe tener al menos <strong>12</strong> caracteres';
 
   /** La nueva contrasenia no puede contener espacios en blanco */
   static readonly CLAVE_ESPACIOS_BLANCO: string =
@@ -40,7 +40,7 @@ export class MessagesBackendConstant {
 
   /** La contrasenia actual no coincide con la contrasenia del usuario autenticado */
   static readonly CLAVE_NO_COINCIDE: string =
-    'La contraseña actual no coincide con la contraseña del usuario autenticado';
+    'La <strong>contraseña actual</strong> no coincide con la contraseña del usuario autenticado';
 
   /** La nueva contrasenia debe ser diferente a la contrasenia actual */
   static readonly CLAVE_ACTUAL_IGUAL: string =
@@ -48,7 +48,7 @@ export class MessagesBackendConstant {
 
   /** El usuario de ingreso debe tener al menos 10 caracteres */
   static readonly USER_INGRESO_LONGITUD_NO_PERMITIDA: string =
-    'El <strong>Usuario de Ingreso</strong> debe tener al menos 10 caracteres';
+    'El <strong>Usuario de Ingreso</strong> debe tener al menos <strong>10</strong> caracteres';
 
   /** El usuario de ingreso no puede contener espacios en blanco */
   static readonly USER_INGRESO_ESPACIOS_BLANCO: string =
