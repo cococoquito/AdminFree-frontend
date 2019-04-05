@@ -40,6 +40,6 @@ export class CampoEntradaDTO {
   /** Se utiliza al momento de crear la nomenclatura */
   public aplica: boolean;
 
-  /** Se utiliza para la edicion de la nomenclatura */
+  /** Se usa en ANGULAR y se utiliza para la edicion de la nomenclatura */
   public campoNomenclatura: NomenclaturaCampoDTO;
 }

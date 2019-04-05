@@ -24,7 +24,7 @@ export class MessagesBackendConstant {
 
   /** El valor del 'Usuario de Ingreso' ya se encuentra asociado a otro usuario */
   static readonly USUARIO_INGRESO_EXISTE: string =
-    'El valor del <strong>Usuario de Ingreso</strong> ya se encuentra asociado a otro usuario';
+    'El valor del <strong>usuario de ingreso</strong> ya se encuentra asociado a otro usuario';
 
   /** La contrasenia de verificación no coincide*/
   static readonly CLAVE_VERIFICACION_NO_COINCIDE: string =
@@ -32,11 +32,11 @@ export class MessagesBackendConstant {
 
   /** La nueva contrasenia debe tener al menos 12 caracteres */
   static readonly CLAVE_LONGITUD_NO_PERMITIDA: string =
-    'La <strong>nueva contraseña</strong> debe tener al menos <strong>12</strong> caracteres';
+    'La <strong>contraseña nueva</strong> debe tener al menos <strong>12</strong> caracteres';
 
   /** La nueva contrasenia no puede contener espacios en blanco */
   static readonly CLAVE_ESPACIOS_BLANCO: string =
-    'La nueva contraseña no puede contener espacios en blanco';
+    'La <strong>contraseña nueva</strong> no puede contener espacios en blanco';
 
   /** La contrasenia actual no coincide con la contrasenia del usuario autenticado */
   static readonly CLAVE_NO_COINCIDE: string =
@@ -44,15 +44,15 @@ export class MessagesBackendConstant {
 
   /** La nueva contrasenia debe ser diferente a la contrasenia actual */
   static readonly CLAVE_ACTUAL_IGUAL: string =
-    'La nueva contraseña debe ser diferente a la contraseña actual';
+    'La <strong>contraseña nueva</strong> debe ser diferente a la contraseña actual';
 
   /** El usuario de ingreso debe tener al menos 10 caracteres */
   static readonly USER_INGRESO_LONGITUD_NO_PERMITIDA: string =
-    'El <strong>Usuario de Ingreso</strong> debe tener al menos <strong>10</strong> caracteres';
+    'El <strong>usuario de ingreso</strong> debe tener al menos <strong>10</strong> caracteres';
 
   /** El usuario de ingreso no puede contener espacios en blanco */
   static readonly USER_INGRESO_ESPACIOS_BLANCO: string =
-    'El <strong>Usuario de Ingreso</strong> no puede contener espacios en blanco';
+    'El <strong>usuario de ingreso</strong> no puede contener espacios en blanco';
 
   /** Ya existe un campo de entrada de informacion con el mismo tipo y nombre*/
   static readonly EXISTE_CAMPO_ENTRADA: string =
