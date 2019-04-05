@@ -64,18 +64,6 @@ export class ConfiguracionesAPIConstant {
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
     'generarclavein';
 
-  /** URL del recurso para la modificacion de los datos de la cuenta de usuario*/
-  static readonly URL_MODIFICAR_DATOS_CUENTA: string =
-    AppDomainConstant.ADMINFREE +
-    ConfiguracionesAPIConstant.CONFIGURACIONES_API +
-    'updateaccount';
-
-  /** URL del recurso para la modificacion de la clave de ingreso*/
-  static readonly URL_MODIFICAR_CLAVE: string =
-    AppDomainConstant.ADMINFREE +
-    ConfiguracionesAPIConstant.CONFIGURACIONES_API +
-    'updateclaveuser';
-
   /** URL del recurso para crear un campo de entrada de informacion*/
   static readonly URL_CREAR_CAMPO_ENTRADA: string =
     AppDomainConstant.ADMINFREE +
@@ -153,4 +141,10 @@ export class ConfiguracionesAPIConstant {
     AppDomainConstant.ADMINFREE +
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
     'getdtlnomenclatura?idNomenclatura=';
+
+  /** URL del recurso que permite modificar la cuenta del usuario*/
+  static readonly MODIFICAR_CUENTA_USUARIO: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesAPIConstant.CONFIGURACIONES_API +
+    'updateusercount';
 }

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
-import { CambioClaveDTO } from './../dtos/configuraciones/cambio-clave.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { UsuarioEdicionDTO } from '../dtos/configuraciones/usuario-edicion.dto';
 import { NomenclaturaDTO } from './../dtos/configuraciones/nomenclatura.dto';
@@ -12,6 +11,7 @@ import { RestriccionDTO } from './../dtos/configuraciones/restriccion.dto';
 import { CampoEntradaDTO } from './../dtos/configuraciones/campo-entrada.dto';
 import { CampoEntradaEdicionDTO } from '../dtos/configuraciones/campo-entrada-edicion.dto';
 import { GenerarTokenIngresoDTO } from '../dtos/configuraciones/generar-token-ingreso.dto';
+import { ModificarCuentaUsuarioDTO } from '../dtos/configuraciones/modificar-cuenta-usuario.dto';
 import { ConfiguracionesAPIConstant } from './../constants/apis/configuraciones-api.constant';
 
 /**
@@ -73,33 +73,6 @@ export class ConfiguracionesService {
     return this.http.put<ClienteDTO>(
       ConfiguracionesAPIConstant.URL_MODIFICAR_CLIENTE,
       cliente);
-  }
-
-  /**
-   * Servicio que permite actualizar los datos de la cuenta
-	 * del usuario, solamente aplica (Nombre, Usuario Ingreso)
-   *
-   * @param usuario, DTO 	que contiene los datos del usuario
-   * @return OK, si todo el proceso se ejecuto sin errores
-   */
-  public modificarDatosCuenta(usuario: UsuarioDTO): Observable<MessageResponseDTO> {
-    return this.http.put<MessageResponseDTO>(
-      ConfiguracionesAPIConstant.URL_MODIFICAR_DATOS_CUENTA,
-      usuario
-    );
-  }
-
-  /**
-   * Servicio que permite soportar el proceso de modificar la clave de ingreso
-   *
-   * @param datos, DTO que contiene los datos para el proceso de la modificacion
-   * @return OK, si todo el proceso se ejecuto sin errores
-   */
-  public modificarClaveIngreso(datos: CambioClaveDTO): Observable<MessageResponseDTO> {
-    return this.http.put<MessageResponseDTO>(
-      ConfiguracionesAPIConstant.URL_MODIFICAR_CLAVE,
-      datos
-    );
   }
 
   /**
@@ -335,6 +308,19 @@ export class ConfiguracionesService {
     return this.http.post<Array<RestriccionDTO>>(
       ConfiguracionesAPIConstant.URL_VALIDAR_DATOS_ENTRADA,
       datosCampo
+    );
+  }
+
+  /**
+	 * Servicio que permite procesar la funcionalidad de negocio de modificacion
+	 * cuenta del usuario aplica para datos personales, cambio clave o usuario de ingreso
+	 *
+	 * @param params, contiene los DTOs para las modificaciones correspondiente
+	 */
+  public modificarCuentaUsuario(params: ModificarCuentaUsuarioDTO): Observable<MessageResponseDTO> {
+    return this.http.post<MessageResponseDTO>(
+      ConfiguracionesAPIConstant.MODIFICAR_CUENTA_USUARIO,
+      params
     );
   }
 }

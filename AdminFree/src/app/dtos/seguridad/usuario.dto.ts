@@ -34,7 +34,4 @@ export class UsuarioDTO {
 
   /** Lista de Tokens de modulos asignados al usuario */
   public modulosTokens: Array<string>;
-
-  /** Indica si el usuario de ingreso fue modificado */
-  public userIngresoModificado: boolean;
 }
