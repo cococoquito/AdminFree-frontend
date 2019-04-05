@@ -52,7 +52,7 @@ export class MsjFrontConstant {
   static readonly ADMIN_NO_APLICA = 'Esta funcionalidad no aplica para el <strong>Administrador</strong>';
 
   /** Mensaje cuando los datos personales fueron modificados */
-  static readonly DATOS_PERSONALES_MODIFICADOS = 'Datos personales modificado';
+  static readonly DATOS_PERSONALES_MODIFICADOS = 'Datos Personales Modificado';
 
   /** Mensaje cuando la clave de ingreso fue actuazalida */
   static readonly CLAVE_INGRESO_ACTUALIZADO = 'Contraseña Modificada';

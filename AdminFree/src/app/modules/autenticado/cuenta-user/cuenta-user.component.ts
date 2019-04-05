@@ -161,12 +161,34 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     // todos los campos son requeridos
     if (this.cambioClave.claveActual && this.cambioClave.claveNueva && this.cambioClave.claveVerificacion) {
 
+      // se limpia mensajes de otros procesos
+      this.messageService.clear();
+
       // se muestra la ventana de confirmacion
       this.confirmationService.confirm({
       message: MsjFrontConstant.CAMBIAR_CLAVE_INGRESO,
       header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
 
+          // se procede a realizar la modificacion de la clave
+          this.cambioClave.idUsuario = this.userAccount.usuario.id;
+          const params = new ModificarCuentaUsuarioDTO();
+          params.cambioClave = this.cambioClave;
+          this.configuracionesService.modificarCuentaUsuario(params).subscribe(
+            data => {
+              // se reinicia los datos de ingreso
+              this.cambioClave = new CambioClaveDTO();
+
+              // Indica que no se ha dado submit, esto si quieren modificar nuevamente la clave
+              this.isSubmitDone = false;
+
+              // se muestra el mensaje exitoso
+              this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CLAVE_INGRESO_ACTUALIZADO));
+            },
+            error => {
+              this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            }
+          );
         }
       });
     }
@@ -225,6 +247,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     this.spinnerState.displaySpinner();
     setTimeout(() => {
       this.cambioClave = new CambioClaveDTO();
+      this.messageService.clear();
       this.spinnerState.hideSpinner();
     }, 100);
   }
@@ -236,6 +259,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     this.spinnerState.displaySpinner();
     setTimeout(() => {
       this.cambioUsuario = new CambioUsuarioIngresoDTO();
+      this.messageService.clear();
       this.spinnerState.hideSpinner();
     }, 100);
   }
@@ -249,6 +273,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
       this.cambioClave = null;
       this.cambioUsuario = null;
       this.isSubmitDone = false;
+      this.messageService.clear();
       this.spinnerState.hideSpinner();
     }, 100);
   }

@@ -32,7 +32,7 @@ export class MessagesBackendConstant {
 
   /** La nueva contrasenia debe tener al menos 12 caracteres */
   static readonly CLAVE_LONGITUD_NO_PERMITIDA: string =
-    'La <strong>nueva contraseña</strong> debe tener al menos 12 carácteres';
+    'La <strong>nueva contraseña</strong> debe tener al menos 12 caracteres';
 
   /** La nueva contrasenia no puede contener espacios en blanco */
   static readonly CLAVE_ESPACIOS_BLANCO: string =
@@ -48,7 +48,7 @@ export class MessagesBackendConstant {
 
   /** El usuario de ingreso debe tener al menos 10 caracteres */
   static readonly USER_INGRESO_LONGITUD_NO_PERMITIDA: string =
-    'El <strong>Usuario de Ingreso</strong> debe tener al menos 10 carácteres';
+    'El <strong>Usuario de Ingreso</strong> debe tener al menos 10 caracteres';
 
   /** El usuario de ingreso no puede contener espacios en blanco */
   static readonly USER_INGRESO_ESPACIOS_BLANCO: string =
