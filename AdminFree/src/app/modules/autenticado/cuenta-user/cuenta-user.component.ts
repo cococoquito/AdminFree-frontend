@@ -5,6 +5,7 @@ import { CommonComponent } from './../../../util/common.component';
 import { UserAccountST } from './../../../states/shell/shell-states/user-account.st';
 import { ShellState } from './../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
+import { ModificarCuentaUsuarioDTO } from '../../../dtos/configuraciones/modificar-cuenta-usuario.dto';
 import { CambioUsuarioIngresoDTO } from '../../../dtos/configuraciones/cambio-usuario-ingreso.dto';
 import { CambioClaveDTO } from './../../../dtos/configuraciones/cambio-clave.dto';
 import { UsuarioDTO } from './../../../dtos/seguridad/usuario.dto';
@@ -113,13 +114,37 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     // solo aplica si hay modificaciones
     if (this.isDatosPersonalesModificado) {
 
+      // se limpia mensajes de otros procesos
+      this.messageService.clear();
+
       // se limpian los espacios en blanco
       this.datosPersonales.nombre = this.setTrimFilter(this.datosPersonales.nombre);
       this.datosPersonales.cargo = this.setTrimFilter(this.datosPersonales.cargo);
 
       // ambos datos son requeridos
       if (this.datosPersonales.nombre && this.datosPersonales.cargo) {
-        // TO-DO
+
+        // se procede a realizar la modificacion de los datos personales
+        const params = new ModificarCuentaUsuarioDTO();
+        params.datosPersonales = this.datosPersonales;
+        this.configuracionesService.modificarCuentaUsuario(params).subscribe(
+          data => {
+            // se notifica los cambios de los datos personales
+            this.userAccount.changeDatosPersonales(this.datosPersonales);
+
+            // Se configura nuevamente los datos personales
+            this.setDatosPersonalesModificar();
+
+            // se deshabilita el boton de los datos personales
+            this.isDatosPersonalesModificado = false;
+
+            // se muestra el mensaje exitoso
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.DATOS_PERSONALES_MODIFICADOS));
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
       }
     }
   }
@@ -235,7 +260,6 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
     this.datosPersonales = new UsuarioDTO();
     this.datosPersonales.nombre = this.userAccount.usuario.nombre;
     this.datosPersonales.cargo = this.userAccount.usuario.cargo;
-    this.datosPersonales.usuarioIngreso = this.userAccount.usuario.usuarioIngreso;
     this.datosPersonales.id = this.userAccount.usuario.id;
   }
 }

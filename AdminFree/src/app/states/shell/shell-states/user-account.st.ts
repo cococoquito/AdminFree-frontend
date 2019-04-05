@@ -75,17 +75,15 @@ export class UserAccountST {
   }
 
   /**
-   * Metodo que es invocado cuando los datos del
-   * usuario cambia su estado
+   * Metodo que es invocado cuando los datos personales del usuario cambia
    */
-  public changeStateCuentaUser(newData: UsuarioDTO): void {
-    // se configura el nombre y el usuario de ingreso
-    this.usuario.nombre = newData.nombre;
-    if (newData.userIngresoModificado) {
-      this.usuario.usuarioIngreso = newData.usuarioIngreso;
-    }
+  public changeDatosPersonales(datosPersonales: UsuarioDTO): void {
 
-    // se configur los cambios en el local-store
+    // se configura el nombre y el cargo
+    this.usuario.nombre = datosPersonales.nombre;
+    this.usuario.cargo = datosPersonales.cargo;
+
+    // se configura los cambios en el local-store
     const welcomeDTO: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
     welcomeDTO.usuario = this.usuario;
     LocalStoreUtil.welcome(TipoEventoConstant.SET, welcomeDTO);
