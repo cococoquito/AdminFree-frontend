@@ -205,7 +205,7 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
 
     // todos los campos son requeridos y el nuevo usuario debe ser modificado
     if (this.cambioUsuario.claveActual && this.cambioUsuario.usuario &&
-        this.cambioUsuario.usuario !== this.datosPersonales.usuarioIngreso) {
+        this.cambioUsuario.usuario !== this.userAccount.usuario.usuarioIngreso) {
 
       // se muestra la ventana de confirmacion
       this.confirmationService.confirm({
@@ -213,6 +213,28 @@ export class CuentaUserComponent extends CommonComponent implements OnInit, OnDe
       header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
 
+          // se procede a realizar la modificacion del user ingreso
+          this.cambioUsuario.idUsuario = this.userAccount.usuario.id;
+          const params = new ModificarCuentaUsuarioDTO();
+          params.cambioUsuario = this.cambioUsuario;
+          this.configuracionesService.modificarCuentaUsuario(params).subscribe(
+            data => {
+              // se notifica los cambios del nuevo usuario de ingreso
+              this.userAccount.changeUsuarioIngreso(this.cambioUsuario.usuario);
+
+              // se reinicia los datos de ingreso
+              this.cambioUsuario = new CambioUsuarioIngresoDTO();
+
+              // Indica que no se ha dado submit, esto si quieren modificar nuevamente el user in
+              this.isSubmitDone = false;
+
+              // se muestra el mensaje exitoso
+              this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.USUARIO_INGRESO_ACTUALIZADO));
+            },
+            error => {
+              this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            }
+          );
         }
       });
     }

@@ -54,8 +54,11 @@ export class MsjFrontConstant {
   /** Mensaje cuando los datos personales fueron modificados */
   static readonly DATOS_PERSONALES_MODIFICADOS = 'Datos Personales Modificado';
 
-  /** Mensaje cuando la clave de ingreso fue actuazalida */
+  /** Mensaje cuando la clave de ingreso fue modificada */
   static readonly CLAVE_INGRESO_ACTUALIZADO = 'Contraseña Modificada';
+
+  /** Mensaje cuando el usuario de ingreso fue modificada */
+  static readonly USUARIO_INGRESO_ACTUALIZADO = 'Usuario de Ingreso Modificado';
 
   /** Mensaje para el cambio de la contrasenia */
   static readonly CAMBIAR_CLAVE_INGRESO: string = '¿Está seguro de cambiar tu <strong>contraseña</strong>?';
