@@ -851,8 +851,8 @@ body {
   -webkit-border-radius: 50%;
   display: inline-block;
   background-color: #f5a96d;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   text-align: center;
   cursor: pointer;
 }
@@ -862,8 +862,8 @@ body {
 }
 
 .round-up-down-i {
-  margin-top: .19rem;
-  font-size: 22px !important;
+  font-size: 28px !important;
+  margin-top: 5px !important;
 }
 
 .outl-no {

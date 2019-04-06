@@ -1,248 +1,273 @@
 <!-- container lista de nomenclaturas -->
 <ng-container *ngIf="!isCreacion && !isEdicion">
 
-  <!-- boton crear nomenclatura -->
-  <div class="text-right mb-1">
-    <button (click)="showPanelCreacion()" type="button" class="btn btn-success btn-sm">
-      <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
-    </button>
-  </div>
+    <!-- boton crear nomenclatura -->
+    <div class="text-right mb-1">
+      <button (click)="showPanelCreacion()" type="button" class="btn btn-success btn-sm">
+        <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
+      </button>
+    </div>
 
-  <!-- tabla - nomenclaturas -->
-  <p-table [value]="nomenclaturas"
-    [responsive]="true"
-    [paginator]="true"
-    [rows]="10"
-    [alwaysShowPaginator]="false"
-    rowHover="true">
+    <!-- tabla - nomenclaturas -->
+    <p-table [value]="nomenclaturas"
+      [responsive]="true"
+      [paginator]="true"
+      [rows]="10"
+      [alwaysShowPaginator]="false"
+      rowHover="true">
 
-    <ng-template pTemplate="caption">
-      <i class="fa fa-ils"><span class="font-admin"> Nomenclaturas</span></i>
-    </ng-template>
+      <ng-template pTemplate="caption">
+        <i class="fa fa-ils"><span class="font-admin"> Nomenclaturas</span></i>
+      </ng-template>
 
-    <ng-template pTemplate="header">
-      <tr class="text-center">
-        <th style="width: 5%">Nomenclatura</th>
-        <th>Descripción</th>
-        <th style="width: 4%">Consec. Inicial</th>
-        <th style="width: 4%">Detalle</th>
-        <th style="width: 4%">Editar</th>
-        <th style="width: 4%">Eliminar</th>
-      </tr>
-    </ng-template>
+      <ng-template pTemplate="header">
+        <tr class="text-center">
+          <th style="width: 5%">Nomenclatura</th>
+          <th>Descripción</th>
+          <th style="width: 4%">Inicial</th>
+          <th style="width: 4%">Detalle</th>
+          <th style="width: 4%">Editar</th>
+          <th style="width: 4%">Eliminar</th>
+        </tr>
+      </ng-template>
 
-    <ng-template pTemplate="body" let-nomenclatura>
-      <tr [pSelectableRow]="nomenclatura">
-        <td class="text-center font-size-14">
-          <strong>{{ nomenclatura.nomenclatura }}</strong>
-        </td>
-        <td>{{ nomenclatura.descripcion }}</td>
-        <td class="text-center">{{ nomenclatura.consecutivoInicial }}</td>
-        <td class="text-center">
-          <button (click)="showModalVerDetalle(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
-            <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
-          </button>
-        </td>
-        <td class="text-center">
-          <button (click)="showPanelEdicion(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-edit">
-            <i class="pi pi-pencil icon-round-edit font-size-22"></i>
-          </button>
-        </td>
-        <td class="text-center">
-          <button (click)="eliminarNomenclatura(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-del">
-            <i class="pi pi-times icon-round-del"></i>
-          </button>
-        </td>
-      </tr>
-    </ng-template>
+      <ng-template pTemplate="body" let-nomenclatura>
+        <tr [pSelectableRow]="nomenclatura">
+          <td class="text-center font-size-14">
+            <strong>{{ nomenclatura.nomenclatura }}</strong>
+          </td>
+          <td>{{ nomenclatura.descripcion }}</td>
+          <td class="text-center">{{ nomenclatura.consecutivoInicial }}</td>
+          <td class="text-center">
+            <button (click)="showModalVerDetalle(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
+              <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
+            </button>
+          </td>
+          <td class="text-center">
+            <button (click)="showPanelEdicion(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-edit">
+              <i class="pi pi-pencil icon-round-edit font-size-22"></i>
+            </button>
+          </td>
+          <td class="text-center">
+            <button (click)="eliminarNomenclatura(nomenclatura)" type="button" class="btn btn-sm btn-round-table btn-round-del">
+              <i class="pi pi-times icon-round-del"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
 
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td [attr.colspan]="6">
-          <div class="mt-2 mb-2 p-1 ui-messages ui-messages-warn ui-corner-all text-center">
-            <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
-            <span class="ui-messages-detail font-size-15 ml-0">
-              No se encontraron <strong>NOMENCLATURAS</strong> parametrizadas en el sistema
-            </span>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="6">
+            <div class="mt-2 mb-2 p-1 ui-messages ui-messages-warn ui-corner-all text-center">
+              <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+              <span class="ui-messages-detail font-size-15 ml-0">
+                No se encontraron <strong>NOMENCLATURAS</strong> parametrizadas en el sistema
+              </span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+
+  <!-- container crear o editar nomenclaturas -->
+  <ng-container *ngIf="isCreacion || isEdicion">
+
+    <!-- panel principal -->
+    <p-panel styleClass="steps-pnl-main">
+      <p-header>
+        <i class="fa fa-ils font-size-14"><span class="font-admin"> {{isCreacion ? 'Creación de la Nomenclatura': 'Edición de la Nomenclatura'}}</span></i>
+      </p-header>
+
+      <!-- pasos de creacion o edicion -->
+      <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+
+      <!-- Paso 1 Datos de la nomenclatura-->
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
+        <form name="formDatos" #formDatos="ngForm"
+          (ngSubmit)="limpiarMensajes() && formDatos.form.valid && siguienteDatosNomenclatura()"
+          (keydown.enter)="$event.preventDefault()" novalidate>
+
+          <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
+            <p-header>
+              <i class="fa fa-info-circle font-size-18"></i>
+              <span> Datos de la nomenclatura, todos los valores son obligatorios</span>
+            </p-header>
+
+            <table class="table steps-tbl mb-0">
+              <tbody>
+                <!-- Nomenclatura -->
+                <tr>
+                  <td>
+                    <label for="nomen" class="steps-st mb-0">Nomenclatura:</label>
+                  </td>
+                  <td>
+                    <input type="text"
+                      id="nomen"
+                      name="nomen"
+                      [(ngModel)]="nomenclaturaCU.nomenclatura"
+                      #nomen="ngModel"
+                      maxlength="15"
+                      adminRequired
+                      adminAutofocus
+                      autocomplete="off"
+                      class="ad-input ad-input-style w-100"
+                      [ngClass]="{'ad-input-required' : (formDatos.submitted && !nomen.valid)}"/>
+                    <div class="focus-border"></div>
+                  </td>
+                </tr>
+
+                <!-- Descripcion -->
+                <tr>
+                  <td>
+                    <label for="descr" class="steps-st mb-0">Descripción:</label>
+                  </td>
+                  <td>
+                    <input type="text"
+                      id="descr"
+                      name="descr"
+                      [(ngModel)]="nomenclaturaCU.descripcion"
+                      #descr="ngModel"
+                      maxlength="255"
+                      adminRequired
+                      autocomplete="off"
+                      class="ad-input ad-input-style w-100"
+                      [ngClass]="{'ad-input-required' : (formDatos.submitted && !descr.valid)}"/>
+                    <div class="focus-border"></div>
+                  </td>
+                </tr>
+
+                <!-- Consecutivo Inicial -->
+                <tr>
+                  <td style="width: 18%">
+                    <label for="coninit" class="steps-st mb-0 pb-3">Consecutivo Inicial:</label>
+                  </td>
+                  <td>
+                    <input type="text"
+                      id="coninit"
+                      name="coninit"
+                      [(ngModel)]="nomenclaturaCU.consecutivoInicial"
+                      #coninit="ngModel"
+                      [pKeyFilter]="regex.SOLO_NUMEROS"
+                      maxlength="3"
+                      required
+                      autocomplete="off"
+                      placeholder="Campo Numérico"
+                      class="ad-input ad-input-style w-100 font-new-roman"
+                      [ngClass]="{'ad-input-required': formDatos.submitted && !coninit.valid}" />
+                    <div class="focus-border"></div>
+                    <p class="st font-weight-bold font-size-14 mb-0"><i class="fa fa-info-circle font-size-14"></i> Número que inicia el consecutivo, ejemplo, si este valor es 10 el primer consecutivo para esta nomenclatura será 10</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </p-panel>
+
+          <!-- botones salir - next-->
+          <div class="text-center mb-1">
+            <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 w-100-px">
+              <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+            </button>
+            <button (click)="formDatos.onSubmit()" type="button" class="btn btn-sm btn-primary w-100-px">
+              <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+            </button>
           </div>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</ng-container>
+        </form>
+      </ng-container>
 
-<!-- container crear o editar nomenclaturas -->
-<ng-container *ngIf="isCreacion || isEdicion">
-
-  <!-- panel principal -->
-  <p-panel styleClass="steps-pnl-main">
-    <p-header>
-      <i class="fa fa-ils font-size-14"><span class="font-admin"> {{isCreacion ? 'Creación de la Nomenclatura': 'Edición de la Nomenclatura'}}</span></i>
-    </p-header>
-
-    <!-- pasos de creacion o edicion -->
-    <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
-
-    <!-- Paso 1 Datos de la nomenclatura-->
-    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
-      <form name="formDatos" #formDatos="ngForm"
-        (ngSubmit)="limpiarMensajes() && formDatos.form.valid && siguienteDatosNomenclatura()"
-        (keydown.enter)="$event.preventDefault()" novalidate>
-
-        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-          <p-header>
-            <i class="fa fa-info-circle font-size-18"></i>
-            <span> Datos de la nomenclatura, todos los valores son obligatorios</span>
-          </p-header>
-
-          <table class="table steps-tbl mb-0">
-            <tbody>
-              <!-- Nomenclatura -->
-              <tr>
-                <td>
-                  <label for="nomen" class="steps-st mb-0">Nomenclatura:</label>
-                </td>
-                <td>
-                  <input type="text"
-                    id="nomen"
-                    name="nomen"
-                    [(ngModel)]="nomenclaturaCU.nomenclatura"
-                    #nomen="ngModel"
-                    maxlength="15"
-                    adminRequired
-                    adminAutofocus
-                    autocomplete="off"
-                    class="ad-input ad-input-style w-100"
-                    [ngClass]="{'ad-input-required' : (formDatos.submitted && !nomen.valid)}"/>
-                  <div class="focus-border"></div>
-                </td>
-              </tr>
-
-              <!-- Descripcion -->
-              <tr>
-                <td>
-                  <label for="descr" class="steps-st mb-0">Descripción:</label>
-                </td>
-                <td>
-                  <input type="text"
-                    id="descr"
-                    name="descr"
-                    [(ngModel)]="nomenclaturaCU.descripcion"
-                    #descr="ngModel"
-                    maxlength="255"
-                    adminRequired
-                    autocomplete="off"
-                    class="ad-input ad-input-style w-100"
-                    [ngClass]="{'ad-input-required' : (formDatos.submitted && !descr.valid)}"/>
-                  <div class="focus-border"></div>
-                </td>
-              </tr>
-
-              <!-- Consecutivo Inicial -->
-              <tr>
-                <td style="width: 18%">
-                  <label for="coninit" class="steps-st mb-0 pb-3">Consecutivo Inicial:</label>
-                </td>
-                <td>
-                  <input type="text"
-                    id="coninit"
-                    name="coninit"
-                    [(ngModel)]="nomenclaturaCU.consecutivoInicial"
-                    #coninit="ngModel"
-                    [pKeyFilter]="regex.SOLO_NUMEROS"
-                    maxlength="3"
-                    required
-                    autocomplete="off"
-                    placeholder="Campo Numérico"
-                    class="ad-input ad-input-style w-100 font-new-roman"
-                    [ngClass]="{'ad-input-required': formDatos.submitted && !coninit.valid}" />
-                  <div class="focus-border"></div>
-                  <p class="st font-weight-bold font-size-14 mb-0"><i class="fa fa-info-circle font-size-14"></i> Número que inicia el consecutivo, ejemplo, si este valor es 10 el primer consecutivo para esta nomenclatura será 10</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </p-panel>
-
-        <!-- botones salir - next-->
-        <div class="text-center mb-1">
-          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 w-100-px">
-            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-          </button>
-          <button (click)="formDatos.onSubmit()" type="button" class="btn btn-sm btn-primary w-100-px">
-            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-          </button>
-        </div>
-      </form>
-    </ng-container>
-
-    <!-- Paso 2 Asociar Campos -->
-    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
-      <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-        <p-header>
-          <i class="fa fa-info-circle font-size-18"></i>
-          <span> Asigne los campos para la nomenclatura</span>
-        </p-header>
+      <!-- Paso 2 Asociar Campos -->
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
 
         <div class="ui-g">
 
-          <div class="ui-g-1 text-center p-0" style="align-self: center;">
-            <div>
-              <span (click)="ordernar(1)" class="round-up-down"><i class="pi pi-caret-up round-up-down-i"></i></span>
-              <div class="mb-2"></div>
-              <span (click)="ordernar()" class="round-up-down"><i class="pi pi-caret-down round-up-down-i"></i></span>
-            </div>
+          <!-- btns ordenar -->
+          <div class="ui-g-1 p-0 text-center" style="align-self: center;">
+            <span (click)="ordernar(1)" class="round-up-down"><i class="pi pi-caret-up round-up-down-i"></i></span>
+            <div class="mb-3"></div>
+            <span (click)="ordernar()" class="round-up-down"><i class="pi pi-caret-down round-up-down-i"></i></span>
           </div>
 
-          <div class="ui-g-11 p-0">
-            <p-table
-            [value]="campos"
-            [responsive]="true"
-            [(selection)]="campoOrden"
-            selectionMode="single"
-            rowHover="true"
-            styleClass="tblshort">
+          <!-- campos seleccionar -->
+          <div class="ui-g-11 pl-0">
+            <p-panel styleClass="steps-pnl pnl-pt">
+              <p-header>
+                <i class="fa fa-info-circle font-size-18"></i>
+                <span> Seleccione los campos de entrada de información</span>
+              </p-header>
+              <p-table
+                [value]="campos"
+                [responsive]="true"
+                [(selection)]="campoOrden"
+                selectionMode="single"
+                rowHover="true"
+                styleClass="tblshort m-2">
 
-              <ng-template pTemplate="header">
-                <tr class="text-center">
-                  <th class="font-new-roman font-size-14">Orden</th>
-                  <th class="font-new-roman font-size-14">¿Aplica?</th>
-                  <th class="font-new-roman font-size-14">Nombre del Campo</th>
-                  <th class="font-new-roman font-size-14">Detalle</th>
-                </tr>
-              </ng-template>
+                <ng-template pTemplate="header">
+                  <tr class="text-center">
+                    <th class="font-new-roman font-size-14">¿Aplica?</th>
+                    <th class="font-new-roman font-size-14">Orden</th>
+                    <th class="font-new-roman font-size-14">Nombre del Campo</th>
+                    <th class="font-new-roman font-size-14">Detalle</th>
+                  </tr>
+                </ng-template>
 
-              <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex">
-                <tr [pSelectableRow]="campo">
-                  <td style="width: 3%" class="text-center">
-                    <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
-                  </td>
-                  <td style="width: 5%" class="text-center">
-                    <admin-inputswitch *ngIf="!(campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo)"
-                      [isChecked]="campo.aplica"
-                      (switchChange)="campo.aplica = $event">
-                    </admin-inputswitch>
-                    <i *ngIf="campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo" class="pi pi-check icon-sel font-size-26"></i>
-                  </td>
-                  <td>{{ campo.nombre }}</td>
-                  <td style="width: 4%" class="text-center">
-                    <button type="button" (click)="showModalVerDetalleCampo($event, campo)" class="btn btn-sm btn-round-table btn-pup">
-                      <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
-                    </button>
-                  </td>
-                </tr>
-              </ng-template>
+                <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex">
+                  <tr [pSelectableRow]="campo">
+                    <td style="width: 5%" class="text-center">
+                      <admin-inputswitch *ngIf="!(campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo)"
+                        [isChecked]="campo.aplica"
+                        (switchChange)="campo.aplica = $event">
+                      </admin-inputswitch>
+                      <i *ngIf="campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo" class="pi pi-check icon-sel font-size-26"></i>
+                    </td>
+                    <td style="width: 3%" class="text-center">
+                      <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
+                    </td>
+                    <td>{{ campo.nombre }}</td>
+                    <td style="width: 4%" class="text-center">
+                      <button type="button" (click)="showModalVerDetalleCampo($event, campo)" class="btn btn-sm btn-round-table btn-pup">
+                        <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-template>
 
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td [attr.colspan]="4">
-                    <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay campos parametrizados en el sistema</p>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td [attr.colspan]="4">
+                      <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay campos parametrizados en el sistema</p>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+
+              <!-- botones salir - next-->
+              <div class="text-center mt-2 mb-1">
+                <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+                  <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
+                </button>
+                <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
+                  <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+                </button>
+                <button (click)="siguienteCamposEntrada()" type="button" class="btn btn-sm btn-primary w-100-px">
+                  <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+                </button>
+              </div>
+            </p-panel>
           </div>
         </div>
+      </ng-container>
+
+      <!-- Paso 3 confirmacion -->
+      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
+
+        <!-- detalle - nomenclatura -->
+        <admin-detalle-nomenclatura
+          [detalle]="nomenclaturaCU"
+          [modificaciones]="datosEdicion"
+          [modulo]="TK_CONFIGURACIONES">
+        </admin-detalle-nomenclatura>
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
@@ -252,72 +277,47 @@
           <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
             <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
           </button>
-          <button (click)="siguienteCamposEntrada()" type="button" class="btn btn-sm btn-primary w-100-px">
-            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
+          <button (click)="crearNomenclatura()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
+            <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
+          </button>
+          <button (click)="editarNomenclatura()" *ngIf="isEdicion" [disabled]="!(datosEdicion.datosBasicosEditar || datosEdicion.camposEntradaEditar)" type="button" class="btn btn-success btn-sm">
+            <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
           </button>
         </div>
-      </p-panel>
-    </ng-container>
+      </ng-container>
+    </p-panel>
+  </ng-container>
 
-    <!-- Paso 3 confirmacion -->
-    <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
-
-      <!-- detalle - nomenclatura -->
-      <admin-detalle-nomenclatura
-        [detalle]="nomenclaturaCU"
-        [modificaciones]="datosEdicion"
-        [modulo]="TK_CONFIGURACIONES">
-      </admin-detalle-nomenclatura>
-
-      <!-- botones salir - next-->
-      <div class="text-center mt-2 mb-1">
-        <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
-          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-        </button>
-        <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
-          <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-        </button>
-        <button (click)="crearNomenclatura()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
-          <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Nomenclatura</label>
-        </button>
-        <button (click)="editarNomenclatura()" *ngIf="isEdicion" [disabled]="!(datosEdicion.datosBasicosEditar || datosEdicion.camposEntradaEditar)" type="button" class="btn btn-success btn-sm">
-          <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
-        </button>
+  <!-- modal ver detalle nomenclatura -->
+  <ng-container *ngIf="verDetalleNomenclatura && verDetalleNomenclatura.data">
+    <p-dialog header="Detalle de la Nomenclatura"
+    [(visible)]="verDetalleNomenclatura.isShowModal"
+    modal="true"
+    responsive="true"
+    dismissableMask="true"
+    styleClass="splr-dl"
+    (onHide)="verDetalleNomenclatura.closeModal()">
+      <div class="mx-dtl-mdl">
+        <admin-detalle-nomenclatura
+          [detalle]="verDetalleNomenclatura.data"
+          [isModal]="true"
+          [modulo]="TK_CONFIGURACIONES">
+        </admin-detalle-nomenclatura>
       </div>
-    </ng-container>
-  </p-panel>
-</ng-container>
+    </p-dialog>
+  </ng-container>
 
-<!-- modal ver detalle nomenclatura -->
-<ng-container *ngIf="verDetalleNomenclatura && verDetalleNomenclatura.data">
-  <p-dialog header="Detalle de la Nomenclatura"
-  [(visible)]="verDetalleNomenclatura.isShowModal"
-  modal="true"
-  responsive="true"
-  dismissableMask="true"
-  styleClass="splr-dl"
-  (onHide)="verDetalleNomenclatura.closeModal()">
-    <div class="mx-dtl-mdl">
-      <admin-detalle-nomenclatura
-        [detalle]="verDetalleNomenclatura.data"
-        [isModal]="true"
-        [modulo]="TK_CONFIGURACIONES">
-      </admin-detalle-nomenclatura>
-    </div>
-  </p-dialog>
-</ng-container>
-
-<!-- modal ver detalle campo -->
-<ng-container *ngIf="verDetalleCampo && verDetalleCampo.data">
-  <p-dialog header="Detalle del Campo"
-  [(visible)]="verDetalleCampo.isShowModal"
-  modal="true"
-  responsive="true"
-  dismissableMask="true"
-  styleClass="splr-dl"
-  (onHide)="verDetalleCampo.closeModal()">
-    <div class="mx-sub-mdl">
-      <admin-detalle-campo [campo]="verDetalleCampo.data" [ocultarItems]="true"></admin-detalle-campo>
-    </div>
-  </p-dialog>
-</ng-container>
+  <!-- modal ver detalle campo -->
+  <ng-container *ngIf="verDetalleCampo && verDetalleCampo.data">
+    <p-dialog header="Detalle del Campo"
+    [(visible)]="verDetalleCampo.isShowModal"
+    modal="true"
+    responsive="true"
+    dismissableMask="true"
+    styleClass="splr-dl"
+    (onHide)="verDetalleCampo.closeModal()">
+      <div class="mx-sub-mdl">
+        <admin-detalle-campo [campo]="verDetalleCampo.data" [ocultarItems]="true"></admin-detalle-campo>
+      </div>
+    </p-dialog>
+  </ng-container>
