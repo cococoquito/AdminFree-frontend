@@ -24,7 +24,6 @@
       <tr class="text-center">
         <th style="width: 18%">Tipo de Campo</th>
         <th>Nombre del Campo</th>
-        <th style="width: 4%">Detalle</th>
         <th style="width: 4%">Editar</th>
         <th style="width: 4%">Eliminar</th>
       </tr>
@@ -34,11 +33,6 @@
       <tr [pSelectableRow]="campo">
         <td class="text-center">{{ campo.tipoCampoNombre }}</td>
         <td>{{ campo.nombre }}</td>
-        <td class="text-center">
-          <button (click)="showModalVerDetalle(campo)" type="button" class="btn btn-sm btn-round-table btn-round-teal">
-            <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
-          </button>
-        </td>
         <td class="text-center">
           <button (click)="showPanelEdicion(campo)" type="button" class="btn btn-sm btn-round-table btn-round-edit">
             <i class="pi pi-pencil icon-round-edit font-size-22"></i>
@@ -78,7 +72,7 @@
 
     <!-- pasos de creacion o edicion -->
     <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
-    <div class="mh-pnl-create">
+    <div style="min-height: 200px;">
 
       <!-- Paso 1 Datos campo-->
       <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
@@ -296,7 +290,7 @@
         </div>
       </ng-container>
 
-      <!-- Paso 4 confirmacion -->
+      <!-- Paso 3 confirmacion -->
       <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
         <!-- detalle - campo -->
@@ -317,7 +311,7 @@
           <button (click)="crearCampoEntrada()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
             <label class="btn-size-admin"><i class="fa fa-plus-circle"></i> Crear Campo</label>
           </button>
-          <button (click)="editarCampoEntrada()" *ngIf="isEdicion" [disabled]="!(campoEditarOrigen.datosBasicosEditar || campoEditarOrigen.restriccionesEditar || campoEditarOrigen.itemsEditar)" type="button" class="btn btn-success btn-sm">
+          <button (click)="editarCampoEntrada()" *ngIf="isEdicion" [disabled]="!(campoEditarOrigen.datosBasicosEditar || campoEditarOrigen.itemsEditar)" type="button" class="btn btn-success btn-sm">
             <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar Cambios</label>
           </button>
         </div>
@@ -325,20 +319,3 @@
     </div>
   </p-panel>
 </ng-container>
-
-<!-- modal ver detalle -->
-<p-dialog header="Detalle del Campo"
-  [(visible)]="isModalVerDetalle"
-  *ngIf="campoVerDetalle"
-  modal="true"
-  responsive="true"
-  dismissableMask="true"
-  styleClass="splr-dl"
-  (onHide)="closeModalVerDetalle()">
-    <div class="mx-w-mdl">
-      <admin-detalle-campo
-        [isAdminCampos]="true"
-        [campo]="campoVerDetalle">
-      </admin-detalle-campo>
-    </div>
-</p-dialog>

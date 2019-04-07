@@ -23,7 +23,6 @@ import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
  */
 @Component({
   templateUrl: './admin-campos.component.html',
-  styleUrls: ['./admin-campos.component.css'],
   providers: [ ConfiguracionesService ]
 })
 export class AdminCamposComponent extends CommonComponent implements OnInit, OnDestroy {
@@ -52,14 +51,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Es el campo que esta en edicion*/
   public campoEdicion: CampoEntradaDTO;
 
-  /** Se utiliza para ver el detalle de un campo de entrada*/
-  public campoVerDetalle: CampoEntradaDTO;
-
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
   public stepsModel: StepsModel;
-
-  /** permite visualizar el modal de ver detalle del campo*/
-  public isModalVerDetalle: boolean;
 
   /** Es el item que esta en modo edicion*/
   public itemEdicion: ItemDTO;
@@ -241,28 +234,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         );
       }
     });
-  }
-
-  /**
-   * Metodo que soporta el evento click del boton ver detalle del campo
-   */
-  public showModalVerDetalle(campo: CampoEntradaDTO): void {
-    this.configuracionesService.getDetalleCampoEntrada(campo.id).subscribe(
-      data => {
-        this.campoVerDetalle = data;
-        this.isModalVerDetalle = true;
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
-  }
-
-  /**
-   * Metodo que es invocado cuando se cierra el modal de ver detalle
-   */
-  public closeModalVerDetalle(): void {
-    this.campoVerDetalle = null;
   }
 
   /**
