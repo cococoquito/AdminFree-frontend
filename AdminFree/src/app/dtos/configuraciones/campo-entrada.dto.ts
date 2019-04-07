@@ -13,6 +13,9 @@ export class CampoEntradaDTO {
   /** Es el identificador del campo de entrada */
   public id: number;
 
+  /** Los campos de ingreso estan asociados a un cliente */
+  public idCliente: number;
+
   /** Nombre del campo de entrada */
   public nombre: string;
 
@@ -25,17 +28,8 @@ export class CampoEntradaDTO {
   /** Nombre del tipo de campo */
   public tipoCampoNombre: string;
 
-  /** Los campos de ingreso estan asociados a un cliente */
-  public idCliente: number;
-
-  /** Son las restricciones que contiene este campo */
-  public restricciones: Array<RestriccionDTO>;
-
   /** Son los items para este campo, solo aplica para lista desplegable */
   public items: Array<ItemDTO>;
-
-  /** indica si se debe consultar las restricciones */
-  public consultarRestricciones: boolean;
 
   /** Se utiliza al momento de crear la nomenclatura */
   public aplica: boolean;

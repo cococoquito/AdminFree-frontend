@@ -7,7 +7,6 @@ import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
 import { UsuarioEdicionDTO } from '../dtos/configuraciones/usuario-edicion.dto';
 import { NomenclaturaDTO } from './../dtos/configuraciones/nomenclatura.dto';
 import { NomenclaturaEdicionDTO } from '../dtos/configuraciones/nomenclatura-edicion.dto';
-import { RestriccionDTO } from './../dtos/configuraciones/restriccion.dto';
 import { CampoEntradaDTO } from './../dtos/configuraciones/campo-entrada.dto';
 import { CampoEntradaEdicionDTO } from '../dtos/configuraciones/campo-entrada-edicion.dto';
 import { GenerarTokenIngresoDTO } from '../dtos/configuraciones/generar-token-ingreso.dto';
@@ -302,10 +301,9 @@ export class ConfiguracionesService {
 	 * esto aplica para el primer paso al momento de crear o editar el campo
 	 *
 	 * @param datosCampo, contiene los datos del campo de entrada
-	 * @return lista restricciones asociada al tipo de campo
 	 */
-  public validarDatosCampoEntrada(datosCampo: CampoEntradaDTO): Observable<Array<RestriccionDTO>> {
-    return this.http.post<Array<RestriccionDTO>>(
+  public validarDatosCampoEntrada(datosCampo: CampoEntradaDTO): Observable<Array<MessageResponseDTO>> {
+    return this.http.post<Array<MessageResponseDTO>>(
       ConfiguracionesAPIConstant.URL_VALIDAR_DATOS_ENTRADA,
       datosCampo
     );

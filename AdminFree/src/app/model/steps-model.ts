@@ -84,7 +84,6 @@ export class StepsModel {
 
     // se agregan los items para este submodulo
     this.agregarStep(LabelsConstant.DATOS_CAMPO);
-    this.agregarStep(LabelsConstant.RESTRICCIONES);
     if (agregarItem) {
       this.agregarStep(LabelsConstant.AGREGAR_ITEMS);
     }

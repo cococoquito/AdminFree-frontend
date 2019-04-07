@@ -7,7 +7,6 @@ import { SpinnerState } from './../../../states/spinner.state';
 import { StepsModel } from './../../../model/steps-model';
 import { ClienteDTO } from './../../../dtos/configuraciones/cliente.dto';
 import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.dto';
-import { RestriccionDTO } from './../../../dtos/configuraciones/restriccion.dto';
 import { CampoEntradaEdicionDTO } from './../../../dtos/configuraciones/campo-entrada-edicion.dto';
 import { ItemDTO } from './../../../dtos/configuraciones/item.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
@@ -15,7 +14,6 @@ import { MsjUtil } from './../../../util/messages.util';
 import { LabelsConstant } from './../../../constants/labels.constant';
 import { MsjFrontConstant } from './../../../constants/messages-frontend.constant';
 import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
-import { RestriccionesKeyConstant } from './../../../constants/restricciones-key.constant';
 
 /**
  * Componente para la administracion de los Campos de ingreso
@@ -149,9 +147,10 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     // se limpia mensajes de otros procesos
     this.messageService.clear();
 
-    // se configuran los datos ingresados para la creacion
-    const restriccionesBK = this.campoCU.restricciones;
-    this.setDatosAntesCreacion(restriccionesBK);
+    // no se debe enviar la instancia de los items para otros tipos de campos
+    if (this.campoCU.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
+      this.campoCU.items = null;
+    }
 
     // se procede a invocar el servicio para la creacion
     this.configuracionesService.crearCampoEntrada(this.campoCU).subscribe(
@@ -166,7 +165,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.limpiarCamposCU();
       },
       error => {
-        this.campoCU.restricciones = restriccionesBK;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
@@ -180,13 +178,12 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     // se limpia mensajes de otros procesos
     this.messageService.clear();
 
-    // backup para el campo origen y las restricciones por si hay errores
+    // backup para el campo origen por si hay errores
     const campoBK = this.campoEditarOrigen.campoEntrada;
-    const restriccionesBK = this.campoCU.restricciones;
     const itemsBK =  this.campoCU.items;
 
     // se configuran los datos modificados para la edicion
-    this.setDatosAntesEdicion(restriccionesBK);
+    this.setDatosAntesEdicion();
 
     // se configura el campo de entrada modificado
     this.campoEditarOrigen.campoEntrada = this.campoCU;
@@ -207,7 +204,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       },
       error => {
         this.campoEditarOrigen.campoEntrada = campoBK;
-        this.campoCU.restricciones = restriccionesBK;
         this.campoCU.items = itemsBK;
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
@@ -270,39 +266,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
-   * Es el evento del boton siguiente para el paso (Datos del Campo)
-   */
-  public siguienteDatosCampo(): void {
-    if (this.isCreacion) {
-      this.siguienteDatosCampoCreacion();
-    } else {
-      this.siguienteDatosCampoEdicion();
-    }
-  }
-
-  /**
-   * Es el evento del boton siguiente para el paso (Restricciones)
-   */
-  public siguienteRestricciones(): void {
-    if (this.isCreacion) {
-      this.siguienteRestriccionCreacion();
-    } else {
-      this.siguienteRestriccionEdicion();
-    }
-  }
-
-  /**
-   * Es el evento del boton siguiente para el paso (Agregar items)
-   */
-  public siguienteAgregarItems(): void {
-    if (this.isCreacion) {
-      this.siguienteAgregarItemsCreacion();
-    } else {
-      this.siguienteAgregarItemsEdicion();
-    }
-  }
-
-  /**
    * Metodo que permite abrir el panel de creacion de campos
    */
   public showPanelCreacion(): void {
@@ -314,7 +277,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.campoCU = new CampoEntradaDTO();
     this.campoCU.items = new Array<ItemDTO>();
     this.campoCU.idCliente = this.clienteCurrent.id;
-    this.campoCU.consultarRestricciones = true;
     this.campoCrearOrigen = null;
 
     // esta bandera visualiza el panel de creacion
@@ -323,42 +285,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     // se define el componente steps para la creacion
     this.stepsModel = new StepsModel();
     this.stepsModel.stepsParaAdminCampos(false);
-  }
-
-  /**
-   * Metodo que permite cerrar el panel de creacion o edicion de campos
-   */
-  public closePanelCU(): void {
-
-    // para creacion se pregunta directamente
-    if (this.isCreacion) {
-        this.confirmationService.confirm({
-        message: MsjFrontConstant.SEGURO_SALIR,
-        header: MsjFrontConstant.CONFIRMACION,
-        accept: () => {
-          this.messageService.clear();
-          this.limpiarCamposCU();
-        }
-      });
-    } else {
-
-      // si hay modificaciones se muestra el modal confirmacion
-      if (this.campoEditarOrigen.datosBasicosEditar ||
-          this.campoEditarOrigen.restriccionesEditar ||
-          this.campoEditarOrigen.itemsEditar) {
-          this.confirmationService.confirm({
-            message: MsjFrontConstant.SEGURO_SALIR_EDICION,
-            header: MsjFrontConstant.CONFIRMACION,
-            accept: () => {
-              this.messageService.clear();
-              this.limpiarCamposCU();
-            }
-          });
-      } else {
-        this.messageService.clear();
-        this.limpiarCamposCU();
-      }
-    }
   }
 
   /**
@@ -391,9 +317,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
           this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.CAMPO_CON_NOMENCLATURAS));
         }
 
-        // bandera indica no se debe consultar restricciones para validar tipo nombre
-        this.campoCU.consultarRestricciones = false;
-
         // se visualiza el panel para la edicion
         this.isEdicion = true;
 
@@ -404,6 +327,41 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que permite cerrar el panel de creacion o edicion de campos
+   */
+  public closePanelCU(): void {
+
+    // para creacion se pregunta directamente
+    if (this.isCreacion) {
+        this.confirmationService.confirm({
+        message: MsjFrontConstant.SEGURO_SALIR,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.messageService.clear();
+          this.limpiarCamposCU();
+        }
+      });
+    } else {
+
+      // si hay modificaciones se muestra el modal confirmacion
+      if (this.campoEditarOrigen.datosBasicosEditar ||
+          this.campoEditarOrigen.itemsEditar) {
+          this.confirmationService.confirm({
+            message: MsjFrontConstant.SEGURO_SALIR_EDICION,
+            header: MsjFrontConstant.CONFIRMACION,
+            accept: () => {
+              this.messageService.clear();
+              this.limpiarCamposCU();
+            }
+          });
+      } else {
+        this.messageService.clear();
+        this.limpiarCamposCU();
+      }
+    }
   }
 
   /**
@@ -477,33 +435,31 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
-   * Metodo que es invocado cuando cambian una restriccion
+   * Es el evento del boton siguiente para el paso (Datos del Campo)
    */
-  public changeRestriccion(restriccion: RestriccionDTO): void {
+  public siguienteDatosCampo(): void {
+    if (this.isCreacion) {
+      this.siguienteDatosCampoCreacion();
+    } else {
+      this.siguienteDatosCampoEdicion();
+    }
+  }
 
-    // se valida si este campo tiene campo no compatibles
-    if (restriccion.compatible) {
-
-      // se separa los ids de no compatibles
-      const noCompatibles = restriccion.compatible.split(',');
-
-      // se recorre todo los demas campos para validar si es compatible
-      for (const other of this.campoCU.restricciones) {
-
-        // se verifica si esta restriccion aplica
-        if (other.aplica && other.id !== restriccion.id) {
-
-          // si la noCompatibles lo incluye la restriccion no debe ser aplicada
-          if (noCompatibles.includes(other.id + '')) {
-              other.aplica = false;
-          }
-        }
-      }
+  /**
+   * Es el evento del boton siguiente para el paso (Agregar items)
+   */
+  public siguienteAgregarItems(): void {
+    if (this.isCreacion) {
+      this.siguienteAgregarItemsCreacion();
+    } else {
+      this.siguienteAgregarItemsEdicion();
     }
   }
 
   /**
    * Metodo que soporta el evento click del boton eliminar item (creacion)
+   *
+   * @param item, item seleccionado para eliminarlo de la lista
    */
   private eliminarItemCreacion(item: ItemDTO): void {
     this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
@@ -511,6 +467,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
 
   /**
    * Metodo que soporta el evento click del boton eliminar item (edicion)
+   *
+   * @param item, item seleccionado para eliminarlo de la lista
    */
   private eliminarItemEdicion(item: ItemDTO): void {
 
@@ -525,37 +483,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       this.itemsEliminados.push(item);
     }
     this.campoCU.items.splice(this.campoCU.items.indexOf(item, 0), 1);
-  }
-
-  /**
-   * Metodo que permite configurar los steps dependiendo del
-   * tipo de campo y las restricciones que llegan por parameto
-   */
-  private setRestriccionesSteps(data): void {
-
-    // se configura las restricciones
-    this.campoCU.restricciones = data;
-
-    // si el tipo de campo es lista desplegable se habilita el paso 3
-    if (this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE) {
-      this.stepsModel.stepsParaAdminCampos(true);
-    } else {
-
-      // se refresca los steps, ya que volvieron al primer paso
-      if (this.campoCrearOrigen) {
-        this.stepsModel.stepsParaAdminCampos(false);
-      }
-
-      // para la casilla de verificacion se debe colocar el valor NO seleccionado
-      if (this.campoCU.tipoCampo === this.ID_CASILLA_VERIFICACION) {
-        for (const restriccion of this.campoCU.restricciones) {
-          if (RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO === restriccion.id) {
-            restriccion.aplica = true;
-            break;
-          }
-        }
-      }
-    }
   }
 
   /**
@@ -583,23 +510,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   }
 
   /**
-   * Metodo que permite configurar los datos antes de la creacion del campo
-   */
-  private setDatosAntesCreacion(restricciones: Array<RestriccionDTO>): void {
-
-    // los items no aplica para el tipo lista desplegable
-    if (this.campoCU.tipoCampo !== this.ID_LISTA_DESPLEGABLE) {
-      this.campoCU.items = null;
-    }
-
-    // se configuran las restricciones seleccionadas
-    this.configurarRestricciones(restricciones);
-  }
-
-  /**
    * Metodo que permite configurar los datos antes de la edicion del campo
    */
-  private setDatosAntesEdicion(restricciones: Array<RestriccionDTO>): void {
+  private setDatosAntesEdicion(): void {
 
     // si hay modificaciones de los items solo para lista desplegable
     if (this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE && this.campoEditarOrigen.itemsEditar) {
@@ -623,27 +536,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       this.campoCU.items = null;
       this.campoEditarOrigen.itemsEditar = false;
     }
-
-    // se configuran las restricciones seleccionadas
-    if (this.campoEditarOrigen.restriccionesEditar) {
-      this.configurarRestricciones(restricciones);
-    }
-  }
-
-  /**
-   * Metodo que permite configurar las restricciones para editar o crear
-   */
-  private configurarRestricciones(restricciones: Array<RestriccionDTO>): void {
-    let seleccionadas: Array<RestriccionDTO>;
-    for (const restriccion of restricciones) {
-      if (restriccion.aplica) {
-        if (!seleccionadas) {
-          seleccionadas = new Array<RestriccionDTO>();
-        }
-        seleccionadas.push(restriccion);
-      }
-    }
-    this.campoCU.restricciones = seleccionadas;
   }
 
   /**
@@ -673,16 +565,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.configuracionesService.validarDatosCampoEntrada(this.campoCU).subscribe(
       data => {
 
-        // solamente se reemplaza las restricciones si el tipo campo
-        // fue modificado o si apenas es la primera entrada para el paso UNO
-        if (this.campoCrearOrigen) {
-          if (this.campoCrearOrigen.tipoCampo !== this.campoCU.tipoCampo) {
-            this.setRestriccionesSteps(data);
-          }
-        } else {
-          this.setRestriccionesSteps(data);
-        }
-
         // se configura el nombre del tipo de campo seleccionado
         this.campoCU.tipoCampoNombre = TipoCamposConstant.getNombre(this.campoCU.tipoCampo);
 
@@ -692,6 +574,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.campoCrearOrigen.tipoCampo = this.campoCU.tipoCampo;
 
         // se procede a seguir al segundo paso
+        this.stepsModel.stepsParaAdminCampos(this.campoCU.tipoCampo === this.ID_LISTA_DESPLEGABLE);
         this.stepsModel.irSegundoStep();
       },
       error => {
@@ -738,55 +621,6 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
       }
     }
     this.stepsModel.irSegundoStep(this.spinnerState);
-  }
-
-  /**
-   * Es el evento del boton siguiente para el paso (Restricciones) para creacion
-   */
-  private siguienteRestriccionCreacion(): void {
-    this.stepsModel.irTercerStep(this.spinnerState);
-  }
-
-  /**
-   * Es el evento del boton siguiente para el paso (Restricciones) para edicion
-   */
-  private siguienteRestriccionEdicion(): void {
-
-    // se inicializa como restricciones modificadas
-    this.campoEditarOrigen.restriccionesEditar = true;
-
-    // se obtiene los datos del campo origen
-    const campoOrigen = this.campoEditarOrigen.campoEntrada;
-
-    // se utiliza para identificar las restricciones modificadas
-    const restriccionesOrigen = new Array<number>();
-    const restriccionesEditar = new Array<number>();
-
-    // se configuran las restricciones seleccionadas origen
-    for (const origen of campoOrigen.restricciones) {
-      if (origen.aplica) {
-        restriccionesOrigen.push(origen.id);
-      }
-    }
-
-    // se configuran las restricciones modificadas
-    for (const editada of this.campoCU.restricciones) {
-      if (editada.aplica) {
-        restriccionesEditar.push(editada.id);
-      }
-    }
-
-    // se valida si hay alguna modificacion
-    if (restriccionesOrigen.length === restriccionesEditar.length) {
-      this.campoEditarOrigen.restriccionesEditar = false;
-      for (const editada of restriccionesEditar) {
-        if (!restriccionesOrigen.includes(editada)) {
-          this.campoEditarOrigen.restriccionesEditar = true;
-          break;
-        }
-      }
-    }
-    this.stepsModel.irTercerStep(this.spinnerState);
   }
 
   /**

@@ -155,7 +155,7 @@
                       name="cnombre"
                       [(ngModel)]="campoCU.nombre"
                       #cnombre="ngModel"
-                      maxlength="50"
+                      maxlength="100"
                       adminRequired
                       adminAutofocus
                       autocomplete="off"
@@ -200,48 +200,8 @@
         </form>
       </ng-container>
 
-      <!-- Paso 2 Restricciones -->
-      <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_DOS">
-        <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
-          <p-header>
-            <i class="fa fa-info-circle font-size-18"></i>
-            <span> Asigne las restricciones para el campo</span>
-          </p-header>
-
-          <!-- lista Restricciones -->
-          <table class="table steps-tbl table-hover mb-0">
-            <tbody>
-              <tr *ngFor="let restriccion of campoCU.restricciones">
-                <td style="width: 8%">
-                  <admin-inputswitch
-                    [isChecked]="restriccion.aplica"
-                    (switchChange)="restriccion.aplica = $event; changeRestriccion(restriccion)">
-                  </admin-inputswitch>
-                </td>
-                <td>
-                  <p class="sub-title-page">{{ restriccion.descripcion }}</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </p-panel>
-
-        <!-- botones salir - next-->
-        <div class="text-center mt-2 mb-1">
-          <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
-            <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
-          </button>
-          <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-1 ml-1 w-100-px">
-            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
-          </button>
-          <button (click)="siguienteRestricciones()" type="button" class="btn btn-sm btn-primary w-100-px">
-            <label class="btn-size-admin">Siguiente <i class="fa fa-hand-o-right"></i></label>
-          </button>
-        </div>
-      </ng-container>
-
-      <!-- Paso 3 agregar items -->
-      <ng-container *ngIf="campoCU.tipoCampo === ID_LISTA_DESPLEGABLE && stepsModel.activeIndex === stepsModel.STEP_TRES">
+      <!-- Paso 2 agregar items -->
+      <ng-container *ngIf="campoCU.tipoCampo === ID_LISTA_DESPLEGABLE && stepsModel.activeIndex === stepsModel.STEP_DOS">
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
             <i class="fa fa-info-circle font-size-18"></i>
@@ -340,7 +300,11 @@
       <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
         <!-- detalle - campo -->
-        <admin-detalle-campo [campo]="campoCU" [camposEditado]="campoEditarOrigen"></admin-detalle-campo>
+        <admin-detalle-campo
+          [isAdminCampos]="true"
+          [campo]="campoCU"
+          [camposEditado]="campoEditarOrigen">
+        </admin-detalle-campo>
 
         <!-- botones salir - next-->
         <div class="text-center mt-2 mb-1">
@@ -372,6 +336,9 @@
   styleClass="splr-dl"
   (onHide)="closeModalVerDetalle()">
     <div class="mx-w-mdl">
-      <admin-detalle-campo [campo]="campoVerDetalle"></admin-detalle-campo>
+      <admin-detalle-campo
+        [isAdminCampos]="true"
+        [campo]="campoVerDetalle">
+      </admin-detalle-campo>
     </div>
 </p-dialog>

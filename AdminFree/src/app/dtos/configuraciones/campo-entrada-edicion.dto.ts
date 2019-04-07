@@ -13,17 +13,11 @@ export class CampoEntradaEdicionDTO {
   /** indica si el campo de entrada tiene nomenclaturas */
   public tieneNomenclaturas: boolean;
 
-  /** indica si el campo de entrada tiene restricciones */
-  public tieneRestricciones: boolean;
-
   /** Indica si el campo de entrada esta asociado algun consecutivo */
   public tieneConsecutivos: boolean;
 
   /** Indica si los datos basicas del campo se debe editar */
   public datosBasicosEditar: boolean;
-
-  /** Indica si las restricciones fueron modificados */
-  public restriccionesEditar: boolean;
 
   /** Indica si los items fueron modificados */
   public itemsEditar: boolean;

@@ -23,8 +23,11 @@ export class DetalleCampoComponent implements OnInit {
   /** Se utiliza para ocultar los items del detalle */
   @Input() public ocultarItems: boolean;
 
-  /** modal que identifica que este detalle se va mostrar como un submodal */
+  /** bandera que identifica que este detalle se va mostrar como un submodal */
   @Input() public isSubModal: boolean;
+
+  /** bandera que identifica que el padre es el componente de admin campos */
+  @Input() public isAdminCampos: boolean;
 
   /** Identifica si el campo tiene restricciones*/
   public tieneRestriccion: boolean;
@@ -44,13 +47,5 @@ export class DetalleCampoComponent implements OnInit {
    */
   private setTieneRestriccion(): void {
     this.tieneRestriccion = false;
-    if (this.campo.restricciones) {
-      for (const restriccion of this.campo.restricciones) {
-        if (restriccion.aplica) {
-          this.tieneRestriccion = true;
-          break;
-        }
-      }
-    }
   }
 }
