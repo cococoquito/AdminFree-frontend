@@ -228,7 +228,7 @@ export class CommonComponent {
    * @param value, es el valor del texto a copiar
    * @param nameValue, nombre del valor ejemplo (Clave, Nombre, Telefono)
    */
-  public copyToClipBoard(value: string, nameValue: string): void {
+  protected copyToClipBoard(value: string, nameValue: string): void {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -241,5 +241,15 @@ export class CommonComponent {
     document.execCommand('copy');
     document.body.removeChild(selBox);
     this.messageService.add(MsjUtil.getToastSuccessMedium(nameValue + ' copiado al portapapeles'));
+  }
+
+  /**
+   * se utiliza para no propagar el evento y asi evitar
+   * que seleccione o deseleccione la fila de la tabla
+   */
+  protected stopPropagation(event): void {
+    if (event) {
+      event.stopPropagation();
+    }
   }
 }

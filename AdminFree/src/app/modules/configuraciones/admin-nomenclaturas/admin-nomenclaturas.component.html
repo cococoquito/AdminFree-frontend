@@ -214,7 +214,7 @@
 
               <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex">
                 <tr [pSelectableRow]="campo">
-                  <td style="width: 5%" class="text-center">
+                  <td (click)="stopPropagation($event)" style="width: 5%" class="text-center">
                     <admin-inputswitch *ngIf="!(campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo)"
                       [isChecked]="campo.aplica"
                       (switchChange)="campo.aplica = $event">
@@ -225,8 +225,8 @@
                     <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
                   </td>
                   <td>{{ campo.nombre }}</td>
-                  <td style="width: 4%" class="text-center">
-                    <button type="button" (click)="showModalVerDetalleCampo($event, campo)" class="btn btn-sm btn-round-table btn-pup">
+                  <td (click)="stopPropagation($event)" style="width: 4%" class="text-center">
+                    <button type="button" (click)="showModalVerDetalleCampo(campo)" class="btn btn-sm btn-round-table btn-pup">
                       <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
                     </button>
                   </td>
