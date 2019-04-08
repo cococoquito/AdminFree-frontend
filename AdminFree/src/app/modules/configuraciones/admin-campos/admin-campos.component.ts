@@ -48,7 +48,7 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
   /** Esta es la variable que se utiliza para la creacion o edicion del campo*/
   public campoCU: CampoEntradaDTO;
 
-  /** Es el campo que esta en edicion*/
+  /** Se utiliza para actualizar los datos editados para que se refleje en la lista*/
   public campoEdicion: CampoEntradaDTO;
 
   /** Modelo del componente steps, se utiliza para la creacion o edicion*/
