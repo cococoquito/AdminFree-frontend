@@ -74,7 +74,7 @@ export class ConfiguracionesAPIConstant {
   static readonly URL_GET_CAMPOS_ENTRADA: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
-    'getcamposin?idCliente=';
+    'getcamposin';
 
   /** URL del recurso para obtener los detalles de un campo de entrada*/
   static readonly URL_GET_DETALLE_CAMPO_ENTRADA: string =

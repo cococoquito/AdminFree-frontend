@@ -122,7 +122,8 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
     // se consulta los campos asociados al cliente autenticado
-    this.configuracionesService.getCamposEntrada(this.clienteCurrent.id).subscribe(
+    const isRestriccion = 0;
+    this.configuracionesService.getCamposEntrada(this.clienteCurrent.id, isRestriccion).subscribe(
       data => {
         this.campos = data;
       },
@@ -152,6 +153,9 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
         this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_CREADO_EXITOSO));
 
         // se agrega en la lista a visualizar en pantalla
+        if (!this.campos) {
+          this.campos = new Array<CampoEntradaDTO>();
+        }
         this.campos.push(data);
 
         // se limpia las variables de creacion

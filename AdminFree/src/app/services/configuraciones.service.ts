@@ -240,12 +240,12 @@ export class ConfiguracionesService {
 	 * Metodo que permite obtener los campos de entrada de informacion asociado a un cliente
 	 *
 	 * @param idCliente, identificador del cliente que le pertenece los campos de entrada
+   * @param isRestriccion, 1=si se debe consultar las restricciones
 	 * @return lista DTO con la informacion de los campos de entrada
 	 */
-  public getCamposEntrada(idCliente: number): Observable<Array<CampoEntradaDTO>> {
-    return this.http.get<Array<CampoEntradaDTO>>(
-      ConfiguracionesAPIConstant.URL_GET_CAMPOS_ENTRADA + idCliente
-    );
+  public getCamposEntrada(idCliente: number, isRestriccion: number): Observable<Array<CampoEntradaDTO>> {
+    const url = `${ConfiguracionesAPIConstant.URL_GET_CAMPOS_ENTRADA}?idCliente=${idCliente}&isRestriccion=${isRestriccion}`;
+    return this.http.get<Array<CampoEntradaDTO>>(url);
   }
 
   /**

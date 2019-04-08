@@ -31,6 +31,9 @@ export class CampoEntradaDTO {
   /** Son los items para este campo, solo aplica para lista desplegable */
   public items: Array<ItemDTO>;
 
+  /** Son las restricciones que contiene este campo */
+  public restricciones: Array<RestriccionDTO>;
+
   /** Se utiliza al momento de crear la nomenclatura */
   public aplica: boolean;
 

@@ -586,7 +586,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       this.setCamposNomenclatura();
     } else {
       // se consulta los campos asociados al cliente autenticado
-      this.configuracionesService.getCamposEntrada(this.clienteCurrent.id).subscribe(
+      const isRestriccion = 1;
+      this.configuracionesService.getCamposEntrada(this.clienteCurrent.id, isRestriccion).subscribe(
         data => {
           this.campos = data;
           this.setCamposNomenclatura();
