@@ -396,6 +396,10 @@ body {
   padding: 0.480em 0.857em !important;
 }
 
+.tblvshort .ui-table-tbody>tr>td {
+  padding: 0.430em 0.857em !important;
+}
+
 /* circulo redondo paginador */
 .ui-paginator-page.ui-state-active {
   background-color: #f5a96d !important;
@@ -742,6 +746,18 @@ body {
   display: inline-block;
   color: white;
   background-color: #007ad9;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+}
+
+.cir-red {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  color: #212121;
+  background-color: #d68b94;
   width: 22px;
   height: 22px;
   text-align: center;

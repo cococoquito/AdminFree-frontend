@@ -9,6 +9,7 @@ import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatu
 import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatura-campo.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
+import { RestriccionDTO } from '../../../dtos/configuraciones/restriccion.dto';
 import { StepsModel } from '../../../model/steps-model';
 import { VentanaModalModel } from '../../../model/ventana-modal.model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
@@ -43,9 +44,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
   /** se utiliza para visualizar el detalle de la nomenclatura*/
   public verDetalleNomenclatura: VentanaModalModel;
-
-  /** se utiliza para visualizar el detalle del campo asociado a la nomenclatura*/
-  public verDetalleCampo: VentanaModalModel;
 
   /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
   public nomenclaturaCU: NomenclaturaDTO;
@@ -258,25 +256,6 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
-   * Metodo que soporta el evento click del boton ver detalle del campo
-   *
-   * @param campo , campo seleccionado para ver su detalle
-   */
-  public showModalVerDetalleCampo(campo: CampoEntradaDTO): void {
-    this.configuracionesService.getDetalleCampoEntrada(campo.id).subscribe(
-      data => {
-        if (!this.verDetalleCampo) {
-          this.verDetalleCampo = new VentanaModalModel();
-        }
-        this.verDetalleCampo.showModal(data);
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
-  }
-
-  /**
    * Metodo que permite abrir el panel de creacion de la nomenclatura
    */
   public showPanelCreacion(): void {
@@ -431,6 +410,34 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         if (index < (this.campos.length - 1)) {
           this.campos[index] = this.campos[index + 1];
           this.campos[index + 1] = this.campoOrden;
+        }
+      }
+    }
+  }
+
+  /**
+   * Se utiliza cuando el usuario da click en alguna restriccion
+   *
+   * @param restriccion, es la restriccion seleccionada al dar click
+   */
+  public changeRestriccion(restriccion: RestriccionDTO, campo: CampoEntradaDTO): void {
+
+    // se valida si este campo tiene campo no compatibles
+    if (restriccion.compatible) {
+
+      // se separa los ids de no compatibles
+      const noCompatibles = restriccion.compatible.split(',');
+
+      // se recorre todo los demas campos para validar si es compatible
+      for (const other of campo.restricciones) {
+
+        // se verifica si esta restriccion aplica
+        if (other.aplica && other.id !== restriccion.id) {
+
+          // si la noCompatibles lo incluye la restriccion no debe ser aplicada
+          if (noCompatibles.includes(other.id + '')) {
+            other.aplica = false;
+          }
         }
       }
     }

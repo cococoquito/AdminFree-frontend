@@ -199,20 +199,23 @@
               [value]="campos"
               [responsive]="true"
               [(selection)]="campoOrden"
+              dataKey="id"
               selectionMode="single"
               rowHover="true"
-              styleClass="tblshort m-2">
+              styleClass="tblvshort m-2">
 
+              <!-- titulos -->
               <ng-template pTemplate="header">
                 <tr class="text-center">
                   <th class="font-new-roman font-size-14">¿Aplica?</th>
                   <th class="font-new-roman font-size-14">Orden</th>
                   <th class="font-new-roman font-size-14">Nombre del Campo</th>
-                  <th class="font-new-roman font-size-14">Detalle</th>
+                  <th class="font-new-roman font-size-14">Restricciones</th>
                 </tr>
               </ng-template>
 
-              <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex">
+              <!-- cuerpo -->
+              <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex" let-expanded="expanded">
                 <tr [pSelectableRow]="campo">
                   <td (click)="stopPropagation($event)" style="width: 5%" class="text-center">
                     <admin-inputswitch *ngIf="!(campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo)"
@@ -225,14 +228,36 @@
                     <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
                   </td>
                   <td>{{ campo.nombre }}</td>
-                  <td (click)="stopPropagation($event)" style="width: 4%" class="text-center">
-                    <button type="button" (click)="showModalVerDetalleCampo(campo)" class="btn btn-sm btn-round-table btn-pup">
-                      <i class="fa fa-arrow-circle-up icon-round-table font-size-18"></i>
-                    </button>
+                  <td (click)="stopPropagation($event)" [pRowToggler]="campo" style="width: 4%" class="text-center">
+                    <span class="cir-red"><i [ngClass]="expanded ? 'pi pi-caret-down' : 'pi pi-caret-right'"></i></span>
                   </td>
                 </tr>
               </ng-template>
 
+              <!-- sub-table restricciones -->
+              <ng-template pTemplate="rowexpansion" let-campo>
+                <tr>
+                  <td [attr.colspan]="4">
+                    <p-table [value]="campo.restricciones" [responsive]="true" styleClass="tblvshort">
+                      <ng-template pTemplate="body" let-restriccion>
+                        <tr [pSelectableRow]="restriccion">
+                          <td>
+                            {{ restriccion.descripcion }}
+                          </td>
+                          <td style="width: 3%" class="text-center">
+                            <admin-inputswitch
+                              [isChecked]="restriccion.aplica"
+                              (switchChange)="restriccion.aplica = $event; changeRestriccion(restriccion,campo)">
+                            </admin-inputswitch>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </td>
+                </tr>
+              </ng-template>
+
+              <!-- mensaje vacio -->
               <ng-template pTemplate="emptymessage">
                 <tr>
                   <td [attr.colspan]="4">
@@ -303,21 +328,6 @@
         [isModal]="true"
         [modulo]="TK_CONFIGURACIONES">
       </admin-detalle-nomenclatura>
-    </div>
-  </p-dialog>
-</ng-container>
-
-<!-- modal ver detalle campo -->
-<ng-container *ngIf="verDetalleCampo && verDetalleCampo.data">
-  <p-dialog header="Detalle del Campo"
-  [(visible)]="verDetalleCampo.isShowModal"
-  modal="true"
-  responsive="true"
-  dismissableMask="true"
-  styleClass="splr-dl"
-  (onHide)="verDetalleCampo.closeModal()">
-    <div class="mx-sub-mdl">
-      <admin-detalle-campo [campo]="verDetalleCampo.data" [ocultarItems]="true"></admin-detalle-campo>
     </div>
   </p-dialog>
 </ng-container>
