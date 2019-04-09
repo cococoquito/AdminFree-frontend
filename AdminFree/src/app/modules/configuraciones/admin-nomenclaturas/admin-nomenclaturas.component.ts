@@ -589,6 +589,13 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       for (const campo of this.campos) {
           campo.aplica = false;
           campo.campoNomenclatura = null;
+
+          // se limpia las restricciones asociados a este campo
+          if (campo.restricciones) {
+            for (const restriccion of campo.restricciones) {
+              restriccion.aplica = false;
+            }
+          }
       }
       this.setCamposNomenclatura();
     } else {
@@ -695,6 +702,18 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
           if (campo.campoNomenclatura) {
             seleccionado.tieneConsecutivo = campo.campoNomenclatura.tieneConsecutivo;
             seleccionado.id = campo.campoNomenclatura.id;
+          }
+
+          // se configura las restricciones seleccionadas para este campo
+          if (campo.restricciones) {
+            for (const restriccion of campo.restricciones) {
+              if (restriccion.aplica) {
+                if (!seleccionado.restricciones) {
+                  seleccionado.restricciones = new Array<RestriccionDTO>();
+                }
+                seleccionado.restricciones.push(restriccion);
+              }
+            }
           }
 
           // se agrega en la lista de creacion

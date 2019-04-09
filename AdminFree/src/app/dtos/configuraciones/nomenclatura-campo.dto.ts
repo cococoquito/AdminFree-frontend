@@ -1,3 +1,5 @@
+import { RestriccionDTO } from './restriccion.dto';
+
 /**
  * DTO que contiene los atributos del campo que le pertenece a
  * una nomenclatura especifica
@@ -17,6 +19,9 @@ export class NomenclaturaCampoDTO {
 
   /** Es el tipo de campo */
   public tipoCampo: string;
+
+  /** Son las restricciones que contiene este campo, se utiliza para la creacion o edicion */
+  public restricciones: Array<RestriccionDTO>;
 
   /** Indica el orden en la que se va mostrar este campo en los modulos */
   public orden: number;

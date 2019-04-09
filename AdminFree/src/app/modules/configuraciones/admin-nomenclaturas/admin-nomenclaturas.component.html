@@ -228,7 +228,10 @@
                     <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
                   </td>
                   <td>{{ campo.nombre }}</td>
-                  <td (click)="stopPropagation($event)" [pRowToggler]="campo" style="width: 4%" class="text-center">
+                  <td *ngIf="!(campo.aplica || expanded)" (click)="stopPropagation($event)" style="width: 4%" class="text-center">
+                    <span class="cir-red"><i class="pi pi-caret-right"></i></span>
+                  </td>
+                  <td *ngIf="campo.aplica || expanded" (click)="stopPropagation($event)" [pRowToggler]="campo" style="width: 4%" class="text-center">
                     <span class="cir-red"><i [ngClass]="expanded ? 'pi pi-caret-down' : 'pi pi-caret-right'"></i></span>
                   </td>
                 </tr>
@@ -287,12 +290,114 @@
     <!-- Paso 3 confirmacion -->
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.ulitmoIndex">
 
-      <!-- detalle - nomenclatura -->
-      <admin-detalle-nomenclatura
-        [detalle]="nomenclaturaCU"
-        [modificaciones]="datosEdicion"
-        [modulo]="TK_CONFIGURACIONES">
-      </admin-detalle-nomenclatura>
+      <!-- pnl datos nomenclatura -->
+      <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
+        <p-header>
+          <span class="steps-circle">1</span> <span> Datos de la Nomenclatura </span>
+          <i *ngIf="datosEdicion && datosEdicion.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+        </p-header>
+        <table class="table steps-tbl mb-0">
+          <tbody>
+            <tr>
+              <td>
+                <p class="steps-st">Nomenclatura:</p>
+              </td>
+              <td>
+                <p class="st">{{ nomenclaturaCU.nomenclatura }}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="steps-st">Descripción:</p>
+              </td>
+              <td>
+                <p class="st">{{ nomenclaturaCU.descripcion }}</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 20%">
+                <p class="steps-st">Consecutivo Inicial:</p>
+              </td>
+              <td>
+                <p class="st">{{ nomenclaturaCU.consecutivoInicial | consecutivo: '' }}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </p-panel>
+
+      <!-- pnl Campos -->
+      <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl pnl-pt">
+        <p-header>
+          <span class="steps-circle">2</span> <span> Campos Asociados </span>
+          <i *ngIf="datosEdicion && datosEdicion.camposEntradaEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+        </p-header>
+
+        <!-- hay campos asociados -->
+        <ng-container *ngIf="nomenclaturaCU.campos">
+          <p-table
+            [value]="nomenclaturaCU.campos"
+            [responsive]="true"
+            dataKey="idCampo"
+            rowHover="true"
+            styleClass="tblvshort">
+
+            <!-- titulos -->
+            <ng-template pTemplate="header">
+              <tr class="text-center">
+                <th class="font-new-roman font-size-14">Orden</th>
+                <th class="font-new-roman font-size-14">Nombre del Campo</th>
+                <th class="font-new-roman font-size-14">Restricciones</th>
+              </tr>
+            </ng-template>
+
+            <!-- cuerpo -->
+            <ng-template pTemplate="body" let-campo let-rowIndex="rowIndex" let-expanded="expanded">
+              <tr [pSelectableRow]="campo">
+                <td style="width: 3%" class="text-center">
+                  <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
+                </td>
+                <td>{{ campo.nombreCampo }}</td>
+                <td [pRowToggler]="campo" style="width: 4%" class="text-center">
+                  <span class="cir-red"><i [ngClass]="expanded ? 'pi pi-caret-down' : 'pi pi-caret-right'"></i></span>
+                </td>
+              </tr>
+            </ng-template>
+
+            <!-- sub-table restricciones -->
+            <ng-template pTemplate="rowexpansion" let-campo>
+              <tr>
+                <td [attr.colspan]="3">
+                  <p-table [value]="campo.restricciones" [responsive]="true" styleClass="tblvshort">
+                    <ng-template pTemplate="body" let-restriccion>
+                      <tr [pSelectableRow]="restriccion">
+                        <td>
+                          {{ restriccion.descripcion }}
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td [attr.colspan]="1">
+                          <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay restricciones para este campo</p>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-container>
+
+        <!-- No hay campos asociados -->
+        <div *ngIf="!nomenclaturaCU.campos" class="mr-3 ml-3 mt-3 mb-3 ui-messages ui-messages-warn ui-corner-all">
+          <span class="ui-messages-icon pi pi-exclamation-triangle"></span>
+          <span class="ui-messages-detail">
+            <strong>No hay campos de información</strong> asociados a la nomenclatura
+          </span>
+        </div>
+      </p-panel>
 
       <!-- botones salir - next-->
       <div class="text-center mt-2 mb-1">
