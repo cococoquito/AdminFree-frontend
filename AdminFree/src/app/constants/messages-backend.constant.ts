@@ -67,7 +67,7 @@ export class MessagesBackendConstant {
 
   /** La nomenclatura que intenta eliminar tiene un consecutivo asociado*/
   static readonly DELETE_NOMENCLATURA_CONSECUTIVO_ASOCIADA: string =
-    'La nomenclatura que intenta eliminar tiene un <strong>consecutivo de correspondencia asociado</strong>';
+    'La nomenclatura que intenta eliminar tiene <strong>consecutivos de correspondencia asociados</strong>';
 
   /** El consecutivo ? ya tiene asociado un documento con el nombre ?*/
   static readonly CONSECUTIVO_DOCUMENTO_MISMO_NOMBRE: string =
