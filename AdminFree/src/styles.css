@@ -601,16 +601,6 @@ body {
   font-size: 20px !important;
 }
 
-.btn-round-teal {
-  background-color: #009688 !important;
-  color: #ffffff !important;
-}
-
-.btn-round-teal:hover {
-  background-color: #016b60 !important;
-  color: #ffffff !important;
-}
-
 .btn-round-del {
   background-color: #d68b94 !important;
   color: #212121 !important;
@@ -803,25 +793,6 @@ body {
 .del-round-min:hover {
   background-color: #c47d86 !important;
   color: #212121 !important;
-}
-
-.dtl-round-min {
-  border-radius: 50%;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  display: inline-block;
-  color: #ffffff !important;
-  background-color: #009688;
-  width: 28px;
-  height: 28px;
-  text-align: center;
-  cursor: pointer;
-  line-height: 1.9;
-}
-
-.dtl-round-min:hover {
-  background-color: #016b60 !important;
-  color: #ffffff !important;
 }
 
 .del-round-min-pi {

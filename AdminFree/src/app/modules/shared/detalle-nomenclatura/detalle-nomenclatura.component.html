@@ -81,9 +81,9 @@
           <td style="width: 25%" class="text-center">{{ campo.tipoCampo }}</td>
           <td>{{ campo.nombreCampo }}</td>
           <td style="width: 4%" class="text-center">
-            <span (click)="showModalVerDetalle(campo)" class="dtl-round-min">
-              <i class="fa fa-arrow-circle-up"></i>
-            </span>
+            <button (click)="showModalVerDetalle(campo)" type="button" class="btn btn-sm btn-round-table btn-pup">
+              <i class="fa fa-search-plus icon-round-table font-size-16"></i>
+            </button>
           </td>
         </tr>
       </ng-template>

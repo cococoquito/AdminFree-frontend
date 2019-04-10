@@ -44,11 +44,6 @@
     <tbody>
       <tr *ngFor="let modulo of selectedModulos.modulos">
         <ng-container *ngIf="modulo.aplica">
-          <td>
-            <div class="custom-control custom-control-inline">
-              <i class="pi pi-check icon-sel"></i>
-            </div>
-          </td>
           <td style="width: 18%">
             <p class="font-new-roman font-size-15 font-weight-bold">{{ modulo.nombre }}</p>
           </td>
