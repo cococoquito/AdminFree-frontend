@@ -2,7 +2,6 @@
 <p-panel styleClass="mr-4 ml-4 steps-pnl steps-pnl-main">
   <p-header>
     <span *ngIf="modulo === TK_CONFIGURACIONES" class="steps-circle">1</span> <span> Datos de la Nomenclatura </span>
-    <i *ngIf="modificaciones && modificaciones.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <table class="table steps-tbl mb-0">
     <tbody>
@@ -54,7 +53,6 @@
 <p-panel styleClass="mr-4 ml-4 mt-2 steps-pnl pnl-pt">
   <p-header>
     <span *ngIf="modulo === TK_CONFIGURACIONES" class="steps-circle">2</span> <span> Campos Asociados </span>
-    <i *ngIf="modificaciones && modificaciones.camposEntradaEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <ng-container *ngIf="detalle.campos">
     <p-table
@@ -104,9 +102,9 @@
 <ng-container *ngIf="verDetalleCampo && verDetalleCampo.data">
   <p-dialog header="Detalle del Campo"
   [(visible)]="verDetalleCampo.isShowModal"
-  [modal]="!isModal"
-  [autoZIndex]="!isModal"
-  [showHeader]="!isModal"
+  [modal]="false"
+  [autoZIndex]="false"
+  [showHeader]="false"
   responsive="true"
   dismissableMask="true"
   styleClass="splr-dl"
@@ -114,7 +112,7 @@
     <div class="mx-sub-mdl">
       <admin-detalle-campo [campo]="verDetalleCampo.data"></admin-detalle-campo>
     </div>
-    <div *ngIf="isModal" class="text-center mt-2 mb-0">
+    <div class="text-center mt-2 mb-0">
       <button (click)="verDetalleCampo.closeModal()" type="button" class="btn btn-sm btn-secondary w-100-px mdl-btn-h">
         <label class="btn-size-admin"><i class="fa fa-times-circle pr-1"></i> Salir</label>
       </button>
