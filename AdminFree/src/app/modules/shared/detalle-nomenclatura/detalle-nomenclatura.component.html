@@ -112,11 +112,7 @@
   styleClass="splr-dl"
   (onHide)="verDetalleCampo.closeModal()">
     <div class="mx-sub-mdl">
-      <admin-detalle-campo
-        [campo]="verDetalleCampo.data"
-        [ocultarItems]="true"
-        [isSubModal]="isModal">
-      </admin-detalle-campo>
+      <admin-detalle-campo [campo]="verDetalleCampo.data"></admin-detalle-campo>
     </div>
     <div *ngIf="isModal" class="text-center mt-2 mb-0">
       <button (click)="verDetalleCampo.closeModal()" type="button" class="btn btn-sm btn-secondary w-100-px mdl-btn-h">

@@ -17,14 +17,8 @@ export class DetalleCampoComponent {
   /** Se utiliza para visualizar el detalle del campo*/
   @Input() public campo: CampoEntradaDTO;
 
-  /** Se utiliza para saber que steps fueron modificados */
-  @Input() public camposEditado: CampoEntradaEdicionDTO;
-
-  /** Se utiliza para ocultar los items del detalle */
-  @Input() public ocultarItems: boolean;
-
-  /** bandera que identifica que este detalle se va mostrar como un submodal */
-  @Input() public isSubModal: boolean;
+  /** Se utiliza para saber que pasos fueron modificados */
+  @Input() public pasosModificados: CampoEntradaEdicionDTO;
 
   /** bandera que identifica que el padre es el componente de admin campos */
   @Input() public isAdminCampos: boolean;

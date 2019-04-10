@@ -1,8 +1,8 @@
 <!-- pnl datos campo -->
-<p-panel [styleClass]="isSubModal?'mr-2 ml-2 steps-pnl steps-pnl-main':'mr-4 ml-4 steps-pnl steps-pnl-main'">
+<p-panel [styleClass]="isAdminCampos?'mr-4 ml-4 steps-pnl steps-pnl-main':'mr-2 ml-2 steps-pnl steps-pnl-main'">
   <p-header>
-    <span *ngIf="!ocultarItems" class="steps-circle">1</span> <span> Datos del Campo </span>
-    <i *ngIf="camposEditado && camposEditado.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+    <span *ngIf="isAdminCampos" class="steps-circle">1</span> <span> Datos del Campo </span>
+    <i *ngIf="pasosModificados && pasosModificados.datosBasicosEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <table class="table steps-tbl mb-0">
     <tbody>
@@ -35,10 +35,9 @@
 </p-panel>
 
 <!-- pnl restricciones -->
-<p-panel *ngIf="!isAdminCampos" [styleClass]="isSubModal?'mr-2 ml-2 mt-2 steps-pnl steps-pnl-main':'mr-4 ml-4 mt-2 steps-pnl steps-pnl-main'">
+<p-panel *ngIf="!isAdminCampos" styleClass="mr-2 ml-2 mt-2 steps-pnl steps-pnl-main">
   <p-header>
-    <span *ngIf="!ocultarItems" class="steps-circle">2</span> <span> Restricciones </span>
-    <i *ngIf="camposEditado && camposEditado.restriccionesEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+    <span> Restricciones </span>
   </p-header>
   <ng-container *ngIf="campo.restricciones && campo.restricciones.length > 0">
     <table class="table steps-tbl mb-0">
@@ -64,10 +63,10 @@
 </p-panel>
 
 <!-- pnl items -->
-<p-panel *ngIf="campo.tipoCampo === ID_LISTA_DESPLEGABLE" [styleClass]="isSubModal?'mr-2 ml-2 mt-2 steps-pnl steps-pnl-main':'mr-4 ml-4 mt-2 steps-pnl steps-pnl-main'">
+<p-panel *ngIf="campo.tipoCampo === ID_LISTA_DESPLEGABLE" [styleClass]="isAdminCampos?'mr-4 ml-4 mt-2 steps-pnl steps-pnl-main':'mr-2 ml-2 mt-2 steps-pnl steps-pnl-main'">
   <p-header>
-    <span *ngIf="!ocultarItems" class="steps-circle">{{isAdminCampos ? '2' : '3' }}</span> <span> Ítems Agregados </span>
-    <i *ngIf="camposEditado && camposEditado.itemsEditar" class="fa fa-asterisk text-danger font-size-12"></i>
+    <span *ngIf="isAdminCampos" class="steps-circle">2</span> <span> Ítems Agregados </span>
+    <i *ngIf="pasosModificados && pasosModificados.itemsEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
   <p-table
     [value]="campo.items"
