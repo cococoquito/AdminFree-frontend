@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CampoEntradaEdicionDTO } from './../../../dtos/configuraciones/campo-entrada-edicion.dto';
 import { CampoEntradaDTO } from './../../../dtos/configuraciones/campo-entrada.dto';
 import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
@@ -12,7 +12,7 @@ import { TipoCamposConstant } from './../../../constants/tipo-campos.constant';
   selector: 'admin-detalle-campo',
   templateUrl: './detalle-campo.component.html'
 })
-export class DetalleCampoComponent implements OnInit {
+export class DetalleCampoComponent {
 
   /** Se utiliza para visualizar el detalle del campo*/
   @Input() public campo: CampoEntradaDTO;
@@ -29,23 +29,6 @@ export class DetalleCampoComponent implements OnInit {
   /** bandera que identifica que el padre es el componente de admin campos */
   @Input() public isAdminCampos: boolean;
 
-  /** Identifica si el campo tiene restricciones*/
-  public tieneRestriccion: boolean;
-
   /** Identificador del tipo de campo lista desplegable*/
   public ID_LISTA_DESPLEGABLE = TipoCamposConstant.ID_LISTA_DESPLEGABLE;
-
-  /**
-   * Metodo que permite validar si tiene restricciones
-   */
-  ngOnInit() {
-    this.setTieneRestriccion();
-  }
-
-  /**
-   * Metodo que permite validar si el campo tiene restricciones
-   */
-  private setTieneRestriccion(): void {
-    this.tieneRestriccion = false;
-  }
 }

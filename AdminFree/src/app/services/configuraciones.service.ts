@@ -249,15 +249,16 @@ export class ConfiguracionesService {
   }
 
   /**
-	 * Metodo que permite obtener el detalle de un campo de entrada de informacion
+	 * Metodo que permite obtener el detalle del campo entrada
+	 * de informacion asociado a una nomenclatura
 	 *
+	 * @param idNomenclatura, nomenclatura asociada al campo a consultar
 	 * @param idCampo, identificador del campo de entrada informacion
 	 * @return DTO con los datos del campo de entrada de informacion
 	 */
-  public getDetalleCampoEntrada(idCampo: number): Observable<CampoEntradaDTO> {
-    return this.http.get<CampoEntradaDTO>(
-      ConfiguracionesAPIConstant.URL_GET_DETALLE_CAMPO_ENTRADA + idCampo
-    );
+  public getDetalleNomenclaturaCampo(idNomenclatura: number, idCampo: number): Observable<CampoEntradaDTO> {
+    const url = `${ConfiguracionesAPIConstant.URL_GET_DETALLE_NOMENCLATURA_CAMPO}?idNomenclatura=${idNomenclatura}&idCampo=${idCampo}`;
+    return this.http.get<CampoEntradaDTO>(url);
   }
 
   /**

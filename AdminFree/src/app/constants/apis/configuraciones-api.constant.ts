@@ -76,11 +76,11 @@ export class ConfiguracionesAPIConstant {
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
     'getcamposin';
 
-  /** URL del recurso para obtener los detalles de un campo de entrada*/
-  static readonly URL_GET_DETALLE_CAMPO_ENTRADA: string =
+  /** URL del recurso para obtener los detalles de un campo asociado a una nomenclatura*/
+  static readonly URL_GET_DETALLE_NOMENCLATURA_CAMPO: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
-    'getdtlcampoin?idCampo=';
+    'getdtlcampoin';
 
   /** URL del recurso para eliminar un campo de entrada de informacion*/
   static readonly URL_DELETE_CAMPO_ENTRADA: string =

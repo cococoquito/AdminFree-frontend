@@ -40,7 +40,7 @@
     <span *ngIf="!ocultarItems" class="steps-circle">2</span> <span> Restricciones </span>
     <i *ngIf="camposEditado && camposEditado.restriccionesEditar" class="fa fa-asterisk text-danger font-size-12"></i>
   </p-header>
-  <ng-container *ngIf="tieneRestriccion">
+  <ng-container *ngIf="campo.restricciones && campo.restricciones.length > 0">
     <table class="table steps-tbl mb-0">
       <tbody>
         <tr *ngFor="let restriccion of campo.restricciones">
@@ -58,7 +58,7 @@
       </tbody>
     </table>
   </ng-container>
-  <div *ngIf="!tieneRestriccion" class="text-center pt-2 pb-2 ">
+  <div *ngIf="!(campo.restricciones && campo.restricciones.length > 0)" class="text-center pt-2 pb-2 ">
     <p class="st font-weight-bold font-size-14">No hay restricciones para el nuevo campo</p>
   </div>
 </p-panel>

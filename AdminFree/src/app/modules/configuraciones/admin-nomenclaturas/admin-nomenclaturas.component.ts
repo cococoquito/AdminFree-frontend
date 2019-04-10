@@ -486,7 +486,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // el consecutivo inicial debe ser numerico
     if (!this.regex.isValorNumerico(this.nomenclaturaCU.consecutivoInicial + '')) {
-        this.messageService.add(MsjUtil.getToastError(this.regex.getMsjSoloNumeros('Consecutivo Inicial')));
+        this.messageService.add(MsjUtil.getToastErrorMedium(this.regex.getMsjSoloNumeros('Consecutivo Inicial')));
         return;
     }
 
@@ -527,7 +527,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
 
     // el consecutivo inicial debe ser numerico
     if (!this.regex.isValorNumerico(this.nomenclaturaCU.consecutivoInicial + '')) {
-      this.messageService.add(MsjUtil.getToastError(this.regex.getMsjSoloNumeros('Consecutivo Inicial')));
+      this.messageService.add(MsjUtil.getToastErrorMedium(this.regex.getMsjSoloNumeros('Consecutivo Inicial')));
       return;
     }
 

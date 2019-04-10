@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { ConfiguracionesService } from './../../../services/configuraciones.service';
+import { CommonComponent } from '../../../util/common.component';
 import { NomenclaturaCampoDTO } from './../../../dtos/configuraciones/nomenclatura-campo.dto';
 import { NomenclaturaEdicionDTO } from '../../../dtos/configuraciones/nomenclatura-edicion.dto';
 import { NomenclaturaDTO } from '../../../dtos/configuraciones/nomenclatura.dto';
 import { VentanaModalModel } from './../../../model/ventana-modal.model';
+import { MsjUtil } from '../../../util/messages.util';
 import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
 
 /**
@@ -15,7 +18,7 @@ import { ModulesTokenConstant } from '../../../constants/modules-token.constant'
   selector: 'admin-detalle-nomenclatura',
   templateUrl: './detalle-nomenclatura.component.html'
 })
-export class DetalleNomenclaturaComponent {
+export class DetalleNomenclaturaComponent extends CommonComponent {
 
   /** Contiene los datos del detalle de la nomenclatura a visualizar*/
   @Input() public detalle: NomenclaturaDTO;
@@ -39,22 +42,31 @@ export class DetalleNomenclaturaComponent {
   /**
    * @param service , se utiliza para consultar el detalle
    * del campo asociado a la nomenclatura
+   *
+   * @param messageService, se utiliza para mostrar los posibles
+   * errores retornados por el servidor
    */
-  constructor(private service: ConfiguracionesService) {}
+  constructor(
+    protected messageService: MessageService,
+    private service: ConfiguracionesService) {
+    super();
+  }
 
   /**
    * Metodo que soporta el evento click del boton ver detalle del campo
    */
   public showModalVerDetalle(campo: NomenclaturaCampoDTO): void {
     if (!this.verDetalleCampo || !this.verDetalleCampo.isShowModal) {
-      this.service.getDetalleCampoEntrada(campo.idCampo).subscribe(
+      this.service.getDetalleNomenclaturaCampo(this.detalle.id, campo.idCampo).subscribe(
         data => {
           if (!this.verDetalleCampo) {
             this.verDetalleCampo = new VentanaModalModel();
           }
           this.verDetalleCampo.showModal(data);
         },
-        error => {}
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
       );
     }
   }
