@@ -9,7 +9,8 @@
   </div>
 
   <!-- tabla - nomenclaturas -->
-  <p-table [value]="nomenclaturas"
+  <p-table
+    [value]="nomenclaturas"
     [responsive]="true"
     [paginator]="true"
     [rows]="10"
@@ -81,13 +82,20 @@
     </p-header>
 
     <!-- pasos de creacion o edicion -->
-    <p-steps [styleClass]="stepsModel.styleClass" [model]="stepsModel.steps" [(activeIndex)]="stepsModel.activeIndex"></p-steps>
+    <p-steps
+      [styleClass]="stepsModel.styleClass"
+      [model]="stepsModel.steps"
+      [(activeIndex)]="stepsModel.activeIndex">
+    </p-steps>
 
     <!-- Paso 1 Datos de la nomenclatura-->
     <ng-container *ngIf="stepsModel.activeIndex === stepsModel.STEP_UNO">
-      <form name="formDatos" #formDatos="ngForm"
+      <form
+        name="formDatos"
+        #formDatos="ngForm"
         (ngSubmit)="limpiarMensajes() && formDatos.form.valid && siguienteDatosNomenclatura()"
-        (keydown.enter)="$event.preventDefault()" novalidate>
+        (keydown.enter)="$event.preventDefault()"
+        novalidate>
 
         <p-panel styleClass="mr-4 ml-4 mb-2 steps-pnl">
           <p-header>
@@ -103,7 +111,8 @@
                   <label for="nomen" class="steps-st mb-0">Nomenclatura:</label>
                 </td>
                 <td>
-                  <input type="text"
+                  <input
+                    type="text"
                     id="nomen"
                     name="nomen"
                     [(ngModel)]="nomenclaturaCU.nomenclatura"
@@ -124,7 +133,8 @@
                   <label for="descr" class="steps-st mb-0">Descripción:</label>
                 </td>
                 <td>
-                  <input type="text"
+                  <input
+                    type="text"
                     id="descr"
                     name="descr"
                     [(ngModel)]="nomenclaturaCU.descripcion"
@@ -144,7 +154,8 @@
                   <label for="coninit" class="steps-st mb-0 pb-3">Consecutivo Inicial:</label>
                 </td>
                 <td>
-                  <input type="text"
+                  <input
+                    type="text"
                     id="coninit"
                     name="coninit"
                     [(ngModel)]="nomenclaturaCU.consecutivoInicial"
@@ -197,8 +208,8 @@
             </p-header>
             <p-table
               [value]="campos"
-              [responsive]="true"
               [(selection)]="campoOrden"
+              [responsive]="true"
               dataKey="id"
               selectionMode="single"
               rowHover="true"
@@ -420,13 +431,14 @@
 
 <!-- modal ver detalle nomenclatura -->
 <ng-container *ngIf="verDetalleNomenclatura && verDetalleNomenclatura.data">
-  <p-dialog header="Detalle de la Nomenclatura"
-  [(visible)]="verDetalleNomenclatura.isShowModal"
-  modal="true"
-  responsive="true"
-  dismissableMask="true"
-  styleClass="splr-dl"
-  (onHide)="verDetalleNomenclatura.closeModal()">
+  <p-dialog
+    header="Detalle de la Nomenclatura"
+    [(visible)]="verDetalleNomenclatura.isShowModal"
+    modal="true"
+    responsive="true"
+    dismissableMask="true"
+    styleClass="splr-dl"
+    (onHide)="verDetalleNomenclatura.closeModal()">
     <div class="mx-dtl-mdl">
       <admin-detalle-nomenclatura
         [detalle]="verDetalleNomenclatura.data"
