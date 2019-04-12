@@ -288,13 +288,22 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // se limpia los mensajes anteriores
     this.messageService.clear();
 
+    // indica si se debe consultar los campos
+    const isGetCampos = (this.campos && this.campos.length > 0) ? 0 : 1;
+
     // se consulta el detalle de la nomenclatura para la edicion
-    const isGetCampos = 1;
     this.configuracionesService.getDetalleNomenclaturaEdicion(
-      nomenclatura.id,
-      this.clienteCurrent.id,
-      isGetCampos).subscribe(
+      nomenclatura.id, this.clienteCurrent.id, isGetCampos).subscribe(
       data => {
+
+        // se configuran los campos de informacion con sus restricciones
+        if (isGetCampos === 1) {
+          this.campos = data.campos;
+          data.campos = null;
+        } else {
+          this.limpiarBanderasCampos();
+        }
+
         // se configura los datos de la edicion de la nomenclatura
         this.datosEdicion = data;
         this.datosEdicion.nomenclatura.idCliente = this.clienteCurrent.id;
@@ -302,22 +311,22 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         // se hace el backup de los atributos
         this.nomenclaturaCU = JSON.parse(JSON.stringify(this.datosEdicion.nomenclatura));
 
+        // se visualiza el panel de edicion
+        this.isEdicion = true;
+
+        // Se utiliza para actualizar los datos modificados para que se refleje en la lista
+        this.nomenclaturaEdicion = nomenclatura;
+
+        // se define el componente steps para la edicion
+        this.getStepsModel();
+
+        // se configura los campos y restricciones asociados a la nomenclatura a editar
+        this.setCamposNomenclatura();
+
         // mensaje cuando la nomenclatura tiene consecutivos
         if (this.nomenclaturaCU.cantConsecutivos && this.nomenclaturaCU.cantConsecutivos > 0) {
           this.messageService.add(MsjUtil.getInfo(MsjFrontConstant.NOMENCLATURA_CON_CONSECUTIVO));
         }
-
-        // se define el componente steps para la creacion
-        this.getStepsModel();
-
-        // se visualiza el panel para la edicion
-        this.isEdicion = true;
-
-        // se configura la nomenclatura como en edicion
-        this.nomenclaturaEdicion = nomenclatura;
-
-        // se consulta los campos asociados al cliente
-        this.getCampos();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -586,32 +595,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   private getCampos(): void {
 
-    // se verifica si los campos ya fueron consultados
-    if (this.campos) {
-
-      // se hace limpieza de banderas por procesos anteriores
-      for (const campo of this.campos) {
-
-          // se limpia la bandera que indica que es seleccionada
-          campo.aplica = false;
-
-          // objecto que indica que el campo tiene una nomenclatura asociada
-          campo.campoNomenclatura = null;
-
-          // se limpia las restricciones seleccionadas
-          if (campo.restricciones) {
-            for (const restriccion of campo.restricciones) {
-              restriccion.aplica = false;
-            }
-          }
-      }
-
-      // se configura los campos seleccionados de la nomenclaura a modificar
-      if (this.isEdicion) {
-        this.setCamposNomenclatura();
-      }
-    } else {
-      // se consulta los campos asociados al cliente autenticado con sus restricciones
+    // si NO HAY campos consultados se procede a obtenerlos
+    if (!this.campos || this.campos.length === 0) {
       const isRestriccion = 1;
       this.configuracionesService.getCamposEntrada(this.clienteCurrent.id, isRestriccion).subscribe(
         data => {
@@ -621,6 +606,9 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
+    } else {
+      // si hay campos consultados solo se limpia las banderas
+      this.limpiarBanderasCampos();
     }
   }
 
@@ -845,6 +833,29 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
             }
             break;
           }
+        }
+      }
+    }
+  }
+
+  /**
+   * Metodo que limpia las banderas de los campos por procesos anteriores
+   */
+  private limpiarBanderasCampos(): void {
+
+    // se recorre los campos parametrizados en el sistema
+    for (const campo of this.campos) {
+
+      // se limpia la bandera que indica que es seleccionada
+      campo.aplica = false;
+
+      // objecto que indica que el campo tiene una nomenclatura asociada
+      campo.campoNomenclatura = null;
+
+      // se limpia las restricciones seleccionadas de este campo
+      if (campo.restricciones) {
+        for (const restriccion of campo.restricciones) {
+          restriccion.aplica = false;
         }
       }
     }
