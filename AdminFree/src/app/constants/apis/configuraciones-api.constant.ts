@@ -142,6 +142,12 @@ export class ConfiguracionesAPIConstant {
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
     'getdtlnomenclatura?idNomenclatura=';
 
+  /** URL del recurso que permite consultar el detalle de la nomenclatura para su modificacion*/
+  static readonly URL_GET_DETALLE_NOMENCLATURA_EDITAR: string =
+    AppDomainConstant.ADMINFREE +
+    ConfiguracionesAPIConstant.CONFIGURACIONES_API +
+    'getdtlnomenclaturaeditar';
+
   /** URL del recurso que permite modificar la cuenta del usuario*/
   static readonly MODIFICAR_CUENTA_USUARIO: string =
     AppDomainConstant.ADMINFREE +

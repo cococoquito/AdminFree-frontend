@@ -311,6 +311,20 @@ export class ConfiguracionesService {
   }
 
   /**
+	 * Servicio que permite consultar el detalle de la nomenclatura para su modificacion
+	 *
+	 * @param idNomenclatura, identificador de la nomenclatura
+	 * @param idCliente, identificador del cliente asociado a los campos
+	 * @param isGetCampos, 1=se debe consultar los campos con sus restricciones
+	 * @return DTO con los atributos configurados
+	 */
+  public getDetalleNomenclaturaEdicion(idNomenclatura: number, idCliente: number, isGetCampos: number): Observable<NomenclaturaEdicionDTO> {
+    const url = ConfiguracionesAPIConstant.URL_GET_DETALLE_NOMENCLATURA_EDITAR +
+      '?idNomenclatura='+idNomenclatura + '&idCliente='+idCliente + '&isGetCampos='+isGetCampos;
+    return this.http.get<NomenclaturaEdicionDTO>(url);
+  }
+
+  /**
 	 * Servicio que permite procesar la funcionalidad de negocio de modificacion
 	 * cuenta del usuario aplica para datos personales, cambio clave o usuario de ingreso
 	 *

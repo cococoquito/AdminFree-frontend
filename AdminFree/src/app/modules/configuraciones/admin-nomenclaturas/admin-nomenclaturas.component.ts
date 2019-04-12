@@ -289,11 +289,14 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.messageService.clear();
 
     // se consulta el detalle de la nomenclatura para la edicion
-    this.configuracionesService.getDetalleNomenclatura(nomenclatura.id).subscribe(
+    const isGetCampos = 1;
+    this.configuracionesService.getDetalleNomenclaturaEdicion(
+      nomenclatura.id,
+      this.clienteCurrent.id,
+      isGetCampos).subscribe(
       data => {
         // se configura los datos de la edicion de la nomenclatura
-        this.datosEdicion = new NomenclaturaEdicionDTO();
-        this.datosEdicion.nomenclatura = data;
+        this.datosEdicion = data;
         this.datosEdicion.nomenclatura.idCliente = this.clienteCurrent.id;
 
         // se hace el backup de los atributos
