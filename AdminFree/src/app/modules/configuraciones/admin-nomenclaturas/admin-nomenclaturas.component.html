@@ -253,16 +253,17 @@
                 <tr>
                   <td [attr.colspan]="4">
                     <p-table [value]="campo.restricciones" [responsive]="true" styleClass="tblvshort">
-                      <ng-template pTemplate="body" let-restriccion>
+                      <ng-template pTemplate="body" let-restriccion let-i="rowIndex">
                         <tr [pSelectableRow]="restriccion">
                           <td>
                             {{ restriccion.descripcion }}
                           </td>
                           <td style="width: 3%" class="text-center">
-                            <admin-inputswitch
-                              [isChecked]="restriccion.aplica"
-                              (switchChange)="restriccion.aplica = $event; changeRestriccion(restriccion,campo)">
-                            </admin-inputswitch>
+                            <p-checkbox
+                              [(ngModel)]="restriccion.aplica"
+                              (onChange)="changeRestriccion(restriccion,campo)"
+                              binary="true">
+                            </p-checkbox>
                           </td>
                         </tr>
                       </ng-template>
