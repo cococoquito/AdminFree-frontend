@@ -172,39 +172,43 @@ export class AdminCamposComponent extends CommonComponent implements OnInit, OnD
    */
   public editarCampoEntrada(): void {
 
-    // se limpia mensajes de otros procesos
-    this.messageService.clear();
+    // solo aplica si hay modificaciones
+    if (this.campoEditarOrigen.datosBasicosEditar || this.campoEditarOrigen.itemsEditar) {
 
-    // backup para el campo origen por si hay errores
-    const campoBK = this.campoEditarOrigen.campoEntrada;
-    const itemsBK =  this.campoCU.items;
+      // se limpia mensajes de otros procesos
+      this.messageService.clear();
 
-    // se configuran los datos modificados para la edicion
-    this.setDatosAntesEdicion();
+      // backup para el campo origen por si hay errores
+      const campoBK = this.campoEditarOrigen.campoEntrada;
+      const itemsBK =  this.campoCU.items;
 
-    // se configura el campo de entrada modificado
-    this.campoEditarOrigen.campoEntrada = this.campoCU;
+      // se configuran los datos modificados para la edicion
+      this.setDatosAntesEdicion();
 
-    // se procede a invocar el servicio para la edicion
-    this.configuracionesService.editarCampoEntradaInformacion(this.campoEditarOrigen).subscribe(
-      data => {
-        // Mensaje exitoso campo modificado
-        this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.CAMPO_ACTUALIZADO_EXITOSO));
+      // se configura el campo de entrada modificado
+      this.campoEditarOrigen.campoEntrada = this.campoCU;
 
-        // se configuran los datos del campo en edicion
-        this.campoEdicion.nombre = data.nombre;
-        this.campoEdicion.tipoCampo = data.tipoCampo;
-        this.campoEdicion.tipoCampoNombre = data.tipoCampoNombre;
+      // se procede a invocar el servicio para la edicion
+      this.configuracionesService.editarCampoEntradaInformacion(this.campoEditarOrigen).subscribe(
+        data => {
+          // Mensaje exitoso campo modificado
+          this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.CAMPO_ACTUALIZADO_EXITOSO));
 
-        // se limpia las variables de la edicion
-        this.limpiarCamposCU();
-      },
-      error => {
-        this.campoEditarOrigen.campoEntrada = campoBK;
-        this.campoCU.items = itemsBK;
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+          // se configuran los datos del campo en edicion
+          this.campoEdicion.nombre = data.nombre;
+          this.campoEdicion.tipoCampo = data.tipoCampo;
+          this.campoEdicion.tipoCampoNombre = data.tipoCampoNombre;
+
+          // se limpia las variables de la edicion
+          this.limpiarCamposCU();
+        },
+        error => {
+          this.campoEditarOrigen.campoEntrada = campoBK;
+          this.campoCU.items = itemsBK;
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
   }
 
   /**

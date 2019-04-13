@@ -172,36 +172,42 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
    */
   public editarNomenclatura(): void {
 
-    // se limpia mensajes de otros procesos
-    this.messageService.clear();
+    // solo aplica si hay modificaciones
+    if (this.datosEdicion.datosBasicosEditar ||
+      this.datosEdicion.camposEntradaEditar ||
+      this.datosEdicion.restriccionesEditar) {
 
-    // se hace el backup por si hay errores en la edicion
-    const nomenclaturaBK = this.datosEdicion.nomenclatura;
+      // se limpia mensajes de otros procesos
+      this.messageService.clear();
 
-    // se configura la nomenclatura a modificar
-    this.datosEdicion.nomenclatura = this.nomenclaturaCU;
+      // se hace el backup por si hay errores en la edicion
+      const nomenclaturaBK = this.datosEdicion.nomenclatura;
 
-    // se hace el llamado HTTP para la edicion de la nomenclatura
-    this.configuracionesService.editarNomenclatura(this.datosEdicion).subscribe(
-      data => {
-        // se muestra el mensaje exitoso
-        this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.NOMENCLATURA_ACTUALIZADO_EXITOSO));
+      // se configura la nomenclatura a modificar
+      this.datosEdicion.nomenclatura = this.nomenclaturaCU;
 
-        // se refresca los datos basicos de la nomenclatura si fueron modificados
-        if (this.datosEdicion.datosBasicosEditar) {
-          this.nomenclaturaEdicion.nomenclatura = this.nomenclaturaCU.nomenclatura;
-          this.nomenclaturaEdicion.descripcion = this.nomenclaturaCU.descripcion;
-          this.nomenclaturaEdicion.consecutivoInicial = this.nomenclaturaCU.consecutivoInicial;
+      // se hace el llamado HTTP para la edicion de la nomenclatura
+      this.configuracionesService.editarNomenclatura(this.datosEdicion).subscribe(
+        data => {
+          // se muestra el mensaje exitoso
+          this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.NOMENCLATURA_ACTUALIZADO_EXITOSO));
+
+          // se refresca los datos basicos de la nomenclatura si fueron modificados
+          if (this.datosEdicion.datosBasicosEditar) {
+            this.nomenclaturaEdicion.nomenclatura = this.nomenclaturaCU.nomenclatura;
+            this.nomenclaturaEdicion.descripcion = this.nomenclaturaCU.descripcion;
+            this.nomenclaturaEdicion.consecutivoInicial = this.nomenclaturaCU.consecutivoInicial;
+          }
+
+          // se limpian los datos de la creacion
+          this.limpiarCamposCU();
+        },
+        error => {
+          this.datosEdicion.nomenclatura = nomenclaturaBK;
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
-
-        // se limpian los datos de la creacion
-        this.limpiarCamposCU();
-      },
-      error => {
-        this.datosEdicion.nomenclatura = nomenclaturaBK;
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+      );
+    }
   }
 
   /**
@@ -352,7 +358,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     } else {
       // si hay modificaciones se muestra el modal confirmacion
       if (this.datosEdicion.datosBasicosEditar ||
-          this.datosEdicion.camposEntradaEditar) {
+          this.datosEdicion.camposEntradaEditar ||
+          this.datosEdicion.restriccionesEditar) {
           this.confirmationService.confirm({
           message: MsjFrontConstant.SEGURO_SALIR_EDICION,
           header: MsjFrontConstant.CONFIRMACION,
@@ -571,6 +578,11 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     // si no hay campos modificados se valida si el orden se modifico
     if (!this.datosEdicion.camposEntradaEditar) {
       this.isOrdenModificado();
+    }
+
+    // si no hay campos modificados se valida si las restricciones se modificaron
+    if (!this.datosEdicion.camposEntradaEditar) {
+      this.isRestriccionesModificado();
     }
 
     // Ultimo paso, confirmacion
@@ -830,6 +842,79 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
             if (origen.orden !== campo.orden) {
               this.datosEdicion.camposEntradaEditar = true;
               break formain;
+            }
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Se verifica si las restricciones fueron modificados
+   */
+  private isRestriccionesModificado(): void {
+
+    // se limpia la bandera que permite editar las restricciones
+    this.datosEdicion.restriccionesEditar = false;
+
+    // se obtiene los campos de origen y de edicion
+    const camposOrigen = this.datosEdicion.nomenclatura.campos;
+    const camposEditar = this.nomenclaturaCU.campos;
+
+    // debe existir los campos para ambos asi validar si las restricciones se modificaron
+    if (camposOrigen && camposOrigen.length > 0 && camposEditar && camposEditar.length > 0) {
+
+      // se recorren los campos de la nomenclatura origen
+      formain:
+      for (const origen of camposOrigen) {
+
+        // se recorren los campos de la nomenclatura visualizada en pantalla
+        for (const campo of camposEditar) {
+
+          // se verifica si son los mismo campos
+          if (origen.idCampo === campo.idCampo) {
+
+            // es la cantidad de restricciones que tiene el campo origen
+            let cantOrigen = 0;
+            if (origen.restricciones) {
+              cantOrigen = origen.restricciones.length;
+            }
+
+            // es la cantidad de restricciones que tiene el campo mostrado en pantalla
+            let cantSeleccionados = 0;
+            if (campo.restricciones) {
+              cantSeleccionados = campo.restricciones.length;
+            }
+
+            // si son diferentes es porque hay modificaciones
+            if (cantOrigen !== cantSeleccionados) {
+              this.datosEdicion.restriccionesEditar = true;
+              break formain;
+            }
+
+            // si son iguales se procede a validar restriccion por restriccion
+            if (cantSeleccionados > 0) {
+
+              // se recorre las restricciones del origen
+              let existe;
+              for (const restriccionOrigen of origen.restricciones) {
+                existe = false;
+
+                // se recorre las restricciones visualizadas en pantalla
+                for (const restriccion of campo.restricciones) {
+                  if (restriccionOrigen.id === restriccion.id) {
+                    existe = true;
+                    break;
+                  }
+                }
+
+                // si no existe esta restriccion es por que hay modificaciones
+                if (!existe) {
+                  this.datosEdicion.restriccionesEditar = true;
+                  break formain;
+                }
+              }
             }
             break;
           }

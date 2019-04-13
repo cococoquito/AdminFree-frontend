@@ -250,36 +250,40 @@ export class AdminUsuariosComponent extends CommonComponent implements OnInit, O
    */
   public editarUsuario(): void {
 
-    // se construye los datos a enviar para la creacion
-    const usuarioBK = this.usuarioEditarOrigen.usuario;
-    this.setDatosAntesEdicion();
+    // solo aplica si hay alguna modificacion
+    if (this.usuarioEditarOrigen.datosBasicosEditar || this.usuarioEditarOrigen.modulosEditar) {
 
-    // se hace el llamado HTTP para la edicion del usuario
-    this.configuracionesService.editarUsuario(this.usuarioEditarOrigen).subscribe(
-      data => {
-        // Mensaje exitoso campo modificado
-        this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.USER_ACTUALIZADO_EXITOSO));
+      // se construye los datos a enviar para la creacion
+      const usuarioBK = this.usuarioEditarOrigen.usuario;
+      this.setDatosAntesEdicion();
 
-        // datos basicos modificados
-        if (this.usuarioEditarOrigen.datosBasicosEditar) {
-          usuarioBK.nombre = this.usuarioCU.nombre;
-          usuarioBK.cargo = this.usuarioCU.cargo;
-          usuarioBK.usuarioIngreso = this.usuarioCU.usuarioIngreso;
+      // se hace el llamado HTTP para la edicion del usuario
+      this.configuracionesService.editarUsuario(this.usuarioEditarOrigen).subscribe(
+        data => {
+          // Mensaje exitoso campo modificado
+          this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.USER_ACTUALIZADO_EXITOSO));
+
+          // datos basicos modificados
+          if (this.usuarioEditarOrigen.datosBasicosEditar) {
+            usuarioBK.nombre = this.usuarioCU.nombre;
+            usuarioBK.cargo = this.usuarioCU.cargo;
+            usuarioBK.usuarioIngreso = this.usuarioCU.usuarioIngreso;
+          }
+
+          // modulos modificados
+          if (this.usuarioEditarOrigen.modulosEditar) {
+            usuarioBK.modulosTokens = this.usuarioCU.modulosTokens;
+          }
+
+          // se limpian los datos del usuario ingresado
+          this.limpiarCamposCU();
+        },
+        error => {
+          this.usuarioEditarOrigen.usuario = usuarioBK;
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
-
-        // modulos modificados
-        if (this.usuarioEditarOrigen.modulosEditar) {
-          usuarioBK.modulosTokens = this.usuarioCU.modulosTokens;
-        }
-
-        // se limpian los datos del usuario ingresado
-        this.limpiarCamposCU();
-      },
-      error => {
-        this.usuarioEditarOrigen.usuario = usuarioBK;
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+      );
+    }
   }
 
   /**

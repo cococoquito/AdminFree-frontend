@@ -17,6 +17,9 @@ export class NomenclaturaEdicionDTO {
   /** Indica si los datos basicos de la nomenclatura se debe editar */
   public datosBasicosEditar: boolean;
 
-  /** Indica si los campos de entrada se debe editar */
+  /** Indica si los campos de entrada se deben editar */
   public camposEntradaEditar: boolean;
+
+  /** Indica si las restricciones se deben editar */
+  public restriccionesEditar: boolean;
 }
