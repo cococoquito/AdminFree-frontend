@@ -253,7 +253,7 @@
                 <tr>
                   <td [attr.colspan]="4">
                     <p-table [value]="campo.restricciones" [responsive]="true" styleClass="tblvshort">
-                      <ng-template pTemplate="body" let-restriccion let-i="rowIndex">
+                      <ng-template pTemplate="body" let-restriccion>
                         <tr [pSelectableRow]="restriccion">
                           <td>
                             {{ restriccion.descripcion }}
