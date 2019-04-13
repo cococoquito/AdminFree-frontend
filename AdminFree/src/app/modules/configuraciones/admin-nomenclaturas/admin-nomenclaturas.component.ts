@@ -18,6 +18,8 @@ import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 import { ModulesTokenConstant } from '../../../constants/modules-token.constant';
+import { TipoCamposConstant } from '../../../constants/tipo-campos.constant';
+import { RestriccionesKeyConstant } from '../../../constants/restricciones-key.constant';
 
 /**
  * Componente para la administracion de las Nomenclaturas
@@ -45,7 +47,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** se utiliza para visualizar el detalle de la nomenclatura*/
   public verDetalleNomenclatura: VentanaModalModel;
 
-  /** Esta es la variable que se utiliza para la creacion o edicion de la nomenclatura*/
+  /** Se utiliza para la creacion o edicion de la nomenclatura*/
   public nomenclaturaCU: NomenclaturaDTO;
 
   /** Se utiliza para comprobar si se debe hacer la validacion al momento de la creacion*/
@@ -69,8 +71,17 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   /** Es el campo seleccionado para ordenar*/
   public campoOrden: CampoEntradaDTO;
 
+  /** Se utiliza para consevar las restricciones expandidas de la tabla campos*/
+  public expandedRowKeys: Array<number>;
+
+  /** Se utiliza para consevar las restricciones expandidas de la tabla campos del paso de confirmacion*/
+  public expandedRowKeysConf: Array<number>;
+
   /** Token del modulo de configuraciones*/
   public TK_CONFIGURACIONES = ModulesTokenConstant.TK_CONFIGURACIONES;
+
+  /** Identificador para el tipo de campo CASILLA DE VERIFICACION*/
+  public ID_CASILLA_VERIFICACION = TipoCamposConstant.ID_CASILLA_VERIFICACION;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -173,9 +184,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   public editarNomenclatura(): void {
 
     // solo aplica si hay modificaciones
-    if (this.datosEdicion.datosBasicosEditar ||
-      this.datosEdicion.camposEntradaEditar ||
-      this.datosEdicion.restriccionesEditar) {
+    if (this.datosEdicion.datosBasicosEditar || this.datosEdicion.camposEntradaEditar || this.datosEdicion.restriccionesEditar) {
 
       // se limpia mensajes de otros procesos
       this.messageService.clear();
@@ -278,10 +287,30 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     this.isCreacion = true;
 
     // se define el componente steps para la creacion
-    this.getStepsModel();
+    this.getStepsModelAndExpanded();
 
-    // se consulta los campos asociados al cliente
-    this.getCampos();
+    // si NO HAY campos consultados se procede a obtenerlos
+    if (!this.campos || this.campos.length === 0) {
+      const isRestriccion = 1;
+      this.configuracionesService.getCamposEntrada(this.clienteCurrent.id, isRestriccion).subscribe(
+        data => {
+          // se configura los campos consultados
+          this.campos = data;
+
+          // para las casillas de verificacion se debe empezar por NO
+          this.setNOCasillaVerificacion();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    } else {
+      // si hay campos consultados solo se limpia las banderas
+      this.limpiarBanderasCampos();
+
+      // para las casillas de verificacion se debe empezar por NO
+      this.setNOCasillaVerificacion();
+    }
   }
 
   /**
@@ -298,8 +327,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
     const isGetCampos = (this.campos && this.campos.length > 0) ? 0 : 1;
 
     // se consulta el detalle de la nomenclatura para la edicion
-    this.configuracionesService.getDetalleNomenclaturaEdicion(
-      nomenclatura.id, this.clienteCurrent.id, isGetCampos).subscribe(
+    this.configuracionesService.getDetalleNomenclaturaEdicion(nomenclatura.id, this.clienteCurrent.id, isGetCampos).subscribe(
       data => {
 
         // se configuran los campos de informacion con sus restricciones
@@ -324,7 +352,7 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
         this.nomenclaturaEdicion = nomenclatura;
 
         // se define el componente steps para la edicion
-        this.getStepsModel();
+        this.getStepsModelAndExpanded();
 
         // se configura los campos y restricciones asociados a la nomenclatura a editar
         this.setCamposNomenclatura();
@@ -595,6 +623,8 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   private limpiarCamposCU(): void {
     this.nomenclaturaEdicion = null;
     this.nomeclaturaValueBK = null;
+    this.expandedRowKeys = null;
+    this.expandedRowKeysConf = null;
     this.campoOrden = null;
     this.nomenclaturaCU = null;
     this.datosEdicion = null;
@@ -603,37 +633,19 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
   }
 
   /**
-   * Metodo para obtener los campos asociados al cliente
-   */
-  private getCampos(): void {
-
-    // si NO HAY campos consultados se procede a obtenerlos
-    if (!this.campos || this.campos.length === 0) {
-      const isRestriccion = 1;
-      this.configuracionesService.getCamposEntrada(this.clienteCurrent.id, isRestriccion).subscribe(
-        data => {
-          this.campos = data;
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-    } else {
-      // si hay campos consultados solo se limpia las banderas
-      this.limpiarBanderasCampos();
-    }
-  }
-
-  /**
    * Se utiliza para definir el modelo del componente steps
    */
-  private getStepsModel(): void {
+  private getStepsModelAndExpanded(): void {
     if (this.stepsModel) {
       this.stepsModel.irPrimerStep();
     } else {
       this.stepsModel = new StepsModel();
       this.stepsModel.stepsParaAdminNomenclaturas();
     }
+
+    // se utiliza para expandir los campos
+    this.expandedRowKeys = new Array<number>();
+    this.expandedRowKeysConf = new Array<number>();
   }
 
   /**
@@ -941,6 +953,42 @@ export class AdminNomenclaturasComponent extends CommonComponent implements OnIn
       if (campo.restricciones) {
         for (const restriccion of campo.restricciones) {
           restriccion.aplica = false;
+        }
+      }
+    }
+  }
+
+  /**
+   * Para los campos tipo casilla se debe inicializar con la
+   * restriccion 'NO' solamente al momento de la creacion de
+   * la nomenclatura
+   */
+  private setNOCasillaVerificacion(): void {
+
+    // se verifica si hay campos parametrizados en el sistema
+    if (this.campos && this.campos.length > 0) {
+
+      // se utiliza para encapsular las restricciones
+      let restricciones: Array<RestriccionDTO>;
+
+      // se recorre cada campo parametrizado
+      for (const campo of this.campos) {
+
+        // se verifica si es una casilla de verificacion
+        if (campo.tipoCampo === this.ID_CASILLA_VERIFICACION) {
+
+          // se verifica si hay restricciones para esta casilla
+          restricciones = campo.restricciones;
+          if (restricciones && restricciones.length > 0) {
+
+            // para la casilla de verificacion por default es NO
+            for (const restriccion of restricciones) {
+              if (restriccion.id === RestriccionesKeyConstant.KEY_VALOR_INICIAL_CASILLA_NO) {
+                restriccion.aplica = true;
+                break;
+              }
+            }
+          }
         }
       }
     }
