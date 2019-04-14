@@ -382,7 +382,11 @@
             <ng-template pTemplate="rowexpansion" let-campo>
               <tr>
                 <td [attr.colspan]="3">
-                  <p-table [value]="campo.restricciones" [responsive]="true" styleClass="tblvshort">
+                  <p-table
+                    *ngIf="campo.restricciones"
+                    [value]="campo.restricciones"
+                    [responsive]="true"
+                    styleClass="tblvshort">
                     <ng-template pTemplate="body" let-restriccion>
                       <tr [pSelectableRow]="restriccion">
                         <td>
@@ -390,14 +394,8 @@
                         </td>
                       </tr>
                     </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                      <tr>
-                        <td [attr.colspan]="1">
-                          <p class="st font-weight-bold font-size-14 mb-0 text-center">No hay restricciones para este campo</p>
-                        </td>
-                      </tr>
-                    </ng-template>
                   </p-table>
+                  <p *ngIf="!campo.restricciones" class="st font-weight-bold font-size-14 mb-0 text-center">No hay restricciones para este campo</p>
                 </td>
               </tr>
             </ng-template>
