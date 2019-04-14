@@ -234,7 +234,7 @@
                       [isChecked]="campo.aplica"
                       (switchChange)="campo.aplica = $event">
                     </admin-inputswitch>
-                    <i *ngIf="campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo" class="pi pi-check icon-sel font-size-26"></i>
+                    <i *ngIf="campo.campoNomenclatura && campo.campoNomenclatura.tieneConsecutivo" class="pi pi-check icon-sel font-size-20"></i>
                   </td>
                   <td style="width: 3%" class="text-center">
                     <p class="font-size-14 font-weight-bold">{{ rowIndex + 1 }}</p>
@@ -415,10 +415,10 @@
 
       <!-- botones salir - next-->
       <div class="text-center mt-2 mb-1">
-        <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-100-px">
+        <button (click)="stepsModel.regresar()" type="button" class="btn btn-sm btn-primary w-130-px">
           <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Regresar</label>
         </button>
-        <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-2 ml-2 w-100-px">
+        <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-secondary mr-2 ml-2 w-130-px">
           <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
         </button>
         <button (click)="crearNomenclatura()" *ngIf="isCreacion" type="button" class="btn btn-success btn-sm">
