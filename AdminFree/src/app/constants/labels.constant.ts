@@ -45,7 +45,7 @@ export class LabelsConstant {
 
   /** Sub - Titulo para la pagina de administracion de usuario*/
   public static readonly SUBTITLE_ADMIN_USER: string =
-    'Submódulo administrativo para las configuraciones de los <strong>usuarios del sistema</strong>';
+    'Submódulo de configuraciones que permite administrar los <strong>usuarios del sistema</strong>';
 
   /** Sub - Titulo para la pagina de administracion la cuenta user*/
   public static readonly SUBTITLE_ADMIN_CUENTA_USER: string =
@@ -53,11 +53,11 @@ export class LabelsConstant {
 
   /** Sub - Titulo para la pagina de administracion de campos*/
   public static readonly SUBTITLE_ADMIN_CAMPOS: string =
-    'Submódulo administrativo para las configuraciones de los <strong>campos de entrada de información</strong>';
+    'Submódulo de configuraciones que permite administrar los <strong>campos de entrada de información</strong>';
 
   /** Sub - Titulo para la pagina de administracion de nomenclaturas*/
   public static readonly SUBTITLE_ADMIN_NOMENCLATURAS: string =
-    'Submódulo administrativo para las configuraciones de las <strong>nomenclaturas del sistema</strong>';
+    'Submódulo de configuraciones que permite administrar las <strong>nomenclaturas del sistema</strong>';
 
   /** Titulo para el modulo de correspondencia*/
   public static readonly MODULO_CORRESPONDENCIA: string = 'Correspondencia';
