@@ -59,69 +59,69 @@ export class CorrespondenciaAPIConstant {
     'eliminardocumento';
 
   /** URL del recurso para obtener los consecutivos anio actual */
-  static readonly GET_CONSECUTIVOS_ACTUAL: string =
+  static readonly URL_GET_CONSECUTIVOS_ACTUAL: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getconsecutivosactual';
 
   /** URL del recurso para obtener los datos iniciales para el
   * submodulo de Consecutivos de correspondencia solicitados */
-  static readonly GET_INIT_CONSECUTIVOS_ACTUAL: string =
+  static readonly URL_GET_INIT_CONSECUTIVOS_ACTUAL: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getinitconsecutivosactual?idCliente=';
 
   /** URL del recurso para obtener los datos iniciales para el
   * submodulo de Mis Consecutivos de correspondencia solicitados */
-  static readonly GET_INIT_MIS_CONSECUTIVOS: string =
+  static readonly URL_GET_INIT_MIS_CONSECUTIVOS: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getinitmisconsecutivos';
 
   /** URL del recurso que permite consultar el detalle de un consecutivo */
-  static readonly GET_DETALLE_CONSECUTIVO: string =
+  static readonly URL_GET_DETALLE_CONSECUTIVO: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getdetalleconsecutivo';
 
   /** URL del recurso que permite obtener los campos para los filtros de busqueda */
-  static readonly GET_CAMPOS_FILTRO: string =
+  static readonly URL_GET_CAMPOS_FILTRO: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getcamposfiltro?idCliente=';
 
   /** URL del recurso que permite obtener los items para los filtros tipo LISTA DESPLEGABLE */
-  static readonly GET_ITEMS_SELECT_FILTRO: string =
+  static readonly URL_GET_ITEMS_SELECT_FILTRO: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getitemsfiltro';
 
   /** URL del recurso que permite cambiar el estado del consecutivo */
-  static readonly ACTIVAR_ANULAR_CONSECUTIVO: string =
+  static readonly URL_ACTIVAR_ANULAR_CONSECUTIVO: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'activaranularconse';
 
   /** URL del recurso que permite transferir un consecutivo hacia otro usuario */
-  static readonly TRANSFERIR_CONSECUTIVO: string =
+  static readonly URL_TRANSFERIR_CONSECUTIVO: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'transferirconse';
 
   /** URL del recurso que permite obtener los usuarios para el proceso de transferir consecutivo */
-  static readonly GET_USERS_TRANSFERIR: string =
+  static readonly URL_GET_USERS_TRANSFERIR: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getusertransferir';
 
   /** URL del recurso que permite obtener los datos de un consecutivo para su edicion */
-  static readonly GET_CONSECUTIVO_EDICION: string =
+  static readonly URL_GET_CONSECUTIVO_EDICION: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'getconsedicion';
 
   /** URL del recurso que permite editar los valores de un consecutivo */
-  static readonly EDITAR_CONSECUTIVO_VALUES: string =
+  static readonly URL_EDITAR_CONSECUTIVO_VALUES: string =
     AppDomainConstant.ADMINFREE +
     CorrespondenciaAPIConstant.CORRESPONDENCIA_API +
     'editconsevalues';

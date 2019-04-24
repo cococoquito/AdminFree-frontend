@@ -149,7 +149,7 @@ export class ConfiguracionesAPIConstant {
     'getdtlnomenclaturaeditar';
 
   /** URL del recurso que permite modificar la cuenta del usuario*/
-  static readonly MODIFICAR_CUENTA_USUARIO: string =
+  static readonly URL_MODIFICAR_CUENTA_USUARIO: string =
     AppDomainConstant.ADMINFREE +
     ConfiguracionesAPIConstant.CONFIGURACIONES_API +
     'updateusercount';

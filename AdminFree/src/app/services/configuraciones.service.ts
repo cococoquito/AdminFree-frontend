@@ -332,7 +332,7 @@ export class ConfiguracionesService {
 	 */
   public modificarCuentaUsuario(params: ModificarCuentaUsuarioDTO): Observable<MessageResponseDTO> {
     return this.http.post<MessageResponseDTO>(
-      ConfiguracionesAPIConstant.MODIFICAR_CUENTA_USUARIO,
+      ConfiguracionesAPIConstant.URL_MODIFICAR_CUENTA_USUARIO,
       params
     );
   }

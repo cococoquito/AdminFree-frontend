@@ -147,7 +147,7 @@ export class CorrespondenciaService {
 	 */
   public getConsecutivosAnioActual(filtro: FiltroConsecutivosDTO): Observable<PaginadorResponseDTO> {
     return this.http.post<PaginadorResponseDTO>(
-      CorrespondenciaAPIConstant.GET_CONSECUTIVOS_ACTUAL,
+      CorrespondenciaAPIConstant.URL_GET_CONSECUTIVOS_ACTUAL,
       filtro
     );
   }
@@ -162,7 +162,7 @@ export class CorrespondenciaService {
    */
   public getInitConsecutivosAnioActual(idCliente: number): Observable<InitConsecutivosAnioActualDTO> {
     return this.http.get<InitConsecutivosAnioActualDTO>(
-      CorrespondenciaAPIConstant.GET_INIT_CONSECUTIVOS_ACTUAL + idCliente
+      CorrespondenciaAPIConstant.URL_GET_INIT_CONSECUTIVOS_ACTUAL + idCliente
     );
   }
 
@@ -176,7 +176,7 @@ export class CorrespondenciaService {
    * @return DTO con los datos iniciales
    */
   public getInitMisConsecutivos(idCliente: number, idUsuario: number): Observable<InitMisConsecutivosDTO> {
-    const url = `${CorrespondenciaAPIConstant.GET_INIT_MIS_CONSECUTIVOS}?idCliente=${idCliente}&idUsuario=${idUsuario}`;
+    const url = `${CorrespondenciaAPIConstant.URL_GET_INIT_MIS_CONSECUTIVOS}?idCliente=${idCliente}&idUsuario=${idUsuario}`;
     return this.http.get<InitMisConsecutivosDTO>(url);
   }
 
@@ -188,7 +188,7 @@ export class CorrespondenciaService {
    */
   public getDetalleConsecutivo(filtro: ConsecutivoDetalleDTO): Observable<ConsecutivoDetalleDTO> {
     return this.http.post<ConsecutivoDetalleDTO>(
-      CorrespondenciaAPIConstant.GET_DETALLE_CONSECUTIVO,
+      CorrespondenciaAPIConstant.URL_GET_DETALLE_CONSECUTIVO,
       filtro
     );
   }
@@ -201,7 +201,7 @@ export class CorrespondenciaService {
 	 */
   public getCamposFiltro(idCliente: number): Observable<Array<CampoFiltroDTO>> {
     return this.http.get<Array<CampoFiltroDTO>>(
-      CorrespondenciaAPIConstant.GET_CAMPOS_FILTRO + idCliente
+      CorrespondenciaAPIConstant.URL_GET_CAMPOS_FILTRO + idCliente
     );
   }
 
@@ -213,7 +213,7 @@ export class CorrespondenciaService {
 	 */
   public getItemsSelectFiltro(idsCampos: Array<number>): Observable<Array<ItemDTO>> {
     return this.http.post<Array<ItemDTO>>(
-      CorrespondenciaAPIConstant.GET_ITEMS_SELECT_FILTRO,
+      CorrespondenciaAPIConstant.URL_GET_ITEMS_SELECT_FILTRO,
       idsCampos
     );
   }
@@ -225,7 +225,7 @@ export class CorrespondenciaService {
 	 */
   public activarAnularConsecutivo(parametro: ActivarAnularConsecutivoDTO): Observable<MessageResponseDTO> {
     return this.http.post<MessageResponseDTO>(
-      CorrespondenciaAPIConstant.ACTIVAR_ANULAR_CONSECUTIVO,
+      CorrespondenciaAPIConstant.URL_ACTIVAR_ANULAR_CONSECUTIVO,
       parametro
     );
   }
@@ -238,7 +238,7 @@ export class CorrespondenciaService {
 	 */
   public transferirConsecutivo(parametro: TransferirConsecutivoDTO): Observable<TransferirConsecutivoDTO> {
     return this.http.post<TransferirConsecutivoDTO>(
-      CorrespondenciaAPIConstant.TRANSFERIR_CONSECUTIVO,
+      CorrespondenciaAPIConstant.URL_TRANSFERIR_CONSECUTIVO,
       parametro
     );
   }
@@ -251,7 +251,7 @@ export class CorrespondenciaService {
 	 * @return Lista de usuarios activos en el sistema
 	 */
   public getUsuariosTransferir(idCliente: number, idUsuario: number): Observable<Array<SelectItemDTO>> {
-    const url = `${CorrespondenciaAPIConstant.GET_USERS_TRANSFERIR}?idCliente=${idCliente}&idUsuario=${idUsuario}`;
+    const url = `${CorrespondenciaAPIConstant.URL_GET_USERS_TRANSFERIR}?idCliente=${idCliente}&idUsuario=${idUsuario}`;
     return this.http.get<Array<SelectItemDTO>>(url);
   }
 
@@ -263,7 +263,7 @@ export class CorrespondenciaService {
 	 */
   public getConsecutivoEdicion(filtro: ConsecutivoEdicionDTO): Observable<ConsecutivoEdicionDTO> {
     return this.http.post<ConsecutivoEdicionDTO>(
-      CorrespondenciaAPIConstant.GET_CONSECUTIVO_EDICION,
+      CorrespondenciaAPIConstant.URL_GET_CONSECUTIVO_EDICION,
       filtro
     );
   }
@@ -276,7 +276,7 @@ export class CorrespondenciaService {
 	 */
   public editarConsecutivoValores(datos: ConsecutivoEdicionDTO): Observable<ConsecutivoEdicionDTO> {
     return this.http.post<ConsecutivoEdicionDTO>(
-      CorrespondenciaAPIConstant.EDITAR_CONSECUTIVO_VALUES,
+      CorrespondenciaAPIConstant.URL_EDITAR_CONSECUTIVO_VALUES,
       datos
     );
   }
