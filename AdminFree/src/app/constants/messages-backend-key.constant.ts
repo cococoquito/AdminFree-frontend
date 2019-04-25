@@ -62,4 +62,34 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo*/
   static readonly KEY_PROCESO_NO_EJECUTADO: string = '19';
+
+  /** 400 - EL tipo documental que intenta eliminar se encuentra asociado a una serie o subserie documental*/
+  static readonly KEY_ELIMINAR_TIPO_DOCUMENTAL: string = '20';
+
+  /** 400 - Ya existe una serie documental con el nombre ?*/
+  static readonly KEY_SERIE_MISMO_NOMBRE: string = '21';
+
+  /** 400 - Ya existe una serie documental con el codigo ?*/
+  static readonly KEY_SERIE_MISMO_CODIGO: string = '22';
+
+  /** 400 - La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
+  static readonly KEY_SERIE_CONSECUTIVOS: string = '23';
+
+  /** 400 - La serie documental que intenta eliminar esta asociado en la TRD*/
+  static readonly KEY_SERIE_TRD: string = '24';
+
+  /** 400 - Para eliminar la serie documental debe eliminar primero las subseries relacionadas*/
+  static readonly KEY_SERIE_TIENE_SUBSERIE: string = '25';
+
+  /** 400 - Ya existe una subserie documental con el nombre ?*/
+  static readonly KEY_SUBSERIE_MISMO_NOMBRE: string = '26';
+
+  /** 400 - Ya existe una subserie documental con el codigo ?*/
+  static readonly KEY_SUBSERIE_MISMO_CODIGO: string = '27';
+
+  /** 400 - La subserie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
+  static readonly KEY_SUBSERIE_CONSECUTIVOS: string = '28';
+
+  /** 400 - La subserie documental que intenta eliminar esta asociado en la TRD*/
+  static readonly KEY_SUBSERIE_TRD: string = '29';
 }

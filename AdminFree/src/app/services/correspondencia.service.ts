@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 import { InitSolicitarConsecutivoDTO } from './../dtos/correspondencia/init-solicitar-consecutivo.dto';
 import { CampoEntradaDetalleDTO } from './../dtos/correspondencia/campo-entrada-detalle.dto';
 import { SolicitudConsecutivoDTO } from './../dtos/correspondencia/solicitud-consecutivo.dto';
@@ -19,7 +20,6 @@ import { ActivarAnularConsecutivoDTO } from '../dtos/correspondencia/activar-anu
 import { TransferirConsecutivoDTO } from '../dtos/correspondencia/transferir-consecutivo.dto';
 import { SelectItemDTO } from '../dtos/transversal/select-item.dto';
 import { ConsecutivoEdicionDTO } from '../dtos/correspondencia/consecutivo-edicion.dto';
-import { CorrespondenciaAPIConstant } from './../constants/apis/correspondencia-api.constant';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia

@@ -218,6 +218,56 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.PROCESO_NO_EJECUTADO;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_ELIMINAR_TIPO_DOCUMENTAL: {
+        businessMsj = MessagesBackendConstant.ELIMINAR_TIPO_DOCUMENTAL;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SERIE_MISMO_NOMBRE: {
+        businessMsj = MessagesBackendConstant.SERIE_MISMO_NOMBRE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SERIE_MISMO_CODIGO: {
+        businessMsj = MessagesBackendConstant.SERIE_MISMO_CODIGO;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SERIE_CONSECUTIVOS: {
+        businessMsj = MessagesBackendConstant.SERIE_CONSECUTIVOS;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SERIE_TRD: {
+        businessMsj = MessagesBackendConstant.SERIE_TRD;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SERIE_TIENE_SUBSERIE: {
+        businessMsj = MessagesBackendConstant.SERIE_TIENE_SUBSERIE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SUBSERIE_MISMO_NOMBRE: {
+        businessMsj = MessagesBackendConstant.SUBSERIE_MISMO_NOMBRE;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SUBSERIE_MISMO_CODIGO: {
+        businessMsj = MessagesBackendConstant.SUBSERIE_MISMO_CODIGO;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SUBSERIE_CONSECUTIVOS: {
+        businessMsj = MessagesBackendConstant.SUBSERIE_CONSECUTIVOS;
+        break;
+      }
+
+      case MessagesBackendKeyConstant.KEY_SUBSERIE_TRD: {
+        businessMsj = MessagesBackendConstant.SUBSERIE_TRD;
+        break;
+      }
     }
     return businessMsj;
   }

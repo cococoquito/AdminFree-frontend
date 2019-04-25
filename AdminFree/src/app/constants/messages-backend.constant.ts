@@ -85,4 +85,36 @@ export class MessagesBackendConstant {
 
   /** EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo*/
   static readonly PROCESO_NO_EJECUTADO: string = 'EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo';
+
+  /** EL tipo documental que intenta eliminar se encuentra asociado a una serie o subserie documental*/
+  static readonly ELIMINAR_TIPO_DOCUMENTAL: string =
+  'El tipo documental que intenta eliminar se encuentra asociado a una serie o subserie documental';
+
+  /** Ya existe una serie documental con el nombre ?*/
+  static readonly SERIE_MISMO_NOMBRE: string = 'Ya existe una serie documental con el nombre';
+
+  /** Ya existe una serie documental con el codigo ?*/
+  static readonly SERIE_MISMO_CODIGO: string = 'Ya existe una serie documental con el código';
+
+  /** La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
+  static readonly SERIE_CONSECUTIVOS: string = 'La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia';
+
+  /** La serie documental que intenta eliminar esta asociado en la TRD*/
+  static readonly SERIE_TRD: string = 'La serie documental que intenta eliminar esta asociado en la TRD';
+
+  /** Para eliminar la serie documental debe eliminar primero las subseries relacionadas*/
+  static readonly SERIE_TIENE_SUBSERIE: string = 'Para eliminar la serie documental debe eliminar primero las subseries relacionadas';
+
+  /** Ya existe una subserie documental con el nombre ?*/
+  static readonly SUBSERIE_MISMO_NOMBRE: string = 'Ya existe una subserie documental con el nombre';
+
+  /** Ya existe una subserie documental con el codigo ?*/
+  static readonly SUBSERIE_MISMO_CODIGO: string = 'Ya existe una subserie documental con el código';
+
+  /** La subserie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
+  static readonly SUBSERIE_CONSECUTIVOS: string =
+  'La subserie documental que intenta eliminar tiene asociado consecutivos de correspondencia';
+
+  /** La subserie documental que intenta eliminar esta asociado en la TRD*/
+  static readonly SUBSERIE_TRD: string = 'La subserie documental que intenta eliminar esta asociado en la TRD';
 }

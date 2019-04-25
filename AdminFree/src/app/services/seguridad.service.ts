@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { SeguridadAPIConstant } from './../constants/apis/seguridad-api.constant';
 import { AdminClientesDTO } from './../dtos/configuraciones/admin-clientes.dto';
 import { CredencialesDTO } from './../dtos/seguridad/credenciales.dto';
 import { WelcomeDTO } from './../dtos/seguridad/welcome.dto';
-import { SeguridadAPIConstant } from './../constants/apis/seguridad-api.constant';
 
 /**
  * Clase que contiene los servicios del modulo de seguridad del sistema

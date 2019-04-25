@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { ConfiguracionesAPIConstant } from './../constants/apis/configuraciones-api.constant';
 import { UsuarioDTO } from './../dtos/seguridad/usuario.dto';
 import { MessageResponseDTO } from './../dtos/transversal/message-response.dto';
 import { ClienteDTO } from './../dtos/configuraciones/cliente.dto';
@@ -11,7 +12,6 @@ import { CampoEntradaDTO } from './../dtos/configuraciones/campo-entrada.dto';
 import { CampoEntradaEdicionDTO } from '../dtos/configuraciones/campo-entrada-edicion.dto';
 import { GenerarTokenIngresoDTO } from '../dtos/configuraciones/generar-token-ingreso.dto';
 import { ModificarCuentaUsuarioDTO } from '../dtos/configuraciones/modificar-cuenta-usuario.dto';
-import { ConfiguracionesAPIConstant } from './../constants/apis/configuraciones-api.constant';
 
 /**
  * Clase que contiene los servicios del modulo de Correspondencia
