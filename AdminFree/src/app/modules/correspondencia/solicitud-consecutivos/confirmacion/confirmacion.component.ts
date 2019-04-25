@@ -11,6 +11,7 @@ import { LocalStoreUtil } from '../../../../util/local-store.util';
 import { MsjUtil } from '../../../../util/messages.util';
 import { TipoEventoConstant } from '../../../../constants/tipo-evento.constant';
 import { LabelsConstant } from '../../../../constants/labels.constant';
+import { MsjFrontConstant } from '../../../../constants/messages-frontend.constant';
 
 /**
  * Componente de confirmacion para las solicitudes de
@@ -56,6 +57,7 @@ export class ConfirmacionComponent extends CommonComponent {
         this.state.responseSolicitud = data;
         this.state.nomenclaturaSeleccionada.cantConsecutivos = this.state.nomenclaturaSeleccionada.cantConsecutivos + 1;
         this.state.stepsModel.irUltimoStep();
+        this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.CONSECUTIVO_GENERADO));
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));

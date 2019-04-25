@@ -281,14 +281,22 @@ export class MenuST {
       id: 'fa-folder-open',
       items: [
         {
-          label: 'Series Documentales',
-          icon: '',
-          routerLink: ['/autenticado/archivogestion/series'],
+          label: LabelsConstant.MENU_SERIES_DOCUMENTALES,
+          routerLink: [RouterConstant.NAVIGATE_ADMIN_SERIES_DOCUMENTALES],
+          icon: 'fa fa-fw fa-clipboard',
+          id: 'fa-clipboard'
         },
         {
-          label: 'Prueba Archivo',
-          icon: '',
-          routerLink: ['/autenticado/archivogestion/prueba'],
+          label: LabelsConstant.MENU_TRD,
+          routerLink: [RouterConstant.NAVIGATE_TRD],
+          icon: 'fa fa-fw fa-sitemap',
+          id: 'fa-sitemap'
+        },
+        {
+          label: LabelsConstant.MENU_ARCHIVAR_CONSECUTIVOS,
+          routerLink: [RouterConstant.NAVIGATE_ARCHIVAR_CONSECUTIVOS],
+          icon: 'fa fa-fw fa-archive',
+          id: 'fa-archive'
         }
       ]
     };

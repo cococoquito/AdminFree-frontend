@@ -56,6 +56,15 @@ export class RouterConstant {
   /** Nombre del Router del ITEM Mis Consecutivos Solicitados*/
   public static readonly ROUTER_MIS_CONSECUTIVOS_SOLICITADOS: string = 'misconsesolicitados';
 
+  /** Nombre del Router del ITEM Administracion de series documentales*/
+  public static readonly ROUTER_ADMIN_SERIES_DOCUMENTALES: string = 'adminseries';
+
+  /** Nombre del Router del ITEM TRD*/
+  public static readonly ROUTER_TRD: string = 'trd';
+
+  /** Nombre del Router del ITEM Archivar consecutivos*/
+  public static readonly ROUTER_ARCHIVAR_CONSECUTIVOS: string = 'archivarconse';
+
   /** Constante para navegar al modulo de CLIENTES */
   public static readonly NAVIGATE_CLIENTES: string = `/${RouterConstant.ROUTER_CLIENTES}`;
 
@@ -94,4 +103,16 @@ export class RouterConstant {
   /** Constante para navegar a la pagina de MIS CONSECUTIVOS SOLICITADOS */
   public static readonly NAVIGATE_MIS_CONSECUTIVOS_SOLICITADOS: string =
     `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CORRESPONDENCIA}/${RouterConstant.ROUTER_MIS_CONSECUTIVOS_SOLICITADOS}`;
+
+  /** Constante para navegar a la pagina de ADMIN SERIES DOCUMENTALES */
+  public static readonly NAVIGATE_ADMIN_SERIES_DOCUMENTALES: string =
+    `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_ARCHIVO_GESTION}/${RouterConstant.ROUTER_ADMIN_SERIES_DOCUMENTALES}`;
+
+  /** Constante para navegar a la pagina de TRD */
+  public static readonly NAVIGATE_TRD: string =
+    `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_ARCHIVO_GESTION}/${RouterConstant.ROUTER_TRD}`;
+
+  /** Constante para navegar a la pagina de ARCHIVAR CONSECUTIVOS */
+  public static readonly NAVIGATE_ARCHIVAR_CONSECUTIVOS: string =
+    `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_ARCHIVO_GESTION}/${RouterConstant.ROUTER_ARCHIVAR_CONSECUTIVOS}`;
 }

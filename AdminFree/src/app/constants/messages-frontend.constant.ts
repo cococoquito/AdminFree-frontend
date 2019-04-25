@@ -154,4 +154,7 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando la informacion del consecutivo fue actualizado */
   static readonly VALORES_CONSECUTIVO_ACTUALIZADO: string = 'La información del consecutivo fue actualizada exitosamente';
+
+  /** Mensaje cuando el consecutivo es generado exitosamente */
+  static readonly CONSECUTIVO_GENERADO: string = 'Consecutivo generado exitosamente';
 }

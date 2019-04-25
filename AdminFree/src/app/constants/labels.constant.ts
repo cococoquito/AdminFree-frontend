@@ -95,6 +95,15 @@ export class LabelsConstant {
   /** Titulo mis consecutivos solicitados*/
   public static readonly MENU_MIS_CONSECUTIVOS_SOLICITADOS: string = 'Mis Consecutivos';
 
+  /** Titulo item del menu Series documentales*/
+  public static readonly MENU_SERIES_DOCUMENTALES: string = 'Series Documentales';
+
+  /** Titulo item TRD*/
+  public static readonly MENU_TRD: string = 'TRD';
+
+  /** Titulo item Archivar Consecutivos*/
+  public static readonly MENU_ARCHIVAR_CONSECUTIVOS: string = 'Archivar Consecutivos';
+
   /** Label cerrar sesion*/
   public static readonly CERRAR_SESION: string = 'Cerrar Sesión';
 

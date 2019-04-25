@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { SeriesDocumentalesComponent } from './series-documentales/series-documentales.component';
-import { PruebaComponent } from './prueba/prueba.component';
+import { AdminSeriesDocumentalesComponent } from './admin-series-documentales/admin-series-documentales.component';
+import { TrdComponent } from './trd/trd.component';
+import { ArchivarConsecutivosComponent } from './archivar-consecutivos/archivar-consecutivos.component';
+import { RouterConstant } from '../../constants/router.constant';
 
 /**
- * Modulo que contiene todos los procesos de negocio
- * para el archivo de gestion de correspondencia
+ * Contiene todos los procesos de negocio para el modulo de archivo de gestion
  *
  * @author Carlos Andres Diaz
  */
@@ -14,16 +15,24 @@ import { PruebaComponent } from './prueba/prueba.component';
   imports: [
     RouterModule.forChild([
       {
-        path: 'series',
-        component: SeriesDocumentalesComponent
+        path: RouterConstant.ROUTER_ADMIN_SERIES_DOCUMENTALES,
+        component: AdminSeriesDocumentalesComponent
       },
       {
-        path: 'prueba',
-        component: PruebaComponent
+        path: RouterConstant.ROUTER_TRD,
+        component: TrdComponent
+      },
+      {
+        path: RouterConstant.ROUTER_ARCHIVAR_CONSECUTIVOS,
+        component: ArchivarConsecutivosComponent
       }
     ]),
     SharedModule
   ],
-  declarations: [SeriesDocumentalesComponent, PruebaComponent]
+  declarations: [
+    AdminSeriesDocumentalesComponent,
+    TrdComponent,
+    ArchivarConsecutivosComponent
+  ]
 })
 export class ArchivoGestionModule { }
