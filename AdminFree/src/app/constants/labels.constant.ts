@@ -6,6 +6,9 @@
  */
 export class LabelsConstant {
 
+  /** Titulo para el componente Administracion de series documentales*/
+  public static readonly TITLE_ADMIN_SERIES_DOCUMENTALES: string = 'Administración de Series Documentales';
+
   /** Titulo para el submodulo de Mis consecutivos solicitados*/
   public static readonly TITLE_MIS_CONSECUTIVOS_SOLICITADOS: string = 'Mis Consecutivos de Correspondencia';
 
@@ -27,6 +30,10 @@ export class LabelsConstant {
   /** Titulo para el componente Administracion de nomenclaturas*/
   public static readonly TITLE_ADMIN_NOMENCLATURAS: string = 'Administración de Nomenclaturas';
 
+  /** Sub-Titulo para el componente Administracion de series documentales*/
+  public static readonly SUBTITLE_ADMIN_SERIES_DOCUMENTALES: string =
+  'Submódulo de archivo de gestión que permite administrar <strong>las series documentales del sistema</strong>';
+
   /** Sub-Titulo para el submodulo de mis consecutivos solicitados*/
   public static readonly SUBTITLE_MIS_CONSECUTIVOS_SOLICITADOS: string =
     'Submódulo de correspondencia que permite administrar <strong>mis consecutivos solicitados del año actual</strong>';
@@ -39,7 +46,7 @@ export class LabelsConstant {
   public static readonly SUBTITLE_BIENVENIDA: string =
     'Diseñado para administrar los <strong>consecutivos de correspondencia</strong> de una manera fácil, rápida y organizada';
 
-  /** Sub - Titulo para la pagina de solicitar consecutivos*/
+  /** Sub-Titulo para la pagina de solicitar consecutivos*/
   public static readonly SUBTITLE_SOLICITAR_CONSECUTIVOS: string =
     'Submódulo de correspondencia que permite <strong>generar consecutivos para el año actual</strong>';
 

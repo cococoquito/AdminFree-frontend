@@ -8,6 +8,7 @@ import { TipoDocumentalDTO } from '../dtos/archivogestion/tipo-documental.dto';
 import { MessageResponseDTO } from '../dtos/transversal/message-response.dto';
 import { SerieDocumentalDTO } from '../dtos/archivogestion/serie-documental.dto';
 import { SubSerieDocumentalDTO } from '../dtos/archivogestion/sub-serie-documental.dto';
+import { InitAdminSeriesDocumentalesDTO } from '../dtos/archivogestion/init-admin-series-documentales.dto';
 
 /**
  * Clase que contiene los servicios del modulo de archivo de gestion
@@ -21,6 +22,19 @@ export class ArchivoGestionService {
    * @param HTTP para hacer las peticiones a los servicios REST
    */
   constructor(private http: HttpClient) { }
+
+  /**
+	 * Metodo que permite obtener los datos de inicio para el submodulo de series documentales
+	 *
+	 * @param idCliente, identificador del cliente autenticado
+	 * @return Response con los datos necesarios para el submodulo
+	 */
+  public getInitAdminSeriesDocumentales(idCliente: number): Observable<InitAdminSeriesDocumentalesDTO> {
+    return this.http.post<InitAdminSeriesDocumentalesDTO>(
+      ArchivoGestionAPIConstant.URL_GET_INIT_ADMIN_SERIES_DOC,
+      idCliente
+    );
+  }
 
   /**
 	 * Metodo que permite obtener las series documentales de acuerdo al filtro de busqueda

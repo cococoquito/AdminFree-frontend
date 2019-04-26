@@ -10,6 +10,12 @@ export class ArchivoGestionAPIConstant {
   /** Nombre del REST para el modulo archivo de gestion*/
   static readonly ARCHIVO_GESTION_API: string = 'archivoapi/';
 
+  /** URL del recurso que permite obtener los datos de inicio para el submodulo de series documentales */
+  static readonly URL_GET_INIT_ADMIN_SERIES_DOC: string =
+    AppDomainConstant.ADMINFREE +
+    ArchivoGestionAPIConstant.ARCHIVO_GESTION_API +
+    'getinitadminseriesdoc';
+
   /** URL del recurso que permite obtener las series documentales de acuerdo al filtro de busqueda*/
   static readonly URL_GET_SERIES: string =
     AppDomainConstant.ADMINFREE +

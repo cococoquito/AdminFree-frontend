@@ -1,3 +1,5 @@
+import { TipoDocumentalDTO } from './tipo-documental.dto';
+
 /**
  * Contiene los datos comunes entre la serie y subserie
  *
@@ -43,4 +45,7 @@ export class Documental {
 
   /** Identifica que tipo de accion se va realizar sobre la serie o subserie */
   protected tipoEvento: string;
+
+  /** Son los tipos documentales que soporta la serie o subserie */
+  protected tiposDocumentales: Array<TipoDocumentalDTO>;
 }
