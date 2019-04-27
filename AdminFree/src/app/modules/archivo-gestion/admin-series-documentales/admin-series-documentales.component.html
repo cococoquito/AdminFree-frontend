@@ -22,41 +22,50 @@
 
     <ng-template pTemplate="header">
       <tr class="text-center">
-        <th rowspan="2">Código</th>
-        <th rowspan="2">Series y Tipos Documentales</th>
-        <th colspan="2">Retención</th>
-        <th colspan="4">Disposición Final</th>
-        <th rowspan="2">Procedimiento</th>
+        <th style="width: 13%" rowspan="2">Código</th>
+        <th style="width: 40%" rowspan="2">Series y Tipos Documentales</th>
+        <th style="width: 10%" colspan="2">Retención</th>
+        <th style="width: 14%" colspan="4">Disposición Final</th>
+        <th style="width: 23%" rowspan="2">Procedimiento</th>
       </tr>
       <tr class="text-center">
         <th>AG</th>
         <th>AC</th>
         <th>CT</th>
-        <th>E</th>
-        <th>S</th>
         <th>M</th>
+        <th>S</th>
+        <th>E</th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-serie>
       <tr [pSelectableRow]="serie">
-        <td class="text-center"> {{serie.codigo}} </td>
-        <td>{{serie.nombre}}</td>
-        <td class="text-center">{{serie.ag}}</td>
-        <td class="text-center">{{serie.ac}}</td>
-        <td class="text-center">
+        <td class="text-center align-text-top">
+          <p class="font-size-14 font-new-roman mb-0 font-weight-bold">{{serie.codigo}}</p>
+        </td>
+        <td style="padding-left: 3px!important">
+          <p class="font-size-14 font-new-roman mb-0 font-weight-bold">{{serie.nombre}}</p>
+          <ul style="padding-left: 20px!important">
+            <li *ngFor="let doc of serie.tiposDocumentales" class="font-size-14 font-new-roman">{{doc.nombre}}</li>
+          </ul>
+        </td>
+        <td class="text-center align-text-top">{{serie.ag}}</td>
+        <td class="text-center align-text-top">{{serie.ac}}</td>
+        <td class="text-center align-text-top">
           <i *ngIf="serie.ct" class="pi pi-check font-size-18"></i>
         </td>
-        <td class="text-center">
+        <td class="text-center align-text-top">
+          <i *ngIf="serie.m" class="pi pi-check font-size-18"></i>
+        </td>
+        <td class="text-center align-text-top">
+          <i *ngIf="serie.s" class="pi pi-check font-size-18"></i>
+        </td>
+        <td class="text-center align-text-top">
           <i *ngIf="serie.e" class="pi pi-check font-size-18"></i>
         </td>
         <td class="text-center">
-          <i *ngIf="serie.s" class="pi pi-check font-size-18"></i>
+          <p class="font-size-14 font-new-roman mb-0">{{serie.procedimiento}}</p>
         </td>
-        <td class="text-center">
-          <i *ngIf="serie.m" class="pi pi-check font-size-18"></i>
-        </td>
-        <td class="text-center"></td>
       </tr>
     </ng-template>
 
