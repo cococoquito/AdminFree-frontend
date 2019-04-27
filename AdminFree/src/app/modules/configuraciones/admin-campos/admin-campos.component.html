@@ -265,7 +265,7 @@
                   <span *ngIf="!campoEditarOrigen.tieneConsecutivos || !item.id" (click)="eliminarItem(item); tblitems.reset()" class="del-round-min">
                     <i class="pi pi-times del-round-min-pi"></i>
                   </span>
-                  <i *ngIf="!(!campoEditarOrigen.tieneConsecutivos || !item.id)" class="pi pi-check icon-sel font-size-22"></i>
+                  <i *ngIf="!(!campoEditarOrigen.tieneConsecutivos || !item.id)" class="pi pi-check font-size-22"></i>
                 </td>
                 <td *ngIf="isCreacion" style="width: 4%" class="text-center">
                   <span (click)="eliminarItem(item); tblitems.reset()" class="del-round-min">

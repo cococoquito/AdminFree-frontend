@@ -377,6 +377,12 @@ body {
   table-layout: auto !important;
 }
 
+.tblhshort .ui-table-thead>tr>th {
+  padding: 0.1em !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+}
+
 /* header de los p-table */
 .ui-table-caption {
   background-color: #607a8c !important;
