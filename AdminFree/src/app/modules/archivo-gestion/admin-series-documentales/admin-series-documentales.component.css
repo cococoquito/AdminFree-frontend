@@ -1,0 +1,77 @@
+:host ::ng-deep #tblseries .ui-table .ui-table-thead>tr>th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+}
+
+@media screen and (max-width: 64em) {
+  :host ::ng-deep #tblseries .ui-table .ui-table-thead>tr>th {
+    top: 100px;
+  }
+}
+
+#tblseries th:after,
+th:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+#tblseries th::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  width: 100%;
+  height: 100%;
+  border-right: 1px solid #c8c8c8;
+  display: block;
+  top: 0px;
+}
+
+#tblseries th:after {
+  bottom: -1px;
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .aico {
+  position: absolute;
+}
+
+.left-addon .aico {
+  left: 93%;
+}
+
+.left-addon input {
+  padding-right: 25px;
+}
+
+.left-addon-f .aico {
+  left: 0px;
+}
+
+.left-addon-f input {
+  padding-left: 30px;
+}
+
+.aico {
+  z-index: 1;
+  cursor: pointer;
+}
+
+.refresh {
+  color: #007ad9;
+  cursor: pointer;
+}
+
+.refresh:hover {
+  color: #1365a3;
+}
+
+.row-serie {
+  background-color: #f8f8f8 !important;
+}

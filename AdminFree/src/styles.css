@@ -905,3 +905,52 @@ body {
   background-color: #f4f4f4;
   border-top: 1px solid #c8c8c8;
 }
+
+.tblwthclr .ui-table-tbody>tr:nth-child(even) {
+  background-color: #fff !important;
+}
+
+.tblwthclr .ui-table-tbody>tr.ui-selectable-row:not(.ui-state-highlight):not(.ui-contextmenu-selected):hover {
+  cursor: default !important;
+  background-color: #eaeaea !important;
+}
+
+.subserie-clr {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #2E7D32;
+  width: 10px;
+  height: 10px;
+}
+
+.serie-clr {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #D84315;
+  width: 10px;
+  height: 10px;
+}
+
+.tipo-clr {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #607D8B;
+  width: 6px;
+  height: 6px;
+}
+
+.tipo-clr-b {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #607D8B;
+  width: 10px;
+  height: 10px;
+}

@@ -31,6 +31,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** DTO donde se encapsula los datos del filtro de busqueda */
   public filtro: FiltroSerieDocumentalDTO;
 
+  /** Se utiliza para consevar las restricciones expandidas de la tabla campos*/
+  public expandedRows: {} = {};
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -92,6 +95,10 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
           // se configura el paginador
           this.seriesPaginados = new PaginadorModel(this);
           this.seriesPaginados.configurarRegistros(data.series);
+          this.expandedRows = {};
+          for(const serie of this.seriesPaginados.registros) {
+            this.expandedRows[serie.idSerie] = 1;
+          }
         }
       },
       error => {

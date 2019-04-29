@@ -14,19 +14,145 @@
 
 <!-- HAY consecutivos -->
 <ng-container *ngIf="seriesPaginados">
-  <p-table id="tblcc" #tblcc [value]="seriesPaginados.registros" (onPage)="seriesPaginados.scrollerListener($event)"
-    [totalRecords]="seriesPaginados.datos.cantidadTotal"
+
+  <p-panel styleClass="steps-pnl steps-pnl-main mb-4">
+
+    <!-- header -->
+    <p-header>
+
+      <div class="ui-g">
+        <div class="ui-md-6 p-0">
+          <button type="button" class="btn btn-sm btn-primary w-180-px">
+            <div class="ui-g">
+              <div class="ui-md-6 p-0 text-left">
+                <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
+              </div>
+              <div class="ui-md-6 p-0 text-right">
+                <label class="btn-size-admin"><strong>Cant:
+                    {{ seriesPaginados.datos?.cantidadTotal | number }}</strong></label>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div class="ui-md-6 p-0 text-right">
+          <button type="button" class="btn btn-sm btn-success w-180-px">
+            <label class="btn-size-admin"><i class="fa fa-clipboard"></i> Agregar serie documental</label>
+          </button>
+        </div>
+      </div>
+
+
+
+
+
+
+
+    </p-header>
+
+    <div class="ui-g pt-2 mb-2">
+      <div class="ui-md-3 pt-0 pb-0 pr-4">
+        <label for="fuser" class="steps-st mb-0"> Filtro por código serie: </label>
+        <div class="inner-addon left-addon">
+          <i class="fa fa-times font-size-16 aico i-slight">
+          </i>
+          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
+            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
+          <div class="focus-border"></div>
+        </div>
+
+
+      </div>
+
+      <div class="ui-md-3 pt-0 pb-0 pr-4">
+        <label for="fuser" class="steps-st mb-0"> Filtro por nombre serie: </label>
+        <div class="inner-addon left-addon">
+          <i class="fa fa-times font-size-16 aico i-slight">
+          </i>
+          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
+            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
+          <div class="focus-border"></div>
+        </div>
+
+
+      </div>
+      <div class="ui-md-3 pt-0 pb-0 pr-4">
+        <label for="fuser" class="steps-st mb-0"> Filtro por código Subserie: </label>
+        <div class="inner-addon left-addon">
+          <i class="fa fa-times font-size-16 aico i-slight">
+          </i>
+          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
+            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
+          <div class="focus-border"></div>
+        </div>
+      </div>
+      <div class="ui-md-3 pt-0 pb-0 pr-4">
+        <label for="fuser" class="steps-st mb-0"> Filtro por nombre Subserie: </label>
+        <div class="inner-addon left-addon">
+          <i class="fa fa-times font-size-16 aico i-slight">
+          </i>
+          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
+            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
+          <div class="focus-border"></div>
+        </div>
+      </div>
+    </div>
+
+  </p-panel>
+
+
+
+
+
+
+
+
+  <div class="ui-g font-size-14 font-new-roman text-center">
+
+
+    <div class="ui-md-4 p-0">
+      <span class="serie-clr mr-1"></span> <span> Serie Documental</span>
+    </div>
+    <div class="ui-md-4 p-0">
+      <span class="subserie-clr mr-1"></span> <span> Subserie Documental</span>
+    </div>
+    <div class="ui-md-4 p-0">
+      <span class="tipo-clr-b mr-1"></span> <span> Tipología Documental</span>
+    </div>
+
+    <div class="ui-md-3 p-0">
+      <span class="font-weight-bold">CT</span> <span> = Conservación Total</span>
+    </div>
+    <div class="ui-md-3 p-0">
+      <span class="font-weight-bold">M</span> <span> = Microfilmación</span>
+    </div>
+    <div class="ui-md-3 p-0">
+      <span class="font-weight-bold">S</span> <span> = Selección</span>
+    </div>
+    <div class="ui-md-3 p-0">
+      <span class="font-weight-bold">E</span> <span> = Eliminación</span>
+    </div>
+
+  </div>
+
+
+
+
+
+  <p-table id="tblseries" #tblseries [value]="seriesPaginados.registros"
+    (onPage)="seriesPaginados.scrollerListener($event)" [totalRecords]="seriesPaginados.datos.cantidadTotal"
     [alwaysShowPaginator]="seriesPaginados.datos.cantidadTotal > seriesPaginados.rowsDefault"
     [rowsPerPageOptions]="seriesPaginados.rowsPerPageOptions" [rows]="seriesPaginados.rowsDefault" [responsive]="true"
-    [paginator]="true" [lazy]="true" rowHover="true" styleClass="tblshort tblhshort">
+    [paginator]="true" [lazy]="true" styleClass="tblshort tblhshort tblwthclr" dataKey="idSerie"
+    [expandedRowKeys]="expandedRows" rowHover="true">
 
     <ng-template pTemplate="header">
       <tr class="text-center">
-        <th style="width: 13%" rowspan="2">Código</th>
+        <th style="width: 12%" rowspan="2">Código</th>
         <th style="width: 40%" rowspan="2">Series y Tipos Documentales</th>
-        <th style="width: 10%" colspan="2">Retención</th>
-        <th style="width: 14%" colspan="4">Disposición Final</th>
-        <th style="width: 23%" rowspan="2">Procedimiento</th>
+        <th style="width: 8%" colspan="2">Retención</th>
+        <th style="width: 10%" colspan="4">Disposición Final</th>
+        <th style="width: 25%" rowspan="2">Procedimiento</th>
+        <th style="width: 3%" rowspan="2"></th>
       </tr>
       <tr class="text-center">
         <th>AG</th>
@@ -40,33 +166,89 @@
 
     <ng-template pTemplate="body" let-serie>
       <tr [pSelectableRow]="serie">
-        <td class="text-center align-text-top">
-          <p class="font-size-14 font-new-roman mb-0 font-weight-bold">{{serie.codigo}}</p>
+
+        <td class="text-center align-text-top row-serie">
+          <p class="font-size-15 font-new-roman mb-0 font-weight-bold clr-anulado">{{serie.codigo}}</p>
         </td>
-        <td style="padding-left: 3px!important">
+        <td style="padding-left: 3px!important" class="align-text-top row-serie">
           <p class="font-size-14 font-new-roman mb-0 font-weight-bold">{{serie.nombre}}</p>
-          <ul style="padding-left: 20px!important">
-            <li *ngFor="let doc of serie.tiposDocumentales" class="font-size-14 font-new-roman">{{doc.nombre}}</li>
-          </ul>
+          <ng-container *ngFor="let doc of serie.tiposDocumentales">
+            <p class="font-size-14 font-new-roman mb-0"><span class="tipo-clr mr-2 ml-1"></span> {{doc.nombre}}</p>
+          </ng-container>
         </td>
-        <td class="text-center align-text-top">{{serie.ag}}</td>
-        <td class="text-center align-text-top">{{serie.ac}}</td>
-        <td class="text-center align-text-top">
+        <td class="text-center align-text-top row-serie">{{serie.ag}}</td>
+        <td class="text-center align-text-top row-serie">{{serie.ac}}</td>
+        <td class="text-center align-text-top row-serie">
           <i *ngIf="serie.ct" class="pi pi-check font-size-18"></i>
         </td>
-        <td class="text-center align-text-top">
+        <td class="text-center align-text-top row-serie">
           <i *ngIf="serie.m" class="pi pi-check font-size-18"></i>
         </td>
-        <td class="text-center align-text-top">
+        <td class="text-center align-text-top row-serie">
           <i *ngIf="serie.s" class="pi pi-check font-size-18"></i>
         </td>
-        <td class="text-center align-text-top">
+        <td class="text-center align-text-top row-serie">
           <i *ngIf="serie.e" class="pi pi-check font-size-18"></i>
         </td>
-        <td class="text-center">
+        <td class="text-center align-text-top row-serie">
           <p class="font-size-14 font-new-roman mb-0">{{serie.procedimiento}}</p>
         </td>
+        <td class="row-serie">
+          <button type="button" class="btn btn-sm btn-primary">
+            <label class="btn-size-admin"><i class="fa fa-pencil"></i></label>
+          </button>
+          <button type="button" class="btn btn-sm btn-danger mt-1 mb-1">
+            <label class="btn-size-admin"><i class="fa fa-trash"></i></label>
+          </button>
+          <button type="button" class="btn btn-sm btn-success">
+            <label class="btn-size-admin"><i class="fa fa-plus-circle"></i></label>
+          </button>
+        </td>
       </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-serie>
+
+      <ng-container *ngFor="let subserie of serie.subSeries">
+        <tr [pSelectableRow]="subserie">
+
+          <td class="text-center align-text-top">
+            <p class="font-size-15 font-new-roman mb-0 font-weight-bold clr-activo">{{subserie.codigo}}</p>
+          </td>
+          <td class="align-text-top" style="padding-left: 3px!important">
+            <p class="font-size-15 font-new-roman mb-0 font-weight-bold text-capitalize">{{subserie.nombre}}</p>
+            <ng-container *ngFor="let doc of subserie.tiposDocumentales">
+              <span class="tipo-clr mr-2 ml-1"></span> <span class="font-size-14 font-new-roman">{{doc.nombre}}</span>
+            </ng-container>
+          </td>
+          <td class="text-center align-text-top">{{subserie.ag}}</td>
+          <td class="text-center align-text-top">{{subserie.ac}}</td>
+          <td class="text-center align-text-top">
+            <i *ngIf="subserie.ct" class="pi pi-check font-size-18"></i>
+          </td>
+          <td class="text-center align-text-top">
+            <i *ngIf="subserie.m" class="pi pi-check font-size-18"></i>
+          </td>
+          <td class="text-center align-text-top">
+            <i *ngIf="subserie.s" class="pi pi-check font-size-18"></i>
+          </td>
+          <td class="text-center align-text-top">
+            <i *ngIf="subserie.e" class="pi pi-check font-size-18"></i>
+          </td>
+          <td class="text-center align-text-top">
+            <p class="font-size-14 font-new-roman mb-0">{{subserie.procedimiento}}</p>
+          </td>
+          <td>
+            <button type="button" class="btn btn-sm btn-primary mb-1">
+              <label class="btn-size-admin"><i class="fa fa-pencil"></i></label>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger">
+              <label class="btn-size-admin"><i class="fa fa-trash"></i></label>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+
     </ng-template>
 
     <ng-template pTemplate="emptymessage">
