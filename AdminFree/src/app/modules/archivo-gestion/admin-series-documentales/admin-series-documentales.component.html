@@ -5,10 +5,11 @@
 
       <!-- btn - filtro -->
       <div class="ui-md-6 p-0 text-left">
-        <button type="button" class="btn btn-sm btn-primary w-180-px">
+        <button (click)="filtrar()" type="button" class="btn btn-sm btn-primary w-180-px">
           <div class="ui-g">
             <div class="ui-md-6 p-0 text-left">
               <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
+              <i *ngIf="hayFiltroAplicado" class="fa fa-asterisk font-size-9 pl-1"></i>
             </div>
             <div class="ui-md-6 p-0 text-right">
               <label class="btn-size-admin">
@@ -35,7 +36,9 @@
     <div class="ui-md-3 pt-0 pb-0 pr-4">
       <label for="fcodigoserie" class="steps-st mb-0"> Filtro por código serie: </label>
       <div class="inner-addon left-addon">
-        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <i (click)="filtro.codigoSerieDocumental=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="filtroClone.codigoSerieDocumental ? 'text-dark' : 'i-slight'"></i>
         <input
           type="text"
           id="fcodigoserie"
@@ -51,7 +54,9 @@
     <div class="ui-md-3 pt-0 pb-0 pr-4">
       <label for="fnombreserie" class="steps-st mb-0"> Filtro por nombre serie: </label>
       <div class="inner-addon left-addon">
-        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <i (click)="filtro.nombreSerieDocumental=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="filtroClone.nombreSerieDocumental ? 'text-dark' : 'i-slight'"></i>
         <input
           type="text"
           id="fnombreserie"
@@ -67,7 +72,9 @@
     <div class="ui-md-3 pt-0 pb-0 pr-4">
       <label for="fcodigosubserie" class="steps-st mb-0"> Filtro por código subserie: </label>
       <div class="inner-addon left-addon">
-        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <i (click)="filtro.codigoSubSerieDocumental=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="filtroClone.codigoSubSerieDocumental ? 'text-dark' : 'i-slight'"></i>
         <input
           type="text"
           id="fcodigosubserie"
@@ -83,7 +90,9 @@
     <div class="ui-md-3 pt-0 pb-0 pr-4">
       <label for="fnombresubserie" class="steps-st mb-0"> Filtro por nombre subserie: </label>
       <div class="inner-addon left-addon">
-        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <i (click)="filtro.nombreSubSerieDocumental=null"
+          class="fa fa-times font-size-16 aico"
+          [ngClass]="filtroClone.nombreSubSerieDocumental ? 'text-dark' : 'i-slight'"></i>
         <input
           type="text"
           id="fnombresubserie"
@@ -277,7 +286,7 @@
 
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td [attr.colspan]="6">
+        <td [attr.colspan]="10">
           <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-1">
             <span class="ui-messages-icon pi pi-info-circle"></span>
             <span class="ui-messages-detail font-size-15">

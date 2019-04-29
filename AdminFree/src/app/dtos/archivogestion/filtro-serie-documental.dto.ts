@@ -25,4 +25,14 @@ export class FiltroSerieDocumentalDTO {
 
   /** Filtro por nombre de la sub-serie documental */
   public nombreSubSerieDocumental: string;
+
+  /**
+   * se debe inicializar con null para eliminar la opcion undefined
+   */
+  constructor() {
+    this.codigoSerieDocumental = null;
+    this.nombreSerieDocumental = null;
+    this.codigoSubSerieDocumental = null;
+    this.nombreSubSerieDocumental = null;
+  }
 }

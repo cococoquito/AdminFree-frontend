@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ArchivoGestionService } from '../../../services/archivo-gestion.service';
 import { CommonComponent } from '../../../util/common.component';
@@ -31,8 +32,17 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** DTO donde se encapsula los valores del filtro de busqueda */
   public filtro: FiltroSerieDocumentalDTO;
 
+  /** contiene los valores del filtro consultado */
+  public filtroClone: FiltroSerieDocumentalDTO;
+
+  /** Se utiliza para pintar el asterisco en el boton filtrar */
+  public hayFiltroAplicado: boolean;
+
   /** Se utiliza para expandir las filas de cada serie asi visualizar las subseries*/
   public expandAllSeries;
+
+  /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
+  @ViewChild('tblseries') tblseries: Table;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -86,6 +96,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.filtro = new FiltroSerieDocumentalDTO();
     this.filtro.idCliente = this.clienteCurrent.id;
 
+    // se debe inicializar el clone con los mismos datos del filtro
+    this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
+
     // se consulta los datos iniciales para este submodulo
     this.archivoGestionService.getInitAdminSeriesDocumentales(this.clienteCurrent.id).subscribe(
       data => {
@@ -104,6 +117,76 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que es invocado por el paginador de la tabla
+   */
+  public paginar(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se configura el paginador dado que puede cambiar el skip o rowsperpage
+    this.filtro.paginador = this.seriesPaginados.datos;
+
+    // se procede a consultar las series documentales
+    this.archivoGestionService.getSeriesDocumentales(this.filtro).subscribe(
+      data => {
+        this.seriesPaginados.configurarRegistros(data);
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
+   * Metodo que permite soportar el evento click del boton filtrar
+   */
+  public filtrar(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se eliminan los espacios
+    this.filtro.codigoSerieDocumental = this.setTrimFilter(this.filtro.codigoSerieDocumental);
+    this.filtro.nombreSerieDocumental = this.setTrimFilter(this.filtro.nombreSerieDocumental);
+    this.filtro.codigoSubSerieDocumental = this.setTrimFilter(this.filtro.codigoSubSerieDocumental);
+    this.filtro.nombreSubSerieDocumental = this.setTrimFilter(this.filtro.nombreSubSerieDocumental);
+
+    // se valida cada criterio con el clone del filtro
+    if (this.filtro.codigoSerieDocumental !== this.filtroClone.codigoSerieDocumental ||
+      this.filtro.nombreSerieDocumental !== this.filtroClone.nombreSerieDocumental ||
+      this.filtro.codigoSubSerieDocumental !== this.filtroClone.codigoSubSerieDocumental ||
+      this.filtro.nombreSubSerieDocumental !== this.filtroClone.nombreSubSerieDocumental) {
+
+      // se hace el backup de los datos del paginador esto por si hay errores
+      this.filtro.paginador = this.seriesPaginados.filtroBefore();
+
+      // se procede a consultar las series documentales
+      this.archivoGestionService.getSeriesDocumentales(this.filtro).subscribe(
+        data => {
+          // se configura los nuevas series consultadas
+          this.seriesPaginados.filtroExitoso(this.tblseries, data);
+
+          // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
+          this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
+
+          // se verifica si hay algun filtro aplicado
+          this.hayFiltroAplicado = false;
+          if (this.filtroClone.codigoSerieDocumental ||
+            this.filtroClone.nombreSerieDocumental ||
+            this.filtroClone.codigoSubSerieDocumental ||
+            this.filtroClone.nombreSubSerieDocumental) {
+            this.hayFiltroAplicado = true;
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
   }
 
   /**
