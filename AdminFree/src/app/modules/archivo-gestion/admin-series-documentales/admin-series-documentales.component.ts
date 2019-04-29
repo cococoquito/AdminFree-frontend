@@ -3,9 +3,9 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { ArchivoGestionService } from '../../../services/archivo-gestion.service';
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
+import { PaginadorModel } from '../../../model/paginador-model';
 import { FiltroSerieDocumentalDTO } from '../../../dtos/archivogestion/filtro-serie-documental.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
-import { PaginadorModel } from '../../../model/paginador-model';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
@@ -28,11 +28,11 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Paginador de la lista de series documentales parametrizados en el sistema */
   public seriesPaginados: PaginadorModel;
 
-  /** DTO donde se encapsula los datos del filtro de busqueda */
+  /** DTO donde se encapsula los valores del filtro de busqueda */
   public filtro: FiltroSerieDocumentalDTO;
 
-  /** Se utiliza para consevar las restricciones expandidas de la tabla campos*/
-  public expandedRows: {} = {};
+  /** Se utiliza para expandir las filas de cada serie asi visualizar las subseries*/
+  public expandAllSeries;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -86,24 +86,34 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.filtro = new FiltroSerieDocumentalDTO();
     this.filtro.idCliente = this.clienteCurrent.id;
 
-    // se consulta las series documentales parametrizadas en el sistema
+    // se consulta los datos iniciales para este submodulo
     this.archivoGestionService.getInitAdminSeriesDocumentales(this.clienteCurrent.id).subscribe(
       data => {
         // se verifica si hay series documentales asociados al cliente autenticado
-        if (data.series && data.series.cantidadTotal && data.series.cantidadTotal > 0) {
+        if (data && data.series && data.series.cantidadTotal) {
 
-          // se configura el paginador
+          // se configura el paginador de las series
           this.seriesPaginados = new PaginadorModel(this);
           this.seriesPaginados.configurarRegistros(data.series);
-          this.expandedRows = {};
-          for(const serie of this.seriesPaginados.registros) {
-            this.expandedRows[serie.idSerie] = 1;
-          }
+
+          // se procede a expandir todas las filas de las series
+          this.expandRowsSeries();
         }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * Metodo que permite expandir todas las filas de las series
+   * para visualizar las subseries de cada serie consultada
+   */
+  private expandRowsSeries(): void {
+    this.expandAllSeries = {};
+    for(const serie of this.seriesPaginados.registros) {
+      this.expandAllSeries[serie.idSerie] = 1;
+    }
   }
 }

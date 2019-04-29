@@ -1,114 +1,123 @@
-<!-- NO hay consecutivos -->
+<!-- pnl filtro - agregar serie -->
+<p-panel styleClass="steps-pnl steps-pnl-main mb-4">
+  <p-header>
+    <div class="ui-g">
+
+      <!-- btn - filtro -->
+      <div class="ui-md-6 p-0 text-left">
+        <button type="button" class="btn btn-sm btn-primary w-180-px">
+          <div class="ui-g">
+            <div class="ui-md-6 p-0 text-left">
+              <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
+            </div>
+            <div class="ui-md-6 p-0 text-right">
+              <label class="btn-size-admin">
+                <strong *ngIf="seriesPaginados">Cant: {{ seriesPaginados.datos?.cantidadTotal | number }}</strong>
+              </label>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- btn - agregar serie -->
+      <div class="ui-md-6 p-0 text-right">
+        <button type="button" class="btn btn-sm btn-success w-180-px">
+          <label class="btn-size-admin"><i class="fa fa-clipboard"></i> Agregar serie documental</label>
+        </button>
+      </div>
+    </div>
+  </p-header>
+
+  <!-- filtros -->
+  <div class="ui-g pt-2 mb-2">
+
+    <!-- filtro codigo serie -->
+    <div class="ui-md-3 pt-0 pb-0 pr-4">
+      <label for="fcodigoserie" class="steps-st mb-0"> Filtro por código serie: </label>
+      <div class="inner-addon left-addon">
+        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <input
+          type="text"
+          id="fcodigoserie"
+          name="fcodigoserie"
+          [(ngModel)]="filtro.codigoSerieDocumental"
+          maxlength="100"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15" />
+        <div class="focus-border"></div>
+      </div>
+    </div>
+
+    <!-- filtro nombre serie -->
+    <div class="ui-md-3 pt-0 pb-0 pr-4">
+      <label for="fnombreserie" class="steps-st mb-0"> Filtro por nombre serie: </label>
+      <div class="inner-addon left-addon">
+        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <input
+          type="text"
+          id="fnombreserie"
+          name="fnombreserie"
+          [(ngModel)]="filtro.nombreSerieDocumental"
+          maxlength="255"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15" />
+        <div class="focus-border"></div>
+      </div>
+    </div>
+
+    <!-- filtro codigo subserie -->
+    <div class="ui-md-3 pt-0 pb-0 pr-4">
+      <label for="fcodigosubserie" class="steps-st mb-0"> Filtro por código subserie: </label>
+      <div class="inner-addon left-addon">
+        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <input
+          type="text"
+          id="fcodigosubserie"
+          name="fcodigosubserie"
+          [(ngModel)]="filtro.codigoSubSerieDocumental"
+          maxlength="100"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15" />
+        <div class="focus-border"></div>
+      </div>
+    </div>
+
+    <!-- filtro nombre subserie -->
+    <div class="ui-md-3 pt-0 pb-0 pr-4">
+      <label for="fnombresubserie" class="steps-st mb-0"> Filtro por nombre subserie: </label>
+      <div class="inner-addon left-addon">
+        <i class="fa fa-times font-size-16 aico i-slight"></i>
+        <input
+          type="text"
+          id="fnombresubserie"
+          name="fnombresubserie"
+          [(ngModel)]="filtro.nombreSubSerieDocumental"
+          maxlength="255"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15" />
+        <div class="focus-border"></div>
+      </div>
+    </div>
+  </div>
+</p-panel>
+
+<!-- NO hay series -->
 <p-panel *ngIf="!seriesPaginados" styleClass="steps-pnl pnl-pt">
   <p-header>
     <i class="fa fa-file-text font-size-16"></i>
-    <span> Consecutivos</span>
+    <span> Series Documentales</span>
   </p-header>
   <div class="mr-3 ml-3 mt-3 mb-3 p-2 ui-messages ui-messages-info ui-corner-all text-center">
     <span class="ui-messages-icon pi pi-info-circle"></span>
     <span class="ui-messages-detail font-size-15 ml-0">
-      No se encontraron <strong>Series Documentales</strong> parametrizados en el sistema
+      No se encontraron <strong>series documentales</strong> parametrizados en el sistema
     </span>
   </div>
 </p-panel>
 
-<!-- HAY consecutivos -->
+<!-- HAY series -->
 <ng-container *ngIf="seriesPaginados">
 
-  <p-panel styleClass="steps-pnl steps-pnl-main mb-4">
-
-    <!-- header -->
-    <p-header>
-
-      <div class="ui-g">
-        <div class="ui-md-6 p-0">
-          <button type="button" class="btn btn-sm btn-primary w-180-px">
-            <div class="ui-g">
-              <div class="ui-md-6 p-0 text-left">
-                <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
-              </div>
-              <div class="ui-md-6 p-0 text-right">
-                <label class="btn-size-admin"><strong>Cant:
-                    {{ seriesPaginados.datos?.cantidadTotal | number }}</strong></label>
-              </div>
-            </div>
-          </button>
-        </div>
-        <div class="ui-md-6 p-0 text-right">
-          <button type="button" class="btn btn-sm btn-success w-180-px">
-            <label class="btn-size-admin"><i class="fa fa-clipboard"></i> Agregar serie documental</label>
-          </button>
-        </div>
-      </div>
-
-
-
-
-
-
-
-    </p-header>
-
-    <div class="ui-g pt-2 mb-2">
-      <div class="ui-md-3 pt-0 pb-0 pr-4">
-        <label for="fuser" class="steps-st mb-0"> Filtro por código serie: </label>
-        <div class="inner-addon left-addon">
-          <i class="fa fa-times font-size-16 aico i-slight">
-          </i>
-          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
-            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
-          <div class="focus-border"></div>
-        </div>
-
-
-      </div>
-
-      <div class="ui-md-3 pt-0 pb-0 pr-4">
-        <label for="fuser" class="steps-st mb-0"> Filtro por nombre serie: </label>
-        <div class="inner-addon left-addon">
-          <i class="fa fa-times font-size-16 aico i-slight">
-          </i>
-          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
-            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
-          <div class="focus-border"></div>
-        </div>
-
-
-      </div>
-      <div class="ui-md-3 pt-0 pb-0 pr-4">
-        <label for="fuser" class="steps-st mb-0"> Filtro por código Subserie: </label>
-        <div class="inner-addon left-addon">
-          <i class="fa fa-times font-size-16 aico i-slight">
-          </i>
-          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
-            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
-          <div class="focus-border"></div>
-        </div>
-      </div>
-      <div class="ui-md-3 pt-0 pb-0 pr-4">
-        <label for="fuser" class="steps-st mb-0"> Filtro por nombre Subserie: </label>
-        <div class="inner-addon left-addon">
-          <i class="fa fa-times font-size-16 aico i-slight">
-          </i>
-          <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
-            class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-14" />
-          <div class="focus-border"></div>
-        </div>
-      </div>
-    </div>
-
-  </p-panel>
-
-
-
-
-
-
-
-
+  <!-- Convesiones -->
   <div class="ui-g font-size-14 font-new-roman text-center">
 
-
+    <!-- series - tipologia -->
     <div class="ui-md-4 p-0">
       <span class="serie-clr mr-1"></span> <span> Serie Documental</span>
     </div>
@@ -119,6 +128,7 @@
       <span class="tipo-clr-b mr-1"></span> <span> Tipología Documental</span>
     </div>
 
+    <!-- disposicion final -->
     <div class="ui-md-3 p-0">
       <span class="font-weight-bold">CT</span> <span> = Conservación Total</span>
     </div>
@@ -131,19 +141,25 @@
     <div class="ui-md-3 p-0">
       <span class="font-weight-bold">E</span> <span> = Eliminación</span>
     </div>
-
   </div>
 
-
-
-
-
-  <p-table id="tblseries" #tblseries [value]="seriesPaginados.registros"
-    (onPage)="seriesPaginados.scrollerListener($event)" [totalRecords]="seriesPaginados.datos.cantidadTotal"
+  <!-- tabla series -->
+  <p-table
+    id="tblseries"
+    #tblseries
+    [value]="seriesPaginados.registros"
+    (onPage)="seriesPaginados.scrollerListener($event)"
+    [totalRecords]="seriesPaginados.datos.cantidadTotal"
     [alwaysShowPaginator]="seriesPaginados.datos.cantidadTotal > seriesPaginados.rowsDefault"
-    [rowsPerPageOptions]="seriesPaginados.rowsPerPageOptions" [rows]="seriesPaginados.rowsDefault" [responsive]="true"
-    [paginator]="true" [lazy]="true" styleClass="tblshort tblhshort tblwthclr" dataKey="idSerie"
-    [expandedRowKeys]="expandedRows" rowHover="true">
+    [rowsPerPageOptions]="seriesPaginados.rowsPerPageOptions"
+    [rows]="seriesPaginados.rowsDefault"
+    [expandedRowKeys]="expandAllSeries"
+    [responsive]="true"
+    [paginator]="true"
+    [lazy]="true"
+    styleClass="tblshort tblhshort tblwthclr"
+    dataKey="idSerie"
+    rowHover="true">
 
     <ng-template pTemplate="header">
       <tr class="text-center">
@@ -151,7 +167,7 @@
         <th style="width: 40%" rowspan="2">Series y Tipos Documentales</th>
         <th style="width: 8%" colspan="2">Retención</th>
         <th style="width: 10%" colspan="4">Disposición Final</th>
-        <th style="width: 25%" rowspan="2">Procedimiento</th>
+        <th style="width: 27%" rowspan="2">Procedimiento</th>
         <th style="width: 3%" rowspan="2"></th>
       </tr>
       <tr class="text-center">
@@ -166,18 +182,23 @@
 
     <ng-template pTemplate="body" let-serie>
       <tr [pSelectableRow]="serie">
-
         <td class="text-center align-text-top row-serie">
           <p class="font-size-15 font-new-roman mb-0 font-weight-bold clr-anulado">{{serie.codigo}}</p>
         </td>
-        <td style="padding-left: 3px!important" class="align-text-top row-serie">
+        <td class="align-text-top row-serie pl-3" style="padding-left: 3px!important">
           <p class="font-size-14 font-new-roman mb-0 font-weight-bold">{{serie.nombre}}</p>
           <ng-container *ngFor="let doc of serie.tiposDocumentales">
-            <p class="font-size-14 font-new-roman mb-0"><span class="tipo-clr mr-2 ml-1"></span> {{doc.nombre}}</p>
+            <p class="font-size-14 font-new-roman mb-0">
+              <span class="tipo-clr mr-2 ml-1"></span> {{doc.nombre}}
+            </p>
           </ng-container>
         </td>
-        <td class="text-center align-text-top row-serie">{{serie.ag}}</td>
-        <td class="text-center align-text-top row-serie">{{serie.ac}}</td>
+        <td class="text-center align-text-top row-serie">
+          {{serie.ag}}
+        </td>
+        <td class="text-center align-text-top row-serie">
+          {{serie.ac}}
+        </td>
         <td class="text-center align-text-top row-serie">
           <i *ngIf="serie.ct" class="pi pi-check font-size-18"></i>
         </td>
@@ -208,21 +229,25 @@
     </ng-template>
 
     <ng-template pTemplate="rowexpansion" let-serie>
-
       <ng-container *ngFor="let subserie of serie.subSeries">
         <tr [pSelectableRow]="subserie">
-
           <td class="text-center align-text-top">
             <p class="font-size-15 font-new-roman mb-0 font-weight-bold clr-activo">{{subserie.codigo}}</p>
           </td>
           <td class="align-text-top" style="padding-left: 3px!important">
             <p class="font-size-15 font-new-roman mb-0 font-weight-bold text-capitalize">{{subserie.nombre}}</p>
             <ng-container *ngFor="let doc of subserie.tiposDocumentales">
-              <span class="tipo-clr mr-2 ml-1"></span> <span class="font-size-14 font-new-roman">{{doc.nombre}}</span>
+              <p class="font-size-14 font-new-roman mb-0">
+                <span class="tipo-clr mr-2 ml-1"></span> {{doc.nombre}}
+              </p>
             </ng-container>
           </td>
-          <td class="text-center align-text-top">{{subserie.ag}}</td>
-          <td class="text-center align-text-top">{{subserie.ac}}</td>
+          <td class="text-center align-text-top">
+            {{subserie.ag}}
+          </td>
+          <td class="text-center align-text-top">
+            {{subserie.ac}}
+          </td>
           <td class="text-center align-text-top">
             <i *ngIf="subserie.ct" class="pi pi-check font-size-18"></i>
           </td>
@@ -248,7 +273,6 @@
           </td>
         </tr>
       </ng-container>
-
     </ng-template>
 
     <ng-template pTemplate="emptymessage">
@@ -257,8 +281,7 @@
           <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-1">
             <span class="ui-messages-icon pi pi-info-circle"></span>
             <span class="ui-messages-detail font-size-15">
-              <strong>No se encontraron consecutivos</strong> que coincidan con los criterios de filtro de búsqueda
-              ingresado
+              <strong>No se encontraron series documentales</strong> que coincidan con los criterios de filtro de búsqueda ingresado
             </span>
           </div>
         </td>

@@ -63,15 +63,6 @@ th:before {
   cursor: pointer;
 }
 
-.refresh {
-  color: #007ad9;
-  cursor: pointer;
-}
-
-.refresh:hover {
-  color: #1365a3;
-}
-
 .row-serie {
   background-color: #f8f8f8 !important;
 }
