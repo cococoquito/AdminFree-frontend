@@ -8,44 +8,44 @@ import { TipoDocumentalDTO } from './tipo-documental.dto';
 export class Documental {
 
   /** Codigo de la serie o subserie */
-  protected codigo: string;
+  public codigo: string;
 
   /** Nombre de la serie o subserie */
-  protected nombre: string;
+  public nombre: string;
 
   /** Tiempo en archivo gestion */
-  protected AG: number;
+  public AG: number;
 
   /** Tiempo en archivo central */
-  protected AC: number;
+  public AC: number;
 
   /** Conservacion total */
-  protected CT: boolean;
+  public CT: boolean;
 
   /** Microfilmacion / digitalizacion */
-  protected M: boolean;
+  public M: boolean;
 
   /** Seleccion */
-  protected S: boolean;
+  public S: boolean;
 
   /** Eliminacion */
-  protected E: boolean;
+  public E: boolean;
 
   /** Procedimiento de la serie o sub-serie */
-  protected procedimiento: string;
+  public procedimiento: string;
 
   /** Fecha de creacion de la serie o sub-serie */
-  protected fechaCreacion: Date;
+  public fechaCreacion: Date;
 
   /** Identificador del usuario para la creacion de la serie o sub-serie */
-  protected idUsuarioCreacion: number;
+  public idUsuarioCreacion: number;
 
   /** Identificador del cliente asociado a esta serie */
-  protected idCliente: number;
+  public idCliente: number;
 
   /** Identifica que tipo de accion se va realizar sobre la serie o subserie */
-  protected tipoEvento: string;
+  public tipoEvento: string;
 
   /** Son los tipos documentales que soporta la serie o subserie */
-  protected tiposDocumentales: Array<TipoDocumentalDTO>;
+  public tiposDocumentales: Array<TipoDocumentalDTO>;
 }

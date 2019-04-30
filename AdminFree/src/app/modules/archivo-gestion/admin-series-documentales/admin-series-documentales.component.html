@@ -221,7 +221,7 @@
           <button type="button" class="btn btn-sm btn-primary">
             <label class="btn-size-admin"><i class="fa fa-pencil"></i></label>
           </button>
-          <button type="button" class="btn btn-sm btn-danger mt-1 mb-1">
+          <button (click)="eliminarSerie(serie)" type="button" class="btn btn-sm btn-danger mt-1 mb-1">
             <label class="btn-size-admin"><i class="fa fa-trash"></i></label>
           </button>
           <button type="button" class="btn btn-sm btn-success">
@@ -270,7 +270,7 @@
             <button type="button" class="btn btn-sm btn-primary mb-1">
               <label class="btn-size-admin"><i class="fa fa-pencil"></i></label>
             </button>
-            <button type="button" class="btn btn-sm btn-danger">
+            <button (click)="eliminarSubSerie(subserie)" type="button" class="btn btn-sm btn-danger">
               <label class="btn-size-admin"><i class="fa fa-trash"></i></label>
             </button>
           </td>

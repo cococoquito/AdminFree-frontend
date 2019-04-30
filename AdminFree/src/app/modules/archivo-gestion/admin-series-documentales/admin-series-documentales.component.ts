@@ -5,6 +5,8 @@ import { ArchivoGestionService } from '../../../services/archivo-gestion.service
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { PaginadorModel } from '../../../model/paginador-model';
+import { SerieDocumentalDTO } from '../../../dtos/archivogestion/serie-documental.dto';
+import { SubSerieDocumentalDTO } from '../../../dtos/archivogestion/sub-serie-documental.dto';
 import { FiltroSerieDocumentalDTO } from '../../../dtos/archivogestion/filtro-serie-documental.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
@@ -126,10 +128,10 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.messageService.clear();
 
     // se configura el paginador dado que puede cambiar el skip o rowsperpage
-    this.filtro.paginador = this.seriesPaginados.datos;
+    this.filtroClone.paginador = this.seriesPaginados.datos;
 
     // se procede a consultar las series documentales
-    this.archivoGestionService.getSeriesDocumentales(this.filtro).subscribe(
+    this.archivoGestionService.getSeriesDocumentales(this.filtroClone).subscribe(
       data => {
         this.seriesPaginados.configurarRegistros(data);
       },
@@ -185,6 +187,20 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         }
       );
     }
+  }
+
+  /**
+   * Metodo que permite soportar el evento click del boton eliminar serie documental
+   */
+  public eliminarSerie(serie: SerieDocumentalDTO): void {
+    console.log(serie.nombre);
+  }
+
+  /**
+   * Metodo que permite soportar el evento click del boton eliminar sub-serie documental
+   */
+  public eliminarSubSerie(subSerie: SubSerieDocumentalDTO): void {
+    console.log(subSerie.nombre);
   }
 
   /**
