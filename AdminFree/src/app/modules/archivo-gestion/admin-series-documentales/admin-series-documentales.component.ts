@@ -12,6 +12,8 @@ import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { LabelsConstant } from '../../../constants/labels.constant';
+import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
+import { TipoEventoConstant } from '../../../constants/tipo-evento.constant';
 
 /**
  * Componente para la administracion de las series documentales
@@ -199,8 +201,33 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /**
    * Metodo que permite soportar el evento click del boton eliminar sub-serie documental
    */
-  public eliminarSubSerie(subSerie: SubSerieDocumentalDTO): void {
-    console.log(subSerie.nombre);
+  public eliminarSubSerie(serie: SerieDocumentalDTO, subSerie: SubSerieDocumentalDTO): void {
+
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.ELIMINAR_CAMPO_ENTRADA.replace('?1', subSerie.nombre),
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se procede a eliminar la subserie
+        subSerie.tipoEvento = TipoEventoConstant.ELIMINAR;
+        this.archivoGestionService.administrarSubSerieDocumental(subSerie).subscribe(
+          data => {
+            // Mensaje exitoso, campo fue eliminado
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ENTRADA_ELIMINADO));
+
+            // se elimina de la lista visualizada en la pagina
+            serie.subSeries.splice(serie.subSeries.indexOf(subSerie, 0), 1);
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 
   /**

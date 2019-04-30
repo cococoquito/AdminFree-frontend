@@ -273,7 +273,7 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
         this.clienteModificar.telefonos !== this.clienteModificarOrigen.telefonos) {
 
       // se procede a MODIFICAR el cliente en el sistema
-      this.clienteModificar.tipoEvento = TipoEventoConstant.ACTUALIZAR;
+      this.clienteModificar.tipoEvento = TipoEventoConstant.EDITAR;
       this.configuracionesService.modificarCliente(this.clienteModificar).subscribe(
         data => {
 
@@ -345,8 +345,8 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   public cerrarSesion(): void {
 
     // se limpia los keystore almacenados
-    LocalStoreUtil.clientes(TipoEventoConstant.REMOVE);
-    LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.REMOVE);
+    LocalStoreUtil.clientes(TipoEventoConstant.ELIMINAR);
+    LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.ELIMINAR);
 
     // se crea la instancia de las credenciales por si intentan ingresar de nuevo
     this.credenciales = new CredencialesDTO();
@@ -396,8 +396,8 @@ export class AdminClientesComponent extends CommonComponent implements OnInit {
   private setStateLocalStore(): void {
 
     // se limpia los keystore almacenados
-    LocalStoreUtil.clientes(TipoEventoConstant.REMOVE);
-    LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.REMOVE);
+    LocalStoreUtil.clientes(TipoEventoConstant.ELIMINAR);
+    LocalStoreUtil.credencialesAdminClientes(TipoEventoConstant.ELIMINAR);
 
     // se verifica si el cliente esta autenticado
     if (this.autenticacion) {

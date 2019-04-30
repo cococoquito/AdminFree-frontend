@@ -147,7 +147,7 @@ export class LocalStoreUtil {
       }
 
       // evento para REMOVER algun valor del local-store
-      case TipoEventoConstant.REMOVE: {
+      case TipoEventoConstant.ELIMINAR: {
         localStorage.removeItem(key);
         break;
       }
