@@ -92,13 +92,6 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se procede a obtener el cliente autenticado
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
-    // se construye el DTO para el filtro de busqueda de series documentales
-    this.filtro = new FiltroSerieDocumentalDTO();
-    this.filtro.idCliente = this.clienteCurrent.id;
-
-    // se debe inicializar el clone con los mismos datos del filtro
-    this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
-
     // se consulta los datos iniciales para este submodulo
     this.archivoGestionService.getInitAdminSeriesDocumentales(this.clienteCurrent.id).subscribe(
       data => {
@@ -108,6 +101,11 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
           // se configura el paginador de las series
           this.seriesPaginados = new PaginadorModel(this);
           this.seriesPaginados.configurarRegistros(data.series);
+
+          // se construye el DTO para el filtro de busqueda con su clone
+          this.filtro = new FiltroSerieDocumentalDTO();
+          this.filtro.idCliente = this.clienteCurrent.id;
+          this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
 
           // se procede a expandir todas las filas de las series
           this.expandRowsSeries();

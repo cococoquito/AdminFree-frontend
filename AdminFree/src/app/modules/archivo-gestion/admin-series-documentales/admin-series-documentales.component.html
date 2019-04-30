@@ -1,11 +1,11 @@
 <!-- pnl filtro - agregar serie -->
-<p-panel styleClass="steps-pnl steps-pnl-main mb-4">
+<p-panel styleClass="steps-pnl pnl-pt mb-4">
   <p-header>
     <div class="ui-g">
 
       <!-- btn - filtro -->
       <div class="ui-md-6 p-0 text-left">
-        <button (click)="filtrar()" type="button" class="btn btn-sm btn-primary w-180-px">
+        <button *ngIf="seriesPaginados" (click)="filtrar()" type="button" class="btn btn-sm btn-primary w-180-px">
           <div class="ui-g">
             <div class="ui-md-6 p-0 text-left">
               <label class="btn-size-admin"><i class="fa fa-search"></i> Filtrar</label>
@@ -13,7 +13,7 @@
             </div>
             <div class="ui-md-6 p-0 text-right">
               <label class="btn-size-admin">
-                <strong *ngIf="seriesPaginados">Cant: {{ seriesPaginados.datos?.cantidadTotal | number }}</strong>
+                <strong>Cant: {{ seriesPaginados.datos?.cantidadTotal | number }}</strong>
               </label>
             </div>
           </div>
@@ -30,7 +30,7 @@
   </p-header>
 
   <!-- filtros -->
-  <div class="ui-g pt-2 mb-2">
+  <div *ngIf="seriesPaginados" class="ui-g pt-2 mb-2">
 
     <!-- filtro codigo serie -->
     <div class="ui-md-3 pt-0 pb-0 pr-4">
@@ -104,15 +104,9 @@
       </div>
     </div>
   </div>
-</p-panel>
 
-<!-- NO hay series -->
-<p-panel *ngIf="!seriesPaginados" styleClass="steps-pnl pnl-pt">
-  <p-header>
-    <i class="fa fa-file-text font-size-16"></i>
-    <span> Series Documentales</span>
-  </p-header>
-  <div class="mr-3 ml-3 mt-3 mb-3 p-2 ui-messages ui-messages-info ui-corner-all text-center">
+  <!-- NO hay series -->
+  <div *ngIf="!seriesPaginados" class="mr-3 ml-3 mt-3 mb-3 p-2 ui-messages ui-messages-info ui-corner-all text-center">
     <span class="ui-messages-icon pi pi-info-circle"></span>
     <span class="ui-messages-detail font-size-15 ml-0">
       No se encontraron <strong>series documentales</strong> parametrizados en el sistema
