@@ -136,6 +136,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.archivoGestionService.getSeriesDocumentales(this.filtroClone).subscribe(
       data => {
         this.seriesPaginados.configurarRegistros(data);
+        this.expandRowsSeries();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -183,6 +184,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
             this.filtroClone.nombreSubSerieDocumental) {
             this.hayFiltroAplicado = true;
           }
+
+          // se procede a expandir todas las filas de las series
+          this.expandRowsSeries();
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -208,7 +212,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
-      message: MsjFrontConstant.ELIMINAR_CAMPO_ENTRADA.replace('?1', subSerie.nombre),
+      message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE.replace('?1', 'Subserie').replace('?2', subSerie.nombre),
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
 
@@ -217,7 +221,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.archivoGestionService.administrarSubSerieDocumental(subSerie).subscribe(
           data => {
             // Mensaje exitoso, campo fue eliminado
-            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAMPO_ENTRADA_ELIMINADO));
+            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Subserie')));
 
             // se elimina de la lista visualizada en la pagina
             serie.subSeries.splice(serie.subSeries.indexOf(subSerie, 0), 1);
@@ -236,8 +240,10 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   private expandRowsSeries(): void {
     this.expandAllSeries = {};
-    for(const serie of this.seriesPaginados.registros) {
-      this.expandAllSeries[serie.idSerie] = 1;
+    if (this.seriesPaginados.registros && this.seriesPaginados.registros.length) {
+      for(const serie of this.seriesPaginados.registros) {
+        this.expandAllSeries[serie.idSerie] = 1;
+      }
     }
   }
 }

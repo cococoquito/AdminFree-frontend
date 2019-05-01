@@ -157,4 +157,11 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando el consecutivo es generado exitosamente */
   static readonly CONSECUTIVO_GENERADO: string = 'Consecutivo generado exitosamente';
+
+  /** Mensaje para la eliminacion de una subserie o serie documental */
+  static readonly ELIMINAR_SERIE_SUBSERIE: string =
+    '¿Seguro de eliminar la siguiente ?1 Documental? <div class="text-center mt-2"><strong>?2</strong></div>';
+
+  /** Mensaje cuando la subserie o serie documental fue eliminada exitosamente */
+  static readonly SERIE_SUBSERIE_ELIMINADA: string = 'La ?1 Documental fue eliminada';
 }
