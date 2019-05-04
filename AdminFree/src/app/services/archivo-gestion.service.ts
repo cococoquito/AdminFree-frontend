@@ -90,9 +90,10 @@ export class ArchivoGestionService {
 	 * aplica solamente para CREAR, EDITAR, ELIMINAR
 	 *
 	 * @param subserie, DTO con los datos de la sub-serie documental
+   * @return Objecto con la respuesta del proceso
 	 */
-  public administrarSubSerieDocumental(subserie: SubSerieDocumentalDTO): Observable<MessageResponseDTO> {
-    return this.http.post<MessageResponseDTO>(
+  public administrarSubSerieDocumental(subserie: SubSerieDocumentalDTO): Observable<any> {
+    return this.http.post<any>(
       ArchivoGestionAPIConstant.URL_ADMIN_SUBSERIES,
       subserie
     );

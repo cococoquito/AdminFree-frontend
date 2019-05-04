@@ -160,8 +160,8 @@ export class MsjFrontConstant {
 
   /** Mensaje para la eliminacion de una subserie o serie documental */
   static readonly ELIMINAR_SERIE_SUBSERIE: string =
-    '¿Seguro de eliminar la siguiente ?1 Documental? <div class="text-center mt-2 ?3"><strong>?2</strong></div>';
+    '¿Seguro de eliminar la siguiente ?1 documental? <div class="text-center mt-2 ?3"><strong>?2</strong></div>';
 
   /** Mensaje cuando la subserie o serie documental fue eliminada exitosamente */
-  static readonly SERIE_SUBSERIE_ELIMINADA: string = 'La ?1 Documental fue eliminada';
+  static readonly SERIE_SUBSERIE_ELIMINADA: string = 'La ?1 documental fue eliminada';
 }

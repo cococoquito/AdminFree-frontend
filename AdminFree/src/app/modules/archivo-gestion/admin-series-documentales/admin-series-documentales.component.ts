@@ -206,7 +206,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
       message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE
-        .replace('?1', 'Serie')
+        .replace('?1', 'serie')
         .replace('?2', serie.nombre)
         .replace('?3', 'text-uppercase'),
       header: MsjFrontConstant.CONFIRMACION,
@@ -223,7 +223,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.archivoGestionService.administrarSerieDocumental(request).subscribe(
           data => {
             // Mensaje exitoso, serie documental fue eliminado
-            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Serie')));
+            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'serie')));
 
             // se configura los nuevas series consultadas
             this.seriesPaginados.filtroExitoso(this.tblseries, data);
@@ -232,7 +232,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
             this.expandRowsSeries();
           },
           error => {
-            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            this.messageService.add(MsjUtil.getToastErrorLng(this.showMensajeError(error)));
           }
         );
       }
@@ -250,7 +250,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
       message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE
-        .replace('?1', 'Subserie')
+        .replace('?1', 'subserie')
         .replace('?2', subSerie.nombre)
         .replace('?3', 'text-capitalize'),
       header: MsjFrontConstant.CONFIRMACION,
@@ -258,18 +258,19 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
         // se procede a eliminar la subserie
         const request = new SubSerieDocumentalDTO();
+        request.idSerie = serie.idSerie;
         request.idSubSerie = subSerie.idSubSerie;
         request.tipoEvento = TipoEventoConstant.ELIMINAR;
         this.archivoGestionService.administrarSubSerieDocumental(request).subscribe(
           data => {
             // Mensaje exitoso, sub-serie documental fue eliminado
-            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Subserie')));
+            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'subserie')));
 
-            // se elimina de la lista visualizada en la pagina
-            serie.subSeries.splice(serie.subSeries.indexOf(subSerie, 0), 1);
+            // el servicio retorna las subseries relacionados a esta serie documental
+            serie.subSeries = data;
           },
           error => {
-            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            this.messageService.add(MsjUtil.getToastErrorLng(this.showMensajeError(error)));
           }
         );
       }

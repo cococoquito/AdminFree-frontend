@@ -97,14 +97,13 @@ export class MessagesBackendConstant {
   static readonly SERIE_MISMO_CODIGO: string = 'Ya existe una serie documental con el código';
 
   /** La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
-  static readonly SERIE_CONSECUTIVOS: string =
-  'La serie documental que intenta eliminar tiene asociado <strong>consecutivos de correspondencia</strong>';
+  static readonly SERIE_CONSECUTIVOS: string = 'La serie tiene asociado consecutivos de correspondencia';
 
   /** La serie documental que intenta eliminar esta asociado en la TRD*/
-  static readonly SERIE_TRD: string = 'La serie documental que intenta eliminar esta asociada en la <strong>TRD</strong>';
+  static readonly SERIE_TRD: string = 'La serie a eliminar esta asociada en la TRD';
 
   /** Para eliminar la serie documental debe eliminar primero las subseries relacionadas*/
-  static readonly SERIE_TIENE_SUBSERIE: string = 'Para eliminar la serie documental debe eliminar primero las subseries relacionadas';
+  static readonly SERIE_TIENE_SUBSERIE: string = 'Para eliminar la serie debe eliminar primero las subseries';
 
   /** Ya existe una subserie documental con el nombre ?*/
   static readonly SUBSERIE_MISMO_NOMBRE: string = 'Ya existe una subserie documental con el nombre';
@@ -113,11 +112,10 @@ export class MessagesBackendConstant {
   static readonly SUBSERIE_MISMO_CODIGO: string = 'Ya existe una subserie documental con el código';
 
   /** La subserie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
-  static readonly SUBSERIE_CONSECUTIVOS: string =
-  'La subserie documental que intenta eliminar tiene asociado <strong>consecutivos de correspondencia</strong>';
+  static readonly SUBSERIE_CONSECUTIVOS: string = 'La subserie tiene asociado consecutivos de correspondencia';
 
   /** La subserie documental que intenta eliminar esta asociado en la TRD*/
-  static readonly SUBSERIE_TRD: string = 'La subserie documental que intenta eliminar esta asociada en la <strong>TRD</strong>';
+  static readonly SUBSERIE_TRD: string = 'La subserie a eliminar esta asociada en la TRD';
 
   /** Ya existe un tipo documental con el nombre ?*/
   static readonly EXISTE_NOMBRE_TIPODOCUMENTAL: string = 'Ya existe un tipo documental con el nombre ?';
