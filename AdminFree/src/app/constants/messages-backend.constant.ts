@@ -97,10 +97,11 @@ export class MessagesBackendConstant {
   static readonly SERIE_MISMO_CODIGO: string = 'Ya existe una serie documental con el código';
 
   /** La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
-  static readonly SERIE_CONSECUTIVOS: string = 'La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia';
+  static readonly SERIE_CONSECUTIVOS: string =
+  'La serie documental que intenta eliminar tiene asociado <strong>consecutivos de correspondencia</strong>';
 
   /** La serie documental que intenta eliminar esta asociado en la TRD*/
-  static readonly SERIE_TRD: string = 'La serie documental que intenta eliminar esta asociado en la TRD';
+  static readonly SERIE_TRD: string = 'La serie documental que intenta eliminar esta asociada en la <strong>TRD</strong>';
 
   /** Para eliminar la serie documental debe eliminar primero las subseries relacionadas*/
   static readonly SERIE_TIENE_SUBSERIE: string = 'Para eliminar la serie documental debe eliminar primero las subseries relacionadas';
@@ -113,8 +114,11 @@ export class MessagesBackendConstant {
 
   /** La subserie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
   static readonly SUBSERIE_CONSECUTIVOS: string =
-  'La subserie documental que intenta eliminar tiene asociado consecutivos de correspondencia';
+  'La subserie documental que intenta eliminar tiene asociado <strong>consecutivos de correspondencia</strong>';
 
   /** La subserie documental que intenta eliminar esta asociado en la TRD*/
-  static readonly SUBSERIE_TRD: string = 'La subserie documental que intenta eliminar esta asociado en la TRD';
+  static readonly SUBSERIE_TRD: string = 'La subserie documental que intenta eliminar esta asociada en la <strong>TRD</strong>';
+
+  /** Ya existe un tipo documental con el nombre ?*/
+  static readonly EXISTE_NOMBRE_TIPODOCUMENTAL: string = 'Ya existe un tipo documental con el nombre ?';
 }

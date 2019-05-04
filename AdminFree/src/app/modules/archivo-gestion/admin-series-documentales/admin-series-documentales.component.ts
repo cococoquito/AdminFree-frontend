@@ -212,13 +212,18 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
-      message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE.replace('?1', 'Subserie').replace('?2', subSerie.nombre),
+      message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE
+        .replace('?1', 'Subserie')
+        .replace('?2', subSerie.nombre)
+        .replace('?3', 'text-capitalize'),
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
 
         // se procede a eliminar la subserie
-        subSerie.tipoEvento = TipoEventoConstant.ELIMINAR;
-        this.archivoGestionService.administrarSubSerieDocumental(subSerie).subscribe(
+        const request = new SubSerieDocumentalDTO();
+        request.idSubSerie = subSerie.idSubSerie;
+        request.tipoEvento = TipoEventoConstant.ELIMINAR;
+        this.archivoGestionService.administrarSubSerieDocumental(request).subscribe(
           data => {
             // Mensaje exitoso, campo fue eliminado
             this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Subserie')));

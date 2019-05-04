@@ -268,6 +268,11 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.SUBSERIE_TRD;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_EXISTE_NOMBRE_TIPODOCUMENTAL: {
+        businessMsj = MessagesBackendConstant.EXISTE_NOMBRE_TIPODOCUMENTAL;
+        break;
+      }
     }
     return businessMsj;
   }

@@ -92,4 +92,7 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - La subserie documental que intenta eliminar esta asociado en la TRD*/
   static readonly KEY_SUBSERIE_TRD: string = '29';
+
+  /** 400 - Ya existe un tipo documental con el nombre ?*/
+  static readonly KEY_EXISTE_NOMBRE_TIPODOCUMENTAL: string = '30';
 }
