@@ -45,10 +45,4 @@ export class ArchivoGestionAPIConstant {
     AppDomainConstant.ADMINFREE +
     ArchivoGestionAPIConstant.ARCHIVO_GESTION_API +
     'adminsubseries';
-
-  /** URL del recurso que permite eliminar una serie documental en el sistema*/
-  static readonly URL_DELETE_SERIE: string =
-    AppDomainConstant.ADMINFREE +
-    ArchivoGestionAPIConstant.ARCHIVO_GESTION_API +
-    'deleteserie';
 }

@@ -215,11 +215,12 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         // se construye el request necesario para la eliminacion
         const request = new SerieDocumentalDTO();
         request.idSerie = serie.idSerie;
+        request.tipoEvento = TipoEventoConstant.ELIMINAR;
         this.filtro.paginador = this.seriesPaginados.filtroBefore();
         request.filtro = this.filtro;
 
         // se procede a eliminar la serie
-        this.archivoGestionService.eliminarSerieDocumental(request).subscribe(
+        this.archivoGestionService.administrarSerieDocumental(request).subscribe(
           data => {
             // Mensaje exitoso, serie documental fue eliminado
             this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Serie')));
