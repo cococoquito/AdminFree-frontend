@@ -73,7 +73,7 @@ export class ArchivoGestionService {
 
   /**
 	 * Servicio que permite administrar la entidad de series documentales
-	 * aplica solamente para CREAR, EDITAR, ELIMINAR
+	 * aplica solamente para CREAR, EDITAR
 	 *
 	 * @param serie, DTO con los datos de la serie documental
 	 */
@@ -94,6 +94,19 @@ export class ArchivoGestionService {
     return this.http.post<MessageResponseDTO>(
       ArchivoGestionAPIConstant.URL_ADMIN_SUBSERIES,
       subserie
+    );
+  }
+
+  /**
+	 * Servicio que permite eliminar una serie documental en el sistema
+	 *
+	 * @param serie, DTO que contiene los datos de la serie a eliminar
+	 * @return Response con la lista de series documentales
+	 */
+  public eliminarSerieDocumental(serie: SerieDocumentalDTO): Observable<PaginadorResponseDTO> {
+    return this.http.post<PaginadorResponseDTO>(
+      ArchivoGestionAPIConstant.URL_DELETE_SERIE,
+      serie
     );
   }
 }

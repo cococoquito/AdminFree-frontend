@@ -199,7 +199,43 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Metodo que permite soportar el evento click del boton eliminar serie documental
    */
   public eliminarSerie(serie: SerieDocumentalDTO): void {
-    console.log(serie.nombre);
+
+    // se limpia los mensajes de otros procesos
+    this.messageService.clear();
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE
+        .replace('?1', 'Serie')
+        .replace('?2', serie.nombre)
+        .replace('?3', 'text-uppercase'),
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se construye el request necesario para la eliminacion
+        const request = new SerieDocumentalDTO();
+        request.idSerie = serie.idSerie;
+        this.filtro.paginador = this.seriesPaginados.filtroBefore();
+        request.filtro = this.filtro;
+
+        // se procede a eliminar la serie
+        this.archivoGestionService.eliminarSerieDocumental(request).subscribe(
+          data => {
+            // Mensaje exitoso, serie documental fue eliminado
+            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Serie')));
+
+            // se configura los nuevas series consultadas
+            this.seriesPaginados.filtroExitoso(this.tblseries, data);
+
+            // se procede a expandir todas las filas de las series
+            this.expandRowsSeries();
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 
   /**
@@ -225,7 +261,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         request.tipoEvento = TipoEventoConstant.ELIMINAR;
         this.archivoGestionService.administrarSubSerieDocumental(request).subscribe(
           data => {
-            // Mensaje exitoso, campo fue eliminado
+            // Mensaje exitoso, sub-serie documental fue eliminado
             this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Subserie')));
 
             // se elimina de la lista visualizada en la pagina
