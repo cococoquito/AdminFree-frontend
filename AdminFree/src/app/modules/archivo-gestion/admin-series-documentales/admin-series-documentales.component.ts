@@ -5,6 +5,7 @@ import { ArchivoGestionService } from '../../../services/archivo-gestion.service
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { PaginadorModel } from '../../../model/paginador-model';
+import { Documental } from '../../../dtos/archivogestion/documental';
 import { SerieDocumentalDTO } from '../../../dtos/archivogestion/serie-documental.dto';
 import { SubSerieDocumentalDTO } from '../../../dtos/archivogestion/sub-serie-documental.dto';
 import { FiltroSerieDocumentalDTO } from '../../../dtos/archivogestion/filtro-serie-documental.dto';
@@ -27,7 +28,7 @@ import { TipoEventoConstant } from '../../../constants/tipo-evento.constant';
 })
 export class AdminSeriesDocumentalesComponent extends CommonComponent implements OnInit, OnDestroy {
 
-  /** cliente autenticado o es el cliente asociado al usuario */
+  /** Cliente autenticado o es el cliente asociado al usuario */
   private clienteCurrent: ClienteDTO;
 
   /** Paginador de la lista de series documentales parametrizados en el sistema */
@@ -44,6 +45,18 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
   /** Se utiliza para expandir las filas de cada serie asi visualizar las subseries*/
   public expandAllSeries;
+
+  /** Variable que se utiliza para la creacion o edicion de la serie/subserie */
+  public serieSubserieCU: Documental;
+
+  /** Variable que contiene los valores origen de la serie o subserie a editar */
+  public serieSubserieEditarOrigen: Documental;
+
+  /** Es la serie propietaria de la subserie a crear/editar */
+  public seriePropietaria: SerieDocumentalDTO;
+
+  /** Bandera que indica si es una serie documental al momento de creacion o edicion */
+  public esSerieDocumental;
 
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') tblseries: Table;
@@ -278,6 +291,82 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   }
 
   /**
+   * Metodo que permite abrir el panel de creacion de serie/subserie
+   *
+   * @param esSerie, indica si la creacion es una serie documental
+   * @param serie, es la serie documental que es la propietaria
+   * de la subserie a crear, solo aplica para la creacion de la subserie
+   */
+  public abrirPanelCreacion(esSerie: boolean, serie: SerieDocumentalDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se configura la bandera que indica si la creacion es serie documental
+    this.esSerieDocumental = esSerie;
+
+    // se indica que tipo de documental se va crear
+    if (this.esSerieDocumental) {
+      this.serieSubserieCU = new SerieDocumentalDTO();
+    } else {
+      this.serieSubserieCU = new SubSerieDocumentalDTO();
+      this.seriePropietaria = serie;
+    }
+  }
+
+  /**
+   * Metodo que permite abrir el panel de edicion de serie/subserie
+   *
+   * @param esSerie, indica si la edicion es una serie documental
+   * @param documental, es la subserie o serie a editar
+   * @param serie, es la serie documental que es la propietaria
+   * de la subserie a editar, solo aplica para la edicion de la subserie
+   */
+  public abrirPanelEdicion(esSerie: boolean, documental: Documental, serie: SerieDocumentalDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se configura la bandera que indica si la edicion es serie documental
+    this.esSerieDocumental = esSerie;
+
+    // se guarda el origen de la serie/subserie a editar
+    this.serieSubserieEditarOrigen = documental;
+
+    // se hace el backup de la serie o subserie a editar
+    this.serieSubserieCU = JSON.parse(JSON.stringify(documental));
+
+    // se indica que tipo de documental se va editar
+    if (this.esSerieDocumental) {
+      this.serieSubserieCU.id = (documental as SerieDocumentalDTO).idSerie;
+    } else {
+      this.seriePropietaria = serie;
+      this.serieSubserieCU.id = (documental as SubSerieDocumentalDTO).idSubSerie;
+    }
+  }
+
+  /**
+   * Metodo que permite cerrar el panel de creacion o edicion de series/subseries
+   */
+  public closePanelCU(): void {
+
+    // para creacion se pregunta directamente
+    if (!this.serieSubserieCU.id) {
+        this.confirmationService.confirm({
+        message: MsjFrontConstant.SEGURO_SALIR,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.messageService.clear();
+          this.limpiarCamposCU();
+        }
+      });
+    } else {
+      this.messageService.clear();
+      this.limpiarCamposCU();
+    }
+  }
+
+  /**
    * Metodo que permite expandir todas las filas de las series
    * para visualizar las subseries de cada serie consultada
    */
@@ -288,5 +377,15 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.expandAllSeries[serie.idSerie] = 1;
       }
     }
+  }
+
+  /**
+   * Permite limpiar los datos utilizado para la creacion o edicion de la serie/subserie
+   */
+  private limpiarCamposCU(): void {
+    this.serieSubserieCU = null;
+    this.seriePropietaria = null;
+    this.serieSubserieEditarOrigen = null;
+    this.esSerieDocumental = false;
   }
 }

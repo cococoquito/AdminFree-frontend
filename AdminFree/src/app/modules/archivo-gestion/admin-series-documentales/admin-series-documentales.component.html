@@ -22,7 +22,7 @@
 
       <!-- btn - agregar serie -->
       <div class="ui-md-6 p-0 text-right">
-        <button type="button" class="btn btn-sm btn-success w-180-px">
+        <button (click)="abrirPanelCreacion(true, null)" type="button" class="btn btn-sm btn-success w-180-px">
           <label class="btn-size-admin"><i class="fa fa-clipboard"></i> Agregar serie documental</label>
         </button>
       </div>
@@ -224,7 +224,7 @@
           <button (click)="eliminarSerie(serie)" type="button" class="btn btn-sm btn-danger mt-1 mb-1">
             <label class="btn-size-admin"><i class="fa fa-trash"></i></label>
           </button>
-          <button type="button" class="btn btn-sm btn-success">
+          <button (click)="abrirPanelCreacion(false, serie)" type="button" class="btn btn-sm btn-success">
             <label class="btn-size-admin"><i class="fa fa-plus-circle"></i></label>
           </button>
         </td>

@@ -48,4 +48,7 @@ export class Documental {
 
   /** Son los tipos documentales que soporta la serie o subserie */
   public tiposDocumentales: Array<TipoDocumentalDTO>;
+
+  /** Se utiliza solamente en ANGULAR, es el identificador de la serie/subserie a editar */
+  public id: number;
 }
