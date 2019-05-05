@@ -46,16 +46,16 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Se utiliza para expandir las filas de cada serie asi visualizar las subseries*/
   public expandAllSeries;
 
-  /** Variable que se utiliza para la creacion o edicion de la serie/subserie */
+  /** Variable que se utiliza para crear/editar la serie/subserie */
   public serieSubserieCU: Documental;
 
-  /** Variable que contiene los valores origen de la serie o subserie a editar */
+  /** Variable que contiene los valores origen de la serie/subserie a editar */
   public serieSubserieEditarOrigen: Documental;
 
   /** Es la serie propietaria de la subserie a crear/editar */
   public seriePropietaria: SerieDocumentalDTO;
 
-  /** Bandera que indica si es una serie documental al momento de creacion o edicion */
+  /** Bandera que indica si es una serie documental al momento de crear/editar */
   public esSerieDocumental;
 
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
