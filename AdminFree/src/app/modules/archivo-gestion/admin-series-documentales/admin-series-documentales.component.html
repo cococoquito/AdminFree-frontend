@@ -114,8 +114,8 @@
   </div>
 </p-panel>
 
-<!-- HAY series -->
-<ng-container *ngIf="seriesPaginados" [style.display]="!serieSubserieCU?'inherit':'none'">
+<!-- tbl series - convesiones -->
+<div *ngIf="seriesPaginados" [style.display]="!serieSubserieCU?'inherit':'none'">
 
   <!-- Convesiones -->
   <div class="ui-g font-size-14 font-new-roman text-center">
@@ -291,7 +291,7 @@
       </tr>
     </ng-template>
   </p-table>
-</ng-container>
+</div>
 
 <!-- panel crear/editar serie/subserie -->
 <ng-container *ngIf="serieSubserieCU">
@@ -346,6 +346,60 @@
               class="ad-input ad-input-style w-100 pt-0"
               [ngClass]="{'ad-input-required': esNombreInvalido}"/>
             <div class="focus-border"></div>
+          </div>
+        </div>
+      </div>
+    </p-panel>
+
+    <!-- disposicion final-->
+    <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
+      <p-header>
+        <span class="steps-circle">2</span> <span> Disposición Final</span>
+      </p-header>
+
+      <div class="ui-g">
+
+        <!-- conservacion total-->
+        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
+          <div class="ui-g-12 pb-0">
+            <label class="steps-st mb-0 mt-1 mr-1">Conservación Total:</label>
+            <admin-inputswitch
+              [isChecked]="serieSubserieCU.ct"
+              (switchChange)="serieSubserieCU.ct = $event">
+            </admin-inputswitch>
+          </div>
+        </div>
+
+        <!-- microfilmacion-->
+        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
+          <div class="ui-g-12 pb-0">
+            <label class="steps-st mb-0 mt-1 mr-1">Microfilmación:</label>
+            <admin-inputswitch
+              [isChecked]="serieSubserieCU.m"
+              (switchChange)="serieSubserieCU.m = $event">
+            </admin-inputswitch>
+          </div>
+        </div>
+
+        <!-- seleccion-->
+        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
+          <div class="ui-g-12 pb-0">
+            <label class="steps-st mb-0 mt-1 mr-1">Selección:</label>
+            <admin-inputswitch
+              [isChecked]="serieSubserieCU.s"
+              (switchChange)="serieSubserieCU.s = $event">
+            </admin-inputswitch>
+          </div>
+        </div>
+
+        <!-- eliminacion-->
+        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
+          <div class="ui-g-12 pb-0">
+            <label class="steps-st mb-0 mt-1 mr-1">Eliminación:</label>
+            <admin-inputswitch
+              [isChecked]="serieSubserieCU.e"
+              (switchChange)="serieSubserieCU.e = $event">
+            </admin-inputswitch>
           </div>
         </div>
       </div>
