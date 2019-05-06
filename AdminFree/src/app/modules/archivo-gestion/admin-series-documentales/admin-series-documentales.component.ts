@@ -56,7 +56,13 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   public seriePropietaria: SerieDocumentalDTO;
 
   /** Bandera que indica si es una serie documental al momento de crear/editar */
-  public esSerieDocumental;
+  public esSerieDocumental: boolean;
+
+  /** Bandera que indica si el campo CODIGO es invalido al momento de crear/editar*/
+  public esCodigoInvalido: boolean;
+
+  /** Bandera que indica si el campo NOMBRE es invalido al momento de crear/editar*/
+  public esNombreInvalido: boolean;
 
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') tblseries: Table;
@@ -318,7 +324,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Metodo que permite abrir el panel de edicion de serie/subserie
    *
    * @param esSerie, indica si la edicion es una serie documental
-   * @param documental, es la subserie o serie a editar
+   * @param documental, es la serie/subserie a editar
    * @param serie, es la serie documental que es la propietaria
    * de la subserie a editar, solo aplica para la edicion de la subserie
    */
@@ -340,8 +346,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     if (this.esSerieDocumental) {
       this.serieSubserieCU.id = (documental as SerieDocumentalDTO).idSerie;
     } else {
-      this.seriePropietaria = serie;
       this.serieSubserieCU.id = (documental as SubSerieDocumentalDTO).idSubSerie;
+      this.seriePropietaria = serie;
     }
   }
 
@@ -387,5 +393,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.seriePropietaria = null;
     this.serieSubserieEditarOrigen = null;
     this.esSerieDocumental = false;
+    this.esCodigoInvalido = false;
+    this.esNombreInvalido = false;
   }
 }
