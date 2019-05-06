@@ -323,7 +323,7 @@
               adminAutofocus
               autocomplete="off"
               maxlength="50"
-              class="ad-input ad-input-style w-100 pt-0"
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-16"
               [ngClass]="{'ad-input-required': esCodigoInvalido}"/>
             <div class="focus-border"></div>
           </div>
@@ -343,7 +343,7 @@
               [(ngModel)]="serieSubserieCU.nombre"
               autocomplete="off"
               maxlength="255"
-              class="ad-input ad-input-style w-100 pt-0"
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-16"
               [ngClass]="{'ad-input-required': esNombreInvalido}"/>
             <div class="focus-border"></div>
           </div>
@@ -351,58 +351,142 @@
       </div>
     </p-panel>
 
-    <!-- disposicion final-->
-    <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
-      <p-header>
-        <span class="steps-circle">2</span> <span> Disposición Final</span>
-      </p-header>
+    <div class="ui-g">
 
-      <div class="ui-g">
+      <!-- retencion-->
+      <div class="ui-g-6 pt-0">
+        <p-panel styleClass="mt-0 mr-2 ml-2 mb-1">
+          <p-header>
+            <span class="steps-circle">2</span> <span> Retención</span>
+          </p-header>
 
-        <!-- conservacion total-->
-        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
-          <div class="ui-g-12 pb-0">
-            <label class="steps-st mb-0 mt-1 mr-1">Conservación Total:</label>
-            <admin-inputswitch
-              [isChecked]="serieSubserieCU.ct"
-              (switchChange)="serieSubserieCU.ct = $event">
-            </admin-inputswitch>
+          <div class="ml-3 mr-3 mt-3">
+            <label for="inag" class="steps-st mb-0 mt-1"> Tiempo (años) en archivo de</label>
+            <span class="steps-st"> GESTIÓN:</span>
           </div>
-        </div>
-
-        <!-- microfilmacion-->
-        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
-          <div class="ui-g-12 pb-0">
-            <label class="steps-st mb-0 mt-1 mr-1">Microfilmación:</label>
-            <admin-inputswitch
-              [isChecked]="serieSubserieCU.m"
-              (switchChange)="serieSubserieCU.m = $event">
-            </admin-inputswitch>
+          <div class="ml-3 mr-3">
+            <input
+              type="text"
+              id="inag"
+              name="inag"
+              [(ngModel)]="serieSubserieCU.ag"
+              [pKeyFilter]="regex.SOLO_NUMEROS"
+              autocomplete="off"
+              maxlength="3"
+              class="ad-input ad-input-style w-100 font-new-roman"
+              placeholder="Campo Numérico"
+              [ngClass]="{'ad-input-required': esCodigoInvalido}"/>
+            <div class="focus-border"></div>
           </div>
-        </div>
 
-        <!-- seleccion-->
-        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
-          <div class="ui-g-12 pb-0">
-            <label class="steps-st mb-0 mt-1 mr-1">Selección:</label>
-            <admin-inputswitch
-              [isChecked]="serieSubserieCU.s"
-              (switchChange)="serieSubserieCU.s = $event">
-            </admin-inputswitch>
+          <div class="ml-3 mr-3 mt-4">
+            <label for="inac" class="steps-st mb-0 mt-1"> Tiempo (años) en archivo CENTRAL:</label>
           </div>
-        </div>
-
-        <!-- eliminacion-->
-        <div class="ui-lg-3 ui-g-12 ui-md-12 pt-0 text-center">
-          <div class="ui-g-12 pb-0">
-            <label class="steps-st mb-0 mt-1 mr-1">Eliminación:</label>
-            <admin-inputswitch
-              [isChecked]="serieSubserieCU.e"
-              (switchChange)="serieSubserieCU.e = $event">
-            </admin-inputswitch>
+          <div class="ml-3 mr-3">
+            <input
+              type="text"
+              id="inac"
+              name="inac"
+              [(ngModel)]="serieSubserieCU.ac"
+              [pKeyFilter]="regex.SOLO_NUMEROS"
+              autocomplete="off"
+              maxlength="3"
+              class="ad-input ad-input-style w-100 font-new-roman"
+              placeholder="Campo Numérico"
+              [ngClass]="{'ad-input-required': esCodigoInvalido}"/>
+            <div class="focus-border"></div>
           </div>
-        </div>
+          <div style="margin-top: 15.5px"></div>
+        </p-panel>
       </div>
+
+      <!-- disposicion final-->
+      <div class="ui-g-6 pt-0">
+        <p-panel styleClass="mt-0 mr-2">
+          <p-header>
+            <span class="steps-circle">3</span> <span> Disposición Final</span>
+          </p-header>
+
+          <div class="ui-g">
+
+            <!-- conservacion total-->
+            <div class="ui-g-12 pt-0">
+              <div class="ui-g-6 pb-0">
+                <label class="steps-st mb-0 mt-1 mr-1">Conservación Total</label>
+                <span class="font-new-roman">(CT)<strong>:</strong></span>
+              </div>
+              <div class="ui-g-6 pb-0">
+                <admin-inputswitch
+                  [isChecked]="serieSubserieCU.ct"
+                  (switchChange)="serieSubserieCU.ct = $event">
+                </admin-inputswitch>
+              </div>
+            </div>
+
+            <!-- microfilmacion-->
+            <div class="ui-g-12 pt-0">
+              <div class="ui-g-6 pb-0">
+                <label class="steps-st mb-0 mt-1 mr-1">Microfilmación</label>
+                <span class="font-new-roman">(M)<strong>:</strong></span>
+              </div>
+              <div class="ui-g-6 pb-0">
+                <admin-inputswitch
+                  [isChecked]="serieSubserieCU.m"
+                  (switchChange)="serieSubserieCU.m = $event">
+                </admin-inputswitch>
+              </div>
+            </div>
+
+            <!-- seleccion-->
+            <div class="ui-g-12 pt-0">
+              <div class="ui-g-6 pb-0">
+                <label class="steps-st mb-0 mt-1 mr-1">Selección</label>
+                <span class="font-new-roman">(S)<strong>:</strong></span>
+              </div>
+              <div class="ui-g-6 pb-0">
+                <admin-inputswitch
+                  [isChecked]="serieSubserieCU.s"
+                  (switchChange)="serieSubserieCU.s = $event">
+                </admin-inputswitch>
+              </div>
+            </div>
+
+            <!-- eliminacion-->
+            <div class="ui-g-12 pt-0">
+              <div class="ui-g-6 pb-0">
+                <label class="steps-st mb-0 mt-1 mr-1">Eliminación</label>
+                <span class="font-new-roman">(E)<strong>:</strong></span>
+              </div>
+              <div class="ui-g-6 pb-0">
+                <admin-inputswitch
+                  [isChecked]="serieSubserieCU.e"
+                  (switchChange)="serieSubserieCU.e = $event">
+                </admin-inputswitch>
+              </div>
+            </div>
+          </div>
+        </p-panel>
+      </div>
+    </div>
+
+    <!-- tipos documentales-->
+    <p-panel styleClass="mb-3 mt-1 mr-3 ml-3">
+      <p-header>
+        <span class="steps-circle">4</span> <span> Adicione los tipos documentales de la serie documental</span>
+      </p-header>
+    </p-panel>
+
+    <!-- procedimientos-->
+    <p-panel styleClass="mb-2 mt-1 mr-3 ml-3">
+      <p-header>
+        <span class="steps-circle">5</span> <span> Procedimiento</span>
+      </p-header>
+      <textarea
+        id="inprocedimiento"
+        [(ngModel)]="serieSubserieCU.procedimiento"
+        class="form-control font-new-roman font-size-16"
+        rows="3">
+      </textarea>
     </p-panel>
 
     <!-- btns -->

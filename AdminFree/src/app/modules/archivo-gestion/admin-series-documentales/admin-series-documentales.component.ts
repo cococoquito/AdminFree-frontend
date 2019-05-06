@@ -12,6 +12,7 @@ import { FiltroSerieDocumentalDTO } from '../../../dtos/archivogestion/filtro-se
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
+import { RegexUtil } from '../../../util/regex-util';
 import { LabelsConstant } from '../../../constants/labels.constant';
 import { MsjFrontConstant } from '../../../constants/messages-frontend.constant';
 import { TipoEventoConstant } from '../../../constants/tipo-evento.constant';
@@ -63,6 +64,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
   /** Bandera que indica si el campo NOMBRE es invalido al momento de crear/editar*/
   public esNombreInvalido: boolean;
+
+  /** Se utiliza para validar los valores de los inputs solo numerico*/
+  public regex: RegexUtil;
 
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') tblseries: Table;
@@ -311,6 +315,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se configura la bandera que indica si la creacion es serie documental
     this.esSerieDocumental = esSerie;
 
+    // se utiliza para validar los input solo numeros
+    this.setRegex();
+
     // se indica que tipo de documental se va crear
     if (this.esSerieDocumental) {
       this.serieSubserieCU = new SerieDocumentalDTO();
@@ -341,6 +348,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
     // se hace el backup de la serie o subserie a editar
     this.serieSubserieCU = JSON.parse(JSON.stringify(documental));
+
+    // se utiliza para validar los input solo numeros
+    this.setRegex();
 
     // se indica que tipo de documental se va editar
     if (this.esSerieDocumental) {
@@ -395,5 +405,14 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.esSerieDocumental = false;
     this.esCodigoInvalido = false;
     this.esNombreInvalido = false;
+  }
+
+  /**
+   * Metodo para configurar el REGEX para validacion de solo numeros
+   */
+  private setRegex(): void {
+    if (!this.regex) {
+      this.regex = new RegexUtil();
+    }
   }
 }
