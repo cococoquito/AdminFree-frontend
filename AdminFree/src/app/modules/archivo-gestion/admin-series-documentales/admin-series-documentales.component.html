@@ -298,7 +298,7 @@
   <p-panel styleClass="mb-1 steps-pnl pnl-pt">
     <p-header>
       <i class="fa fa-info-circle font-size-18"></i>
-      <span> Creación de la serie documental</span>
+      <span> Creación de series documentales</span>
     </p-header>
 
     <!-- Codigo y Nombre-->
@@ -396,7 +396,7 @@
               [ngClass]="{'ad-input-required': esCodigoInvalido}"/>
             <div class="focus-border"></div>
           </div>
-          <div style="margin-top: 15.5px"></div>
+          <div style="margin-top: 14.2px"></div>
         </p-panel>
       </div>
 
@@ -410,58 +410,58 @@
           <div class="ui-g">
 
             <!-- conservacion total-->
-            <div class="ui-g-12 pt-0">
-              <div class="ui-g-6 pb-0">
-                <label class="steps-st mb-0 mt-1 mr-1">Conservación Total</label>
-                <span class="font-new-roman">(CT)<strong>:</strong></span>
-              </div>
-              <div class="ui-g-6 pb-0">
+            <div class="ui-g-12 pt-0 mt-1">
+              <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.ct"
                   (switchChange)="serieSubserieCU.ct = $event">
                 </admin-inputswitch>
               </div>
+              <div class="ui-g-10 pb-0 align-middle">
+                <span class="steps-st mb-0 mt-1 mr-1">Conservación Total</span>
+                <span class="font-new-roman">(CT)</span>
+              </div>
             </div>
 
             <!-- microfilmacion-->
             <div class="ui-g-12 pt-0">
-              <div class="ui-g-6 pb-0">
-                <label class="steps-st mb-0 mt-1 mr-1">Microfilmación</label>
-                <span class="font-new-roman">(M)<strong>:</strong></span>
-              </div>
-              <div class="ui-g-6 pb-0">
+              <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.m"
                   (switchChange)="serieSubserieCU.m = $event">
                 </admin-inputswitch>
               </div>
+              <div class="ui-g-10 pb-0 align-middle">
+                <span class="steps-st mb-0 mt-1 mr-1">Microfilmación</span>
+                <span class="font-new-roman">(M)</span>
+              </div>
             </div>
 
             <!-- seleccion-->
             <div class="ui-g-12 pt-0">
-              <div class="ui-g-6 pb-0">
-                <label class="steps-st mb-0 mt-1 mr-1">Selección</label>
-                <span class="font-new-roman">(S)<strong>:</strong></span>
-              </div>
-              <div class="ui-g-6 pb-0">
+              <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.s"
                   (switchChange)="serieSubserieCU.s = $event">
                 </admin-inputswitch>
               </div>
+              <div class="ui-g-10 pb-0 align-middle">
+                <span class="steps-st mb-0 mt-1 mr-1">Selección</span>
+                <span class="font-new-roman">(S)</span>
+              </div>
             </div>
 
             <!-- eliminacion-->
             <div class="ui-g-12 pt-0">
-              <div class="ui-g-6 pb-0">
-                <label class="steps-st mb-0 mt-1 mr-1">Eliminación</label>
-                <span class="font-new-roman">(E)<strong>:</strong></span>
-              </div>
-              <div class="ui-g-6 pb-0">
+              <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.e"
                   (switchChange)="serieSubserieCU.e = $event">
                 </admin-inputswitch>
+              </div>
+              <div class="ui-g-10 pb-0 align-middle">
+                <span class="steps-st mb-0 mt-1 mr-1">Eliminación</span>
+                <span class="font-new-roman">(E)</span>
               </div>
             </div>
           </div>

@@ -4,12 +4,14 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { ArchivoGestionService } from '../../../services/archivo-gestion.service';
 import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
+import { SpinnerState } from '../../../states/spinner.state';
 import { PaginadorModel } from '../../../model/paginador-model';
 import { Documental } from '../../../dtos/archivogestion/documental';
 import { SerieDocumentalDTO } from '../../../dtos/archivogestion/serie-documental.dto';
 import { SubSerieDocumentalDTO } from '../../../dtos/archivogestion/sub-serie-documental.dto';
 import { FiltroSerieDocumentalDTO } from '../../../dtos/archivogestion/filtro-serie-documental.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
+import { TipoDocumentalDTO } from '../../../dtos/archivogestion/tipo-documental.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { RegexUtil } from '../../../util/regex-util';
@@ -68,6 +70,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Se utiliza para validar los valores de los inputs solo numerico*/
   public regex: RegexUtil;
 
+  /** Son los tipos documentales parametrizados en el sistema*/
+  public tiposDocumentales: Array<TipoDocumentalDTO>;
+
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') tblseries: Table;
 
@@ -82,12 +87,15 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * los servicios relacionados a este proceso negocio
    *
    * @param shellState, se utiliza para el titulo del componente
+   *
+   * @param spinnerState, se utiliza para simular el spinner
    */
   constructor(
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
     private archivoGestionService: ArchivoGestionService,
-    private shellState: ShellState) {
+    private shellState: ShellState,
+    private spinnerState: SpinnerState) {
     super();
   }
 
@@ -309,21 +317,32 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   public abrirPanelCreacion(esSerie: boolean, serie: SerieDocumentalDTO): void {
 
-    // se limpia los mensajes anteriores
-    this.messageService.clear();
+    // se valida si se debe consultar los tipos documentales para la creacion
+    if (this.tiposDocumentales && this.tiposDocumentales.length) {
 
-    // se configura la bandera que indica si la creacion es serie documental
-    this.esSerieDocumental = esSerie;
+      // se simula el spinner por un segundo
+      this.spinnerState.displaySpinner();
+      setTimeout(() => {
+        // se configura los datos necesarios del panel de creacion
+        this.setPanelCreacion(esSerie, serie);
 
-    // se utiliza para validar los input solo numeros
-    this.setRegex();
-
-    // se indica que tipo de documental se va crear
-    if (this.esSerieDocumental) {
-      this.serieSubserieCU = new SerieDocumentalDTO();
+        // se cierra el spinner
+        this.spinnerState.hideSpinner();
+      }, 100);
     } else {
-      this.serieSubserieCU = new SubSerieDocumentalDTO();
-      this.seriePropietaria = serie;
+      // se procede a consultar los tipos documentales en el sistema
+      this.archivoGestionService.getTiposDocumentales().subscribe(
+        data => {
+          // se configura los tipos documentales consultados
+          this.tiposDocumentales = data;
+
+          // se configura los datos necesarios del panel de creacion
+          this.setPanelCreacion(esSerie, serie);
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
     }
   }
 
@@ -379,6 +398,33 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     } else {
       this.messageService.clear();
       this.limpiarCamposCU();
+    }
+  }
+
+  /**
+   * Metodo que permite configurar los datos necesarios del panel de creacion
+   *
+   * @param esSerie, indica si la creacion es una serie documental
+   * @param serie, es la serie documental que es la propietaria
+   * de la subserie a crear, solo aplica para la creacion de la subserie
+   */
+  private setPanelCreacion(esSerie: boolean, serie: SerieDocumentalDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se configura la bandera que indica si la creacion es serie documental
+    this.esSerieDocumental = esSerie;
+
+    // se utiliza para validar los input solo numeros
+    this.setRegex();
+
+    // se indica que tipo de documental se va crear
+    if (this.esSerieDocumental) {
+      this.serieSubserieCU = new SerieDocumentalDTO();
+    } else {
+      this.serieSubserieCU = new SubSerieDocumentalDTO();
+      this.seriePropietaria = serie;
     }
   }
 
