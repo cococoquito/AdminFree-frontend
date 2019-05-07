@@ -324,7 +324,7 @@
               autocomplete="off"
               maxlength="50"
               class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-16"
-              [ngClass]="{'ad-input-required': esCodigoInvalido}"/>
+              [ngClass]="{'ad-input-required': serieSubserieCU.esCodigoInvalido}"/>
             <div class="focus-border"></div>
           </div>
         </div>
@@ -344,22 +344,24 @@
               autocomplete="off"
               maxlength="255"
               class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-16"
-              [ngClass]="{'ad-input-required': esNombreInvalido}"/>
+              [ngClass]="{'ad-input-required': serieSubserieCU.esNombreInvalido}"/>
             <div class="focus-border"></div>
           </div>
         </div>
       </div>
     </p-panel>
 
+    <!-- retencion y disposicion final-->
     <div class="ui-g">
 
-      <!-- retencion-->
+      <!-- retencion -->
       <div class="ui-g-6 pt-0">
         <p-panel styleClass="mt-0 mr-2 ml-2 mb-1">
           <p-header>
             <span class="steps-circle">2</span> <span> Retención</span>
           </p-header>
 
+          <!-- AG -->
           <div class="ml-3 mr-3 mt-3">
             <label for="inag" class="steps-st mb-0 mt-1"> Tiempo (años) en archivo de</label>
             <span class="steps-st"> GESTIÓN:</span>
@@ -375,10 +377,11 @@
               maxlength="3"
               class="ad-input ad-input-style w-100 font-new-roman"
               placeholder="Campo Numérico"
-              [ngClass]="{'ad-input-required': esCodigoInvalido}"/>
+              [ngClass]="{'ad-input-required': serieSubserieCU.esAGInvalido}"/>
             <div class="focus-border"></div>
           </div>
 
+          <!-- AC -->
           <div class="ml-3 mr-3 mt-4">
             <label for="inac" class="steps-st mb-0 mt-1"> Tiempo (años) en archivo CENTRAL:</label>
           </div>
@@ -393,7 +396,7 @@
               maxlength="3"
               class="ad-input ad-input-style w-100 font-new-roman"
               placeholder="Campo Numérico"
-              [ngClass]="{'ad-input-required': esCodigoInvalido}"/>
+              [ngClass]="{'ad-input-required': serieSubserieCU.esACInvalido}"/>
             <div class="focus-border"></div>
           </div>
           <div style="margin-top: 14.2px"></div>

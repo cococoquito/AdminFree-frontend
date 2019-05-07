@@ -49,6 +49,19 @@ export class Documental {
   /** Son los tipos documentales que soporta la serie o subserie */
   public tiposDocumentales: Array<TipoDocumentalDTO>;
 
-  /** Se utiliza solamente en ANGULAR, es el identificador de la serie/subserie a editar */
+  /** **********************VARIABLES UTILIZADAS EN ANGULAR**************************** */
+  /** es el identificador de la serie/subserie a editar */
   public id: number;
+
+  /** Bandera que indica si el campo CODIGO es invalido al momento de crear/editar*/
+  public esCodigoInvalido: boolean;
+
+  /** Bandera que indica si el campo NOMBRE es invalido al momento de crear/editar*/
+  public esNombreInvalido: boolean;
+
+  /** Bandera que indica si el campo AG es invalido al momento de crear/editar*/
+  public esAGInvalido: boolean;
+
+  /** Bandera que indica si el campo AC es invalido al momento de crear/editar*/
+  public esACInvalido: boolean;
 }

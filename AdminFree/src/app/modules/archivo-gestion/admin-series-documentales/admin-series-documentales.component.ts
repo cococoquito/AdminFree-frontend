@@ -61,12 +61,6 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Bandera que indica si es una serie documental al momento de crear/editar */
   public esSerieDocumental: boolean;
 
-  /** Bandera que indica si el campo CODIGO es invalido al momento de crear/editar*/
-  public esCodigoInvalido: boolean;
-
-  /** Bandera que indica si el campo NOMBRE es invalido al momento de crear/editar*/
-  public esNombreInvalido: boolean;
-
   /** Se utiliza para validar los valores de los inputs solo numerico*/
   public regex: RegexUtil;
 
@@ -323,7 +317,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
       // se simula el spinner por un segundo
       this.spinnerState.displaySpinner();
       setTimeout(() => {
-        // se configura los datos necesarios del panel de creacion
+        // se configura los datos necesarios para el panel de creacion
         this.setPanelCreacion(esSerie, serie);
 
         // se cierra el spinner
@@ -336,7 +330,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
           // se configura los tipos documentales consultados
           this.tiposDocumentales = data;
 
-          // se configura los datos necesarios del panel de creacion
+          // se configura los datos necesarios para el panel de creacion
           this.setPanelCreacion(esSerie, serie);
         },
         error => {
@@ -391,12 +385,10 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         message: MsjFrontConstant.SEGURO_SALIR,
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
-          this.messageService.clear();
           this.limpiarCamposCU();
         }
       });
     } else {
-      this.messageService.clear();
       this.limpiarCamposCU();
     }
   }
@@ -445,12 +437,15 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Permite limpiar los datos utilizado para la creacion o edicion de la serie/subserie
    */
   private limpiarCamposCU(): void {
-    this.serieSubserieCU = null;
-    this.seriePropietaria = null;
-    this.serieSubserieEditarOrigen = null;
-    this.esSerieDocumental = false;
-    this.esCodigoInvalido = false;
-    this.esNombreInvalido = false;
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.messageService.clear();
+      this.serieSubserieCU = null;
+      this.seriePropietaria = null;
+      this.serieSubserieEditarOrigen = null;
+      this.esSerieDocumental = false;
+      this.spinnerState.hideSpinner();
+    }, 100);
   }
 
   /**
