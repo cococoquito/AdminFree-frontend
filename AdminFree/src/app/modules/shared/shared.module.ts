@@ -13,6 +13,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SharedCommonModule } from './shared-common.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { CheckboxModule } from 'primeng/checkbox';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ConsecutivoPipe } from '../../pipes/consecutivo.pipe';
 import { DatePipe } from '@angular/common';
 import { InputswitchComponent } from './inputswitch/inputswitch.component';
@@ -42,7 +43,8 @@ import { ConsecutivoInfoGeneralComponent } from './consecutivo-info-general/cons
     ProgressBarModule,
     OverlayPanelModule,
     KeyFilterModule,
-    CheckboxModule
+    CheckboxModule,
+    AutoCompleteModule
   ],
   declarations: [
     ConsecutivoPipe,
@@ -67,6 +69,7 @@ import { ConsecutivoInfoGeneralComponent } from './consecutivo-info-general/cons
     OverlayPanelModule,
     KeyFilterModule,
     CheckboxModule,
+    AutoCompleteModule,
     ConsecutivoPipe,
     InputswitchComponent,
     DetalleCampoComponent,

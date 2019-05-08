@@ -63,9 +63,6 @@ export class MessagesBackendKeyConstant {
   /** 400 - EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo*/
   static readonly KEY_PROCESO_NO_EJECUTADO: string = '19';
 
-  /** 400 - EL tipo documental que intenta eliminar se encuentra asociado a una serie o subserie documental*/
-  static readonly KEY_ELIMINAR_TIPO_DOCUMENTAL: string = '20';
-
   /** 400 - Ya existe una serie documental con el nombre ?*/
   static readonly KEY_SERIE_MISMO_NOMBRE: string = '21';
 
@@ -92,7 +89,4 @@ export class MessagesBackendKeyConstant {
 
   /** 400 - La subserie documental que intenta eliminar esta asociado en la TRD*/
   static readonly KEY_SUBSERIE_TRD: string = '29';
-
-  /** 400 - Ya existe un tipo documental con el nombre ?*/
-  static readonly KEY_EXISTE_NOMBRE_TIPODOCUMENTAL: string = '30';
 }

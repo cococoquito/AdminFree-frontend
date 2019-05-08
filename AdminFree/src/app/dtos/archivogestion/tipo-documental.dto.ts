@@ -10,7 +10,4 @@ export class TipoDocumentalDTO {
 
   /** Nombre del tipo documental */
   public nombre: string;
-
-  /** Identifica que tipo de accion se va realizar sobre el tipo documental */
-  public tipoEvento: string;
 }

@@ -52,22 +52,12 @@ export class ArchivoGestionService {
   /**
 	 * Metodo que permite obtener todos los tipos documentales parametrizados
 	 *
-	 * @return Lista de tipos documentales
+   * @param idCliente, cada cliente tiene sus propios tipos documentales
+	 * @return Lista de tipos documentales asociados al cliente
 	 */
-  public getTiposDocumentales(): Observable<Array<TipoDocumentalDTO>> {
-    return this.http.get<Array<TipoDocumentalDTO>>(ArchivoGestionAPIConstant.URL_GET_TIPOS_DOCUMENTALES);
-  }
-
-  /**
-	 * Servicio que permite administrar los tipos documentales
-	 * aplica solamente para CREAR, EDITAR, ELIMINAR
-	 *
-	 * @param tipo, contiene los datos del tipo documental a procesar
-	 */
-  public administrarTiposDocumentales(tipo: TipoDocumentalDTO): Observable<MessageResponseDTO> {
-    return this.http.post<MessageResponseDTO>(
-      ArchivoGestionAPIConstant.URL_ADMIN_TIPOS_DOCUMENTAL,
-      tipo
+  public getTiposDocumentales(idCliente: number): Observable<Array<TipoDocumentalDTO>> {
+    return this.http.get<Array<TipoDocumentalDTO>>(
+      ArchivoGestionAPIConstant.URL_GET_TIPOS_DOCUMENTALES + idCliente
     );
   }
 

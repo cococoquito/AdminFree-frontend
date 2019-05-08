@@ -66,3 +66,12 @@ th:before {
 .row-serie {
   background-color: #f8f8f8 !important;
 }
+
+.bg-cgb {
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.b-clr {
+  border-bottom: 1px solid #c8c8c8;
+}

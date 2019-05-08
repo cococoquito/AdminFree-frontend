@@ -351,6 +351,54 @@
       </div>
     </p-panel>
 
+    <!-- tipos documentales-->
+    <p-panel styleClass="mb-3 mt-1 mr-3 ml-3">
+      <p-header>
+        <span class="steps-circle">2</span> <span> Adicione los tipos documentales de la serie documental</span>
+      </p-header>
+
+      <!-- autocomplete - btn adicionar -->
+      <div class="ui-g bg-cgb pb-2">
+        <div class="ui-g-2 pb-0">
+          <button (click)="adicionarTipoDocumental()" type="button" class="btn btn-sm btn-success w-100">
+            <label class="btn-size-admin"><i class="fa fa-plus-circle mr-1"></i> Adicionar</label>
+          </button>
+        </div>
+        <div class="ui-g-10 pb-0">
+          <p-autoComplete
+            [suggestions]="ss"
+            [(ngModel)]="seleccionado"
+            (completeMethod)="dropDownSearch($event)"
+            field="nombre"
+            styleClass="w-100 font-new-roman font-size-16"
+            inputStyleClass="w-100 font-new-roman font-size-16 p-2rem pl-2">
+          </p-autoComplete>
+        </div>
+      </div>
+
+      <!-- tipos documentales -->
+      <div *ngIf="seleccionados" class="ui-g mt-2 mb-2">
+        <ng-container *ngFor="let campo of seleccionados">
+          <div class="ui-g-12 pb-1 ml-2">
+            <span class="del-round-min mr-2">
+              <i class="pi pi-times del-round-min-pi"></i>
+            </span>
+            <span class="font-new-roman font-size-15">
+              {{campo.nombre}}
+            </span>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- NO HAY tipos documentales -->
+      <div *ngIf="!seleccionados" class="mr-2 ml-2 mt-2 mb-2 p-1 ui-messages ui-messages-info ui-corner-all text-center">
+        <span class="ui-messages-icon pi pi-info-circle"></span>
+        <span class="ui-messages-detail font-size-15 ml-0">
+          No hay <strong>tipos documentales</strong> asociados a la serie documental
+        </span>
+      </div>
+    </p-panel>
+
     <!-- retencion y disposicion final-->
     <div class="ui-g">
 
@@ -358,7 +406,7 @@
       <div class="ui-g-6 pt-0">
         <p-panel styleClass="mt-0 mr-2 ml-2 mb-1">
           <p-header>
-            <span class="steps-circle">2</span> <span> Retención</span>
+            <span class="steps-circle">3</span> <span> Retención</span>
           </p-header>
 
           <!-- AG -->
@@ -407,13 +455,13 @@
       <div class="ui-g-6 pt-0">
         <p-panel styleClass="mt-0 mr-2">
           <p-header>
-            <span class="steps-circle">3</span> <span> Disposición Final</span>
+            <span class="steps-circle">4</span> <span> Disposición Final</span>
           </p-header>
 
           <div class="ui-g">
 
             <!-- conservacion total-->
-            <div class="ui-g-12 pt-0 mt-1">
+            <div class="ui-g-12 pt-0 b-clr">
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.ct"
@@ -427,7 +475,7 @@
             </div>
 
             <!-- microfilmacion-->
-            <div class="ui-g-12 pt-0">
+            <div class="ui-g-12 pt-0 b-clr">
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.m"
@@ -441,7 +489,7 @@
             </div>
 
             <!-- seleccion-->
-            <div class="ui-g-12 pt-0">
+            <div class="ui-g-12 pt-0 b-clr">
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.s"
@@ -472,13 +520,6 @@
       </div>
     </div>
 
-    <!-- tipos documentales-->
-    <p-panel styleClass="mb-3 mt-1 mr-3 ml-3">
-      <p-header>
-        <span class="steps-circle">4</span> <span> Adicione los tipos documentales de la serie documental</span>
-      </p-header>
-    </p-panel>
-
     <!-- procedimientos-->
     <p-panel styleClass="mb-2 mt-1 mr-3 ml-3">
       <p-header>
@@ -488,7 +529,7 @@
         id="inprocedimiento"
         [(ngModel)]="serieSubserieCU.procedimiento"
         class="form-control font-new-roman font-size-16"
-        rows="3">
+        rows="2">
       </textarea>
     </p-panel>
 

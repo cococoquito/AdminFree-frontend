@@ -954,3 +954,7 @@ body {
   width: 10px;
   height: 10px;
 }
+
+.p-2rem {
+  padding: .2rem!important;
+}

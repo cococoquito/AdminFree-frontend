@@ -67,6 +67,14 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Son los tipos documentales parametrizados en el sistema*/
   public tiposDocumentales: Array<TipoDocumentalDTO>;
 
+  /** Son los tipos documentales parametrizados en el sistema*/
+  public ss: Array<TipoDocumentalDTO>;
+
+  /** Son los tipos documentales parametrizados en el sistema*/
+  public seleccionados: Array<TipoDocumentalDTO>;
+
+  public seleccionado: TipoDocumentalDTO;
+
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') tblseries: Table;
 
@@ -91,6 +99,32 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
+  }
+
+  /**
+   * Metodo que se ejecuta cuando van ingresando valores en el componente
+   * donde se consultan los valores que coincidan con el valor ingresado
+   * @param event , evento que se ejecuta desde la pantalla
+   */
+  public dropDownSearch(event): void {
+    this.ss = [];
+    if (this.tiposDocumentales) {
+        for (const t of this.tiposDocumentales) {
+            if (t.nombre.toLowerCase().indexOf(event.query.toLowerCase()) >= 0) {
+                this.ss.push(t);
+            }
+        }
+    }
+  }
+
+  public adicionarTipoDocumental(): void {
+    if (this.seleccionado) {
+      if (!this.seleccionados) {
+        this.seleccionados = new Array<TipoDocumentalDTO>();
+      }
+      this.seleccionados.push(this.seleccionado);
+      this.seleccionado = null;
+    }
   }
 
   /**
@@ -324,8 +358,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.spinnerState.hideSpinner();
       }, 100);
     } else {
-      // se procede a consultar los tipos documentales en el sistema
-      this.archivoGestionService.getTiposDocumentales().subscribe(
+      // se procede a consultar los tipos documentales asociados al cliente
+      this.archivoGestionService.getTiposDocumentales(this.clienteCurrent.id).subscribe(
         data => {
           // se configura los tipos documentales consultados
           this.tiposDocumentales = data;

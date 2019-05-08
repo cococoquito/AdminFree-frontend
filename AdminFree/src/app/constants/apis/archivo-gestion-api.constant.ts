@@ -26,13 +26,7 @@ export class ArchivoGestionAPIConstant {
   static readonly URL_GET_TIPOS_DOCUMENTALES: string =
     AppDomainConstant.ADMINFREE +
     ArchivoGestionAPIConstant.ARCHIVO_GESTION_API +
-    'gettiposdocumentales';
-
-  /** URL del recurso que permite administrar los tipos documentales*/
-  static readonly URL_ADMIN_TIPOS_DOCUMENTAL: string =
-    AppDomainConstant.ADMINFREE +
-    ArchivoGestionAPIConstant.ARCHIVO_GESTION_API +
-    'admintiposdoc';
+    'gettiposdocumentales?idCliente=';
 
   /** URL del recurso que permite administrar la entidad de series documentales*/
   static readonly URL_ADMIN_SERIES: string =

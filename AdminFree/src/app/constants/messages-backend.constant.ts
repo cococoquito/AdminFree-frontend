@@ -86,10 +86,6 @@ export class MessagesBackendConstant {
   /** EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo*/
   static readonly PROCESO_NO_EJECUTADO: string = 'EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo';
 
-  /** EL tipo documental que intenta eliminar se encuentra asociado a una serie o subserie documental*/
-  static readonly ELIMINAR_TIPO_DOCUMENTAL: string =
-  'El tipo documental que intenta eliminar se encuentra asociado a una serie o subserie documental';
-
   /** Ya existe una serie documental con el nombre ?*/
   static readonly SERIE_MISMO_NOMBRE: string = 'Ya existe una serie documental con el nombre';
 
@@ -116,7 +112,4 @@ export class MessagesBackendConstant {
 
   /** La subserie documental que intenta eliminar esta asociado en la TRD*/
   static readonly SUBSERIE_TRD: string = 'La subserie a eliminar esta asociada en la TRD';
-
-  /** Ya existe un tipo documental con el nombre ?*/
-  static readonly EXISTE_NOMBRE_TIPODOCUMENTAL: string = 'Ya existe un tipo documental con el nombre ?';
 }

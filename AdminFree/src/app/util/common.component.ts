@@ -219,11 +219,6 @@ export class CommonComponent {
         break;
       }
 
-      case MessagesBackendKeyConstant.KEY_ELIMINAR_TIPO_DOCUMENTAL: {
-        businessMsj = MessagesBackendConstant.ELIMINAR_TIPO_DOCUMENTAL;
-        break;
-      }
-
       case MessagesBackendKeyConstant.KEY_SERIE_MISMO_NOMBRE: {
         businessMsj = MessagesBackendConstant.SERIE_MISMO_NOMBRE;
         break;
@@ -266,11 +261,6 @@ export class CommonComponent {
 
       case MessagesBackendKeyConstant.KEY_SUBSERIE_TRD: {
         businessMsj = MessagesBackendConstant.SUBSERIE_TRD;
-        break;
-      }
-
-      case MessagesBackendKeyConstant.KEY_EXISTE_NOMBRE_TIPODOCUMENTAL: {
-        businessMsj = MessagesBackendConstant.EXISTE_NOMBRE_TIPODOCUMENTAL;
         break;
       }
     }
