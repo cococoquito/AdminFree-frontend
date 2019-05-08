@@ -366,10 +366,10 @@
         </div>
         <div class="ui-g-10 pb-0">
           <p-autoComplete
-            [suggestions]="ss"
-            [(ngModel)]="seleccionado"
-            (completeMethod)="dropDownSearch($event)"
-            field="nombre"
+            [(ngModel)]="tiposDocModel.valor"
+            [suggestions]="tiposDocModel.suggestions"
+            (completeMethod)="tiposDocModel.search($event)"
+            [forceSelection]="false"
             styleClass="w-100 font-new-roman font-size-16"
             inputStyleClass="w-100 font-new-roman font-size-16 p-2rem pl-2">
           </p-autoComplete>
@@ -377,21 +377,20 @@
       </div>
 
       <!-- tipos documentales -->
-      <div *ngIf="seleccionados" class="ui-g mt-2 mb-2">
-        <ng-container *ngFor="let campo of seleccionados">
+      <div *ngIf="serieSubserieCU.tiposDocumentales && serieSubserieCU.tiposDocumentales.length" class="ui-g mt-2 mb-2">
+        <ng-container *ngFor="let tipo of serieSubserieCU.tiposDocumentales">
           <div class="ui-g-12 pb-1 ml-2">
             <span class="del-round-min mr-2">
               <i class="pi pi-times del-round-min-pi"></i>
             </span>
-            <span class="font-new-roman font-size-15">
-              {{campo.nombre}}
-            </span>
+            <span class="font-new-roman font-size-15">{{tipo.nombre}}</span>
           </div>
         </ng-container>
       </div>
 
       <!-- NO HAY tipos documentales -->
-      <div *ngIf="!seleccionados" class="mr-2 ml-2 mt-2 mb-2 p-1 ui-messages ui-messages-info ui-corner-all text-center">
+      <div *ngIf="!(serieSubserieCU.tiposDocumentales && serieSubserieCU.tiposDocumentales.length)"
+        class="mr-2 ml-2 mt-2 mb-2 p-1 ui-messages ui-messages-info ui-corner-all text-center">
         <span class="ui-messages-icon pi pi-info-circle"></span>
         <span class="ui-messages-detail font-size-15 ml-0">
           No hay <strong>tipos documentales</strong> asociados a la serie documental

@@ -6,6 +6,7 @@ import { CommonComponent } from '../../../util/common.component';
 import { ShellState } from '../../../states/shell/shell.state';
 import { SpinnerState } from '../../../states/spinner.state';
 import { PaginadorModel } from '../../../model/paginador-model';
+import { AutoCompleteModel } from '../../../model/auto-complete.model';
 import { Documental } from '../../../dtos/archivogestion/documental';
 import { SerieDocumentalDTO } from '../../../dtos/archivogestion/serie-documental.dto';
 import { SubSerieDocumentalDTO } from '../../../dtos/archivogestion/sub-serie-documental.dto';
@@ -37,6 +38,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Paginador de la lista de series documentales parametrizados en el sistema */
   public seriesPaginados: PaginadorModel;
 
+  /** Modelo para los tipos documentales asociados al cliente */
+  public tiposDocModel: AutoCompleteModel;
+
   /** DTO donde se encapsula los valores del filtro de busqueda */
   public filtro: FiltroSerieDocumentalDTO;
 
@@ -64,17 +68,6 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Se utiliza para validar los valores de los inputs solo numerico*/
   public regex: RegexUtil;
 
-  /** Son los tipos documentales parametrizados en el sistema*/
-  public tiposDocumentales: Array<TipoDocumentalDTO>;
-
-  /** Son los tipos documentales parametrizados en el sistema*/
-  public ss: Array<TipoDocumentalDTO>;
-
-  /** Son los tipos documentales parametrizados en el sistema*/
-  public seleccionados: Array<TipoDocumentalDTO>;
-
-  public seleccionado: TipoDocumentalDTO;
-
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') tblseries: Table;
 
@@ -99,32 +92,6 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     private shellState: ShellState,
     private spinnerState: SpinnerState) {
     super();
-  }
-
-  /**
-   * Metodo que se ejecuta cuando van ingresando valores en el componente
-   * donde se consultan los valores que coincidan con el valor ingresado
-   * @param event , evento que se ejecuta desde la pantalla
-   */
-  public dropDownSearch(event): void {
-    this.ss = [];
-    if (this.tiposDocumentales) {
-        for (const t of this.tiposDocumentales) {
-            if (t.nombre.toLowerCase().indexOf(event.query.toLowerCase()) >= 0) {
-                this.ss.push(t);
-            }
-        }
-    }
-  }
-
-  public adicionarTipoDocumental(): void {
-    if (this.seleccionado) {
-      if (!this.seleccionados) {
-        this.seleccionados = new Array<TipoDocumentalDTO>();
-      }
-      this.seleccionados.push(this.seleccionado);
-      this.seleccionado = null;
-    }
   }
 
   /**
@@ -346,7 +313,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   public abrirPanelCreacion(esSerie: boolean, serie: SerieDocumentalDTO): void {
 
     // se valida si se debe consultar los tipos documentales para la creacion
-    if (this.tiposDocumentales && this.tiposDocumentales.length) {
+    if (this.tiposDocModel &&
+        this.tiposDocModel.items &&
+        this.tiposDocModel.items.length) {
 
       // se simula el spinner por un segundo
       this.spinnerState.displaySpinner();
@@ -361,8 +330,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
       // se procede a consultar los tipos documentales asociados al cliente
       this.archivoGestionService.getTiposDocumentales(this.clienteCurrent.id).subscribe(
         data => {
-          // se configura los tipos documentales consultados
-          this.tiposDocumentales = data;
+          // se configura el model de los tipos documentales consultados
+          this.setModelTiposDocumentales(data);
 
           // se configura los datos necesarios para el panel de creacion
           this.setPanelCreacion(esSerie, serie);
@@ -405,6 +374,25 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     } else {
       this.serieSubserieCU.id = (documental as SubSerieDocumentalDTO).idSubSerie;
       this.seriePropietaria = serie;
+    }
+  }
+
+  /**
+   * Metodo que soporta el evento clik del boton agregar tipo documental
+   */
+  public adicionarTipoDocumental(): void {
+
+    // se obtiene el tipo documental seleccionado
+    const itemSelected = this.tiposDocModel.getItemSelected(AutoCompleteModel.TIPOS_DOCUMENTALES);
+
+    // se verifica si el usuario si ingreso algun valor
+    if (itemSelected) {
+
+      // se configura el tipo documental seleccionado en la lista de la serie/subserie
+      if (!this.serieSubserieCU.tiposDocumentales) {
+        this.serieSubserieCU.tiposDocumentales = new Array<TipoDocumentalDTO>();
+      }
+      this.serieSubserieCU.tiposDocumentales.push(itemSelected);
     }
   }
 
@@ -489,5 +477,17 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     if (!this.regex) {
       this.regex = new RegexUtil();
     }
+  }
+
+  /**
+   * Metodo que permite configurar el model para los tipos documentales
+   * @param tipos , lista de tipos documentales asociados al cliente
+   */
+  private setModelTiposDocumentales(tipos: Array<TipoDocumentalDTO>): void {
+    if (!this.tiposDocModel) {
+      this.tiposDocModel = new AutoCompleteModel();
+    }
+    this.tiposDocModel.items = tipos;
+    this.tiposDocModel.reset();
   }
 }
