@@ -568,20 +568,20 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     }
 
     // se verifica si AG es un valor numerico
-    this.serieSubserieCU.AG = this.setTrimFilter(this.serieSubserieCU.AG);
+    this.serieSubserieCU.tiempoArchivoGestion = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoGestion);
     this.serieSubserieCU.esAGInvalido = false;
-    if (this.serieSubserieCU.AG) {
-      this.serieSubserieCU.esAGInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.AG);
+    if (this.serieSubserieCU.tiempoArchivoGestion) {
+      this.serieSubserieCU.esAGInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.tiempoArchivoGestion);
       if (this.serieSubserieCU.esAGInvalido) {
         isValido = false;
       }
     }
 
     // se verifica si AC es un valor numerico
-    this.serieSubserieCU.AC = this.setTrimFilter(this.serieSubserieCU.AC);
+    this.serieSubserieCU.tiempoArchivoCentral = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoCentral);
     this.serieSubserieCU.esACInvalido = false;
-    if (this.serieSubserieCU.AC) {
-      this.serieSubserieCU.esACInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.AC);
+    if (this.serieSubserieCU.tiempoArchivoCentral) {
+      this.serieSubserieCU.esACInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.tiempoArchivoCentral);
       if (this.serieSubserieCU.esACInvalido) {
         isValido = false;
       }

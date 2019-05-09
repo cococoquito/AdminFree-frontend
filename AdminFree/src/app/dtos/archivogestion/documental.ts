@@ -13,23 +13,23 @@ export class Documental {
   /** Nombre de la serie o subserie */
   public nombre: string;
 
-  /** Tiempo en archivo gestion */
-  public AG: any;
+  /** Tiempo en archivo gestion (AG)*/
+  public tiempoArchivoGestion: any;
 
-  /** Tiempo en archivo central */
-  public AC: any;
+  /** Tiempo en archivo central (AC) */
+  public tiempoArchivoCentral: any;
 
-  /** Conservacion total */
-  public CT: boolean;
+  /** Conservacion total (CT)*/
+  public conservacionTotal: boolean;
 
-  /** Microfilmacion / digitalizacion */
-  public M: boolean;
+  /** Microfilmacion / digitalizacion (M) */
+  public microfilmacion: boolean;
 
-  /** Seleccion */
-  public S: boolean;
+  /** Seleccion (S)*/
+  public seleccion: boolean;
 
-  /** Eliminacion */
-  public E: boolean;
+  /** Eliminacion (E)*/
+  public eliminacion: boolean;
 
   /** Procedimiento de la serie o sub-serie */
   public procedimiento: string;

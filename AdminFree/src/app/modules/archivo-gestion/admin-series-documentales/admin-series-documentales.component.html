@@ -197,22 +197,22 @@
           </ng-container>
         </td>
         <td class="text-center align-text-top row-serie">
-          {{serie.ag}}
+          {{serie.tiempoArchivoGestion}}
         </td>
         <td class="text-center align-text-top row-serie">
-          {{serie.ac}}
+          {{serie.tiempoArchivoCentral}}
         </td>
         <td class="text-center align-text-top row-serie">
-          <i *ngIf="serie.ct" class="pi pi-check font-size-18"></i>
+          <i *ngIf="serie.conservacionTotal" class="pi pi-check font-size-18"></i>
         </td>
         <td class="text-center align-text-top row-serie">
-          <i *ngIf="serie.m" class="pi pi-check font-size-18"></i>
+          <i *ngIf="serie.microfilmacion" class="pi pi-check font-size-18"></i>
         </td>
         <td class="text-center align-text-top row-serie">
-          <i *ngIf="serie.s" class="pi pi-check font-size-18"></i>
+          <i *ngIf="serie.seleccion" class="pi pi-check font-size-18"></i>
         </td>
         <td class="text-center align-text-top row-serie">
-          <i *ngIf="serie.e" class="pi pi-check font-size-18"></i>
+          <i *ngIf="serie.eliminacion" class="pi pi-check font-size-18"></i>
         </td>
         <td class="text-center align-text-top row-serie">
           <p class="font-size-14 font-new-roman mb-0">{{serie.procedimiento}}</p>
@@ -246,22 +246,22 @@
             </ng-container>
           </td>
           <td class="text-center align-text-top">
-            {{subserie.ag}}
+            {{subserie.tiempoArchivoGestion}}
           </td>
           <td class="text-center align-text-top">
-            {{subserie.ac}}
+            {{subserie.tiempoArchivoCentral}}
           </td>
           <td class="text-center align-text-top">
-            <i *ngIf="subserie.ct" class="pi pi-check font-size-18"></i>
+            <i *ngIf="subserie.conservacionTotal" class="pi pi-check font-size-18"></i>
           </td>
           <td class="text-center align-text-top">
-            <i *ngIf="subserie.m" class="pi pi-check font-size-18"></i>
+            <i *ngIf="subserie.microfilmacion" class="pi pi-check font-size-18"></i>
           </td>
           <td class="text-center align-text-top">
-            <i *ngIf="subserie.s" class="pi pi-check font-size-18"></i>
+            <i *ngIf="subserie.seleccion" class="pi pi-check font-size-18"></i>
           </td>
           <td class="text-center align-text-top">
-            <i *ngIf="subserie.e" class="pi pi-check font-size-18"></i>
+            <i *ngIf="subserie.eliminacion" class="pi pi-check font-size-18"></i>
           </td>
           <td class="text-center align-text-top">
             <p class="font-size-14 font-new-roman mb-0">{{subserie.procedimiento}}</p>
@@ -421,7 +421,7 @@
               type="text"
               id="inag"
               name="inag"
-              [(ngModel)]="serieSubserieCU.AG"
+              [(ngModel)]="serieSubserieCU.tiempoArchivoGestion"
               [pKeyFilter]="regex.SOLO_NUMEROS"
               autocomplete="off"
               maxlength="3"
@@ -440,7 +440,7 @@
               type="text"
               id="inac"
               name="inac"
-              [(ngModel)]="serieSubserieCU.AC"
+              [(ngModel)]="serieSubserieCU.tiempoArchivoCentral"
               [pKeyFilter]="regex.SOLO_NUMEROS"
               autocomplete="off"
               maxlength="3"
@@ -466,8 +466,8 @@
             <div class="ui-g-12 pt-0 b-clr">
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
-                  [isChecked]="serieSubserieCU.ct"
-                  (switchChange)="serieSubserieCU.ct = $event">
+                  [isChecked]="serieSubserieCU.conservacionTotal"
+                  (switchChange)="serieSubserieCU.conservacionTotal = $event">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
@@ -480,8 +480,8 @@
             <div class="ui-g-12 pt-0 b-clr">
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
-                  [isChecked]="serieSubserieCU.m"
-                  (switchChange)="serieSubserieCU.m = $event">
+                  [isChecked]="serieSubserieCU.microfilmacion"
+                  (switchChange)="serieSubserieCU.microfilmacion = $event">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
@@ -494,8 +494,8 @@
             <div class="ui-g-12 pt-0 b-clr">
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
-                  [isChecked]="serieSubserieCU.s"
-                  (switchChange)="serieSubserieCU.s = $event">
+                  [isChecked]="serieSubserieCU.seleccion"
+                  (switchChange)="serieSubserieCU.seleccion = $event">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
@@ -508,8 +508,8 @@
             <div class="ui-g-12 pt-0">
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
-                  [isChecked]="serieSubserieCU.e"
-                  (switchChange)="serieSubserieCU.e = $event">
+                  [isChecked]="serieSubserieCU.eliminacion"
+                  (switchChange)="serieSubserieCU.eliminacion = $event">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
