@@ -38,13 +38,13 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Paginador de la lista de series documentales parametrizados en el sistema */
   public seriesPaginados: PaginadorModel;
 
-  /** Modelo para los tipos documentales asociados al cliente */
+  /** Modelo para el autocomplete de los tipos documentales asociados al cliente */
   public tiposDocModel: AutoCompleteModel;
 
   /** DTO donde se encapsula los valores del filtro de busqueda */
   public filtro: FiltroSerieDocumentalDTO;
 
-  /** contiene los valores del filtro consultado */
+  /** Contiene los valores del filtro consultado */
   public filtroClone: FiltroSerieDocumentalDTO;
 
   /** Se utiliza para pintar el asterisco en el boton filtrar */
@@ -59,7 +59,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Variable que contiene los valores origen de la serie/subserie a editar */
   public serieSubserieEditarOrigen: Documental;
 
-  /** Es la serie propietaria de la subserie a crear/editar */
+  /** Es la serie propietaria de la subserie a crear/editar, ojo se debe coloca aca */
   public seriePropietaria: SerieDocumentalDTO;
 
   /** Bandera que indica si es una serie documental al momento de crear/editar */
@@ -70,6 +70,10 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') tblseries: Table;
+
+  /**Es la referencia del componente autocomplete de tipos documentales*/
+  @ViewChild('autotiposdocs')
+  private autoTiposDocs: any;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -388,11 +392,30 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se verifica si el usuario si ingreso algun valor
     if (itemSelected) {
 
-      // se configura el tipo documental seleccionado en la lista de la serie/subserie
-      if (!this.serieSubserieCU.tiposDocumentales) {
+      // no se puede ingresar dos tipos documentales iguales
+      if (this.serieSubserieCU.tiposDocumentales) {
+        for (const serieTipo of this.serieSubserieCU.tiposDocumentales) {
+          if (serieTipo.nombre === itemSelected.nombre) {
+            this.autoTiposDocs.inputEL.nativeElement.focus();
+            return;
+          }
+        }
+      } else {
         this.serieSubserieCU.tiposDocumentales = new Array<TipoDocumentalDTO>();
       }
+
+      // se agrega el tipo documental ingresado y se configura el focus
       this.serieSubserieCU.tiposDocumentales.push(itemSelected);
+      this.autoTiposDocs.inputEL.nativeElement.focus();
+    }
+  }
+
+  /**
+   * Metodo que soporta el evento clik del boton eliminar documental
+   */
+  public eliminarTipoDocumental(tipo: TipoDocumentalDTO): void {
+    if (this.serieSubserieCU.tiposDocumentales && this.serieSubserieCU.tiposDocumentales.length) {
+      this.serieSubserieCU.tiposDocumentales.splice(this.serieSubserieCU.tiposDocumentales.indexOf(tipo, 0), 1);
     }
   }
 
@@ -462,12 +485,19 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.spinnerState.displaySpinner();
     setTimeout(() => {
       this.messageService.clear();
-      this.serieSubserieCU = null;
-      this.seriePropietaria = null;
-      this.serieSubserieEditarOrigen = null;
-      this.esSerieDocumental = false;
+      this.limpiar();
       this.spinnerState.hideSpinner();
     }, 100);
+  }
+
+  /**
+   * Permite limpiar las variables de ingreso para crear/editar una serie/subserie
+   */
+  private limpiar(): void {
+    this.serieSubserieCU = null;
+    this.seriePropietaria = null;
+    this.serieSubserieEditarOrigen = null;
+    this.esSerieDocumental = false;
   }
 
   /**

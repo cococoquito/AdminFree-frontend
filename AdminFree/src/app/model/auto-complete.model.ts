@@ -23,14 +23,12 @@ export class AutoCompleteModel {
   /**
     * Metodo que se ejecuta cuando van ingresando valores en el componente
     * donde se consultan los valores que coincidan con el valor ingresado
-    *
-    * @param event , contiene el valor ingresado
     */
-  public search(event): void {
+  public search(): void {
     this.suggestions = new Array<any>();
-    if (this.items && this.items.length) {
+    if (this.valor && this.items && this.items.length) {
       for (const item of this.items) {
-        if (item.nombre.toLowerCase().indexOf(event.query.toLowerCase()) >= 0) {
+        if (item.nombre.toLowerCase().indexOf(this.valor.toLowerCase()) >= 0) {
           this.suggestions.push(item.nombre);
         }
       }

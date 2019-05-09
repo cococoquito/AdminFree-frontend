@@ -366,9 +366,11 @@
         </div>
         <div class="ui-g-10 pb-0">
           <p-autoComplete
+            id="autotiposdocs"
+            #autotiposdocs
             [(ngModel)]="tiposDocModel.valor"
             [suggestions]="tiposDocModel.suggestions"
-            (completeMethod)="tiposDocModel.search($event)"
+            (completeMethod)="tiposDocModel.search()"
             [forceSelection]="false"
             styleClass="w-100 font-new-roman font-size-16"
             inputStyleClass="w-100 font-new-roman font-size-16 p-2rem pl-2">
@@ -380,7 +382,7 @@
       <div *ngIf="serieSubserieCU.tiposDocumentales && serieSubserieCU.tiposDocumentales.length" class="ui-g mt-2 mb-2">
         <ng-container *ngFor="let tipo of serieSubserieCU.tiposDocumentales">
           <div class="ui-g-12 pb-1 ml-2">
-            <span class="del-round-min mr-2">
+            <span (click)="eliminarTipoDocumental(tipo)" class="del-round-min mr-2">
               <i class="pi pi-times del-round-min-pi"></i>
             </span>
             <span class="font-new-roman font-size-15">{{tipo.nombre}}</span>
