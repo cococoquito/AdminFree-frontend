@@ -372,6 +372,7 @@
             [suggestions]="tiposDocModel.suggestions"
             (completeMethod)="tiposDocModel.search()"
             [forceSelection]="false"
+            maxlength="255"
             styleClass="w-100 font-new-roman font-size-16"
             inputStyleClass="w-100 font-new-roman font-size-16 p-2rem pl-2">
           </p-autoComplete>
@@ -420,7 +421,7 @@
               type="text"
               id="inag"
               name="inag"
-              [(ngModel)]="serieSubserieCU.ag"
+              [(ngModel)]="serieSubserieCU.AG"
               [pKeyFilter]="regex.SOLO_NUMEROS"
               autocomplete="off"
               maxlength="3"
@@ -439,7 +440,7 @@
               type="text"
               id="inac"
               name="inac"
-              [(ngModel)]="serieSubserieCU.ac"
+              [(ngModel)]="serieSubserieCU.AC"
               [pKeyFilter]="regex.SOLO_NUMEROS"
               autocomplete="off"
               maxlength="3"
@@ -530,6 +531,7 @@
         id="inprocedimiento"
         [(ngModel)]="serieSubserieCU.procedimiento"
         class="form-control font-new-roman font-size-16"
+        maxlength="500"
         rows="2">
       </textarea>
     </p-panel>
@@ -539,7 +541,7 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary w-180-px mr-2">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left mr-1"></i> Regresar</label>
       </button>
-      <button type="button" class="btn btn-sm btn-success w-180-px">
+      <button (click)="crearSerieDocumental()" type="button" class="btn btn-sm btn-success w-180-px">
         <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear serie documental</label>
       </button>
     </div>

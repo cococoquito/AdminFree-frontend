@@ -152,6 +152,27 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   }
 
   /**
+   * Metodo que soporta el evento click del boton crear serie documental
+   */
+  public crearSerieDocumental(): void {
+
+    // se verifica si los campos son validos
+    if (this.isCamposIngresoValidos()) {
+
+      // se muestra la ventana de confirmacion
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CREAR_SERIE_SUBSERIE.replace('?1', 'serie'),
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+
+        }
+      });
+    } else {
+      this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.ADMIN_SERIES_ERROR_CAMPOS));
+    }
+  }
+
+  /**
    * Metodo que es invocado por el paginador de la tabla
    */
   public paginar(): void {
@@ -519,5 +540,52 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     }
     this.tiposDocModel.items = tipos;
     this.tiposDocModel.reset();
+  }
+
+  /**
+   * Metodo que permite validar si los campos son validos
+   * para crear/editar una serie/subserie
+   *
+   * @return, true si son validos, de lo contrario false
+   */
+  private isCamposIngresoValidos(): boolean {
+    let isValido = true;
+
+    // se verifica la obligatoriedad del codigo
+    this.serieSubserieCU.codigo = this.setTrimFilter(this.serieSubserieCU.codigo);
+    this.serieSubserieCU.esCodigoInvalido = false;
+    if (!this.serieSubserieCU.codigo) {
+      this.serieSubserieCU.esCodigoInvalido = true;
+      isValido = false;
+    }
+
+    // se verifica la obligatoriedad del nombre
+    this.serieSubserieCU.nombre = this.setTrimFilter(this.serieSubserieCU.nombre);
+    this.serieSubserieCU.esNombreInvalido = false;
+    if (!this.serieSubserieCU.nombre) {
+      this.serieSubserieCU.esNombreInvalido = true;
+      isValido = false;
+    }
+
+    // se verifica si AG es un valor numerico
+    this.serieSubserieCU.AG = this.setTrimFilter(this.serieSubserieCU.AG);
+    this.serieSubserieCU.esAGInvalido = false;
+    if (this.serieSubserieCU.AG) {
+      this.serieSubserieCU.esAGInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.AG);
+      if (this.serieSubserieCU.esAGInvalido) {
+        isValido = false;
+      }
+    }
+
+    // se verifica si AC es un valor numerico
+    this.serieSubserieCU.AC = this.setTrimFilter(this.serieSubserieCU.AC);
+    this.serieSubserieCU.esACInvalido = false;
+    if (this.serieSubserieCU.AC) {
+      this.serieSubserieCU.esACInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.AC);
+      if (this.serieSubserieCU.esACInvalido) {
+        isValido = false;
+      }
+    }
+    return isValido;
   }
 }

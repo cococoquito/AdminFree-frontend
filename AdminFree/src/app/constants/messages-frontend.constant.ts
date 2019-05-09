@@ -164,4 +164,10 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando la subserie o serie documental fue eliminada exitosamente */
   static readonly SERIE_SUBSERIE_ELIMINADA: string = 'La ?1 documental fue eliminada';
+
+  /** Mensaje cuando se presenta algun error en los campos para crear/editar serie/subserie */
+  static readonly ADMIN_SERIES_ERROR_CAMPOS: string = 'Se presentaron errores en algunos campos, por favor verifique';
+
+  /** Mensaje de confirmacion para la creacion de una serie o subserie */
+  static readonly CREAR_SERIE_SUBSERIE: string = '¿Está seguro de proceder a crear la ?1 documental?';
 }

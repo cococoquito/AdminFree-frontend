@@ -14,10 +14,10 @@ export class Documental {
   public nombre: string;
 
   /** Tiempo en archivo gestion */
-  public AG: number;
+  public AG: any;
 
   /** Tiempo en archivo central */
-  public AC: number;
+  public AC: any;
 
   /** Conservacion total */
   public CT: boolean;
