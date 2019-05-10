@@ -68,12 +68,14 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Se utiliza para validar los valores de los inputs solo numerico*/
   public regex: RegexUtil;
 
+  /** Indica si debe consultar nuevamente las series cuando se salen del panel de creacion*/
+  private hayNuevasSeries: boolean;
+
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
-  @ViewChild('tblseries') tblseries: Table;
+  @ViewChild('tblseries') private tblseries: Table;
 
   /**Es la referencia del componente autocomplete de tipos documentales*/
-  @ViewChild('autotiposdocs')
-  private autoTiposDocs: any;
+  @ViewChild('autotiposdocs') private autoTiposDocs: any;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -156,6 +158,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   public crearSerieDocumental(): void {
 
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
     // se verifica si los campos son validos
     if (this.isCamposIngresoValidos()) {
 
@@ -165,6 +170,29 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
 
+          // se procede a crear la serie documental
+          this.serieSubserieCU.idCliente = this.clienteCurrent.id;
+          this.serieSubserieCU.tipoEvento = TipoEventoConstant.CREAR;
+          this.archivoGestionService.administrarSerieDocumental(this.serieSubserieCU as SerieDocumentalDTO).subscribe(
+            data => {
+              // Mensaje exitoso, serie documental fue creado
+              this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_CREADA.replace('?1', 'serie')));
+
+              // se reinicia la variable permitiendo crear otra serie documental
+              this.serieSubserieCU = new SerieDocumentalDTO();
+
+              // se configura los nuevos tipos documentales en el modelo
+              this.setNuevosTiposDocumentales(data);
+
+              // indica que se debe consultar las series cuando se salen del panel de creacion
+              this.hayNuevasSeries = true;
+            },
+            error => {
+              const msj = this.showMensajeError(error);
+              this.messageService.add(MsjUtil.getMsjError(msj));
+              this.messageService.add(MsjUtil.getToastErrorLng(msj));
+            }
+          );
         }
       });
     } else {
@@ -267,8 +295,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         const request = new SerieDocumentalDTO();
         request.idSerie = serie.idSerie;
         request.tipoEvento = TipoEventoConstant.ELIMINAR;
-        this.filtro.paginador = this.seriesPaginados.filtroBefore();
-        request.filtro = this.filtro;
+        this.filtroClone.paginador = this.seriesPaginados.filtroBefore();
+        request.filtro = this.filtroClone;
 
         // se procede a eliminar la serie
         this.archivoGestionService.administrarSerieDocumental(request).subscribe(
@@ -451,7 +479,29 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         message: MsjFrontConstant.SEGURO_SALIR,
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
-          this.limpiarCamposCU();
+
+          // se verifica si se debe consultar las series documentales
+          if (this.esSerieDocumental && this.hayNuevasSeries) {
+
+            // se hace el backup de los datos del paginador esto por si hay errores
+            this.filtroClone.paginador = this.seriesPaginados.filtroBefore();
+
+            // se procede a consultar las series documentales de acuerdo al filtro
+            this.archivoGestionService.getSeriesDocumentales(this.filtroClone).subscribe(
+              data => {
+                // se configura los nuevas series consultadas
+                this.seriesPaginados.filtroExitoso(this.tblseries, data);
+
+                // se limpia las variables utilizadas para el panel de creacion
+                this.limpiar();
+              },
+              error => {
+                this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+              }
+            );
+          } else {
+            this.limpiarCamposCU();
+          }
         }
       });
     } else {
@@ -505,20 +555,21 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   private limpiarCamposCU(): void {
     this.spinnerState.displaySpinner();
     setTimeout(() => {
-      this.messageService.clear();
       this.limpiar();
       this.spinnerState.hideSpinner();
     }, 100);
   }
 
   /**
-   * Permite limpiar las variables de ingreso para crear/editar una serie/subserie
+   * Metodo que permite limpiar las variables utilizadas en los paneles crear/editar
    */
   private limpiar(): void {
+    this.messageService.clear();
     this.serieSubserieCU = null;
     this.seriePropietaria = null;
     this.serieSubserieEditarOrigen = null;
     this.esSerieDocumental = false;
+    this.hayNuevasSeries = false;
   }
 
   /**
@@ -587,5 +638,33 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
       }
     }
     return isValido;
+  }
+
+  /**
+   * Metodo que permite configurar los nuevos tipos documentales al modelo
+   * @param nuevosItems , son los nuevos items a configurar
+   */
+  private setNuevosTiposDocumentales(nuevosItems: any): void {
+
+    // se verifica si hay nuevos items
+    if (nuevosItems && nuevosItems.length) {
+
+      // se verifica si existe el modelo
+      if (this.tiposDocModel) {
+
+        // si el modelo ya tiene items se procede solamente agregar los nuevos
+        const items = this.tiposDocModel.items;
+        if (items) {
+          for (const tipoDocumental of nuevosItems) {
+            items.push(tipoDocumental);
+          }
+        } else {
+          this.tiposDocModel.items = nuevosItems;
+        }
+      } else {
+        this.tiposDocModel = new AutoCompleteModel();
+        this.tiposDocModel.items = nuevosItems;
+      }
+    }
   }
 }

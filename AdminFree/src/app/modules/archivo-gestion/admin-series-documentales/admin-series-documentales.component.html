@@ -323,7 +323,7 @@
               adminAutofocus
               autocomplete="off"
               maxlength="50"
-              class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-16"
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15"
               [ngClass]="{'ad-input-required': serieSubserieCU.esCodigoInvalido}"/>
             <div class="focus-border"></div>
           </div>
@@ -343,8 +343,8 @@
               [(ngModel)]="serieSubserieCU.nombre"
               autocomplete="off"
               maxlength="255"
-              class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-16"
-              [ngClass]="{'ad-input-required': serieSubserieCU.esNombreInvalido}"/>
+              class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15"
+              [ngClass]="{'ad-input-required':serieSubserieCU.esNombreInvalido,'text-uppercase':esSerieDocumental,'text-capitalize':!esSerieDocumental}"/>
             <div class="focus-border"></div>
           </div>
         </div>

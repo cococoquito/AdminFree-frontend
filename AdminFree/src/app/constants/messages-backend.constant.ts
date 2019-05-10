@@ -87,10 +87,10 @@ export class MessagesBackendConstant {
   static readonly PROCESO_NO_EJECUTADO: string = 'EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo';
 
   /** Ya existe una serie documental con el nombre ?*/
-  static readonly SERIE_MISMO_NOMBRE: string = 'Ya existe una serie documental con el nombre';
+  static readonly SERIE_MISMO_NOMBRE: string = 'Ya existe una serie documental con el mismo nombre';
 
   /** Ya existe una serie documental con el codigo ?*/
-  static readonly SERIE_MISMO_CODIGO: string = 'Ya existe una serie documental con el código';
+  static readonly SERIE_MISMO_CODIGO: string = 'Ya existe una serie documental con el mismo código';
 
   /** La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
   static readonly SERIE_CONSECUTIVOS: string = 'La serie tiene asociado consecutivos de correspondencia';

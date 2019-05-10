@@ -162,7 +162,7 @@ export class MsjFrontConstant {
   static readonly ELIMINAR_SERIE_SUBSERIE: string =
     '¿Seguro de eliminar la siguiente ?1 documental? <div class="text-center mt-2 ?3"><strong>?2</strong></div>';
 
-  /** Mensaje cuando la subserie o serie documental fue eliminada exitosamente */
+  /** Mensaje cuando la serie/subserie documental fue eliminada exitosamente */
   static readonly SERIE_SUBSERIE_ELIMINADA: string = 'La ?1 documental fue eliminada';
 
   /** Mensaje cuando se presenta algun error en los campos para crear/editar serie/subserie */
@@ -170,4 +170,7 @@ export class MsjFrontConstant {
 
   /** Mensaje de confirmacion para la creacion de una serie o subserie */
   static readonly CREAR_SERIE_SUBSERIE: string = '¿Está seguro de proceder a crear la ?1 documental?';
+
+  /** Mensaje cuando la serie/subserie documental fue creada exitosamente */
+  static readonly SERIE_SUBSERIE_CREADA: string = 'La ?1 documental fue creada exitosamente en el sistema';
 }
