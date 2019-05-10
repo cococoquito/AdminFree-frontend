@@ -297,8 +297,10 @@
 <ng-container *ngIf="serieSubserieCU">
   <p-panel styleClass="mb-1 steps-pnl pnl-pt">
     <p-header>
-      <i class="fa fa-info-circle font-size-18"></i>
-      <span> Creación de series documentales</span>
+      <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary mr-1 p-0 w-35-px">
+        <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> </label>
+      </button>
+      <span class="align-middle">Creación de series documentales</span>
     </p-header>
 
     <!-- Codigo y Nombre-->

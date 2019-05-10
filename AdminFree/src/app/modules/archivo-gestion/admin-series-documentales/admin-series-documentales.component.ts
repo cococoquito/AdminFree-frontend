@@ -129,28 +129,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.clienteCurrent = LocalStoreUtil.getCurrentCliente();
 
     // se consulta los datos iniciales para este submodulo
-    this.archivoGestionService.getInitAdminSeriesDocumentales(this.clienteCurrent.id).subscribe(
-      data => {
-        // se verifica si hay series documentales asociados al cliente autenticado
-        if (data && data.series && data.series.cantidadTotal) {
-
-          // se configura el paginador de las series
-          this.seriesPaginados = new PaginadorModel(this);
-          this.seriesPaginados.configurarRegistros(data.series);
-
-          // se construye el DTO para el filtro de busqueda con su clone
-          this.filtro = new FiltroSerieDocumentalDTO();
-          this.filtro.idCliente = this.clienteCurrent.id;
-          this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
-
-          // se procede a expandir todas las filas de las series
-          this.expandRowsSeries();
-        }
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+    this.getInitAdminSeriesDocumentales(false);
   }
 
   /**
@@ -482,30 +461,14 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
           // se verifica si se debe consultar las series documentales
           if (this.esSerieDocumental && this.hayNuevasSeries) {
-
-            // se hace el backup de los datos del paginador esto por si hay errores
-            this.filtroClone.paginador = this.seriesPaginados.filtroBefore();
-
-            // se procede a consultar las series documentales de acuerdo al filtro
-            this.archivoGestionService.getSeriesDocumentales(this.filtroClone).subscribe(
-              data => {
-                // se configura los nuevas series consultadas
-                this.seriesPaginados.filtroExitoso(this.tblseries, data);
-
-                // se limpia las variables utilizadas para el panel de creacion
-                this.limpiar();
-              },
-              error => {
-                this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-              }
-            );
+            this.getSeriesDespuesCreacion();
           } else {
-            this.limpiarCamposCU();
+            this.cleanPanelSpinnerCU();
           }
         }
       });
     } else {
-      this.limpiarCamposCU();
+      this.cleanPanelSpinnerCU();
     }
   }
 
@@ -537,6 +500,44 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   }
 
   /**
+   * Metodo que permite configurar los datos iniciales para
+   * el submodulo de administrar series documentales
+   *
+   * @param esCreacionSerie, si el llamado a este metodo es por creacion de serie
+   */
+  private getInitAdminSeriesDocumentales(esCreacionSerie: boolean): void {
+
+    // se consulta los datos iniciales para este submodulo
+    this.archivoGestionService.getInitAdminSeriesDocumentales(this.clienteCurrent.id).subscribe(
+      data => {
+        // se verifica si hay series documentales asociados al cliente autenticado
+        if (data && data.series && data.series.cantidadTotal) {
+
+          // se configura el paginador de las series
+          this.seriesPaginados = new PaginadorModel(this);
+          this.seriesPaginados.configurarRegistros(data.series);
+
+          // se construye el DTO para el filtro de busqueda con su clone
+          this.filtro = new FiltroSerieDocumentalDTO();
+          this.filtro.idCliente = this.clienteCurrent.id;
+          this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
+
+          // se procede a expandir todas las filas de las series
+          this.expandRowsSeries();
+
+          // se verifica si se debe cerrar el panel de crear/editar
+          if (esCreacionSerie) {
+            this.cleanPanelCU();
+          }
+        }
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
    * Metodo que permite expandir todas las filas de las series
    * para visualizar las subseries de cada serie consultada
    */
@@ -550,12 +551,12 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   }
 
   /**
-   * Permite limpiar los datos utilizado para la creacion o edicion de la serie/subserie
+   * limpia los datos utilizado para crear/editar la serie/subserie simulando el spinner
    */
-  private limpiarCamposCU(): void {
+  private cleanPanelSpinnerCU(): void {
     this.spinnerState.displaySpinner();
     setTimeout(() => {
-      this.limpiar();
+      this.cleanPanelCU();
       this.spinnerState.hideSpinner();
     }, 100);
   }
@@ -563,7 +564,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /**
    * Metodo que permite limpiar las variables utilizadas en los paneles crear/editar
    */
-  private limpiar(): void {
+  private cleanPanelCU(): void {
     this.messageService.clear();
     this.serieSubserieCU = null;
     this.seriePropietaria = null;
@@ -665,6 +666,37 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.tiposDocModel = new AutoCompleteModel();
         this.tiposDocModel.items = nuevosItems;
       }
+    }
+  }
+
+  /**
+   * Metodo que permite consultar las series documentales
+   * despues de la creacion de una serie sobre el sistema
+   */
+  private getSeriesDespuesCreacion(): void {
+
+    // si no hay paginador significa que son las primeras series creadas
+    if (this.seriesPaginados) {
+
+      // se hace el backup de los datos del paginador esto por si hay errores
+      this.filtroClone.paginador = this.seriesPaginados.filtroBefore();
+
+      // se procede a consultar las series documentales de acuerdo al filtro
+      this.archivoGestionService.getSeriesDocumentales(this.filtroClone).subscribe(
+        data => {
+          // se configura los nuevas series consultadas
+          this.seriesPaginados.filtroExitoso(this.tblseries, data);
+
+          // se limpia las variables utilizadas para el panel de creacion
+          this.cleanPanelCU();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    } else {
+      // si no hay paginador se procede a consultar los datos iniciales
+      this.getInitAdminSeriesDocumentales(true);
     }
   }
 }
