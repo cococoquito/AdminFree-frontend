@@ -172,11 +172,11 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
               // indica que se debe consultar las series cuando se salen del panel de creacion
               this.hayNuevasSeries = true;
 
-              // se posiciona el scroll en la parte superior
-              this.shellState.screen.putScrollUP();
-
               // se fija el focus en el codigo
               this.inCodigo.nativeElement.focus();
+
+              // se posiciona el scroll en la parte superior
+              this.shellState.screen.putScrollUP();
             },
             error => {
               const msj = this.showMensajeError(error);
@@ -198,6 +198,52 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
     // se limpia los mensajes anteriores
     this.messageService.clear();
+
+    // se verifica si los campos son validos
+    if (this.isCamposIngresoValidos()) {
+
+      // se muestra la ventana de confirmacion
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CREAR_SERIE_SUBSERIE.replace('?1', 'subserie'),
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+
+          // se procede a crear la subserie documental
+          const nuevaSubSerie: SubSerieDocumentalDTO = (this.serieSubserieCU as SubSerieDocumentalDTO);
+          nuevaSubSerie.idCliente = this.clienteCurrent.id;
+          nuevaSubSerie.tipoEvento = TipoEventoConstant.CREAR;
+          nuevaSubSerie.idSerie = this.seriePropietaria.idSerie;
+          this.archivoGestionService.administrarSubSerieDocumental(nuevaSubSerie).subscribe(
+            data => {
+              // Mensaje exitoso, subserie documental fue creado
+              this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_CREADA.replace('?1', 'Subserie')));
+
+              // se reinicia la variable permitiendo crear otra serie documental
+              this.serieSubserieCU = new SubSerieDocumentalDTO();
+
+              // se configura los nuevos tipos documentales en el modelo
+              this.setNuevosTiposDocumentales(data);
+
+              // indica que se debe consultar las subseries cuando se salen del panel de creacion
+              this.hayNuevasSubSeries = true;
+
+              // se fija el focus en el codigo
+              this.inCodigo.nativeElement.focus();
+
+              // se posiciona el scroll en la parte superior
+              this.shellState.screen.putScrollUP();
+            },
+            error => {
+              const msj = this.showMensajeError(error);
+              this.messageService.add(MsjUtil.getMsjError(msj));
+              this.messageService.add(MsjUtil.getToastErrorLng(msj));
+            }
+          );
+        }
+      });
+    } else {
+      this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.ADMIN_SERIES_ERROR_CAMPOS));
+    }
   }
 
   /**
@@ -480,11 +526,23 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
 
-          // se verifica si se debe consultar las series documentales
-          if (this.esSerieDocumental && this.hayNuevasSeries) {
-            this.getSeriesDespuesCreacion();
+          // se verifica que tipo de documental se registro en el sistema
+          if (this.esSerieDocumental) {
+
+            // para series documentales
+            if (this.hayNuevasSeries) {
+              this.getSeriesDespuesCreacion();
+            } else {
+              this.cleanPanelSpinnerCU();
+            }
           } else {
-            this.cleanPanelSpinnerCU();
+
+            // para subseries documentales
+            if (this.hayNuevasSubSeries) {
+              this.getSubseriesDespuesCreacion();
+            } else {
+              this.cleanPanelSpinnerCU();
+            }
           }
         }
       });
@@ -599,11 +657,11 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.hayNuevasSeries = false;
     this.hayNuevasSubSeries = false;
 
-    // se posiciona el scroll en la parte superior
-    this.shellState.screen.putScrollUP();
-
     // se resetea el componente autocomplete de tipos documentales
     this.tiposDocModel.reset();
+
+    // se posiciona el scroll en la parte superior
+    this.shellState.screen.putScrollUP();
   }
 
   /**
@@ -730,6 +788,34 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     } else {
       // si no hay paginador se procede a consultar los datos iniciales
       this.getInitAdminSeriesDocumentales(true);
+    }
+  }
+
+  /**
+   * Metodo que permite consultar las subseries documentales
+   * despues de la creacion de una subserie sobre el sistema
+   */
+  private getSubseriesDespuesCreacion(): void {
+
+    // solamente se consulta si hay serie propietaria de las nuevas subseries
+    if (this.seriePropietaria) {
+
+      // se procede a consultar las subseries documentales
+      this.archivoGestionService.getSubSeriesDocumental(this.seriePropietaria.idSerie).subscribe(
+        data => {
+          // se configuran las subseries documentales
+          this.seriePropietaria.subSeries = data;
+
+          // se limpia las variables utilizadas para el panel de creacion
+          this.cleanPanelCU();
+
+          // se procede a expandir todas las filas de las series
+          this.expandRowsSeries();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
     }
   }
 }

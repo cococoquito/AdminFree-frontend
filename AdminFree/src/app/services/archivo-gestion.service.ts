@@ -95,7 +95,7 @@ export class ArchivoGestionService {
 	 * @param idSerie, identificador de la serie documental
    * @return lista de subseries documentales relacionadas a una serie documental
 	 */
-  public getSubSeriesDocumental(idSerie: number): Observable<SubSerieDocumentalDTO> {
-    return this.http.get<SubSerieDocumentalDTO>(ArchivoGestionAPIConstant.URL_GET_SUBSERIES + idSerie);
+  public getSubSeriesDocumental(idSerie: number): Observable<Array<SubSerieDocumentalDTO>> {
+    return this.http.get<Array<SubSerieDocumentalDTO>>(ArchivoGestionAPIConstant.URL_GET_SUBSERIES + idSerie);
   }
 }
