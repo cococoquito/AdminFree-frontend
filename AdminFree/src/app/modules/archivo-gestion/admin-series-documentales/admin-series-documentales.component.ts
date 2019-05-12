@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ArchivoGestionService } from '../../../services/archivo-gestion.service';
@@ -77,8 +77,11 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') private tblseries: Table;
 
-  /**Es la referencia del componente autocomplete de tipos documentales*/
+  /** Es la referencia del componente autocomplete de tipos documentales*/
   @ViewChild('autotiposdocs') private autoTiposDocs: any;
+
+  /** Es la referencia del componente codigo para fijar el focus*/
+  @ViewChild('incodigo') private inCodigo: ElementRef;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -168,6 +171,12 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
               // indica que se debe consultar las series cuando se salen del panel de creacion
               this.hayNuevasSeries = true;
+
+              // se posiciona el scroll en la parte superior
+              this.shellState.screen.putScrollUP();
+
+              // se fija el focus en el codigo
+              this.inCodigo.nativeElement.focus();
             },
             error => {
               const msj = this.showMensajeError(error);
@@ -592,6 +601,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
     // se posiciona el scroll en la parte superior
     this.shellState.screen.putScrollUP();
+
+    // se resetea el componente autocomplete de tipos documentales
+    this.tiposDocModel.reset();
   }
 
   /**
