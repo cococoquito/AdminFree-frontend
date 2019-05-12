@@ -509,6 +509,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
       this.serieSubserieCU = new SubSerieDocumentalDTO();
       this.seriePropietaria = serie;
     }
+
+    // se posiciona el scroll en la parte superior
+    this.shellState.screen.putScrollUP();
   }
 
   /**
@@ -577,6 +580,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Metodo que permite limpiar las variables utilizadas en los paneles crear/editar
    */
   private cleanPanelCU(): void {
+
+    // se limpia las variables utilizadas del panel de crear/editar
     this.messageService.clear();
     this.serieSubserieCU = null;
     this.seriePropietaria = null;
@@ -584,6 +589,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.esSerieDocumental = false;
     this.hayNuevasSeries = false;
     this.hayNuevasSubSeries = false;
+
+    // se posiciona el scroll en la parte superior
+    this.shellState.screen.putScrollUP();
   }
 
   /**
