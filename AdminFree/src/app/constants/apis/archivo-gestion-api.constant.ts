@@ -39,4 +39,10 @@ export class ArchivoGestionAPIConstant {
     AppDomainConstant.ADMINFREE +
     ArchivoGestionAPIConstant.ARCHIVO_GESTION_API +
     'adminsubseries';
+
+  /** URL del recurso que permite obtener las subseries documentales relacionadas a una serie documental*/
+  static readonly URL_GET_SUBSERIES: string =
+    AppDomainConstant.ADMINFREE +
+    ArchivoGestionAPIConstant.ARCHIVO_GESTION_API +
+    'getsubseries?idSerie=';
 }

@@ -71,6 +71,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Indica si debe consultar nuevamente las series cuando se salen del panel de creacion*/
   private hayNuevasSeries: boolean;
 
+  /** Indica si debe consultar las subseries asociadas a la serie cuando se salen del panel de creacion*/
+  private hayNuevasSubSeries: boolean;
+
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') private tblseries: Table;
 
@@ -177,6 +180,15 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     } else {
       this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.ADMIN_SERIES_ERROR_CAMPOS));
     }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton crear subserie documental
+   */
+  public crearSubserieDocumental(): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
   }
 
   /**
@@ -571,6 +583,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.serieSubserieEditarOrigen = null;
     this.esSerieDocumental = false;
     this.hayNuevasSeries = false;
+    this.hayNuevasSubSeries = false;
   }
 
   /**

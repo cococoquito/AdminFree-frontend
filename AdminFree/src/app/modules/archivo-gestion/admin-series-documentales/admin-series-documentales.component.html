@@ -22,8 +22,8 @@
 
       <!-- btn - agregar serie -->
       <div class="ui-md-6 p-0 text-right">
-        <button (click)="abrirPanelCreacion(true, null)" type="button" class="btn btn-sm btn-success w-180-px">
-          <label class="btn-size-admin"><i class="fa fa-clipboard"></i> Agregar serie documental</label>
+        <button (click)="abrirPanelCreacion(true, null)" type="button" class="btn btn-sm btn-success w-185-px">
+          <label class="btn-size-admin"><i class="fa fa-clipboard"></i> Agregar Serie Documental</label>
         </button>
       </div>
     </div>
@@ -300,7 +300,7 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary mr-1 p-0 w-35-px">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> </label>
       </button>
-      <span class="align-middle">Creación de series documentales</span>
+      <span class="align-middle">Formulario para la creación de {{esSerieDocumental ? 'Series' : 'Subseries'}} Documentales</span>
     </p-header>
 
     <!-- Codigo y Nombre-->
@@ -356,7 +356,7 @@
     <!-- tipos documentales-->
     <p-panel styleClass="mb-3 mt-1 mr-3 ml-3">
       <p-header>
-        <span class="steps-circle">2</span> <span> Adicione los tipos documentales de la serie documental</span>
+        <span class="steps-circle">2</span> <span> Adicione los tipos documentales de la {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental</span>
       </p-header>
 
       <!-- autocomplete - btn adicionar -->
@@ -398,7 +398,7 @@
         class="mr-2 ml-2 mt-2 mb-2 p-1 ui-messages ui-messages-info ui-corner-all text-center">
         <span class="ui-messages-icon pi pi-info-circle"></span>
         <span class="ui-messages-detail font-size-15 ml-0">
-          No hay <strong>tipos documentales</strong> asociados a la serie documental
+          No hay <strong>tipos documentales</strong> asociados a la {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental
         </span>
       </div>
     </p-panel>
@@ -543,8 +543,11 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary w-180-px mr-2">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left mr-1"></i> Regresar</label>
       </button>
-      <button (click)="crearSerieDocumental()" type="button" class="btn btn-sm btn-success w-180-px">
-        <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear serie documental</label>
+      <button (click)="crearSerieDocumental()" *ngIf="esSerieDocumental" type="button" class="btn btn-sm btn-success w-180-px">
+        <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Serie Documental</label>
+      </button>
+      <button (click)="crearSubserieDocumental()" *ngIf="!esSerieDocumental" type="button" class="btn btn-sm btn-success">
+        <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Subserie Documental</label>
       </button>
     </div>
   </p-panel>

@@ -88,4 +88,14 @@ export class ArchivoGestionService {
       subserie
     );
   }
+
+  /**
+	 * Servicio que permite obtener las subseries documentales relacionadas a una serie documental
+	 *
+	 * @param idSerie, identificador de la serie documental
+   * @return lista de subseries documentales relacionadas a una serie documental
+	 */
+  public getSubSeriesDocumental(idSerie: number): Observable<SubSerieDocumentalDTO> {
+    return this.http.get<SubSerieDocumentalDTO>(ArchivoGestionAPIConstant.URL_GET_SUBSERIES + idSerie);
+  }
 }
