@@ -300,7 +300,7 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary mr-1 p-0 w-35-px">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> </label>
       </button>
-      <span class="align-middle">Formulario para la creación de {{esSerieDocumental ? 'Series' : 'Subseries'}} Documentales</span>
+      <span class="align-middle">Formulario para la creación de las {{esSerieDocumental ? 'Series' : 'Subseries'}} Documentales</span>
     </p-header>
 
     <!-- Codigo y Nombre-->
@@ -310,10 +310,19 @@
       </p-header>
       <div class="ui-g">
 
+        <!-- Datos serie propietaria -->
+        <ng-container *ngIf="!esSerieDocumental">
+          <div class="ui-g-12 pb-0 pt-0 text-center bg-cgb">
+            <p class="steps-st mb-0 mt-1">Código y Nombre de la Serie Documental</p>
+            <label (click)="copyToClipBoard(seriePropietaria.codigo,'Código')" class="font-weight-bold font-size-14 font-new-roman text-secondary copy mb-0"> {{seriePropietaria.codigo}} </label>
+            <p class="font-weight-bold font-size-14 font-new-roman text-secondary"> {{seriePropietaria.nombre}} </p>
+          </div>
+        </ng-container>
+
         <!-- Codigo -->
         <div class="ui-g-6 pt-0">
           <div class="ui-g-12 pb-0">
-            <label for="incodigo" class="steps-st mb-0 mt-1"> Código: </label>
+            <label for="incodigo" class="steps-st mb-0 mt-1"> Código de la {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental: </label>
             <i class="fa fa-asterisk text-danger font-size-10"></i>
           </div>
           <div class="ui-g-12 pt-0">
@@ -335,7 +344,7 @@
         <!-- Nombre -->
         <div class="ui-g-6 pt-0">
           <div class="ui-g-12 pb-0">
-            <label for="innombre" class="steps-st mb-0 mt-1"> Nombre: </label>
+            <label for="innombre" class="steps-st mb-0 mt-1"> Nombre de la {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental: </label>
             <i class="fa fa-asterisk text-danger font-size-10"></i>
           </div>
           <div class="ui-g-12 pt-0">

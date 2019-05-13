@@ -77,10 +77,10 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') private tblseries: Table;
 
-  /** Es la referencia del componente autocomplete de tipos documentales*/
+  /** Se utiliza para fijar el focus del autocomplete tipos documentales*/
   @ViewChild('autotiposdocs') private autoTiposDocs: any;
 
-  /** Es la referencia del componente codigo para fijar el focus*/
+  /** Se utiliza para fijar el focus del codigo al crear una serie/subserie*/
   @ViewChild('incodigo') private inCodigo: ElementRef;
 
   /**
@@ -218,7 +218,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
               // Mensaje exitoso, subserie documental fue creado
               this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_CREADA.replace('?1', 'Subserie')));
 
-              // se reinicia la variable permitiendo crear otra serie documental
+              // se reinicia la variable permitiendo crear otra subserie documental
               this.serieSubserieCU = new SubSerieDocumentalDTO();
 
               // se configura los nuevos tipos documentales en el modelo
@@ -383,8 +383,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
         // se procede a eliminar la subserie
         const request = new SubSerieDocumentalDTO();
-        request.idSerie = serie.idSerie;
         request.idSubSerie = subSerie.idSubSerie;
+        request.idSerie = serie.idSerie;
         request.tipoEvento = TipoEventoConstant.ELIMINAR;
         this.archivoGestionService.administrarSubSerieDocumental(request).subscribe(
           data => {
@@ -519,7 +519,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   public closePanelCU(): void {
 
-    // para creacion se pregunta directamente
+    // si ID no existe es porque el proceso es creacion por lo tanto se debe preguntar directo
     if (!this.serieSubserieCU.id) {
         this.confirmationService.confirm({
         message: MsjFrontConstant.SEGURO_SALIR,
@@ -797,25 +797,21 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   private getSubseriesDespuesCreacion(): void {
 
-    // solamente se consulta si hay serie propietaria de las nuevas subseries
-    if (this.seriePropietaria) {
+    // se procede a consultar las subseries documentales
+    this.archivoGestionService.getSubSeriesDocumental(this.seriePropietaria.idSerie).subscribe(
+      data => {
+        // se configuran las subseries documentales
+        this.seriePropietaria.subSeries = data;
 
-      // se procede a consultar las subseries documentales
-      this.archivoGestionService.getSubSeriesDocumental(this.seriePropietaria.idSerie).subscribe(
-        data => {
-          // se configuran las subseries documentales
-          this.seriePropietaria.subSeries = data;
+        // se limpia las variables utilizadas para el panel de creacion
+        this.cleanPanelCU();
 
-          // se limpia las variables utilizadas para el panel de creacion
-          this.cleanPanelCU();
-
-          // se procede a expandir todas las filas de las series
-          this.expandRowsSeries();
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-    }
+        // se procede a expandir todas las filas por si la serie propietaria no tenia subserie
+        this.expandRowsSeries();
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 }
