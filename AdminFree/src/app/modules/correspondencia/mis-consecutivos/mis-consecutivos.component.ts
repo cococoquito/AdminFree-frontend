@@ -83,6 +83,9 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
   /** Se utiliza para validar los valores de los inputs para la edicion*/
   public regex: RegexUtil;
 
+  /** Es la posicion del scroll para la edicion del consecutivo */
+  private positionScroll: number;
+
   /** labels para el componente de los calendars */
   public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
@@ -382,7 +385,13 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
       data => {
         // se configura los datos del consecutivo a editar
         this.consecutivoEdicion = data;
+
+        // permite configurar el modelo de los valores a editar
         this.setModelValuesEditar();
+
+        // se posiciona el scroll en la parte superior
+        this.positionScroll = this.shellState.contentComponent.getPositionScroll();
+        this.shellState.contentComponent.setPositionScroll(0);
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -886,5 +895,6 @@ export class MisConsecutivosComponent extends CommonComponent implements OnInit,
     this.consecutivoEdicion = null;
     this.valuesEditar = null;
     this.isAplicarEdicion = false;
+    this.shellState.contentComponent.setPositionScroll(this.positionScroll);
   }
 }

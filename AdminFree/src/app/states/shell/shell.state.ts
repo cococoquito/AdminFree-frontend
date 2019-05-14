@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ContentComponent } from '../../modules/shell/content/content.component';
 import { ScreenST } from './shell-states/screen.st';
 import { MenuST } from './shell-states/menu.st';
 import { UserAccountST } from './shell-states/user-account.st';
@@ -28,6 +29,9 @@ export class ShellState {
 
   /** Se utiliza para la visualizacion de los titulos de las paginas */
   public title: TitleST;
+
+  /** Componente del shell content para manipular el scroll del DIV content main*/
+  public contentComponent: ContentComponent;
 
   /**
    * Constructor donde se crea todo el modelo del estado del Shell

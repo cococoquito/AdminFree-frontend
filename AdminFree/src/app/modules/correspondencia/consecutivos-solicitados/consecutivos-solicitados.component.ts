@@ -31,6 +31,9 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
   /** Es el detalle del consecutivo a visualizar */
   public consecutivoDetalle: ConsecutivoDetalleDTO;
 
+  /** Es la posicion del scroll para el detalle del consecutivo */
+  private positionScroll: number;
+
   /** Se utiliza para resetear la tabla de consecutivos cuando aplican un filtro*/
   @ViewChild('tblcc') tblConsecutivos: Table;
 
@@ -200,7 +203,12 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     // se procede a consultar el detalle del consecutivo
     this.correspondenciaService.getDetalleConsecutivo(filtroDetalle).subscribe(
       data => {
+        // se configura los datos del detalle del consecutivo
         this.consecutivoDetalle = data;
+
+        // se posiciona el scroll en la parte superior
+        this.positionScroll = this.shellState.contentComponent.getPositionScroll();
+        this.shellState.contentComponent.setPositionScroll(0);
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -216,6 +224,7 @@ export class ConsecutivosSolicitadosComponent extends CommonComponent implements
     setTimeout(() => {
       this.spinnerState.hideSpinner();
       this.consecutivoDetalle = null;
+      this.shellState.contentComponent.setPositionScrollDelay(this.positionScroll);
     }, 100);
   }
 

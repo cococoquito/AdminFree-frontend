@@ -178,7 +178,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
               this.inCodigo.nativeElement.focus();
 
               // se posiciona el scroll en la parte superior
-              this.shellState.screen.putScrollUP();
+              this.shellState.contentComponent.setPositionScroll(0);
             },
             error => {
               const msj = this.showMensajeError(error);
@@ -234,7 +234,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
               this.inCodigo.nativeElement.focus();
 
               // se posiciona el scroll en la parte superior
-              this.shellState.screen.putScrollUP();
+              this.shellState.contentComponent.setPositionScroll(0);
             },
             error => {
               const msj = this.showMensajeError(error);
@@ -581,7 +581,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     }
 
     // se posiciona el scroll en la parte superior
-    this.shellState.screen.putScrollUP();
+    this.shellState.contentComponent.setPositionScroll(0);
   }
 
   /**
@@ -664,7 +664,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.tiposDocModel.reset();
 
     // se posiciona el scroll en la parte superior
-    this.shellState.screen.putScrollUP();
+    this.shellState.contentComponent.setPositionScroll(0);
   }
 
   /**

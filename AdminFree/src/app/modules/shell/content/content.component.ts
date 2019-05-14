@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ShellState } from '../../../states/shell/shell.state';
 import {
   trigger,
@@ -27,11 +27,60 @@ import {
     ])
   ]
 })
-export class ContentComponent {
+export class ContentComponent implements OnInit {
 
   /**
    * @param shellState, se utiliza para mostrar/ocultar el menu
    * y validar el tamanio de la pantalla
    */
   constructor(public shellState: ShellState) {}
+
+  /**
+   * Se utiliza para pasar la instancia de este shell content
+   */
+  ngOnInit() {
+    this.shellState.contentComponent = this;
+  }
+
+  /**
+   * Metodo que permite fijar el scroll del DIV content
+   * main en una posicion determinada con un tiempo delay
+   */
+  public setPositionScrollDelay(position: number) {
+    setTimeout(() => {
+      (function setPositionScrollFunction() {
+        const div = document.getElementById('maincontent');
+        if (div) {
+          div.scrollTop = position;
+        }
+      })();
+    }, 10);
+  }
+
+  /**
+   * Metodo que permite fijar el scroll del DIV content
+   * main en una posicion determinada
+   */
+  public setPositionScroll(position: number) {
+    (function setPositionScrollFunction() {
+      const div = document.getElementById('maincontent');
+      if (div) {
+        div.scrollTop = position;
+      }
+    })();
+  }
+
+  /**
+   * Metodo que permite retornar la posicion del scroll del DIV content main
+   */
+  public getPositionScroll(): number {
+    let response;
+    (function getPositionScrollFunction() {
+      const div = document.getElementById('maincontent');
+      if (div) {
+        response = div.scrollTop;
+      }
+    })();
+    return response;
+  }
 }

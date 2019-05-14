@@ -13,9 +13,6 @@ export class ScreenST {
   /** Es el ancho de la pantalla, este valor es dinamico si el dispositivo cambia **/
   public screenWidth = 1000;
 
-  /** Se utiliza para el binding del scrollTop del div del content **/
-  public scrollPosition;
-
   /**
    * Se hace la inscripcion con la ventana del navegador
    * para ser notificado si el dispositivo cambia su resolucion
@@ -27,20 +24,6 @@ export class ScreenST {
     } catch (e) {
       // we're going with default screen dimensions
     }
-  }
-
-  /**
-   * Metodo que permite colocar el scroll en la parte superior de la pagina
-   */
-  public putScrollUP(): void {
-    this.scrollPosition = window.setInterval(() => {
-      const pos = window.pageYOffset;
-      if (pos > 0) {
-        window.scrollTo(0, pos - 50);
-      } else {
-        window.clearInterval(this.scrollPosition);
-      }
-    }, 16);
   }
 
   /**
