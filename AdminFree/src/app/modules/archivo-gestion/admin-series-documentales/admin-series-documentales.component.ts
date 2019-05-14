@@ -75,6 +75,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Indica si debe consultar las subseries asociadas a la serie cuando se salen del panel de creacion*/
   private hayNuevasSubSeries: boolean;
 
+  /** Es la posicion del scroll para administrarlo en diferentes procesos */
+  private positionScroll: number;
+
   /** Se utiliza para resetear la tabla de series cuando aplican un filtro*/
   @ViewChild('tblseries') private tblseries: Table;
 
@@ -163,7 +166,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
           this.archivoGestionService.administrarSerieDocumental(this.serieSubserieCU as SerieDocumentalDTO).subscribe(
             data => {
               // Mensaje exitoso, serie documental fue creado
-              this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_CREADA.replace('?1', 'serie')));
+              this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_CREADA.replace('?1', 'Serie')));
 
               // se reinicia la variable permitiendo crear otra serie documental
               this.serieSubserieCU = new SerieDocumentalDTO();
@@ -581,6 +584,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     }
 
     // se posiciona el scroll en la parte superior
+    this.positionScroll = this.shellState.contentComponent.getPositionScroll();
     this.shellState.contentComponent.setPositionScroll(0);
   }
 
@@ -663,8 +667,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se resetea el componente autocomplete de tipos documentales
     this.tiposDocModel.reset();
 
-    // se posiciona el scroll en la parte superior
-    this.shellState.contentComponent.setPositionScroll(0);
+    // se posiciona el scroll como estaba antes de entrar al panel de crear/editar
+    this.shellState.contentComponent.setPositionScrollDelay(this.positionScroll);
   }
 
   /**

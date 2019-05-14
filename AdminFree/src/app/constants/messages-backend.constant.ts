@@ -87,10 +87,10 @@ export class MessagesBackendConstant {
   static readonly PROCESO_NO_EJECUTADO: string = 'EL proceso no se ejecutó satisfactoriamente, por favor inténtalo de nuevo';
 
   /** Ya existe una serie documental con el nombre ?*/
-  static readonly SERIE_MISMO_NOMBRE: string = 'Ya existe una serie documental con el mismo nombre';
+  static readonly SERIE_MISMO_NOMBRE: string = 'Ya existe una Serie Documental con el mismo nombre';
 
   /** Ya existe una serie documental con el codigo ?*/
-  static readonly SERIE_MISMO_CODIGO: string = 'Ya existe una serie documental con el mismo código';
+  static readonly SERIE_MISMO_CODIGO: string = 'Ya existe una Serie Documental con el mismo código';
 
   /** La serie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
   static readonly SERIE_CONSECUTIVOS: string = 'La serie tiene asociado consecutivos de correspondencia';
@@ -102,10 +102,10 @@ export class MessagesBackendConstant {
   static readonly SERIE_TIENE_SUBSERIE: string = 'Para eliminar la serie debe eliminar primero las subseries';
 
   /** Ya existe una subserie documental con el nombre ?*/
-  static readonly SUBSERIE_MISMO_NOMBRE: string = 'Ya existe una subserie documental con el nombre';
+  static readonly SUBSERIE_MISMO_NOMBRE: string = 'Ya existe una Subserie Documental con el mismo nombre';
 
   /** Ya existe una subserie documental con el codigo ?*/
-  static readonly SUBSERIE_MISMO_CODIGO: string = 'Ya existe una subserie documental con el código';
+  static readonly SUBSERIE_MISMO_CODIGO: string = 'Ya existe una Subserie Documental con el mismo código';
 
   /** La subserie documental que intenta eliminar tiene asociado consecutivos de correspondencia*/
   static readonly SUBSERIE_CONSECUTIVOS: string = 'La subserie tiene asociado consecutivos de correspondencia';

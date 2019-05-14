@@ -172,5 +172,5 @@ export class MsjFrontConstant {
   static readonly CREAR_SERIE_SUBSERIE: string = '¿Está seguro de crear la ?1 Documental?';
 
   /** Mensaje cuando la serie/subserie documental fue creada exitosamente */
-  static readonly SERIE_SUBSERIE_CREADA: string = 'La ?1 documental fue creada exitosamente en el sistema';
+  static readonly SERIE_SUBSERIE_CREADA: string = 'La ?1 Documental fue creada exitosamente en el sistema';
 }
