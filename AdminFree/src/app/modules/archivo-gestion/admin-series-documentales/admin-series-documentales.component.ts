@@ -13,6 +13,7 @@ import { SubSerieDocumentalDTO } from '../../../dtos/archivogestion/sub-serie-do
 import { FiltroSerieDocumentalDTO } from '../../../dtos/archivogestion/filtro-serie-documental.dto';
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { TipoDocumentalDTO } from '../../../dtos/archivogestion/tipo-documental.dto';
+import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { RegexUtil } from '../../../util/regex-util';
@@ -151,13 +152,14 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
       // se muestra la ventana de confirmacion
       this.confirmationService.confirm({
-        message: MsjFrontConstant.CREAR_SERIE_SUBSERIE.replace('?1', 'serie'),
+        message: MsjFrontConstant.CREAR_SERIE_SUBSERIE.replace('?1', 'Serie'),
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
 
           // se procede a crear la serie documental
           this.serieSubserieCU.idCliente = this.clienteCurrent.id;
           this.serieSubserieCU.tipoEvento = TipoEventoConstant.CREAR;
+          this.setUsuarioCreacion();
           this.archivoGestionService.administrarSerieDocumental(this.serieSubserieCU as SerieDocumentalDTO).subscribe(
             data => {
               // Mensaje exitoso, serie documental fue creado
@@ -204,7 +206,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
       // se muestra la ventana de confirmacion
       this.confirmationService.confirm({
-        message: MsjFrontConstant.CREAR_SERIE_SUBSERIE.replace('?1', 'subserie'),
+        message: MsjFrontConstant.CREAR_SERIE_SUBSERIE.replace('?1', 'Subserie'),
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
 
@@ -213,6 +215,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
           nuevaSubSerie.idCliente = this.clienteCurrent.id;
           nuevaSubSerie.tipoEvento = TipoEventoConstant.CREAR;
           nuevaSubSerie.idSerie = this.seriePropietaria.idSerie;
+          this.setUsuarioCreacion();
           this.archivoGestionService.administrarSubSerieDocumental(nuevaSubSerie).subscribe(
             data => {
               // Mensaje exitoso, subserie documental fue creado
@@ -813,5 +816,15 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+  /**
+   * se configura el id del usuario quien esta creando la serie/subserie
+   */
+  private setUsuarioCreacion(): void {
+    const welcome: WelcomeDTO = LocalStoreUtil.welcome(TipoEventoConstant.GET);
+    if (welcome && welcome.credenciales && !welcome.credenciales.administrador) {
+      this.serieSubserieCU.idUsuarioCreacion = welcome.usuario.id;
+    }
   }
 }

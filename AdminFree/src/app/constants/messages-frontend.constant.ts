@@ -169,7 +169,7 @@ export class MsjFrontConstant {
   static readonly ADMIN_SERIES_ERROR_CAMPOS: string = 'Se presentaron errores en algunos campos, por favor verifique';
 
   /** Mensaje de confirmacion para la creacion de una serie o subserie */
-  static readonly CREAR_SERIE_SUBSERIE: string = '¿Está seguro de proceder a crear la ?1 documental?';
+  static readonly CREAR_SERIE_SUBSERIE: string = '¿Está seguro de crear la ?1 Documental?';
 
   /** Mensaje cuando la serie/subserie documental fue creada exitosamente */
   static readonly SERIE_SUBSERIE_CREADA: string = 'La ?1 documental fue creada exitosamente en el sistema';
