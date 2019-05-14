@@ -337,7 +337,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
       message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE
-        .replace('?1', 'serie')
+        .replace('?1', 'Serie')
         .replace('?2', serie.nombre)
         .replace('?3', 'text-uppercase'),
       header: MsjFrontConstant.CONFIRMACION,
@@ -354,7 +354,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.archivoGestionService.administrarSerieDocumental(request).subscribe(
           data => {
             // Mensaje exitoso, serie documental fue eliminado
-            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'serie')));
+            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Serie')));
 
             // se configura los nuevas series consultadas
             this.seriesPaginados.filtroExitoso(this.tblseries, data);
@@ -381,7 +381,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
       message: MsjFrontConstant.ELIMINAR_SERIE_SUBSERIE
-        .replace('?1', 'subserie')
+        .replace('?1', 'Subserie')
         .replace('?2', subSerie.nombre)
         .replace('?3', 'text-capitalize'),
       header: MsjFrontConstant.CONFIRMACION,
@@ -395,7 +395,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.archivoGestionService.administrarSubSerieDocumental(request).subscribe(
           data => {
             // Mensaje exitoso, sub-serie documental fue eliminado
-            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'subserie')));
+            this.messageService.add(MsjUtil.getToastSuccessMedium(MsjFrontConstant.SERIE_SUBSERIE_ELIMINADA.replace('?1', 'Subserie')));
 
             // el servicio retorna las subseries relacionados a esta serie documental
             serie.subSeries = data;
