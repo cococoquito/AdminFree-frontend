@@ -144,7 +144,7 @@
                       (ngModelChange)="inputChangedEdicion(value)"
                       [placeholder]="value.isSoloNumeros ? 'Campo Numérico': ''"
                       [pKeyFilter]="value.isSoloNumeros ? regex.SOLO_NUMEROS : regex.ALFANUMERICO"
-                      [ngClass]="{'ad-input-required' : !value.isValido, 'font-size-14' : value.isSoloNumeros, 'font-size-16' : !value.isSoloNumeros}"
+                      [ngClass]="{'ad-input-required' : !value.isValido, 'font-size-14' : value.isSoloNumeros, 'font-size-15' : !value.isSoloNumeros}"
                       maxlength="255"
                       class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
                     <div class="focus-border"></div>

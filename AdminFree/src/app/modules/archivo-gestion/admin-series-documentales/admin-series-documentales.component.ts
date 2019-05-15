@@ -736,6 +736,9 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         isValido = false;
       }
     }
+
+    // se limpia los espacios en blanco del procedimiento ingresado
+    this.serieSubserieCU.procedimiento = this.setTrimFilter(this.serieSubserieCU.procedimiento);
     return isValido;
   }
 
