@@ -458,27 +458,34 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   public abrirPanelEdicion(esSerie: boolean, documental: Documental, serie: SerieDocumentalDTO): void {
 
-    // se limpia los mensajes anteriores
-    this.messageService.clear();
+    // se valida si se debe consultar los tipos documentales para la edicion
+    if (this.tiposDocModel &&
+        this.tiposDocModel.items &&
+        this.tiposDocModel.items.length) {
 
-    // se configura la bandera que indica si la edicion es serie documental
-    this.esSerieDocumental = esSerie;
+      // se simula el spinner por un segundo
+      this.spinnerState.displaySpinner();
+      setTimeout(() => {
+        // se configura los datos necesarios para el panel de edicion
+        this.setPanelEdicion(esSerie, documental, serie);
 
-    // se guarda el origen de la serie/subserie a editar
-    this.serieSubserieEditarOrigen = documental;
-
-    // se hace el backup de la serie o subserie a editar
-    this.serieSubserieCU = JSON.parse(JSON.stringify(documental));
-
-    // se utiliza para validar los input solo numeros
-    this.setRegex();
-
-    // se indica que tipo de documental se va editar
-    if (this.esSerieDocumental) {
-      this.serieSubserieCU.id = (documental as SerieDocumentalDTO).idSerie;
+        // se cierra el spinner
+        this.spinnerState.hideSpinner();
+      }, 100);
     } else {
-      this.serieSubserieCU.id = (documental as SubSerieDocumentalDTO).idSubSerie;
-      this.seriePropietaria = serie;
+      // se procede a consultar los tipos documentales asociados al cliente
+      this.archivoGestionService.getTiposDocumentales(this.clienteCurrent.id).subscribe(
+        data => {
+          // se configura el model de los tipos documentales consultados
+          this.setModelTiposDocumentales(data);
+
+          // se configura los datos necesarios para el panel de edicion
+          this.setPanelEdicion(esSerie, documental, serie);
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
     }
   }
 
@@ -558,7 +565,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   }
 
   /**
-   * Metodo que permite configurar los datos necesarios del panel de creacion
+   * Metodo que permite configurar los datos necesarios para el panel de creacion
    *
    * @param esSerie, indica si la creacion es una serie documental
    * @param serie, es la serie documental que es la propietaria
@@ -580,6 +587,44 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
       this.serieSubserieCU = new SerieDocumentalDTO();
     } else {
       this.serieSubserieCU = new SubSerieDocumentalDTO();
+      this.seriePropietaria = serie;
+    }
+
+    // se posiciona el scroll en la parte superior
+    this.positionScroll = this.shellState.contentComponent.getPositionScroll();
+    this.shellState.contentComponent.setPositionScroll(0);
+  }
+
+  /**
+   * Metodo que permite configurar los datos necesarios para el panel de edicion
+   *
+   * @param esSerie, indica si la edicion es una serie documental
+   * @param documental, es la serie/subserie a editar
+   * @param serie, es la serie documental que es la propietaria
+   * de la subserie a editar, solo aplica para la edicion de la subserie
+   */
+  private setPanelEdicion(esSerie: boolean, documental: Documental, serie: SerieDocumentalDTO): void {
+
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+
+    // se configura la bandera que indica si la edicion es serie documental
+    this.esSerieDocumental = esSerie;
+
+    // se utiliza para validar los input solo numeros
+    this.setRegex();
+
+    // se guarda el origen de la serie/subserie a editar
+    this.serieSubserieEditarOrigen = documental;
+
+    // se hace el backup de la serie o subserie a editar
+    this.serieSubserieCU = JSON.parse(JSON.stringify(documental));
+
+    // este ID permite hacer saber que el proceso es una edicion
+    if (this.esSerieDocumental) {
+      this.serieSubserieCU.id = (documental as SerieDocumentalDTO).idSerie;
+    } else {
+      this.serieSubserieCU.id = (documental as SubSerieDocumentalDTO).idSubSerie;
       this.seriePropietaria = serie;
     }
 

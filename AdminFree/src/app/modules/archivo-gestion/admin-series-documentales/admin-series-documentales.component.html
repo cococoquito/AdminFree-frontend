@@ -218,7 +218,7 @@
           <p class="font-size-14 font-new-roman mb-0">{{serie.procedimiento}}</p>
         </td>
         <td class="align-text-top row-serie">
-          <button type="button" class="btn btn-sm btn-primary">
+          <button (click)="abrirPanelEdicion(true, serie, null)" type="button" class="btn btn-sm btn-primary">
             <label class="btn-size-admin"><i class="fa fa-pencil"></i></label>
           </button>
           <button (click)="eliminarSerie(serie)" type="button" class="btn btn-sm btn-danger mt-1 mb-1">
@@ -267,7 +267,7 @@
             <p class="font-size-14 font-new-roman mb-0">{{subserie.procedimiento}}</p>
           </td>
           <td>
-            <button type="button" class="btn btn-sm btn-primary mb-1">
+            <button (click)="abrirPanelEdicion(false, subserie, serie)" type="button" class="btn btn-sm btn-primary mb-1">
               <label class="btn-size-admin"><i class="fa fa-pencil"></i></label>
             </button>
             <button (click)="eliminarSubSerie(serie,subserie)" type="button" class="btn btn-sm btn-danger">
