@@ -87,7 +87,7 @@
             [filter]="state.usuarios.length > 6"
             [options]="state.usuarios"
             [autoDisplayFirst]="false"
-            styleClass="ad-select down-ad">
+            styleClass="ad-select down-ad-s">
           </p-dropdown>
         </div>
       </div>
@@ -111,7 +111,7 @@
           [readonlyInput]="true"
           [minDate]="state.minDateSolicitudFilter"
           [maxDate]="state.maxDateSolicitudFilter"
-          inputStyleClass="ad-calendar"
+          inputStyleClass="ad-calendar-s"
           [monthNavigator]="true"
           dateFormat="dd/MM/yy">
         </p-calendar>
@@ -136,7 +136,7 @@
           [readonlyInput]="true"
           [minDate]="state.minDateSolicitudFilter"
           [maxDate]="state.maxDateSolicitudFilter"
-          inputStyleClass="ad-calendar"
+          inputStyleClass="ad-calendar-s"
           [monthNavigator]="true"
           dateFormat="dd/MM/yy">
         </p-calendar>
@@ -214,7 +214,7 @@
               [filter]="campo.items && campo.items.length > 6"
               [options]="campo.items"
               [autoDisplayFirst]="false"
-              styleClass="ad-select down-ad">
+              styleClass="ad-select down-ad-s">
             </p-dropdown>
           </div>
         </div>
@@ -239,7 +239,7 @@
               [locale]="state.CALENDAR_SPANISH"
               showButtonBar="true"
               [readonlyInput]="true"
-              inputStyleClass="ad-calendar"
+              inputStyleClass="ad-calendar-s"
               [monthNavigator]="true"
               [yearNavigator]="true"
               yearRange="2010:2025"
@@ -264,7 +264,7 @@
               [locale]="state.CALENDAR_SPANISH"
               showButtonBar="true"
               [readonlyInput]="true"
-              inputStyleClass="ad-calendar"
+              inputStyleClass="ad-calendar-s"
               [monthNavigator]="true"
               [yearNavigator]="true"
               yearRange="2010:2025"
