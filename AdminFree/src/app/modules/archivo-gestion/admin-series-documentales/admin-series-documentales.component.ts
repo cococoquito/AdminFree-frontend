@@ -75,6 +75,13 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   /** Indica si debe consultar las subseries asociadas a la serie cuando se salen del panel de creacion*/
   private hayNuevasSubSeries: boolean;
 
+  /** Banderas que indica que hay cambios en algun panel especifico*/
+  public isCambioPnlCodigoNombre: boolean;
+  public isCambioPnlTiposDocumentales: boolean;
+  public isCambioPnlRetencion: boolean;
+  public isCambioPnlDisposicionFinal: boolean;
+  public isCambioPnlProcedimiento: boolean;
+
   /** Es la posicion del scroll para administrarlo en diferentes procesos */
   private positionScroll: number;
 
@@ -560,7 +567,112 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         }
       });
     } else {
-      this.cleanPanelSpinnerCU();
+      // para edicion se muestra la ventana si hay alguna modificacion
+      if (this.isCambioPnlCodigoNombre ||
+          this.isCambioPnlTiposDocumentales ||
+          this.isCambioPnlRetencion ||
+          this.isCambioPnlDisposicionFinal ||
+          this.isCambioPnlProcedimiento) {
+        this.confirmationService.confirm({
+          message: MsjFrontConstant.SEGURO_SALIR_EDICION,
+          header: MsjFrontConstant.CONFIRMACION,
+          accept: () => {
+            this.cleanPanelSpinnerCU();
+          }
+        });
+      } else {
+        this.cleanPanelSpinnerCU();
+      }
+    }
+  }
+
+  /**
+   * Valida si hay cambios para el primer panel (nombre y codigo)
+   */
+  public changePnlCodigoNombre(): void {
+    this.isCambioPnlCodigoNombre = false;
+    this.serieSubserieCU.codigo = this.setTrimFilter(this.serieSubserieCU.codigo);
+    this.serieSubserieCU.nombre = this.setTrimFilter(this.serieSubserieCU.nombre);
+    if (this.serieSubserieCU.codigo !== this.serieSubserieEditarOrigen.codigo ||
+      this.serieSubserieCU.nombre !== this.serieSubserieEditarOrigen.nombre) {
+      this.isCambioPnlCodigoNombre = true;
+    }
+  }
+
+  /**
+   * Valida si hay cambios para el segundo panel (tipos documentales)
+   */
+  public changePnlTiposDocumentales(): void {
+    this.isCambioPnlTiposDocumentales = true;
+
+    // es la cantidad de tipos documentales origen
+    let cantOrigen = 0;
+    if (this.serieSubserieEditarOrigen.tiposDocumentales) {
+      cantOrigen = this.serieSubserieEditarOrigen.tiposDocumentales.length;
+    }
+
+    // es la cantidad de tipos documentales mostrado en pantalla
+    let cantEdicion = 0;
+    if (this.serieSubserieCU.tiposDocumentales) {
+      cantEdicion = this.serieSubserieCU.tiposDocumentales.length;
+    }
+
+    // si son diferentes es porque hay modificaciones
+    if (cantOrigen === cantEdicion) {
+      this.isCambioPnlTiposDocumentales = false;
+      if (cantOrigen > 0) {
+        let existe;
+        for (const view of this.serieSubserieCU.tiposDocumentales) {
+          existe = false;
+          for (const origen of this.serieSubserieEditarOrigen.tiposDocumentales) {
+            if (view.id === origen.id) {
+              existe = true;
+              break;
+            }
+          }
+          if (!existe) {
+            this.isCambioPnlTiposDocumentales = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Valida si hay cambios para el tercer panel (retencion)
+   */
+  public changePnlRetencion(): void {
+    this.isCambioPnlRetencion = false;
+    this.serieSubserieCU.tiempoArchivoGestion = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoGestion);
+    this.serieSubserieCU.tiempoArchivoCentral = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoCentral);
+    if (this.serieSubserieCU.tiempoArchivoGestion !== this.serieSubserieEditarOrigen.tiempoArchivoGestion ||
+      this.serieSubserieCU.tiempoArchivoCentral !== this.serieSubserieEditarOrigen.tiempoArchivoCentral) {
+      this.isCambioPnlRetencion = true;
+    }
+  }
+
+  /**
+   * Valida si hay cambios para el cuarto panel (Disposicion Final)
+   */
+  public changePnlDisposicionFinal(): void {
+    this.isCambioPnlDisposicionFinal = false;
+    if (this.serieSubserieCU.conservacionTotal !== this.serieSubserieEditarOrigen.conservacionTotal ||
+      this.serieSubserieCU.microfilmacion !== this.serieSubserieEditarOrigen.microfilmacion ||
+      this.serieSubserieCU.seleccion !== this.serieSubserieEditarOrigen.seleccion ||
+      this.serieSubserieCU.eliminacion !== this.serieSubserieEditarOrigen.eliminacion) {
+      this.isCambioPnlDisposicionFinal = true;
+    }
+  }
+
+  /**
+   * Valida si hay cambios para el quinto panel (Procedimiento)
+   */
+  public changePnlProcedimiento(): void {
+    this.isCambioPnlProcedimiento = false;
+    this.serieSubserieCU.procedimiento = this.setTrimFilter(this.serieSubserieCU.procedimiento);
+    if (this.serieSubserieCU.procedimiento !== this.serieSubserieEditarOrigen.procedimiento) {
+      this.isCambioPnlProcedimiento = true;
     }
   }
 
@@ -708,6 +820,11 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.esSerieDocumental = false;
     this.hayNuevasSeries = false;
     this.hayNuevasSubSeries = false;
+    this.isCambioPnlCodigoNombre = false;
+    this.isCambioPnlTiposDocumentales = false;
+    this.isCambioPnlRetencion = false;
+    this.isCambioPnlDisposicionFinal = false;
+    this.isCambioPnlProcedimiento = false;
 
     // se resetea el componente autocomplete de tipos documentales
     this.tiposDocModel.reset();

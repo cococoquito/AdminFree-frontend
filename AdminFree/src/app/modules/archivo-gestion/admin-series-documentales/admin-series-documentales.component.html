@@ -300,7 +300,8 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary mr-1 p-0 w-35-px">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> </label>
       </button>
-      <span class="align-middle">Formulario para la creación de las {{esSerieDocumental ? 'Series' : 'Subseries'}} Documentales</span>
+      <span *ngIf="!serieSubserieCU.id" class="align-middle">Formulario para la creación de las {{esSerieDocumental ? 'Series' : 'Subseries'}} Documentales</span>
+      <span *ngIf="serieSubserieCU.id" class="align-middle">Editar {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental</span>
     </p-header>
 
     <!-- Codigo y Nombre-->
@@ -553,12 +554,20 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary w-180-px mr-2">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left mr-1"></i> Regresar</label>
       </button>
-      <button (click)="crearSerieDocumental()" *ngIf="esSerieDocumental" type="button" class="btn btn-sm btn-success w-180-px">
-        <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Serie Documental</label>
-      </button>
-      <button (click)="crearSubserieDocumental()" *ngIf="!esSerieDocumental" type="button" class="btn btn-sm btn-success">
-        <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Subserie Documental</label>
-      </button>
+      <ng-container *ngIf="!serieSubserieCU.id">
+        <button (click)="crearSerieDocumental()" *ngIf="esSerieDocumental" type="button" class="btn btn-sm btn-success w-180-px">
+          <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Serie Documental</label>
+        </button>
+        <button (click)="crearSubserieDocumental()" *ngIf="!esSerieDocumental" type="button" class="btn btn-sm btn-success">
+          <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Subserie Documental</label>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="serieSubserieCU.id">
+        <button type="button" class="btn btn-sm btn-success w-180-px"
+        [disabled]="!(isCambioPnlCodigoNombre || isCambioPnlTiposDocumentales || isCambioPnlRetencion || isCambioPnlDisposicionFinal || isCambioPnlProcedimiento)">
+          <label class="btn-size-admin"><i class="fa fa-pencil mr-1"></i> Aplicar Cambios</label>
+        </button>
+      </ng-container>
     </div>
   </p-panel>
 </ng-container>
