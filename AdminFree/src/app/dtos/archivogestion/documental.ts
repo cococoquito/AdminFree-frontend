@@ -49,6 +49,12 @@ export class Documental {
   /** Son los tipos documentales que soporta la serie o subserie */
   public tiposDocumentales: Array<TipoDocumentalDTO>;
 
+  /** Indica si se debe modificar los datos generales de la serie/subserie */
+  public modificarDatosGenerales;
+
+  /** Indica si se debe modificar los tipos documentales de la serie/subserie */
+  public modificarTiposDocumentales;
+
   /** **********************VARIABLES UTILIZADAS EN ANGULAR**************************** */
 
   /** Bandera que indica si el campo CODIGO es invalido al momento de crear/editar*/

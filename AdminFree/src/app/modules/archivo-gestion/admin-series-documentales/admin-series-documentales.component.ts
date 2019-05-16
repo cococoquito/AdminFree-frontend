@@ -14,6 +14,7 @@ import { FiltroSerieDocumentalDTO } from '../../../dtos/archivogestion/filtro-se
 import { ClienteDTO } from '../../../dtos/configuraciones/cliente.dto';
 import { TipoDocumentalDTO } from '../../../dtos/archivogestion/tipo-documental.dto';
 import { WelcomeDTO } from '../../../dtos/seguridad/welcome.dto';
+import { ResponseEdicionSerieSubserieDTO } from '../../../dtos/archivogestion/response-edicion-serie-subserie.dto';
 import { LocalStoreUtil } from '../../../util/local-store.util';
 import { MsjUtil } from '../../../util/messages.util';
 import { RegexUtil } from '../../../util/regex-util';
@@ -283,6 +284,34 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
           header: MsjFrontConstant.CONFIRMACION,
           accept: () => {
 
+            // se indica al servicio que el proceso es una actualizacion
+            this.serieSubserieCU.tipoEvento = TipoEventoConstant.EDITAR;
+
+            // se indica al servicio que tipos de datos se va actualizar
+            this.serieSubserieCU.modificarDatosGenerales = false;
+            this.serieSubserieCU.modificarTiposDocumentales = false;
+            if (this.isCambioPnlCodigoNombre ||
+                this.isCambioPnlRetencion ||
+                this.isCambioPnlDisposicionFinal ||
+                this.isCambioPnlProcedimiento) {
+                this.serieSubserieCU.modificarDatosGenerales = true;
+            }
+            if (this.isCambioPnlTiposDocumentales) {
+              this.serieSubserieCU.modificarTiposDocumentales = true;
+            }
+
+            // se verifica que tipo documental se va actualizar
+            if (this.esSerieDocumental) {
+              this.archivoGestionService.administrarSerieDocumental(this.serieSubserieCU as SerieDocumentalDTO).subscribe(
+                data => { this.afterUpdateSerieSubserie(data); },
+                error => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
+              );
+            } else {
+              this.archivoGestionService.administrarSubSerieDocumental(this.serieSubserieCU as SubSerieDocumentalDTO).subscribe(
+                data => { this.afterUpdateSerieSubserie(data); },
+                error => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
+              );
+            }
           }
         });
       } else {
@@ -805,7 +834,15 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     this.serieSubserieEditarOrigen = documental;
 
     // se hace el backup de la serie o subserie a editar
-    this.serieSubserieCU = JSON.parse(JSON.stringify(documental));
+    if (esSerie) {
+      const serieDTO = (documental as SerieDocumentalDTO);
+      const subSeriesDTO = serieDTO.subSeries;
+      serieDTO.subSeries = null;
+      this.serieSubserieCU = JSON.parse(JSON.stringify(serieDTO));
+      serieDTO.subSeries = subSeriesDTO;
+    } else {
+      this.serieSubserieCU = JSON.parse(JSON.stringify(documental));
+    }
 
     // se configura la serie propietaria para la subserie
     this.seriePropietaria = serie;
@@ -1063,5 +1100,42 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     if (welcome && welcome.credenciales && !welcome.credenciales.administrador) {
       this.serieSubserieCU.idUsuarioCreacion = welcome.usuario.id;
     }
+  }
+
+  /**
+   * Metodo que es invocado despues de la edicion de una serie/subserie
+   * @param response, contiene los datos del response del server
+   */
+  private afterUpdateSerieSubserie(response: ResponseEdicionSerieSubserieDTO): void {
+
+    // se muestra el mensaje de actualizacion exitoso
+    if (this.esSerieDocumental) {
+      this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_ACTUALIZADA.replace('?1', 'Serie')));
+    } else {
+      this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_ACTUALIZADA.replace('?1', 'Subserie')));
+    }
+
+    // se verifica si el server retorna alguna respuesta
+    if (response) {
+
+      // se configura los nuevos tipos documentales en el modelo
+      this.setNuevosTiposDocumentales(response.tiposDocumentales);
+
+      // se configura los atributos actualizados
+      if (response.datosUpdate) {
+        const datosUpdate = response.datosUpdate;
+        this.serieSubserieEditarOrigen.codigo = datosUpdate.codigo;
+        this.serieSubserieEditarOrigen.nombre = datosUpdate.nombre;
+        this.serieSubserieEditarOrigen.tiposDocumentales = datosUpdate.tiposDocumentales;
+        this.serieSubserieEditarOrigen.tiempoArchivoGestion = datosUpdate.tiempoArchivoGestion;
+        this.serieSubserieEditarOrigen.tiempoArchivoCentral = datosUpdate.tiempoArchivoCentral;
+        this.serieSubserieEditarOrigen.conservacionTotal = datosUpdate.conservacionTotal;
+        this.serieSubserieEditarOrigen.microfilmacion = datosUpdate.microfilmacion;
+        this.serieSubserieEditarOrigen.seleccion = datosUpdate.seleccion;
+        this.serieSubserieEditarOrigen.eliminacion = datosUpdate.eliminacion;
+        this.serieSubserieEditarOrigen.procedimiento = datosUpdate.procedimiento;
+      }
+    }
+    this.cleanPanelCU();
   }
 }

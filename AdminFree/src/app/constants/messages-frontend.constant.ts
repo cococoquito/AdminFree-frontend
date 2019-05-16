@@ -176,4 +176,7 @@ export class MsjFrontConstant {
 
   /** Mensaje de confirmacion para aplicar los cambios */
   static readonly APLICAR_CAMBIOS: string = '¿Está seguro de aplicar los cambios?';
+
+  /** Mensaje cuando la serie/subserie documental fue actualizada exitosamente */
+  static readonly SERIE_SUBSERIE_ACTUALIZADA: string = 'La ?1 Documental fue actualizada exitosamente en el sistema';
 }
