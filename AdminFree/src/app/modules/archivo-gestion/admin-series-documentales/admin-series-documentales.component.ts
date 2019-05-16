@@ -150,7 +150,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   }
 
   /**
-   * Metodo que soporta el evento click del boton crear serie documental
+   * Metodo que soporta el evento click del boton Crear Serie Documental
    */
   public crearSerieDocumental(): void {
 
@@ -204,7 +204,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
   }
 
   /**
-   * Metodo que soporta el evento click del boton crear subserie documental
+   * Metodo que soporta el evento click del boton Crear Subserie documental
    */
   public crearSubserieDocumental(): void {
 
@@ -256,6 +256,38 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
       });
     } else {
       this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.ADMIN_SERIES_ERROR_CAMPOS));
+    }
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton Aplicar Cambios
+   */
+  public aplicarCambios(): void {
+
+    // se verifica si hay algun cambio
+    if (this.isCambioPnlCodigoNombre ||
+        this.isCambioPnlTiposDocumentales ||
+        this.isCambioPnlRetencion ||
+        this.isCambioPnlDisposicionFinal ||
+        this.isCambioPnlProcedimiento) {
+
+      // se limpia los mensajes anteriores
+      this.messageService.clear();
+
+      // se verifica si los campos son validos
+      if (this.isCamposIngresoValidos()) {
+
+        // se muestra la ventana de confirmacion
+        this.confirmationService.confirm({
+          message: MsjFrontConstant.APLICAR_CAMBIOS,
+          header: MsjFrontConstant.CONFIRMACION,
+          accept: () => {
+
+          }
+        });
+      } else {
+        this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.ADMIN_SERIES_ERROR_CAMPOS));
+      }
     }
   }
 
@@ -519,8 +551,13 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.serieSubserieCU.tiposDocumentales = new Array<TipoDocumentalDTO>();
       }
 
-      // se agrega el tipo documental ingresado y se configura el focus
+      // se agrega el tipo documental ingresado
       this.serieSubserieCU.tiposDocumentales.push(itemSelected);
+
+      // se verifica si hay cambios, esto aplica solamente para EDICION
+      this.changePnlTiposDocumentales();
+
+      // se configura el focus para ingresar otro tipo documental
       this.autoTiposDocs.inputEL.nativeElement.focus();
     }
   }
@@ -529,8 +566,15 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Metodo que soporta el evento clik del boton eliminar documental
    */
   public eliminarTipoDocumental(tipo: TipoDocumentalDTO): void {
+
+    // se verifica si hay tipos documentales a eliminar
     if (this.serieSubserieCU.tiposDocumentales && this.serieSubserieCU.tiposDocumentales.length) {
+
+      // se procede eliminar el tipo documental seleccionada
       this.serieSubserieCU.tiposDocumentales.splice(this.serieSubserieCU.tiposDocumentales.indexOf(tipo, 0), 1);
+
+      // se verifica si hay cambios, esto aplica solamente para EDICION
+      this.changePnlTiposDocumentales();
     }
   }
 
@@ -539,8 +583,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   public closePanelCU(): void {
 
-    // si ID no existe es porque el proceso es creacion por lo tanto se debe preguntar directo
-    if (!this.serieSubserieCU.id) {
+    // se verifica si el proceso es de creacion
+    if (!this.serieSubserieEditarOrigen) {
         this.confirmationService.confirm({
         message: MsjFrontConstant.SEGURO_SALIR,
         header: MsjFrontConstant.CONFIRMACION,
@@ -590,12 +634,18 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Valida si hay cambios para el primer panel (nombre y codigo)
    */
   public changePnlCodigoNombre(): void {
-    this.isCambioPnlCodigoNombre = false;
-    this.serieSubserieCU.codigo = this.setTrimFilter(this.serieSubserieCU.codigo);
-    this.serieSubserieCU.nombre = this.setTrimFilter(this.serieSubserieCU.nombre);
-    if (this.serieSubserieCU.codigo !== this.serieSubserieEditarOrigen.codigo ||
-      this.serieSubserieCU.nombre !== this.serieSubserieEditarOrigen.nombre) {
-      this.isCambioPnlCodigoNombre = true;
+
+    // aplica solamente para edicion
+    if (this.serieSubserieEditarOrigen) {
+
+      // se verifica si hay algun cambio para el panel - 1
+      this.isCambioPnlCodigoNombre = false;
+      this.serieSubserieCU.codigo = this.setTrimFilter(this.serieSubserieCU.codigo);
+      this.serieSubserieCU.nombre = this.setTrimFilter(this.serieSubserieCU.nombre);
+      if (this.serieSubserieCU.codigo !== this.serieSubserieEditarOrigen.codigo ||
+        this.serieSubserieCU.nombre !== this.serieSubserieEditarOrigen.nombre) {
+        this.isCambioPnlCodigoNombre = true;
+      }
     }
   }
 
@@ -603,36 +653,42 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Valida si hay cambios para el segundo panel (tipos documentales)
    */
   public changePnlTiposDocumentales(): void {
-    this.isCambioPnlTiposDocumentales = true;
 
-    // es la cantidad de tipos documentales origen
-    let cantOrigen = 0;
-    if (this.serieSubserieEditarOrigen.tiposDocumentales) {
-      cantOrigen = this.serieSubserieEditarOrigen.tiposDocumentales.length;
-    }
+    // aplica solamente para edicion
+    if (this.serieSubserieEditarOrigen) {
 
-    // es la cantidad de tipos documentales mostrado en pantalla
-    let cantEdicion = 0;
-    if (this.serieSubserieCU.tiposDocumentales) {
-      cantEdicion = this.serieSubserieCU.tiposDocumentales.length;
-    }
+      // se verifica si hay algun cambio para el panel - 2
+      this.isCambioPnlTiposDocumentales = true;
 
-    // si son diferentes es porque hay modificaciones
-    if (cantOrigen === cantEdicion) {
-      this.isCambioPnlTiposDocumentales = false;
-      if (cantOrigen > 0) {
-        let existe;
-        for (const view of this.serieSubserieCU.tiposDocumentales) {
-          existe = false;
-          for (const origen of this.serieSubserieEditarOrigen.tiposDocumentales) {
-            if (view.id === origen.id) {
-              existe = true;
+      // es la cantidad de tipos documentales origen
+      let cantOrigen = 0;
+      if (this.serieSubserieEditarOrigen.tiposDocumentales) {
+        cantOrigen = this.serieSubserieEditarOrigen.tiposDocumentales.length;
+      }
+
+      // es la cantidad de tipos documentales mostrado en pantalla
+      let cantEdicion = 0;
+      if (this.serieSubserieCU.tiposDocumentales) {
+        cantEdicion = this.serieSubserieCU.tiposDocumentales.length;
+      }
+
+      // si son diferentes es porque hay modificaciones
+      if (cantOrigen === cantEdicion) {
+        this.isCambioPnlTiposDocumentales = false;
+        if (cantOrigen > 0) {
+          let existe;
+          for (const view of this.serieSubserieCU.tiposDocumentales) {
+            existe = false;
+            for (const origen of this.serieSubserieEditarOrigen.tiposDocumentales) {
+              if (view.id === origen.id) {
+                existe = true;
+                break;
+              }
+            }
+            if (!existe) {
+              this.isCambioPnlTiposDocumentales = true;
               break;
             }
-          }
-          if (!existe) {
-            this.isCambioPnlTiposDocumentales = true;
-            break;
           }
         }
       }
@@ -643,12 +699,19 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Valida si hay cambios para el tercer panel (retencion)
    */
   public changePnlRetencion(): void {
-    this.isCambioPnlRetencion = false;
-    this.serieSubserieCU.tiempoArchivoGestion = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoGestion);
-    this.serieSubserieCU.tiempoArchivoCentral = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoCentral);
-    if (this.serieSubserieCU.tiempoArchivoGestion !== this.serieSubserieEditarOrigen.tiempoArchivoGestion ||
-      this.serieSubserieCU.tiempoArchivoCentral !== this.serieSubserieEditarOrigen.tiempoArchivoCentral) {
-      this.isCambioPnlRetencion = true;
+
+    // aplica solamente para edicion
+    if (this.serieSubserieEditarOrigen) {
+
+      // se verifica si hay algun cambio para el panel - 3
+      this.isCambioPnlRetencion = false;
+
+      /* tslint:disable */
+      if (this.serieSubserieCU.tiempoArchivoGestion != this.serieSubserieEditarOrigen.tiempoArchivoGestion ||
+        this.serieSubserieCU.tiempoArchivoCentral != this.serieSubserieEditarOrigen.tiempoArchivoCentral) {
+        this.isCambioPnlRetencion = true;
+      }
+      /* tslint:enable */
     }
   }
 
@@ -656,12 +719,18 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Valida si hay cambios para el cuarto panel (Disposicion Final)
    */
   public changePnlDisposicionFinal(): void {
-    this.isCambioPnlDisposicionFinal = false;
-    if (this.serieSubserieCU.conservacionTotal !== this.serieSubserieEditarOrigen.conservacionTotal ||
-      this.serieSubserieCU.microfilmacion !== this.serieSubserieEditarOrigen.microfilmacion ||
-      this.serieSubserieCU.seleccion !== this.serieSubserieEditarOrigen.seleccion ||
-      this.serieSubserieCU.eliminacion !== this.serieSubserieEditarOrigen.eliminacion) {
-      this.isCambioPnlDisposicionFinal = true;
+
+    // aplica solamente para edicion
+    if (this.serieSubserieEditarOrigen) {
+
+      // se verifica si hay algun cambio para el panel - 4
+      this.isCambioPnlDisposicionFinal = false;
+      if (this.serieSubserieCU.conservacionTotal !== this.serieSubserieEditarOrigen.conservacionTotal ||
+        this.serieSubserieCU.microfilmacion !== this.serieSubserieEditarOrigen.microfilmacion ||
+        this.serieSubserieCU.seleccion !== this.serieSubserieEditarOrigen.seleccion ||
+        this.serieSubserieCU.eliminacion !== this.serieSubserieEditarOrigen.eliminacion) {
+        this.isCambioPnlDisposicionFinal = true;
+      }
     }
   }
 
@@ -669,10 +738,16 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    * Valida si hay cambios para el quinto panel (Procedimiento)
    */
   public changePnlProcedimiento(): void {
-    this.isCambioPnlProcedimiento = false;
-    this.serieSubserieCU.procedimiento = this.setTrimFilter(this.serieSubserieCU.procedimiento);
-    if (this.serieSubserieCU.procedimiento !== this.serieSubserieEditarOrigen.procedimiento) {
-      this.isCambioPnlProcedimiento = true;
+
+    // aplica solamente para edicion
+    if (this.serieSubserieEditarOrigen) {
+
+      // se verifica si hay algun cambio para el panel - 5
+      this.isCambioPnlProcedimiento = false;
+      this.serieSubserieCU.procedimiento = this.setTrimFilter(this.serieSubserieCU.procedimiento);
+      if (this.serieSubserieCU.procedimiento !== this.serieSubserieEditarOrigen.procedimiento) {
+        this.isCambioPnlProcedimiento = true;
+      }
     }
   }
 
@@ -732,13 +807,8 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se hace el backup de la serie o subserie a editar
     this.serieSubserieCU = JSON.parse(JSON.stringify(documental));
 
-    // este ID permite hacer saber que el proceso es una edicion
-    if (this.esSerieDocumental) {
-      this.serieSubserieCU.id = (documental as SerieDocumentalDTO).idSerie;
-    } else {
-      this.serieSubserieCU.id = (documental as SubSerieDocumentalDTO).idSubSerie;
-      this.seriePropietaria = serie;
-    }
+    // se configura la serie propietaria para la subserie
+    this.seriePropietaria = serie;
 
     // se posiciona el scroll en la parte superior
     this.positionScroll = this.shellState.contentComponent.getPositionScroll();
@@ -880,7 +950,6 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     }
 
     // se verifica si AG es un valor numerico
-    this.serieSubserieCU.tiempoArchivoGestion = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoGestion);
     this.serieSubserieCU.esAGInvalido = false;
     if (this.serieSubserieCU.tiempoArchivoGestion) {
       this.serieSubserieCU.esAGInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.tiempoArchivoGestion);
@@ -890,7 +959,6 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     }
 
     // se verifica si AC es un valor numerico
-    this.serieSubserieCU.tiempoArchivoCentral = this.setTrimFilter(this.serieSubserieCU.tiempoArchivoCentral);
     this.serieSubserieCU.esACInvalido = false;
     if (this.serieSubserieCU.tiempoArchivoCentral) {
       this.serieSubserieCU.esACInvalido = !this.regex.isValorNumerico(this.serieSubserieCU.tiempoArchivoCentral);

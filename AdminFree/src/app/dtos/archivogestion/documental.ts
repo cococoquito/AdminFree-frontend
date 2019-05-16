@@ -50,8 +50,6 @@ export class Documental {
   public tiposDocumentales: Array<TipoDocumentalDTO>;
 
   /** **********************VARIABLES UTILIZADAS EN ANGULAR**************************** */
-  /** es el identificador de la serie/subserie a editar */
-  public id: number;
 
   /** Bandera que indica si el campo CODIGO es invalido al momento de crear/editar*/
   public esCodigoInvalido: boolean;

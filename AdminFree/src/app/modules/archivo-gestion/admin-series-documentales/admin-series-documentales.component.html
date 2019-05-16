@@ -300,14 +300,15 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary mr-1 p-0 w-35-px">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> </label>
       </button>
-      <span *ngIf="!serieSubserieCU.id" class="align-middle">Formulario para la creación de las {{esSerieDocumental ? 'Series' : 'Subseries'}} Documentales</span>
-      <span *ngIf="serieSubserieCU.id" class="align-middle">Editar {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental</span>
+      <span *ngIf="!serieSubserieEditarOrigen" class="align-middle">Formulario para la creación de las {{esSerieDocumental ? 'Series' : 'Subseries'}} Documentales</span>
+      <span *ngIf="serieSubserieEditarOrigen" class="align-middle">Editar {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental</span>
     </p-header>
 
     <!-- Codigo y Nombre-->
     <p-panel styleClass="mb-3 mt-3 mr-3 ml-3">
       <p-header>
         <span class="steps-circle">1</span> <span> Código y Nombre </span>
+        <i *ngIf="isCambioPnlCodigoNombre" class="fa fa-asterisk text-danger font-size-12"></i>
       </p-header>
       <div class="ui-g">
 
@@ -333,6 +334,7 @@
               name="incodigo"
               #incodigo
               [(ngModel)]="serieSubserieCU.codigo"
+              (ngModelChange)="changePnlCodigoNombre()"
               adminAutofocus
               autocomplete="off"
               maxlength="50"
@@ -354,6 +356,7 @@
               id="innombre"
               name="innombre"
               [(ngModel)]="serieSubserieCU.nombre"
+              (ngModelChange)="changePnlCodigoNombre()"
               autocomplete="off"
               maxlength="255"
               class="ad-input ad-input-style w-100 pt-0 font-new-roman text-uppercase font-size-14"
@@ -367,7 +370,8 @@
     <!-- tipos documentales-->
     <p-panel styleClass="mb-3 mt-1 mr-3 ml-3">
       <p-header>
-        <span class="steps-circle">2</span> <span> Adicione los tipos documentales de la {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental</span>
+        <span class="steps-circle">2</span> <span> Adicione los tipos documentales de la {{esSerieDocumental ? 'Serie' : 'Subserie'}} Documental </span>
+        <i *ngIf="isCambioPnlTiposDocumentales" class="fa fa-asterisk text-danger font-size-12"></i>
       </p-header>
 
       <!-- autocomplete - btn adicionar -->
@@ -421,7 +425,8 @@
       <div class="ui-g-6 pt-0">
         <p-panel styleClass="mt-0 mr-2 ml-2 mb-1">
           <p-header>
-            <span class="steps-circle">3</span> <span> Retención</span>
+            <span class="steps-circle">3</span> <span> Retención </span>
+            <i *ngIf="isCambioPnlRetencion" class="fa fa-asterisk text-danger font-size-12"></i>
           </p-header>
 
           <!-- AG -->
@@ -435,6 +440,7 @@
               id="inag"
               name="inag"
               [(ngModel)]="serieSubserieCU.tiempoArchivoGestion"
+              (ngModelChange)="changePnlRetencion()"
               [pKeyFilter]="regex.SOLO_NUMEROS"
               autocomplete="off"
               maxlength="3"
@@ -454,6 +460,7 @@
               id="inac"
               name="inac"
               [(ngModel)]="serieSubserieCU.tiempoArchivoCentral"
+              (ngModelChange)="changePnlRetencion()"
               [pKeyFilter]="regex.SOLO_NUMEROS"
               autocomplete="off"
               maxlength="3"
@@ -470,7 +477,8 @@
       <div class="ui-g-6 pt-0">
         <p-panel styleClass="mt-0 mr-2">
           <p-header>
-            <span class="steps-circle">4</span> <span> Disposición Final</span>
+            <span class="steps-circle">4</span> <span> Disposición Final </span>
+            <i *ngIf="isCambioPnlDisposicionFinal" class="fa fa-asterisk text-danger font-size-12"></i>
           </p-header>
 
           <div class="ui-g">
@@ -480,7 +488,7 @@
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.conservacionTotal"
-                  (switchChange)="serieSubserieCU.conservacionTotal = $event">
+                  (switchChange)="serieSubserieCU.conservacionTotal = $event; changePnlDisposicionFinal()">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
@@ -494,7 +502,7 @@
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.microfilmacion"
-                  (switchChange)="serieSubserieCU.microfilmacion = $event">
+                  (switchChange)="serieSubserieCU.microfilmacion = $event; changePnlDisposicionFinal()">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
@@ -508,7 +516,7 @@
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.seleccion"
-                  (switchChange)="serieSubserieCU.seleccion = $event">
+                  (switchChange)="serieSubserieCU.seleccion = $event; changePnlDisposicionFinal()">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
@@ -522,7 +530,7 @@
               <div class="ui-g-2 pb-0">
                 <admin-inputswitch
                   [isChecked]="serieSubserieCU.eliminacion"
-                  (switchChange)="serieSubserieCU.eliminacion = $event">
+                  (switchChange)="serieSubserieCU.eliminacion = $event; changePnlDisposicionFinal()">
                 </admin-inputswitch>
               </div>
               <div class="ui-g-10 pb-0 align-middle">
@@ -538,11 +546,13 @@
     <!-- procedimientos-->
     <p-panel styleClass="mb-2 mt-1 mr-3 ml-3">
       <p-header>
-        <span class="steps-circle">5</span> <label for="inprocedimiento" class="ml-1 mb-0"> Procedimiento</label>
+        <span class="steps-circle">5</span> <label for="inprocedimiento" class="ml-1 mb-0"> Procedimiento </label>
+        <i *ngIf="isCambioPnlProcedimiento" class="fa fa-asterisk text-danger font-size-12 ml-1"></i>
       </p-header>
       <textarea
         id="inprocedimiento"
         [(ngModel)]="serieSubserieCU.procedimiento"
+        (ngModelChange)="changePnlProcedimiento()"
         class="form-control font-new-roman font-size-16"
         maxlength="500"
         rows="2">
@@ -554,7 +564,7 @@
       <button (click)="closePanelCU()" type="button" class="btn btn-sm btn-primary w-180-px mr-2">
         <label class="btn-size-admin"><i class="fa fa-hand-o-left mr-1"></i> Regresar</label>
       </button>
-      <ng-container *ngIf="!serieSubserieCU.id">
+      <ng-container *ngIf="!serieSubserieEditarOrigen">
         <button (click)="crearSerieDocumental()" *ngIf="esSerieDocumental" type="button" class="btn btn-sm btn-success w-180-px">
           <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Serie Documental</label>
         </button>
@@ -562,8 +572,8 @@
           <label class="btn-size-admin"><i class="fa fa-clipboard mr-1"></i> Crear Subserie Documental</label>
         </button>
       </ng-container>
-      <ng-container *ngIf="serieSubserieCU.id">
-        <button type="button" class="btn btn-sm btn-success w-180-px"
+      <ng-container *ngIf="serieSubserieEditarOrigen">
+        <button (click)="aplicarCambios()" type="button" class="btn btn-sm btn-success w-180-px"
         [disabled]="!(isCambioPnlCodigoNombre || isCambioPnlTiposDocumentales || isCambioPnlRetencion || isCambioPnlDisposicionFinal || isCambioPnlProcedimiento)">
           <label class="btn-size-admin"><i class="fa fa-pencil mr-1"></i> Aplicar Cambios</label>
         </button>
