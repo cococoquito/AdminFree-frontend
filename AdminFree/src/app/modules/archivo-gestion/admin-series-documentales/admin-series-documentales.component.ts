@@ -286,6 +286,7 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
 
             // se indica al servicio que el proceso es una actualizacion
             this.serieSubserieCU.tipoEvento = TipoEventoConstant.EDITAR;
+            this.serieSubserieCU.idCliente = this.clienteCurrent.id;
 
             // se indica al servicio que tipos de datos se va actualizar
             this.serieSubserieCU.modificarDatosGenerales = false;
@@ -303,13 +304,25 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
             // se verifica que tipo documental se va actualizar
             if (this.esSerieDocumental) {
               this.archivoGestionService.administrarSerieDocumental(this.serieSubserieCU as SerieDocumentalDTO).subscribe(
-                data => { this.afterUpdateSerieSubserie(data); },
-                error => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
+                data => {
+                  this.afterUpdateSerieSubserie(data);
+                },
+                error => {
+                  const msj = this.showMensajeError(error);
+                  this.messageService.add(MsjUtil.getMsjError(msj));
+                  this.messageService.add(MsjUtil.getToastErrorLng(msj));
+                }
               );
             } else {
               this.archivoGestionService.administrarSubSerieDocumental(this.serieSubserieCU as SubSerieDocumentalDTO).subscribe(
-                data => { this.afterUpdateSerieSubserie(data); },
-                error => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
+                data => {
+                  this.afterUpdateSerieSubserie(data);
+                },
+                error => {
+                  const msj = this.showMensajeError(error);
+                  this.messageService.add(MsjUtil.getMsjError(msj));
+                  this.messageService.add(MsjUtil.getToastErrorLng(msj));
+                }
               );
             }
           }
@@ -1108,13 +1121,6 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
    */
   private afterUpdateSerieSubserie(response: ResponseEdicionSerieSubserieDTO): void {
 
-    // se muestra el mensaje de actualizacion exitoso
-    if (this.esSerieDocumental) {
-      this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_ACTUALIZADA.replace('?1', 'Serie')));
-    } else {
-      this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_ACTUALIZADA.replace('?1', 'Subserie')));
-    }
-
     // se verifica si el server retorna alguna respuesta
     if (response) {
 
@@ -1125,28 +1131,45 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
           this.isCambioPnlProcedimiento) {
 
         // se configuran los nuevos atributos
-        const datosUpdate = response.datosUpdate;
-        this.serieSubserieEditarOrigen.codigo = datosUpdate.codigo;
-        this.serieSubserieEditarOrigen.nombre = datosUpdate.nombre;
-        this.serieSubserieEditarOrigen.tiempoArchivoGestion = datosUpdate.tiempoArchivoGestion;
-        this.serieSubserieEditarOrigen.tiempoArchivoCentral = datosUpdate.tiempoArchivoCentral;
-        this.serieSubserieEditarOrigen.conservacionTotal = datosUpdate.conservacionTotal;
-        this.serieSubserieEditarOrigen.microfilmacion = datosUpdate.microfilmacion;
-        this.serieSubserieEditarOrigen.seleccion = datosUpdate.seleccion;
-        this.serieSubserieEditarOrigen.eliminacion = datosUpdate.eliminacion;
-        this.serieSubserieEditarOrigen.procedimiento = datosUpdate.procedimiento;
+        if (response.datosUpdate) {
+          const datosUpdate = response.datosUpdate;
+          this.serieSubserieEditarOrigen.codigo = datosUpdate.codigo;
+          this.serieSubserieEditarOrigen.nombre = datosUpdate.nombre;
+          this.serieSubserieEditarOrigen.tiempoArchivoGestion = datosUpdate.tiempoArchivoGestion;
+          this.serieSubserieEditarOrigen.tiempoArchivoCentral = datosUpdate.tiempoArchivoCentral;
+          this.serieSubserieEditarOrigen.conservacionTotal = datosUpdate.conservacionTotal;
+          this.serieSubserieEditarOrigen.microfilmacion = datosUpdate.microfilmacion;
+          this.serieSubserieEditarOrigen.seleccion = datosUpdate.seleccion;
+          this.serieSubserieEditarOrigen.eliminacion = datosUpdate.eliminacion;
+          this.serieSubserieEditarOrigen.procedimiento = datosUpdate.procedimiento;
+        }
       }
 
       // se verifica si hay alguna modificacion en los tipos documentales
       if (this.isCambioPnlTiposDocumentales) {
 
-        // estos son los tipos documentales que le pertenece al documental
-        this.serieSubserieEditarOrigen.tiposDocumentales = response.datosUpdate.tiposDocumentales;
+        // se configuran los tipos documentales que le pertenece al documental
+        this.serieSubserieEditarOrigen.tiposDocumentales = null;
+        if (response.datosUpdate && response.datosUpdate.tiposDocumentales) {
+          this.serieSubserieEditarOrigen.tiposDocumentales = response.datosUpdate.tiposDocumentales;
+        }
 
         // estos son los nuevos tipos documentales que se registraron en el sistema
         this.setNuevosTiposDocumentales(response.tiposDocumentales);
       }
     }
+
+    // se utiliza para mostrar el tipo documental en el mensaje, ya que esta variable se limpia en cleanPanelCU()
+    const tipoDocumentalSerie = this.esSerieDocumental;
+
+    // se retornar a la lista de series/subseries
     this.cleanPanelCU();
+
+    // se muestra el mensaje de actualizacion exitoso
+    if (tipoDocumentalSerie) {
+      this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_ACTUALIZADA.replace('?1', 'Serie')));
+    } else {
+      this.messageService.add(MsjUtil.getToastSuccessLng(MsjFrontConstant.SERIE_SUBSERIE_ACTUALIZADA.replace('?1', 'Subserie')));
+    }
   }
 }
