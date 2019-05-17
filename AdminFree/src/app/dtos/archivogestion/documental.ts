@@ -50,10 +50,10 @@ export class Documental {
   public tiposDocumentales: Array<TipoDocumentalDTO>;
 
   /** Indica si se debe modificar los datos generales de la serie/subserie */
-  public modificarDatosGenerales;
+  public modificarDatosGenerales: boolean;
 
   /** Indica si se debe modificar los tipos documentales de la serie/subserie */
-  public modificarTiposDocumentales;
+  public modificarTiposDocumentales: boolean;
 
   /** **********************VARIABLES UTILIZADAS EN ANGULAR**************************** */
 

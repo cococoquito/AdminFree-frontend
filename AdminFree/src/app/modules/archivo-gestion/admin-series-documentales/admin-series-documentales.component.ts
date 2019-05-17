@@ -1118,15 +1118,16 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
     // se verifica si el server retorna alguna respuesta
     if (response) {
 
-      // se configura los nuevos tipos documentales en el modelo
-      this.setNuevosTiposDocumentales(response.tiposDocumentales);
+      // se verifica si hay alguna modificacion en los datos generales
+      if (this.isCambioPnlCodigoNombre ||
+          this.isCambioPnlRetencion ||
+          this.isCambioPnlDisposicionFinal ||
+          this.isCambioPnlProcedimiento) {
 
-      // se configura los atributos actualizados
-      if (response.datosUpdate) {
+        // se configuran los nuevos atributos
         const datosUpdate = response.datosUpdate;
         this.serieSubserieEditarOrigen.codigo = datosUpdate.codigo;
         this.serieSubserieEditarOrigen.nombre = datosUpdate.nombre;
-        this.serieSubserieEditarOrigen.tiposDocumentales = datosUpdate.tiposDocumentales;
         this.serieSubserieEditarOrigen.tiempoArchivoGestion = datosUpdate.tiempoArchivoGestion;
         this.serieSubserieEditarOrigen.tiempoArchivoCentral = datosUpdate.tiempoArchivoCentral;
         this.serieSubserieEditarOrigen.conservacionTotal = datosUpdate.conservacionTotal;
@@ -1134,6 +1135,16 @@ export class AdminSeriesDocumentalesComponent extends CommonComponent implements
         this.serieSubserieEditarOrigen.seleccion = datosUpdate.seleccion;
         this.serieSubserieEditarOrigen.eliminacion = datosUpdate.eliminacion;
         this.serieSubserieEditarOrigen.procedimiento = datosUpdate.procedimiento;
+      }
+
+      // se verifica si hay alguna modificacion en los tipos documentales
+      if (this.isCambioPnlTiposDocumentales) {
+
+        // estos son los tipos documentales que le pertenece al documental
+        this.serieSubserieEditarOrigen.tiposDocumentales = response.datosUpdate.tiposDocumentales;
+
+        // estos son los nuevos tipos documentales que se registraron en el sistema
+        this.setNuevosTiposDocumentales(response.tiposDocumentales);
       }
     }
     this.cleanPanelCU();
