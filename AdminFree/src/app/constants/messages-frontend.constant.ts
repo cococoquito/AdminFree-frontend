@@ -175,7 +175,7 @@ export class MsjFrontConstant {
   static readonly SERIE_SUBSERIE_CREADA: string = 'La ?1 Documental fue creada exitosamente en el sistema';
 
   /** Mensaje de confirmacion para aplicar los cambios */
-  static readonly APLICAR_CAMBIOS: string = '¿Está seguro de aplicar los cambios?';
+  static readonly APLICAR_CAMBIOS: string = '¿Está seguro que desea aplicar los cambios?';
 
   /** Mensaje cuando la serie/subserie documental fue actualizada exitosamente */
   static readonly SERIE_SUBSERIE_ACTUALIZADA: string = 'La ?1 Documental fue actualizada exitosamente';
