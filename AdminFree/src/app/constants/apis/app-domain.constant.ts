@@ -6,5 +6,5 @@
 export class AppDomainConstant {
 
   /** Dominio para consumir los recursos de ADMINFREE*/
-  static readonly ADMINFREE: string = 'http://192.168.0.17:19090/';
+  static readonly ADMINFREE: string = 'http://192.168.0.15:19090/';
 }

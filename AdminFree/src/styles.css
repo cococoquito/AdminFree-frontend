@@ -994,3 +994,13 @@ body {
 .p-2rem {
   padding: .2rem!important;
 }
+
+.title-page-english {
+  font-family: Times, Times New Roman, serif !important;
+  color: #00AECF;
+  font-weight: 700 !important;
+  font-size: 25px;
+  letter-spacing: 0.4pt;
+  word-spacing: 0.8pt;
+  margin: 0px !important;
+}

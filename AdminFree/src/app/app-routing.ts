@@ -11,6 +11,10 @@ import { RouterConstant } from './constants/router.constant';
  */
 export const ROUTES: Routes = [
   {
+    path: RouterConstant.ROUTER_ENGLISH,
+    loadChildren: './modules/english/english.module#EnglishModule'
+  },
+  {
     path: RouterConstant.ROUTER_CLIENTES,
     loadChildren: './modules/clientes/clientes.module#ClientesModule'
   },
