@@ -97,8 +97,4 @@ export class LoginComponent extends CommonComponent implements OnInit {
     this.credenciales = new CredencialesDTO();
     this.credenciales.administrador = false;
   }
-
-  public goToLearnEnglish(): void {
-    this.router.navigate([RouterConstant.ROUTER_ENGLISH]);
-  }
 }

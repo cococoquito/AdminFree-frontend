@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SharedCommonModule } from '../shared/shared-common.module';
 import { SeriesComponent } from './series/series.component';
+import { CreateSeriesComponent } from './create-series/create-series.component';
+import { RouterConstant } from './../../constants/router.constant';
+import { SharedModule } from '../shared/shared.module';
 
 /**
  * Modulo que contiene los componentes y servicios para la
- * administracion de clientes del sistema
+ * aplicacion de estudio de ingles
  *
  * @author Carlos Andres Diaz
  */
@@ -15,10 +17,17 @@ import { SeriesComponent } from './series/series.component';
       {
         path: '',
         component: SeriesComponent
+      },
+      {
+        path: RouterConstant.ROUTER_CREATE_SERIES,
+        component: CreateSeriesComponent
       }
     ]),
-    SharedCommonModule
+    SharedModule
   ],
-  declarations: [SeriesComponent]
+  declarations: [
+    SeriesComponent,
+    CreateSeriesComponent
+  ]
 })
 export class EnglishModule {}
