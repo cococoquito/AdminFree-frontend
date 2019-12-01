@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from 'src/app/constants/router.constant';
+import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
 import { SeriesDTO } from 'src/app/dtos/english/serie.dto';
+import { EnglishService } from 'src/app/services/english.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { MsjUtil } from 'src/app/util/messages.util';
+import { CommonComponent } from 'src/app/util/common.component';
 
 /**
  * Componente para la creacion de las series
@@ -13,7 +18,7 @@ import { SeriesDTO } from 'src/app/dtos/english/serie.dto';
   templateUrl: './create-series.component.html',
   styleUrls: ['./create-series.component.css']
 })
-export class CreateSeriesComponent implements OnInit {
+export class CreateSeriesComponent extends CommonComponent implements OnInit {
 
   /** es la imagen cargada para la creacion*/
   public img: any;
@@ -22,9 +27,24 @@ export class CreateSeriesComponent implements OnInit {
   public serie: SeriesDTO;
 
   /**
+   * @param messageService, Se utiliza para la visualizacion
+   * de los mensajes en la pantalla
+   * 
    * @param router, Router para la navegacion entre paginas
+   * 
+   * @param confirmationService, se utiliza para mostrar el
+   * modal de confirmacion para diferente procesos
+   *
+   * @param englishService, se utiliza para consumir
+   * los servicios relacionados a este proceso negocio
    */
-  constructor(private router: Router) { }
+  constructor(
+    protected messageService: MessageService,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private englishService: EnglishService) {
+    super();
+  }
 
   /**
    * Se debe inicializar las variables globales
@@ -37,6 +57,48 @@ export class CreateSeriesComponent implements OnInit {
    * Metodo que soporta el evento click del boton create serie
    */
   public createSerie(): void {
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CONF_CREAR_SERIE,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se procede a invocar el servicio para la creacion
+        this.englishService.createSerie(this.serie).subscribe(
+          data => {
+
+            // mensaje de creacion exitoso
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.SERIE_CREADO_EXITOSO));
+
+            // se procede almacenar la imagen asociada a esta serie
+            if (this.img) {
+
+              // se configura los parametros para la imagen
+              const parametros = new FormData();
+              parametros.append('img', this.img);
+              parametros.append('idSerie', data.id + '');
+
+              // se procede hacer la invocacion del cargue de la imagen
+              this.englishService.downloadImgSerie(parametros).subscribe(
+                res => {
+                  this.messageService.add(MsjUtil.getToastSuccessLng(res.mensaje));
+                  this.init();
+                },
+                error => {
+                  this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+                }
+              );
+            } else {
+              this.init();
+            }
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 
   /**
@@ -60,5 +122,6 @@ export class CreateSeriesComponent implements OnInit {
    */
   private init(): void {
     this.serie = new SeriesDTO();
+    this.img = null;
   }
 }

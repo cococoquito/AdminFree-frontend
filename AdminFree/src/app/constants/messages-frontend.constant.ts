@@ -179,4 +179,10 @@ export class MsjFrontConstant {
 
   /** Mensaje cuando la serie/subserie documental fue actualizada exitosamente */
   static readonly SERIE_SUBSERIE_ACTUALIZADA: string = 'La ?1 Documental fue actualizada exitosamente';
+
+  /** Mensaje cuando se registra una nueva serie en el sistema */
+  static readonly SERIE_CREADO_EXITOSO: string = 'Serie creada exitosamente';
+
+  /** Mensaje confirmacion para la creacion de la serie */
+  static readonly CONF_CREAR_SERIE: string = '¿Está seguro de crear la serie?';
 }
