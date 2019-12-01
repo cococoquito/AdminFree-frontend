@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from 'src/app/constants/router.constant';
+import { SeriesDTO } from 'src/app/dtos/english/serie.dto';
 
 /**
  * Componente para la creacion de las series
@@ -15,14 +16,27 @@ import { RouterConstant } from 'src/app/constants/router.constant';
 export class CreateSeriesComponent implements OnInit {
 
   /** es la imagen cargada para la creacion*/
-  public img: FormData;
+  public img: any;
+
+  /** Es la nueva serie a crear */
+  public serie: SeriesDTO;
 
   /**
    * @param router, Router para la navegacion entre paginas
    */
   constructor(private router: Router) { }
 
+  /**
+   * Se debe inicializar las variables globales
+   */
   ngOnInit() {
+    this.init();
+  }
+
+  /**
+   * Metodo que soporta el evento click del boton create serie
+   */
+  public createSerie(): void {
   }
 
   /**
@@ -32,7 +46,6 @@ export class CreateSeriesComponent implements OnInit {
    */
   public downloadImage(event): void {
     this.img = event.files[0];
-    console.log(this.img);
   }
 
   /**
@@ -40,5 +53,12 @@ export class CreateSeriesComponent implements OnInit {
    */
   public goToListSeries(): void {
     this.router.navigate([RouterConstant.ROUTER_ENGLISH]);
+  }
+
+  /**
+   * Metodo que es invocado al momento de la creacion del componente
+   */
+  private init(): void {
+    this.serie = new SeriesDTO();
   }
 }

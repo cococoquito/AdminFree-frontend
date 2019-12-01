@@ -5,47 +5,66 @@
   <p class="s-title-page-english text-danger">CREATION OF SERIES</p>
 </div>
 
-<!-- filtros -->
+<!-- creacion -->
 <div class="ui-g pb-1 w-65 mx-auto pt-4">
 
-  <!-- filtro - consecutivos -->
+  <!-- nombre -->
   <div class="ui-g-12 pb-0 pt-0">
-    <label for="fconsecutivos" class="steps-st mb-0 mt-1"> NAME: </label>
+    <label for="fname" class="steps-st mb-0 mt-1"> NAME: </label>
   </div>
   <div class="ui-g-12 pt-0 pb-0">
     <div class="inner-addon left-addon">
-      <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
+      <input
+        [(ngModel)]="serie.name"
+        adminAutofocus
+        type="text"
+        id="fname"
+        name="fname"
+        maxlength="255"
         class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
       <div class="focus-border"></div>
     </div>
   </div>
 
-  <!-- filtro - consecutivos -->
+  <!-- url -->
   <div class="ui-g-12 pb-0 pt-4">
-    <label for="fconsecutivos" class="steps-st mb-0 mt-1"> URL ORORO: </label>
+    <label for="furl" class="steps-st mb-0 mt-1"> URL ORORO: </label>
   </div>
   <div class="ui-g-12 pt-0 pb-0">
     <div class="inner-addon left-addon">
-      <input type="text" id="fconsecutivos" name="fconsecutivos" maxlength="100"
+      <input
+        [(ngModel)]="serie.url"
+        type="text"
+        id="furl"
+        name="furl"
+        maxlength="255"
         class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
       <div class="focus-border"></div>
     </div>
   </div>
 
   <div class="ui-g-12 pb-0 pt-4">
-    <p-fileUpload (uploadHandler)="downloadImage($event)" customUpload="true" auto="true" [showUploadButton]="false"
-      [showCancelButton]="false" chooseLabel="Download Image" invalidFileTypeMessageSummary="Archivo invalido"
-      invalidFileTypeMessageDetail="Solo Imagenes" invalidFileSizeMessageSummary="Iamege invalido" accept="image/*">
+    <p-fileUpload
+      (uploadHandler)="downloadImage($event)"
+      customUpload="true"
+      auto="true"
+      [showUploadButton]="false"
+      [showCancelButton]="false"
+      chooseLabel="Download Image"
+      invalidFileTypeMessageSummary="Archivo invalido"
+      invalidFileTypeMessageDetail="Solo Imagenes"
+      invalidFileSizeMessageSummary="Iamege invalido"
+      accept="image/*">
       <ng-template pTemplate="content"></ng-template>
     </p-fileUpload>
   </div>
 
-  <!-- botones salir - next-->
+  <!-- botones come back, save-->
   <div class="text-center mt-2 mb-1 mx-auto">
     <button (click)="goToListSeries()" type="button" class="btn btn-primary w-130-px mr-4">
       <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Come Back</label>
     </button>
-    <button (click)="closePanelCU()" type="button" class="btn btn-success mr-2 ml-2 w-130-px">
+    <button (click)="createSerie()" type="button" class="btn btn-success mr-2 ml-2 w-130-px">
       <label class="btn-size-admin"><i class="fa fa-times"></i> Save</label>
     </button>
   </div>
