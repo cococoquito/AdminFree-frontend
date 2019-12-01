@@ -5,7 +5,6 @@ import { ArchivoGestionAPIConstant } from '../constants/apis/archivo-gestion-api
 import { FiltroSerieDocumentalDTO } from '../dtos/archivogestion/filtro-serie-documental.dto';
 import { PaginadorResponseDTO } from '../dtos/transversal/paginador-response.dto';
 import { TipoDocumentalDTO } from '../dtos/archivogestion/tipo-documental.dto';
-import { MessageResponseDTO } from '../dtos/transversal/message-response.dto';
 import { SerieDocumentalDTO } from '../dtos/archivogestion/serie-documental.dto';
 import { SubSerieDocumentalDTO } from '../dtos/archivogestion/sub-serie-documental.dto';
 import { InitAdminSeriesDocumentalesDTO } from '../dtos/archivogestion/init-admin-series-documentales.dto';
