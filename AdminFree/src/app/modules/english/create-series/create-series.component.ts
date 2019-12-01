@@ -26,6 +26,10 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
   /** Es la nueva serie a crear */
   public serie: SeriesDTO;
 
+  /** se utiliza para validar los campos requeridos */
+  public nameRequired: boolean;
+  public urlRequired: boolean;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -57,6 +61,12 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
    * Metodo que soporta el evento click del boton create serie
    */
   public createSerie(): void {
+
+    // se valida los campos de ingresos obligatorios
+    this.validateInValues();
+    if (this.nameRequired || this.urlRequired) {
+      return;
+    }
 
     // se muestra la ventana de confirmacion
     this.confirmationService.confirm({
@@ -123,5 +133,23 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
   private init(): void {
     this.serie = new SeriesDTO();
     this.img = null;
+    this.nameRequired = false;
+    this.urlRequired = false;
+  }
+
+  /**
+   * Metodo para validar si los campos de ingresos son requeridos
+   */
+  private validateInValues(): void {
+    this.nameRequired = false;
+    this.urlRequired = false;
+    this.serie.name = this.setTrimFilter(this.serie.name);
+    this.serie.url = this.setTrimFilter(this.serie.url);
+    if (!this.serie.name) {
+      this.nameRequired = true;
+    }
+    if (!this.serie.url) {
+      this.urlRequired = true;
+    }
   }
 }

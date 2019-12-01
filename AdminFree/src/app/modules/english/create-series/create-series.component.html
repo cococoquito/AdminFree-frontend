@@ -21,7 +21,8 @@
         id="fname"
         name="fname"
         maxlength="255"
-        class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+        class="ad-input ad-input-style w-100 pt-0 font-new-roman"
+        [ngClass]="{'ad-input-required': nameRequired}"/>
       <div class="focus-border"></div>
     </div>
   </div>
@@ -38,7 +39,8 @@
         id="furl"
         name="furl"
         maxlength="255"
-        class="ad-input ad-input-style w-100 pt-0 font-new-roman" />
+        class="ad-input ad-input-style w-100 pt-0 font-new-roman"
+        [ngClass]="{'ad-input-required': urlRequired}"/>
       <div class="focus-border"></div>
     </div>
   </div>
