@@ -6,7 +6,7 @@
 export class SeriesDTO {
 
   /** identificador de la serie */
-  public id: string;
+  public id: number;
 
   /** Es el nombre de la serie */
   public name: string;

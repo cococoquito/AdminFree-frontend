@@ -22,7 +22,7 @@
         name="fname"
         maxlength="255"
         class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-        [ngClass]="{'ad-input-required': nameRequired}"/>
+        [ngClass]="{'ad-input-required': submit && !serie.name}"/>
       <div class="focus-border"></div>
     </div>
   </div>
@@ -40,7 +40,7 @@
         name="furl"
         maxlength="255"
         class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-        [ngClass]="{'ad-input-required': urlRequired}"/>
+        [ngClass]="{'ad-input-required': submit && !serie.url}"/>
       <div class="focus-border"></div>
     </div>
   </div>
@@ -50,6 +50,7 @@
       (uploadHandler)="downloadImage($event)"
       customUpload="true"
       auto="true"
+      #inImg
       [showUploadButton]="false"
       [showCancelButton]="false"
       chooseLabel="Download Image"

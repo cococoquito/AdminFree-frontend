@@ -6,6 +6,7 @@ import { CredencialesDTO } from '../dtos/seguridad/credenciales.dto';
 import { SeguridadAPIConstant } from '../constants/apis/seguridad-api.constant';
 import { AppSecurityConstant } from '../constants/app-security.constant';
 import { CorrespondenciaAPIConstant } from '../constants/apis/correspondencia-api.constant';
+import { EnglishAPIConstant } from '../constants/apis/english.constant';
 import { LocalStoreUtil } from '../util/local-store.util';
 import {
   HttpInterceptor,
@@ -62,7 +63,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           credenciales.usuario,
           credenciales.clave,
           credenciales.token + AppSecurityConstant.POST_ANGULAR,
-          CorrespondenciaAPIConstant.URL_CARGAR_DOCUMENTO === req.url
+          (CorrespondenciaAPIConstant.URL_CARGAR_DOCUMENTO === req.url || EnglishAPIConstant.URL_DOWNLOAD_IMG_SERIE === req.url)
         );
       }
     }

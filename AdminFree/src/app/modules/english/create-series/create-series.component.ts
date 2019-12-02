@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from 'src/app/constants/router.constant';
 import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
@@ -26,9 +26,11 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
   /** Es la nueva serie a crear */
   public serie: SeriesDTO;
 
-  /** se utiliza para validar los campos requeridos */
-  public nameRequired: boolean;
-  public urlRequired: boolean;
+  /** indica si el usuario ya dio click en el boton save */
+  public submit: boolean;
+
+  /** se utiliza para limpiar el componente de carga de img*/
+  @ViewChild('inImg') inImg: any;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -62,9 +64,19 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
    */
   public createSerie(): void {
 
+    // inidica que el usuario ya dio click boton enviar
+    this.submit = true;
+
     // se valida los campos de ingresos obligatorios
-    this.validateInValues();
-    if (this.nameRequired || this.urlRequired) {
+    this.serie.name = this.setTrimFilter(this.serie.name);
+    this.serie.url = this.setTrimFilter(this.serie.url);
+    if (!this.serie.name || !this.serie.url) {
+      return;
+    }
+
+    // la imagen es requerida
+    if (!this.img) {
+      this.messageService.add(MsjUtil.getToastError('Imagen requerido'));
       return;
     }
 
@@ -78,30 +90,22 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
         this.englishService.createSerie(this.serie).subscribe(
           data => {
 
-            // mensaje de creacion exitoso
-            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.SERIE_CREADO_EXITOSO));
+            // se configura los parametros para la imagen
+            const parametros = new FormData();
+            parametros.append('img', this.img);
+            parametros.append('idSerie', data.id + '');
 
-            // se procede almacenar la imagen asociada a esta serie
-            if (this.img) {
-
-              // se configura los parametros para la imagen
-              const parametros = new FormData();
-              parametros.append('img', this.img);
-              parametros.append('idSerie', data.id + '');
-
-              // se procede hacer la invocacion del cargue de la imagen
-              this.englishService.downloadImgSerie(parametros).subscribe(
-                res => {
-                  this.messageService.add(MsjUtil.getToastSuccessLng(res.mensaje));
-                  this.init();
-                },
-                error => {
-                  this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-                }
-              );
-            } else {
-              this.init();
-            }
+            // se procede hacer la invocacion del cargue de la imagen
+            this.englishService.downloadImgSerie(parametros).subscribe(
+              res => {
+                this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.SERIE_CREADO_EXITOSO));
+                this.init();
+                this.cleanImg();
+              },
+              error => {
+                this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+              }
+            );
           },
           error => {
             this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -132,24 +136,16 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
    */
   private init(): void {
     this.serie = new SeriesDTO();
+    this.submit = false;
     this.img = null;
-    this.nameRequired = false;
-    this.urlRequired = false;
   }
 
   /**
-   * Metodo para validar si los campos de ingresos son requeridos
+   * Metodo para limpiar la img cargada
    */
-  private validateInValues(): void {
-    this.nameRequired = false;
-    this.urlRequired = false;
-    this.serie.name = this.setTrimFilter(this.serie.name);
-    this.serie.url = this.setTrimFilter(this.serie.url);
-    if (!this.serie.name) {
-      this.nameRequired = true;
-    }
-    if (!this.serie.url) {
-      this.urlRequired = true;
+  private cleanImg(): void {
+    if (this.inImg) {
+      this.inImg.clear();
     }
   }
 }
