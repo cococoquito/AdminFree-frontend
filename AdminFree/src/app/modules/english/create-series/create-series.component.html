@@ -1,77 +1,81 @@
+<!-- title -->
 <div class="text-center mt-2 ">
   <p class="title-page-english">FUN WAY TO LEARN ENGLISH</p>
 </div>
-<div class="text-center mt-2 mb-4">
-  <p class="s-title-page-english text-danger">CREATION OF SERIES</p>
-</div>
 
 <!-- creacion -->
-<div class="ui-g pb-1 w-65 mx-auto pt-4">
+<p-panel styleClass="steps-pnl pnl-pt mt-3">
+  <p-header>
+    <p class="s-title-page-english text-center">CREATION OF SERIES</p>
+  </p-header>
 
-  <!-- nombre -->
-  <div class="ui-g-12 pb-0 pt-0">
-    <label for="fname" class="steps-st mb-0 mt-1"> NAME: </label>
-  </div>
-  <div class="ui-g-12 pt-0 pb-0">
-    <div class="inner-addon left-addon">
-      <input
-        [(ngModel)]="serie.name"
-        adminAutofocus
-        type="text"
-        id="fname"
-        name="fname"
-        maxlength="255"
-        class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-        [ngClass]="{'ad-input-required': submit && !serie.name}"/>
-      <div class="focus-border"></div>
+  <div class="ui-g pb-1 w-65 mx-auto pt-4">
+    <!-- nombre -->
+    <div class="ui-g-12 pb-0 pt-0">
+      <label for="fname" class="steps-st mb-0 mt-1"> NAME: </label>
+    </div>
+    <div class="ui-g-12 pt-0 pb-0">
+      <div class="inner-addon left-addon">
+        <input
+          [(ngModel)]="serie.name"
+          adminAutofocus
+          type="text"
+          id="fname"
+          name="fname"
+          maxlength="255"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman"
+          [ngClass]="{'ad-input-required': submit && !serie.name}"/>
+        <div class="focus-border"></div>
+      </div>
+    </div>
+    
+    <!-- url -->
+    <div class="ui-g-12 pb-0 pt-4">
+      <label for="furl" class="steps-st mb-0 mt-1"> URL ORORO: </label>
+    </div>
+    <div class="ui-g-12 pt-0 pb-0">
+      <div class="inner-addon left-addon">
+        <input
+          [(ngModel)]="serie.url"
+          type="text"
+          id="furl"
+          name="furl"
+          maxlength="255"
+          class="ad-input ad-input-style w-100 pt-0 font-new-roman"
+          [ngClass]="{'ad-input-required': submit && !serie.url}"/>
+        <div class="focus-border"></div>
+      </div>
+    </div>
+    
+    <div class="ui-g-12 pb-0 pt-4">
+      <p-fileUpload
+        (uploadHandler)="downloadImage($event)"
+        customUpload="true"
+        auto="true"
+        #inImg
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        chooseLabel="Download Image"
+        invalidFileTypeMessageSummary="Archivo invalido"
+        invalidFileTypeMessageDetail="Solo Imagenes"
+        invalidFileSizeMessageSummary="Iamege invalido"
+        accept="image/*">
+        <ng-template pTemplate="content"></ng-template>
+      </p-fileUpload>
+    </div>
+    
+    <!-- botones come back, save-->
+    <div class="text-center mt-2 mb-1 mx-auto">
+      <button (click)="goToListSeries()" type="button" class="btn btn-primary w-130-px mr-3">
+        <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Come Back</label>
+      </button>
+      <button (click)="createSerie()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
+        <label class="btn-size-admin"><i class="fa fa-plus font-size-14 pr-1"></i> Save</label>
+      </button>
     </div>
   </div>
+</p-panel>
 
-  <!-- url -->
-  <div class="ui-g-12 pb-0 pt-4">
-    <label for="furl" class="steps-st mb-0 mt-1"> URL ORORO: </label>
-  </div>
-  <div class="ui-g-12 pt-0 pb-0">
-    <div class="inner-addon left-addon">
-      <input
-        [(ngModel)]="serie.url"
-        type="text"
-        id="furl"
-        name="furl"
-        maxlength="255"
-        class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-        [ngClass]="{'ad-input-required': submit && !serie.url}"/>
-      <div class="focus-border"></div>
-    </div>
-  </div>
-
-  <div class="ui-g-12 pb-0 pt-4">
-    <p-fileUpload
-      (uploadHandler)="downloadImage($event)"
-      customUpload="true"
-      auto="true"
-      #inImg
-      [showUploadButton]="false"
-      [showCancelButton]="false"
-      chooseLabel="Download Image"
-      invalidFileTypeMessageSummary="Archivo invalido"
-      invalidFileTypeMessageDetail="Solo Imagenes"
-      invalidFileSizeMessageSummary="Iamege invalido"
-      accept="image/*">
-      <ng-template pTemplate="content"></ng-template>
-    </p-fileUpload>
-  </div>
-
-  <!-- botones come back, save-->
-  <div class="text-center mt-2 mb-1 mx-auto">
-    <button (click)="goToListSeries()" type="button" class="btn btn-primary w-130-px mr-4">
-      <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Come Back</label>
-    </button>
-    <button (click)="createSerie()" type="button" class="btn btn-success mr-2 ml-2 w-130-px">
-      <label class="btn-size-admin"><i class="fa fa-plus font-size-14 pr-1"></i> Save</label>
-    </button>
-  </div>
-</div>
 
 <p-confirmDialog id="confApp" icon="pi pi-exclamation-triangle" #cd>
   <p-footer>
