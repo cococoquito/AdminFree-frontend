@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from 'src/app/constants/router.constant';
 import { EnglishService } from 'src/app/services/english.service';
-import { SeriesDTO } from 'src/app/dtos/english/serie.dto';
+import { SerieDTO } from 'src/app/dtos/english/serie.dto';
 import { MsjUtil } from 'src/app/util/messages.util';
 import { MessageService } from 'primeng/api';
 import { CommonComponent } from 'src/app/util/common.component';
@@ -20,7 +20,7 @@ import { CommonComponent } from 'src/app/util/common.component';
 export class SeriesComponent extends CommonComponent implements OnInit {
 
   /** Lista de series parametrizados en el sistema */
-  public series: Array<SeriesDTO>;
+  public series: Array<SerieDTO>;
 
   /**
    * @param messageService, Se utiliza para la visualizacion

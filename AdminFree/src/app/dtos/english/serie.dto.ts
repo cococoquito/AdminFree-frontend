@@ -1,9 +1,11 @@
+import { SeasonDTO } from "./season.dto";
+
 /**
  * DTO para mappear las series
  *
  * @author Carlos Andres Diaz
  */
-export class SeriesDTO {
+export class SerieDTO {
 
   /** identificador de la serie */
   public id: number;
@@ -16,4 +18,7 @@ export class SeriesDTO {
 
   /** es la imagen a mostrar en pantalla */
   public img: any;
+
+  /** son las temporadas de esta serie */
+  public seasons: Array<SeasonDTO>;
 }

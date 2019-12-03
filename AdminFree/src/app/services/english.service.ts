@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { SeriesDTO } from '../dtos/english/serie.dto';
+import { SerieDTO } from '../dtos/english/serie.dto';
 import { EnglishAPIConstant } from '../constants/apis/english.constant';
 import { MessageResponseDTO } from '../dtos/transversal/message-response.dto';
 
@@ -24,8 +24,8 @@ export class EnglishService {
 	 * @param serie, contiene los datos de la serie a crear
 	 * @return Response con los datos de la nueva serie creada
 	 */
-  public createSerie(serie: SeriesDTO): Observable<SeriesDTO> {
-    return this.http.post<SeriesDTO>(
+  public createSerie(serie: SerieDTO): Observable<SerieDTO> {
+    return this.http.post<SerieDTO>(
       EnglishAPIConstant.URL_CREATE_SERIE,
       serie
     );
@@ -46,7 +46,7 @@ export class EnglishService {
 	/**
 	 * Servicio que permite cargar las series parametrizadas en el sistema
 	 */
-  public getSeries(): Observable<Array<SeriesDTO>> {
-    return this.http.get<Array<SeriesDTO>>(EnglishAPIConstant.URL_GET_SERIES);
+  public getSeries(): Observable<Array<SerieDTO>> {
+    return this.http.get<Array<SerieDTO>>(EnglishAPIConstant.URL_GET_SERIES);
   }
 }

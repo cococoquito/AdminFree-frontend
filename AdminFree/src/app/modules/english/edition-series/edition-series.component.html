@@ -97,40 +97,33 @@
         </div>
 
         <div class="ui-g-12">
-            <p-panel>
-              <p-header>
-                <label for="inprocedimiento" class="ml-1 mb-0"> English Sentence:</label>
-              </p-header>
-              <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
+          <p-panel>
+            <p-header>
+              <label for="inprocedimiento" class="ml-1 mb-0"> English Sentence:</label>
+            </p-header>
+            <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
                   </textarea>
-            </p-panel>
-          </div>
+          </p-panel>
+        </div>
 
-          <div class="ui-g-12">
-              <p-fileUpload
-                customUpload="true"
-                auto="true"
-                #inImg
-                [showUploadButton]="false"
-                [showCancelButton]="false"
-                chooseLabel="Download Sound"
-                invalidFileTypeMessageSummary="Archivo invalido"
-                invalidFileTypeMessageDetail="Solo Imagenes"
-                invalidFileSizeMessageSummary="Iamege invalido"
-                accept="image/*">
-                <ng-template pTemplate="content"></ng-template>
-              </p-fileUpload>
-            </div>
+        <div class="ui-g-12">
+          <p-fileUpload customUpload="true" auto="true" #inImg [showUploadButton]="false" [showCancelButton]="false"
+            chooseLabel="Download Sound" invalidFileTypeMessageSummary="Archivo invalido"
+            invalidFileTypeMessageDetail="Solo Imagenes" invalidFileSizeMessageSummary="Iamege invalido"
+            accept="image/*">
+            <ng-template pTemplate="content"></ng-template>
+          </p-fileUpload>
+        </div>
 
 
-          <div class="text-center mb-1 mx-auto ui-g-12">
-              <button (click)="editSerie()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
-                <label class="btn-size-admin"><i class="fa fa-edit"></i> Save</label>
-              </button>
-              <button (click)="editSerie()" type="button" class="btn btn-info mr-2 ml-2 w-130-px">
-                  <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
-                </button>
-            </div>
+        <div class="text-center mb-1 mx-auto ui-g-12">
+          <button (click)="editSerie()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
+            <label class="btn-size-admin"><i class="fa fa-edit"></i> Save</label>
+          </button>
+          <button (click)="editSerie()" type="button" class="btn btn-info mr-2 ml-2 w-130-px">
+            <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
+          </button>
+        </div>
 
 
       </div>

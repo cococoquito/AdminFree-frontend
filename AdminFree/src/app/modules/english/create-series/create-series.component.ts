@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from 'src/app/constants/router.constant';
 import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
-import { SeriesDTO } from 'src/app/dtos/english/serie.dto';
+import { SerieDTO } from 'src/app/dtos/english/serie.dto';
 import { EnglishService } from 'src/app/services/english.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MsjUtil } from 'src/app/util/messages.util';
@@ -24,7 +24,7 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
   public img: any;
 
   /** Es la nueva serie a crear */
-  public serie: SeriesDTO;
+  public serie: SerieDTO;
 
   /** indica si el usuario ya dio click en el boton save */
   public submit: boolean;
@@ -135,7 +135,7 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
    * Metodo que es invocado al momento de la creacion del componente
    */
   private init(): void {
-    this.serie = new SeriesDTO();
+    this.serie = new SerieDTO();
     this.submit = false;
     this.img = null;
   }
