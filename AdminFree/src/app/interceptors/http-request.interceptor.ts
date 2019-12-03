@@ -44,28 +44,36 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     // variable que contiene el header con seguridad
     let securityHeader;
 
+    // se verifica si la peticion es del modulo learning english
+    if (EnglishAPIConstant.URL_DOWNLOAD_IMG_SERIE === req.url ||
+        EnglishAPIConstant.URL_CREATE_SERIE === req.url || 
+        EnglishAPIConstant.URL_GET_SERIES === req.url) {
+        if (EnglishAPIConstant.URL_GET_SERIES === req.url) {
+          securityHeader = this.getOnlyTypeJson();
+        }
+    } else {
     // si la peticion es para autenticacion se agrega la seguridad correspondiente
     if (SeguridadAPIConstant.URL_AUTH === req.url ||
-        SeguridadAPIConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
-          securityHeader = this.getSecurityHeader(
-            AppSecurityConstant.AUTH_USER,
-            AppSecurityConstant.AUTH_PASS,
-            AppSecurityConstant.AUTH_TOKEN + AppSecurityConstant.POST_ANGULAR_AUTH,
-            false
-          );
-    } else {
-      // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
-      const credenciales: CredencialesDTO = LocalStoreUtil.getCurrentCredenciales();
-      if (credenciales) {
-
-        // invocaciones del cargue documento no puede tener Content-Type
+      SeguridadAPIConstant.URL_ADMIN_CLIENTES_AUTH === req.url) {
         securityHeader = this.getSecurityHeader(
-          credenciales.usuario,
-          credenciales.clave,
-          credenciales.token + AppSecurityConstant.POST_ANGULAR,
-          (CorrespondenciaAPIConstant.URL_CARGAR_DOCUMENTO === req.url || EnglishAPIConstant.URL_DOWNLOAD_IMG_SERIE === req.url)
-        );
-      }
+          AppSecurityConstant.AUTH_USER,
+          AppSecurityConstant.AUTH_PASS,
+          AppSecurityConstant.AUTH_TOKEN + AppSecurityConstant.POST_ANGULAR_AUTH,
+          false
+      );
+    } else {
+        // peticiones que no sea de autenticacion se verifica con las credenciales del usuario
+        const credenciales: CredencialesDTO = LocalStoreUtil.getCurrentCredenciales();
+        if (credenciales) {
+          // invocaciones del cargue documento no puede tener Content-Type
+          securityHeader = this.getSecurityHeader(
+            credenciales.usuario,
+            credenciales.clave,
+            credenciales.token + AppSecurityConstant.POST_ANGULAR,
+            CorrespondenciaAPIConstant.URL_CARGAR_DOCUMENTO === req.url
+          );
+        }
+      }     
     }
 
     // se configura el spinner para esta peticion
@@ -106,5 +114,14 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         'htoken': token
       };
     }
+  }
+
+  /**
+   * Metodo que permite crear un Header con solo el tipo de json content
+   */
+  private getOnlyTypeJson(): any {
+    return {
+      'Content-Type': AppSecurityConstant.CONTENT,
+    };
   }
 }

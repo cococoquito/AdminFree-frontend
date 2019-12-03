@@ -11,6 +11,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SharedCommonModule } from './shared-common.module';
+import { CarouselModule } from 'primeng/carousel';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -44,7 +45,8 @@ import { ConsecutivoInfoGeneralComponent } from './consecutivo-info-general/cons
     OverlayPanelModule,
     KeyFilterModule,
     CheckboxModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CarouselModule
   ],
   declarations: [
     ConsecutivoPipe,
@@ -70,6 +72,7 @@ import { ConsecutivoInfoGeneralComponent } from './consecutivo-info-general/cons
     KeyFilterModule,
     CheckboxModule,
     AutoCompleteModule,
+    CarouselModule,
     ConsecutivoPipe,
     InputswitchComponent,
     DetalleCampoComponent,

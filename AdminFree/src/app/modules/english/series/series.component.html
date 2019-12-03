@@ -1,7 +1,30 @@
-<div class="text-center mt-2 ">
+<div class="text-center mt-2 mb-4">
   <p class="title-page-english">FUN WAY TO LEARN ENGLISH</p>
   <button (click)="goToCreateSeries()" type="button" class="btn btn-success btn-sm w-180-px mt-1">
-    <i class="fa fa-user-circle-o font-size-18"></i>
+    <i class="fa fa-plus font-size-14 pr-1"></i>
     <span class="font-new-roman font-size-16"> Create Serie</span>
   </button>
 </div>
+
+<p-carousel [value]="series" [numVisible]="4">
+  <ng-template let-serie pTemplate="item">
+    <div class="details">
+      <div class="title font-new-roman text-center">{{serie.name}}</div>
+      <div class="p-grid">
+        <div class="p-col-12">
+          <img src="data:image/PNG;base64,{{serie.img}}" width="200" height="200">
+        </div>
+        <div class="p-col-12 car-data mt-4">
+          <button type="button" class="btn btn-primary btn-sm mr-4 w-100-px">
+            <i class="fa fa-pencil font-size-14 pr-1"></i>
+            <span class="font-new-roman font-size-16"> Edit</span>
+          </button>
+          <button type="button" class="btn btn-info btn-sm w-100-px">
+            <i class="fa fa-book font-size-14 pr-1"></i>
+            <span class="font-new-roman font-size-16"> Study</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <p-/carousel>

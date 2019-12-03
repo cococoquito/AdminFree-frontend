@@ -13,4 +13,7 @@ export class SeriesDTO {
 
   /** Es la URL de esta serie */
   public url: string;
+
+  /** es la imagen a mostrar en pantalla */
+  public img: any;
 }

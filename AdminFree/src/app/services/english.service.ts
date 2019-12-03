@@ -42,4 +42,11 @@ export class EnglishService {
       img
     );
   }
+
+	/**
+	 * Servicio que permite cargar las series parametrizadas en el sistema
+	 */
+  public getSeries(): Observable<Array<SeriesDTO>> {
+    return this.http.get<Array<SeriesDTO>>(EnglishAPIConstant.URL_GET_SERIES);
+  }
 }

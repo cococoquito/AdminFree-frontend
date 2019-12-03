@@ -21,4 +21,10 @@ export class EnglishAPIConstant {
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'downloadimgserie';
+
+  /** URL del recurso para obtener las series parametrizadas en el sistema */
+  static readonly URL_GET_SERIES: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'getseries';
 }
