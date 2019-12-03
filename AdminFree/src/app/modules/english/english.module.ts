@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { SeriesComponent } from './series/series.component';
 import { CreateSeriesComponent } from './create-series/create-series.component';
+import { EditionSeriesComponent } from './edition-series/edition-series.component';
 import { RouterConstant } from './../../constants/router.constant';
 import { SharedModule } from '../shared/shared.module';
 import { EnglishService } from 'src/app/services/english.service';
@@ -26,6 +27,10 @@ import { MessagesModule } from 'primeng/messages';
       {
         path: RouterConstant.ROUTER_CREATE_SERIES,
         component: CreateSeriesComponent
+      },
+      {
+        path: RouterConstant.ROUTER_EDIT_SERIES,
+        component: EditionSeriesComponent
       }
     ]),
     SharedModule,
@@ -35,7 +40,8 @@ import { MessagesModule } from 'primeng/messages';
   ],
   declarations: [
     SeriesComponent,
-    CreateSeriesComponent
+    CreateSeriesComponent,
+    EditionSeriesComponent
   ],
   providers: [
     ConfirmationService,

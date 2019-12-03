@@ -53,6 +53,14 @@ export class SeriesComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que soporta el evento click de edicion de series
+   */
+  public goToEditSeries(): void {
+    this.router.navigate([RouterConstant.NAVIGATE_EDIT_SERIES]);
+  }
+
+
+  /**
    * Metodo que es invocado al momento de la creacion
    * del componente, donde se procede a consultar los
    * series parametrizadas en el sistema

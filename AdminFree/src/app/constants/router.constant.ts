@@ -71,8 +71,14 @@ export class RouterConstant {
   /** Nombre del Router de creacion de series*/
   public static readonly ROUTER_CREATE_SERIES: string = 'createseries';
 
+  /** Nombre del Router para la edicion de series*/
+  public static readonly ROUTER_EDIT_SERIES: string = 'editseries';
+
   /** Constante para navegar al componente crear series */
   public static readonly NAVIGATE_CREATE_SERIES: string = `/${RouterConstant.ROUTER_ENGLISH}/${RouterConstant.ROUTER_CREATE_SERIES}`;
+
+  /** Constante para navegar al componente edit series */
+  public static readonly NAVIGATE_EDIT_SERIES: string = `/${RouterConstant.ROUTER_ENGLISH}/${RouterConstant.ROUTER_EDIT_SERIES}`;
 
   /** Constante para navegar al modulo de CLIENTES */
   public static readonly NAVIGATE_CLIENTES: string = `/${RouterConstant.ROUTER_CLIENTES}`;

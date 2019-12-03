@@ -15,7 +15,7 @@
           <img src="data:image/PNG;base64,{{serie.img}}" width="200" height="200">
         </div>
         <div class="p-col-12 car-data mt-4">
-          <button type="button" class="btn btn-primary btn-sm mr-4 w-100-px">
+          <button (click)="goToEditSeries()" type="button" class="btn btn-primary btn-sm mr-4 w-100-px">
             <i class="fa fa-pencil font-size-14 pr-1"></i>
             <span class="font-new-roman font-size-16"> Edit</span>
           </button>
@@ -27,4 +27,4 @@
       </div>
     </div>
   </ng-template>
-  <p-/carousel>
+<p-/carousel>
