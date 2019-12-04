@@ -65,16 +65,22 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
 
     // se obtiene el identificador de la serie del localstore
     const idSerie = LocalStoreUtil.idSerie(TipoEventoConstant.GET);
-    LocalStoreUtil.idSerie(TipoEventoConstant.ELIMINAR);
 
-    // se procede a buscar el detalle de la serie a editar
-    this.englishService.getDetailSerie(idSerie).subscribe(
-      data => {
-        this.serie = data;
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+    // solo aplica si hay id de la serie en el local
+    if (idSerie) {
+
+      // se debe eliminar el id del local
+      LocalStoreUtil.idSerie(TipoEventoConstant.ELIMINAR);
+
+      // se procede a buscar el detalle de la serie a editar
+      this.englishService.getDetailSerie(idSerie).subscribe(
+        data => {
+          this.serie = data;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
   }
 }

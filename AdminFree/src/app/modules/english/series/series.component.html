@@ -6,25 +6,38 @@
   </button>
 </div>
 
-<p-carousel [value]="series" [numVisible]="4">
-  <ng-template let-serie pTemplate="item">
-    <div class="details">
-      <div class="title font-new-roman text-center">{{serie.name}}</div>
-      <div class="p-grid">
-        <div class="p-col-12">
-          <img src="data:image/PNG;base64,{{serie.img}}" width="200" height="200">
-        </div>
-        <div class="p-col-12 car-data mt-4">
-          <button (click)="goToEditSeries(serie.id)" type="button" class="btn btn-primary btn-sm mr-4 w-100-px">
-            <i class="fa fa-pencil font-size-14 pr-1"></i>
-            <span class="font-new-roman font-size-16"> Edit</span>
-          </button>
-          <button type="button" class="btn btn-info btn-sm w-100-px">
-            <i class="fa fa-book font-size-14 pr-1"></i>
-            <span class="font-new-roman font-size-16"> Study</span>
-          </button>
+<!-- SI hay series-->
+<ng-container *ngIf="series">
+  <p-carousel [value]="series" [numVisible]="4">
+    <ng-template let-serie pTemplate="item">
+      <div class="details">
+        <div class="title font-new-roman text-center">{{serie.name}}</div>
+        <div class="p-grid">
+          <div class="p-col-12">
+            <img src="data:image/PNG;base64,{{serie.img}}" width="200" height="200">
+          </div>
+          <div class="p-col-12 car-data mt-4">
+            <button (click)="goToEditSeries(serie.id)" type="button" class="btn btn-primary btn-sm mr-4 w-100-px">
+              <i class="fa fa-pencil font-size-14 pr-1"></i>
+              <span class="font-new-roman font-size-16"> Edit</span>
+            </button>
+            <button type="button" class="btn btn-info btn-sm w-100-px">
+              <i class="fa fa-book font-size-14 pr-1"></i>
+              <span class="font-new-roman font-size-16"> Study</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </ng-template>
-<p-/carousel>
+    </ng-template>
+  </p-carousel>
+</ng-container>
+
+<!-- NO hay series-->
+<ng-container *ngIf="!series">
+  <div class="mr-3 ml-3 mt-3 mb-3 p-2 ui-messages ui-messages-warn ui-corner-all text-center">
+    <span class="ui-messages-icon pi pi-info-circle"></span>
+    <span class="ui-messages-detail font-size-15 ml-0">
+      <strong>No hay series parametrizadas en el sistema</strong>
+    </span>
+  </div>
+</ng-container>
