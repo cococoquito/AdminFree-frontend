@@ -48,7 +48,7 @@
           </ng-container>  
 
           <!-- btn agregar capitulo-->
-          <button type="button" class="btn-sm btn-info w-130-px mt-3">
+          <button (click)="enableAddChapter(season)" type="button" class="btn-sm btn-info w-130-px mt-3">
             <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Chapter</label>
           </button>
         </p-tabPanel>
@@ -66,98 +66,101 @@
     </div>
   </ng-container>
 
-  <p-panel styleClass="steps-pnl pnl-pt mt-2" [showHeader]="false">
-    <div class="ui-g border-top">
-      <div class="ui-g-10">
-        <div class="ui-g">
-          <div class="ui-g-2">
-            <span class="font-weight-bold s-title font-size-15 font-new-roman">SEASON # 1</span>
-          </div>
-          <div class="ui-g-5">
-            <div class="ui-g-12 pt-0 pb-0">
-              <div class="inner-addon left-addon">
-                <input adminAutofocus type="text" id="fname" name="fname" maxlength="255"
-                  class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-                  [ngClass]="{'ad-input-required': submit && !serie.name}" placeholder="NAME CHAPTER" />
-                <div class="focus-border"></div>
+  <!-- panel para administracion capitulo-->
+  <ng-container *ngIf="chapter">
+    <p-panel styleClass="steps-pnl pnl-pt mt-2" [showHeader]="false">
+      <div class="ui-g border-top">
+        <div class="ui-g-10">
+          <div class="ui-g">
+            <div class="ui-g-2">
+              <span class="font-weight-bold s-title font-size-15 font-new-roman">{{season.name}}</span>
+            </div>
+            <div class="ui-g-5">
+              <div class="ui-g-12 pt-0 pb-0">
+                <div class="inner-addon left-addon">
+                  <input adminAutofocus type="text" id="fname" name="fname" maxlength="255"
+                    class="ad-input ad-input-style w-100 pt-0 font-new-roman"
+                    [ngClass]="{'ad-input-required': submit && !serie.name}" placeholder="NAME CHAPTER" />
+                  <div class="focus-border"></div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="ui-g-5">
-            <div class="ui-g-12 pt-0 pb-0">
-              <div class="inner-addon left-addon">
-                <input type="text" id="fname" name="fname" maxlength="255"
-                  class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-                  [ngClass]="{'ad-input-required': submit && !serie.name}" placeholder="URL ORORO" />
-                <div class="focus-border"></div>
+            <div class="ui-g-5">
+              <div class="ui-g-12 pt-0 pb-0">
+                <div class="inner-addon left-addon">
+                  <input type="text" id="fname" name="fname" maxlength="255"
+                    class="ad-input ad-input-style w-100 pt-0 font-new-roman"
+                    [ngClass]="{'ad-input-required': submit && !serie.name}" placeholder="URL ORORO" />
+                  <div class="focus-border"></div>
+                </div>
               </div>
             </div>
-          </div>
 
 
-          <div class="ui-g-12">
-            <p-panel>
-              <p-header>
-                <label for="inprocedimiento" class="ml-1 mb-0"> Spanish Sentence:</label>
-              </p-header>
-              <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
-                      </textarea>
-            </p-panel>
-          </div>
-
-          <div class="ui-g-12">
-            <p-panel>
-              <p-header>
-                <label for="inprocedimiento" class="ml-1 mb-0"> English Sentence:</label>
-              </p-header>
-              <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
+            <div class="ui-g-12">
+              <p-panel>
+                <p-header>
+                  <label for="inprocedimiento" class="ml-1 mb-0"> Spanish Sentence:</label>
+                </p-header>
+                <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
                         </textarea>
-            </p-panel>
+              </p-panel>
+            </div>
+
+            <div class="ui-g-12">
+              <p-panel>
+                <p-header>
+                  <label for="inprocedimiento" class="ml-1 mb-0"> English Sentence:</label>
+                </p-header>
+                <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
+                          </textarea>
+              </p-panel>
+            </div>
+
+            <div class="ui-g-12">
+              <p-fileUpload customUpload="true" auto="true" #inImg [showUploadButton]="false" [showCancelButton]="false"
+                chooseLabel="Download Sound" invalidFileTypeMessageSummary="Archivo invalido"
+                invalidFileTypeMessageDetail="Solo Imagenes" invalidFileSizeMessageSummary="Iamege invalido"
+                accept="image/*">
+                <ng-template pTemplate="content"></ng-template>
+              </p-fileUpload>
+            </div>
+
+
+            <div class="text-center mb-1 mx-auto ui-g-12">
+              <button (click)="editSerie()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
+                <label class="btn-size-admin"><i class="fa fa-edit"></i> Save</label>
+              </button>
+              <button (click)="editSerie()" type="button" class="btn btn-info mr-2 ml-2 w-130-px">
+                <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
+              </button>
+            </div>
+
+
           </div>
-
-          <div class="ui-g-12">
-            <p-fileUpload customUpload="true" auto="true" #inImg [showUploadButton]="false" [showCancelButton]="false"
-              chooseLabel="Download Sound" invalidFileTypeMessageSummary="Archivo invalido"
-              invalidFileTypeMessageDetail="Solo Imagenes" invalidFileSizeMessageSummary="Iamege invalido"
-              accept="image/*">
-              <ng-template pTemplate="content"></ng-template>
-            </p-fileUpload>
-          </div>
-
-
-          <div class="text-center mb-1 mx-auto ui-g-12">
-            <button (click)="editSerie()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
-              <label class="btn-size-admin"><i class="fa fa-edit"></i> Save</label>
-            </button>
-            <button (click)="editSerie()" type="button" class="btn btn-info mr-2 ml-2 w-130-px">
-              <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
-            </button>
-          </div>
-
 
         </div>
-
+        <div class="ui-g-2 border-left">
+          <p class="text-center border-bottom s-title font-weight-bold font-new-roman">SENTENCES ADDED</p>
+          <p class="mb-2 mt-2">
+            <span class="font-weight-bold">1: </span>
+            <span class="chapter font-new-roman font-size-15">Sentence </span>
+          </p>
+          <p class="mb-2 mt-2">
+            <span class="font-weight-bold">2: </span>
+            <span class="chapter font-new-roman font-size-15">Sentence </span>
+          </p>
+          <p class="mb-2 mt-2">
+            <span class="font-weight-bold">3: </span>
+            <span class="chapter font-new-roman font-size-15">Sentence </span>
+          </p>
+        </div>
       </div>
-      <div class="ui-g-2 border-left">
-        <p class="text-center border-bottom s-title font-weight-bold font-new-roman">SENTENCES ADDED</p>
-        <p class="mb-2 mt-2">
-          <span class="font-weight-bold">1: </span>
-          <span class="chapter font-new-roman font-size-15">Sentence </span>
-        </p>
-        <p class="mb-2 mt-2">
-          <span class="font-weight-bold">2: </span>
-          <span class="chapter font-new-roman font-size-15">Sentence </span>
-        </p>
-        <p class="mb-2 mt-2">
-          <span class="font-weight-bold">3: </span>
-          <span class="chapter font-new-roman font-size-15">Sentence </span>
-        </p>
-      </div>
-    </div>
 
 
 
-  </p-panel>
+    </p-panel>
+  </ng-container> 
 </ng-container>
 
 <!-- NO existe serie a editar-->

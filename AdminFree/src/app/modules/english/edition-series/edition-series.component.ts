@@ -9,6 +9,8 @@ import { LocalStoreUtil } from 'src/app/util/local-store.util';
 import { SerieDTO } from 'src/app/dtos/english/serie.dto';
 import { MsjUtil } from 'src/app/util/messages.util';
 import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
+import { ChapterDTO } from 'src/app/dtos/english/chapter.dto';
+import { SeasonDTO } from 'src/app/dtos/english/season.dto';
 
 /**
  * Componente para la edition de las series
@@ -24,6 +26,12 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
 
   /** Es la serie seleccionada para editar*/
   public serie: SerieDTO;
+
+  /** Es la temporada seleccionada para agregar o editar el capitulo*/
+  public season: SeasonDTO;
+
+  /** Es el capitulo a crear o editar*/
+  public chapter: ChapterDTO;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -74,6 +82,27 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**
+   * Metodo que permite habilitar el panel de agregar capitulo
+   * @param seasonSelected , es la temporada seleccionada para
+   * agregar el nuevo capitulo
+   */
+  public enableAddChapter(seasonSelected: SeasonDTO): void {
+    if (this.chapter){
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CONF_ADD_CHAPTER,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.chapter = new ChapterDTO();
+          this.season = seasonSelected;
+        }
+      });
+    } else {
+      this.chapter = new ChapterDTO();
+      this.season = seasonSelected;
+    }
   }
 
   /**
