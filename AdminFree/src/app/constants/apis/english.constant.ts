@@ -27,4 +27,10 @@ export class EnglishAPIConstant {
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'getseries';
+
+  /** URL del recurso para obtener el detalle de la serie */
+  static readonly URL_GET_DETAIL_SERIE: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'detailserie';
 }

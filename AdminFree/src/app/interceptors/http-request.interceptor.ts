@@ -47,8 +47,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     // se verifica si la peticion es del modulo learning english
     if (EnglishAPIConstant.URL_DOWNLOAD_IMG_SERIE === req.url ||
         EnglishAPIConstant.URL_CREATE_SERIE === req.url || 
-        EnglishAPIConstant.URL_GET_SERIES === req.url) {
-        if (EnglishAPIConstant.URL_GET_SERIES === req.url) {
+        EnglishAPIConstant.URL_GET_SERIES === req.url ||
+        EnglishAPIConstant.URL_GET_DETAIL_SERIE) {
+        if (EnglishAPIConstant.URL_GET_SERIES === req.url || EnglishAPIConstant.URL_GET_DETAIL_SERIE === req.url) {
           securityHeader = this.getOnlyTypeJson();
         }
     } else {

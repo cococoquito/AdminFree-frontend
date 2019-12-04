@@ -6,6 +6,8 @@ import { SerieDTO } from 'src/app/dtos/english/serie.dto';
 import { MsjUtil } from 'src/app/util/messages.util';
 import { MessageService } from 'primeng/api';
 import { CommonComponent } from 'src/app/util/common.component';
+import { LocalStoreUtil } from 'src/app/util/local-store.util';
+import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 
 /**
  * Componente donde se muestran todas las serires parametrizadas en el sistema
@@ -33,7 +35,7 @@ export class SeriesComponent extends CommonComponent implements OnInit {
    */
   constructor(
     protected messageService: MessageService,
-    private router: Router, 
+    private router: Router,
     private englishService: EnglishService) {
     super();
   }
@@ -55,7 +57,8 @@ export class SeriesComponent extends CommonComponent implements OnInit {
   /**
    * Metodo que soporta el evento click de edicion de series
    */
-  public goToEditSeries(): void {
+  public goToEditSeries(idSerie: number): void {
+    LocalStoreUtil.idSerie(TipoEventoConstant.SET, idSerie);
     this.router.navigate([RouterConstant.NAVIGATE_EDIT_SERIES]);
   }
 

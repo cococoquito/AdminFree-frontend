@@ -24,6 +24,16 @@ export class LocalStoreUtil {
   /** Key que representa los datos del Menu*/
   private static readonly KEY_MENU: string = 'MENU';
 
+  /** Key que representa el id de la serie*/
+  private static readonly KEY_ID_SERIE: string = 'ID_SERIE';
+
+  /**
+   * Metodo que permite administrar el id de la serie en LOCAL-STORE
+   */
+  public static idSerie(evento: TipoEventoConstant, idSerie?: number): number {
+    return this.implementarEvento(evento, this.KEY_ID_SERIE, idSerie);
+  }
+
   /**
    * Metodo que permite administrar los clientes en el LOCAL-STORE
    */

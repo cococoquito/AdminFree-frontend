@@ -49,4 +49,14 @@ export class EnglishService {
   public getSeries(): Observable<Array<SerieDTO>> {
     return this.http.get<Array<SerieDTO>>(EnglishAPIConstant.URL_GET_SERIES);
   }
+
+  /**
+	 * Service que permite obtener los detalles de una serie
+	 *
+	 * @param idSerie, identificador de la serie
+	 * @return DTO con el detalle de la serie
+	 */
+  public getDetailSerie(idSerie: number): Observable<SerieDTO> {
+    return this.http.post<SerieDTO>(EnglishAPIConstant.URL_GET_DETAIL_SERIE, idSerie);
+  }
 }
