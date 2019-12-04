@@ -185,4 +185,7 @@ export class MsjFrontConstant {
 
   /** Mensaje confirmacion para la creacion de la serie */
   static readonly CONF_CREAR_SERIE: string = '¿Está seguro de crear la serie?';
+
+  /** Mensaje confirmacion para agregar una nueva temporada */
+  static readonly CONF_ADD_SEASON: string = '¿Está seguro de agregar una nueva temporada?';
 }

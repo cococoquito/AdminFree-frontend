@@ -59,4 +59,14 @@ export class EnglishService {
   public getDetailSerie(idSerie: number): Observable<SerieDTO> {
     return this.http.post<SerieDTO>(EnglishAPIConstant.URL_GET_DETAIL_SERIE, idSerie);
   }
+
+  /**
+	 * Service que permite agregar una temporada para esta serie
+	 *
+	 * @param idSerie, identificador de la serie
+	 * @return DTO con el detalle de la serie
+	 */
+  public addSeason(idSerie: number): Observable<SerieDTO> {
+    return this.http.post<SerieDTO>(EnglishAPIConstant.URL_ADD_SEASON, idSerie);
+  }
 }

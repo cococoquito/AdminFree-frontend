@@ -48,7 +48,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     if (EnglishAPIConstant.URL_DOWNLOAD_IMG_SERIE === req.url ||
         EnglishAPIConstant.URL_CREATE_SERIE === req.url || 
         EnglishAPIConstant.URL_GET_SERIES === req.url ||
-        EnglishAPIConstant.URL_GET_DETAIL_SERIE) {
+        EnglishAPIConstant.URL_GET_DETAIL_SERIE ||
+        EnglishAPIConstant.URL_ADD_SEASON) {
         if (EnglishAPIConstant.URL_GET_SERIES === req.url || EnglishAPIConstant.URL_GET_DETAIL_SERIE === req.url) {
           securityHeader = this.getOnlyTypeJson();
         }

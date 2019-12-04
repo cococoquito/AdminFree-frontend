@@ -8,6 +8,7 @@ import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { LocalStoreUtil } from 'src/app/util/local-store.util';
 import { SerieDTO } from 'src/app/dtos/english/serie.dto';
 import { MsjUtil } from 'src/app/util/messages.util';
+import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
 
 /**
  * Componente para la edition de las series
@@ -49,6 +50,30 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
    */
   ngOnInit() {
     this.init();
+  }
+
+  /**
+   * Metodo que permite agregar una nueva temporada para esta serie
+   */
+  public addSeason(): void {
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CONF_ADD_SEASON,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se procede a invocar el servicio para agregar la temporada
+        this.englishService.addSeason(this.serie.id).subscribe(
+          data => {
+            this.serie = data;
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
   }
 
   /**

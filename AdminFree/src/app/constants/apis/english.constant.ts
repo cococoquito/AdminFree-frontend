@@ -33,4 +33,10 @@ export class EnglishAPIConstant {
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'detailserie';
+
+  /** URL del recurso para agregar una temporada */
+  static readonly URL_ADD_SEASON: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'addseason';
 }

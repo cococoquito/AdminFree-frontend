@@ -24,7 +24,7 @@
         <button (click)="goToListSeries()" type="button" class="btn-sm btn-primary w-130-px mr-4">
           <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Come Back</label>
         </button>
-        <button (click)="goToListSeries()" type="button" class="btn-sm btn-info w-130-px">
+        <button (click)="addSeason()" type="button" class="btn-sm btn-info w-130-px">
           <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Season</label>
         </button>
       </div>
@@ -169,3 +169,13 @@
     </span>
   </div>
 </ng-container>
+
+<p-confirmDialog id="confApp" icon="pi pi-exclamation-triangle" #cd>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+    <button class="btn-no" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
+<p-toast [style]="{marginTop: '80px'}" position="top-center" key="toast"></p-toast>
+<p-toast #toastLonger id="toastLonger" [style]="{marginTop: '80px'}" position="top-center" key="toastLonger"></p-toast>
+<p-toast #toastMedium id="toastMedium" [style]="{marginTop: '80px'}" position="top-center" key="toastMedium"></p-toast>
