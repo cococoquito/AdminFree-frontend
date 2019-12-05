@@ -28,6 +28,10 @@
     text-decoration: underline;
 }
 
+.chapter-selected {
+    color: hotpink;
+}
+
 .ma-auto {
     margin: auto;
 }

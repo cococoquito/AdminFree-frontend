@@ -41,9 +41,9 @@
 
           <!-- Capitulos-->
           <ng-container *ngFor="let chapter of season.chapters; let i = index">
-            <p class="mb-3 mt-3 border-bottom">
+            <p (click)="clickChapter(chapter.id, season)" class="mb-3 mt-3 border-bottom">
               <span class="font-weight-bold">{{i + 1}}: </span>
-              <span class="chapter font-new-roman font-size-15 mayuscula">{{chapter.name}}</span>
+              <span class="chapter font-new-roman font-size-15 mayuscula" [ngClass]="{'chapter-selected': chapterDetail?.id == chapter.id}">{{chapter.name}}</span>
             </p>  
           </ng-container>  
 
@@ -125,8 +125,8 @@
     </p-panel>
   </ng-container>
 
-  <!-- panel para agregar sentencias-->
-  <ng-container *ngIf="sentence">
+  <!-- panel detalle de capitulo-->
+  <ng-container *ngIf="chapterDetail">
     <p-panel styleClass="steps-pnl pnl-pt mt-2" [showHeader]="false">
       <div class="ui-g border-top">
         <div class="ui-g-10">
@@ -137,37 +137,14 @@
 
             <!-- name capitulo-->
             <div class="ui-g-5">
-              <div class="ui-g-12 pt-0 pb-0">
-                <div class="inner-addon left-addon">
-                  <input
-                    [(ngModel)]="chapter.name"
-                    type="text"
-                    id="fname"
-                    maxlength="255"
-                    class="ad-input ad-input-style w-100 pt-0 font-new-roman mayuscula"
-                    [ngClass]="{'ad-input-required': submit && !chapter.name}"
-                    placeholder="NAME CHAPTER" 
-                    adminAutofocus/>
-                  <div class="focus-border"></div>
-                </div>
-              </div>
+              <span class="font-weight-bold font-size-15 font-new-roman">NAME: </span>
+              <span class="font-weight-bold s-title font-size-15 font-new-roman mayuscula">{{chapterDetail.name}}</span>
             </div>
 
             <!-- URL capitulo-->
             <div class="ui-g-5">
-              <div class="ui-g-12 pt-0 pb-0">
-                <div class="inner-addon left-addon">
-                  <input
-                    [(ngModel)]="chapter.url"
-                    type="text"
-                    id="furl"
-                    maxlength="255"
-                    class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15"
-                    [ngClass]="{'ad-input-required': submit && !chapter.url}"
-                    placeholder="URL ORORO" />
-                  <div class="focus-border"></div>
-                </div>
-              </div>
+              <span class="font-weight-bold font-size-15 font-new-roman">URL ORORO: </span>
+              <a href="{{chapterDetail.url}}" target="_blank" class="link font-new-roman font-size-15">{{chapterDetail.url}}</a>
             </div>
 
             <!-- sentence spanish-->
@@ -177,7 +154,7 @@
                   <label for="inspanish" class="ml-1 mb-0"> Spanish Sentence:</label>
                 </p-header>
                 <textarea
-                  [(ngModel)]="sentence.spanish"
+                  
                   id="inspanish"
                   class="form-control font-new-roman"
                   rows="3">
@@ -192,7 +169,7 @@
                   <label for="inenglish" class="ml-1 mb-0"> English Sentence:</label>
                 </p-header>
                 <textarea
-                  [(ngModel)]="sentence.english"
+                 
                   id="inenglish"
                   class="form-control font-new-roman"
                   rows="3">

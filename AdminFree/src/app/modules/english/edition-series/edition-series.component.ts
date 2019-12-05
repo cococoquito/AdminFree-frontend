@@ -34,6 +34,9 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   /** Es el capitulo a crear o editar*/
   public chapter: ChapterDTO;
 
+  /** Es el capitulo a visualizar su detalle*/
+  public chapterDetail: ChapterDTO;
+
   /** Es la sentence agregar o editar*/
   public sentence: SentenceDTO;
 
@@ -130,12 +133,31 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que permite consultar el detalle del capitulo
+   */
+  public clickChapter(idChapter: number, seasonSelected: SeasonDTO): void {
+
+    // si hay una edicion o insercion en proceso
+    if (this.chapter || this.sentence){
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CONF_ADD_CHAPTER,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.getDetailChapter(idChapter, seasonSelected);
+        }
+      });
+    } else {
+      this.getDetailChapter(idChapter, seasonSelected);
+    }
+  }
+
+  /**
    * Metodo que permite habilitar el panel de agregar capitulo
    * @param seasonSelected , es la temporada seleccionada para
    * agregar el nuevo capitulo
    */
   public enableAddChapter(seasonSelected: SeasonDTO): void {
-    if (this.chapter){
+    if (this.chapter || this.sentence){
       this.confirmationService.confirm({
         message: MsjFrontConstant.CONF_ADD_CHAPTER,
         header: MsjFrontConstant.CONFIRMACION,
@@ -149,14 +171,14 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que soporta el evento del boton 'Download sound'
+   * Metodo que soporta el evento del boton 'Download sound' (PENDIENTE)
    */
   public downloadSound(event): void {
     this.sentence.audio = event.files[0];
   }
 
  /**
-   * Permite soportar el evento click del boton agregar sentence
+   * Permite soportar el evento click del boton agregar sentence (PENDIENTE)
    */
   public addSentence(): void {
 
@@ -184,7 +206,7 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
    * Metodo que soporta el evento click del boton come back
    */
   public goToListSeries(): void {
-    if (this.chapter){
+    if (this.chapter || this.sentence){
       this.confirmationService.confirm({
         message: MsjFrontConstant.CONF_ADD_CHAPTER,
         header: MsjFrontConstant.CONFIRMACION,
@@ -224,6 +246,28 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que permite consultar el detalle del capitulo
+   */
+  private getDetailChapter(idChapter: number, seasonSelected: SeasonDTO): void {
+
+    // se limpia las variables globales
+    this.cleanVariableAddChapter();
+
+    // se configura la temporada seleccionada
+    this.seasonSelected = seasonSelected;
+
+    // se procede a consultar el detalle del capitulo
+    this.englishService.getDetailChapter(idChapter).subscribe(
+      data => {
+        this.chapterDetail = data;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+  /**
    * Permite inicializar las variables necesarios para add chapter
    */
   private initVariableAddChapter(seasonSelected: SeasonDTO): void {
@@ -232,6 +276,7 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
     this.chapter.idSeason = seasonSelected.id;
     this.chapter.idSerie = this.serie.id;
     this.submit = false;
+    this.chapterDetail = null;
   }
 
   /**
@@ -240,6 +285,8 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   private cleanVariableAddChapter(): void {
     this.seasonSelected = null;
     this.chapter = null;
+    this.chapterDetail = null;
+    this.sentence = null;
     this.submit = false;
   }
 }
