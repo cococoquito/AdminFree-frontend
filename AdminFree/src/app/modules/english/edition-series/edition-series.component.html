@@ -130,6 +130,8 @@
     <p-panel styleClass="steps-pnl pnl-pt mt-2" [showHeader]="false">
       <div class="ui-g border-top">
         <div class="ui-g-10">
+
+          <!-- name de la temporada seleccionada-->
           <div class="ui-g">
             <div class="ui-g-2">
               <span class="font-weight-bold text-danger font-size-16 font-new-roman">{{seasonSelected.name}}</span>
@@ -147,93 +149,80 @@
               <a href="{{chapterDetail.url}}" target="_blank" class="link font-new-roman font-size-15">{{chapterDetail.url}}</a>
             </div>
 
-            <!-- sentence spanish-->
-            <div class="ui-g-12">
-              <p-panel>
-                <p-header>
-                  <label for="inspanish" class="ml-1 mb-0"> Spanish Sentence:</label>
-                </p-header>
-                <textarea
-                  
-                  id="inspanish"
-                  class="form-control font-new-roman"
-                  rows="3">
-                </textarea>
-              </p-panel>
-            </div>
+            <!-- panel agregar o editar sentence-->
+            <ng-container *ngIf="sentence">
 
-            <!-- sentence english-->
-            <div class="ui-g-12">
-              <p-panel>
-                <p-header>
-                  <label for="inenglish" class="ml-1 mb-0"> English Sentence:</label>
-                </p-header>
-                <textarea
-                 
-                  id="inenglish"
-                  class="form-control font-new-roman"
-                  rows="3">
-                </textarea>
-              </p-panel>
-            </div>
-
-            <!-- sonido-->
-            <div class="ui-g-12">
-              <p-fileUpload
-                (uploadHandler)="downloadSound($event)"
-                customUpload="true"
-                auto="true"
-                #inSound
-                [showUploadButton]="false"
-                [showCancelButton]="false"
-                chooseLabel="Download Sound"
-                invalidFileTypeMessageSummary="Archivo invalido"
-                invalidFileTypeMessageDetail="Solo Sonidos"
-                invalidFileSizeMessageSummary="Iamege invalido">
-                <ng-template pTemplate="content"></ng-template>
-              </p-fileUpload>
-            </div>
-
-            <!-- btns add sentence y save-->
-            <div class="text-center mb-1 mx-auto ui-g-12">
-              <div class="ui-g">
-                <div class="ui-g-6 text-left">
-                  <button
-                    (click)="addSentence()"
-                    type="button"
-                    class="btn btn-info mr-2 ml-2 w-130-px">
-                    <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
-                  </button>
-                </div>
-                <div class="ui-g-6 text-right">
-                  <button
-                    (click)="editSerie()"
-                    type="button"
-                    class="btn btn-warning mr-2 ml-2 w-130-px">
-                    <label class="btn-size-admin"><i class="fa fa-edit"></i> Save</label>
-                  </button>
-                </div>
+              <!-- sentence spanish-->
+              <div class="ui-g-12">
+                <p-panel>
+                  <p-header>
+                    <label for="inspanish" class="ml-1 mb-0"> Spanish Sentence:</label>
+                  </p-header>
+                  <textarea
+                    [(ngModel)]="sentence.spanish"
+                    id="inspanish"
+                    class="form-control font-new-roman"
+                    rows="3">
+                  </textarea>
+                </p-panel>
               </div>
-            </div>
+  
+              <!-- sentence english-->
+              <div class="ui-g-12">
+                <p-panel>
+                  <p-header>
+                    <label for="inenglish" class="ml-1 mb-0"> English Sentence:</label>
+                  </p-header>
+                  <textarea
+                    [(ngModel)]="sentence.english"
+                    id="inenglish"
+                    class="form-control font-new-roman"
+                    rows="3">
+                  </textarea>
+                </p-panel>
+              </div>
+  
+              <!-- sonido-->
+              <div class="ui-g-12">
+                <p-fileUpload
+                  (uploadHandler)="downloadSound($event)"
+                  customUpload="true"
+                  auto="true"
+                  #inSound
+                  [showUploadButton]="false"
+                  [showCancelButton]="false"
+                  chooseLabel="Download Sound"
+                  invalidFileTypeMessageSummary="Archivo invalido"
+                  invalidFileTypeMessageDetail="Solo Sonidos"
+                  invalidFileSizeMessageSummary="Iamege invalido">
+                  <ng-template pTemplate="content"></ng-template>
+                </p-fileUpload>
+              </div>
+
+              <!-- btn save -->
+              <div class="text-center mb-1 mx-auto ui-g-12">
+                <button (click)="crearEditarSentence()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
+                  <label class="btn-size-admin"><i class="fa fa-save"></i> SAVE</label>
+                </button>
+              </div>
+            </ng-container>
           </div>
         </div>
 
-
-
+        <!-- sentences added-->
         <div class="ui-g-2 border-left">
-          <p class="text-center border-bottom s-title font-weight-bold font-new-roman">SENTENCES ADDED</p>
-          <p class="mb-2 mt-2">
-            <span class="font-weight-bold">1: </span>
-            <span class="chapter font-new-roman font-size-15">Sentence </span>
-          </p>
-          <p class="mb-2 mt-2">
-            <span class="font-weight-bold">2: </span>
-            <span class="chapter font-new-roman font-size-15">Sentence </span>
-          </p>
-          <p class="mb-2 mt-2">
-            <span class="font-weight-bold">3: </span>
-            <span class="chapter font-new-roman font-size-15">Sentence </span>
-          </p>
+          <div class="border-bottom text-center">
+            <p class="s-title font-weight-bold font-new-roman">SENTENCES ADDED</p>
+            <button (click)="addSentence()" type="button" class="btn-sm btn-info mr-2 ml-2 w-130-px mt-2 mb-2">
+              <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
+            </button>
+          </div>
+          <ng-container *ngFor="let sentence of chapterDetail.sentences; let i = index">
+            <p class="mb-2 mt-2">
+              <span class="font-weight-bold">{{i + 1}}: </span>
+              <span class="chapter font-new-roman font-size-15">SENTENCE</span>
+            </p>
+          </ng-container>
         </div>
       </div>
     </p-panel>

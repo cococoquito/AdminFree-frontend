@@ -202,7 +202,7 @@ export class MsjFrontConstant {
   static readonly CONF_ADD_CHAPTER: string = 'Estas en modo creación o edición ¿desea salir?';
 
   /** Mensaje para los campos requeridos de las sentencias */
-  static readonly CHAPTER_FIELDS_REQUIRED: string = 'Los campos spanish, english y el sonido son obligatorios';
+  static readonly SENTENCE_FIELDS_REQUIRED: string = 'Los campos spanish, english y el sonido son obligatorios';
 
   /** Mensaje confirmacion cuando quieren agregar una nueva sentencia */
   static readonly CONF_ADD_SENTENCE: string = '¿Está seguro de agregar esta sentencia?';

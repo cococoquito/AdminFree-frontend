@@ -133,6 +133,31 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que permite guardar los cambios para almacenar o editar una sentence
+   */
+  public crearEditarSentence(): void {
+
+    // se valida los campos de ingresos obligatorios
+    this.sentence.english = this.setTrimFilter(this.sentence.english);
+    this.sentence.spanish = this.setTrimFilter(this.sentence.spanish);
+    if (!this.sentence.english ||
+        !this.sentence.spanish ||
+        !this.sentence.audio) {
+      this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.SENTENCE_FIELDS_REQUIRED));
+      return;
+    }
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CONF_ADD_SENTENCE,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+      }
+    });
+  }
+
+  /**
    * Metodo que permite consultar el detalle del capitulo
    */
   public clickChapter(idChapter: number, seasonSelected: SeasonDTO): void {
@@ -170,36 +195,28 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
     }
   }
 
+ /**
+   * Permite soportar el evento click del boton agregar sentence
+   */
+  public addSentence(): void {
+    if (this.sentence){
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CONF_ADD_CHAPTER,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+         this.sentence = new SentenceDTO();
+        }
+      });
+    } else {
+      this.sentence = new SentenceDTO();
+    }
+  }
+
   /**
    * Metodo que soporta el evento del boton 'Download sound' (PENDIENTE)
    */
   public downloadSound(event): void {
     this.sentence.audio = event.files[0];
-  }
-
- /**
-   * Permite soportar el evento click del boton agregar sentence (PENDIENTE)
-   */
-  public addSentence(): void {
-
-    // se valida los campos de ingresos obligatorios
-    this.sentence.english = this.setTrimFilter(this.sentence.english);
-    this.sentence.spanish = this.setTrimFilter(this.sentence.spanish);
-    if (!this.sentence.english ||
-        !this.sentence.spanish ||
-        !this.sentence.audio) {
-      this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.CHAPTER_FIELDS_REQUIRED));
-      return;
-    }
-
-    // se muestra la ventana de confirmacion
-    this.confirmationService.confirm({
-      message: MsjFrontConstant.CONF_ADD_SENTENCE,
-      header: MsjFrontConstant.CONFIRMACION,
-      accept: () => {
-
-      }
-    });
   }
 
   /**
