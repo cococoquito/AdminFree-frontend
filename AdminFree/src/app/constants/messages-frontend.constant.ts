@@ -183,11 +183,20 @@ export class MsjFrontConstant {
   /** Mensaje cuando se registra una nueva serie en el sistema */
   static readonly SERIE_CREADO_EXITOSO: string = 'Serie creada exitosamente';
 
+  /** Mensaje cuando se registra una nueva temporada en el sistema */
+  static readonly TEMPORADA_CREADO_EXITOSO: string = 'Temporada creada exitosamente';
+
+  /** Mensaje cuando se registra un nuevo capitulo en el sistema */
+  static readonly CAPITULO_CREADO_EXITOSO: string = 'Capítulo creada exitosamente';
+
   /** Mensaje confirmacion para la creacion de la serie */
   static readonly CONF_CREAR_SERIE: string = '¿Está seguro de crear la serie?';
 
   /** Mensaje confirmacion para agregar una nueva temporada */
   static readonly CONF_ADD_SEASON: string = '¿Está seguro de agregar una nueva temporada?';
+
+  /** Mensaje confirmacion para agregar un nuevo capitulo */
+  static readonly CONF_ADD_NEW_CHAPTER: string = '¿Está seguro de agregar el capítulo?';
 
   /** Mensaje confirmacion cuando quieren agregar un nuevo capitulo con otro proceso actual */
   static readonly CONF_ADD_CHAPTER: string = 'Estas en modo creación o edición ¿desea salir?';

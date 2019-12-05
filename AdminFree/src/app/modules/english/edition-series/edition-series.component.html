@@ -43,14 +43,14 @@
           <ng-container *ngFor="let chapter of season.chapters; let i = index">
             <p class="mb-3 mt-3">
               <span class="font-weight-bold">{{i + 1}}: </span>
-              <span class="chapter font-new-roman font-size-15">{{chapter.name}}</span>
+              <span class="chapter font-new-roman font-size-15 mayuscula">{{chapter.name}}</span>
             </p>  
           </ng-container>  
 
           <!-- btn agregar capitulo-->
           <button 
           (click)="enableAddChapter(season)"
-          [disabled]="seasonSelected && seasonSelected.id == season.id"
+          [disabled]="chapter && chapter.idSeason == season.id"
           type="button"
           class="btn btn-sm btn-info w-130-px mt-3">
             <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Chapter</label>
@@ -70,8 +70,63 @@
     </div>
   </ng-container>
 
-  <!-- panel para administracion capitulo-->
+  <!-- panel para agregar capitulos-->
   <ng-container *ngIf="chapter">
+    <p-panel styleClass="steps-pnl pnl-pt mt-2" [showHeader]="false">
+      <div class="ui-g border-top">
+
+        <!-- name de la temporada seleccionada-->
+        <div class="ui-g-2">
+          <span class="font-weight-bold text-danger font-size-16 font-new-roman">{{seasonSelected.name}}</span>
+        </div>
+
+        <!-- name capitulo-->
+        <div class="ui-g-5">
+          <div class="ui-g-12 pt-0 pb-0">
+            <div class="inner-addon left-addon">
+              <input
+                [(ngModel)]="chapter.name"
+                type="text"
+                id="fname"
+                maxlength="255"
+                class="ad-input ad-input-style w-100 pt-0 font-new-roman mayuscula"
+                [ngClass]="{'ad-input-required': submit && !chapter.name}"
+                placeholder="NAME CHAPTER" 
+                adminAutofocus/>
+              <div class="focus-border"></div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- URL capitulo-->
+        <div class="ui-g-5">
+          <div class="ui-g-12 pt-0 pb-0">
+            <div class="inner-addon left-addon">
+              <input
+                [(ngModel)]="chapter.url"
+                type="text"
+                id="furl"
+                maxlength="255"
+                class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15"
+                [ngClass]="{'ad-input-required': submit && !chapter.url}"
+                placeholder="URL ORORO" />
+              <div class="focus-border"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- btns add capitulo-->
+        <div class="text-center mb-1 mx-auto ui-g-12">
+          <button (click)="addChapter()" type="button" class="btn btn-info mr-2 ml-2 w-130-px">
+            <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Chapter</label>
+          </button>
+        </div>
+      </div>
+    </p-panel>
+  </ng-container>
+
+  <!-- panel para agregar sentencias-->
+  <ng-container *ngIf="sentence">
     <p-panel styleClass="steps-pnl pnl-pt mt-2" [showHeader]="false">
       <div class="ui-g border-top">
         <div class="ui-g-10">
@@ -90,7 +145,7 @@
                     id="fname"
                     maxlength="255"
                     class="ad-input ad-input-style w-100 pt-0 font-new-roman mayuscula"
-                    [ngClass]="{'ad-input-required': submitAddChapter && !chapter.name}"
+                    [ngClass]="{'ad-input-required': submit && !chapter.name}"
                     placeholder="NAME CHAPTER" 
                     adminAutofocus/>
                   <div class="focus-border"></div>
@@ -108,7 +163,7 @@
                     id="furl"
                     maxlength="255"
                     class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15"
-                    [ngClass]="{'ad-input-required': submitAddChapter && !chapter.url}"
+                    [ngClass]="{'ad-input-required': submit && !chapter.url}"
                     placeholder="URL ORORO" />
                   <div class="focus-border"></div>
                 </div>

@@ -37,8 +37,8 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   /** Es la sentence agregar o editar*/
   public sentence: SentenceDTO;
 
-  /** indica si el usuario ya dio click en el boton add chapter */
-  public submitAddChapter: boolean;
+  /** indica si el usuario ya dio click en los botones de agregacion */
+  public submit: boolean;
 
   /** se utiliza para limpiar el componente de carga de sonido*/
   @ViewChild('inSound') inSound: any;
@@ -84,7 +84,42 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
         // se procede a invocar el servicio para agregar la temporada
         this.englishService.addSeason(this.serie.id).subscribe(
           data => {
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.TEMPORADA_CREADO_EXITOSO));
             this.serie = data;
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
+      }
+    });
+  }
+
+  /**
+   * Metodo que permite agregar un capitulo para la temporada seleccionada
+   */
+  public addChapter(): void {
+    this.submit = true;
+
+    // se valida los campos de ingresos obligatorios
+    this.chapter.name = this.setTrimFilter(this.chapter.name);
+    this.chapter.url = this.setTrimFilter(this.chapter.url);
+    if (!this.chapter.name || !this.chapter.url) {
+      return;
+    }
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CONF_ADD_NEW_CHAPTER,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se procede a invocar el servicio para agregar el capitulo
+        this.englishService.addChapter(this.chapter).subscribe(
+          data => {
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.CAPITULO_CREADO_EXITOSO));
+            this.serie = data;
+            this.cleanVariableAddChapter();
           },
           error => {
             this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -192,10 +227,19 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
    * Permite inicializar las variables necesarios para add chapter
    */
   private initVariableAddChapter(seasonSelected: SeasonDTO): void {
-    this.chapter = new ChapterDTO();
-    this.chapter.sentences = new Array<SentenceDTO>();
-    this.sentence = new SentenceDTO();
     this.seasonSelected = seasonSelected;
-    this.submitAddChapter = false;
+    this.chapter = new ChapterDTO();
+    this.chapter.idSeason = seasonSelected.id;
+    this.chapter.idSerie = this.serie.id;
+    this.submit = false;
+  }
+
+  /**
+   * Permite limpiar las variables del panel add chapter
+   */
+  private cleanVariableAddChapter(): void {
+    this.seasonSelected = null;
+    this.chapter = null;
+    this.submit = false;
   }
 }
