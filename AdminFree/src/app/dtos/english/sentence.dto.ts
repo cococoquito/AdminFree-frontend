@@ -9,6 +9,9 @@ export class SentenceDTO {
   /** identificador de la sentencia */
   public id: number;
 
+	/** identificador del capitulo */
+	public idChapter: number;
+
   /** Es la sentencia en español */
   public spanish: string;
 

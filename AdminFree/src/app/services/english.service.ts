@@ -5,6 +5,7 @@ import { SerieDTO } from '../dtos/english/serie.dto';
 import { EnglishAPIConstant } from '../constants/apis/english.constant';
 import { MessageResponseDTO } from '../dtos/transversal/message-response.dto';
 import { ChapterDTO } from '../dtos/english/chapter.dto';
+import { SentenceDTO } from '../dtos/english/sentence.dto';
 
 /**
  * Clase que contiene los servicios del modulo de learning english
@@ -87,5 +88,26 @@ export class EnglishService {
 	 */
   public getDetailChapter(idChapter: number): Observable<ChapterDTO> {
     return this.http.post<ChapterDTO>(EnglishAPIConstant.URL_DETAIL_CHAPTER, idChapter);
+  }
+
+	/**
+	 * Service que permite ingresar los datos basicos de la sentencia
+	 * @param sentence, DTO con los datos de la sentencia
+	 * @return DTO con el identificador de la sentencia
+	 */
+  public insertSentence(sentence: SentenceDTO): Observable<SentenceDTO> {
+    return this.http.post<SentenceDTO>(EnglishAPIConstant.URL_INSERT_SENTENCE, sentence);
+  }
+
+	/**
+	 * Service para almacenar el sonido a la sentencia
+	 * @param parametros, contiene todos los valores necesarios
+	 * @return Detalle del capitulo que contiene esta sentencia
+	 */
+  public downloadSound(parametros: FormData): Observable<ChapterDTO> {
+    return this.http.post<ChapterDTO>(
+      EnglishAPIConstant.URL_DOWNLOAD_SOUND,
+      parametros
+    );
   }
 }

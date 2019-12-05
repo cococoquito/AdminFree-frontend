@@ -51,4 +51,16 @@ export class EnglishAPIConstant {
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'detailchapter';
+
+  /** URL del recurso para crear una sentence */
+  static readonly URL_INSERT_SENTENCE: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'insertsentence';
+
+  /** URL del recurso para cargar el sonido a una sentencia */
+  static readonly URL_DOWNLOAD_SOUND: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'downloadsound';
 }
