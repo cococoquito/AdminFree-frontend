@@ -17,4 +17,7 @@ export class SentenceDTO {
 
   /** Es el audio de la sentencia */
   public audio: any;
+
+  /** Es el nombre del audio de la sentencia */
+  public audioName: string;
 }

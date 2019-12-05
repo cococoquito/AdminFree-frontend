@@ -79,4 +79,13 @@ export class EnglishService {
   public addChapter(chapter: ChapterDTO): Observable<SerieDTO> {
     return this.http.post<SerieDTO>(EnglishAPIConstant.URL_ADD_CHAPTER, chapter);
   }
+
+	/**
+	 * Service que permite consultar el detalle del capitulo
+	 * @param idChapter, identificador del capitulo
+	 * @return DTO con los datos del capitulo
+	 */
+  public getDetailChapter(idChapter: number): Observable<ChapterDTO> {
+    return this.http.post<ChapterDTO>(EnglishAPIConstant.URL_DETAIL_CHAPTER, idChapter);
+  }
 }

@@ -45,4 +45,10 @@ export class EnglishAPIConstant {
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'addchapter';
+
+  /** URL del recurso para el detalle del capitulo */
+  static readonly URL_DETAIL_CHAPTER: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'detailchapter';
 }
