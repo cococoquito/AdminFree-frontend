@@ -48,11 +48,7 @@
           </ng-container>  
 
           <!-- btn agregar capitulo-->
-          <button 
-          (click)="enableAddChapter(season)"
-          [disabled]="chapter && chapter.idSeason == season.id"
-          type="button"
-          class="btn btn-sm btn-warning w-130-px mt-3">
+          <button (click)="enableAddChapter(season)" [disabled]="chapter?.idSeason == season.id" type="button" class="btn btn-sm btn-warning w-130-px mt-3">
             <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Chapter</label>
           </button>
         </p-tabPanel>

@@ -31,7 +31,7 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   /** Es la temporada seleccionada para agregar o editar el capitulo*/
   public seasonSelected: SeasonDTO;
 
-  /** Es el capitulo a crear o editar*/
+  /** Es el capitulo a crear*/
   public chapter: ChapterDTO;
 
   /** Es el capitulo a visualizar su detalle*/
@@ -178,11 +178,9 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
 
   /**
    * Metodo que permite habilitar el panel de agregar capitulo
-   * @param seasonSelected , es la temporada seleccionada para
-   * agregar el nuevo capitulo
    */
   public enableAddChapter(seasonSelected: SeasonDTO): void {
-    if (this.chapter || this.sentence){
+    if (this.chapter || this.sentence) {
       this.confirmationService.confirm({
         message: MsjFrontConstant.CONF_ADD_CHAPTER,
         header: MsjFrontConstant.CONFIRMACION,
@@ -204,16 +202,16 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
         message: MsjFrontConstant.CONF_ADD_CHAPTER,
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
-         this.sentence = new SentenceDTO();
+         this.addingSentence();
         }
       });
     } else {
-      this.sentence = new SentenceDTO();
+      this.addingSentence();
     }
   }
 
   /**
-   * Metodo que soporta el evento del boton 'Download sound' (PENDIENTE)
+   * Metodo que soporta el evento del boton 'Download sound'
    */
   public downloadSound(event): void {
     this.sentence.audio = event.files[0];
@@ -223,7 +221,7 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
    * Metodo que soporta el evento click del boton come back
    */
   public goToListSeries(): void {
-    if (this.chapter || this.sentence){
+    if (this.chapter || this.sentence) {
       this.confirmationService.confirm({
         message: MsjFrontConstant.CONF_ADD_CHAPTER,
         header: MsjFrontConstant.CONFIRMACION,
@@ -305,5 +303,16 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
     this.chapterDetail = null;
     this.sentence = null;
     this.submit = false;
+
+  }
+
+  /**
+   * Permite construir el DTO para agregar una nueva sentence
+   */
+  private addingSentence(): void {
+    this.sentence = new SentenceDTO();
+    if (this.inSound) {
+      this.inSound.clear();
+    }
   }
 }
