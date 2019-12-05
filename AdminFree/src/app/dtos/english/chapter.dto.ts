@@ -11,6 +11,12 @@ export class ChapterDTO {
   /** identificador del capitulo */
   public id: number;
 
+	/** identificador de la temporada */
+	public idSeason: number;
+
+	/** identificador de la serie */
+	public idSerie: number;
+
   /** Es el nombre del capitulo */
   public name: string;
 

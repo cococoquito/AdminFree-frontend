@@ -39,4 +39,10 @@ export class EnglishAPIConstant {
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'addseason';
+
+  /** URL del recurso para agregar un capitulo */
+  static readonly URL_ADD_CHAPTER: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'addchapter';
 }

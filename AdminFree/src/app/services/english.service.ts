@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { SerieDTO } from '../dtos/english/serie.dto';
 import { EnglishAPIConstant } from '../constants/apis/english.constant';
 import { MessageResponseDTO } from '../dtos/transversal/message-response.dto';
+import { ChapterDTO } from '../dtos/english/chapter.dto';
 
 /**
  * Clase que contiene los servicios del modulo de learning english
@@ -68,5 +69,14 @@ export class EnglishService {
 	 */
   public addSeason(idSerie: number): Observable<SerieDTO> {
     return this.http.post<SerieDTO>(EnglishAPIConstant.URL_ADD_SEASON, idSerie);
+  }
+
+	/**
+	 * Service que permite agregar un capitulo a una temporada
+	 * @param chapter, DTO con los datos del capitulo
+	 * @return DTO con el detalle de la serie
+	 */
+  public addChapter(chapter: ChapterDTO): Observable<SerieDTO> {
+    return this.http.post<SerieDTO>(EnglishAPIConstant.URL_ADD_CHAPTER, chapter);
   }
 }
