@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonComponent } from 'src/app/util/common.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { MsjUtil } from 'src/app/util/messages.util';
 import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
 import { ChapterDTO } from 'src/app/dtos/english/chapter.dto';
 import { SeasonDTO } from 'src/app/dtos/english/season.dto';
+import { SentenceDTO } from 'src/app/dtos/english/sentence.dto';
 
 /**
  * Componente para la edition de las series
@@ -28,10 +29,19 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   public serie: SerieDTO;
 
   /** Es la temporada seleccionada para agregar o editar el capitulo*/
-  public season: SeasonDTO;
+  public seasonSelected: SeasonDTO;
 
   /** Es el capitulo a crear o editar*/
   public chapter: ChapterDTO;
+
+  /** Es la sentence agregar o editar*/
+  public sentence: SentenceDTO;
+
+  /** indica si el usuario ya dio click en el boton add chapter */
+  public submitAddChapter: boolean;
+
+  /** se utiliza para limpiar el componente de carga de sonido*/
+  @ViewChild('inSound') inSound: any;
 
   /**
    * @param messageService, Se utiliza para la visualizacion
@@ -95,21 +105,61 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
         message: MsjFrontConstant.CONF_ADD_CHAPTER,
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
-          this.chapter = new ChapterDTO();
-          this.season = seasonSelected;
+          this.initVariableAddChapter(seasonSelected);
         }
       });
     } else {
-      this.chapter = new ChapterDTO();
-      this.season = seasonSelected;
+      this.initVariableAddChapter(seasonSelected);
     }
+  }
+
+  /**
+   * Metodo que soporta el evento del boton 'Download sound'
+   */
+  public downloadSound(event): void {
+    this.sentence.audio = event.files[0];
+  }
+
+ /**
+   * Permite soportar el evento click del boton agregar sentence
+   */
+  public addSentence(): void {
+
+    // se valida los campos de ingresos obligatorios
+    this.sentence.english = this.setTrimFilter(this.sentence.english);
+    this.sentence.spanish = this.setTrimFilter(this.sentence.spanish);
+    if (!this.sentence.english ||
+        !this.sentence.spanish ||
+        !this.sentence.audio) {
+      this.messageService.add(MsjUtil.getToastErrorLng(MsjFrontConstant.CHAPTER_FIELDS_REQUIRED));
+      return;
+    }
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.CONF_ADD_SENTENCE,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+      }
+    });
   }
 
   /**
    * Metodo que soporta el evento click del boton come back
    */
   public goToListSeries(): void {
-    this.router.navigate([RouterConstant.ROUTER_ENGLISH]);
+    if (this.chapter){
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CONF_ADD_CHAPTER,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.router.navigate([RouterConstant.ROUTER_ENGLISH]);
+        }
+      });
+    } else {
+      this.router.navigate([RouterConstant.ROUTER_ENGLISH]);
+    }
   }
 
   /**
@@ -136,5 +186,16 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
         }
       );
     }
+  }
+
+  /**
+   * Permite inicializar las variables necesarios para add chapter
+   */
+  private initVariableAddChapter(seasonSelected: SeasonDTO): void {
+    this.chapter = new ChapterDTO();
+    this.chapter.sentences = new Array<SentenceDTO>();
+    this.sentence = new SentenceDTO();
+    this.seasonSelected = seasonSelected;
+    this.submitAddChapter = false;
   }
 }

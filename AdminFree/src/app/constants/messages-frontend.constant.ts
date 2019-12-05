@@ -191,4 +191,10 @@ export class MsjFrontConstant {
 
   /** Mensaje confirmacion cuando quieren agregar un nuevo capitulo con otro proceso actual */
   static readonly CONF_ADD_CHAPTER: string = 'Estas en modo creación o edición ¿desea salir?';
+
+  /** Mensaje confirmacion cuando quieren agregar un nuevo capitulo con otro proceso actual */
+  static readonly CHAPTER_FIELDS_REQUIRED: string = 'Los campos spanish, english y el sonido son obligatorios';
+
+  /** Mensaje confirmacion cuando quieren agregar una nueva sentencia */
+  static readonly CONF_ADD_SENTENCE: string = '¿Está seguro de agregar esta sentencia?';
 }

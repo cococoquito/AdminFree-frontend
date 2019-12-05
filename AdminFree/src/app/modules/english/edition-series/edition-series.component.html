@@ -14,7 +14,7 @@
     <div class="ui-g">
       <div class="ui-g-4">
         <img src="data:image/PNG;base64,{{serie.img}}" width="40" height="40">
-        <span class="font-weight-bold s-title font-size-15 font-new-roman ml-2">{{serie.name}}</span>
+        <span class="font-weight-bold s-title font-size-15 font-new-roman ml-2 mayuscula">{{serie.name}}</span>
       </div>
       <div class="ui-g-4 ma-auto">
         <span class="font-weight-bold font-size-15 font-new-roman">URL ORORO: </span>
@@ -48,7 +48,11 @@
           </ng-container>  
 
           <!-- btn agregar capitulo-->
-          <button (click)="enableAddChapter(season)" type="button" class="btn-sm btn-info w-130-px mt-3">
+          <button 
+          (click)="enableAddChapter(season)"
+          [disabled]="seasonSelected && seasonSelected.id == season.id"
+          type="button"
+          class="btn btn-sm btn-info w-130-px mt-3">
             <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Chapter</label>
           </button>
         </p-tabPanel>
@@ -73,73 +77,117 @@
         <div class="ui-g-10">
           <div class="ui-g">
             <div class="ui-g-2">
-              <span class="font-weight-bold s-title font-size-15 font-new-roman">{{season.name}}</span>
+              <span class="font-weight-bold text-danger font-size-16 font-new-roman">{{seasonSelected.name}}</span>
             </div>
+
+            <!-- name capitulo-->
             <div class="ui-g-5">
               <div class="ui-g-12 pt-0 pb-0">
                 <div class="inner-addon left-addon">
-                  <input adminAutofocus type="text" id="fname" name="fname" maxlength="255"
-                    class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-                    [ngClass]="{'ad-input-required': submit && !serie.name}" placeholder="NAME CHAPTER" />
+                  <input
+                    [(ngModel)]="chapter.name"
+                    type="text"
+                    id="fname"
+                    maxlength="255"
+                    class="ad-input ad-input-style w-100 pt-0 font-new-roman mayuscula"
+                    [ngClass]="{'ad-input-required': submitAddChapter && !chapter.name}"
+                    placeholder="NAME CHAPTER" 
+                    adminAutofocus/>
                   <div class="focus-border"></div>
                 </div>
               </div>
             </div>
+
+            <!-- URL capitulo-->
             <div class="ui-g-5">
               <div class="ui-g-12 pt-0 pb-0">
                 <div class="inner-addon left-addon">
-                  <input type="text" id="fname" name="fname" maxlength="255"
-                    class="ad-input ad-input-style w-100 pt-0 font-new-roman"
-                    [ngClass]="{'ad-input-required': submit && !serie.name}" placeholder="URL ORORO" />
+                  <input
+                    [(ngModel)]="chapter.url"
+                    type="text"
+                    id="furl"
+                    maxlength="255"
+                    class="ad-input ad-input-style w-100 pt-0 font-new-roman font-size-15"
+                    [ngClass]="{'ad-input-required': submitAddChapter && !chapter.url}"
+                    placeholder="URL ORORO" />
                   <div class="focus-border"></div>
                 </div>
               </div>
             </div>
 
-
+            <!-- sentence spanish-->
             <div class="ui-g-12">
               <p-panel>
                 <p-header>
-                  <label for="inprocedimiento" class="ml-1 mb-0"> Spanish Sentence:</label>
+                  <label for="inspanish" class="ml-1 mb-0"> Spanish Sentence:</label>
                 </p-header>
-                <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
-                        </textarea>
+                <textarea
+                  [(ngModel)]="sentence.spanish"
+                  id="inspanish"
+                  class="form-control font-new-roman"
+                  rows="3">
+                </textarea>
               </p-panel>
             </div>
 
+            <!-- sentence english-->
             <div class="ui-g-12">
               <p-panel>
                 <p-header>
-                  <label for="inprocedimiento" class="ml-1 mb-0"> English Sentence:</label>
+                  <label for="inenglish" class="ml-1 mb-0"> English Sentence:</label>
                 </p-header>
-                <textarea id="inprocedimiento" class="form-control font-new-roman " rows="3">
-                          </textarea>
+                <textarea
+                  [(ngModel)]="sentence.english"
+                  id="inenglish"
+                  class="form-control font-new-roman"
+                  rows="3">
+                </textarea>
               </p-panel>
             </div>
 
+            <!-- sonido-->
             <div class="ui-g-12">
-              <p-fileUpload customUpload="true" auto="true" #inImg [showUploadButton]="false" [showCancelButton]="false"
-                chooseLabel="Download Sound" invalidFileTypeMessageSummary="Archivo invalido"
-                invalidFileTypeMessageDetail="Solo Imagenes" invalidFileSizeMessageSummary="Iamege invalido"
-                accept="image/*">
+              <p-fileUpload
+                (uploadHandler)="downloadSound($event)"
+                customUpload="true"
+                auto="true"
+                #inSound
+                [showUploadButton]="false"
+                [showCancelButton]="false"
+                chooseLabel="Download Sound"
+                invalidFileTypeMessageSummary="Archivo invalido"
+                invalidFileTypeMessageDetail="Solo Sonidos"
+                invalidFileSizeMessageSummary="Iamege invalido">
                 <ng-template pTemplate="content"></ng-template>
               </p-fileUpload>
             </div>
 
-
+            <!-- btns add sentence y save-->
             <div class="text-center mb-1 mx-auto ui-g-12">
-              <button (click)="editSerie()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
-                <label class="btn-size-admin"><i class="fa fa-edit"></i> Save</label>
-              </button>
-              <button (click)="editSerie()" type="button" class="btn btn-info mr-2 ml-2 w-130-px">
-                <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
-              </button>
+              <div class="ui-g">
+                <div class="ui-g-6 text-left">
+                  <button
+                    (click)="addSentence()"
+                    type="button"
+                    class="btn btn-info mr-2 ml-2 w-130-px">
+                    <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
+                  </button>
+                </div>
+                <div class="ui-g-6 text-right">
+                  <button
+                    (click)="editSerie()"
+                    type="button"
+                    class="btn btn-warning mr-2 ml-2 w-130-px">
+                    <label class="btn-size-admin"><i class="fa fa-edit"></i> Save</label>
+                  </button>
+                </div>
+              </div>
             </div>
-
-
           </div>
-
         </div>
+
+
+
         <div class="ui-g-2 border-left">
           <p class="text-center border-bottom s-title font-weight-bold font-new-roman">SENTENCES ADDED</p>
           <p class="mb-2 mt-2">
@@ -156,9 +204,6 @@
           </p>
         </div>
       </div>
-
-
-
     </p-panel>
   </ng-container> 
 </ng-container>
