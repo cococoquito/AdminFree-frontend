@@ -41,7 +41,7 @@
 
           <!-- Capitulos-->
           <ng-container *ngFor="let chapter of season.chapters; let i = index">
-            <p class="mb-3 mt-3">
+            <p class="mb-3 mt-3 border-bottom">
               <span class="font-weight-bold">{{i + 1}}: </span>
               <span class="chapter font-new-roman font-size-15 mayuscula">{{chapter.name}}</span>
             </p>  
@@ -52,7 +52,7 @@
           (click)="enableAddChapter(season)"
           [disabled]="chapter && chapter.idSeason == season.id"
           type="button"
-          class="btn btn-sm btn-info w-130-px mt-3">
+          class="btn btn-sm btn-warning w-130-px mt-3">
             <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Chapter</label>
           </button>
         </p-tabPanel>
