@@ -206,4 +206,7 @@ export class MsjFrontConstant {
 
   /** Mensaje confirmacion cuando quieren agregar una nueva sentencia */
   static readonly CONF_ADD_SENTENCE: string = '¿Está seguro de agregar esta sentencia?';
+
+  /** Mensaje cuando se crea una sentencia */
+  static readonly ADD_SENTENCE: string = 'Sentencia creada exitosamente';
 }

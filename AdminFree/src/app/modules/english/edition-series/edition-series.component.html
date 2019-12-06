@@ -12,15 +12,15 @@
       <p class="s-title-page-english text-center">EDITION OF SERIES</p>
     </p-header>
     <div class="ui-g">
-      <div class="ui-g-4">
+      <div class="ui-g-3">
         <img src="data:image/PNG;base64,{{serie.img}}" width="40" height="40">
         <span class="font-weight-bold s-title font-size-15 font-new-roman ml-2 mayuscula">{{serie.name}}</span>
       </div>
-      <div class="ui-g-4 ma-auto">
+      <div class="ui-g-6 ma-auto">
         <span class="font-weight-bold font-size-15 font-new-roman">URL ORORO: </span>
         <a href="{{serie.url}}" target="_blank" class="link font-new-roman font-size-15">{{serie.url}}</a>
       </div>
-      <div class="ui-g-4 ma-auto">
+      <div class="ui-g-3 ma-auto">
         <button (click)="goToListSeries()" type="button" class="btn-sm btn-primary w-130-px mr-4">
           <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Come Back</label>
         </button>
@@ -128,19 +128,19 @@
         <div class="ui-g-10">
 
           <!-- name de la temporada seleccionada-->
-          <div class="ui-g">
+          <div class="ui-g border-bottom">
             <div class="ui-g-2">
               <span class="font-weight-bold text-danger font-size-16 font-new-roman">{{seasonSelected.name}}</span>
             </div>
 
             <!-- name capitulo-->
-            <div class="ui-g-5">
+            <div class="ui-g-3">
               <span class="font-weight-bold font-size-15 font-new-roman">NAME: </span>
               <span class="font-weight-bold s-title font-size-15 font-new-roman mayuscula">{{chapterDetail.name}}</span>
             </div>
 
             <!-- URL capitulo-->
-            <div class="ui-g-5">
+            <div class="ui-g-7">
               <span class="font-weight-bold font-size-15 font-new-roman">URL ORORO: </span>
               <a href="{{chapterDetail.url}}" target="_blank" class="link font-new-roman font-size-15">{{chapterDetail.url}}</a>
             </div>
@@ -197,7 +197,10 @@
 
               <!-- btn save -->
               <div class="text-center mb-1 mx-auto ui-g-12">
-                <button (click)="crearEditarSentence()" type="button" class="btn btn-warning mr-2 ml-2 w-130-px">
+                <button (click)="insertSentence()" *ngIf="!sentence.id" type="button" class="btn btn-warning mr-2 ml-2 w-200-px">
+                  <label class="btn-size-admin"><i class="fa fa-save"></i> CREATE SENTENCE</label>
+                </button>
+                <button *ngIf="sentence.id" type="button" class="btn btn-warning mr-2 ml-2 w-150-px">
                   <label class="btn-size-admin"><i class="fa fa-save"></i> SAVE</label>
                 </button>
               </div>
@@ -213,12 +216,14 @@
               <label class="btn-size-admin"><i class="fa fa-plus"></i> Add Sentence</label>
             </button>
           </div>
-          <ng-container *ngFor="let sentence of chapterDetail.sentences; let i = index">
-            <p class="mb-2 mt-2">
-              <span class="font-weight-bold">{{i + 1}}: </span>
-              <span class="chapter font-new-roman font-size-15">SENTENCE</span>
-            </p>
-          </ng-container>
+          <div class="sentence-scroll">
+            <ng-container *ngFor="let sen of chapterDetail.sentences; let i = index">
+              <p (click)="clickSentence(sen)" class="mb-2 mt-2 border-bottom">
+                <span class="font-weight-bold">{{i + 1}}: </span>
+                <span class="chapter font-new-roman font-size-15" [ngClass]="{'chapter-selected': sentence?.id == sen.id}">SENTENCE</span>
+              </p>
+            </ng-container>
+          </div>
         </div>
       </div>
     </p-panel>

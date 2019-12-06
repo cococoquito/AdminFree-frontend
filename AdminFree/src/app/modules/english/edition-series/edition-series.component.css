@@ -35,3 +35,8 @@
 .ma-auto {
     margin: auto;
 }
+
+.sentence-scroll {
+    height: 400px;
+    overflow: auto;
+}

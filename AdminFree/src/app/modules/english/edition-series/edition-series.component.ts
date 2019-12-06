@@ -133,9 +133,9 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Metodo que permite guardar los cambios para almacenar o editar una sentence
+   * Metodo que permite crear una sentencia
    */
-  public crearEditarSentence(): void {
+  public insertSentence(): void {
 
     // se valida los campos de ingresos obligatorios
     this.sentence.english = this.setTrimFilter(this.sentence.english);
@@ -152,7 +152,36 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
       message: MsjFrontConstant.CONF_ADD_SENTENCE,
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
+        
+        // se procede a insertar la sentencia
+        this.sentence.idChapter = this.chapterDetail.id;
+        const audio = this.sentence.audio;
+        this.sentence.audio = null;
+        this.englishService.insertSentence(this.sentence).subscribe(
+          data => {
+            
+            // se configura los parametros para el sonido
+            const parametros = new FormData();
+            parametros.append('sound', audio);
+            parametros.append('idSentence', data.id + '');
+            parametros.append('idChapter', this.sentence.idChapter + '');
 
+            // se procede hacer la invocacion para almacenar el audio
+            this.englishService.downloadSound(parametros).subscribe(
+              res => {
+                this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.ADD_SENTENCE));
+                this.chapterDetail = res;
+                this.sentence = null;
+              },
+              error => {
+                this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+              }
+            );
+          },
+          error => {
+            this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+          }
+        );
       }
     });
   }
@@ -173,6 +202,23 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
       });
     } else {
       this.getDetailChapter(idChapter, seasonSelected);
+    }
+  }
+
+  /**
+   * Metodo que permite ver el detalle de la sentencia seleccionada
+   */
+  public clickSentence(sentenceSelected: SentenceDTO): void {
+    if (this.sentence) {
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CONF_ADD_CHAPTER,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          this.sentence = sentenceSelected;
+        }
+      });
+    } else {
+      this.sentence = sentenceSelected;
     }
   }
 
@@ -303,7 +349,6 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
     this.chapterDetail = null;
     this.sentence = null;
     this.submit = false;
-
   }
 
   /**
