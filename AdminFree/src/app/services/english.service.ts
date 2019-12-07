@@ -21,27 +21,13 @@ export class EnglishService {
   constructor(private http: HttpClient) { }
 
   /**
-	 * Metodo para la creacion de una serie
-	 *
-	 * @param serie, contiene los datos de la serie a crear
-	 * @return Response con los datos de la nueva serie creada
+	 * Service para la creacion de una serie
+	 * @param parametros, contiene los datos de la serie a crear
 	 */
-  public createSerie(serie: SerieDTO): Observable<SerieDTO> {
-    return this.http.post<SerieDTO>(
-      EnglishAPIConstant.URL_CREATE_SERIE,
-      serie
-    );
-  }
-
-  /**
-	 * Servicio para cargar la imagen de la serie
-   *
-   * @param img, es la imagen a cargar
-	 */
-  public downloadImgSerie(img: FormData): Observable<MessageResponseDTO> {
+  public createSerie(parametros: FormData): Observable<MessageResponseDTO> {
     return this.http.post<MessageResponseDTO>(
-      EnglishAPIConstant.URL_DOWNLOAD_IMG_SERIE,
-      img
+      EnglishAPIConstant.URL_CREATE_SERIE,
+      parametros
     );
   }
 

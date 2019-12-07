@@ -16,12 +16,6 @@ export class EnglishAPIConstant {
     EnglishAPIConstant.ENGLISH_API +
     'createserie';
 
-  /** URL del recurso para cargar una imagen de la serie*/
-  static readonly URL_DOWNLOAD_IMG_SERIE: string =
-    AppDomainConstant.ADMINFREE +
-    EnglishAPIConstant.ENGLISH_API +
-    'downloadimgserie';
-
   /** URL del recurso para obtener las series parametrizadas en el sistema */
   static readonly URL_GET_SERIES: string =
     AppDomainConstant.ADMINFREE +

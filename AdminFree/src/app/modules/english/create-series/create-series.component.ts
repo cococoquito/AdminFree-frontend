@@ -76,7 +76,7 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
 
     // la imagen es requerida
     if (!this.img) {
-      this.messageService.add(MsjUtil.getToastError('Imagen requerido'));
+      this.messageService.add(MsjUtil.getToastError('Imagen Requerida'));
       return;
     }
 
@@ -86,26 +86,18 @@ export class CreateSeriesComponent extends CommonComponent implements OnInit {
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
 
+        // se configura los parametros necesarios para la creacion
+        const parametros = new FormData();
+        parametros.append('img', this.img);
+        parametros.append('name', this.serie.name);
+        parametros.append('url', this.serie.url);
+
         // se procede a invocar el servicio para la creacion
-        this.englishService.createSerie(this.serie).subscribe(
+        this.englishService.createSerie(parametros).subscribe(
           data => {
-
-            // se configura los parametros para la imagen
-            const parametros = new FormData();
-            parametros.append('img', this.img);
-            parametros.append('idSerie', data.id + '');
-
-            // se procede hacer la invocacion del cargue de la imagen
-            this.englishService.downloadImgSerie(parametros).subscribe(
-              res => {
-                this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.SERIE_CREADO_EXITOSO));
-                this.init();
-                this.cleanImg();
-              },
-              error => {
-                this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-              }
-            );
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.SERIE_CREADO_EXITOSO));
+            this.init();
+            this.cleanImg();
           },
           error => {
             this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
