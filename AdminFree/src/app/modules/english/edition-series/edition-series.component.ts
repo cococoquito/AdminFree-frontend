@@ -153,30 +153,19 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
         
-        // se procede a insertar la sentencia
-        this.sentence.idChapter = this.chapterDetail.id;
-        const audio = this.sentence.audio;
-        this.sentence.audio = null;
-        this.englishService.insertSentence(this.sentence).subscribe(
-          data => {
-            
-            // se configura los parametros para el sonido
-            const parametros = new FormData();
-            parametros.append('sound', audio);
-            parametros.append('idSentence', data.id + '');
-            parametros.append('idChapter', this.sentence.idChapter + '');
+        // se configura los parametros para la creacion
+        const parametros = new FormData();
+        parametros.append('audio', this.sentence.audio);
+        parametros.append('idChapter', this.chapterDetail.id + '');
+        parametros.append('spanish', this.sentence.spanish);
+        parametros.append('english', this.sentence.english);
 
-            // se procede hacer la invocacion para almacenar el audio
-            this.englishService.downloadSound(parametros).subscribe(
-              res => {
-                this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.ADD_SENTENCE));
-                this.chapterDetail = res;
-                this.sentence = null;
-              },
-              error => {
-                this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-              }
-            );
+        // se procede a insertar la sentencia
+        this.englishService.createSentence(parametros).subscribe(
+          data => {
+            this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.ADD_SENTENCE));
+            this.chapterDetail = data;
+            this.sentence = null;
           },
           error => {
             this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));

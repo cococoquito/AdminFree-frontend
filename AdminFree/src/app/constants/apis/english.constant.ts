@@ -23,7 +23,7 @@ export class EnglishAPIConstant {
     'getseries';
 
   /** URL del recurso para obtener el detalle de la serie */
-  static readonly URL_GET_DETAIL_SERIE: string =
+  static readonly URL_DETAIL_SERIE: string =
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'detailserie';
@@ -47,14 +47,8 @@ export class EnglishAPIConstant {
     'detailchapter';
 
   /** URL del recurso para crear una sentence */
-  static readonly URL_INSERT_SENTENCE: string =
+  static readonly URL_CREATE_SENTENCE: string =
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
-    'insertsentence';
-
-  /** URL del recurso para cargar el sonido a una sentencia */
-  static readonly URL_DOWNLOAD_SOUND: string =
-    AppDomainConstant.ADMINFREE +
-    EnglishAPIConstant.ENGLISH_API +
-    'downloadsound';
+    'createsentence';
 }

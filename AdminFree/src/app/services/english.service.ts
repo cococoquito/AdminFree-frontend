@@ -5,7 +5,6 @@ import { SerieDTO } from '../dtos/english/serie.dto';
 import { EnglishAPIConstant } from '../constants/apis/english.constant';
 import { MessageResponseDTO } from '../dtos/transversal/message-response.dto';
 import { ChapterDTO } from '../dtos/english/chapter.dto';
-import { SentenceDTO } from '../dtos/english/sentence.dto';
 
 /**
  * Clase que contiene los servicios del modulo de learning english
@@ -20,15 +19,14 @@ export class EnglishService {
    */
   constructor(private http: HttpClient) { }
 
-  /**
-	 * Service para la creacion de una serie
-	 * @param parametros, contiene los datos de la serie a crear
+	/**
+	 * Service que permite crear una serie en el sistema
+	 * @param img, Imagen asociada a la serie
+	 * @param name, nombre de la serie a crear
+	 * @param url, direccion de la pagina de esta serie
 	 */
   public createSerie(parametros: FormData): Observable<MessageResponseDTO> {
-    return this.http.post<MessageResponseDTO>(
-      EnglishAPIConstant.URL_CREATE_SERIE,
-      parametros
-    );
+    return this.http.post<MessageResponseDTO>(EnglishAPIConstant.URL_CREATE_SERIE, parametros);
   }
 
 	/**
@@ -45,7 +43,7 @@ export class EnglishService {
 	 * @return DTO con el detalle de la serie
 	 */
   public getDetailSerie(idSerie: number): Observable<SerieDTO> {
-    return this.http.post<SerieDTO>(EnglishAPIConstant.URL_GET_DETAIL_SERIE, idSerie);
+    return this.http.post<SerieDTO>(EnglishAPIConstant.URL_DETAIL_SERIE, idSerie);
   }
 
   /**
@@ -77,23 +75,14 @@ export class EnglishService {
   }
 
 	/**
-	 * Service que permite ingresar los datos basicos de la sentencia
-	 * @param sentence, DTO con los datos de la sentencia
-	 * @return DTO con el identificador de la sentencia
+	 * Service que permite crear una sentencia en el sistema
+	 * @param audio, es el audio de la sentencia
+	 * @param idChapter, identificador del capitulo
+	 * @param spanish, la sentencia en espaniol
+	 * @param english, la sentencia en ingles
+	 * @return detalle del capitulo con todas sus sentencias
 	 */
-  public insertSentence(sentence: SentenceDTO): Observable<SentenceDTO> {
-    return this.http.post<SentenceDTO>(EnglishAPIConstant.URL_INSERT_SENTENCE, sentence);
-  }
-
-	/**
-	 * Service para almacenar el sonido a la sentencia
-	 * @param parametros, contiene todos los valores necesarios
-	 * @return Detalle del capitulo que contiene esta sentencia
-	 */
-  public downloadSound(parametros: FormData): Observable<ChapterDTO> {
-    return this.http.post<ChapterDTO>(
-      EnglishAPIConstant.URL_DOWNLOAD_SOUND,
-      parametros
-    );
+  public createSentence(parametros: FormData): Observable<ChapterDTO> {
+    return this.http.post<ChapterDTO>(EnglishAPIConstant.URL_CREATE_SENTENCE, parametros);
   }
 }
