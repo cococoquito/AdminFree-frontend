@@ -51,4 +51,10 @@ export class EnglishAPIConstant {
     AppDomainConstant.ADMINFREE +
     EnglishAPIConstant.ENGLISH_API +
     'createsentence';
+
+  /** URL del recurso para editar una sentence */
+  static readonly URL_EDIT_SENTENCE: string =
+    AppDomainConstant.ADMINFREE +
+    EnglishAPIConstant.ENGLISH_API +
+    'editsentence';
 }

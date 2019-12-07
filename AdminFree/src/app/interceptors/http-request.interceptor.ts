@@ -51,7 +51,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         EnglishAPIConstant.URL_ADD_SEASON || 
         EnglishAPIConstant.URL_ADD_CHAPTER || 
         EnglishAPIConstant.URL_DETAIL_CHAPTER ||
-        EnglishAPIConstant.URL_CREATE_SENTENCE) {
+        EnglishAPIConstant.URL_CREATE_SENTENCE ||
+        EnglishAPIConstant.URL_EDIT_SENTENCE) {
 
         // para las peticiones GET es obligatorio colocar el typcontent
         if (EnglishAPIConstant.URL_GET_SERIES === req.url) {
