@@ -40,6 +40,9 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   /** Es la sentence agregar o editar*/
   public sentence: SentenceDTO;
 
+  /** Contiene los datos origen de la sentencia a editar*/
+  public sentenceOrigen: SentenceDTO;
+
   /** indica si el usuario ya dio click en los botones de agregacion */
   public submit: boolean;
 
@@ -176,6 +179,51 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que permite editar una sentencia
+   */
+  public editSentence(): void {
+
+    // se verifica si hay alguna modificacion
+    this.sentence.english = this.setTrimFilter(this.sentence.english);
+    this.sentence.spanish = this.setTrimFilter(this.sentence.spanish);
+    if (this.sentenceOrigen.spanish !== this.sentence.spanish || this.sentenceOrigen.english !== this.sentence.english || this.sentence.audioModificado) {
+
+      // se muestra la ventana de confirmacion
+      this.confirmationService.confirm({
+        message: MsjFrontConstant.CONF_EDIT_SENTENCE,
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+          
+          // se configura los parametros para la edicion
+          const parametros = new FormData();
+          if (this.sentence.audioModificado) {
+            parametros.append('audio', this.sentence.audio);
+          }
+          parametros.append('idChapter', this.chapterDetail.id + '');
+          parametros.append('idSentence', this.sentence.id + '');
+          parametros.append('spanish', this.sentence.spanish);
+          parametros.append('english', this.sentence.english);
+
+          // se procede a editar la sentencia
+          this.englishService.editSentence(parametros).subscribe(
+            data => {
+              this.messageService.add(MsjUtil.getToastSuccess(MsjFrontConstant.EDIT_SENTENCE));
+              this.chapterDetail = data;
+              this.sentence = null;
+              this.sentenceOrigen = null;
+            },
+            error => {
+              this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            }
+          );
+        }
+      });
+    } else {
+      this.messageService.add(MsjUtil.getToastError(MsjFrontConstant.FIELD_NO_MODIFICADOS));
+    }
+  }
+
+  /**
    * Metodo que permite consultar el detalle del capitulo
    */
   public clickChapter(idChapter: number, seasonSelected: SeasonDTO): void {
@@ -203,11 +251,13 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
         message: MsjFrontConstant.CONF_ADD_CHAPTER,
         header: MsjFrontConstant.CONFIRMACION,
         accept: () => {
-          this.sentence = sentenceSelected;
+          this.sentenceOrigen = sentenceSelected;
+          this.sentence = JSON.parse(JSON.stringify(sentenceSelected));
         }
       });
     } else {
-      this.sentence = sentenceSelected;
+      this.sentenceOrigen = sentenceSelected;
+      this.sentence = JSON.parse(JSON.stringify(sentenceSelected));
     }
   }
 
@@ -250,6 +300,7 @@ export class EditionSeriesComponent extends CommonComponent implements OnInit {
    */
   public downloadSound(event): void {
     this.sentence.audio = event.files[0];
+    this.sentence.audioModificado = true;
   }
 
   /**

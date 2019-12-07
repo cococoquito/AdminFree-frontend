@@ -207,6 +207,15 @@ export class MsjFrontConstant {
   /** Mensaje confirmacion cuando quieren agregar una nueva sentencia */
   static readonly CONF_ADD_SENTENCE: string = '¿Está seguro de agregar esta sentencia?';
 
+  /** Mensaje confirmacion cuando quieren editar una sentencia */
+  static readonly CONF_EDIT_SENTENCE: string = '¿Está seguro de editar esta sentencia?';
+
   /** Mensaje cuando se crea una sentencia */
   static readonly ADD_SENTENCE: string = 'Sentencia creada exitosamente';
+
+  /** Mensaje cuando se edita una sentencia */
+  static readonly EDIT_SENTENCE: string = 'Sentencia editada exitosamente';
+
+  /** Mensaje cuando no hay campos modificados */
+  static readonly FIELD_NO_MODIFICADOS: string = 'No hay ninguna modificación';
 }

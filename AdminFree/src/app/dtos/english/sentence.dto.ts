@@ -23,4 +23,7 @@ export class SentenceDTO {
 
   /** Es el nombre del audio de la sentencia */
   public audioName: string;
+
+	/** Se utiliza para la modificacion de la sentencia */
+	public audioModificado: boolean;
 }

@@ -195,12 +195,17 @@
                 </p-fileUpload>
               </div>
 
+              <!-- name audio-->
+              <div class="ui-g-12" *ngIf="sentence.id">
+                <label class="s-title font-size-15 font-new-roman mayuscula"> <strong>Name of sound:</strong> {{sentence.audioName}}</label>
+              </div>
+
               <!-- btn save -->
               <div class="text-center mb-1 mx-auto ui-g-12">
                 <button (click)="insertSentence()" *ngIf="!sentence.id" type="button" class="btn btn-warning mr-2 ml-2 w-200-px">
                   <label class="btn-size-admin"><i class="fa fa-save"></i> CREATE SENTENCE</label>
                 </button>
-                <button *ngIf="sentence.id" type="button" class="btn btn-warning mr-2 ml-2 w-150-px">
+                <button (click)="editSentence()" *ngIf="sentence.id" type="button" class="btn btn-warning mr-2 ml-2 w-150-px">
                   <label class="btn-size-admin"><i class="fa fa-save"></i> SAVE</label>
                 </button>
               </div>
