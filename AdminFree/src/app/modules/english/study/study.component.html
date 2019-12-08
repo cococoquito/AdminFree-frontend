@@ -3,9 +3,169 @@
   <p class="title-page-english">FUN WAY TO LEARN ENGLISH</p>
 </div>
 
-<button (click)="goToListSeries()" type="button" class="btn-sm btn-primary w-130-px mr-4">
-  <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Come Back</label>
-</button>
+<!-- existe serie a editar-->
+<ng-container *ngIf="serie">
+
+  <!-- datos generales de la serie-->
+  <p-panel styleClass="steps-pnl pnl-pt mt-3">
+    <p-header>
+      <p class="s-title-page-english text-center">PRACTICE MAKES PERFECT</p>
+    </p-header>
+    <div class="ui-g">
+      <div class="ui-g-3">
+        <img src="data:image/PNG;base64,{{serie.img}}" width="40" height="40">
+        <span class="font-weight-bold s-title font-size-15 font-new-roman ml-2 mayuscula">{{serie.name}}</span>
+      </div>
+      <div class="ui-g-6 ma-auto">
+        <span class="font-weight-bold font-size-15 font-new-roman">URL ORORO: </span>
+        <a href="{{serie.url}}" target="_blank" class="link font-new-roman font-size-15">{{serie.url}}</a>
+      </div>
+      <div class="ui-g-3 ma-auto">
+        <button (click)="goToListSeries()" type="button" class="btn-sm btn-primary w-130-px mr-4">
+          <label class="btn-size-admin"><i class="fa fa-hand-o-left"></i> Come Back</label>
+        </button>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- SI hay temporadas para esta serie-->
+  <ng-container *ngIf="serie.seasons">
+    <p-tabView>
+
+      <!-- Temporadas-->
+      <ng-container *ngFor="let season of serie.seasons; first as isFirst">
+        <p-tabPanel [header]="season.name" [selected]="isFirst">
+          <ng-container *ngFor="let chapter of season.chapters; let i = index">
+            <p (click)="clickChapter(chapter.id, season)" class="mb-3 mt-3 border-bottom">
+              <span class="font-weight-bold">{{i + 1}}: </span>
+              <span class="chapter font-new-roman font-size-15 mayuscula" [ngClass]="{'chapter-selected': chapterDetail?.id == chapter.id}">{{chapter.name}}</span>
+            </p>  
+          </ng-container>
+        </p-tabPanel>
+      </ng-container>
+    </p-tabView>
+  </ng-container>
+
+  <!-- NO hay temporadas para esta serie-->
+  <ng-container *ngIf="!serie.seasons">
+    <div class="mr-3 ml-3 mt-3 mb-3 p-2 ui-messages ui-messages-warn ui-corner-all text-center">
+      <span class="ui-messages-icon pi pi-info-circle"></span>
+      <span class="ui-messages-detail font-size-15 ml-0">
+        <strong>No hay temporadas para esta serie</strong>
+      </span>
+    </div>
+  </ng-container>
+
+  <!-- panel detalle de capitulo-->
+  <ng-container *ngIf="chapterDetail">
+    <p-panel styleClass="steps-pnl pnl-pt mt-2" [showHeader]="false">
+      <div class="ui-g border-top">
+        <div class="ui-g-10">
+
+          <!-- name de la temporada seleccionada-->
+          <div class="ui-g border-bottom">
+            <div class="ui-g-2">
+              <span class="font-weight-bold text-danger font-size-16 font-new-roman">{{seasonSelected.name}}</span>
+            </div>
+
+            <!-- name capitulo-->
+            <div class="ui-g-3">
+              <span class="font-weight-bold font-size-15 font-new-roman">NAME: </span>
+              <span class="font-weight-bold s-title font-size-15 font-new-roman mayuscula">{{chapterDetail.name}}</span>
+            </div>
+
+            <!-- URL capitulo-->
+            <div class="ui-g-7">
+              <span class="font-weight-bold font-size-15 font-new-roman">URL ORORO: </span>
+              <a href="{{chapterDetail.url}}" target="_blank" class="link font-new-roman font-size-15">{{chapterDetail.url}}</a>
+            </div>
+
+            <!-- panel agregar o editar sentence-->
+            <ng-container *ngIf="sentence">
+
+              <!-- sentence spanish-->
+              <div class="ui-g-12">
+                <p-panel>
+                  <p-header>
+                    <label for="inspanish" class="ml-1 mb-0"> Spanish Sentence:</label>
+                  </p-header>
+                  <textarea
+                    [(ngModel)]="sentence.spanish"
+                    id="inspanish"
+                    class="form-control font-new-roman"
+                    rows="3">
+                  </textarea>
+                </p-panel>
+              </div>
+  
+              <!-- sentence english-->
+              <div class="ui-g-12">
+                <p-panel>
+                  <p-header>
+                    <label for="inenglish" class="ml-1 mb-0"> English Sentence:</label>
+                  </p-header>
+                  <textarea
+                    [(ngModel)]="sentence.english"
+                    id="inenglish"
+                    class="form-control font-new-roman"
+                    rows="3">
+                  </textarea>
+                </p-panel>
+              </div>
+  
+              <!-- sonido-->
+              <div class="ui-g-12">
+                <p-fileUpload
+                  (uploadHandler)="downloadSound($event)"
+                  customUpload="true"
+                  auto="true"
+                  #inSound
+                  [showUploadButton]="false"
+                  [showCancelButton]="false"
+                  chooseLabel="Download Sound"
+                  invalidFileTypeMessageSummary="Archivo invalido"
+                  invalidFileTypeMessageDetail="Solo Sonidos"
+                  invalidFileSizeMessageSummary="Iamege invalido">
+                  <ng-template pTemplate="content"></ng-template>
+                </p-fileUpload>
+              </div>
+
+              <!-- name audio-->
+              <div class="ui-g-12" *ngIf="sentence.id">
+                <label class="s-title font-size-15 font-new-roman mayuscula"> <strong>Name of sound:</strong> {{sentence.audioName}}</label>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- sentences added-->
+        <div class="ui-g-2 border-left">
+          <div class="border-bottom text-center">
+            <p class="s-title font-weight-bold font-new-roman">SENTENCES</p>
+          </div>
+          <div class="sentence-scroll">
+            <ng-container *ngFor="let sen of chapterDetail.sentences; let i = index">
+              <p (click)="clickSentence(sen)" class="mb-2 mt-2 border-bottom">
+                <span class="font-weight-bold">{{i + 1}}: </span>
+                <span class="chapter font-new-roman font-size-15" [ngClass]="{'chapter-selected': sentence?.id == sen.id}">SENTENCE</span>
+              </p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </p-panel>
+  </ng-container>
+</ng-container>
+
+<!-- NO existe serie para estudiar-->
+<ng-container *ngIf="!serie">
+  <div class="mr-3 ml-3 mt-3 mb-3 p-2 ui-messages ui-messages-warn ui-corner-all text-center">
+    <span class="ui-messages-icon pi pi-info-circle"></span>
+    <span class="ui-messages-detail font-size-15 ml-0">
+      <strong>Seleccione la serie que desea estudiar</strong>
+    </span>
+  </div>
+</ng-container>
 
 <p-confirmDialog id="confApp" icon="pi pi-exclamation-triangle" #cd>
   <p-footer>

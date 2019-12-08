@@ -1,0 +1,42 @@
+.s-title-page-english {
+    font-family: Times, Times New Roman, serif !important;
+    font-weight: 700 !important;
+    font-size: 16px;
+    letter-spacing: 0.4pt;
+    word-spacing: 0.8pt;
+    margin: 0px !important;
+    color: #ec6880
+}
+
+.s-title {
+    color: #563d7c;
+}
+
+.link {
+    color: #009FDA;
+    font-weight: 700 !important;
+}
+
+.chapter {
+    color: #009FDA;
+    font-weight: 700 !important;
+    cursor: pointer;
+}
+
+.chapter:hover {
+    color: hotpink;
+    text-decoration: underline;
+}
+
+.chapter-selected {
+    color: hotpink;
+}
+
+.ma-auto {
+    margin: auto;
+}
+
+.sentence-scroll {
+    height: 400px;
+    overflow: auto;
+}
