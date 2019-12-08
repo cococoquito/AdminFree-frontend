@@ -10,6 +10,7 @@ import { EnglishService } from 'src/app/services/english.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { StudyComponent } from './study/study.component';
 
 /**
  * Modulo que contiene los componentes y servicios para la
@@ -31,6 +32,10 @@ import { MessagesModule } from 'primeng/messages';
       {
         path: RouterConstant.ROUTER_EDIT_SERIES,
         component: EditionSeriesComponent
+      },
+      {
+        path: RouterConstant.ROUTER_STUDY,
+        component: StudyComponent
       }
     ]),
     SharedModule,
@@ -41,7 +46,8 @@ import { MessagesModule } from 'primeng/messages';
   declarations: [
     SeriesComponent,
     CreateSeriesComponent,
-    EditionSeriesComponent
+    EditionSeriesComponent,
+    StudyComponent
   ],
   providers: [
     ConfirmationService,

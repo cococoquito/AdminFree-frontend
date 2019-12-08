@@ -62,6 +62,13 @@ export class SeriesComponent extends CommonComponent implements OnInit {
     this.router.navigate([RouterConstant.NAVIGATE_EDIT_SERIES]);
   }
 
+  /**
+   * Metodo que soporta el evento click para ir la pagina de study
+   */
+  public goToStudy(idSerie: number): void {
+    LocalStoreUtil.idSerie(TipoEventoConstant.SET, idSerie);
+    this.router.navigate([RouterConstant.NAVIGATE_STUDY]);
+  }
 
   /**
    * Metodo que es invocado al momento de la creacion
