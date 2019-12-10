@@ -47,12 +47,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     // se verifica si la peticion es del modulo learning english
     if (EnglishAPIConstant.URL_CREATE_SERIE === req.url || 
         EnglishAPIConstant.URL_GET_SERIES === req.url ||
-        EnglishAPIConstant.URL_DETAIL_SERIE ||
-        EnglishAPIConstant.URL_ADD_SEASON || 
-        EnglishAPIConstant.URL_ADD_CHAPTER || 
-        EnglishAPIConstant.URL_DETAIL_CHAPTER ||
-        EnglishAPIConstant.URL_CREATE_SENTENCE ||
-        EnglishAPIConstant.URL_EDIT_SENTENCE) {
+        EnglishAPIConstant.URL_DETAIL_SERIE === req.url ||
+        EnglishAPIConstant.URL_ADD_SEASON === req.url || 
+        EnglishAPIConstant.URL_ADD_CHAPTER === req.url || 
+        EnglishAPIConstant.URL_DETAIL_CHAPTER === req.url ||
+        EnglishAPIConstant.URL_CREATE_SENTENCE === req.url ||
+        EnglishAPIConstant.URL_EDIT_SENTENCE === req.url) {
 
         // para las peticiones GET es obligatorio colocar el typcontent
         if (EnglishAPIConstant.URL_GET_SERIES === req.url) {

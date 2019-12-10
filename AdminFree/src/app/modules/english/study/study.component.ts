@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { CommonComponent } from 'src/app/util/common.component';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
@@ -47,6 +48,18 @@ export class StudyComponent extends CommonComponent implements OnInit {
   /** bandera para ver la respuesta */
   public verAnswer: boolean;
 
+  /** Es la URL del audio de la sentencia */
+  public urlAudio: any;
+
+  /** se utiliza para la configuracion correcta del audio */
+  private HEADER_AUDIO = 'data:audio/mp3;base64,';
+
+  /** se utiliza para la configuracion del URL del sonido*/
+  private BASE_64 = ';base64,';
+
+  /** es el tipo de sonido que permite el sistema*/
+  private MP3 = 'audio/mp3,';
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -61,13 +74,16 @@ export class StudyComponent extends CommonComponent implements OnInit {
    * 
    * @param spinnerState, se utiliza para simular el spinner cuando
    * pasa del panel edicion a la lista de consecutivos
+   * 
+   * @param domSanitizer, se utiliza para crear una URL segura del audio
    */
   constructor(
     protected messageService: MessageService,
     private router: Router,
     private confirmationService: ConfirmationService,
     private englishService: EnglishService,
-    private spinnerState: SpinnerState) {
+    private spinnerState: SpinnerState,
+    private domSanitizer: DomSanitizer) {
     super();
   }
 
@@ -110,18 +126,11 @@ export class StudyComponent extends CommonComponent implements OnInit {
 
   /**
    * Metodo que permite colocar la siguiente sentence
+   * solo aplica si ya se visualizo la respuesta
    */
   public nextSentence(): void {
-    if (this.chapterDetail && this.chapterDetail.sentences) {
-      if (this.indexSentence < this.chapterDetail.sentences.length) {
-        this.spinnerState.displaySpinner();
-        setTimeout(() => { 
-          this.sentence = this.chapterDetail.sentences[this.indexSentence];
-          this.indexSentence = this.indexSentence + 1;
-          this.verAnswer = false;
-          this.spinnerState.hideSpinner();
-        }, 150);
-      }
+    if (this.verAnswer) {
+      this.setSentence();
     }
   }
 
@@ -150,7 +159,22 @@ export class StudyComponent extends CommonComponent implements OnInit {
    * Metodo que pemrmite soportar el evento click del boton show answer
    */
   public showAnswer(): void {
-    this.verAnswer = true;
+
+    // no aplica si ya fue visualizada
+    if (!this.verAnswer) {
+
+      // bandera para visualizar la respuesta de la sentencia en ingles
+      this.verAnswer = true;
+
+      // se procede a configurar el audio de la sentencia
+      this.urlAudio = null;
+      if (this.sentence && this.sentence.audio) {
+        const binary = this.convertDataURIToBinary(this.HEADER_AUDIO + this.sentence.audio);
+        const blob = new Blob([binary], { type: this.MP3 });
+        const urlBlob = URL.createObjectURL(blob);
+        this.urlAudio = this.domSanitizer.bypassSecurityTrustUrl(urlBlob);
+      }
+    }
   }
 
   /**
@@ -159,12 +183,7 @@ export class StudyComponent extends CommonComponent implements OnInit {
   private getDetailChapter(idChapter: number, seasonSelected: SeasonDTO): void {
 
     // se limpia las variables globales
-    this.seasonSelected = null;
-    this.chapterDetail = null;
-    this.wrongSentences = null;
-    this.indexSentence = 0;
-    this.sentence = null;
-    this.verAnswer = false;
+    this.cleanGlobalVariable();
 
     // se configura la temporada seleccionada
     this.seasonSelected = seasonSelected;
@@ -173,7 +192,7 @@ export class StudyComponent extends CommonComponent implements OnInit {
     this.englishService.getDetailChapter(idChapter).subscribe(
       data => {
         this.chapterDetail = data;
-        this.nextSentence();
+        this.setSentence();
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -208,6 +227,28 @@ export class StudyComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Permite configurar la sentencia a estudiar
+   */
+  private setSentence(): void {
+
+    // se verifica si el capitulo tiene sentencia
+    if (this.chapterDetail && this.chapterDetail.sentences) {
+
+      // se verifica que no sea la ultima sentencia
+      if (this.indexSentence < this.chapterDetail.sentences.length) {
+        this.spinnerState.displaySpinner();
+        setTimeout(() => { 
+          this.sentence = this.chapterDetail.sentences[this.indexSentence];
+          this.indexSentence = this.indexSentence + 1;
+          this.verAnswer = false;
+          this.urlAudio = null;
+          this.spinnerState.hideSpinner();
+        }, 150);
+      }
+    }
+  }
+
+  /**
    * Metodo que es utilizada para agregar una sentencia wrong
    */
   private addSentence(): void {
@@ -216,5 +257,34 @@ export class StudyComponent extends CommonComponent implements OnInit {
       this.wrongSentences.push(this.sentence);
       this.spinnerState.hideSpinner();
     }, 150);
+  }
+
+  /**
+   * Metodo que permite limpiar las variables globales
+   */
+  private cleanGlobalVariable(): void {
+    this.seasonSelected = null;
+    this.chapterDetail = null;
+    this.wrongSentences = null;
+    this.indexSentence = 0;
+    this.sentence = null;
+    this.verAnswer = false;
+    this.urlAudio = null;
+  }
+
+  /**
+   * Metodo que permite construir el binario del audio en una
+   * data valida para ser visualizado en pantalla
+   */
+  private convertDataURIToBinary(dataURI) {
+    const base64Index = dataURI.indexOf(this.BASE_64) + this.BASE_64.length;
+    const base64 = dataURI.substring(base64Index);
+    const raw = window.atob(base64);
+    const rawLength = raw.length;
+    const array = new Uint8Array(new ArrayBuffer(rawLength));
+    for (let i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+    return array;
   }
 }

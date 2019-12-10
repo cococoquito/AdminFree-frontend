@@ -116,7 +116,7 @@
                 </div>
               </div>
   
-              <!-- sentence english-->
+              <!-- sentence english- audio-->
               <div class="ui-g-12">
                 <p-panel>
                   <p-header>
@@ -137,6 +137,11 @@
                     rows="3"
                     readonly>
                   </textarea>
+                  <div class="text-center" *ngIf="urlAudio">
+                    <audio id="audio" controls>
+                      <source id="source" [src]="urlAudio" type="audio/mp3" />
+                    </audio>
+                  </div>
                 </p-panel>
               </div>
   
