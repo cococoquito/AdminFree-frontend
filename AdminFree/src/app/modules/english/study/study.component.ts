@@ -184,6 +184,8 @@ export class StudyComponent extends CommonComponent implements OnInit {
     this.spinnerState.displaySpinner();
     setTimeout(() => {
       this.sentence = sentenceSelected;
+      this.verAnswer = false;
+      this.urlAudio = null;
       this.spinnerState.hideSpinner();
     }, 150);
   }
