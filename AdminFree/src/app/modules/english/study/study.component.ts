@@ -178,6 +178,17 @@ export class StudyComponent extends CommonComponent implements OnInit {
   }
 
   /**
+   * Metodo que permite ver el detalle de la sentencia seleccionada
+   */
+  public clickSentence(sentenceSelected: SentenceDTO): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.sentence = sentenceSelected;
+      this.spinnerState.hideSpinner();
+    }, 150);
+  }
+
+  /**
    * Metodo que permite consultar el detalle del capitulo
    */
   private getDetailChapter(idChapter: number, seasonSelected: SeasonDTO): void {

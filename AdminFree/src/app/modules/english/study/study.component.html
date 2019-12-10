@@ -61,9 +61,13 @@
           </div>
           <div class="sentence-scroll">
             <ng-container *ngFor="let sen of wrongSentences; let i = index">
-              <p class="mb-2 mt-2 border-bottom">
+              <p (click)="clickSentence(sen)" *ngIf="indexSentence === chapterDetail?.sentences?.length" class="mb-2 mt-2 border-bottom">
                 <span class="font-weight-bold">{{i + 1}}: </span>
-                <span class="chapter font-new-roman font-size-15" [ngClass]="{'chapter-selected': sentence?.id == sen.id}">SENTENCE</span>
+                <span class="chapter font-new-roman font-size-15" [ngClass]="{'chapter-selected':sentence?.id == sen.id}">SENTENCE</span>
+              </p>
+              <p *ngIf="!(indexSentence === chapterDetail?.sentences?.length)" class="mb-2 mt-2 border-bottom">
+                <span class="font-weight-bold">{{i + 1}}: </span>
+                <span class="font-new-roman font-size-15">SENTENCE</span>
               </p>
             </ng-container>
           </div>
