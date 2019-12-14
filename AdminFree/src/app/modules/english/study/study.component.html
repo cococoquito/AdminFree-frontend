@@ -106,10 +106,9 @@
                   <textarea
                     [(ngModel)]="sentence.spanish"
                     id="inspanish"
-                    class="form-control font-new-roman"
+                    class="form-control font-new-roman font-size-20 text-sentence"
                     rows="3"
-                    readonly
-                    class="text-sentence">
+                    readonly>
                   </textarea>
                 </p-panel>
 
@@ -130,7 +129,7 @@
                   <textarea
                     *ngIf="!verAnswer"
                     id="inenglish"
-                    class="form-control font-new-roman text-sentence"
+                    class="form-control font-new-roman text-sentence font-size-20"
                     rows="3"
                     readonly>
                   </textarea>
@@ -138,7 +137,7 @@
                     *ngIf="verAnswer"
                     [(ngModel)]="sentence.english"
                     id="inenglish"
-                    class="form-control font-new-roman text-sentence"
+                    class="form-control font-new-roman text-sentence font-size-20"
                     rows="3"
                     readonly>
                   </textarea>
